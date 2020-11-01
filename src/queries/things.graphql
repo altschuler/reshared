@@ -1,9 +1,9 @@
 ﻿fragment ThingCard on things {
     id
     name
-   owner {
-       ...UserCard
-   }
+    owner {
+        ...UserCard
+    }
 }
 
 query ThingList {
@@ -11,4 +11,3 @@ query ThingList {
         ...ThingCard
     }
 }
-
