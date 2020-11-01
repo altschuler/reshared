@@ -1,15 +1,50 @@
 {
-  "name": "reshared",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },
-  "dependencies": {
-    "next": "10.0.0",
-    "react": "17.0.1",
-    "react-dom": "17.0.1"
-  }
+    "name": "reshared",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "schema": "dotenv -c local -- graphql-codegen",
+        "schema-watch": "dotenv -c local -- graphql-codegen --watch"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "prettier": {
+        "printWidth": 100,
+        "tabWidth": 4,
+        "singleQuote": true,
+        "jsxBracketSameLine": true,
+        "trailingComma": "all"
+    },
+    "dependencies": {
+        "@apollo/client": "^3.2.5",
+        "antd": "^4.7.3",
+        "dotenv": "^8.2.0",
+        "graphql": "^15.4.0",
+        "graphql-tag": "^2.11.0",
+        "next": "10.0.0",
+        "nhost-js-sdk": "^2.2.5",
+        "react": "17.0.1",
+        "react-dom": "17.0.1",
+        "react-jss": "^10.4.0",
+        "react-nhost": "^2.0.2",
+        "sass": "^1.28.0"
+    },
+    "devDependencies": {
+        "@graphql-codegen/cli": "^1.19.0",
+        "@graphql-codegen/fragment-matcher": "^2.0.0",
+        "@graphql-codegen/introspection": "^1.18.0",
+        "@graphql-codegen/named-operations-object": "^1.17.8",
+        "@graphql-codegen/schema-ast": "^1.17.8",
+        "@graphql-codegen/typescript": "^1.17.11",
+        "@graphql-codegen/typescript-operations": "^1.17.8",
+        "@graphql-codegen/typescript-react-apollo": "^2.0.7",
+        "@types/node": "^14.14.6",
+        "@types/react": "^16.9.55",
+        "prettier": "^2.1.2",
+        "typescript": "^4.0.5"
+    }
 }
