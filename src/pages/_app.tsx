@@ -1,26 +1,50 @@
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
-import { NhostApolloProvider, NhostAuthProvider } from 'react-nhost';
-import { nhost } from '../utils/nhost';
+import { getSession, Provider } from 'next-auth/client';
+import { ApolloClient, ApolloLink, ApolloProvider, HttpLink, InMemoryCache } from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 import { PageLayout } from '../components/PageLayout';
+import { AuthProvider } from '../utils/auth';
 
 import '../styles/globals.scss';
+import { ThemeProvider } from 'react-jss';
 
-const App = ({ Component, pageProps }: AppProps) => (
-    <NhostAuthProvider auth={nhost.auth}>
-        <NhostApolloProvider
-            auth={nhost.auth}
-            gqlEndpoint={process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT}>
-            <Head>
-                <title>Reshar.ed</title>
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
+const authLink = setContext(async (_, { headers }) => {
+    const session = await getSession();
+    if (session?.token) {
+        return { headers: { ...headers, Authorization: `Bearer ${session.token}` } };
+    }
+});
 
-            <PageLayout>
-                <Component {...pageProps} />
-            </PageLayout>
-        </NhostApolloProvider>
-    </NhostAuthProvider>
-);
+const apolloClient = new ApolloClient({
+    link: ApolloLink.from([
+        authLink,
+        new HttpLink({ uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT }),
+    ]),
+    cache: new InMemoryCache(),
+});
+
+const theme = {};
+
+const App = ({ Component, pageProps }: AppProps) => {
+    return (
+        <Provider session={pageProps.session}>
+            <ApolloProvider client={apolloClient}>
+                <AuthProvider>
+                    <ThemeProvider theme={theme}>
+                        <Head>
+                            <title>Reshar.ed</title>
+                            <link rel="icon" href="/favicon.ico" />
+                        </Head>
+
+                        <PageLayout>
+                            <Component {...pageProps} />
+                        </PageLayout>
+                    </ThemeProvider>
+                </AuthProvider>
+            </ApolloProvider>
+        </Provider>
+    );
+};
 
 export default App;

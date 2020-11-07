@@ -1,0 +1,2505 @@
+schema {
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
+}
+
+input CredentialsInput {
+  email: String
+  name: String!
+  password: String!
+}
+
+"""
+expression to compare columns of type Int. All fields are combined with logical 'AND'.
+"""
+input Int_comparison_exp {
+  _eq: Int
+  _gt: Int
+  _gte: Int
+  _in: [Int!]
+  _is_null: Boolean
+  _lt: Int
+  _lte: Int
+  _neq: Int
+  _nin: [Int!]
+}
+
+type RegistrationResult {
+  user: users
+  user_id: uuid!
+}
+
+"""
+expression to compare columns of type String. All fields are combined with logical 'AND'.
+"""
+input String_comparison_exp {
+  _eq: String
+  _gt: String
+  _gte: String
+  _ilike: String
+  _in: [String!]
+  _is_null: Boolean
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+  _nilike: String
+  _nin: [String!]
+  _nlike: String
+  _nsimilar: String
+  _similar: String
+}
+
+"""
+columns and relationships of "group_members"
+"""
+type group_members {
+  created_at: timestamptz!
+
+  """An object relationship"""
+  group: groups!
+  group_id: uuid!
+  id: uuid!
+  role: String!
+  updated_at: timestamptz!
+
+  """An object relationship"""
+  user: users!
+  user_id: uuid!
+}
+
+"""
+aggregated selection of "group_members"
+"""
+type group_members_aggregate {
+  aggregate: group_members_aggregate_fields
+  nodes: [group_members!]!
+}
+
+"""
+aggregate fields of "group_members"
+"""
+type group_members_aggregate_fields {
+  count(columns: [group_members_select_column!], distinct: Boolean): Int
+  max: group_members_max_fields
+  min: group_members_min_fields
+}
+
+"""
+order by aggregate values of table "group_members"
+"""
+input group_members_aggregate_order_by {
+  count: order_by
+  max: group_members_max_order_by
+  min: group_members_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "group_members"
+"""
+input group_members_arr_rel_insert_input {
+  data: [group_members_insert_input!]!
+  on_conflict: group_members_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "group_members". All fields are combined with a logical 'AND'.
+"""
+input group_members_bool_exp {
+  _and: [group_members_bool_exp]
+  _not: group_members_bool_exp
+  _or: [group_members_bool_exp]
+  created_at: timestamptz_comparison_exp
+  group: groups_bool_exp
+  group_id: uuid_comparison_exp
+  id: uuid_comparison_exp
+  role: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  user: users_bool_exp
+  user_id: uuid_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "group_members"
+"""
+enum group_members_constraint {
+  """unique or primary key constraint"""
+  group_members_pkey
+}
+
+"""
+input type for inserting data into table "group_members"
+"""
+input group_members_insert_input {
+  created_at: timestamptz
+  group: groups_obj_rel_insert_input
+  group_id: uuid
+  id: uuid
+  role: String
+  updated_at: timestamptz
+  user: users_obj_rel_insert_input
+  user_id: uuid
+}
+
+"""aggregate max on columns"""
+type group_members_max_fields {
+  created_at: timestamptz
+  group_id: uuid
+  id: uuid
+  role: String
+  updated_at: timestamptz
+  user_id: uuid
+}
+
+"""
+order by max() on columns of table "group_members"
+"""
+input group_members_max_order_by {
+  created_at: order_by
+  group_id: order_by
+  id: order_by
+  role: order_by
+  updated_at: order_by
+  user_id: order_by
+}
+
+"""aggregate min on columns"""
+type group_members_min_fields {
+  created_at: timestamptz
+  group_id: uuid
+  id: uuid
+  role: String
+  updated_at: timestamptz
+  user_id: uuid
+}
+
+"""
+order by min() on columns of table "group_members"
+"""
+input group_members_min_order_by {
+  created_at: order_by
+  group_id: order_by
+  id: order_by
+  role: order_by
+  updated_at: order_by
+  user_id: order_by
+}
+
+"""
+response of any mutation on the table "group_members"
+"""
+type group_members_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [group_members!]!
+}
+
+"""
+input type for inserting object relation for remote table "group_members"
+"""
+input group_members_obj_rel_insert_input {
+  data: group_members_insert_input!
+  on_conflict: group_members_on_conflict
+}
+
+"""
+on conflict condition type for table "group_members"
+"""
+input group_members_on_conflict {
+  constraint: group_members_constraint!
+  update_columns: [group_members_update_column!]!
+  where: group_members_bool_exp
+}
+
+"""
+ordering options when selecting data from "group_members"
+"""
+input group_members_order_by {
+  created_at: order_by
+  group: groups_order_by
+  group_id: order_by
+  id: order_by
+  role: order_by
+  updated_at: order_by
+  user: users_order_by
+  user_id: order_by
+}
+
+"""
+primary key columns input for table: "group_members"
+"""
+input group_members_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "group_members"
+"""
+enum group_members_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  group_id
+
+  """column name"""
+  id
+
+  """column name"""
+  role
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "group_members"
+"""
+input group_members_set_input {
+  created_at: timestamptz
+  group_id: uuid
+  id: uuid
+  role: String
+  updated_at: timestamptz
+  user_id: uuid
+}
+
+"""
+update columns of table "group_members"
+"""
+enum group_members_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  group_id
+
+  """column name"""
+  id
+
+  """column name"""
+  role
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  user_id
+}
+
+"""
+columns and relationships of "groups"
+"""
+type groups {
+  created_at: timestamptz!
+  id: uuid!
+
+  """An array relationship"""
+  memberships(
+    """distinct select on columns"""
+    distinct_on: [group_members_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_members_order_by!]
+
+    """filter the rows returned"""
+    where: group_members_bool_exp
+  ): [group_members!]!
+
+  """An aggregated array relationship"""
+  memberships_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_members_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_members_order_by!]
+
+    """filter the rows returned"""
+    where: group_members_bool_exp
+  ): group_members_aggregate!
+  name: String!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "groups"
+"""
+type groups_aggregate {
+  aggregate: groups_aggregate_fields
+  nodes: [groups!]!
+}
+
+"""
+aggregate fields of "groups"
+"""
+type groups_aggregate_fields {
+  count(columns: [groups_select_column!], distinct: Boolean): Int
+  max: groups_max_fields
+  min: groups_min_fields
+}
+
+"""
+order by aggregate values of table "groups"
+"""
+input groups_aggregate_order_by {
+  count: order_by
+  max: groups_max_order_by
+  min: groups_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "groups"
+"""
+input groups_arr_rel_insert_input {
+  data: [groups_insert_input!]!
+  on_conflict: groups_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "groups". All fields are combined with a logical 'AND'.
+"""
+input groups_bool_exp {
+  _and: [groups_bool_exp]
+  _not: groups_bool_exp
+  _or: [groups_bool_exp]
+  created_at: timestamptz_comparison_exp
+  id: uuid_comparison_exp
+  memberships: group_members_bool_exp
+  name: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "groups"
+"""
+enum groups_constraint {
+  """unique or primary key constraint"""
+  groups_pkey
+}
+
+"""
+input type for inserting data into table "groups"
+"""
+input groups_insert_input {
+  created_at: timestamptz
+  id: uuid
+  memberships: group_members_arr_rel_insert_input
+  name: String
+  updated_at: timestamptz
+}
+
+"""aggregate max on columns"""
+type groups_max_fields {
+  created_at: timestamptz
+  id: uuid
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "groups"
+"""
+input groups_max_order_by {
+  created_at: order_by
+  id: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""aggregate min on columns"""
+type groups_min_fields {
+  created_at: timestamptz
+  id: uuid
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "groups"
+"""
+input groups_min_order_by {
+  created_at: order_by
+  id: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""
+response of any mutation on the table "groups"
+"""
+type groups_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [groups!]!
+}
+
+"""
+input type for inserting object relation for remote table "groups"
+"""
+input groups_obj_rel_insert_input {
+  data: groups_insert_input!
+  on_conflict: groups_on_conflict
+}
+
+"""
+on conflict condition type for table "groups"
+"""
+input groups_on_conflict {
+  constraint: groups_constraint!
+  update_columns: [groups_update_column!]!
+  where: groups_bool_exp
+}
+
+"""
+ordering options when selecting data from "groups"
+"""
+input groups_order_by {
+  created_at: order_by
+  id: order_by
+  memberships_aggregate: group_members_aggregate_order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""
+primary key columns input for table: "groups"
+"""
+input groups_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "groups"
+"""
+enum groups_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "groups"
+"""
+input groups_set_input {
+  created_at: timestamptz
+  id: uuid
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+update columns of table "groups"
+"""
+enum groups_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+
+  """column name"""
+  updated_at
+}
+
+scalar json
+
+"""mutation root"""
+type mutation_root {
+  """
+  delete data from the table: "group_members"
+  """
+  delete_group_members(
+    """filter the rows which have to be deleted"""
+    where: group_members_bool_exp!
+  ): group_members_mutation_response
+
+  """
+  delete single row from the table: "group_members"
+  """
+  delete_group_members_by_pk(id: uuid!): group_members
+
+  """
+  delete data from the table: "groups"
+  """
+  delete_groups(
+    """filter the rows which have to be deleted"""
+    where: groups_bool_exp!
+  ): groups_mutation_response
+
+  """
+  delete single row from the table: "groups"
+  """
+  delete_groups_by_pk(id: uuid!): groups
+
+  """
+  delete data from the table: "things"
+  """
+  delete_things(
+    """filter the rows which have to be deleted"""
+    where: things_bool_exp!
+  ): things_mutation_response
+
+  """
+  delete single row from the table: "things"
+  """
+  delete_things_by_pk(id: uuid!): things
+
+  """
+  delete data from the table: "user_private"
+  """
+  delete_user_private(
+    """filter the rows which have to be deleted"""
+    where: user_private_bool_exp!
+  ): user_private_mutation_response
+
+  """
+  delete data from the table: "users"
+  """
+  delete_users(
+    """filter the rows which have to be deleted"""
+    where: users_bool_exp!
+  ): users_mutation_response
+
+  """
+  delete single row from the table: "users"
+  """
+  delete_users_by_pk(id: uuid!): users
+
+  """
+  delete data from the table: "verification_requests"
+  """
+  delete_verification_requests(
+    """filter the rows which have to be deleted"""
+    where: verification_requests_bool_exp!
+  ): verification_requests_mutation_response
+
+  """
+  delete single row from the table: "verification_requests"
+  """
+  delete_verification_requests_by_pk(id: Int!): verification_requests
+
+  """
+  insert data into the table: "group_members"
+  """
+  insert_group_members(
+    """the rows to be inserted"""
+    objects: [group_members_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: group_members_on_conflict
+  ): group_members_mutation_response
+
+  """
+  insert a single row into the table: "group_members"
+  """
+  insert_group_members_one(
+    """the row to be inserted"""
+    object: group_members_insert_input!
+
+    """on conflict condition"""
+    on_conflict: group_members_on_conflict
+  ): group_members
+
+  """
+  insert data into the table: "groups"
+  """
+  insert_groups(
+    """the rows to be inserted"""
+    objects: [groups_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: groups_on_conflict
+  ): groups_mutation_response
+
+  """
+  insert a single row into the table: "groups"
+  """
+  insert_groups_one(
+    """the row to be inserted"""
+    object: groups_insert_input!
+
+    """on conflict condition"""
+    on_conflict: groups_on_conflict
+  ): groups
+
+  """
+  insert data into the table: "things"
+  """
+  insert_things(
+    """the rows to be inserted"""
+    objects: [things_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: things_on_conflict
+  ): things_mutation_response
+
+  """
+  insert a single row into the table: "things"
+  """
+  insert_things_one(
+    """the row to be inserted"""
+    object: things_insert_input!
+
+    """on conflict condition"""
+    on_conflict: things_on_conflict
+  ): things
+
+  """
+  insert data into the table: "user_private"
+  """
+  insert_user_private(
+    """the rows to be inserted"""
+    objects: [user_private_insert_input!]!
+  ): user_private_mutation_response
+
+  """
+  insert a single row into the table: "user_private"
+  """
+  insert_user_private_one(
+    """the row to be inserted"""
+    object: user_private_insert_input!
+  ): user_private
+
+  """
+  insert data into the table: "users"
+  """
+  insert_users(
+    """the rows to be inserted"""
+    objects: [users_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: users_on_conflict
+  ): users_mutation_response
+
+  """
+  insert a single row into the table: "users"
+  """
+  insert_users_one(
+    """the row to be inserted"""
+    object: users_insert_input!
+
+    """on conflict condition"""
+    on_conflict: users_on_conflict
+  ): users
+
+  """
+  insert data into the table: "verification_requests"
+  """
+  insert_verification_requests(
+    """the rows to be inserted"""
+    objects: [verification_requests_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: verification_requests_on_conflict
+  ): verification_requests_mutation_response
+
+  """
+  insert a single row into the table: "verification_requests"
+  """
+  insert_verification_requests_one(
+    """the row to be inserted"""
+    object: verification_requests_insert_input!
+
+    """on conflict condition"""
+    on_conflict: verification_requests_on_conflict
+  ): verification_requests
+
+  """
+  perform the action: "registerCredentials"
+  """
+  registerCredentials(input: CredentialsInput!): RegistrationResult
+
+  """
+  update data of the table: "group_members"
+  """
+  update_group_members(
+    """sets the columns of the filtered rows to the given values"""
+    _set: group_members_set_input
+
+    """filter the rows which have to be updated"""
+    where: group_members_bool_exp!
+  ): group_members_mutation_response
+
+  """
+  update single row of the table: "group_members"
+  """
+  update_group_members_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: group_members_set_input
+    pk_columns: group_members_pk_columns_input!
+  ): group_members
+
+  """
+  update data of the table: "groups"
+  """
+  update_groups(
+    """sets the columns of the filtered rows to the given values"""
+    _set: groups_set_input
+
+    """filter the rows which have to be updated"""
+    where: groups_bool_exp!
+  ): groups_mutation_response
+
+  """
+  update single row of the table: "groups"
+  """
+  update_groups_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: groups_set_input
+    pk_columns: groups_pk_columns_input!
+  ): groups
+
+  """
+  update data of the table: "things"
+  """
+  update_things(
+    """sets the columns of the filtered rows to the given values"""
+    _set: things_set_input
+
+    """filter the rows which have to be updated"""
+    where: things_bool_exp!
+  ): things_mutation_response
+
+  """
+  update single row of the table: "things"
+  """
+  update_things_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: things_set_input
+    pk_columns: things_pk_columns_input!
+  ): things
+
+  """
+  update data of the table: "user_private"
+  """
+  update_user_private(
+    """sets the columns of the filtered rows to the given values"""
+    _set: user_private_set_input
+
+    """filter the rows which have to be updated"""
+    where: user_private_bool_exp!
+  ): user_private_mutation_response
+
+  """
+  update data of the table: "users"
+  """
+  update_users(
+    """sets the columns of the filtered rows to the given values"""
+    _set: users_set_input
+
+    """filter the rows which have to be updated"""
+    where: users_bool_exp!
+  ): users_mutation_response
+
+  """
+  update single row of the table: "users"
+  """
+  update_users_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: users_set_input
+    pk_columns: users_pk_columns_input!
+  ): users
+
+  """
+  update data of the table: "verification_requests"
+  """
+  update_verification_requests(
+    """increments the integer columns with given value of the filtered values"""
+    _inc: verification_requests_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: verification_requests_set_input
+
+    """filter the rows which have to be updated"""
+    where: verification_requests_bool_exp!
+  ): verification_requests_mutation_response
+
+  """
+  update single row of the table: "verification_requests"
+  """
+  update_verification_requests_by_pk(
+    """increments the integer columns with given value of the filtered values"""
+    _inc: verification_requests_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: verification_requests_set_input
+    pk_columns: verification_requests_pk_columns_input!
+  ): verification_requests
+}
+
+"""column ordering options"""
+enum order_by {
+  """in the ascending order, nulls last"""
+  asc
+
+  """in the ascending order, nulls first"""
+  asc_nulls_first
+
+  """in the ascending order, nulls last"""
+  asc_nulls_last
+
+  """in the descending order, nulls first"""
+  desc
+
+  """in the descending order, nulls first"""
+  desc_nulls_first
+
+  """in the descending order, nulls last"""
+  desc_nulls_last
+}
+
+"""query root"""
+type query_root {
+  """
+  fetch data from the table: "group_members"
+  """
+  group_members(
+    """distinct select on columns"""
+    distinct_on: [group_members_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_members_order_by!]
+
+    """filter the rows returned"""
+    where: group_members_bool_exp
+  ): [group_members!]!
+
+  """
+  fetch aggregated fields from the table: "group_members"
+  """
+  group_members_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_members_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_members_order_by!]
+
+    """filter the rows returned"""
+    where: group_members_bool_exp
+  ): group_members_aggregate!
+
+  """fetch data from the table: "group_members" using primary key columns"""
+  group_members_by_pk(id: uuid!): group_members
+
+  """
+  fetch data from the table: "groups"
+  """
+  groups(
+    """distinct select on columns"""
+    distinct_on: [groups_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [groups_order_by!]
+
+    """filter the rows returned"""
+    where: groups_bool_exp
+  ): [groups!]!
+
+  """
+  fetch aggregated fields from the table: "groups"
+  """
+  groups_aggregate(
+    """distinct select on columns"""
+    distinct_on: [groups_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [groups_order_by!]
+
+    """filter the rows returned"""
+    where: groups_bool_exp
+  ): groups_aggregate!
+
+  """fetch data from the table: "groups" using primary key columns"""
+  groups_by_pk(id: uuid!): groups
+
+  """
+  fetch data from the table: "things"
+  """
+  things(
+    """distinct select on columns"""
+    distinct_on: [things_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [things_order_by!]
+
+    """filter the rows returned"""
+    where: things_bool_exp
+  ): [things!]!
+
+  """
+  fetch aggregated fields from the table: "things"
+  """
+  things_aggregate(
+    """distinct select on columns"""
+    distinct_on: [things_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [things_order_by!]
+
+    """filter the rows returned"""
+    where: things_bool_exp
+  ): things_aggregate!
+
+  """fetch data from the table: "things" using primary key columns"""
+  things_by_pk(id: uuid!): things
+
+  """
+  fetch data from the table: "user_private"
+  """
+  user_private(
+    """distinct select on columns"""
+    distinct_on: [user_private_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_private_order_by!]
+
+    """filter the rows returned"""
+    where: user_private_bool_exp
+  ): [user_private!]!
+
+  """
+  fetch aggregated fields from the table: "user_private"
+  """
+  user_private_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_private_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_private_order_by!]
+
+    """filter the rows returned"""
+    where: user_private_bool_exp
+  ): user_private_aggregate!
+
+  """
+  fetch data from the table: "users"
+  """
+  users(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): [users!]!
+
+  """
+  fetch aggregated fields from the table: "users"
+  """
+  users_aggregate(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): users_aggregate!
+
+  """fetch data from the table: "users" using primary key columns"""
+  users_by_pk(id: uuid!): users
+
+  """
+  fetch data from the table: "verification_requests"
+  """
+  verification_requests(
+    """distinct select on columns"""
+    distinct_on: [verification_requests_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [verification_requests_order_by!]
+
+    """filter the rows returned"""
+    where: verification_requests_bool_exp
+  ): [verification_requests!]!
+
+  """
+  fetch aggregated fields from the table: "verification_requests"
+  """
+  verification_requests_aggregate(
+    """distinct select on columns"""
+    distinct_on: [verification_requests_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [verification_requests_order_by!]
+
+    """filter the rows returned"""
+    where: verification_requests_bool_exp
+  ): verification_requests_aggregate!
+
+  """
+  fetch data from the table: "verification_requests" using primary key columns
+  """
+  verification_requests_by_pk(id: Int!): verification_requests
+}
+
+"""subscription root"""
+type subscription_root {
+  """
+  fetch data from the table: "group_members"
+  """
+  group_members(
+    """distinct select on columns"""
+    distinct_on: [group_members_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_members_order_by!]
+
+    """filter the rows returned"""
+    where: group_members_bool_exp
+  ): [group_members!]!
+
+  """
+  fetch aggregated fields from the table: "group_members"
+  """
+  group_members_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_members_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_members_order_by!]
+
+    """filter the rows returned"""
+    where: group_members_bool_exp
+  ): group_members_aggregate!
+
+  """fetch data from the table: "group_members" using primary key columns"""
+  group_members_by_pk(id: uuid!): group_members
+
+  """
+  fetch data from the table: "groups"
+  """
+  groups(
+    """distinct select on columns"""
+    distinct_on: [groups_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [groups_order_by!]
+
+    """filter the rows returned"""
+    where: groups_bool_exp
+  ): [groups!]!
+
+  """
+  fetch aggregated fields from the table: "groups"
+  """
+  groups_aggregate(
+    """distinct select on columns"""
+    distinct_on: [groups_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [groups_order_by!]
+
+    """filter the rows returned"""
+    where: groups_bool_exp
+  ): groups_aggregate!
+
+  """fetch data from the table: "groups" using primary key columns"""
+  groups_by_pk(id: uuid!): groups
+
+  """
+  fetch data from the table: "things"
+  """
+  things(
+    """distinct select on columns"""
+    distinct_on: [things_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [things_order_by!]
+
+    """filter the rows returned"""
+    where: things_bool_exp
+  ): [things!]!
+
+  """
+  fetch aggregated fields from the table: "things"
+  """
+  things_aggregate(
+    """distinct select on columns"""
+    distinct_on: [things_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [things_order_by!]
+
+    """filter the rows returned"""
+    where: things_bool_exp
+  ): things_aggregate!
+
+  """fetch data from the table: "things" using primary key columns"""
+  things_by_pk(id: uuid!): things
+
+  """
+  fetch data from the table: "user_private"
+  """
+  user_private(
+    """distinct select on columns"""
+    distinct_on: [user_private_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_private_order_by!]
+
+    """filter the rows returned"""
+    where: user_private_bool_exp
+  ): [user_private!]!
+
+  """
+  fetch aggregated fields from the table: "user_private"
+  """
+  user_private_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_private_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_private_order_by!]
+
+    """filter the rows returned"""
+    where: user_private_bool_exp
+  ): user_private_aggregate!
+
+  """
+  fetch data from the table: "users"
+  """
+  users(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): [users!]!
+
+  """
+  fetch aggregated fields from the table: "users"
+  """
+  users_aggregate(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): users_aggregate!
+
+  """fetch data from the table: "users" using primary key columns"""
+  users_by_pk(id: uuid!): users
+
+  """
+  fetch data from the table: "verification_requests"
+  """
+  verification_requests(
+    """distinct select on columns"""
+    distinct_on: [verification_requests_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [verification_requests_order_by!]
+
+    """filter the rows returned"""
+    where: verification_requests_bool_exp
+  ): [verification_requests!]!
+
+  """
+  fetch aggregated fields from the table: "verification_requests"
+  """
+  verification_requests_aggregate(
+    """distinct select on columns"""
+    distinct_on: [verification_requests_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [verification_requests_order_by!]
+
+    """filter the rows returned"""
+    where: verification_requests_bool_exp
+  ): verification_requests_aggregate!
+
+  """
+  fetch data from the table: "verification_requests" using primary key columns
+  """
+  verification_requests_by_pk(id: Int!): verification_requests
+}
+
+"""
+columns and relationships of "things"
+"""
+type things {
+  created_at: timestamptz!
+  id: uuid!
+  name: String!
+
+  """An object relationship"""
+  owner: users!
+  owner_id: uuid!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "things"
+"""
+type things_aggregate {
+  aggregate: things_aggregate_fields
+  nodes: [things!]!
+}
+
+"""
+aggregate fields of "things"
+"""
+type things_aggregate_fields {
+  count(columns: [things_select_column!], distinct: Boolean): Int
+  max: things_max_fields
+  min: things_min_fields
+}
+
+"""
+order by aggregate values of table "things"
+"""
+input things_aggregate_order_by {
+  count: order_by
+  max: things_max_order_by
+  min: things_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "things"
+"""
+input things_arr_rel_insert_input {
+  data: [things_insert_input!]!
+  on_conflict: things_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "things". All fields are combined with a logical 'AND'.
+"""
+input things_bool_exp {
+  _and: [things_bool_exp]
+  _not: things_bool_exp
+  _or: [things_bool_exp]
+  created_at: timestamptz_comparison_exp
+  id: uuid_comparison_exp
+  name: String_comparison_exp
+  owner: users_bool_exp
+  owner_id: uuid_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "things"
+"""
+enum things_constraint {
+  """unique or primary key constraint"""
+  things_pkey
+}
+
+"""
+input type for inserting data into table "things"
+"""
+input things_insert_input {
+  created_at: timestamptz
+  id: uuid
+  name: String
+  owner: users_obj_rel_insert_input
+  owner_id: uuid
+  updated_at: timestamptz
+}
+
+"""aggregate max on columns"""
+type things_max_fields {
+  created_at: timestamptz
+  id: uuid
+  name: String
+  owner_id: uuid
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "things"
+"""
+input things_max_order_by {
+  created_at: order_by
+  id: order_by
+  name: order_by
+  owner_id: order_by
+  updated_at: order_by
+}
+
+"""aggregate min on columns"""
+type things_min_fields {
+  created_at: timestamptz
+  id: uuid
+  name: String
+  owner_id: uuid
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "things"
+"""
+input things_min_order_by {
+  created_at: order_by
+  id: order_by
+  name: order_by
+  owner_id: order_by
+  updated_at: order_by
+}
+
+"""
+response of any mutation on the table "things"
+"""
+type things_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [things!]!
+}
+
+"""
+input type for inserting object relation for remote table "things"
+"""
+input things_obj_rel_insert_input {
+  data: things_insert_input!
+  on_conflict: things_on_conflict
+}
+
+"""
+on conflict condition type for table "things"
+"""
+input things_on_conflict {
+  constraint: things_constraint!
+  update_columns: [things_update_column!]!
+  where: things_bool_exp
+}
+
+"""
+ordering options when selecting data from "things"
+"""
+input things_order_by {
+  created_at: order_by
+  id: order_by
+  name: order_by
+  owner: users_order_by
+  owner_id: order_by
+  updated_at: order_by
+}
+
+"""
+primary key columns input for table: "things"
+"""
+input things_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "things"
+"""
+enum things_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+
+  """column name"""
+  owner_id
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "things"
+"""
+input things_set_input {
+  created_at: timestamptz
+  id: uuid
+  name: String
+  owner_id: uuid
+  updated_at: timestamptz
+}
+
+"""
+update columns of table "things"
+"""
+enum things_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+
+  """column name"""
+  owner_id
+
+  """column name"""
+  updated_at
+}
+
+scalar timestamptz
+
+"""
+expression to compare columns of type timestamptz. All fields are combined with logical 'AND'.
+"""
+input timestamptz_comparison_exp {
+  _eq: timestamptz
+  _gt: timestamptz
+  _gte: timestamptz
+  _in: [timestamptz!]
+  _is_null: Boolean
+  _lt: timestamptz
+  _lte: timestamptz
+  _neq: timestamptz
+  _nin: [timestamptz!]
+}
+
+"""
+columns and relationships of "user_private"
+"""
+type user_private {
+  email: String
+  user_id: uuid
+}
+
+"""
+aggregated selection of "user_private"
+"""
+type user_private_aggregate {
+  aggregate: user_private_aggregate_fields
+  nodes: [user_private!]!
+}
+
+"""
+aggregate fields of "user_private"
+"""
+type user_private_aggregate_fields {
+  count(columns: [user_private_select_column!], distinct: Boolean): Int
+  max: user_private_max_fields
+  min: user_private_min_fields
+}
+
+"""
+order by aggregate values of table "user_private"
+"""
+input user_private_aggregate_order_by {
+  count: order_by
+  max: user_private_max_order_by
+  min: user_private_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "user_private"
+"""
+input user_private_arr_rel_insert_input {
+  data: [user_private_insert_input!]!
+}
+
+"""
+Boolean expression to filter rows from the table "user_private". All fields are combined with a logical 'AND'.
+"""
+input user_private_bool_exp {
+  _and: [user_private_bool_exp]
+  _not: user_private_bool_exp
+  _or: [user_private_bool_exp]
+  email: String_comparison_exp
+  user_id: uuid_comparison_exp
+}
+
+"""
+input type for inserting data into table "user_private"
+"""
+input user_private_insert_input {
+  email: String
+  user_id: uuid
+}
+
+"""aggregate max on columns"""
+type user_private_max_fields {
+  email: String
+  user_id: uuid
+}
+
+"""
+order by max() on columns of table "user_private"
+"""
+input user_private_max_order_by {
+  email: order_by
+  user_id: order_by
+}
+
+"""aggregate min on columns"""
+type user_private_min_fields {
+  email: String
+  user_id: uuid
+}
+
+"""
+order by min() on columns of table "user_private"
+"""
+input user_private_min_order_by {
+  email: order_by
+  user_id: order_by
+}
+
+"""
+response of any mutation on the table "user_private"
+"""
+type user_private_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [user_private!]!
+}
+
+"""
+input type for inserting object relation for remote table "user_private"
+"""
+input user_private_obj_rel_insert_input {
+  data: user_private_insert_input!
+}
+
+"""
+ordering options when selecting data from "user_private"
+"""
+input user_private_order_by {
+  email: order_by
+  user_id: order_by
+}
+
+"""
+select columns of table "user_private"
+"""
+enum user_private_select_column {
+  """column name"""
+  email
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "user_private"
+"""
+input user_private_set_input {
+  email: String
+  user_id: uuid
+}
+
+"""
+columns and relationships of "users"
+"""
+type users {
+  created_at: timestamptz!
+  email: String
+  email_verified: timestamptz
+  id: uuid!
+  image: String
+  last_seen: timestamptz
+
+  """An array relationship"""
+  memberships(
+    """distinct select on columns"""
+    distinct_on: [group_members_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_members_order_by!]
+
+    """filter the rows returned"""
+    where: group_members_bool_exp
+  ): [group_members!]!
+
+  """An aggregated array relationship"""
+  memberships_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_members_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_members_order_by!]
+
+    """filter the rows returned"""
+    where: group_members_bool_exp
+  ): group_members_aggregate!
+  name: String!
+  password_hash: String
+
+  """An object relationship"""
+  private_info: user_private
+
+  """An array relationship"""
+  things(
+    """distinct select on columns"""
+    distinct_on: [things_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [things_order_by!]
+
+    """filter the rows returned"""
+    where: things_bool_exp
+  ): [things!]!
+
+  """An aggregated array relationship"""
+  things_aggregate(
+    """distinct select on columns"""
+    distinct_on: [things_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [things_order_by!]
+
+    """filter the rows returned"""
+    where: things_bool_exp
+  ): things_aggregate!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "users"
+"""
+type users_aggregate {
+  aggregate: users_aggregate_fields
+  nodes: [users!]!
+}
+
+"""
+aggregate fields of "users"
+"""
+type users_aggregate_fields {
+  count(columns: [users_select_column!], distinct: Boolean): Int
+  max: users_max_fields
+  min: users_min_fields
+}
+
+"""
+order by aggregate values of table "users"
+"""
+input users_aggregate_order_by {
+  count: order_by
+  max: users_max_order_by
+  min: users_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "users"
+"""
+input users_arr_rel_insert_input {
+  data: [users_insert_input!]!
+  on_conflict: users_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'.
+"""
+input users_bool_exp {
+  _and: [users_bool_exp]
+  _not: users_bool_exp
+  _or: [users_bool_exp]
+  created_at: timestamptz_comparison_exp
+  email: String_comparison_exp
+  email_verified: timestamptz_comparison_exp
+  id: uuid_comparison_exp
+  image: String_comparison_exp
+  last_seen: timestamptz_comparison_exp
+  memberships: group_members_bool_exp
+  name: String_comparison_exp
+  password_hash: String_comparison_exp
+  private_info: user_private_bool_exp
+  things: things_bool_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "users"
+"""
+enum users_constraint {
+  """unique or primary key constraint"""
+  email
+
+  """unique or primary key constraint"""
+  users_email_key
+
+  """unique or primary key constraint"""
+  users_pkey
+}
+
+"""
+input type for inserting data into table "users"
+"""
+input users_insert_input {
+  created_at: timestamptz
+  email: String
+  email_verified: timestamptz
+  id: uuid
+  image: String
+  last_seen: timestamptz
+  memberships: group_members_arr_rel_insert_input
+  name: String
+  password_hash: String
+  private_info: user_private_obj_rel_insert_input
+  things: things_arr_rel_insert_input
+  updated_at: timestamptz
+}
+
+"""aggregate max on columns"""
+type users_max_fields {
+  created_at: timestamptz
+  email: String
+  email_verified: timestamptz
+  id: uuid
+  image: String
+  last_seen: timestamptz
+  name: String
+  password_hash: String
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "users"
+"""
+input users_max_order_by {
+  created_at: order_by
+  email: order_by
+  email_verified: order_by
+  id: order_by
+  image: order_by
+  last_seen: order_by
+  name: order_by
+  password_hash: order_by
+  updated_at: order_by
+}
+
+"""aggregate min on columns"""
+type users_min_fields {
+  created_at: timestamptz
+  email: String
+  email_verified: timestamptz
+  id: uuid
+  image: String
+  last_seen: timestamptz
+  name: String
+  password_hash: String
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "users"
+"""
+input users_min_order_by {
+  created_at: order_by
+  email: order_by
+  email_verified: order_by
+  id: order_by
+  image: order_by
+  last_seen: order_by
+  name: order_by
+  password_hash: order_by
+  updated_at: order_by
+}
+
+"""
+response of any mutation on the table "users"
+"""
+type users_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [users!]!
+}
+
+"""
+input type for inserting object relation for remote table "users"
+"""
+input users_obj_rel_insert_input {
+  data: users_insert_input!
+  on_conflict: users_on_conflict
+}
+
+"""
+on conflict condition type for table "users"
+"""
+input users_on_conflict {
+  constraint: users_constraint!
+  update_columns: [users_update_column!]!
+  where: users_bool_exp
+}
+
+"""
+ordering options when selecting data from "users"
+"""
+input users_order_by {
+  created_at: order_by
+  email: order_by
+  email_verified: order_by
+  id: order_by
+  image: order_by
+  last_seen: order_by
+  memberships_aggregate: group_members_aggregate_order_by
+  name: order_by
+  password_hash: order_by
+  private_info: user_private_order_by
+  things_aggregate: things_aggregate_order_by
+  updated_at: order_by
+}
+
+"""
+primary key columns input for table: "users"
+"""
+input users_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "users"
+"""
+enum users_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  email
+
+  """column name"""
+  email_verified
+
+  """column name"""
+  id
+
+  """column name"""
+  image
+
+  """column name"""
+  last_seen
+
+  """column name"""
+  name
+
+  """column name"""
+  password_hash
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "users"
+"""
+input users_set_input {
+  created_at: timestamptz
+  email: String
+  email_verified: timestamptz
+  id: uuid
+  image: String
+  last_seen: timestamptz
+  name: String
+  password_hash: String
+  updated_at: timestamptz
+}
+
+"""
+update columns of table "users"
+"""
+enum users_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  email
+
+  """column name"""
+  email_verified
+
+  """column name"""
+  id
+
+  """column name"""
+  image
+
+  """column name"""
+  last_seen
+
+  """column name"""
+  name
+
+  """column name"""
+  password_hash
+
+  """column name"""
+  updated_at
+}
+
+scalar uuid
+
+"""
+expression to compare columns of type uuid. All fields are combined with logical 'AND'.
+"""
+input uuid_comparison_exp {
+  _eq: uuid
+  _gt: uuid
+  _gte: uuid
+  _in: [uuid!]
+  _is_null: Boolean
+  _lt: uuid
+  _lte: uuid
+  _neq: uuid
+  _nin: [uuid!]
+}
+
+"""
+columns and relationships of "verification_requests"
+"""
+type verification_requests {
+  created_at: timestamptz!
+  expires: timestamptz!
+  id: Int!
+  identifier: String!
+  token: String!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "verification_requests"
+"""
+type verification_requests_aggregate {
+  aggregate: verification_requests_aggregate_fields
+  nodes: [verification_requests!]!
+}
+
+"""
+aggregate fields of "verification_requests"
+"""
+type verification_requests_aggregate_fields {
+  avg: verification_requests_avg_fields
+  count(columns: [verification_requests_select_column!], distinct: Boolean): Int
+  max: verification_requests_max_fields
+  min: verification_requests_min_fields
+  stddev: verification_requests_stddev_fields
+  stddev_pop: verification_requests_stddev_pop_fields
+  stddev_samp: verification_requests_stddev_samp_fields
+  sum: verification_requests_sum_fields
+  var_pop: verification_requests_var_pop_fields
+  var_samp: verification_requests_var_samp_fields
+  variance: verification_requests_variance_fields
+}
+
+"""
+order by aggregate values of table "verification_requests"
+"""
+input verification_requests_aggregate_order_by {
+  avg: verification_requests_avg_order_by
+  count: order_by
+  max: verification_requests_max_order_by
+  min: verification_requests_min_order_by
+  stddev: verification_requests_stddev_order_by
+  stddev_pop: verification_requests_stddev_pop_order_by
+  stddev_samp: verification_requests_stddev_samp_order_by
+  sum: verification_requests_sum_order_by
+  var_pop: verification_requests_var_pop_order_by
+  var_samp: verification_requests_var_samp_order_by
+  variance: verification_requests_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "verification_requests"
+"""
+input verification_requests_arr_rel_insert_input {
+  data: [verification_requests_insert_input!]!
+  on_conflict: verification_requests_on_conflict
+}
+
+"""aggregate avg on columns"""
+type verification_requests_avg_fields {
+  id: Float
+}
+
+"""
+order by avg() on columns of table "verification_requests"
+"""
+input verification_requests_avg_order_by {
+  id: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "verification_requests". All fields are combined with a logical 'AND'.
+"""
+input verification_requests_bool_exp {
+  _and: [verification_requests_bool_exp]
+  _not: verification_requests_bool_exp
+  _or: [verification_requests_bool_exp]
+  created_at: timestamptz_comparison_exp
+  expires: timestamptz_comparison_exp
+  id: Int_comparison_exp
+  identifier: String_comparison_exp
+  token: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "verification_requests"
+"""
+enum verification_requests_constraint {
+  """unique or primary key constraint"""
+  token
+
+  """unique or primary key constraint"""
+  verification_requests_pkey
+}
+
+"""
+input type for incrementing integer column in table "verification_requests"
+"""
+input verification_requests_inc_input {
+  id: Int
+}
+
+"""
+input type for inserting data into table "verification_requests"
+"""
+input verification_requests_insert_input {
+  created_at: timestamptz
+  expires: timestamptz
+  id: Int
+  identifier: String
+  token: String
+  updated_at: timestamptz
+}
+
+"""aggregate max on columns"""
+type verification_requests_max_fields {
+  created_at: timestamptz
+  expires: timestamptz
+  id: Int
+  identifier: String
+  token: String
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "verification_requests"
+"""
+input verification_requests_max_order_by {
+  created_at: order_by
+  expires: order_by
+  id: order_by
+  identifier: order_by
+  token: order_by
+  updated_at: order_by
+}
+
+"""aggregate min on columns"""
+type verification_requests_min_fields {
+  created_at: timestamptz
+  expires: timestamptz
+  id: Int
+  identifier: String
+  token: String
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "verification_requests"
+"""
+input verification_requests_min_order_by {
+  created_at: order_by
+  expires: order_by
+  id: order_by
+  identifier: order_by
+  token: order_by
+  updated_at: order_by
+}
+
+"""
+response of any mutation on the table "verification_requests"
+"""
+type verification_requests_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [verification_requests!]!
+}
+
+"""
+input type for inserting object relation for remote table "verification_requests"
+"""
+input verification_requests_obj_rel_insert_input {
+  data: verification_requests_insert_input!
+  on_conflict: verification_requests_on_conflict
+}
+
+"""
+on conflict condition type for table "verification_requests"
+"""
+input verification_requests_on_conflict {
+  constraint: verification_requests_constraint!
+  update_columns: [verification_requests_update_column!]!
+  where: verification_requests_bool_exp
+}
+
+"""
+ordering options when selecting data from "verification_requests"
+"""
+input verification_requests_order_by {
+  created_at: order_by
+  expires: order_by
+  id: order_by
+  identifier: order_by
+  token: order_by
+  updated_at: order_by
+}
+
+"""
+primary key columns input for table: "verification_requests"
+"""
+input verification_requests_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "verification_requests"
+"""
+enum verification_requests_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  expires
+
+  """column name"""
+  id
+
+  """column name"""
+  identifier
+
+  """column name"""
+  token
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "verification_requests"
+"""
+input verification_requests_set_input {
+  created_at: timestamptz
+  expires: timestamptz
+  id: Int
+  identifier: String
+  token: String
+  updated_at: timestamptz
+}
+
+"""aggregate stddev on columns"""
+type verification_requests_stddev_fields {
+  id: Float
+}
+
+"""
+order by stddev() on columns of table "verification_requests"
+"""
+input verification_requests_stddev_order_by {
+  id: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type verification_requests_stddev_pop_fields {
+  id: Float
+}
+
+"""
+order by stddev_pop() on columns of table "verification_requests"
+"""
+input verification_requests_stddev_pop_order_by {
+  id: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type verification_requests_stddev_samp_fields {
+  id: Float
+}
+
+"""
+order by stddev_samp() on columns of table "verification_requests"
+"""
+input verification_requests_stddev_samp_order_by {
+  id: order_by
+}
+
+"""aggregate sum on columns"""
+type verification_requests_sum_fields {
+  id: Int
+}
+
+"""
+order by sum() on columns of table "verification_requests"
+"""
+input verification_requests_sum_order_by {
+  id: order_by
+}
+
+"""
+update columns of table "verification_requests"
+"""
+enum verification_requests_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  expires
+
+  """column name"""
+  id
+
+  """column name"""
+  identifier
+
+  """column name"""
+  token
+
+  """column name"""
+  updated_at
+}
+
+"""aggregate var_pop on columns"""
+type verification_requests_var_pop_fields {
+  id: Float
+}
+
+"""
+order by var_pop() on columns of table "verification_requests"
+"""
+input verification_requests_var_pop_order_by {
+  id: order_by
+}
+
+"""aggregate var_samp on columns"""
+type verification_requests_var_samp_fields {
+  id: Float
+}
+
+"""
+order by var_samp() on columns of table "verification_requests"
+"""
+input verification_requests_var_samp_order_by {
+  id: order_by
+}
+
+"""aggregate variance on columns"""
+type verification_requests_variance_fields {
+  id: Float
+}
+
+"""
+order by variance() on columns of table "verification_requests"
+"""
+input verification_requests_variance_order_by {
+  id: order_by
+}

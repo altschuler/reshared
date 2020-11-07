@@ -1,28 +1,32 @@
 ﻿import { useThingListQuery } from '../../generated/graphql';
-import { useAuth } from '../../utils/nhost';
 import { ThingCard } from '../../components/display';
+import { createUseStyles } from 'react-jss';
+import { Spin } from 'antd';
+
+const useStyles = createUseStyles((theme) => ({
+    root: {
+        display: 'flex',
+    },
+    thing: {
+        marginRight: '2em',
+    },
+}));
 
 export const SharableList = () => {
-    const auth = useAuth();
+    const classes = useStyles();
 
     const { data, loading, error } = useThingListQuery();
 
     const things = data?.things || [];
 
     return (
-        <div>
-            {things.map((thing) => (
-                <ThingCard className="thing" key={thing.id} thing={thing} />
-            ))}
-            <style jsx>{`
-                div {
-                    display: flex;
-                }
-                div :global(.thing) {
-                    margin-right: 2em;
-                }
-            `}</style>
-        </div>
+        <Spin spinning={loading}>
+            <div className={classes.root}>
+                {things.map((thing) => (
+                    <ThingCard className={classes.thing} key={thing.id} thing={thing} />
+                ))}
+            </div>
+        </Spin>
     );
 };
 

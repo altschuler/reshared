@@ -1,18 +1,29 @@
 ﻿overwrite: true
 schema:
-  - ${NEXT_PUBLIC_GRAPHQL_ENDPOINT}:
-      headers:
-        X-HASURA-ADMIN-SECRET: ${HASURA_ADMIN_SECRET}
-documents:
-  - ./src/**/*.{graphql,ts,tsx}
+  - ${NEXT_PUBLIC_GRAPHQL_ENDPOINT}
 generates:
-  ./graphql.schema.json:
-    plugins:
-      - introspection
-  ./schema.graphql:
+  ./src/generated/schema.graphql:
     plugins:
       - schema-ast
+  ./src/generated/server-queries.ts:
+    documents:
+      - ./src/server/queries/*.{graphql,ts,tsx}
+    schema:
+      - ${NEXT_PUBLIC_GRAPHQL_ENDPOINT}
+    plugins:
+      - typescript
+      - typescript-operations
+      - typescript-resolvers
+      - typed-document-node
+      - fragment-matcher
   ./src/generated/graphql.tsx:
+    schema:
+      - ${NEXT_PUBLIC_GRAPHQL_ENDPOINT}
+    documents:
+      - ./src/**/*.{graphql,ts,tsx}
+      - '!./src/generated/**'
+      - '!./src/pages/api/**'
+      - '!./src/server/**'
     plugins:
       - typescript
       - typescript-operations

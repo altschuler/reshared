@@ -1,12 +1,19 @@
 ﻿fragment UserCard on users {
     id
-    display_name
-    avatar_url
+    name
+    image
 }
 
 fragment UserDetail on users {
     ...UserCard
     created_at
+}
+
+fragment UserPrivateDetail on users {
+    ...UserDetail
+    private_info {
+        email
+    }
 }
 
 query UserList {
@@ -15,8 +22,16 @@ query UserList {
     }
 }
 
-query UserDetails($id: uuid!) {
+query UserPrivateDetails($id: uuid!) {
     users_by_pk(id: $id) {
-        ...UserDetail
+        ...UserPrivateDetail
+    }
+}
+
+mutation RegisterUser($input: CredentialsInput!) {
+    registerCredentials(input: $input) {
+        user {
+            ...UserDetail
+        }
     }
 }

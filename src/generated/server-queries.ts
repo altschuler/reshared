@@ -1,0 +1,3022 @@
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
+import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+export type Maybe<T> = T | null;
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
+/** All built-in and custom scalars, mapped to their actual values */
+export type Scalars = {
+  ID: string;
+  String: string;
+  Boolean: boolean;
+  Int: number;
+  Float: number;
+  json: any;
+  timestamptz: any;
+  uuid: any;
+};
+
+export type CredentialsInput = {
+  email?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  password: Scalars['String'];
+};
+
+/** expression to compare columns of type Int. All fields are combined with logical 'AND'. */
+export type Int_Comparison_Exp = {
+  _eq?: Maybe<Scalars['Int']>;
+  _gt?: Maybe<Scalars['Int']>;
+  _gte?: Maybe<Scalars['Int']>;
+  _in?: Maybe<Array<Scalars['Int']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['Int']>;
+  _lte?: Maybe<Scalars['Int']>;
+  _neq?: Maybe<Scalars['Int']>;
+  _nin?: Maybe<Array<Scalars['Int']>>;
+};
+
+export type RegistrationResult = {
+  __typename?: 'RegistrationResult';
+  user?: Maybe<Users>;
+  user_id: Scalars['uuid'];
+};
+
+/** expression to compare columns of type String. All fields are combined with logical 'AND'. */
+export type String_Comparison_Exp = {
+  _eq?: Maybe<Scalars['String']>;
+  _gt?: Maybe<Scalars['String']>;
+  _gte?: Maybe<Scalars['String']>;
+  _ilike?: Maybe<Scalars['String']>;
+  _in?: Maybe<Array<Scalars['String']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _like?: Maybe<Scalars['String']>;
+  _lt?: Maybe<Scalars['String']>;
+  _lte?: Maybe<Scalars['String']>;
+  _neq?: Maybe<Scalars['String']>;
+  _nilike?: Maybe<Scalars['String']>;
+  _nin?: Maybe<Array<Scalars['String']>>;
+  _nlike?: Maybe<Scalars['String']>;
+  _nsimilar?: Maybe<Scalars['String']>;
+  _similar?: Maybe<Scalars['String']>;
+};
+
+/** columns and relationships of "group_members" */
+export type Group_Members = {
+  __typename?: 'group_members';
+  created_at: Scalars['timestamptz'];
+  /** An object relationship */
+  group: Groups;
+  group_id: Scalars['uuid'];
+  id: Scalars['uuid'];
+  role: Scalars['String'];
+  updated_at: Scalars['timestamptz'];
+  /** An object relationship */
+  user: Users;
+  user_id: Scalars['uuid'];
+};
+
+/** aggregated selection of "group_members" */
+export type Group_Members_Aggregate = {
+  __typename?: 'group_members_aggregate';
+  aggregate?: Maybe<Group_Members_Aggregate_Fields>;
+  nodes: Array<Group_Members>;
+};
+
+/** aggregate fields of "group_members" */
+export type Group_Members_Aggregate_Fields = {
+  __typename?: 'group_members_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Group_Members_Max_Fields>;
+  min?: Maybe<Group_Members_Min_Fields>;
+};
+
+
+/** aggregate fields of "group_members" */
+export type Group_Members_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Group_Members_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "group_members" */
+export type Group_Members_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Group_Members_Max_Order_By>;
+  min?: Maybe<Group_Members_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "group_members" */
+export type Group_Members_Arr_Rel_Insert_Input = {
+  data: Array<Group_Members_Insert_Input>;
+  on_conflict?: Maybe<Group_Members_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "group_members". All fields are combined with a logical 'AND'. */
+export type Group_Members_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Group_Members_Bool_Exp>>>;
+  _not?: Maybe<Group_Members_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Group_Members_Bool_Exp>>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  group?: Maybe<Groups_Bool_Exp>;
+  group_id?: Maybe<Uuid_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  role?: Maybe<String_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+  user?: Maybe<Users_Bool_Exp>;
+  user_id?: Maybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "group_members" */
+export enum Group_Members_Constraint {
+  /** unique or primary key constraint */
+  GroupMembersPkey = 'group_members_pkey'
+}
+
+/** input type for inserting data into table "group_members" */
+export type Group_Members_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group?: Maybe<Groups_Obj_Rel_Insert_Input>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  role?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user?: Maybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type Group_Members_Max_Fields = {
+  __typename?: 'group_members_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  role?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "group_members" */
+export type Group_Members_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  role?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Group_Members_Min_Fields = {
+  __typename?: 'group_members_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  role?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "group_members" */
+export type Group_Members_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  role?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "group_members" */
+export type Group_Members_Mutation_Response = {
+  __typename?: 'group_members_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Group_Members>;
+};
+
+/** input type for inserting object relation for remote table "group_members" */
+export type Group_Members_Obj_Rel_Insert_Input = {
+  data: Group_Members_Insert_Input;
+  on_conflict?: Maybe<Group_Members_On_Conflict>;
+};
+
+/** on conflict condition type for table "group_members" */
+export type Group_Members_On_Conflict = {
+  constraint: Group_Members_Constraint;
+  update_columns: Array<Group_Members_Update_Column>;
+  where?: Maybe<Group_Members_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "group_members" */
+export type Group_Members_Order_By = {
+  created_at?: Maybe<Order_By>;
+  group?: Maybe<Groups_Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  role?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user?: Maybe<Users_Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "group_members" */
+export type Group_Members_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "group_members" */
+export enum Group_Members_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  GroupId = 'group_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Role = 'role',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "group_members" */
+export type Group_Members_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  role?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** update columns of table "group_members" */
+export enum Group_Members_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  GroupId = 'group_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Role = 'role',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** columns and relationships of "groups" */
+export type Groups = {
+  __typename?: 'groups';
+  created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  /** An array relationship */
+  memberships: Array<Group_Members>;
+  /** An aggregated array relationship */
+  memberships_aggregate: Group_Members_Aggregate;
+  name: Scalars['String'];
+  updated_at: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "groups" */
+export type GroupsMembershipsArgs = {
+  distinct_on?: Maybe<Array<Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Members_Order_By>>;
+  where?: Maybe<Group_Members_Bool_Exp>;
+};
+
+
+/** columns and relationships of "groups" */
+export type GroupsMemberships_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Members_Order_By>>;
+  where?: Maybe<Group_Members_Bool_Exp>;
+};
+
+/** aggregated selection of "groups" */
+export type Groups_Aggregate = {
+  __typename?: 'groups_aggregate';
+  aggregate?: Maybe<Groups_Aggregate_Fields>;
+  nodes: Array<Groups>;
+};
+
+/** aggregate fields of "groups" */
+export type Groups_Aggregate_Fields = {
+  __typename?: 'groups_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Groups_Max_Fields>;
+  min?: Maybe<Groups_Min_Fields>;
+};
+
+
+/** aggregate fields of "groups" */
+export type Groups_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Groups_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "groups" */
+export type Groups_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Groups_Max_Order_By>;
+  min?: Maybe<Groups_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "groups" */
+export type Groups_Arr_Rel_Insert_Input = {
+  data: Array<Groups_Insert_Input>;
+  on_conflict?: Maybe<Groups_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "groups". All fields are combined with a logical 'AND'. */
+export type Groups_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Groups_Bool_Exp>>>;
+  _not?: Maybe<Groups_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Groups_Bool_Exp>>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  memberships?: Maybe<Group_Members_Bool_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "groups" */
+export enum Groups_Constraint {
+  /** unique or primary key constraint */
+  GroupsPkey = 'groups_pkey'
+}
+
+/** input type for inserting data into table "groups" */
+export type Groups_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  memberships?: Maybe<Group_Members_Arr_Rel_Insert_Input>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Groups_Max_Fields = {
+  __typename?: 'groups_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "groups" */
+export type Groups_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Groups_Min_Fields = {
+  __typename?: 'groups_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "groups" */
+export type Groups_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "groups" */
+export type Groups_Mutation_Response = {
+  __typename?: 'groups_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Groups>;
+};
+
+/** input type for inserting object relation for remote table "groups" */
+export type Groups_Obj_Rel_Insert_Input = {
+  data: Groups_Insert_Input;
+  on_conflict?: Maybe<Groups_On_Conflict>;
+};
+
+/** on conflict condition type for table "groups" */
+export type Groups_On_Conflict = {
+  constraint: Groups_Constraint;
+  update_columns: Array<Groups_Update_Column>;
+  where?: Maybe<Groups_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "groups" */
+export type Groups_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  memberships_aggregate?: Maybe<Group_Members_Aggregate_Order_By>;
+  name?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "groups" */
+export type Groups_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "groups" */
+export enum Groups_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "groups" */
+export type Groups_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "groups" */
+export enum Groups_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+
+/** mutation root */
+export type Mutation_Root = {
+  __typename?: 'mutation_root';
+  /** delete data from the table: "group_members" */
+  delete_group_members?: Maybe<Group_Members_Mutation_Response>;
+  /** delete single row from the table: "group_members" */
+  delete_group_members_by_pk?: Maybe<Group_Members>;
+  /** delete data from the table: "groups" */
+  delete_groups?: Maybe<Groups_Mutation_Response>;
+  /** delete single row from the table: "groups" */
+  delete_groups_by_pk?: Maybe<Groups>;
+  /** delete data from the table: "things" */
+  delete_things?: Maybe<Things_Mutation_Response>;
+  /** delete single row from the table: "things" */
+  delete_things_by_pk?: Maybe<Things>;
+  /** delete data from the table: "user_private" */
+  delete_user_private?: Maybe<User_Private_Mutation_Response>;
+  /** delete data from the table: "users" */
+  delete_users?: Maybe<Users_Mutation_Response>;
+  /** delete single row from the table: "users" */
+  delete_users_by_pk?: Maybe<Users>;
+  /** delete data from the table: "verification_requests" */
+  delete_verification_requests?: Maybe<Verification_Requests_Mutation_Response>;
+  /** delete single row from the table: "verification_requests" */
+  delete_verification_requests_by_pk?: Maybe<Verification_Requests>;
+  /** insert data into the table: "group_members" */
+  insert_group_members?: Maybe<Group_Members_Mutation_Response>;
+  /** insert a single row into the table: "group_members" */
+  insert_group_members_one?: Maybe<Group_Members>;
+  /** insert data into the table: "groups" */
+  insert_groups?: Maybe<Groups_Mutation_Response>;
+  /** insert a single row into the table: "groups" */
+  insert_groups_one?: Maybe<Groups>;
+  /** insert data into the table: "things" */
+  insert_things?: Maybe<Things_Mutation_Response>;
+  /** insert a single row into the table: "things" */
+  insert_things_one?: Maybe<Things>;
+  /** insert data into the table: "user_private" */
+  insert_user_private?: Maybe<User_Private_Mutation_Response>;
+  /** insert a single row into the table: "user_private" */
+  insert_user_private_one?: Maybe<User_Private>;
+  /** insert data into the table: "users" */
+  insert_users?: Maybe<Users_Mutation_Response>;
+  /** insert a single row into the table: "users" */
+  insert_users_one?: Maybe<Users>;
+  /** insert data into the table: "verification_requests" */
+  insert_verification_requests?: Maybe<Verification_Requests_Mutation_Response>;
+  /** insert a single row into the table: "verification_requests" */
+  insert_verification_requests_one?: Maybe<Verification_Requests>;
+  /** perform the action: "registerCredentials" */
+  registerCredentials?: Maybe<RegistrationResult>;
+  /** update data of the table: "group_members" */
+  update_group_members?: Maybe<Group_Members_Mutation_Response>;
+  /** update single row of the table: "group_members" */
+  update_group_members_by_pk?: Maybe<Group_Members>;
+  /** update data of the table: "groups" */
+  update_groups?: Maybe<Groups_Mutation_Response>;
+  /** update single row of the table: "groups" */
+  update_groups_by_pk?: Maybe<Groups>;
+  /** update data of the table: "things" */
+  update_things?: Maybe<Things_Mutation_Response>;
+  /** update single row of the table: "things" */
+  update_things_by_pk?: Maybe<Things>;
+  /** update data of the table: "user_private" */
+  update_user_private?: Maybe<User_Private_Mutation_Response>;
+  /** update data of the table: "users" */
+  update_users?: Maybe<Users_Mutation_Response>;
+  /** update single row of the table: "users" */
+  update_users_by_pk?: Maybe<Users>;
+  /** update data of the table: "verification_requests" */
+  update_verification_requests?: Maybe<Verification_Requests_Mutation_Response>;
+  /** update single row of the table: "verification_requests" */
+  update_verification_requests_by_pk?: Maybe<Verification_Requests>;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_MembersArgs = {
+  where: Group_Members_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_Members_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_GroupsArgs = {
+  where: Groups_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Groups_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_ThingsArgs = {
+  where: Things_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Things_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_User_PrivateArgs = {
+  where: User_Private_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_UsersArgs = {
+  where: Users_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Users_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Verification_RequestsArgs = {
+  where: Verification_Requests_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Verification_Requests_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Group_MembersArgs = {
+  objects: Array<Group_Members_Insert_Input>;
+  on_conflict?: Maybe<Group_Members_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Group_Members_OneArgs = {
+  object: Group_Members_Insert_Input;
+  on_conflict?: Maybe<Group_Members_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_GroupsArgs = {
+  objects: Array<Groups_Insert_Input>;
+  on_conflict?: Maybe<Groups_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Groups_OneArgs = {
+  object: Groups_Insert_Input;
+  on_conflict?: Maybe<Groups_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_ThingsArgs = {
+  objects: Array<Things_Insert_Input>;
+  on_conflict?: Maybe<Things_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Things_OneArgs = {
+  object: Things_Insert_Input;
+  on_conflict?: Maybe<Things_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_User_PrivateArgs = {
+  objects: Array<User_Private_Insert_Input>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_User_Private_OneArgs = {
+  object: User_Private_Insert_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_UsersArgs = {
+  objects: Array<Users_Insert_Input>;
+  on_conflict?: Maybe<Users_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Users_OneArgs = {
+  object: Users_Insert_Input;
+  on_conflict?: Maybe<Users_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Verification_RequestsArgs = {
+  objects: Array<Verification_Requests_Insert_Input>;
+  on_conflict?: Maybe<Verification_Requests_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Verification_Requests_OneArgs = {
+  object: Verification_Requests_Insert_Input;
+  on_conflict?: Maybe<Verification_Requests_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootRegisterCredentialsArgs = {
+  input: CredentialsInput;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_MembersArgs = {
+  _set?: Maybe<Group_Members_Set_Input>;
+  where: Group_Members_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_Members_By_PkArgs = {
+  _set?: Maybe<Group_Members_Set_Input>;
+  pk_columns: Group_Members_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_GroupsArgs = {
+  _set?: Maybe<Groups_Set_Input>;
+  where: Groups_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Groups_By_PkArgs = {
+  _set?: Maybe<Groups_Set_Input>;
+  pk_columns: Groups_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_ThingsArgs = {
+  _set?: Maybe<Things_Set_Input>;
+  where: Things_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Things_By_PkArgs = {
+  _set?: Maybe<Things_Set_Input>;
+  pk_columns: Things_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_PrivateArgs = {
+  _set?: Maybe<User_Private_Set_Input>;
+  where: User_Private_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_UsersArgs = {
+  _set?: Maybe<Users_Set_Input>;
+  where: Users_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Users_By_PkArgs = {
+  _set?: Maybe<Users_Set_Input>;
+  pk_columns: Users_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Verification_RequestsArgs = {
+  _inc?: Maybe<Verification_Requests_Inc_Input>;
+  _set?: Maybe<Verification_Requests_Set_Input>;
+  where: Verification_Requests_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Verification_Requests_By_PkArgs = {
+  _inc?: Maybe<Verification_Requests_Inc_Input>;
+  _set?: Maybe<Verification_Requests_Set_Input>;
+  pk_columns: Verification_Requests_Pk_Columns_Input;
+};
+
+/** column ordering options */
+export enum Order_By {
+  /** in the ascending order, nulls last */
+  Asc = 'asc',
+  /** in the ascending order, nulls first */
+  AscNullsFirst = 'asc_nulls_first',
+  /** in the ascending order, nulls last */
+  AscNullsLast = 'asc_nulls_last',
+  /** in the descending order, nulls first */
+  Desc = 'desc',
+  /** in the descending order, nulls first */
+  DescNullsFirst = 'desc_nulls_first',
+  /** in the descending order, nulls last */
+  DescNullsLast = 'desc_nulls_last'
+}
+
+/** query root */
+export type Query_Root = {
+  __typename?: 'query_root';
+  /** fetch data from the table: "group_members" */
+  group_members: Array<Group_Members>;
+  /** fetch aggregated fields from the table: "group_members" */
+  group_members_aggregate: Group_Members_Aggregate;
+  /** fetch data from the table: "group_members" using primary key columns */
+  group_members_by_pk?: Maybe<Group_Members>;
+  /** fetch data from the table: "groups" */
+  groups: Array<Groups>;
+  /** fetch aggregated fields from the table: "groups" */
+  groups_aggregate: Groups_Aggregate;
+  /** fetch data from the table: "groups" using primary key columns */
+  groups_by_pk?: Maybe<Groups>;
+  /** fetch data from the table: "things" */
+  things: Array<Things>;
+  /** fetch aggregated fields from the table: "things" */
+  things_aggregate: Things_Aggregate;
+  /** fetch data from the table: "things" using primary key columns */
+  things_by_pk?: Maybe<Things>;
+  /** fetch data from the table: "user_private" */
+  user_private: Array<User_Private>;
+  /** fetch aggregated fields from the table: "user_private" */
+  user_private_aggregate: User_Private_Aggregate;
+  /** fetch data from the table: "users" */
+  users: Array<Users>;
+  /** fetch aggregated fields from the table: "users" */
+  users_aggregate: Users_Aggregate;
+  /** fetch data from the table: "users" using primary key columns */
+  users_by_pk?: Maybe<Users>;
+  /** fetch data from the table: "verification_requests" */
+  verification_requests: Array<Verification_Requests>;
+  /** fetch aggregated fields from the table: "verification_requests" */
+  verification_requests_aggregate: Verification_Requests_Aggregate;
+  /** fetch data from the table: "verification_requests" using primary key columns */
+  verification_requests_by_pk?: Maybe<Verification_Requests>;
+};
+
+
+/** query root */
+export type Query_RootGroup_MembersArgs = {
+  distinct_on?: Maybe<Array<Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Members_Order_By>>;
+  where?: Maybe<Group_Members_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootGroup_Members_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Members_Order_By>>;
+  where?: Maybe<Group_Members_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootGroup_Members_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** query root */
+export type Query_RootGroupsArgs = {
+  distinct_on?: Maybe<Array<Groups_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Groups_Order_By>>;
+  where?: Maybe<Groups_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootGroups_AggregateArgs = {
+  distinct_on?: Maybe<Array<Groups_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Groups_Order_By>>;
+  where?: Maybe<Groups_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootGroups_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** query root */
+export type Query_RootThingsArgs = {
+  distinct_on?: Maybe<Array<Things_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Things_Order_By>>;
+  where?: Maybe<Things_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootThings_AggregateArgs = {
+  distinct_on?: Maybe<Array<Things_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Things_Order_By>>;
+  where?: Maybe<Things_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootThings_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** query root */
+export type Query_RootUser_PrivateArgs = {
+  distinct_on?: Maybe<Array<User_Private_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Private_Order_By>>;
+  where?: Maybe<User_Private_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootUser_Private_AggregateArgs = {
+  distinct_on?: Maybe<Array<User_Private_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Private_Order_By>>;
+  where?: Maybe<User_Private_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootUsersArgs = {
+  distinct_on?: Maybe<Array<Users_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Order_By>>;
+  where?: Maybe<Users_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootUsers_AggregateArgs = {
+  distinct_on?: Maybe<Array<Users_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Order_By>>;
+  where?: Maybe<Users_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootUsers_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** query root */
+export type Query_RootVerification_RequestsArgs = {
+  distinct_on?: Maybe<Array<Verification_Requests_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Verification_Requests_Order_By>>;
+  where?: Maybe<Verification_Requests_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootVerification_Requests_AggregateArgs = {
+  distinct_on?: Maybe<Array<Verification_Requests_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Verification_Requests_Order_By>>;
+  where?: Maybe<Verification_Requests_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootVerification_Requests_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+/** subscription root */
+export type Subscription_Root = {
+  __typename?: 'subscription_root';
+  /** fetch data from the table: "group_members" */
+  group_members: Array<Group_Members>;
+  /** fetch aggregated fields from the table: "group_members" */
+  group_members_aggregate: Group_Members_Aggregate;
+  /** fetch data from the table: "group_members" using primary key columns */
+  group_members_by_pk?: Maybe<Group_Members>;
+  /** fetch data from the table: "groups" */
+  groups: Array<Groups>;
+  /** fetch aggregated fields from the table: "groups" */
+  groups_aggregate: Groups_Aggregate;
+  /** fetch data from the table: "groups" using primary key columns */
+  groups_by_pk?: Maybe<Groups>;
+  /** fetch data from the table: "things" */
+  things: Array<Things>;
+  /** fetch aggregated fields from the table: "things" */
+  things_aggregate: Things_Aggregate;
+  /** fetch data from the table: "things" using primary key columns */
+  things_by_pk?: Maybe<Things>;
+  /** fetch data from the table: "user_private" */
+  user_private: Array<User_Private>;
+  /** fetch aggregated fields from the table: "user_private" */
+  user_private_aggregate: User_Private_Aggregate;
+  /** fetch data from the table: "users" */
+  users: Array<Users>;
+  /** fetch aggregated fields from the table: "users" */
+  users_aggregate: Users_Aggregate;
+  /** fetch data from the table: "users" using primary key columns */
+  users_by_pk?: Maybe<Users>;
+  /** fetch data from the table: "verification_requests" */
+  verification_requests: Array<Verification_Requests>;
+  /** fetch aggregated fields from the table: "verification_requests" */
+  verification_requests_aggregate: Verification_Requests_Aggregate;
+  /** fetch data from the table: "verification_requests" using primary key columns */
+  verification_requests_by_pk?: Maybe<Verification_Requests>;
+};
+
+
+/** subscription root */
+export type Subscription_RootGroup_MembersArgs = {
+  distinct_on?: Maybe<Array<Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Members_Order_By>>;
+  where?: Maybe<Group_Members_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootGroup_Members_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Members_Order_By>>;
+  where?: Maybe<Group_Members_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootGroup_Members_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** subscription root */
+export type Subscription_RootGroupsArgs = {
+  distinct_on?: Maybe<Array<Groups_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Groups_Order_By>>;
+  where?: Maybe<Groups_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootGroups_AggregateArgs = {
+  distinct_on?: Maybe<Array<Groups_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Groups_Order_By>>;
+  where?: Maybe<Groups_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootGroups_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** subscription root */
+export type Subscription_RootThingsArgs = {
+  distinct_on?: Maybe<Array<Things_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Things_Order_By>>;
+  where?: Maybe<Things_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootThings_AggregateArgs = {
+  distinct_on?: Maybe<Array<Things_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Things_Order_By>>;
+  where?: Maybe<Things_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootThings_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** subscription root */
+export type Subscription_RootUser_PrivateArgs = {
+  distinct_on?: Maybe<Array<User_Private_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Private_Order_By>>;
+  where?: Maybe<User_Private_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootUser_Private_AggregateArgs = {
+  distinct_on?: Maybe<Array<User_Private_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<User_Private_Order_By>>;
+  where?: Maybe<User_Private_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootUsersArgs = {
+  distinct_on?: Maybe<Array<Users_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Order_By>>;
+  where?: Maybe<Users_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootUsers_AggregateArgs = {
+  distinct_on?: Maybe<Array<Users_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Order_By>>;
+  where?: Maybe<Users_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootUsers_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** subscription root */
+export type Subscription_RootVerification_RequestsArgs = {
+  distinct_on?: Maybe<Array<Verification_Requests_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Verification_Requests_Order_By>>;
+  where?: Maybe<Verification_Requests_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootVerification_Requests_AggregateArgs = {
+  distinct_on?: Maybe<Array<Verification_Requests_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Verification_Requests_Order_By>>;
+  where?: Maybe<Verification_Requests_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootVerification_Requests_By_PkArgs = {
+  id: Scalars['Int'];
+};
+
+/** columns and relationships of "things" */
+export type Things = {
+  __typename?: 'things';
+  created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  name: Scalars['String'];
+  /** An object relationship */
+  owner: Users;
+  owner_id: Scalars['uuid'];
+  updated_at: Scalars['timestamptz'];
+};
+
+/** aggregated selection of "things" */
+export type Things_Aggregate = {
+  __typename?: 'things_aggregate';
+  aggregate?: Maybe<Things_Aggregate_Fields>;
+  nodes: Array<Things>;
+};
+
+/** aggregate fields of "things" */
+export type Things_Aggregate_Fields = {
+  __typename?: 'things_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Things_Max_Fields>;
+  min?: Maybe<Things_Min_Fields>;
+};
+
+
+/** aggregate fields of "things" */
+export type Things_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Things_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "things" */
+export type Things_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Things_Max_Order_By>;
+  min?: Maybe<Things_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "things" */
+export type Things_Arr_Rel_Insert_Input = {
+  data: Array<Things_Insert_Input>;
+  on_conflict?: Maybe<Things_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "things". All fields are combined with a logical 'AND'. */
+export type Things_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Things_Bool_Exp>>>;
+  _not?: Maybe<Things_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Things_Bool_Exp>>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
+  owner?: Maybe<Users_Bool_Exp>;
+  owner_id?: Maybe<Uuid_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "things" */
+export enum Things_Constraint {
+  /** unique or primary key constraint */
+  ThingsPkey = 'things_pkey'
+}
+
+/** input type for inserting data into table "things" */
+export type Things_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  owner?: Maybe<Users_Obj_Rel_Insert_Input>;
+  owner_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Things_Max_Fields = {
+  __typename?: 'things_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  owner_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "things" */
+export type Things_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  owner_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Things_Min_Fields = {
+  __typename?: 'things_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  owner_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "things" */
+export type Things_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  owner_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "things" */
+export type Things_Mutation_Response = {
+  __typename?: 'things_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Things>;
+};
+
+/** input type for inserting object relation for remote table "things" */
+export type Things_Obj_Rel_Insert_Input = {
+  data: Things_Insert_Input;
+  on_conflict?: Maybe<Things_On_Conflict>;
+};
+
+/** on conflict condition type for table "things" */
+export type Things_On_Conflict = {
+  constraint: Things_Constraint;
+  update_columns: Array<Things_Update_Column>;
+  where?: Maybe<Things_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "things" */
+export type Things_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  owner?: Maybe<Users_Order_By>;
+  owner_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "things" */
+export type Things_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "things" */
+export enum Things_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  OwnerId = 'owner_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "things" */
+export type Things_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  owner_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "things" */
+export enum Things_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  OwnerId = 'owner_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+
+/** expression to compare columns of type timestamptz. All fields are combined with logical 'AND'. */
+export type Timestamptz_Comparison_Exp = {
+  _eq?: Maybe<Scalars['timestamptz']>;
+  _gt?: Maybe<Scalars['timestamptz']>;
+  _gte?: Maybe<Scalars['timestamptz']>;
+  _in?: Maybe<Array<Scalars['timestamptz']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['timestamptz']>;
+  _lte?: Maybe<Scalars['timestamptz']>;
+  _neq?: Maybe<Scalars['timestamptz']>;
+  _nin?: Maybe<Array<Scalars['timestamptz']>>;
+};
+
+/** columns and relationships of "user_private" */
+export type User_Private = {
+  __typename?: 'user_private';
+  email?: Maybe<Scalars['String']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregated selection of "user_private" */
+export type User_Private_Aggregate = {
+  __typename?: 'user_private_aggregate';
+  aggregate?: Maybe<User_Private_Aggregate_Fields>;
+  nodes: Array<User_Private>;
+};
+
+/** aggregate fields of "user_private" */
+export type User_Private_Aggregate_Fields = {
+  __typename?: 'user_private_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<User_Private_Max_Fields>;
+  min?: Maybe<User_Private_Min_Fields>;
+};
+
+
+/** aggregate fields of "user_private" */
+export type User_Private_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<User_Private_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "user_private" */
+export type User_Private_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<User_Private_Max_Order_By>;
+  min?: Maybe<User_Private_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "user_private" */
+export type User_Private_Arr_Rel_Insert_Input = {
+  data: Array<User_Private_Insert_Input>;
+};
+
+/** Boolean expression to filter rows from the table "user_private". All fields are combined with a logical 'AND'. */
+export type User_Private_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<User_Private_Bool_Exp>>>;
+  _not?: Maybe<User_Private_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<User_Private_Bool_Exp>>>;
+  email?: Maybe<String_Comparison_Exp>;
+  user_id?: Maybe<Uuid_Comparison_Exp>;
+};
+
+/** input type for inserting data into table "user_private" */
+export type User_Private_Insert_Input = {
+  email?: Maybe<Scalars['String']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type User_Private_Max_Fields = {
+  __typename?: 'user_private_max_fields';
+  email?: Maybe<Scalars['String']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "user_private" */
+export type User_Private_Max_Order_By = {
+  email?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type User_Private_Min_Fields = {
+  __typename?: 'user_private_min_fields';
+  email?: Maybe<Scalars['String']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "user_private" */
+export type User_Private_Min_Order_By = {
+  email?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "user_private" */
+export type User_Private_Mutation_Response = {
+  __typename?: 'user_private_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<User_Private>;
+};
+
+/** input type for inserting object relation for remote table "user_private" */
+export type User_Private_Obj_Rel_Insert_Input = {
+  data: User_Private_Insert_Input;
+};
+
+/** ordering options when selecting data from "user_private" */
+export type User_Private_Order_By = {
+  email?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** select columns of table "user_private" */
+export enum User_Private_Select_Column {
+  /** column name */
+  Email = 'email',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "user_private" */
+export type User_Private_Set_Input = {
+  email?: Maybe<Scalars['String']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** columns and relationships of "users" */
+export type Users = {
+  __typename?: 'users';
+  created_at: Scalars['timestamptz'];
+  email?: Maybe<Scalars['String']>;
+  email_verified?: Maybe<Scalars['timestamptz']>;
+  id: Scalars['uuid'];
+  image?: Maybe<Scalars['String']>;
+  last_seen?: Maybe<Scalars['timestamptz']>;
+  /** An array relationship */
+  memberships: Array<Group_Members>;
+  /** An aggregated array relationship */
+  memberships_aggregate: Group_Members_Aggregate;
+  name: Scalars['String'];
+  password_hash?: Maybe<Scalars['String']>;
+  /** An object relationship */
+  private_info?: Maybe<User_Private>;
+  /** An array relationship */
+  things: Array<Things>;
+  /** An aggregated array relationship */
+  things_aggregate: Things_Aggregate;
+  updated_at: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "users" */
+export type UsersMembershipsArgs = {
+  distinct_on?: Maybe<Array<Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Members_Order_By>>;
+  where?: Maybe<Group_Members_Bool_Exp>;
+};
+
+
+/** columns and relationships of "users" */
+export type UsersMemberships_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Members_Order_By>>;
+  where?: Maybe<Group_Members_Bool_Exp>;
+};
+
+
+/** columns and relationships of "users" */
+export type UsersThingsArgs = {
+  distinct_on?: Maybe<Array<Things_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Things_Order_By>>;
+  where?: Maybe<Things_Bool_Exp>;
+};
+
+
+/** columns and relationships of "users" */
+export type UsersThings_AggregateArgs = {
+  distinct_on?: Maybe<Array<Things_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Things_Order_By>>;
+  where?: Maybe<Things_Bool_Exp>;
+};
+
+/** aggregated selection of "users" */
+export type Users_Aggregate = {
+  __typename?: 'users_aggregate';
+  aggregate?: Maybe<Users_Aggregate_Fields>;
+  nodes: Array<Users>;
+};
+
+/** aggregate fields of "users" */
+export type Users_Aggregate_Fields = {
+  __typename?: 'users_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Users_Max_Fields>;
+  min?: Maybe<Users_Min_Fields>;
+};
+
+
+/** aggregate fields of "users" */
+export type Users_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Users_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "users" */
+export type Users_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Users_Max_Order_By>;
+  min?: Maybe<Users_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "users" */
+export type Users_Arr_Rel_Insert_Input = {
+  data: Array<Users_Insert_Input>;
+  on_conflict?: Maybe<Users_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'. */
+export type Users_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Users_Bool_Exp>>>;
+  _not?: Maybe<Users_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Users_Bool_Exp>>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  email?: Maybe<String_Comparison_Exp>;
+  email_verified?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  image?: Maybe<String_Comparison_Exp>;
+  last_seen?: Maybe<Timestamptz_Comparison_Exp>;
+  memberships?: Maybe<Group_Members_Bool_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
+  password_hash?: Maybe<String_Comparison_Exp>;
+  private_info?: Maybe<User_Private_Bool_Exp>;
+  things?: Maybe<Things_Bool_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "users" */
+export enum Users_Constraint {
+  /** unique or primary key constraint */
+  Email = 'email',
+  /** unique or primary key constraint */
+  UsersEmailKey = 'users_email_key',
+  /** unique or primary key constraint */
+  UsersPkey = 'users_pkey'
+}
+
+/** input type for inserting data into table "users" */
+export type Users_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
+  email_verified?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  image?: Maybe<Scalars['String']>;
+  last_seen?: Maybe<Scalars['timestamptz']>;
+  memberships?: Maybe<Group_Members_Arr_Rel_Insert_Input>;
+  name?: Maybe<Scalars['String']>;
+  password_hash?: Maybe<Scalars['String']>;
+  private_info?: Maybe<User_Private_Obj_Rel_Insert_Input>;
+  things?: Maybe<Things_Arr_Rel_Insert_Input>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Users_Max_Fields = {
+  __typename?: 'users_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
+  email_verified?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  image?: Maybe<Scalars['String']>;
+  last_seen?: Maybe<Scalars['timestamptz']>;
+  name?: Maybe<Scalars['String']>;
+  password_hash?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "users" */
+export type Users_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  email?: Maybe<Order_By>;
+  email_verified?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  image?: Maybe<Order_By>;
+  last_seen?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  password_hash?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Users_Min_Fields = {
+  __typename?: 'users_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
+  email_verified?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  image?: Maybe<Scalars['String']>;
+  last_seen?: Maybe<Scalars['timestamptz']>;
+  name?: Maybe<Scalars['String']>;
+  password_hash?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "users" */
+export type Users_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  email?: Maybe<Order_By>;
+  email_verified?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  image?: Maybe<Order_By>;
+  last_seen?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  password_hash?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "users" */
+export type Users_Mutation_Response = {
+  __typename?: 'users_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Users>;
+};
+
+/** input type for inserting object relation for remote table "users" */
+export type Users_Obj_Rel_Insert_Input = {
+  data: Users_Insert_Input;
+  on_conflict?: Maybe<Users_On_Conflict>;
+};
+
+/** on conflict condition type for table "users" */
+export type Users_On_Conflict = {
+  constraint: Users_Constraint;
+  update_columns: Array<Users_Update_Column>;
+  where?: Maybe<Users_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "users" */
+export type Users_Order_By = {
+  created_at?: Maybe<Order_By>;
+  email?: Maybe<Order_By>;
+  email_verified?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  image?: Maybe<Order_By>;
+  last_seen?: Maybe<Order_By>;
+  memberships_aggregate?: Maybe<Group_Members_Aggregate_Order_By>;
+  name?: Maybe<Order_By>;
+  password_hash?: Maybe<Order_By>;
+  private_info?: Maybe<User_Private_Order_By>;
+  things_aggregate?: Maybe<Things_Aggregate_Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "users" */
+export type Users_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "users" */
+export enum Users_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Email = 'email',
+  /** column name */
+  EmailVerified = 'email_verified',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Image = 'image',
+  /** column name */
+  LastSeen = 'last_seen',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  PasswordHash = 'password_hash',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "users" */
+export type Users_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  email?: Maybe<Scalars['String']>;
+  email_verified?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  image?: Maybe<Scalars['String']>;
+  last_seen?: Maybe<Scalars['timestamptz']>;
+  name?: Maybe<Scalars['String']>;
+  password_hash?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "users" */
+export enum Users_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Email = 'email',
+  /** column name */
+  EmailVerified = 'email_verified',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Image = 'image',
+  /** column name */
+  LastSeen = 'last_seen',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  PasswordHash = 'password_hash',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+
+/** expression to compare columns of type uuid. All fields are combined with logical 'AND'. */
+export type Uuid_Comparison_Exp = {
+  _eq?: Maybe<Scalars['uuid']>;
+  _gt?: Maybe<Scalars['uuid']>;
+  _gte?: Maybe<Scalars['uuid']>;
+  _in?: Maybe<Array<Scalars['uuid']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['uuid']>;
+  _lte?: Maybe<Scalars['uuid']>;
+  _neq?: Maybe<Scalars['uuid']>;
+  _nin?: Maybe<Array<Scalars['uuid']>>;
+};
+
+/** columns and relationships of "verification_requests" */
+export type Verification_Requests = {
+  __typename?: 'verification_requests';
+  created_at: Scalars['timestamptz'];
+  expires: Scalars['timestamptz'];
+  id: Scalars['Int'];
+  identifier: Scalars['String'];
+  token: Scalars['String'];
+  updated_at: Scalars['timestamptz'];
+};
+
+/** aggregated selection of "verification_requests" */
+export type Verification_Requests_Aggregate = {
+  __typename?: 'verification_requests_aggregate';
+  aggregate?: Maybe<Verification_Requests_Aggregate_Fields>;
+  nodes: Array<Verification_Requests>;
+};
+
+/** aggregate fields of "verification_requests" */
+export type Verification_Requests_Aggregate_Fields = {
+  __typename?: 'verification_requests_aggregate_fields';
+  avg?: Maybe<Verification_Requests_Avg_Fields>;
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Verification_Requests_Max_Fields>;
+  min?: Maybe<Verification_Requests_Min_Fields>;
+  stddev?: Maybe<Verification_Requests_Stddev_Fields>;
+  stddev_pop?: Maybe<Verification_Requests_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Verification_Requests_Stddev_Samp_Fields>;
+  sum?: Maybe<Verification_Requests_Sum_Fields>;
+  var_pop?: Maybe<Verification_Requests_Var_Pop_Fields>;
+  var_samp?: Maybe<Verification_Requests_Var_Samp_Fields>;
+  variance?: Maybe<Verification_Requests_Variance_Fields>;
+};
+
+
+/** aggregate fields of "verification_requests" */
+export type Verification_Requests_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Verification_Requests_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "verification_requests" */
+export type Verification_Requests_Aggregate_Order_By = {
+  avg?: Maybe<Verification_Requests_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Verification_Requests_Max_Order_By>;
+  min?: Maybe<Verification_Requests_Min_Order_By>;
+  stddev?: Maybe<Verification_Requests_Stddev_Order_By>;
+  stddev_pop?: Maybe<Verification_Requests_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Verification_Requests_Stddev_Samp_Order_By>;
+  sum?: Maybe<Verification_Requests_Sum_Order_By>;
+  var_pop?: Maybe<Verification_Requests_Var_Pop_Order_By>;
+  var_samp?: Maybe<Verification_Requests_Var_Samp_Order_By>;
+  variance?: Maybe<Verification_Requests_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "verification_requests" */
+export type Verification_Requests_Arr_Rel_Insert_Input = {
+  data: Array<Verification_Requests_Insert_Input>;
+  on_conflict?: Maybe<Verification_Requests_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Verification_Requests_Avg_Fields = {
+  __typename?: 'verification_requests_avg_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "verification_requests" */
+export type Verification_Requests_Avg_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "verification_requests". All fields are combined with a logical 'AND'. */
+export type Verification_Requests_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Verification_Requests_Bool_Exp>>>;
+  _not?: Maybe<Verification_Requests_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Verification_Requests_Bool_Exp>>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  expires?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Int_Comparison_Exp>;
+  identifier?: Maybe<String_Comparison_Exp>;
+  token?: Maybe<String_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "verification_requests" */
+export enum Verification_Requests_Constraint {
+  /** unique or primary key constraint */
+  Token = 'token',
+  /** unique or primary key constraint */
+  VerificationRequestsPkey = 'verification_requests_pkey'
+}
+
+/** input type for incrementing integer column in table "verification_requests" */
+export type Verification_Requests_Inc_Input = {
+  id?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "verification_requests" */
+export type Verification_Requests_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  expires?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['Int']>;
+  identifier?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Verification_Requests_Max_Fields = {
+  __typename?: 'verification_requests_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  expires?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['Int']>;
+  identifier?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "verification_requests" */
+export type Verification_Requests_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  expires?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  identifier?: Maybe<Order_By>;
+  token?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Verification_Requests_Min_Fields = {
+  __typename?: 'verification_requests_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  expires?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['Int']>;
+  identifier?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "verification_requests" */
+export type Verification_Requests_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  expires?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  identifier?: Maybe<Order_By>;
+  token?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "verification_requests" */
+export type Verification_Requests_Mutation_Response = {
+  __typename?: 'verification_requests_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Verification_Requests>;
+};
+
+/** input type for inserting object relation for remote table "verification_requests" */
+export type Verification_Requests_Obj_Rel_Insert_Input = {
+  data: Verification_Requests_Insert_Input;
+  on_conflict?: Maybe<Verification_Requests_On_Conflict>;
+};
+
+/** on conflict condition type for table "verification_requests" */
+export type Verification_Requests_On_Conflict = {
+  constraint: Verification_Requests_Constraint;
+  update_columns: Array<Verification_Requests_Update_Column>;
+  where?: Maybe<Verification_Requests_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "verification_requests" */
+export type Verification_Requests_Order_By = {
+  created_at?: Maybe<Order_By>;
+  expires?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  identifier?: Maybe<Order_By>;
+  token?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "verification_requests" */
+export type Verification_Requests_Pk_Columns_Input = {
+  id: Scalars['Int'];
+};
+
+/** select columns of table "verification_requests" */
+export enum Verification_Requests_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Expires = 'expires',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Identifier = 'identifier',
+  /** column name */
+  Token = 'token',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "verification_requests" */
+export type Verification_Requests_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  expires?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['Int']>;
+  identifier?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate stddev on columns */
+export type Verification_Requests_Stddev_Fields = {
+  __typename?: 'verification_requests_stddev_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "verification_requests" */
+export type Verification_Requests_Stddev_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Verification_Requests_Stddev_Pop_Fields = {
+  __typename?: 'verification_requests_stddev_pop_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "verification_requests" */
+export type Verification_Requests_Stddev_Pop_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Verification_Requests_Stddev_Samp_Fields = {
+  __typename?: 'verification_requests_stddev_samp_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "verification_requests" */
+export type Verification_Requests_Stddev_Samp_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Verification_Requests_Sum_Fields = {
+  __typename?: 'verification_requests_sum_fields';
+  id?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "verification_requests" */
+export type Verification_Requests_Sum_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+/** update columns of table "verification_requests" */
+export enum Verification_Requests_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Expires = 'expires',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Identifier = 'identifier',
+  /** column name */
+  Token = 'token',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** aggregate var_pop on columns */
+export type Verification_Requests_Var_Pop_Fields = {
+  __typename?: 'verification_requests_var_pop_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "verification_requests" */
+export type Verification_Requests_Var_Pop_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Verification_Requests_Var_Samp_Fields = {
+  __typename?: 'verification_requests_var_samp_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "verification_requests" */
+export type Verification_Requests_Var_Samp_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Verification_Requests_Variance_Fields = {
+  __typename?: 'verification_requests_variance_fields';
+  id?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "verification_requests" */
+export type Verification_Requests_Variance_Order_By = {
+  id?: Maybe<Order_By>;
+};
+
+export type UserCredentialsQueryVariables = Exact<{
+  email: Scalars['String'];
+}>;
+
+
+export type UserCredentialsQuery = (
+  { __typename?: 'query_root' }
+  & { users: Array<(
+    { __typename?: 'users' }
+    & Pick<Users, 'id' | 'password_hash'>
+  )> }
+);
+
+export type FindUserQueryVariables = Exact<{
+  email?: Maybe<Scalars['String']>;
+}>;
+
+
+export type FindUserQuery = (
+  { __typename?: 'query_root' }
+  & { users: Array<(
+    { __typename?: 'users' }
+    & Pick<Users, 'id' | 'email'>
+  )> }
+);
+
+export type RegisterUserMutationVariables = Exact<{
+  input: Users_Insert_Input;
+}>;
+
+
+export type RegisterUserMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_users_one?: Maybe<(
+    { __typename?: 'users' }
+    & Pick<Users, 'id'>
+  )> }
+);
+
+
+
+export type ResolverTypeWrapper<T> = Promise<T> | T;
+
+
+export type LegacyStitchingResolver<TResult, TParent, TContext, TArgs> = {
+  fragment: string;
+  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
+};
+
+export type NewStitchingResolver<TResult, TParent, TContext, TArgs> = {
+  selectionSet: string;
+  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
+};
+export type StitchingResolver<TResult, TParent, TContext, TArgs> = LegacyStitchingResolver<TResult, TParent, TContext, TArgs> | NewStitchingResolver<TResult, TParent, TContext, TArgs>;
+export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
+  | ResolverFn<TResult, TParent, TContext, TArgs>
+  | StitchingResolver<TResult, TParent, TContext, TArgs>;
+
+export type ResolverFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => Promise<TResult> | TResult;
+
+export type SubscriptionSubscribeFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => AsyncIterator<TResult> | Promise<AsyncIterator<TResult>>;
+
+export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => TResult | Promise<TResult>;
+
+export interface SubscriptionSubscriberObject<TResult, TKey extends string, TParent, TContext, TArgs> {
+  subscribe: SubscriptionSubscribeFn<{ [key in TKey]: TResult }, TParent, TContext, TArgs>;
+  resolve?: SubscriptionResolveFn<TResult, { [key in TKey]: TResult }, TContext, TArgs>;
+}
+
+export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
+  subscribe: SubscriptionSubscribeFn<any, TParent, TContext, TArgs>;
+  resolve: SubscriptionResolveFn<TResult, any, TContext, TArgs>;
+}
+
+export type SubscriptionObject<TResult, TKey extends string, TParent, TContext, TArgs> =
+  | SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
+  | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>;
+
+export type SubscriptionResolver<TResult, TKey extends string, TParent = {}, TContext = {}, TArgs = {}> =
+  | ((...args: any[]) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
+  | SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>;
+
+export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
+  parent: TParent,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => Maybe<TTypes> | Promise<Maybe<TTypes>>;
+
+export type IsTypeOfResolverFn<T = {}, TContext = {}> = (obj: T, context: TContext, info: GraphQLResolveInfo) => boolean | Promise<boolean>;
+
+export type NextResolverFn<T> = () => Promise<T>;
+
+export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs = {}> = (
+  next: NextResolverFn<TResult>,
+  parent: TParent,
+  args: TArgs,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => TResult | Promise<TResult>;
+
+/** Mapping between all available schema types and the resolvers types */
+export type ResolversTypes = {
+  CredentialsInput: CredentialsInput;
+  String: ResolverTypeWrapper<Scalars['String']>;
+  Int_comparison_exp: Int_Comparison_Exp;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  RegistrationResult: ResolverTypeWrapper<RegistrationResult>;
+  String_comparison_exp: String_Comparison_Exp;
+  group_members: ResolverTypeWrapper<Group_Members>;
+  group_members_aggregate: ResolverTypeWrapper<Group_Members_Aggregate>;
+  group_members_aggregate_fields: ResolverTypeWrapper<Group_Members_Aggregate_Fields>;
+  group_members_aggregate_order_by: Group_Members_Aggregate_Order_By;
+  group_members_arr_rel_insert_input: Group_Members_Arr_Rel_Insert_Input;
+  group_members_bool_exp: Group_Members_Bool_Exp;
+  group_members_constraint: Group_Members_Constraint;
+  group_members_insert_input: Group_Members_Insert_Input;
+  group_members_max_fields: ResolverTypeWrapper<Group_Members_Max_Fields>;
+  group_members_max_order_by: Group_Members_Max_Order_By;
+  group_members_min_fields: ResolverTypeWrapper<Group_Members_Min_Fields>;
+  group_members_min_order_by: Group_Members_Min_Order_By;
+  group_members_mutation_response: ResolverTypeWrapper<Group_Members_Mutation_Response>;
+  group_members_obj_rel_insert_input: Group_Members_Obj_Rel_Insert_Input;
+  group_members_on_conflict: Group_Members_On_Conflict;
+  group_members_order_by: Group_Members_Order_By;
+  group_members_pk_columns_input: Group_Members_Pk_Columns_Input;
+  group_members_select_column: Group_Members_Select_Column;
+  group_members_set_input: Group_Members_Set_Input;
+  group_members_update_column: Group_Members_Update_Column;
+  groups: ResolverTypeWrapper<Groups>;
+  groups_aggregate: ResolverTypeWrapper<Groups_Aggregate>;
+  groups_aggregate_fields: ResolverTypeWrapper<Groups_Aggregate_Fields>;
+  groups_aggregate_order_by: Groups_Aggregate_Order_By;
+  groups_arr_rel_insert_input: Groups_Arr_Rel_Insert_Input;
+  groups_bool_exp: Groups_Bool_Exp;
+  groups_constraint: Groups_Constraint;
+  groups_insert_input: Groups_Insert_Input;
+  groups_max_fields: ResolverTypeWrapper<Groups_Max_Fields>;
+  groups_max_order_by: Groups_Max_Order_By;
+  groups_min_fields: ResolverTypeWrapper<Groups_Min_Fields>;
+  groups_min_order_by: Groups_Min_Order_By;
+  groups_mutation_response: ResolverTypeWrapper<Groups_Mutation_Response>;
+  groups_obj_rel_insert_input: Groups_Obj_Rel_Insert_Input;
+  groups_on_conflict: Groups_On_Conflict;
+  groups_order_by: Groups_Order_By;
+  groups_pk_columns_input: Groups_Pk_Columns_Input;
+  groups_select_column: Groups_Select_Column;
+  groups_set_input: Groups_Set_Input;
+  groups_update_column: Groups_Update_Column;
+  json: ResolverTypeWrapper<Scalars['json']>;
+  mutation_root: ResolverTypeWrapper<{}>;
+  order_by: Order_By;
+  query_root: ResolverTypeWrapper<{}>;
+  subscription_root: ResolverTypeWrapper<{}>;
+  things: ResolverTypeWrapper<Things>;
+  things_aggregate: ResolverTypeWrapper<Things_Aggregate>;
+  things_aggregate_fields: ResolverTypeWrapper<Things_Aggregate_Fields>;
+  things_aggregate_order_by: Things_Aggregate_Order_By;
+  things_arr_rel_insert_input: Things_Arr_Rel_Insert_Input;
+  things_bool_exp: Things_Bool_Exp;
+  things_constraint: Things_Constraint;
+  things_insert_input: Things_Insert_Input;
+  things_max_fields: ResolverTypeWrapper<Things_Max_Fields>;
+  things_max_order_by: Things_Max_Order_By;
+  things_min_fields: ResolverTypeWrapper<Things_Min_Fields>;
+  things_min_order_by: Things_Min_Order_By;
+  things_mutation_response: ResolverTypeWrapper<Things_Mutation_Response>;
+  things_obj_rel_insert_input: Things_Obj_Rel_Insert_Input;
+  things_on_conflict: Things_On_Conflict;
+  things_order_by: Things_Order_By;
+  things_pk_columns_input: Things_Pk_Columns_Input;
+  things_select_column: Things_Select_Column;
+  things_set_input: Things_Set_Input;
+  things_update_column: Things_Update_Column;
+  timestamptz: ResolverTypeWrapper<Scalars['timestamptz']>;
+  timestamptz_comparison_exp: Timestamptz_Comparison_Exp;
+  user_private: ResolverTypeWrapper<User_Private>;
+  user_private_aggregate: ResolverTypeWrapper<User_Private_Aggregate>;
+  user_private_aggregate_fields: ResolverTypeWrapper<User_Private_Aggregate_Fields>;
+  user_private_aggregate_order_by: User_Private_Aggregate_Order_By;
+  user_private_arr_rel_insert_input: User_Private_Arr_Rel_Insert_Input;
+  user_private_bool_exp: User_Private_Bool_Exp;
+  user_private_insert_input: User_Private_Insert_Input;
+  user_private_max_fields: ResolverTypeWrapper<User_Private_Max_Fields>;
+  user_private_max_order_by: User_Private_Max_Order_By;
+  user_private_min_fields: ResolverTypeWrapper<User_Private_Min_Fields>;
+  user_private_min_order_by: User_Private_Min_Order_By;
+  user_private_mutation_response: ResolverTypeWrapper<User_Private_Mutation_Response>;
+  user_private_obj_rel_insert_input: User_Private_Obj_Rel_Insert_Input;
+  user_private_order_by: User_Private_Order_By;
+  user_private_select_column: User_Private_Select_Column;
+  user_private_set_input: User_Private_Set_Input;
+  users: ResolverTypeWrapper<Users>;
+  users_aggregate: ResolverTypeWrapper<Users_Aggregate>;
+  users_aggregate_fields: ResolverTypeWrapper<Users_Aggregate_Fields>;
+  users_aggregate_order_by: Users_Aggregate_Order_By;
+  users_arr_rel_insert_input: Users_Arr_Rel_Insert_Input;
+  users_bool_exp: Users_Bool_Exp;
+  users_constraint: Users_Constraint;
+  users_insert_input: Users_Insert_Input;
+  users_max_fields: ResolverTypeWrapper<Users_Max_Fields>;
+  users_max_order_by: Users_Max_Order_By;
+  users_min_fields: ResolverTypeWrapper<Users_Min_Fields>;
+  users_min_order_by: Users_Min_Order_By;
+  users_mutation_response: ResolverTypeWrapper<Users_Mutation_Response>;
+  users_obj_rel_insert_input: Users_Obj_Rel_Insert_Input;
+  users_on_conflict: Users_On_Conflict;
+  users_order_by: Users_Order_By;
+  users_pk_columns_input: Users_Pk_Columns_Input;
+  users_select_column: Users_Select_Column;
+  users_set_input: Users_Set_Input;
+  users_update_column: Users_Update_Column;
+  uuid: ResolverTypeWrapper<Scalars['uuid']>;
+  uuid_comparison_exp: Uuid_Comparison_Exp;
+  verification_requests: ResolverTypeWrapper<Verification_Requests>;
+  verification_requests_aggregate: ResolverTypeWrapper<Verification_Requests_Aggregate>;
+  verification_requests_aggregate_fields: ResolverTypeWrapper<Verification_Requests_Aggregate_Fields>;
+  verification_requests_aggregate_order_by: Verification_Requests_Aggregate_Order_By;
+  verification_requests_arr_rel_insert_input: Verification_Requests_Arr_Rel_Insert_Input;
+  verification_requests_avg_fields: ResolverTypeWrapper<Verification_Requests_Avg_Fields>;
+  Float: ResolverTypeWrapper<Scalars['Float']>;
+  verification_requests_avg_order_by: Verification_Requests_Avg_Order_By;
+  verification_requests_bool_exp: Verification_Requests_Bool_Exp;
+  verification_requests_constraint: Verification_Requests_Constraint;
+  verification_requests_inc_input: Verification_Requests_Inc_Input;
+  verification_requests_insert_input: Verification_Requests_Insert_Input;
+  verification_requests_max_fields: ResolverTypeWrapper<Verification_Requests_Max_Fields>;
+  verification_requests_max_order_by: Verification_Requests_Max_Order_By;
+  verification_requests_min_fields: ResolverTypeWrapper<Verification_Requests_Min_Fields>;
+  verification_requests_min_order_by: Verification_Requests_Min_Order_By;
+  verification_requests_mutation_response: ResolverTypeWrapper<Verification_Requests_Mutation_Response>;
+  verification_requests_obj_rel_insert_input: Verification_Requests_Obj_Rel_Insert_Input;
+  verification_requests_on_conflict: Verification_Requests_On_Conflict;
+  verification_requests_order_by: Verification_Requests_Order_By;
+  verification_requests_pk_columns_input: Verification_Requests_Pk_Columns_Input;
+  verification_requests_select_column: Verification_Requests_Select_Column;
+  verification_requests_set_input: Verification_Requests_Set_Input;
+  verification_requests_stddev_fields: ResolverTypeWrapper<Verification_Requests_Stddev_Fields>;
+  verification_requests_stddev_order_by: Verification_Requests_Stddev_Order_By;
+  verification_requests_stddev_pop_fields: ResolverTypeWrapper<Verification_Requests_Stddev_Pop_Fields>;
+  verification_requests_stddev_pop_order_by: Verification_Requests_Stddev_Pop_Order_By;
+  verification_requests_stddev_samp_fields: ResolverTypeWrapper<Verification_Requests_Stddev_Samp_Fields>;
+  verification_requests_stddev_samp_order_by: Verification_Requests_Stddev_Samp_Order_By;
+  verification_requests_sum_fields: ResolverTypeWrapper<Verification_Requests_Sum_Fields>;
+  verification_requests_sum_order_by: Verification_Requests_Sum_Order_By;
+  verification_requests_update_column: Verification_Requests_Update_Column;
+  verification_requests_var_pop_fields: ResolverTypeWrapper<Verification_Requests_Var_Pop_Fields>;
+  verification_requests_var_pop_order_by: Verification_Requests_Var_Pop_Order_By;
+  verification_requests_var_samp_fields: ResolverTypeWrapper<Verification_Requests_Var_Samp_Fields>;
+  verification_requests_var_samp_order_by: Verification_Requests_Var_Samp_Order_By;
+  verification_requests_variance_fields: ResolverTypeWrapper<Verification_Requests_Variance_Fields>;
+  verification_requests_variance_order_by: Verification_Requests_Variance_Order_By;
+};
+
+/** Mapping between all available schema types and the resolvers parents */
+export type ResolversParentTypes = {
+  CredentialsInput: CredentialsInput;
+  String: Scalars['String'];
+  Int_comparison_exp: Int_Comparison_Exp;
+  Int: Scalars['Int'];
+  Boolean: Scalars['Boolean'];
+  RegistrationResult: RegistrationResult;
+  String_comparison_exp: String_Comparison_Exp;
+  group_members: Group_Members;
+  group_members_aggregate: Group_Members_Aggregate;
+  group_members_aggregate_fields: Group_Members_Aggregate_Fields;
+  group_members_aggregate_order_by: Group_Members_Aggregate_Order_By;
+  group_members_arr_rel_insert_input: Group_Members_Arr_Rel_Insert_Input;
+  group_members_bool_exp: Group_Members_Bool_Exp;
+  group_members_insert_input: Group_Members_Insert_Input;
+  group_members_max_fields: Group_Members_Max_Fields;
+  group_members_max_order_by: Group_Members_Max_Order_By;
+  group_members_min_fields: Group_Members_Min_Fields;
+  group_members_min_order_by: Group_Members_Min_Order_By;
+  group_members_mutation_response: Group_Members_Mutation_Response;
+  group_members_obj_rel_insert_input: Group_Members_Obj_Rel_Insert_Input;
+  group_members_on_conflict: Group_Members_On_Conflict;
+  group_members_order_by: Group_Members_Order_By;
+  group_members_pk_columns_input: Group_Members_Pk_Columns_Input;
+  group_members_set_input: Group_Members_Set_Input;
+  groups: Groups;
+  groups_aggregate: Groups_Aggregate;
+  groups_aggregate_fields: Groups_Aggregate_Fields;
+  groups_aggregate_order_by: Groups_Aggregate_Order_By;
+  groups_arr_rel_insert_input: Groups_Arr_Rel_Insert_Input;
+  groups_bool_exp: Groups_Bool_Exp;
+  groups_insert_input: Groups_Insert_Input;
+  groups_max_fields: Groups_Max_Fields;
+  groups_max_order_by: Groups_Max_Order_By;
+  groups_min_fields: Groups_Min_Fields;
+  groups_min_order_by: Groups_Min_Order_By;
+  groups_mutation_response: Groups_Mutation_Response;
+  groups_obj_rel_insert_input: Groups_Obj_Rel_Insert_Input;
+  groups_on_conflict: Groups_On_Conflict;
+  groups_order_by: Groups_Order_By;
+  groups_pk_columns_input: Groups_Pk_Columns_Input;
+  groups_set_input: Groups_Set_Input;
+  json: Scalars['json'];
+  mutation_root: {};
+  query_root: {};
+  subscription_root: {};
+  things: Things;
+  things_aggregate: Things_Aggregate;
+  things_aggregate_fields: Things_Aggregate_Fields;
+  things_aggregate_order_by: Things_Aggregate_Order_By;
+  things_arr_rel_insert_input: Things_Arr_Rel_Insert_Input;
+  things_bool_exp: Things_Bool_Exp;
+  things_insert_input: Things_Insert_Input;
+  things_max_fields: Things_Max_Fields;
+  things_max_order_by: Things_Max_Order_By;
+  things_min_fields: Things_Min_Fields;
+  things_min_order_by: Things_Min_Order_By;
+  things_mutation_response: Things_Mutation_Response;
+  things_obj_rel_insert_input: Things_Obj_Rel_Insert_Input;
+  things_on_conflict: Things_On_Conflict;
+  things_order_by: Things_Order_By;
+  things_pk_columns_input: Things_Pk_Columns_Input;
+  things_set_input: Things_Set_Input;
+  timestamptz: Scalars['timestamptz'];
+  timestamptz_comparison_exp: Timestamptz_Comparison_Exp;
+  user_private: User_Private;
+  user_private_aggregate: User_Private_Aggregate;
+  user_private_aggregate_fields: User_Private_Aggregate_Fields;
+  user_private_aggregate_order_by: User_Private_Aggregate_Order_By;
+  user_private_arr_rel_insert_input: User_Private_Arr_Rel_Insert_Input;
+  user_private_bool_exp: User_Private_Bool_Exp;
+  user_private_insert_input: User_Private_Insert_Input;
+  user_private_max_fields: User_Private_Max_Fields;
+  user_private_max_order_by: User_Private_Max_Order_By;
+  user_private_min_fields: User_Private_Min_Fields;
+  user_private_min_order_by: User_Private_Min_Order_By;
+  user_private_mutation_response: User_Private_Mutation_Response;
+  user_private_obj_rel_insert_input: User_Private_Obj_Rel_Insert_Input;
+  user_private_order_by: User_Private_Order_By;
+  user_private_set_input: User_Private_Set_Input;
+  users: Users;
+  users_aggregate: Users_Aggregate;
+  users_aggregate_fields: Users_Aggregate_Fields;
+  users_aggregate_order_by: Users_Aggregate_Order_By;
+  users_arr_rel_insert_input: Users_Arr_Rel_Insert_Input;
+  users_bool_exp: Users_Bool_Exp;
+  users_insert_input: Users_Insert_Input;
+  users_max_fields: Users_Max_Fields;
+  users_max_order_by: Users_Max_Order_By;
+  users_min_fields: Users_Min_Fields;
+  users_min_order_by: Users_Min_Order_By;
+  users_mutation_response: Users_Mutation_Response;
+  users_obj_rel_insert_input: Users_Obj_Rel_Insert_Input;
+  users_on_conflict: Users_On_Conflict;
+  users_order_by: Users_Order_By;
+  users_pk_columns_input: Users_Pk_Columns_Input;
+  users_set_input: Users_Set_Input;
+  uuid: Scalars['uuid'];
+  uuid_comparison_exp: Uuid_Comparison_Exp;
+  verification_requests: Verification_Requests;
+  verification_requests_aggregate: Verification_Requests_Aggregate;
+  verification_requests_aggregate_fields: Verification_Requests_Aggregate_Fields;
+  verification_requests_aggregate_order_by: Verification_Requests_Aggregate_Order_By;
+  verification_requests_arr_rel_insert_input: Verification_Requests_Arr_Rel_Insert_Input;
+  verification_requests_avg_fields: Verification_Requests_Avg_Fields;
+  Float: Scalars['Float'];
+  verification_requests_avg_order_by: Verification_Requests_Avg_Order_By;
+  verification_requests_bool_exp: Verification_Requests_Bool_Exp;
+  verification_requests_inc_input: Verification_Requests_Inc_Input;
+  verification_requests_insert_input: Verification_Requests_Insert_Input;
+  verification_requests_max_fields: Verification_Requests_Max_Fields;
+  verification_requests_max_order_by: Verification_Requests_Max_Order_By;
+  verification_requests_min_fields: Verification_Requests_Min_Fields;
+  verification_requests_min_order_by: Verification_Requests_Min_Order_By;
+  verification_requests_mutation_response: Verification_Requests_Mutation_Response;
+  verification_requests_obj_rel_insert_input: Verification_Requests_Obj_Rel_Insert_Input;
+  verification_requests_on_conflict: Verification_Requests_On_Conflict;
+  verification_requests_order_by: Verification_Requests_Order_By;
+  verification_requests_pk_columns_input: Verification_Requests_Pk_Columns_Input;
+  verification_requests_set_input: Verification_Requests_Set_Input;
+  verification_requests_stddev_fields: Verification_Requests_Stddev_Fields;
+  verification_requests_stddev_order_by: Verification_Requests_Stddev_Order_By;
+  verification_requests_stddev_pop_fields: Verification_Requests_Stddev_Pop_Fields;
+  verification_requests_stddev_pop_order_by: Verification_Requests_Stddev_Pop_Order_By;
+  verification_requests_stddev_samp_fields: Verification_Requests_Stddev_Samp_Fields;
+  verification_requests_stddev_samp_order_by: Verification_Requests_Stddev_Samp_Order_By;
+  verification_requests_sum_fields: Verification_Requests_Sum_Fields;
+  verification_requests_sum_order_by: Verification_Requests_Sum_Order_By;
+  verification_requests_var_pop_fields: Verification_Requests_Var_Pop_Fields;
+  verification_requests_var_pop_order_by: Verification_Requests_Var_Pop_Order_By;
+  verification_requests_var_samp_fields: Verification_Requests_Var_Samp_Fields;
+  verification_requests_var_samp_order_by: Verification_Requests_Var_Samp_Order_By;
+  verification_requests_variance_fields: Verification_Requests_Variance_Fields;
+  verification_requests_variance_order_by: Verification_Requests_Variance_Order_By;
+};
+
+export type RegistrationResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['RegistrationResult'] = ResolversParentTypes['RegistrationResult']> = {
+  user?: Resolver<Maybe<ResolversTypes['users']>, ParentType, ContextType>;
+  user_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_MembersResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_members'] = ResolversParentTypes['group_members']> = {
+  created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  group?: Resolver<ResolversTypes['groups'], ParentType, ContextType>;
+  group_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  role?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  updated_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['users'], ParentType, ContextType>;
+  user_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Members_AggregateResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_members_aggregate'] = ResolversParentTypes['group_members_aggregate']> = {
+  aggregate?: Resolver<Maybe<ResolversTypes['group_members_aggregate_fields']>, ParentType, ContextType>;
+  nodes?: Resolver<Array<ResolversTypes['group_members']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Members_Aggregate_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_members_aggregate_fields'] = ResolversParentTypes['group_members_aggregate_fields']> = {
+  count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<Group_Members_Aggregate_FieldsCountArgs, never>>;
+  max?: Resolver<Maybe<ResolversTypes['group_members_max_fields']>, ParentType, ContextType>;
+  min?: Resolver<Maybe<ResolversTypes['group_members_min_fields']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Members_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_members_max_fields'] = ResolversParentTypes['group_members_max_fields']> = {
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  role?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  user_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Members_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_members_min_fields'] = ResolversParentTypes['group_members_min_fields']> = {
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  role?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  user_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Members_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_members_mutation_response'] = ResolversParentTypes['group_members_mutation_response']> = {
+  affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  returning?: Resolver<Array<ResolversTypes['group_members']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type GroupsResolvers<ContextType = any, ParentType extends ResolversParentTypes['groups'] = ResolversParentTypes['groups']> = {
+  created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  memberships?: Resolver<Array<ResolversTypes['group_members']>, ParentType, ContextType, RequireFields<GroupsMembershipsArgs, never>>;
+  memberships_aggregate?: Resolver<ResolversTypes['group_members_aggregate'], ParentType, ContextType, RequireFields<GroupsMemberships_AggregateArgs, never>>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  updated_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Groups_AggregateResolvers<ContextType = any, ParentType extends ResolversParentTypes['groups_aggregate'] = ResolversParentTypes['groups_aggregate']> = {
+  aggregate?: Resolver<Maybe<ResolversTypes['groups_aggregate_fields']>, ParentType, ContextType>;
+  nodes?: Resolver<Array<ResolversTypes['groups']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Groups_Aggregate_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['groups_aggregate_fields'] = ResolversParentTypes['groups_aggregate_fields']> = {
+  count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<Groups_Aggregate_FieldsCountArgs, never>>;
+  max?: Resolver<Maybe<ResolversTypes['groups_max_fields']>, ParentType, ContextType>;
+  min?: Resolver<Maybe<ResolversTypes['groups_min_fields']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Groups_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['groups_max_fields'] = ResolversParentTypes['groups_max_fields']> = {
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Groups_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['groups_min_fields'] = ResolversParentTypes['groups_min_fields']> = {
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Groups_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['groups_mutation_response'] = ResolversParentTypes['groups_mutation_response']> = {
+  affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  returning?: Resolver<Array<ResolversTypes['groups']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['json'], any> {
+  name: 'json';
+}
+
+export type Mutation_RootResolvers<ContextType = any, ParentType extends ResolversParentTypes['mutation_root'] = ResolversParentTypes['mutation_root']> = {
+  delete_group_members?: Resolver<Maybe<ResolversTypes['group_members_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_MembersArgs, 'where'>>;
+  delete_group_members_by_pk?: Resolver<Maybe<ResolversTypes['group_members']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_Members_By_PkArgs, 'id'>>;
+  delete_groups?: Resolver<Maybe<ResolversTypes['groups_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_GroupsArgs, 'where'>>;
+  delete_groups_by_pk?: Resolver<Maybe<ResolversTypes['groups']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Groups_By_PkArgs, 'id'>>;
+  delete_things?: Resolver<Maybe<ResolversTypes['things_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_ThingsArgs, 'where'>>;
+  delete_things_by_pk?: Resolver<Maybe<ResolversTypes['things']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Things_By_PkArgs, 'id'>>;
+  delete_user_private?: Resolver<Maybe<ResolversTypes['user_private_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_User_PrivateArgs, 'where'>>;
+  delete_users?: Resolver<Maybe<ResolversTypes['users_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_UsersArgs, 'where'>>;
+  delete_users_by_pk?: Resolver<Maybe<ResolversTypes['users']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Users_By_PkArgs, 'id'>>;
+  delete_verification_requests?: Resolver<Maybe<ResolversTypes['verification_requests_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Verification_RequestsArgs, 'where'>>;
+  delete_verification_requests_by_pk?: Resolver<Maybe<ResolversTypes['verification_requests']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Verification_Requests_By_PkArgs, 'id'>>;
+  insert_group_members?: Resolver<Maybe<ResolversTypes['group_members_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_MembersArgs, 'objects'>>;
+  insert_group_members_one?: Resolver<Maybe<ResolversTypes['group_members']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_Members_OneArgs, 'object'>>;
+  insert_groups?: Resolver<Maybe<ResolversTypes['groups_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_GroupsArgs, 'objects'>>;
+  insert_groups_one?: Resolver<Maybe<ResolversTypes['groups']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Groups_OneArgs, 'object'>>;
+  insert_things?: Resolver<Maybe<ResolversTypes['things_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_ThingsArgs, 'objects'>>;
+  insert_things_one?: Resolver<Maybe<ResolversTypes['things']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Things_OneArgs, 'object'>>;
+  insert_user_private?: Resolver<Maybe<ResolversTypes['user_private_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_User_PrivateArgs, 'objects'>>;
+  insert_user_private_one?: Resolver<Maybe<ResolversTypes['user_private']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_User_Private_OneArgs, 'object'>>;
+  insert_users?: Resolver<Maybe<ResolversTypes['users_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_UsersArgs, 'objects'>>;
+  insert_users_one?: Resolver<Maybe<ResolversTypes['users']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Users_OneArgs, 'object'>>;
+  insert_verification_requests?: Resolver<Maybe<ResolversTypes['verification_requests_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Verification_RequestsArgs, 'objects'>>;
+  insert_verification_requests_one?: Resolver<Maybe<ResolversTypes['verification_requests']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Verification_Requests_OneArgs, 'object'>>;
+  registerCredentials?: Resolver<Maybe<ResolversTypes['RegistrationResult']>, ParentType, ContextType, RequireFields<Mutation_RootRegisterCredentialsArgs, 'input'>>;
+  update_group_members?: Resolver<Maybe<ResolversTypes['group_members_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_MembersArgs, 'where'>>;
+  update_group_members_by_pk?: Resolver<Maybe<ResolversTypes['group_members']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_Members_By_PkArgs, 'pk_columns'>>;
+  update_groups?: Resolver<Maybe<ResolversTypes['groups_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_GroupsArgs, 'where'>>;
+  update_groups_by_pk?: Resolver<Maybe<ResolversTypes['groups']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Groups_By_PkArgs, 'pk_columns'>>;
+  update_things?: Resolver<Maybe<ResolversTypes['things_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_ThingsArgs, 'where'>>;
+  update_things_by_pk?: Resolver<Maybe<ResolversTypes['things']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Things_By_PkArgs, 'pk_columns'>>;
+  update_user_private?: Resolver<Maybe<ResolversTypes['user_private_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_User_PrivateArgs, 'where'>>;
+  update_users?: Resolver<Maybe<ResolversTypes['users_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_UsersArgs, 'where'>>;
+  update_users_by_pk?: Resolver<Maybe<ResolversTypes['users']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Users_By_PkArgs, 'pk_columns'>>;
+  update_verification_requests?: Resolver<Maybe<ResolversTypes['verification_requests_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Verification_RequestsArgs, 'where'>>;
+  update_verification_requests_by_pk?: Resolver<Maybe<ResolversTypes['verification_requests']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Verification_Requests_By_PkArgs, 'pk_columns'>>;
+};
+
+export type Query_RootResolvers<ContextType = any, ParentType extends ResolversParentTypes['query_root'] = ResolversParentTypes['query_root']> = {
+  group_members?: Resolver<Array<ResolversTypes['group_members']>, ParentType, ContextType, RequireFields<Query_RootGroup_MembersArgs, never>>;
+  group_members_aggregate?: Resolver<ResolversTypes['group_members_aggregate'], ParentType, ContextType, RequireFields<Query_RootGroup_Members_AggregateArgs, never>>;
+  group_members_by_pk?: Resolver<Maybe<ResolversTypes['group_members']>, ParentType, ContextType, RequireFields<Query_RootGroup_Members_By_PkArgs, 'id'>>;
+  groups?: Resolver<Array<ResolversTypes['groups']>, ParentType, ContextType, RequireFields<Query_RootGroupsArgs, never>>;
+  groups_aggregate?: Resolver<ResolversTypes['groups_aggregate'], ParentType, ContextType, RequireFields<Query_RootGroups_AggregateArgs, never>>;
+  groups_by_pk?: Resolver<Maybe<ResolversTypes['groups']>, ParentType, ContextType, RequireFields<Query_RootGroups_By_PkArgs, 'id'>>;
+  things?: Resolver<Array<ResolversTypes['things']>, ParentType, ContextType, RequireFields<Query_RootThingsArgs, never>>;
+  things_aggregate?: Resolver<ResolversTypes['things_aggregate'], ParentType, ContextType, RequireFields<Query_RootThings_AggregateArgs, never>>;
+  things_by_pk?: Resolver<Maybe<ResolversTypes['things']>, ParentType, ContextType, RequireFields<Query_RootThings_By_PkArgs, 'id'>>;
+  user_private?: Resolver<Array<ResolversTypes['user_private']>, ParentType, ContextType, RequireFields<Query_RootUser_PrivateArgs, never>>;
+  user_private_aggregate?: Resolver<ResolversTypes['user_private_aggregate'], ParentType, ContextType, RequireFields<Query_RootUser_Private_AggregateArgs, never>>;
+  users?: Resolver<Array<ResolversTypes['users']>, ParentType, ContextType, RequireFields<Query_RootUsersArgs, never>>;
+  users_aggregate?: Resolver<ResolversTypes['users_aggregate'], ParentType, ContextType, RequireFields<Query_RootUsers_AggregateArgs, never>>;
+  users_by_pk?: Resolver<Maybe<ResolversTypes['users']>, ParentType, ContextType, RequireFields<Query_RootUsers_By_PkArgs, 'id'>>;
+  verification_requests?: Resolver<Array<ResolversTypes['verification_requests']>, ParentType, ContextType, RequireFields<Query_RootVerification_RequestsArgs, never>>;
+  verification_requests_aggregate?: Resolver<ResolversTypes['verification_requests_aggregate'], ParentType, ContextType, RequireFields<Query_RootVerification_Requests_AggregateArgs, never>>;
+  verification_requests_by_pk?: Resolver<Maybe<ResolversTypes['verification_requests']>, ParentType, ContextType, RequireFields<Query_RootVerification_Requests_By_PkArgs, 'id'>>;
+};
+
+export type Subscription_RootResolvers<ContextType = any, ParentType extends ResolversParentTypes['subscription_root'] = ResolversParentTypes['subscription_root']> = {
+  group_members?: SubscriptionResolver<Array<ResolversTypes['group_members']>, "group_members", ParentType, ContextType, RequireFields<Subscription_RootGroup_MembersArgs, never>>;
+  group_members_aggregate?: SubscriptionResolver<ResolversTypes['group_members_aggregate'], "group_members_aggregate", ParentType, ContextType, RequireFields<Subscription_RootGroup_Members_AggregateArgs, never>>;
+  group_members_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['group_members']>, "group_members_by_pk", ParentType, ContextType, RequireFields<Subscription_RootGroup_Members_By_PkArgs, 'id'>>;
+  groups?: SubscriptionResolver<Array<ResolversTypes['groups']>, "groups", ParentType, ContextType, RequireFields<Subscription_RootGroupsArgs, never>>;
+  groups_aggregate?: SubscriptionResolver<ResolversTypes['groups_aggregate'], "groups_aggregate", ParentType, ContextType, RequireFields<Subscription_RootGroups_AggregateArgs, never>>;
+  groups_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['groups']>, "groups_by_pk", ParentType, ContextType, RequireFields<Subscription_RootGroups_By_PkArgs, 'id'>>;
+  things?: SubscriptionResolver<Array<ResolversTypes['things']>, "things", ParentType, ContextType, RequireFields<Subscription_RootThingsArgs, never>>;
+  things_aggregate?: SubscriptionResolver<ResolversTypes['things_aggregate'], "things_aggregate", ParentType, ContextType, RequireFields<Subscription_RootThings_AggregateArgs, never>>;
+  things_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['things']>, "things_by_pk", ParentType, ContextType, RequireFields<Subscription_RootThings_By_PkArgs, 'id'>>;
+  user_private?: SubscriptionResolver<Array<ResolversTypes['user_private']>, "user_private", ParentType, ContextType, RequireFields<Subscription_RootUser_PrivateArgs, never>>;
+  user_private_aggregate?: SubscriptionResolver<ResolversTypes['user_private_aggregate'], "user_private_aggregate", ParentType, ContextType, RequireFields<Subscription_RootUser_Private_AggregateArgs, never>>;
+  users?: SubscriptionResolver<Array<ResolversTypes['users']>, "users", ParentType, ContextType, RequireFields<Subscription_RootUsersArgs, never>>;
+  users_aggregate?: SubscriptionResolver<ResolversTypes['users_aggregate'], "users_aggregate", ParentType, ContextType, RequireFields<Subscription_RootUsers_AggregateArgs, never>>;
+  users_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['users']>, "users_by_pk", ParentType, ContextType, RequireFields<Subscription_RootUsers_By_PkArgs, 'id'>>;
+  verification_requests?: SubscriptionResolver<Array<ResolversTypes['verification_requests']>, "verification_requests", ParentType, ContextType, RequireFields<Subscription_RootVerification_RequestsArgs, never>>;
+  verification_requests_aggregate?: SubscriptionResolver<ResolversTypes['verification_requests_aggregate'], "verification_requests_aggregate", ParentType, ContextType, RequireFields<Subscription_RootVerification_Requests_AggregateArgs, never>>;
+  verification_requests_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['verification_requests']>, "verification_requests_by_pk", ParentType, ContextType, RequireFields<Subscription_RootVerification_Requests_By_PkArgs, 'id'>>;
+};
+
+export type ThingsResolvers<ContextType = any, ParentType extends ResolversParentTypes['things'] = ResolversParentTypes['things']> = {
+  created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  owner?: Resolver<ResolversTypes['users'], ParentType, ContextType>;
+  owner_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  updated_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Things_AggregateResolvers<ContextType = any, ParentType extends ResolversParentTypes['things_aggregate'] = ResolversParentTypes['things_aggregate']> = {
+  aggregate?: Resolver<Maybe<ResolversTypes['things_aggregate_fields']>, ParentType, ContextType>;
+  nodes?: Resolver<Array<ResolversTypes['things']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Things_Aggregate_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['things_aggregate_fields'] = ResolversParentTypes['things_aggregate_fields']> = {
+  count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<Things_Aggregate_FieldsCountArgs, never>>;
+  max?: Resolver<Maybe<ResolversTypes['things_max_fields']>, ParentType, ContextType>;
+  min?: Resolver<Maybe<ResolversTypes['things_min_fields']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Things_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['things_max_fields'] = ResolversParentTypes['things_max_fields']> = {
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  owner_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Things_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['things_min_fields'] = ResolversParentTypes['things_min_fields']> = {
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  owner_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Things_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['things_mutation_response'] = ResolversParentTypes['things_mutation_response']> = {
+  affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  returning?: Resolver<Array<ResolversTypes['things']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export interface TimestamptzScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['timestamptz'], any> {
+  name: 'timestamptz';
+}
+
+export type User_PrivateResolvers<ContextType = any, ParentType extends ResolversParentTypes['user_private'] = ResolversParentTypes['user_private']> = {
+  email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  user_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type User_Private_AggregateResolvers<ContextType = any, ParentType extends ResolversParentTypes['user_private_aggregate'] = ResolversParentTypes['user_private_aggregate']> = {
+  aggregate?: Resolver<Maybe<ResolversTypes['user_private_aggregate_fields']>, ParentType, ContextType>;
+  nodes?: Resolver<Array<ResolversTypes['user_private']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type User_Private_Aggregate_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['user_private_aggregate_fields'] = ResolversParentTypes['user_private_aggregate_fields']> = {
+  count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<User_Private_Aggregate_FieldsCountArgs, never>>;
+  max?: Resolver<Maybe<ResolversTypes['user_private_max_fields']>, ParentType, ContextType>;
+  min?: Resolver<Maybe<ResolversTypes['user_private_min_fields']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type User_Private_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['user_private_max_fields'] = ResolversParentTypes['user_private_max_fields']> = {
+  email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  user_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type User_Private_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['user_private_min_fields'] = ResolversParentTypes['user_private_min_fields']> = {
+  email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  user_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type User_Private_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['user_private_mutation_response'] = ResolversParentTypes['user_private_mutation_response']> = {
+  affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  returning?: Resolver<Array<ResolversTypes['user_private']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type UsersResolvers<ContextType = any, ParentType extends ResolversParentTypes['users'] = ResolversParentTypes['users']> = {
+  created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  email_verified?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  last_seen?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  memberships?: Resolver<Array<ResolversTypes['group_members']>, ParentType, ContextType, RequireFields<UsersMembershipsArgs, never>>;
+  memberships_aggregate?: Resolver<ResolversTypes['group_members_aggregate'], ParentType, ContextType, RequireFields<UsersMemberships_AggregateArgs, never>>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  password_hash?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  private_info?: Resolver<Maybe<ResolversTypes['user_private']>, ParentType, ContextType>;
+  things?: Resolver<Array<ResolversTypes['things']>, ParentType, ContextType, RequireFields<UsersThingsArgs, never>>;
+  things_aggregate?: Resolver<ResolversTypes['things_aggregate'], ParentType, ContextType, RequireFields<UsersThings_AggregateArgs, never>>;
+  updated_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Users_AggregateResolvers<ContextType = any, ParentType extends ResolversParentTypes['users_aggregate'] = ResolversParentTypes['users_aggregate']> = {
+  aggregate?: Resolver<Maybe<ResolversTypes['users_aggregate_fields']>, ParentType, ContextType>;
+  nodes?: Resolver<Array<ResolversTypes['users']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Users_Aggregate_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['users_aggregate_fields'] = ResolversParentTypes['users_aggregate_fields']> = {
+  count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<Users_Aggregate_FieldsCountArgs, never>>;
+  max?: Resolver<Maybe<ResolversTypes['users_max_fields']>, ParentType, ContextType>;
+  min?: Resolver<Maybe<ResolversTypes['users_min_fields']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Users_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['users_max_fields'] = ResolversParentTypes['users_max_fields']> = {
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  email_verified?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  last_seen?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  password_hash?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Users_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['users_min_fields'] = ResolversParentTypes['users_min_fields']> = {
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  email_verified?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  last_seen?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  password_hash?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Users_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['users_mutation_response'] = ResolversParentTypes['users_mutation_response']> = {
+  affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  returning?: Resolver<Array<ResolversTypes['users']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export interface UuidScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['uuid'], any> {
+  name: 'uuid';
+}
+
+export type Verification_RequestsResolvers<ContextType = any, ParentType extends ResolversParentTypes['verification_requests'] = ResolversParentTypes['verification_requests']> = {
+  created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  expires?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  identifier?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  updated_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Verification_Requests_AggregateResolvers<ContextType = any, ParentType extends ResolversParentTypes['verification_requests_aggregate'] = ResolversParentTypes['verification_requests_aggregate']> = {
+  aggregate?: Resolver<Maybe<ResolversTypes['verification_requests_aggregate_fields']>, ParentType, ContextType>;
+  nodes?: Resolver<Array<ResolversTypes['verification_requests']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Verification_Requests_Aggregate_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['verification_requests_aggregate_fields'] = ResolversParentTypes['verification_requests_aggregate_fields']> = {
+  avg?: Resolver<Maybe<ResolversTypes['verification_requests_avg_fields']>, ParentType, ContextType>;
+  count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<Verification_Requests_Aggregate_FieldsCountArgs, never>>;
+  max?: Resolver<Maybe<ResolversTypes['verification_requests_max_fields']>, ParentType, ContextType>;
+  min?: Resolver<Maybe<ResolversTypes['verification_requests_min_fields']>, ParentType, ContextType>;
+  stddev?: Resolver<Maybe<ResolversTypes['verification_requests_stddev_fields']>, ParentType, ContextType>;
+  stddev_pop?: Resolver<Maybe<ResolversTypes['verification_requests_stddev_pop_fields']>, ParentType, ContextType>;
+  stddev_samp?: Resolver<Maybe<ResolversTypes['verification_requests_stddev_samp_fields']>, ParentType, ContextType>;
+  sum?: Resolver<Maybe<ResolversTypes['verification_requests_sum_fields']>, ParentType, ContextType>;
+  var_pop?: Resolver<Maybe<ResolversTypes['verification_requests_var_pop_fields']>, ParentType, ContextType>;
+  var_samp?: Resolver<Maybe<ResolversTypes['verification_requests_var_samp_fields']>, ParentType, ContextType>;
+  variance?: Resolver<Maybe<ResolversTypes['verification_requests_variance_fields']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Verification_Requests_Avg_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['verification_requests_avg_fields'] = ResolversParentTypes['verification_requests_avg_fields']> = {
+  id?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Verification_Requests_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['verification_requests_max_fields'] = ResolversParentTypes['verification_requests_max_fields']> = {
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  expires?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  identifier?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Verification_Requests_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['verification_requests_min_fields'] = ResolversParentTypes['verification_requests_min_fields']> = {
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  expires?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  identifier?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Verification_Requests_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['verification_requests_mutation_response'] = ResolversParentTypes['verification_requests_mutation_response']> = {
+  affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  returning?: Resolver<Array<ResolversTypes['verification_requests']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Verification_Requests_Stddev_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['verification_requests_stddev_fields'] = ResolversParentTypes['verification_requests_stddev_fields']> = {
+  id?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Verification_Requests_Stddev_Pop_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['verification_requests_stddev_pop_fields'] = ResolversParentTypes['verification_requests_stddev_pop_fields']> = {
+  id?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Verification_Requests_Stddev_Samp_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['verification_requests_stddev_samp_fields'] = ResolversParentTypes['verification_requests_stddev_samp_fields']> = {
+  id?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Verification_Requests_Sum_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['verification_requests_sum_fields'] = ResolversParentTypes['verification_requests_sum_fields']> = {
+  id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Verification_Requests_Var_Pop_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['verification_requests_var_pop_fields'] = ResolversParentTypes['verification_requests_var_pop_fields']> = {
+  id?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Verification_Requests_Var_Samp_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['verification_requests_var_samp_fields'] = ResolversParentTypes['verification_requests_var_samp_fields']> = {
+  id?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Verification_Requests_Variance_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['verification_requests_variance_fields'] = ResolversParentTypes['verification_requests_variance_fields']> = {
+  id?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Resolvers<ContextType = any> = {
+  RegistrationResult?: RegistrationResultResolvers<ContextType>;
+  group_members?: Group_MembersResolvers<ContextType>;
+  group_members_aggregate?: Group_Members_AggregateResolvers<ContextType>;
+  group_members_aggregate_fields?: Group_Members_Aggregate_FieldsResolvers<ContextType>;
+  group_members_max_fields?: Group_Members_Max_FieldsResolvers<ContextType>;
+  group_members_min_fields?: Group_Members_Min_FieldsResolvers<ContextType>;
+  group_members_mutation_response?: Group_Members_Mutation_ResponseResolvers<ContextType>;
+  groups?: GroupsResolvers<ContextType>;
+  groups_aggregate?: Groups_AggregateResolvers<ContextType>;
+  groups_aggregate_fields?: Groups_Aggregate_FieldsResolvers<ContextType>;
+  groups_max_fields?: Groups_Max_FieldsResolvers<ContextType>;
+  groups_min_fields?: Groups_Min_FieldsResolvers<ContextType>;
+  groups_mutation_response?: Groups_Mutation_ResponseResolvers<ContextType>;
+  json?: GraphQLScalarType;
+  mutation_root?: Mutation_RootResolvers<ContextType>;
+  query_root?: Query_RootResolvers<ContextType>;
+  subscription_root?: Subscription_RootResolvers<ContextType>;
+  things?: ThingsResolvers<ContextType>;
+  things_aggregate?: Things_AggregateResolvers<ContextType>;
+  things_aggregate_fields?: Things_Aggregate_FieldsResolvers<ContextType>;
+  things_max_fields?: Things_Max_FieldsResolvers<ContextType>;
+  things_min_fields?: Things_Min_FieldsResolvers<ContextType>;
+  things_mutation_response?: Things_Mutation_ResponseResolvers<ContextType>;
+  timestamptz?: GraphQLScalarType;
+  user_private?: User_PrivateResolvers<ContextType>;
+  user_private_aggregate?: User_Private_AggregateResolvers<ContextType>;
+  user_private_aggregate_fields?: User_Private_Aggregate_FieldsResolvers<ContextType>;
+  user_private_max_fields?: User_Private_Max_FieldsResolvers<ContextType>;
+  user_private_min_fields?: User_Private_Min_FieldsResolvers<ContextType>;
+  user_private_mutation_response?: User_Private_Mutation_ResponseResolvers<ContextType>;
+  users?: UsersResolvers<ContextType>;
+  users_aggregate?: Users_AggregateResolvers<ContextType>;
+  users_aggregate_fields?: Users_Aggregate_FieldsResolvers<ContextType>;
+  users_max_fields?: Users_Max_FieldsResolvers<ContextType>;
+  users_min_fields?: Users_Min_FieldsResolvers<ContextType>;
+  users_mutation_response?: Users_Mutation_ResponseResolvers<ContextType>;
+  uuid?: GraphQLScalarType;
+  verification_requests?: Verification_RequestsResolvers<ContextType>;
+  verification_requests_aggregate?: Verification_Requests_AggregateResolvers<ContextType>;
+  verification_requests_aggregate_fields?: Verification_Requests_Aggregate_FieldsResolvers<ContextType>;
+  verification_requests_avg_fields?: Verification_Requests_Avg_FieldsResolvers<ContextType>;
+  verification_requests_max_fields?: Verification_Requests_Max_FieldsResolvers<ContextType>;
+  verification_requests_min_fields?: Verification_Requests_Min_FieldsResolvers<ContextType>;
+  verification_requests_mutation_response?: Verification_Requests_Mutation_ResponseResolvers<ContextType>;
+  verification_requests_stddev_fields?: Verification_Requests_Stddev_FieldsResolvers<ContextType>;
+  verification_requests_stddev_pop_fields?: Verification_Requests_Stddev_Pop_FieldsResolvers<ContextType>;
+  verification_requests_stddev_samp_fields?: Verification_Requests_Stddev_Samp_FieldsResolvers<ContextType>;
+  verification_requests_sum_fields?: Verification_Requests_Sum_FieldsResolvers<ContextType>;
+  verification_requests_var_pop_fields?: Verification_Requests_Var_Pop_FieldsResolvers<ContextType>;
+  verification_requests_var_samp_fields?: Verification_Requests_Var_Samp_FieldsResolvers<ContextType>;
+  verification_requests_variance_fields?: Verification_Requests_Variance_FieldsResolvers<ContextType>;
+};
+
+
+/**
+ * @deprecated
+ * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
+ */
+export type IResolvers<ContextType = any> = Resolvers<ContextType>;
+
+
+export const UserCredentialsDocument: DocumentNode<UserCredentialsQuery, UserCredentialsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserCredentials"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"password_hash"},"arguments":[],"directives":[]}]}}]}}]};
+export const FindUserDocument: DocumentNode<FindUserQuery, FindUserQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"email"},"arguments":[],"directives":[]}]}}]}}]};
+export const RegisterUserDocument: DocumentNode<RegisterUserMutation, RegisterUserMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RegisterUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"users_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_users_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]};
+
+      export interface PossibleTypesResultData {
+        possibleTypes: {
+          [key: string]: string[]
+        }
+      }
+      const result: PossibleTypesResultData = {
+  "possibleTypes": {}
+};
+      export default result;
+    
