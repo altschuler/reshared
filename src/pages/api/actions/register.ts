@@ -11,7 +11,7 @@ const inputSchema = Joi.object({
     password: Joi.string().min(6).rule({ message: 'Password must be at least 6 characters long' }),
 });
 
-const client = new ApolloClient({
+export const client = new ApolloClient({
     link: new HttpLink({
         fetch,
         uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,

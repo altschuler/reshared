@@ -2,8 +2,8 @@
 import Providers from 'next-auth/providers';
 import bcrypt from 'bcryptjs';
 import { UserCredentialsDocument } from '../../../generated/server-queries';
-import { apollo } from '../../../utils/client';
 import jwt from 'jsonwebtoken';
+import { client } from '../actions/register';
 
 const jwtSecret = JSON.parse(process.env.AUTH_PRIVATE_SECRET!);
 
@@ -51,7 +51,7 @@ const options = {
                 password: { label: 'Password', type: 'password' },
             },
             authorize: async (credentials) => {
-                const userQuery = await apollo.query({
+                const userQuery = await client.query({
                     query: UserCredentialsDocument,
                     variables: { email: credentials.email },
                 });

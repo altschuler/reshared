@@ -56,14 +56,14 @@ export const RegisterForm = (props: RegisterFormProps) => {
                 name="basic"
                 onFinish={handleSignUp}>
                 <Form.Item
-                    name="Name"
+                    name="name"
                     rules={[{ required: true, min: 3 }]}
                     extra="Name as it is shown to other users">
                     <Input placeholder="Name" />
                 </Form.Item>
 
-                <Form.Item name="email" rules={[{ type: 'email' }]}>
-                    <Input placeholder="Email (optional)" />
+                <Form.Item name="email" rules={[{ required: true, type: 'email' }]}>
+                    <Input placeholder="Email" />
                 </Form.Item>
 
                 <Form.Item
