@@ -16,7 +16,7 @@ const client = new ApolloClient({
         fetch,
         uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
         headers: {
-            'X-Hasura-Admin-Secret': process.env.HASURA_ADMIN_SECRET,
+            'x-hasura-admin-secret': process.env.HASURA_ADMIN_SECRET,
         },
     }),
     cache: new InMemoryCache(),

@@ -2,7 +2,7 @@
 import Providers from 'next-auth/providers';
 import bcrypt from 'bcryptjs';
 import { UserCredentialsDocument } from '../../../generated/server-queries';
-import { apollo } from '../../../server/client';
+import { apollo } from '../../../utils/client';
 import jwt from 'jsonwebtoken';
 
 const jwtSecret = JSON.parse(process.env.AUTH_PRIVATE_SECRET!);

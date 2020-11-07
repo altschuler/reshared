@@ -14,8 +14,9 @@ class MyDocument extends Document {
                     </JssProvider>
                 ),
             });
+
         const initialProps = await Document.getInitialProps(ctx);
-        console.log(registry);
+
         return {
             ...initialProps,
             styles: (
@@ -29,9 +30,7 @@ class MyDocument extends Document {
     render() {
         return (
             <Html>
-                <Head>
-                    <title>Reshared</title>
-                </Head>
+                <Head />
                 <body>
                     <Main />
                     <NextScript />
