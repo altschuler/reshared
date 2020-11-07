@@ -25,10 +25,7 @@ export const ThingCard = ({ thing, className }: ThingCardProps) => {
             ]}>
             <Card.Meta
                 avatar={
-                    <Avatar
-                        alt={thing.owner.display_name || 'anonymous'}
-                        src={thing.owner.avatar_url || ''}
-                    />
+                    <Avatar alt={thing.owner.name || 'anonymous'} src={thing.owner.image || ''} />
                 }
                 title={thing.name}
                 description={'A thing wow'}
