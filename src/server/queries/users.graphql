@@ -12,7 +12,7 @@ query FindUser($email: String) {
     }
 }
 
-mutation RegisterUser($input: users_insert_input!) {
+mutation InsertUser($input: users_insert_input!) {
     insert_users_one(object: $input) {
         id
     }

@@ -1,7 +1,7 @@
 ﻿import { Typography, Alert, Button, Divider, Form, Input, Space } from 'antd';
 import { values } from 'lodash';
 import { getProviders, SessionProvider, signIn } from 'next-auth/client';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useRegisterUserMutation } from '../../../generated/graphql';
 

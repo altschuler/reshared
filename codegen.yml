@@ -1,6 +1,8 @@
 ﻿overwrite: true
 schema:
-  - ${NEXT_PUBLIC_GRAPHQL_ENDPOINT}
+  - ${NEXT_PUBLIC_GRAPHQL_ENDPOINT}:
+      headers:
+        X-Hasura-Admin-Secret: ${HASURA_ADMIN_SECRET}
 generates:
   ./src/generated/schema.graphql:
     plugins:
@@ -8,8 +10,6 @@ generates:
   ./src/generated/server-queries.ts:
     documents:
       - ./src/server/queries/*.{graphql,ts,tsx}
-    schema:
-      - ${NEXT_PUBLIC_GRAPHQL_ENDPOINT}
     plugins:
       - typescript
       - typescript-operations
@@ -17,8 +17,6 @@ generates:
       - typed-document-node
       - fragment-matcher
   ./src/generated/graphql.tsx:
-    schema:
-      - ${NEXT_PUBLIC_GRAPHQL_ENDPOINT}
     documents:
       - ./src/**/*.{graphql,ts,tsx}
       - '!./src/generated/**'
