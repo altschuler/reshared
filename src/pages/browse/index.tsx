@@ -19,11 +19,14 @@ export const SharableList = () => {
 
     const things = data?.things || [];
 
+    // TODO: use ant's list
     return (
         <Spin spinning={loading}>
             <div className={classes.root}>
                 {things.map((thing) => (
-                    <ThingCard className={classes.thing} key={thing.id} thing={thing} />
+                    <div key={thing.id} className={classes.thing}>
+                        <ThingCard thing={thing} />
+                    </div>
                 ))}
             </div>
         </Spin>
