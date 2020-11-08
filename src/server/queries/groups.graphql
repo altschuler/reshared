@@ -1,0 +1,5 @@
+﻿mutation InsertGroup($input: groups_insert_input!) {
+    insert_groups_one(object: $input) {
+        id
+    }
+}

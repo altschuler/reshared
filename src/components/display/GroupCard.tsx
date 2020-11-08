@@ -1,12 +1,12 @@
-﻿import { ThingCardFragment } from '../../generated/graphql';
+﻿import { GroupCardFragment } from '../../generated/graphql';
 import { Avatar, Card } from 'antd';
 import { SettingOutlined, EllipsisOutlined, EditOutlined } from '@ant-design/icons';
 
-export interface ThingCardProps {
-    thing: ThingCardFragment;
+export interface GroupCardProps {
+    group: GroupCardFragment;
 }
 
-export const ThingCard = ({ thing }: ThingCardProps) => {
+export const GroupCard = ({ group }: GroupCardProps) => {
     return (
         <Card
             style={{ width: 300 }}
@@ -22,10 +22,10 @@ export const ThingCard = ({ thing }: ThingCardProps) => {
                 <EllipsisOutlined key="ellipsis" />,
             ]}>
             <Card.Meta
-                avatar={
-                    <Avatar alt={thing.owner.name || 'anonymous'} src={thing.owner.image || ''} />
-                }
-                title={thing.name}
+                // avatar={
+                //     <Avatar alt={group.name} src={group.image || ''} />
+                // }
+                title={group.name}
                 description={'A thing wow'}
             />
         </Card>

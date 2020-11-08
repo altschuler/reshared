@@ -2,36 +2,30 @@
 import Providers from 'next-auth/providers';
 import bcrypt from 'bcryptjs';
 import { UserCredentialsDocument } from '../../../generated/server-queries';
-import jwt from 'jsonwebtoken';
-import { client } from '../actions/register';
-
-const jwtSecret = JSON.parse(process.env.AUTH_PRIVATE_SECRET!);
+import { hasuraClient } from '../../../server/hasuraClient';
+import { decodeToken, encodeToken } from '../../../server/auth';
 
 const options = {
     database: process.env.POSTGRES_URL,
     secret: process.env.NEXT_AUTH_SECRET,
     jwt: {
-        encode: async ({ token, secret }) => {
-            const tokenContents = {
-                id: token.id,
-                name: token.name,
-                email: token.email,
-                picture: token.picture,
+        encode: async (options) =>
+            encodeToken({
+                id: options.token.id,
+                name: options.token.name,
+                email: options.token.email,
+                picture: options.token.picture,
                 'https://hasura.io/jwt/claims': {
-                    'x-hasura-allowed-roles': ['admin', 'user'],
+                    'x-hasura-allowed-roles': ['user'],
                     'x-hasura-default-role': 'user',
                     'x-hasura-role': 'user',
-                    'x-hasura-user-id': token.id,
+                    'x-hasura-user-id': options.token.id,
                 },
                 iat: Date.now() / 1000,
                 exp: Math.floor(Date.now() / 1000) + 24 * 60 * 60,
-                sub: token.id,
-            };
-
-            return jwt.sign(tokenContents, jwtSecret.key, { algorithm: jwtSecret.type });
-        },
-        decode: async ({ token, secret }: { token: string; secret: string }) =>
-            jwt.verify(token, jwtSecret.key, { algorithms: jwtSecret.type }) as string,
+                sub: options.token.id,
+            }),
+        decode: async (options) => (decodeToken(options.token) as unknown) as string,
     },
     session: { jwt: true },
     pages: {
@@ -51,7 +45,7 @@ const options = {
                 password: { label: 'Password', type: 'password' },
             },
             authorize: async (credentials) => {
-                const userQuery = await client.query({
+                const userQuery = await hasuraClient.query({
                     query: UserCredentialsDocument,
                     variables: { email: credentials.email },
                 });
@@ -71,12 +65,8 @@ const options = {
 
     callbacks: {
         session: async (session, user) => {
-            const encodedToken = jwt.sign(user, jwtSecret.key, {
-                algorithm: jwtSecret.type,
-            });
-
             session.id = user.id;
-            session.token = encodedToken;
+            session.token = encodeToken(user);
 
             return Promise.resolve(session);
         },

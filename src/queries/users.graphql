@@ -31,7 +31,7 @@ query UserPrivateDetails($id: uuid!) {
 mutation RegisterUser($input: CredentialsInput!) {
     registerCredentials(input: $input) {
         user {
-            ...UserDetail
+            ...UserCard
         }
     }
 }

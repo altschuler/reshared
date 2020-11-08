@@ -9,9 +9,6 @@
         "schema": "dotenv -c local -- graphql-codegen",
         "schema-watch": "dotenv -c local -- graphql-codegen --watch"
     },
-    "eslintConfig": {
-        "extends": "react-app"
-    },
     "prettier": {
         "printWidth": 100,
         "tabWidth": 4,
@@ -55,8 +52,11 @@
         "@graphql-codegen/typescript-react-apollo": "^2.0.7",
         "@types/node": "^14.14.6",
         "@types/react": "^16.9.55",
-        "eslint": "^7.12.1",
+        "@typescript-eslint/eslint-plugin": "^4.6.1",
+        "@typescript-eslint/parser": "^4.6.1",
+        "eslint": "^7.13.0",
         "eslint-plugin-react": "^7.21.5",
+        "eslint-plugin-react-hooks": "^4.2.0",
         "prettier": "^2.1.2",
         "typescript": "^4.0.5"
     }

@@ -18,7 +18,7 @@ generates:
       - fragment-matcher
   ./src/generated/graphql.tsx:
     documents:
-      - ./src/**/*.{graphql,ts,tsx}
+      - './src/**/*.graphql'
       - '!./src/generated/**'
       - '!./src/pages/api/**'
       - '!./src/server/**'

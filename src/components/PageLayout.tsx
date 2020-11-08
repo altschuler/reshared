@@ -57,11 +57,10 @@ interface UserButtonProps {
     user: UserDetailFragment;
 }
 
-const doSignOut = () => signOut();
 const UserButton = ({ user }: UserButtonProps) => {
     const menu = (
         <div>
-            <Button onClick={doSignOut}>Log out</Button>
+            <Button onClick={() => signOut()}>Log out</Button>
         </div>
     );
 
@@ -102,8 +101,8 @@ export const PageLayout = (props: PageLayoutProps) => {
                         <Link href="/browse">
                             <Button type="primary">Browse</Button>
                         </Link>
-                        <Link href="/my-shares">
-                            <Button type="primary">My Shares</Button>
+                        <Link href="/groups">
+                            <Button type="primary">Groups</Button>
                         </Link>
                     </Space>
                 </div>

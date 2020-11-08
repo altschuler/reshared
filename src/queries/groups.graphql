@@ -1,0 +1,33 @@
+﻿fragment GroupCard on groups {
+    id
+    name
+    created_at
+    description
+    public
+
+    memberships_aggregate {
+        aggregate {
+            count
+        }
+    }
+}
+
+mutation CreateGroup($input: CreateGroupInput!) {
+    createGroup(input: $input) {
+        group {
+            ...GroupCard
+        }
+    }
+}
+
+query ListGroups($limit: Int!, $offset: Int!, $where: groups_bool_exp) {
+    groups_aggregate(where: $where) {
+        aggregate {
+            count
+        }
+    }
+
+    groups(limit: $limit, offset: $offset, where: $where) {
+        ...GroupCard
+    }
+}

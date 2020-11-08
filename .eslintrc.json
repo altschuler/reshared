@@ -1,4 +1,17 @@
 ﻿{
-    "extends": ["eslint:recommended", "plugin:react/recommended"],
-    "globals": { "React": "writable" }
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
+    "extends": [
+        "eslint:recommended",
+
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended"
+    ],
+    "globals": { "React": "writable" },
+    "rules": {
+        "@typescript-eslint/explicit-module-boundary-types": 0
+    }
 }

@@ -4,6 +4,32 @@ schema {
   subscription: subscription_root
 }
 
+"""
+expression to compare columns of type Boolean. All fields are combined with logical 'AND'.
+"""
+input Boolean_comparison_exp {
+  _eq: Boolean
+  _gt: Boolean
+  _gte: Boolean
+  _in: [Boolean!]
+  _is_null: Boolean
+  _lt: Boolean
+  _lte: Boolean
+  _neq: Boolean
+  _nin: [Boolean!]
+}
+
+input CreateGroupInput {
+  description: String!
+  name: String!
+  public: Boolean
+}
+
+type CreateGroupResult {
+  group: groups
+  group_id: uuid!
+}
+
 input CredentialsInput {
   email: String
   name: String!
@@ -51,6 +77,16 @@ input String_comparison_exp {
   _similar: String
 }
 
+input create_group_input {
+  description: String!
+  name: String!
+  public: Boolean
+}
+
+type create_group_result {
+  group_id: uuid!
+}
+
 """
 columns and relationships of "group_members"
 """
@@ -61,7 +97,7 @@ type group_members {
   group: groups!
   group_id: uuid!
   id: uuid!
-  role: String!
+  role: group_role_enum!
   updated_at: timestamptz!
 
   """An object relationship"""
@@ -114,7 +150,7 @@ input group_members_bool_exp {
   group: groups_bool_exp
   group_id: uuid_comparison_exp
   id: uuid_comparison_exp
-  role: String_comparison_exp
+  role: group_role_enum_comparison_exp
   updated_at: timestamptz_comparison_exp
   user: users_bool_exp
   user_id: uuid_comparison_exp
@@ -136,7 +172,7 @@ input group_members_insert_input {
   group: groups_obj_rel_insert_input
   group_id: uuid
   id: uuid
-  role: String
+  role: group_role_enum
   updated_at: timestamptz
   user: users_obj_rel_insert_input
   user_id: uuid
@@ -147,7 +183,6 @@ type group_members_max_fields {
   created_at: timestamptz
   group_id: uuid
   id: uuid
-  role: String
   updated_at: timestamptz
   user_id: uuid
 }
@@ -159,7 +194,6 @@ input group_members_max_order_by {
   created_at: order_by
   group_id: order_by
   id: order_by
-  role: order_by
   updated_at: order_by
   user_id: order_by
 }
@@ -169,7 +203,6 @@ type group_members_min_fields {
   created_at: timestamptz
   group_id: uuid
   id: uuid
-  role: String
   updated_at: timestamptz
   user_id: uuid
 }
@@ -181,7 +214,6 @@ input group_members_min_order_by {
   created_at: order_by
   group_id: order_by
   id: order_by
-  role: order_by
   updated_at: order_by
   user_id: order_by
 }
@@ -265,7 +297,7 @@ input group_members_set_input {
   created_at: timestamptz
   group_id: uuid
   id: uuid
-  role: String
+  role: group_role_enum
   updated_at: timestamptz
   user_id: uuid
 }
@@ -294,10 +326,200 @@ enum group_members_update_column {
 }
 
 """
+columns and relationships of "group_role"
+"""
+type group_role {
+  comment: String!
+  value: String!
+}
+
+"""
+aggregated selection of "group_role"
+"""
+type group_role_aggregate {
+  aggregate: group_role_aggregate_fields
+  nodes: [group_role!]!
+}
+
+"""
+aggregate fields of "group_role"
+"""
+type group_role_aggregate_fields {
+  count(columns: [group_role_select_column!], distinct: Boolean): Int
+  max: group_role_max_fields
+  min: group_role_min_fields
+}
+
+"""
+order by aggregate values of table "group_role"
+"""
+input group_role_aggregate_order_by {
+  count: order_by
+  max: group_role_max_order_by
+  min: group_role_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "group_role"
+"""
+input group_role_arr_rel_insert_input {
+  data: [group_role_insert_input!]!
+  on_conflict: group_role_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "group_role". All fields are combined with a logical 'AND'.
+"""
+input group_role_bool_exp {
+  _and: [group_role_bool_exp]
+  _not: group_role_bool_exp
+  _or: [group_role_bool_exp]
+  comment: String_comparison_exp
+  value: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "group_role"
+"""
+enum group_role_constraint {
+  """unique or primary key constraint"""
+  group_role_pkey
+}
+
+enum group_role_enum {
+  """group administrator role"""
+  admin
+
+  """regular member"""
+  user
+}
+
+"""
+expression to compare columns of type group_role_enum. All fields are combined with logical 'AND'.
+"""
+input group_role_enum_comparison_exp {
+  _eq: group_role_enum
+  _in: [group_role_enum!]
+  _is_null: Boolean
+  _neq: group_role_enum
+  _nin: [group_role_enum!]
+}
+
+"""
+input type for inserting data into table "group_role"
+"""
+input group_role_insert_input {
+  comment: String
+  value: String
+}
+
+"""aggregate max on columns"""
+type group_role_max_fields {
+  comment: String
+  value: String
+}
+
+"""
+order by max() on columns of table "group_role"
+"""
+input group_role_max_order_by {
+  comment: order_by
+  value: order_by
+}
+
+"""aggregate min on columns"""
+type group_role_min_fields {
+  comment: String
+  value: String
+}
+
+"""
+order by min() on columns of table "group_role"
+"""
+input group_role_min_order_by {
+  comment: order_by
+  value: order_by
+}
+
+"""
+response of any mutation on the table "group_role"
+"""
+type group_role_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [group_role!]!
+}
+
+"""
+input type for inserting object relation for remote table "group_role"
+"""
+input group_role_obj_rel_insert_input {
+  data: group_role_insert_input!
+  on_conflict: group_role_on_conflict
+}
+
+"""
+on conflict condition type for table "group_role"
+"""
+input group_role_on_conflict {
+  constraint: group_role_constraint!
+  update_columns: [group_role_update_column!]!
+  where: group_role_bool_exp
+}
+
+"""
+ordering options when selecting data from "group_role"
+"""
+input group_role_order_by {
+  comment: order_by
+  value: order_by
+}
+
+"""
+primary key columns input for table: "group_role"
+"""
+input group_role_pk_columns_input {
+  value: String!
+}
+
+"""
+select columns of table "group_role"
+"""
+enum group_role_select_column {
+  """column name"""
+  comment
+
+  """column name"""
+  value
+}
+
+"""
+input type for updating data in table "group_role"
+"""
+input group_role_set_input {
+  comment: String
+  value: String
+}
+
+"""
+update columns of table "group_role"
+"""
+enum group_role_update_column {
+  """column name"""
+  comment
+
+  """column name"""
+  value
+}
+
+"""
 columns and relationships of "groups"
 """
 type groups {
   created_at: timestamptz!
+  description: String
   id: uuid!
 
   """An array relationship"""
@@ -336,6 +558,7 @@ type groups {
     where: group_members_bool_exp
   ): group_members_aggregate!
   name: String!
+  public: Boolean!
   updated_at: timestamptz!
 }
 
@@ -381,9 +604,11 @@ input groups_bool_exp {
   _not: groups_bool_exp
   _or: [groups_bool_exp]
   created_at: timestamptz_comparison_exp
+  description: String_comparison_exp
   id: uuid_comparison_exp
   memberships: group_members_bool_exp
   name: String_comparison_exp
+  public: Boolean_comparison_exp
   updated_at: timestamptz_comparison_exp
 }
 
@@ -391,6 +616,9 @@ input groups_bool_exp {
 unique or primary key constraints on table "groups"
 """
 enum groups_constraint {
+  """unique or primary key constraint"""
+  groups_name_key
+
   """unique or primary key constraint"""
   groups_pkey
 }
@@ -400,15 +628,18 @@ input type for inserting data into table "groups"
 """
 input groups_insert_input {
   created_at: timestamptz
+  description: String
   id: uuid
   memberships: group_members_arr_rel_insert_input
   name: String
+  public: Boolean
   updated_at: timestamptz
 }
 
 """aggregate max on columns"""
 type groups_max_fields {
   created_at: timestamptz
+  description: String
   id: uuid
   name: String
   updated_at: timestamptz
@@ -419,6 +650,7 @@ order by max() on columns of table "groups"
 """
 input groups_max_order_by {
   created_at: order_by
+  description: order_by
   id: order_by
   name: order_by
   updated_at: order_by
@@ -427,6 +659,7 @@ input groups_max_order_by {
 """aggregate min on columns"""
 type groups_min_fields {
   created_at: timestamptz
+  description: String
   id: uuid
   name: String
   updated_at: timestamptz
@@ -437,6 +670,7 @@ order by min() on columns of table "groups"
 """
 input groups_min_order_by {
   created_at: order_by
+  description: order_by
   id: order_by
   name: order_by
   updated_at: order_by
@@ -475,9 +709,11 @@ ordering options when selecting data from "groups"
 """
 input groups_order_by {
   created_at: order_by
+  description: order_by
   id: order_by
   memberships_aggregate: group_members_aggregate_order_by
   name: order_by
+  public: order_by
   updated_at: order_by
 }
 
@@ -496,10 +732,16 @@ enum groups_select_column {
   created_at
 
   """column name"""
+  description
+
+  """column name"""
   id
 
   """column name"""
   name
+
+  """column name"""
+  public
 
   """column name"""
   updated_at
@@ -510,8 +752,10 @@ input type for updating data in table "groups"
 """
 input groups_set_input {
   created_at: timestamptz
+  description: String
   id: uuid
   name: String
+  public: Boolean
   updated_at: timestamptz
 }
 
@@ -523,10 +767,16 @@ enum groups_update_column {
   created_at
 
   """column name"""
+  description
+
+  """column name"""
   id
 
   """column name"""
   name
+
+  """column name"""
+  public
 
   """column name"""
   updated_at
@@ -536,6 +786,11 @@ scalar json
 
 """mutation root"""
 type mutation_root {
+  """
+  perform the action: "createGroup"
+  """
+  createGroup(input: CreateGroupInput!): CreateGroupResult!
+
   """
   delete data from the table: "group_members"
   """
@@ -548,6 +803,19 @@ type mutation_root {
   delete single row from the table: "group_members"
   """
   delete_group_members_by_pk(id: uuid!): group_members
+
+  """
+  delete data from the table: "group_role"
+  """
+  delete_group_role(
+    """filter the rows which have to be deleted"""
+    where: group_role_bool_exp!
+  ): group_role_mutation_response
+
+  """
+  delete single row from the table: "group_role"
+  """
+  delete_group_role_by_pk(value: String!): group_role
 
   """
   delete data from the table: "groups"
@@ -630,6 +898,28 @@ type mutation_root {
     """on conflict condition"""
     on_conflict: group_members_on_conflict
   ): group_members
+
+  """
+  insert data into the table: "group_role"
+  """
+  insert_group_role(
+    """the rows to be inserted"""
+    objects: [group_role_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: group_role_on_conflict
+  ): group_role_mutation_response
+
+  """
+  insert a single row into the table: "group_role"
+  """
+  insert_group_role_one(
+    """the row to be inserted"""
+    object: group_role_insert_input!
+
+    """on conflict condition"""
+    on_conflict: group_role_on_conflict
+  ): group_role
 
   """
   insert data into the table: "groups"
@@ -759,6 +1049,26 @@ type mutation_root {
     _set: group_members_set_input
     pk_columns: group_members_pk_columns_input!
   ): group_members
+
+  """
+  update data of the table: "group_role"
+  """
+  update_group_role(
+    """sets the columns of the filtered rows to the given values"""
+    _set: group_role_set_input
+
+    """filter the rows which have to be updated"""
+    where: group_role_bool_exp!
+  ): group_role_mutation_response
+
+  """
+  update single row of the table: "group_role"
+  """
+  update_group_role_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: group_role_set_input
+    pk_columns: group_role_pk_columns_input!
+  ): group_role
 
   """
   update data of the table: "groups"
@@ -923,6 +1233,49 @@ type query_root {
 
   """fetch data from the table: "group_members" using primary key columns"""
   group_members_by_pk(id: uuid!): group_members
+
+  """
+  fetch data from the table: "group_role"
+  """
+  group_role(
+    """distinct select on columns"""
+    distinct_on: [group_role_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_role_order_by!]
+
+    """filter the rows returned"""
+    where: group_role_bool_exp
+  ): [group_role!]!
+
+  """
+  fetch aggregated fields from the table: "group_role"
+  """
+  group_role_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_role_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_role_order_by!]
+
+    """filter the rows returned"""
+    where: group_role_bool_exp
+  ): group_role_aggregate!
+
+  """fetch data from the table: "group_role" using primary key columns"""
+  group_role_by_pk(value: String!): group_role
 
   """
   fetch data from the table: "groups"
@@ -1183,6 +1536,49 @@ type subscription_root {
 
   """fetch data from the table: "group_members" using primary key columns"""
   group_members_by_pk(id: uuid!): group_members
+
+  """
+  fetch data from the table: "group_role"
+  """
+  group_role(
+    """distinct select on columns"""
+    distinct_on: [group_role_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_role_order_by!]
+
+    """filter the rows returned"""
+    where: group_role_bool_exp
+  ): [group_role!]!
+
+  """
+  fetch aggregated fields from the table: "group_role"
+  """
+  group_role_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_role_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_role_order_by!]
+
+    """filter the rows returned"""
+    where: group_role_bool_exp
+  ): group_role_aggregate!
+
+  """fetch data from the table: "group_role" using primary key columns"""
+  group_role_by_pk(value: String!): group_role
 
   """
   fetch data from the table: "groups"
