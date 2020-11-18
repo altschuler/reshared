@@ -74,6 +74,10 @@ const options = {
         jwt: async (token, user, account, profile, isNewUser) => {
             const isSignIn = !!user;
 
+            if (isNewUser) {
+                //hasuraClient.mutate({mutation: })
+            }
+
             // Add auth_time to token on signin in
             if (isSignIn) {
                 token.id = user.id;

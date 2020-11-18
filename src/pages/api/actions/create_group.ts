@@ -1,13 +1,14 @@
-﻿import { InsertGroupDocument } from '../../../generated/server-queries';
+﻿import { ServerInsertGroupDocument } from '../../../generated/server-queries';
 import Joi from 'joi';
 import { hasuraClient } from '../../../server/hasuraClient';
 import { makeHandler } from '../../../server/utils';
 import {
     CreateGroupInput,
-    CreateGroupResult,
     CreateGroupMutationVariables,
+    CreateGroupResult,
     Group_Role_Enum,
 } from '../../../generated/graphql';
+import { MailTemplate, sendMail } from '../../../server/mail';
 
 export default makeHandler<CreateGroupMutationVariables, CreateGroupResult>(
     Joi.object<CreateGroupMutationVariables>({
@@ -19,7 +20,7 @@ export default makeHandler<CreateGroupMutationVariables, CreateGroupResult>(
     }),
     async (args, ctx) => {
         const mutation = await hasuraClient.mutate({
-            mutation: InsertGroupDocument,
+            mutation: ServerInsertGroupDocument,
             variables: {
                 input: {
                     ...args.input,
@@ -31,5 +32,15 @@ export default makeHandler<CreateGroupMutationVariables, CreateGroupResult>(
         });
 
         ctx.success({ group_id: mutation.data?.insert_groups_one?.id });
+        //
+        // sendMail({
+        //     to: 'simon@altschuler.dk',
+        //     templateId: MailTemplate.VerifyEmail,
+        //     dynamicTemplateData: {
+        //         token: 'thisisnotreal',
+        //     },
+        // })
+        //     .then(() => console.log('mail sent'))
+        //     .catch((err) => console.log(err));
     },
 );

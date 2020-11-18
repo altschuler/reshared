@@ -9,8 +9,25 @@ fragment UserDetail on users {
     created_at
 }
 
+fragment UserJoinRequests on users {
+    id
+    group_join_requests {
+        ...GroupJoinRequestCard
+    }
+}
+
 fragment UserPrivateDetail on users {
     ...UserDetail
+    ...UserJoinRequests
+
+    memberships {
+        group {
+            id
+            name
+        }
+        role
+    }
+
     private_info {
         email
     }

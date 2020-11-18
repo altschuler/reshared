@@ -1,5 +1,12 @@
-﻿mutation InsertGroup($input: groups_insert_input!) {
+﻿mutation ServerInsertGroup($input: groups_insert_input!) {
     insert_groups_one(object: $input) {
         id
+    }
+}
+
+mutation ServerInsertGroupJoinRequest($input: group_join_requests_insert_input!) {
+    insert_group_join_requests_one(object: $input) {
+        group_id
+        status
     }
 }

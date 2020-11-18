@@ -56,6 +56,18 @@ type RegistrationResult {
   user_id: uuid!
 }
 
+input RequestJoinGroupInput {
+  group_id: uuid!
+  message: String
+}
+
+type RequestJoinGroupResult {
+  group: groups
+  group_id: uuid!
+  user: users
+  user_id: uuid!
+}
+
 """
 expression to compare columns of type String. All fields are combined with logical 'AND'.
 """
@@ -85,6 +97,484 @@ input create_group_input {
 
 type create_group_result {
   group_id: uuid!
+}
+
+"""
+columns and relationships of "group_join_request_status"
+"""
+type group_join_request_status {
+  comment: String!
+  value: String!
+}
+
+"""
+aggregated selection of "group_join_request_status"
+"""
+type group_join_request_status_aggregate {
+  aggregate: group_join_request_status_aggregate_fields
+  nodes: [group_join_request_status!]!
+}
+
+"""
+aggregate fields of "group_join_request_status"
+"""
+type group_join_request_status_aggregate_fields {
+  count(columns: [group_join_request_status_select_column!], distinct: Boolean): Int
+  max: group_join_request_status_max_fields
+  min: group_join_request_status_min_fields
+}
+
+"""
+order by aggregate values of table "group_join_request_status"
+"""
+input group_join_request_status_aggregate_order_by {
+  count: order_by
+  max: group_join_request_status_max_order_by
+  min: group_join_request_status_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "group_join_request_status"
+"""
+input group_join_request_status_arr_rel_insert_input {
+  data: [group_join_request_status_insert_input!]!
+  on_conflict: group_join_request_status_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "group_join_request_status". All fields are combined with a logical 'AND'.
+"""
+input group_join_request_status_bool_exp {
+  _and: [group_join_request_status_bool_exp]
+  _not: group_join_request_status_bool_exp
+  _or: [group_join_request_status_bool_exp]
+  comment: String_comparison_exp
+  value: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "group_join_request_status"
+"""
+enum group_join_request_status_constraint {
+  """unique or primary key constraint"""
+  group_join_request_status_pkey
+}
+
+enum group_join_request_status_enum {
+  """Request accepted"""
+  accepted
+
+  """Request cancelled"""
+  cancelled
+
+  """Pending status"""
+  pending
+
+  """Request rejected"""
+  rejected
+}
+
+"""
+expression to compare columns of type group_join_request_status_enum. All fields are combined with logical 'AND'.
+"""
+input group_join_request_status_enum_comparison_exp {
+  _eq: group_join_request_status_enum
+  _in: [group_join_request_status_enum!]
+  _is_null: Boolean
+  _neq: group_join_request_status_enum
+  _nin: [group_join_request_status_enum!]
+}
+
+"""
+input type for inserting data into table "group_join_request_status"
+"""
+input group_join_request_status_insert_input {
+  comment: String
+  value: String
+}
+
+"""aggregate max on columns"""
+type group_join_request_status_max_fields {
+  comment: String
+  value: String
+}
+
+"""
+order by max() on columns of table "group_join_request_status"
+"""
+input group_join_request_status_max_order_by {
+  comment: order_by
+  value: order_by
+}
+
+"""aggregate min on columns"""
+type group_join_request_status_min_fields {
+  comment: String
+  value: String
+}
+
+"""
+order by min() on columns of table "group_join_request_status"
+"""
+input group_join_request_status_min_order_by {
+  comment: order_by
+  value: order_by
+}
+
+"""
+response of any mutation on the table "group_join_request_status"
+"""
+type group_join_request_status_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [group_join_request_status!]!
+}
+
+"""
+input type for inserting object relation for remote table "group_join_request_status"
+"""
+input group_join_request_status_obj_rel_insert_input {
+  data: group_join_request_status_insert_input!
+  on_conflict: group_join_request_status_on_conflict
+}
+
+"""
+on conflict condition type for table "group_join_request_status"
+"""
+input group_join_request_status_on_conflict {
+  constraint: group_join_request_status_constraint!
+  update_columns: [group_join_request_status_update_column!]!
+  where: group_join_request_status_bool_exp
+}
+
+"""
+ordering options when selecting data from "group_join_request_status"
+"""
+input group_join_request_status_order_by {
+  comment: order_by
+  value: order_by
+}
+
+"""
+primary key columns input for table: "group_join_request_status"
+"""
+input group_join_request_status_pk_columns_input {
+  value: String!
+}
+
+"""
+select columns of table "group_join_request_status"
+"""
+enum group_join_request_status_select_column {
+  """column name"""
+  comment
+
+  """column name"""
+  value
+}
+
+"""
+input type for updating data in table "group_join_request_status"
+"""
+input group_join_request_status_set_input {
+  comment: String
+  value: String
+}
+
+"""
+update columns of table "group_join_request_status"
+"""
+enum group_join_request_status_update_column {
+  """column name"""
+  comment
+
+  """column name"""
+  value
+}
+
+"""
+columns and relationships of "group_join_requests"
+"""
+type group_join_requests {
+  created_at: timestamptz!
+
+  """An object relationship"""
+  group: groups!
+  group_id: uuid!
+  id: uuid!
+  message: String!
+  responder_id: uuid
+  response: String
+  status: group_join_request_status_enum
+  updated_at: timestamptz!
+
+  """An object relationship"""
+  user: users!
+  user_id: uuid!
+}
+
+"""
+aggregated selection of "group_join_requests"
+"""
+type group_join_requests_aggregate {
+  aggregate: group_join_requests_aggregate_fields
+  nodes: [group_join_requests!]!
+}
+
+"""
+aggregate fields of "group_join_requests"
+"""
+type group_join_requests_aggregate_fields {
+  count(columns: [group_join_requests_select_column!], distinct: Boolean): Int
+  max: group_join_requests_max_fields
+  min: group_join_requests_min_fields
+}
+
+"""
+order by aggregate values of table "group_join_requests"
+"""
+input group_join_requests_aggregate_order_by {
+  count: order_by
+  max: group_join_requests_max_order_by
+  min: group_join_requests_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "group_join_requests"
+"""
+input group_join_requests_arr_rel_insert_input {
+  data: [group_join_requests_insert_input!]!
+  on_conflict: group_join_requests_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "group_join_requests". All fields are combined with a logical 'AND'.
+"""
+input group_join_requests_bool_exp {
+  _and: [group_join_requests_bool_exp]
+  _not: group_join_requests_bool_exp
+  _or: [group_join_requests_bool_exp]
+  created_at: timestamptz_comparison_exp
+  group: groups_bool_exp
+  group_id: uuid_comparison_exp
+  id: uuid_comparison_exp
+  message: String_comparison_exp
+  responder_id: uuid_comparison_exp
+  response: String_comparison_exp
+  status: group_join_request_status_enum_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  user: users_bool_exp
+  user_id: uuid_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "group_join_requests"
+"""
+enum group_join_requests_constraint {
+  """unique or primary key constraint"""
+  group_join_requests_pkey
+}
+
+"""
+input type for inserting data into table "group_join_requests"
+"""
+input group_join_requests_insert_input {
+  created_at: timestamptz
+  group: groups_obj_rel_insert_input
+  group_id: uuid
+  id: uuid
+  message: String
+  responder_id: uuid
+  response: String
+  status: group_join_request_status_enum
+  updated_at: timestamptz
+  user: users_obj_rel_insert_input
+  user_id: uuid
+}
+
+"""aggregate max on columns"""
+type group_join_requests_max_fields {
+  created_at: timestamptz
+  group_id: uuid
+  id: uuid
+  message: String
+  responder_id: uuid
+  response: String
+  updated_at: timestamptz
+  user_id: uuid
+}
+
+"""
+order by max() on columns of table "group_join_requests"
+"""
+input group_join_requests_max_order_by {
+  created_at: order_by
+  group_id: order_by
+  id: order_by
+  message: order_by
+  responder_id: order_by
+  response: order_by
+  updated_at: order_by
+  user_id: order_by
+}
+
+"""aggregate min on columns"""
+type group_join_requests_min_fields {
+  created_at: timestamptz
+  group_id: uuid
+  id: uuid
+  message: String
+  responder_id: uuid
+  response: String
+  updated_at: timestamptz
+  user_id: uuid
+}
+
+"""
+order by min() on columns of table "group_join_requests"
+"""
+input group_join_requests_min_order_by {
+  created_at: order_by
+  group_id: order_by
+  id: order_by
+  message: order_by
+  responder_id: order_by
+  response: order_by
+  updated_at: order_by
+  user_id: order_by
+}
+
+"""
+response of any mutation on the table "group_join_requests"
+"""
+type group_join_requests_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [group_join_requests!]!
+}
+
+"""
+input type for inserting object relation for remote table "group_join_requests"
+"""
+input group_join_requests_obj_rel_insert_input {
+  data: group_join_requests_insert_input!
+  on_conflict: group_join_requests_on_conflict
+}
+
+"""
+on conflict condition type for table "group_join_requests"
+"""
+input group_join_requests_on_conflict {
+  constraint: group_join_requests_constraint!
+  update_columns: [group_join_requests_update_column!]!
+  where: group_join_requests_bool_exp
+}
+
+"""
+ordering options when selecting data from "group_join_requests"
+"""
+input group_join_requests_order_by {
+  created_at: order_by
+  group: groups_order_by
+  group_id: order_by
+  id: order_by
+  message: order_by
+  responder_id: order_by
+  response: order_by
+  status: order_by
+  updated_at: order_by
+  user: users_order_by
+  user_id: order_by
+}
+
+"""
+primary key columns input for table: "group_join_requests"
+"""
+input group_join_requests_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "group_join_requests"
+"""
+enum group_join_requests_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  group_id
+
+  """column name"""
+  id
+
+  """column name"""
+  message
+
+  """column name"""
+  responder_id
+
+  """column name"""
+  response
+
+  """column name"""
+  status
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "group_join_requests"
+"""
+input group_join_requests_set_input {
+  created_at: timestamptz
+  group_id: uuid
+  id: uuid
+  message: String
+  responder_id: uuid
+  response: String
+  status: group_join_request_status_enum
+  updated_at: timestamptz
+  user_id: uuid
+}
+
+"""
+update columns of table "group_join_requests"
+"""
+enum group_join_requests_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  group_id
+
+  """column name"""
+  id
+
+  """column name"""
+  message
+
+  """column name"""
+  responder_id
+
+  """column name"""
+  response
+
+  """column name"""
+  status
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  user_id
 }
 
 """
@@ -515,12 +1005,266 @@ enum group_role_update_column {
 }
 
 """
+columns and relationships of "group_thing"
+"""
+type group_thing {
+  created_at: timestamptz!
+  group_id: uuid!
+  id: uuid!
+  thing_id: uuid!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "group_thing"
+"""
+type group_thing_aggregate {
+  aggregate: group_thing_aggregate_fields
+  nodes: [group_thing!]!
+}
+
+"""
+aggregate fields of "group_thing"
+"""
+type group_thing_aggregate_fields {
+  count(columns: [group_thing_select_column!], distinct: Boolean): Int
+  max: group_thing_max_fields
+  min: group_thing_min_fields
+}
+
+"""
+order by aggregate values of table "group_thing"
+"""
+input group_thing_aggregate_order_by {
+  count: order_by
+  max: group_thing_max_order_by
+  min: group_thing_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "group_thing"
+"""
+input group_thing_arr_rel_insert_input {
+  data: [group_thing_insert_input!]!
+  on_conflict: group_thing_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "group_thing". All fields are combined with a logical 'AND'.
+"""
+input group_thing_bool_exp {
+  _and: [group_thing_bool_exp]
+  _not: group_thing_bool_exp
+  _or: [group_thing_bool_exp]
+  created_at: timestamptz_comparison_exp
+  group_id: uuid_comparison_exp
+  id: uuid_comparison_exp
+  thing_id: uuid_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "group_thing"
+"""
+enum group_thing_constraint {
+  """unique or primary key constraint"""
+  group_thing_group_id_thing_id_key
+
+  """unique or primary key constraint"""
+  group_thing_pkey
+}
+
+"""
+input type for inserting data into table "group_thing"
+"""
+input group_thing_insert_input {
+  created_at: timestamptz
+  group_id: uuid
+  id: uuid
+  thing_id: uuid
+  updated_at: timestamptz
+}
+
+"""aggregate max on columns"""
+type group_thing_max_fields {
+  created_at: timestamptz
+  group_id: uuid
+  id: uuid
+  thing_id: uuid
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "group_thing"
+"""
+input group_thing_max_order_by {
+  created_at: order_by
+  group_id: order_by
+  id: order_by
+  thing_id: order_by
+  updated_at: order_by
+}
+
+"""aggregate min on columns"""
+type group_thing_min_fields {
+  created_at: timestamptz
+  group_id: uuid
+  id: uuid
+  thing_id: uuid
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "group_thing"
+"""
+input group_thing_min_order_by {
+  created_at: order_by
+  group_id: order_by
+  id: order_by
+  thing_id: order_by
+  updated_at: order_by
+}
+
+"""
+response of any mutation on the table "group_thing"
+"""
+type group_thing_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [group_thing!]!
+}
+
+"""
+input type for inserting object relation for remote table "group_thing"
+"""
+input group_thing_obj_rel_insert_input {
+  data: group_thing_insert_input!
+  on_conflict: group_thing_on_conflict
+}
+
+"""
+on conflict condition type for table "group_thing"
+"""
+input group_thing_on_conflict {
+  constraint: group_thing_constraint!
+  update_columns: [group_thing_update_column!]!
+  where: group_thing_bool_exp
+}
+
+"""
+ordering options when selecting data from "group_thing"
+"""
+input group_thing_order_by {
+  created_at: order_by
+  group_id: order_by
+  id: order_by
+  thing_id: order_by
+  updated_at: order_by
+}
+
+"""
+primary key columns input for table: "group_thing"
+"""
+input group_thing_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "group_thing"
+"""
+enum group_thing_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  group_id
+
+  """column name"""
+  id
+
+  """column name"""
+  thing_id
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "group_thing"
+"""
+input group_thing_set_input {
+  created_at: timestamptz
+  group_id: uuid
+  id: uuid
+  thing_id: uuid
+  updated_at: timestamptz
+}
+
+"""
+update columns of table "group_thing"
+"""
+enum group_thing_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  group_id
+
+  """column name"""
+  id
+
+  """column name"""
+  thing_id
+
+  """column name"""
+  updated_at
+}
+
+"""
 columns and relationships of "groups"
 """
 type groups {
   created_at: timestamptz!
   description: String
   id: uuid!
+
+  """An array relationship"""
+  join_requests(
+    """distinct select on columns"""
+    distinct_on: [group_join_requests_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_join_requests_order_by!]
+
+    """filter the rows returned"""
+    where: group_join_requests_bool_exp
+  ): [group_join_requests!]!
+
+  """An aggregated array relationship"""
+  join_requests_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_join_requests_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_join_requests_order_by!]
+
+    """filter the rows returned"""
+    where: group_join_requests_bool_exp
+  ): group_join_requests_aggregate!
 
   """An array relationship"""
   memberships(
@@ -606,6 +1350,7 @@ input groups_bool_exp {
   created_at: timestamptz_comparison_exp
   description: String_comparison_exp
   id: uuid_comparison_exp
+  join_requests: group_join_requests_bool_exp
   memberships: group_members_bool_exp
   name: String_comparison_exp
   public: Boolean_comparison_exp
@@ -630,6 +1375,7 @@ input groups_insert_input {
   created_at: timestamptz
   description: String
   id: uuid
+  join_requests: group_join_requests_arr_rel_insert_input
   memberships: group_members_arr_rel_insert_input
   name: String
   public: Boolean
@@ -711,6 +1457,7 @@ input groups_order_by {
   created_at: order_by
   description: order_by
   id: order_by
+  join_requests_aggregate: group_join_requests_aggregate_order_by
   memberships_aggregate: group_members_aggregate_order_by
   name: order_by
   public: order_by
@@ -784,12 +1531,238 @@ enum groups_update_column {
 
 scalar json
 
+"""
+columns and relationships of "messages"
+"""
+type messages {
+  created_at: timestamptz!
+  id: uuid!
+  receiver_id: uuid!
+  sender_id: uuid!
+}
+
+"""
+aggregated selection of "messages"
+"""
+type messages_aggregate {
+  aggregate: messages_aggregate_fields
+  nodes: [messages!]!
+}
+
+"""
+aggregate fields of "messages"
+"""
+type messages_aggregate_fields {
+  count(columns: [messages_select_column!], distinct: Boolean): Int
+  max: messages_max_fields
+  min: messages_min_fields
+}
+
+"""
+order by aggregate values of table "messages"
+"""
+input messages_aggregate_order_by {
+  count: order_by
+  max: messages_max_order_by
+  min: messages_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "messages"
+"""
+input messages_arr_rel_insert_input {
+  data: [messages_insert_input!]!
+  on_conflict: messages_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "messages". All fields are combined with a logical 'AND'.
+"""
+input messages_bool_exp {
+  _and: [messages_bool_exp]
+  _not: messages_bool_exp
+  _or: [messages_bool_exp]
+  created_at: timestamptz_comparison_exp
+  id: uuid_comparison_exp
+  receiver_id: uuid_comparison_exp
+  sender_id: uuid_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "messages"
+"""
+enum messages_constraint {
+  """unique or primary key constraint"""
+  messages_pkey
+}
+
+"""
+input type for inserting data into table "messages"
+"""
+input messages_insert_input {
+  created_at: timestamptz
+  id: uuid
+  receiver_id: uuid
+  sender_id: uuid
+}
+
+"""aggregate max on columns"""
+type messages_max_fields {
+  created_at: timestamptz
+  id: uuid
+  receiver_id: uuid
+  sender_id: uuid
+}
+
+"""
+order by max() on columns of table "messages"
+"""
+input messages_max_order_by {
+  created_at: order_by
+  id: order_by
+  receiver_id: order_by
+  sender_id: order_by
+}
+
+"""aggregate min on columns"""
+type messages_min_fields {
+  created_at: timestamptz
+  id: uuid
+  receiver_id: uuid
+  sender_id: uuid
+}
+
+"""
+order by min() on columns of table "messages"
+"""
+input messages_min_order_by {
+  created_at: order_by
+  id: order_by
+  receiver_id: order_by
+  sender_id: order_by
+}
+
+"""
+response of any mutation on the table "messages"
+"""
+type messages_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [messages!]!
+}
+
+"""
+input type for inserting object relation for remote table "messages"
+"""
+input messages_obj_rel_insert_input {
+  data: messages_insert_input!
+  on_conflict: messages_on_conflict
+}
+
+"""
+on conflict condition type for table "messages"
+"""
+input messages_on_conflict {
+  constraint: messages_constraint!
+  update_columns: [messages_update_column!]!
+  where: messages_bool_exp
+}
+
+"""
+ordering options when selecting data from "messages"
+"""
+input messages_order_by {
+  created_at: order_by
+  id: order_by
+  receiver_id: order_by
+  sender_id: order_by
+}
+
+"""
+primary key columns input for table: "messages"
+"""
+input messages_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "messages"
+"""
+enum messages_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  receiver_id
+
+  """column name"""
+  sender_id
+}
+
+"""
+input type for updating data in table "messages"
+"""
+input messages_set_input {
+  created_at: timestamptz
+  id: uuid
+  receiver_id: uuid
+  sender_id: uuid
+}
+
+"""
+update columns of table "messages"
+"""
+enum messages_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  receiver_id
+
+  """column name"""
+  sender_id
+}
+
 """mutation root"""
 type mutation_root {
   """
   perform the action: "createGroup"
   """
   createGroup(input: CreateGroupInput!): CreateGroupResult!
+
+  """
+  delete data from the table: "group_join_request_status"
+  """
+  delete_group_join_request_status(
+    """filter the rows which have to be deleted"""
+    where: group_join_request_status_bool_exp!
+  ): group_join_request_status_mutation_response
+
+  """
+  delete single row from the table: "group_join_request_status"
+  """
+  delete_group_join_request_status_by_pk(value: String!): group_join_request_status
+
+  """
+  delete data from the table: "group_join_requests"
+  """
+  delete_group_join_requests(
+    """filter the rows which have to be deleted"""
+    where: group_join_requests_bool_exp!
+  ): group_join_requests_mutation_response
+
+  """
+  delete single row from the table: "group_join_requests"
+  """
+  delete_group_join_requests_by_pk(id: uuid!): group_join_requests
 
   """
   delete data from the table: "group_members"
@@ -818,6 +1791,19 @@ type mutation_root {
   delete_group_role_by_pk(value: String!): group_role
 
   """
+  delete data from the table: "group_thing"
+  """
+  delete_group_thing(
+    """filter the rows which have to be deleted"""
+    where: group_thing_bool_exp!
+  ): group_thing_mutation_response
+
+  """
+  delete single row from the table: "group_thing"
+  """
+  delete_group_thing_by_pk(id: uuid!): group_thing
+
+  """
   delete data from the table: "groups"
   """
   delete_groups(
@@ -829,6 +1815,19 @@ type mutation_root {
   delete single row from the table: "groups"
   """
   delete_groups_by_pk(id: uuid!): groups
+
+  """
+  delete data from the table: "messages"
+  """
+  delete_messages(
+    """filter the rows which have to be deleted"""
+    where: messages_bool_exp!
+  ): messages_mutation_response
+
+  """
+  delete single row from the table: "messages"
+  """
+  delete_messages_by_pk(id: uuid!): messages
 
   """
   delete data from the table: "things"
@@ -878,6 +1877,50 @@ type mutation_root {
   delete_verification_requests_by_pk(id: Int!): verification_requests
 
   """
+  insert data into the table: "group_join_request_status"
+  """
+  insert_group_join_request_status(
+    """the rows to be inserted"""
+    objects: [group_join_request_status_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: group_join_request_status_on_conflict
+  ): group_join_request_status_mutation_response
+
+  """
+  insert a single row into the table: "group_join_request_status"
+  """
+  insert_group_join_request_status_one(
+    """the row to be inserted"""
+    object: group_join_request_status_insert_input!
+
+    """on conflict condition"""
+    on_conflict: group_join_request_status_on_conflict
+  ): group_join_request_status
+
+  """
+  insert data into the table: "group_join_requests"
+  """
+  insert_group_join_requests(
+    """the rows to be inserted"""
+    objects: [group_join_requests_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: group_join_requests_on_conflict
+  ): group_join_requests_mutation_response
+
+  """
+  insert a single row into the table: "group_join_requests"
+  """
+  insert_group_join_requests_one(
+    """the row to be inserted"""
+    object: group_join_requests_insert_input!
+
+    """on conflict condition"""
+    on_conflict: group_join_requests_on_conflict
+  ): group_join_requests
+
+  """
   insert data into the table: "group_members"
   """
   insert_group_members(
@@ -922,6 +1965,28 @@ type mutation_root {
   ): group_role
 
   """
+  insert data into the table: "group_thing"
+  """
+  insert_group_thing(
+    """the rows to be inserted"""
+    objects: [group_thing_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: group_thing_on_conflict
+  ): group_thing_mutation_response
+
+  """
+  insert a single row into the table: "group_thing"
+  """
+  insert_group_thing_one(
+    """the row to be inserted"""
+    object: group_thing_insert_input!
+
+    """on conflict condition"""
+    on_conflict: group_thing_on_conflict
+  ): group_thing
+
+  """
   insert data into the table: "groups"
   """
   insert_groups(
@@ -942,6 +2007,28 @@ type mutation_root {
     """on conflict condition"""
     on_conflict: groups_on_conflict
   ): groups
+
+  """
+  insert data into the table: "messages"
+  """
+  insert_messages(
+    """the rows to be inserted"""
+    objects: [messages_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: messages_on_conflict
+  ): messages_mutation_response
+
+  """
+  insert a single row into the table: "messages"
+  """
+  insert_messages_one(
+    """the row to be inserted"""
+    object: messages_insert_input!
+
+    """on conflict condition"""
+    on_conflict: messages_on_conflict
+  ): messages
 
   """
   insert data into the table: "things"
@@ -1031,6 +2118,51 @@ type mutation_root {
   registerCredentials(input: CredentialsInput!): RegistrationResult
 
   """
+  perform the action: "requestJoinGroup"
+  """
+  requestJoinGroup(input: RequestJoinGroupInput!): RequestJoinGroupResult
+
+  """
+  update data of the table: "group_join_request_status"
+  """
+  update_group_join_request_status(
+    """sets the columns of the filtered rows to the given values"""
+    _set: group_join_request_status_set_input
+
+    """filter the rows which have to be updated"""
+    where: group_join_request_status_bool_exp!
+  ): group_join_request_status_mutation_response
+
+  """
+  update single row of the table: "group_join_request_status"
+  """
+  update_group_join_request_status_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: group_join_request_status_set_input
+    pk_columns: group_join_request_status_pk_columns_input!
+  ): group_join_request_status
+
+  """
+  update data of the table: "group_join_requests"
+  """
+  update_group_join_requests(
+    """sets the columns of the filtered rows to the given values"""
+    _set: group_join_requests_set_input
+
+    """filter the rows which have to be updated"""
+    where: group_join_requests_bool_exp!
+  ): group_join_requests_mutation_response
+
+  """
+  update single row of the table: "group_join_requests"
+  """
+  update_group_join_requests_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: group_join_requests_set_input
+    pk_columns: group_join_requests_pk_columns_input!
+  ): group_join_requests
+
+  """
   update data of the table: "group_members"
   """
   update_group_members(
@@ -1071,6 +2203,26 @@ type mutation_root {
   ): group_role
 
   """
+  update data of the table: "group_thing"
+  """
+  update_group_thing(
+    """sets the columns of the filtered rows to the given values"""
+    _set: group_thing_set_input
+
+    """filter the rows which have to be updated"""
+    where: group_thing_bool_exp!
+  ): group_thing_mutation_response
+
+  """
+  update single row of the table: "group_thing"
+  """
+  update_group_thing_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: group_thing_set_input
+    pk_columns: group_thing_pk_columns_input!
+  ): group_thing
+
+  """
   update data of the table: "groups"
   """
   update_groups(
@@ -1089,6 +2241,26 @@ type mutation_root {
     _set: groups_set_input
     pk_columns: groups_pk_columns_input!
   ): groups
+
+  """
+  update data of the table: "messages"
+  """
+  update_messages(
+    """sets the columns of the filtered rows to the given values"""
+    _set: messages_set_input
+
+    """filter the rows which have to be updated"""
+    where: messages_bool_exp!
+  ): messages_mutation_response
+
+  """
+  update single row of the table: "messages"
+  """
+  update_messages_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: messages_set_input
+    pk_columns: messages_pk_columns_input!
+  ): messages
 
   """
   update data of the table: "things"
@@ -1192,6 +2364,96 @@ enum order_by {
 """query root"""
 type query_root {
   """
+  fetch data from the table: "group_join_request_status"
+  """
+  group_join_request_status(
+    """distinct select on columns"""
+    distinct_on: [group_join_request_status_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_join_request_status_order_by!]
+
+    """filter the rows returned"""
+    where: group_join_request_status_bool_exp
+  ): [group_join_request_status!]!
+
+  """
+  fetch aggregated fields from the table: "group_join_request_status"
+  """
+  group_join_request_status_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_join_request_status_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_join_request_status_order_by!]
+
+    """filter the rows returned"""
+    where: group_join_request_status_bool_exp
+  ): group_join_request_status_aggregate!
+
+  """
+  fetch data from the table: "group_join_request_status" using primary key columns
+  """
+  group_join_request_status_by_pk(value: String!): group_join_request_status
+
+  """
+  fetch data from the table: "group_join_requests"
+  """
+  group_join_requests(
+    """distinct select on columns"""
+    distinct_on: [group_join_requests_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_join_requests_order_by!]
+
+    """filter the rows returned"""
+    where: group_join_requests_bool_exp
+  ): [group_join_requests!]!
+
+  """
+  fetch aggregated fields from the table: "group_join_requests"
+  """
+  group_join_requests_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_join_requests_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_join_requests_order_by!]
+
+    """filter the rows returned"""
+    where: group_join_requests_bool_exp
+  ): group_join_requests_aggregate!
+
+  """
+  fetch data from the table: "group_join_requests" using primary key columns
+  """
+  group_join_requests_by_pk(id: uuid!): group_join_requests
+
+  """
   fetch data from the table: "group_members"
   """
   group_members(
@@ -1278,6 +2540,49 @@ type query_root {
   group_role_by_pk(value: String!): group_role
 
   """
+  fetch data from the table: "group_thing"
+  """
+  group_thing(
+    """distinct select on columns"""
+    distinct_on: [group_thing_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_thing_order_by!]
+
+    """filter the rows returned"""
+    where: group_thing_bool_exp
+  ): [group_thing!]!
+
+  """
+  fetch aggregated fields from the table: "group_thing"
+  """
+  group_thing_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_thing_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_thing_order_by!]
+
+    """filter the rows returned"""
+    where: group_thing_bool_exp
+  ): group_thing_aggregate!
+
+  """fetch data from the table: "group_thing" using primary key columns"""
+  group_thing_by_pk(id: uuid!): group_thing
+
+  """
   fetch data from the table: "groups"
   """
   groups(
@@ -1319,6 +2624,49 @@ type query_root {
 
   """fetch data from the table: "groups" using primary key columns"""
   groups_by_pk(id: uuid!): groups
+
+  """
+  fetch data from the table: "messages"
+  """
+  messages(
+    """distinct select on columns"""
+    distinct_on: [messages_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [messages_order_by!]
+
+    """filter the rows returned"""
+    where: messages_bool_exp
+  ): [messages!]!
+
+  """
+  fetch aggregated fields from the table: "messages"
+  """
+  messages_aggregate(
+    """distinct select on columns"""
+    distinct_on: [messages_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [messages_order_by!]
+
+    """filter the rows returned"""
+    where: messages_bool_exp
+  ): messages_aggregate!
+
+  """fetch data from the table: "messages" using primary key columns"""
+  messages_by_pk(id: uuid!): messages
 
   """
   fetch data from the table: "things"
@@ -1495,6 +2843,96 @@ type query_root {
 """subscription root"""
 type subscription_root {
   """
+  fetch data from the table: "group_join_request_status"
+  """
+  group_join_request_status(
+    """distinct select on columns"""
+    distinct_on: [group_join_request_status_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_join_request_status_order_by!]
+
+    """filter the rows returned"""
+    where: group_join_request_status_bool_exp
+  ): [group_join_request_status!]!
+
+  """
+  fetch aggregated fields from the table: "group_join_request_status"
+  """
+  group_join_request_status_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_join_request_status_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_join_request_status_order_by!]
+
+    """filter the rows returned"""
+    where: group_join_request_status_bool_exp
+  ): group_join_request_status_aggregate!
+
+  """
+  fetch data from the table: "group_join_request_status" using primary key columns
+  """
+  group_join_request_status_by_pk(value: String!): group_join_request_status
+
+  """
+  fetch data from the table: "group_join_requests"
+  """
+  group_join_requests(
+    """distinct select on columns"""
+    distinct_on: [group_join_requests_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_join_requests_order_by!]
+
+    """filter the rows returned"""
+    where: group_join_requests_bool_exp
+  ): [group_join_requests!]!
+
+  """
+  fetch aggregated fields from the table: "group_join_requests"
+  """
+  group_join_requests_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_join_requests_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_join_requests_order_by!]
+
+    """filter the rows returned"""
+    where: group_join_requests_bool_exp
+  ): group_join_requests_aggregate!
+
+  """
+  fetch data from the table: "group_join_requests" using primary key columns
+  """
+  group_join_requests_by_pk(id: uuid!): group_join_requests
+
+  """
   fetch data from the table: "group_members"
   """
   group_members(
@@ -1581,6 +3019,49 @@ type subscription_root {
   group_role_by_pk(value: String!): group_role
 
   """
+  fetch data from the table: "group_thing"
+  """
+  group_thing(
+    """distinct select on columns"""
+    distinct_on: [group_thing_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_thing_order_by!]
+
+    """filter the rows returned"""
+    where: group_thing_bool_exp
+  ): [group_thing!]!
+
+  """
+  fetch aggregated fields from the table: "group_thing"
+  """
+  group_thing_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_thing_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_thing_order_by!]
+
+    """filter the rows returned"""
+    where: group_thing_bool_exp
+  ): group_thing_aggregate!
+
+  """fetch data from the table: "group_thing" using primary key columns"""
+  group_thing_by_pk(id: uuid!): group_thing
+
+  """
   fetch data from the table: "groups"
   """
   groups(
@@ -1622,6 +3103,49 @@ type subscription_root {
 
   """fetch data from the table: "groups" using primary key columns"""
   groups_by_pk(id: uuid!): groups
+
+  """
+  fetch data from the table: "messages"
+  """
+  messages(
+    """distinct select on columns"""
+    distinct_on: [messages_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [messages_order_by!]
+
+    """filter the rows returned"""
+    where: messages_bool_exp
+  ): [messages!]!
+
+  """
+  fetch aggregated fields from the table: "messages"
+  """
+  messages_aggregate(
+    """distinct select on columns"""
+    distinct_on: [messages_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [messages_order_by!]
+
+    """filter the rows returned"""
+    where: messages_bool_exp
+  ): messages_aggregate!
+
+  """fetch data from the table: "messages" using primary key columns"""
+  messages_by_pk(id: uuid!): messages
 
   """
   fetch data from the table: "things"
@@ -2173,6 +3697,42 @@ type users {
   created_at: timestamptz!
   email: String
   email_verified: timestamptz
+
+  """An array relationship"""
+  group_join_requests(
+    """distinct select on columns"""
+    distinct_on: [group_join_requests_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_join_requests_order_by!]
+
+    """filter the rows returned"""
+    where: group_join_requests_bool_exp
+  ): [group_join_requests!]!
+
+  """An aggregated array relationship"""
+  group_join_requests_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_join_requests_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_join_requests_order_by!]
+
+    """filter the rows returned"""
+    where: group_join_requests_bool_exp
+  ): group_join_requests_aggregate!
   id: uuid!
   image: String
   last_seen: timestamptz
@@ -2300,6 +3860,7 @@ input users_bool_exp {
   created_at: timestamptz_comparison_exp
   email: String_comparison_exp
   email_verified: timestamptz_comparison_exp
+  group_join_requests: group_join_requests_bool_exp
   id: uuid_comparison_exp
   image: String_comparison_exp
   last_seen: timestamptz_comparison_exp
@@ -2332,6 +3893,7 @@ input users_insert_input {
   created_at: timestamptz
   email: String
   email_verified: timestamptz
+  group_join_requests: group_join_requests_arr_rel_insert_input
   id: uuid
   image: String
   last_seen: timestamptz
@@ -2434,6 +3996,7 @@ input users_order_by {
   created_at: order_by
   email: order_by
   email_verified: order_by
+  group_join_requests_aggregate: group_join_requests_aggregate_order_by
   id: order_by
   image: order_by
   last_seen: order_by

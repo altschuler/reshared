@@ -8,6 +8,7 @@ import { AuthProvider } from '../utils/auth';
 
 import '../styles/globals.scss';
 import { ThemeProvider } from 'react-jss';
+import { DialogsProvider } from '../components/dialogs/DialogProvider';
 
 const authLink = setContext(async (_, { headers }) => {
     const session = await getSession();
@@ -32,14 +33,16 @@ const App = ({ Component, pageProps }: AppProps) => {
             <ApolloProvider client={apolloClient}>
                 <AuthProvider>
                     <ThemeProvider theme={theme}>
-                        <Head>
-                            <title>Reshar.ed</title>
-                            <link rel="icon" href="/favicon.ico" />
-                        </Head>
+                        <DialogsProvider>
+                            <Head>
+                                <title>Reshar.ed</title>
+                                <link rel="icon" href="/favicon.ico" />
+                            </Head>
 
-                        <PageLayout>
-                            <Component {...pageProps} />
-                        </PageLayout>
+                            <PageLayout>
+                                <Component {...pageProps} />
+                            </PageLayout>
+                        </DialogsProvider>
                     </ThemeProvider>
                 </AuthProvider>
             </ApolloProvider>

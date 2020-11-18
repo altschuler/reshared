@@ -51,6 +51,9 @@ const useStyles = createUseStyles((theme) => ({
     footer: {
         textAlign: 'center',
     },
+    root: {
+        backgroundColor: 'white',
+    },
 }));
 
 interface UserButtonProps {
@@ -88,7 +91,7 @@ export const PageLayout = (props: PageLayoutProps) => {
     const [loginVisible, setLoginVisible] = useState(false);
 
     return (
-        <Layout>
+        <Layout className={classes.root}>
             <AuthDialog visible={loginVisible} onClose={() => setLoginVisible(false)} />
             <header className={clsx(classes.header, 'ant-layout-header')}>
                 <div className={classes.title}>
@@ -118,11 +121,7 @@ export const PageLayout = (props: PageLayoutProps) => {
                             </Button>
                         </div>
                     )}
-                    {auth.user && (
-                        <>
-                            <UserButton user={auth.user} />
-                        </>
-                    )}
+                    {auth.user && <UserButton user={auth.user} />}
                 </div>
             </header>
             <Content className={classes.content}>

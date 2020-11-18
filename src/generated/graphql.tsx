@@ -64,6 +64,19 @@ export type RegistrationResult = {
   user_id: Scalars['uuid'];
 };
 
+export type RequestJoinGroupInput = {
+  group_id: Scalars['uuid'];
+  message?: Maybe<Scalars['String']>;
+};
+
+export type RequestJoinGroupResult = {
+  __typename?: 'RequestJoinGroupResult';
+  group?: Maybe<Groups>;
+  group_id: Scalars['uuid'];
+  user?: Maybe<Users>;
+  user_id: Scalars['uuid'];
+};
+
 /** expression to compare columns of type String. All fields are combined with logical 'AND'. */
 export type String_Comparison_Exp = {
   _eq?: Maybe<Scalars['String']>;
@@ -93,6 +106,411 @@ export type Create_Group_Result = {
   __typename?: 'create_group_result';
   group_id: Scalars['uuid'];
 };
+
+/** columns and relationships of "group_join_request_status" */
+export type Group_Join_Request_Status = {
+  __typename?: 'group_join_request_status';
+  comment: Scalars['String'];
+  value: Scalars['String'];
+};
+
+/** aggregated selection of "group_join_request_status" */
+export type Group_Join_Request_Status_Aggregate = {
+  __typename?: 'group_join_request_status_aggregate';
+  aggregate?: Maybe<Group_Join_Request_Status_Aggregate_Fields>;
+  nodes: Array<Group_Join_Request_Status>;
+};
+
+/** aggregate fields of "group_join_request_status" */
+export type Group_Join_Request_Status_Aggregate_Fields = {
+  __typename?: 'group_join_request_status_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Group_Join_Request_Status_Max_Fields>;
+  min?: Maybe<Group_Join_Request_Status_Min_Fields>;
+};
+
+
+/** aggregate fields of "group_join_request_status" */
+export type Group_Join_Request_Status_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Group_Join_Request_Status_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "group_join_request_status" */
+export type Group_Join_Request_Status_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Group_Join_Request_Status_Max_Order_By>;
+  min?: Maybe<Group_Join_Request_Status_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "group_join_request_status" */
+export type Group_Join_Request_Status_Arr_Rel_Insert_Input = {
+  data: Array<Group_Join_Request_Status_Insert_Input>;
+  on_conflict?: Maybe<Group_Join_Request_Status_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "group_join_request_status". All fields are combined with a logical 'AND'. */
+export type Group_Join_Request_Status_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Group_Join_Request_Status_Bool_Exp>>>;
+  _not?: Maybe<Group_Join_Request_Status_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Group_Join_Request_Status_Bool_Exp>>>;
+  comment?: Maybe<String_Comparison_Exp>;
+  value?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "group_join_request_status" */
+export enum Group_Join_Request_Status_Constraint {
+  /** unique or primary key constraint */
+  GroupJoinRequestStatusPkey = 'group_join_request_status_pkey'
+}
+
+export enum Group_Join_Request_Status_Enum {
+  /** Request accepted */
+  Accepted = 'accepted',
+  /** Request cancelled */
+  Cancelled = 'cancelled',
+  /** Pending status */
+  Pending = 'pending',
+  /** Request rejected */
+  Rejected = 'rejected'
+}
+
+/** expression to compare columns of type group_join_request_status_enum. All fields are combined with logical 'AND'. */
+export type Group_Join_Request_Status_Enum_Comparison_Exp = {
+  _eq?: Maybe<Group_Join_Request_Status_Enum>;
+  _in?: Maybe<Array<Group_Join_Request_Status_Enum>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _neq?: Maybe<Group_Join_Request_Status_Enum>;
+  _nin?: Maybe<Array<Group_Join_Request_Status_Enum>>;
+};
+
+/** input type for inserting data into table "group_join_request_status" */
+export type Group_Join_Request_Status_Insert_Input = {
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Group_Join_Request_Status_Max_Fields = {
+  __typename?: 'group_join_request_status_max_fields';
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "group_join_request_status" */
+export type Group_Join_Request_Status_Max_Order_By = {
+  comment?: Maybe<Order_By>;
+  value?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Group_Join_Request_Status_Min_Fields = {
+  __typename?: 'group_join_request_status_min_fields';
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "group_join_request_status" */
+export type Group_Join_Request_Status_Min_Order_By = {
+  comment?: Maybe<Order_By>;
+  value?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "group_join_request_status" */
+export type Group_Join_Request_Status_Mutation_Response = {
+  __typename?: 'group_join_request_status_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Group_Join_Request_Status>;
+};
+
+/** input type for inserting object relation for remote table "group_join_request_status" */
+export type Group_Join_Request_Status_Obj_Rel_Insert_Input = {
+  data: Group_Join_Request_Status_Insert_Input;
+  on_conflict?: Maybe<Group_Join_Request_Status_On_Conflict>;
+};
+
+/** on conflict condition type for table "group_join_request_status" */
+export type Group_Join_Request_Status_On_Conflict = {
+  constraint: Group_Join_Request_Status_Constraint;
+  update_columns: Array<Group_Join_Request_Status_Update_Column>;
+  where?: Maybe<Group_Join_Request_Status_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "group_join_request_status" */
+export type Group_Join_Request_Status_Order_By = {
+  comment?: Maybe<Order_By>;
+  value?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "group_join_request_status" */
+export type Group_Join_Request_Status_Pk_Columns_Input = {
+  value: Scalars['String'];
+};
+
+/** select columns of table "group_join_request_status" */
+export enum Group_Join_Request_Status_Select_Column {
+  /** column name */
+  Comment = 'comment',
+  /** column name */
+  Value = 'value'
+}
+
+/** input type for updating data in table "group_join_request_status" */
+export type Group_Join_Request_Status_Set_Input = {
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "group_join_request_status" */
+export enum Group_Join_Request_Status_Update_Column {
+  /** column name */
+  Comment = 'comment',
+  /** column name */
+  Value = 'value'
+}
+
+/** columns and relationships of "group_join_requests" */
+export type Group_Join_Requests = {
+  __typename?: 'group_join_requests';
+  created_at: Scalars['timestamptz'];
+  /** An object relationship */
+  group: Groups;
+  group_id: Scalars['uuid'];
+  id: Scalars['uuid'];
+  message: Scalars['String'];
+  responder_id?: Maybe<Scalars['uuid']>;
+  response?: Maybe<Scalars['String']>;
+  status?: Maybe<Group_Join_Request_Status_Enum>;
+  updated_at: Scalars['timestamptz'];
+  /** An object relationship */
+  user: Users;
+  user_id: Scalars['uuid'];
+};
+
+/** aggregated selection of "group_join_requests" */
+export type Group_Join_Requests_Aggregate = {
+  __typename?: 'group_join_requests_aggregate';
+  aggregate?: Maybe<Group_Join_Requests_Aggregate_Fields>;
+  nodes: Array<Group_Join_Requests>;
+};
+
+/** aggregate fields of "group_join_requests" */
+export type Group_Join_Requests_Aggregate_Fields = {
+  __typename?: 'group_join_requests_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Group_Join_Requests_Max_Fields>;
+  min?: Maybe<Group_Join_Requests_Min_Fields>;
+};
+
+
+/** aggregate fields of "group_join_requests" */
+export type Group_Join_Requests_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Group_Join_Requests_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "group_join_requests" */
+export type Group_Join_Requests_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Group_Join_Requests_Max_Order_By>;
+  min?: Maybe<Group_Join_Requests_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "group_join_requests" */
+export type Group_Join_Requests_Arr_Rel_Insert_Input = {
+  data: Array<Group_Join_Requests_Insert_Input>;
+  on_conflict?: Maybe<Group_Join_Requests_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "group_join_requests". All fields are combined with a logical 'AND'. */
+export type Group_Join_Requests_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Group_Join_Requests_Bool_Exp>>>;
+  _not?: Maybe<Group_Join_Requests_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Group_Join_Requests_Bool_Exp>>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  group?: Maybe<Groups_Bool_Exp>;
+  group_id?: Maybe<Uuid_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  message?: Maybe<String_Comparison_Exp>;
+  responder_id?: Maybe<Uuid_Comparison_Exp>;
+  response?: Maybe<String_Comparison_Exp>;
+  status?: Maybe<Group_Join_Request_Status_Enum_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+  user?: Maybe<Users_Bool_Exp>;
+  user_id?: Maybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "group_join_requests" */
+export enum Group_Join_Requests_Constraint {
+  /** unique or primary key constraint */
+  GroupJoinRequestsPkey = 'group_join_requests_pkey'
+}
+
+/** input type for inserting data into table "group_join_requests" */
+export type Group_Join_Requests_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group?: Maybe<Groups_Obj_Rel_Insert_Input>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  message?: Maybe<Scalars['String']>;
+  responder_id?: Maybe<Scalars['uuid']>;
+  response?: Maybe<Scalars['String']>;
+  status?: Maybe<Group_Join_Request_Status_Enum>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user?: Maybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type Group_Join_Requests_Max_Fields = {
+  __typename?: 'group_join_requests_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  message?: Maybe<Scalars['String']>;
+  responder_id?: Maybe<Scalars['uuid']>;
+  response?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "group_join_requests" */
+export type Group_Join_Requests_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  message?: Maybe<Order_By>;
+  responder_id?: Maybe<Order_By>;
+  response?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Group_Join_Requests_Min_Fields = {
+  __typename?: 'group_join_requests_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  message?: Maybe<Scalars['String']>;
+  responder_id?: Maybe<Scalars['uuid']>;
+  response?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "group_join_requests" */
+export type Group_Join_Requests_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  message?: Maybe<Order_By>;
+  responder_id?: Maybe<Order_By>;
+  response?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "group_join_requests" */
+export type Group_Join_Requests_Mutation_Response = {
+  __typename?: 'group_join_requests_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Group_Join_Requests>;
+};
+
+/** input type for inserting object relation for remote table "group_join_requests" */
+export type Group_Join_Requests_Obj_Rel_Insert_Input = {
+  data: Group_Join_Requests_Insert_Input;
+  on_conflict?: Maybe<Group_Join_Requests_On_Conflict>;
+};
+
+/** on conflict condition type for table "group_join_requests" */
+export type Group_Join_Requests_On_Conflict = {
+  constraint: Group_Join_Requests_Constraint;
+  update_columns: Array<Group_Join_Requests_Update_Column>;
+  where?: Maybe<Group_Join_Requests_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "group_join_requests" */
+export type Group_Join_Requests_Order_By = {
+  created_at?: Maybe<Order_By>;
+  group?: Maybe<Groups_Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  message?: Maybe<Order_By>;
+  responder_id?: Maybe<Order_By>;
+  response?: Maybe<Order_By>;
+  status?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  user?: Maybe<Users_Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "group_join_requests" */
+export type Group_Join_Requests_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "group_join_requests" */
+export enum Group_Join_Requests_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  GroupId = 'group_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Message = 'message',
+  /** column name */
+  ResponderId = 'responder_id',
+  /** column name */
+  Response = 'response',
+  /** column name */
+  Status = 'status',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "group_join_requests" */
+export type Group_Join_Requests_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  message?: Maybe<Scalars['String']>;
+  responder_id?: Maybe<Scalars['uuid']>;
+  response?: Maybe<Scalars['String']>;
+  status?: Maybe<Group_Join_Request_Status_Enum>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** update columns of table "group_join_requests" */
+export enum Group_Join_Requests_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  GroupId = 'group_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Message = 'message',
+  /** column name */
+  ResponderId = 'responder_id',
+  /** column name */
+  Response = 'response',
+  /** column name */
+  Status = 'status',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
 
 /** columns and relationships of "group_members" */
 export type Group_Members = {
@@ -456,6 +874,191 @@ export enum Group_Role_Update_Column {
   Value = 'value'
 }
 
+/** columns and relationships of "group_thing" */
+export type Group_Thing = {
+  __typename?: 'group_thing';
+  created_at: Scalars['timestamptz'];
+  group_id: Scalars['uuid'];
+  id: Scalars['uuid'];
+  thing_id: Scalars['uuid'];
+  updated_at: Scalars['timestamptz'];
+};
+
+/** aggregated selection of "group_thing" */
+export type Group_Thing_Aggregate = {
+  __typename?: 'group_thing_aggregate';
+  aggregate?: Maybe<Group_Thing_Aggregate_Fields>;
+  nodes: Array<Group_Thing>;
+};
+
+/** aggregate fields of "group_thing" */
+export type Group_Thing_Aggregate_Fields = {
+  __typename?: 'group_thing_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Group_Thing_Max_Fields>;
+  min?: Maybe<Group_Thing_Min_Fields>;
+};
+
+
+/** aggregate fields of "group_thing" */
+export type Group_Thing_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Group_Thing_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "group_thing" */
+export type Group_Thing_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Group_Thing_Max_Order_By>;
+  min?: Maybe<Group_Thing_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "group_thing" */
+export type Group_Thing_Arr_Rel_Insert_Input = {
+  data: Array<Group_Thing_Insert_Input>;
+  on_conflict?: Maybe<Group_Thing_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "group_thing". All fields are combined with a logical 'AND'. */
+export type Group_Thing_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Group_Thing_Bool_Exp>>>;
+  _not?: Maybe<Group_Thing_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Group_Thing_Bool_Exp>>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  group_id?: Maybe<Uuid_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  thing_id?: Maybe<Uuid_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "group_thing" */
+export enum Group_Thing_Constraint {
+  /** unique or primary key constraint */
+  GroupThingGroupIdThingIdKey = 'group_thing_group_id_thing_id_key',
+  /** unique or primary key constraint */
+  GroupThingPkey = 'group_thing_pkey'
+}
+
+/** input type for inserting data into table "group_thing" */
+export type Group_Thing_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  thing_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Group_Thing_Max_Fields = {
+  __typename?: 'group_thing_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  thing_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "group_thing" */
+export type Group_Thing_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  thing_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Group_Thing_Min_Fields = {
+  __typename?: 'group_thing_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  thing_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "group_thing" */
+export type Group_Thing_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  thing_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "group_thing" */
+export type Group_Thing_Mutation_Response = {
+  __typename?: 'group_thing_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Group_Thing>;
+};
+
+/** input type for inserting object relation for remote table "group_thing" */
+export type Group_Thing_Obj_Rel_Insert_Input = {
+  data: Group_Thing_Insert_Input;
+  on_conflict?: Maybe<Group_Thing_On_Conflict>;
+};
+
+/** on conflict condition type for table "group_thing" */
+export type Group_Thing_On_Conflict = {
+  constraint: Group_Thing_Constraint;
+  update_columns: Array<Group_Thing_Update_Column>;
+  where?: Maybe<Group_Thing_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "group_thing" */
+export type Group_Thing_Order_By = {
+  created_at?: Maybe<Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  thing_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "group_thing" */
+export type Group_Thing_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "group_thing" */
+export enum Group_Thing_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  GroupId = 'group_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  ThingId = 'thing_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "group_thing" */
+export type Group_Thing_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  thing_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "group_thing" */
+export enum Group_Thing_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  GroupId = 'group_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  ThingId = 'thing_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
 /** columns and relationships of "groups" */
 export type Groups = {
   __typename?: 'groups';
@@ -463,12 +1066,36 @@ export type Groups = {
   description?: Maybe<Scalars['String']>;
   id: Scalars['uuid'];
   /** An array relationship */
+  join_requests: Array<Group_Join_Requests>;
+  /** An aggregated array relationship */
+  join_requests_aggregate: Group_Join_Requests_Aggregate;
+  /** An array relationship */
   memberships: Array<Group_Members>;
   /** An aggregated array relationship */
   memberships_aggregate: Group_Members_Aggregate;
   name: Scalars['String'];
   public: Scalars['Boolean'];
   updated_at: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "groups" */
+export type GroupsJoin_RequestsArgs = {
+  distinct_on?: Maybe<Array<Group_Join_Requests_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Join_Requests_Order_By>>;
+  where?: Maybe<Group_Join_Requests_Bool_Exp>;
+};
+
+
+/** columns and relationships of "groups" */
+export type GroupsJoin_Requests_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Join_Requests_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Join_Requests_Order_By>>;
+  where?: Maybe<Group_Join_Requests_Bool_Exp>;
 };
 
 
@@ -534,6 +1161,7 @@ export type Groups_Bool_Exp = {
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   description?: Maybe<String_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
+  join_requests?: Maybe<Group_Join_Requests_Bool_Exp>;
   memberships?: Maybe<Group_Members_Bool_Exp>;
   name?: Maybe<String_Comparison_Exp>;
   public?: Maybe<Boolean_Comparison_Exp>;
@@ -553,6 +1181,7 @@ export type Groups_Insert_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
+  join_requests?: Maybe<Group_Join_Requests_Arr_Rel_Insert_Input>;
   memberships?: Maybe<Group_Members_Arr_Rel_Insert_Input>;
   name?: Maybe<Scalars['String']>;
   public?: Maybe<Scalars['Boolean']>;
@@ -624,6 +1253,7 @@ export type Groups_Order_By = {
   created_at?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  join_requests_aggregate?: Maybe<Group_Join_Requests_Aggregate_Order_By>;
   memberships_aggregate?: Maybe<Group_Members_Aggregate_Order_By>;
   name?: Maybe<Order_By>;
   public?: Maybe<Order_By>;
@@ -678,11 +1308,189 @@ export enum Groups_Update_Column {
 }
 
 
+/** columns and relationships of "messages" */
+export type Messages = {
+  __typename?: 'messages';
+  created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  receiver_id: Scalars['uuid'];
+  sender_id: Scalars['uuid'];
+};
+
+/** aggregated selection of "messages" */
+export type Messages_Aggregate = {
+  __typename?: 'messages_aggregate';
+  aggregate?: Maybe<Messages_Aggregate_Fields>;
+  nodes: Array<Messages>;
+};
+
+/** aggregate fields of "messages" */
+export type Messages_Aggregate_Fields = {
+  __typename?: 'messages_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Messages_Max_Fields>;
+  min?: Maybe<Messages_Min_Fields>;
+};
+
+
+/** aggregate fields of "messages" */
+export type Messages_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Messages_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "messages" */
+export type Messages_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Messages_Max_Order_By>;
+  min?: Maybe<Messages_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "messages" */
+export type Messages_Arr_Rel_Insert_Input = {
+  data: Array<Messages_Insert_Input>;
+  on_conflict?: Maybe<Messages_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "messages". All fields are combined with a logical 'AND'. */
+export type Messages_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Messages_Bool_Exp>>>;
+  _not?: Maybe<Messages_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Messages_Bool_Exp>>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  receiver_id?: Maybe<Uuid_Comparison_Exp>;
+  sender_id?: Maybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "messages" */
+export enum Messages_Constraint {
+  /** unique or primary key constraint */
+  MessagesPkey = 'messages_pkey'
+}
+
+/** input type for inserting data into table "messages" */
+export type Messages_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  receiver_id?: Maybe<Scalars['uuid']>;
+  sender_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type Messages_Max_Fields = {
+  __typename?: 'messages_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  receiver_id?: Maybe<Scalars['uuid']>;
+  sender_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "messages" */
+export type Messages_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  receiver_id?: Maybe<Order_By>;
+  sender_id?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Messages_Min_Fields = {
+  __typename?: 'messages_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  receiver_id?: Maybe<Scalars['uuid']>;
+  sender_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "messages" */
+export type Messages_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  receiver_id?: Maybe<Order_By>;
+  sender_id?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "messages" */
+export type Messages_Mutation_Response = {
+  __typename?: 'messages_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Messages>;
+};
+
+/** input type for inserting object relation for remote table "messages" */
+export type Messages_Obj_Rel_Insert_Input = {
+  data: Messages_Insert_Input;
+  on_conflict?: Maybe<Messages_On_Conflict>;
+};
+
+/** on conflict condition type for table "messages" */
+export type Messages_On_Conflict = {
+  constraint: Messages_Constraint;
+  update_columns: Array<Messages_Update_Column>;
+  where?: Maybe<Messages_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "messages" */
+export type Messages_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  receiver_id?: Maybe<Order_By>;
+  sender_id?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "messages" */
+export type Messages_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "messages" */
+export enum Messages_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  ReceiverId = 'receiver_id',
+  /** column name */
+  SenderId = 'sender_id'
+}
+
+/** input type for updating data in table "messages" */
+export type Messages_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  receiver_id?: Maybe<Scalars['uuid']>;
+  sender_id?: Maybe<Scalars['uuid']>;
+};
+
+/** update columns of table "messages" */
+export enum Messages_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  ReceiverId = 'receiver_id',
+  /** column name */
+  SenderId = 'sender_id'
+}
+
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
   /** perform the action: "createGroup" */
   createGroup: CreateGroupResult;
+  /** delete data from the table: "group_join_request_status" */
+  delete_group_join_request_status?: Maybe<Group_Join_Request_Status_Mutation_Response>;
+  /** delete single row from the table: "group_join_request_status" */
+  delete_group_join_request_status_by_pk?: Maybe<Group_Join_Request_Status>;
+  /** delete data from the table: "group_join_requests" */
+  delete_group_join_requests?: Maybe<Group_Join_Requests_Mutation_Response>;
+  /** delete single row from the table: "group_join_requests" */
+  delete_group_join_requests_by_pk?: Maybe<Group_Join_Requests>;
   /** delete data from the table: "group_members" */
   delete_group_members?: Maybe<Group_Members_Mutation_Response>;
   /** delete single row from the table: "group_members" */
@@ -691,10 +1499,18 @@ export type Mutation_Root = {
   delete_group_role?: Maybe<Group_Role_Mutation_Response>;
   /** delete single row from the table: "group_role" */
   delete_group_role_by_pk?: Maybe<Group_Role>;
+  /** delete data from the table: "group_thing" */
+  delete_group_thing?: Maybe<Group_Thing_Mutation_Response>;
+  /** delete single row from the table: "group_thing" */
+  delete_group_thing_by_pk?: Maybe<Group_Thing>;
   /** delete data from the table: "groups" */
   delete_groups?: Maybe<Groups_Mutation_Response>;
   /** delete single row from the table: "groups" */
   delete_groups_by_pk?: Maybe<Groups>;
+  /** delete data from the table: "messages" */
+  delete_messages?: Maybe<Messages_Mutation_Response>;
+  /** delete single row from the table: "messages" */
+  delete_messages_by_pk?: Maybe<Messages>;
   /** delete data from the table: "things" */
   delete_things?: Maybe<Things_Mutation_Response>;
   /** delete single row from the table: "things" */
@@ -709,6 +1525,14 @@ export type Mutation_Root = {
   delete_verification_requests?: Maybe<Verification_Requests_Mutation_Response>;
   /** delete single row from the table: "verification_requests" */
   delete_verification_requests_by_pk?: Maybe<Verification_Requests>;
+  /** insert data into the table: "group_join_request_status" */
+  insert_group_join_request_status?: Maybe<Group_Join_Request_Status_Mutation_Response>;
+  /** insert a single row into the table: "group_join_request_status" */
+  insert_group_join_request_status_one?: Maybe<Group_Join_Request_Status>;
+  /** insert data into the table: "group_join_requests" */
+  insert_group_join_requests?: Maybe<Group_Join_Requests_Mutation_Response>;
+  /** insert a single row into the table: "group_join_requests" */
+  insert_group_join_requests_one?: Maybe<Group_Join_Requests>;
   /** insert data into the table: "group_members" */
   insert_group_members?: Maybe<Group_Members_Mutation_Response>;
   /** insert a single row into the table: "group_members" */
@@ -717,10 +1541,18 @@ export type Mutation_Root = {
   insert_group_role?: Maybe<Group_Role_Mutation_Response>;
   /** insert a single row into the table: "group_role" */
   insert_group_role_one?: Maybe<Group_Role>;
+  /** insert data into the table: "group_thing" */
+  insert_group_thing?: Maybe<Group_Thing_Mutation_Response>;
+  /** insert a single row into the table: "group_thing" */
+  insert_group_thing_one?: Maybe<Group_Thing>;
   /** insert data into the table: "groups" */
   insert_groups?: Maybe<Groups_Mutation_Response>;
   /** insert a single row into the table: "groups" */
   insert_groups_one?: Maybe<Groups>;
+  /** insert data into the table: "messages" */
+  insert_messages?: Maybe<Messages_Mutation_Response>;
+  /** insert a single row into the table: "messages" */
+  insert_messages_one?: Maybe<Messages>;
   /** insert data into the table: "things" */
   insert_things?: Maybe<Things_Mutation_Response>;
   /** insert a single row into the table: "things" */
@@ -739,6 +1571,16 @@ export type Mutation_Root = {
   insert_verification_requests_one?: Maybe<Verification_Requests>;
   /** perform the action: "registerCredentials" */
   registerCredentials?: Maybe<RegistrationResult>;
+  /** perform the action: "requestJoinGroup" */
+  requestJoinGroup?: Maybe<RequestJoinGroupResult>;
+  /** update data of the table: "group_join_request_status" */
+  update_group_join_request_status?: Maybe<Group_Join_Request_Status_Mutation_Response>;
+  /** update single row of the table: "group_join_request_status" */
+  update_group_join_request_status_by_pk?: Maybe<Group_Join_Request_Status>;
+  /** update data of the table: "group_join_requests" */
+  update_group_join_requests?: Maybe<Group_Join_Requests_Mutation_Response>;
+  /** update single row of the table: "group_join_requests" */
+  update_group_join_requests_by_pk?: Maybe<Group_Join_Requests>;
   /** update data of the table: "group_members" */
   update_group_members?: Maybe<Group_Members_Mutation_Response>;
   /** update single row of the table: "group_members" */
@@ -747,10 +1589,18 @@ export type Mutation_Root = {
   update_group_role?: Maybe<Group_Role_Mutation_Response>;
   /** update single row of the table: "group_role" */
   update_group_role_by_pk?: Maybe<Group_Role>;
+  /** update data of the table: "group_thing" */
+  update_group_thing?: Maybe<Group_Thing_Mutation_Response>;
+  /** update single row of the table: "group_thing" */
+  update_group_thing_by_pk?: Maybe<Group_Thing>;
   /** update data of the table: "groups" */
   update_groups?: Maybe<Groups_Mutation_Response>;
   /** update single row of the table: "groups" */
   update_groups_by_pk?: Maybe<Groups>;
+  /** update data of the table: "messages" */
+  update_messages?: Maybe<Messages_Mutation_Response>;
+  /** update single row of the table: "messages" */
+  update_messages_by_pk?: Maybe<Messages>;
   /** update data of the table: "things" */
   update_things?: Maybe<Things_Mutation_Response>;
   /** update single row of the table: "things" */
@@ -771,6 +1621,30 @@ export type Mutation_Root = {
 /** mutation root */
 export type Mutation_RootCreateGroupArgs = {
   input: CreateGroupInput;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_Join_Request_StatusArgs = {
+  where: Group_Join_Request_Status_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_Join_Request_Status_By_PkArgs = {
+  value: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_Join_RequestsArgs = {
+  where: Group_Join_Requests_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_Join_Requests_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -799,6 +1673,18 @@ export type Mutation_RootDelete_Group_Role_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Group_ThingArgs = {
+  where: Group_Thing_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_Thing_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_GroupsArgs = {
   where: Groups_Bool_Exp;
 };
@@ -806,6 +1692,18 @@ export type Mutation_RootDelete_GroupsArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Groups_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_MessagesArgs = {
+  where: Messages_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Messages_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -853,6 +1751,34 @@ export type Mutation_RootDelete_Verification_Requests_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_Group_Join_Request_StatusArgs = {
+  objects: Array<Group_Join_Request_Status_Insert_Input>;
+  on_conflict?: Maybe<Group_Join_Request_Status_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Group_Join_Request_Status_OneArgs = {
+  object: Group_Join_Request_Status_Insert_Input;
+  on_conflict?: Maybe<Group_Join_Request_Status_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Group_Join_RequestsArgs = {
+  objects: Array<Group_Join_Requests_Insert_Input>;
+  on_conflict?: Maybe<Group_Join_Requests_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Group_Join_Requests_OneArgs = {
+  object: Group_Join_Requests_Insert_Input;
+  on_conflict?: Maybe<Group_Join_Requests_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_Group_MembersArgs = {
   objects: Array<Group_Members_Insert_Input>;
   on_conflict?: Maybe<Group_Members_On_Conflict>;
@@ -881,6 +1807,20 @@ export type Mutation_RootInsert_Group_Role_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_Group_ThingArgs = {
+  objects: Array<Group_Thing_Insert_Input>;
+  on_conflict?: Maybe<Group_Thing_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Group_Thing_OneArgs = {
+  object: Group_Thing_Insert_Input;
+  on_conflict?: Maybe<Group_Thing_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_GroupsArgs = {
   objects: Array<Groups_Insert_Input>;
   on_conflict?: Maybe<Groups_On_Conflict>;
@@ -891,6 +1831,20 @@ export type Mutation_RootInsert_GroupsArgs = {
 export type Mutation_RootInsert_Groups_OneArgs = {
   object: Groups_Insert_Input;
   on_conflict?: Maybe<Groups_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_MessagesArgs = {
+  objects: Array<Messages_Insert_Input>;
+  on_conflict?: Maybe<Messages_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Messages_OneArgs = {
+  object: Messages_Insert_Input;
+  on_conflict?: Maybe<Messages_On_Conflict>;
 };
 
 
@@ -955,6 +1909,40 @@ export type Mutation_RootRegisterCredentialsArgs = {
 
 
 /** mutation root */
+export type Mutation_RootRequestJoinGroupArgs = {
+  input: RequestJoinGroupInput;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_Join_Request_StatusArgs = {
+  _set?: Maybe<Group_Join_Request_Status_Set_Input>;
+  where: Group_Join_Request_Status_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_Join_Request_Status_By_PkArgs = {
+  _set?: Maybe<Group_Join_Request_Status_Set_Input>;
+  pk_columns: Group_Join_Request_Status_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_Join_RequestsArgs = {
+  _set?: Maybe<Group_Join_Requests_Set_Input>;
+  where: Group_Join_Requests_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_Join_Requests_By_PkArgs = {
+  _set?: Maybe<Group_Join_Requests_Set_Input>;
+  pk_columns: Group_Join_Requests_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Group_MembersArgs = {
   _set?: Maybe<Group_Members_Set_Input>;
   where: Group_Members_Bool_Exp;
@@ -983,6 +1971,20 @@ export type Mutation_RootUpdate_Group_Role_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Group_ThingArgs = {
+  _set?: Maybe<Group_Thing_Set_Input>;
+  where: Group_Thing_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_Thing_By_PkArgs = {
+  _set?: Maybe<Group_Thing_Set_Input>;
+  pk_columns: Group_Thing_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_GroupsArgs = {
   _set?: Maybe<Groups_Set_Input>;
   where: Groups_Bool_Exp;
@@ -993,6 +1995,20 @@ export type Mutation_RootUpdate_GroupsArgs = {
 export type Mutation_RootUpdate_Groups_By_PkArgs = {
   _set?: Maybe<Groups_Set_Input>;
   pk_columns: Groups_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_MessagesArgs = {
+  _set?: Maybe<Messages_Set_Input>;
+  where: Messages_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Messages_By_PkArgs = {
+  _set?: Maybe<Messages_Set_Input>;
+  pk_columns: Messages_Pk_Columns_Input;
 };
 
 
@@ -1065,6 +2081,18 @@ export enum Order_By {
 /** query root */
 export type Query_Root = {
   __typename?: 'query_root';
+  /** fetch data from the table: "group_join_request_status" */
+  group_join_request_status: Array<Group_Join_Request_Status>;
+  /** fetch aggregated fields from the table: "group_join_request_status" */
+  group_join_request_status_aggregate: Group_Join_Request_Status_Aggregate;
+  /** fetch data from the table: "group_join_request_status" using primary key columns */
+  group_join_request_status_by_pk?: Maybe<Group_Join_Request_Status>;
+  /** fetch data from the table: "group_join_requests" */
+  group_join_requests: Array<Group_Join_Requests>;
+  /** fetch aggregated fields from the table: "group_join_requests" */
+  group_join_requests_aggregate: Group_Join_Requests_Aggregate;
+  /** fetch data from the table: "group_join_requests" using primary key columns */
+  group_join_requests_by_pk?: Maybe<Group_Join_Requests>;
   /** fetch data from the table: "group_members" */
   group_members: Array<Group_Members>;
   /** fetch aggregated fields from the table: "group_members" */
@@ -1077,12 +2105,24 @@ export type Query_Root = {
   group_role_aggregate: Group_Role_Aggregate;
   /** fetch data from the table: "group_role" using primary key columns */
   group_role_by_pk?: Maybe<Group_Role>;
+  /** fetch data from the table: "group_thing" */
+  group_thing: Array<Group_Thing>;
+  /** fetch aggregated fields from the table: "group_thing" */
+  group_thing_aggregate: Group_Thing_Aggregate;
+  /** fetch data from the table: "group_thing" using primary key columns */
+  group_thing_by_pk?: Maybe<Group_Thing>;
   /** fetch data from the table: "groups" */
   groups: Array<Groups>;
   /** fetch aggregated fields from the table: "groups" */
   groups_aggregate: Groups_Aggregate;
   /** fetch data from the table: "groups" using primary key columns */
   groups_by_pk?: Maybe<Groups>;
+  /** fetch data from the table: "messages" */
+  messages: Array<Messages>;
+  /** fetch aggregated fields from the table: "messages" */
+  messages_aggregate: Messages_Aggregate;
+  /** fetch data from the table: "messages" using primary key columns */
+  messages_by_pk?: Maybe<Messages>;
   /** fetch data from the table: "things" */
   things: Array<Things>;
   /** fetch aggregated fields from the table: "things" */
@@ -1105,6 +2145,58 @@ export type Query_Root = {
   verification_requests_aggregate: Verification_Requests_Aggregate;
   /** fetch data from the table: "verification_requests" using primary key columns */
   verification_requests_by_pk?: Maybe<Verification_Requests>;
+};
+
+
+/** query root */
+export type Query_RootGroup_Join_Request_StatusArgs = {
+  distinct_on?: Maybe<Array<Group_Join_Request_Status_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Join_Request_Status_Order_By>>;
+  where?: Maybe<Group_Join_Request_Status_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootGroup_Join_Request_Status_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Join_Request_Status_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Join_Request_Status_Order_By>>;
+  where?: Maybe<Group_Join_Request_Status_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootGroup_Join_Request_Status_By_PkArgs = {
+  value: Scalars['String'];
+};
+
+
+/** query root */
+export type Query_RootGroup_Join_RequestsArgs = {
+  distinct_on?: Maybe<Array<Group_Join_Requests_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Join_Requests_Order_By>>;
+  where?: Maybe<Group_Join_Requests_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootGroup_Join_Requests_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Join_Requests_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Join_Requests_Order_By>>;
+  where?: Maybe<Group_Join_Requests_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootGroup_Join_Requests_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -1161,6 +2253,32 @@ export type Query_RootGroup_Role_By_PkArgs = {
 
 
 /** query root */
+export type Query_RootGroup_ThingArgs = {
+  distinct_on?: Maybe<Array<Group_Thing_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Thing_Order_By>>;
+  where?: Maybe<Group_Thing_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootGroup_Thing_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Thing_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Thing_Order_By>>;
+  where?: Maybe<Group_Thing_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootGroup_Thing_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** query root */
 export type Query_RootGroupsArgs = {
   distinct_on?: Maybe<Array<Groups_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -1182,6 +2300,32 @@ export type Query_RootGroups_AggregateArgs = {
 
 /** query root */
 export type Query_RootGroups_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** query root */
+export type Query_RootMessagesArgs = {
+  distinct_on?: Maybe<Array<Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Messages_Order_By>>;
+  where?: Maybe<Messages_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootMessages_AggregateArgs = {
+  distinct_on?: Maybe<Array<Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Messages_Order_By>>;
+  where?: Maybe<Messages_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootMessages_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -1286,6 +2430,18 @@ export type Query_RootVerification_Requests_By_PkArgs = {
 /** subscription root */
 export type Subscription_Root = {
   __typename?: 'subscription_root';
+  /** fetch data from the table: "group_join_request_status" */
+  group_join_request_status: Array<Group_Join_Request_Status>;
+  /** fetch aggregated fields from the table: "group_join_request_status" */
+  group_join_request_status_aggregate: Group_Join_Request_Status_Aggregate;
+  /** fetch data from the table: "group_join_request_status" using primary key columns */
+  group_join_request_status_by_pk?: Maybe<Group_Join_Request_Status>;
+  /** fetch data from the table: "group_join_requests" */
+  group_join_requests: Array<Group_Join_Requests>;
+  /** fetch aggregated fields from the table: "group_join_requests" */
+  group_join_requests_aggregate: Group_Join_Requests_Aggregate;
+  /** fetch data from the table: "group_join_requests" using primary key columns */
+  group_join_requests_by_pk?: Maybe<Group_Join_Requests>;
   /** fetch data from the table: "group_members" */
   group_members: Array<Group_Members>;
   /** fetch aggregated fields from the table: "group_members" */
@@ -1298,12 +2454,24 @@ export type Subscription_Root = {
   group_role_aggregate: Group_Role_Aggregate;
   /** fetch data from the table: "group_role" using primary key columns */
   group_role_by_pk?: Maybe<Group_Role>;
+  /** fetch data from the table: "group_thing" */
+  group_thing: Array<Group_Thing>;
+  /** fetch aggregated fields from the table: "group_thing" */
+  group_thing_aggregate: Group_Thing_Aggregate;
+  /** fetch data from the table: "group_thing" using primary key columns */
+  group_thing_by_pk?: Maybe<Group_Thing>;
   /** fetch data from the table: "groups" */
   groups: Array<Groups>;
   /** fetch aggregated fields from the table: "groups" */
   groups_aggregate: Groups_Aggregate;
   /** fetch data from the table: "groups" using primary key columns */
   groups_by_pk?: Maybe<Groups>;
+  /** fetch data from the table: "messages" */
+  messages: Array<Messages>;
+  /** fetch aggregated fields from the table: "messages" */
+  messages_aggregate: Messages_Aggregate;
+  /** fetch data from the table: "messages" using primary key columns */
+  messages_by_pk?: Maybe<Messages>;
   /** fetch data from the table: "things" */
   things: Array<Things>;
   /** fetch aggregated fields from the table: "things" */
@@ -1326,6 +2494,58 @@ export type Subscription_Root = {
   verification_requests_aggregate: Verification_Requests_Aggregate;
   /** fetch data from the table: "verification_requests" using primary key columns */
   verification_requests_by_pk?: Maybe<Verification_Requests>;
+};
+
+
+/** subscription root */
+export type Subscription_RootGroup_Join_Request_StatusArgs = {
+  distinct_on?: Maybe<Array<Group_Join_Request_Status_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Join_Request_Status_Order_By>>;
+  where?: Maybe<Group_Join_Request_Status_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootGroup_Join_Request_Status_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Join_Request_Status_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Join_Request_Status_Order_By>>;
+  where?: Maybe<Group_Join_Request_Status_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootGroup_Join_Request_Status_By_PkArgs = {
+  value: Scalars['String'];
+};
+
+
+/** subscription root */
+export type Subscription_RootGroup_Join_RequestsArgs = {
+  distinct_on?: Maybe<Array<Group_Join_Requests_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Join_Requests_Order_By>>;
+  where?: Maybe<Group_Join_Requests_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootGroup_Join_Requests_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Join_Requests_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Join_Requests_Order_By>>;
+  where?: Maybe<Group_Join_Requests_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootGroup_Join_Requests_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -1382,6 +2602,32 @@ export type Subscription_RootGroup_Role_By_PkArgs = {
 
 
 /** subscription root */
+export type Subscription_RootGroup_ThingArgs = {
+  distinct_on?: Maybe<Array<Group_Thing_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Thing_Order_By>>;
+  where?: Maybe<Group_Thing_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootGroup_Thing_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Thing_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Thing_Order_By>>;
+  where?: Maybe<Group_Thing_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootGroup_Thing_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** subscription root */
 export type Subscription_RootGroupsArgs = {
   distinct_on?: Maybe<Array<Groups_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -1403,6 +2649,32 @@ export type Subscription_RootGroups_AggregateArgs = {
 
 /** subscription root */
 export type Subscription_RootGroups_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** subscription root */
+export type Subscription_RootMessagesArgs = {
+  distinct_on?: Maybe<Array<Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Messages_Order_By>>;
+  where?: Maybe<Messages_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootMessages_AggregateArgs = {
+  distinct_on?: Maybe<Array<Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Messages_Order_By>>;
+  where?: Maybe<Messages_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootMessages_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -1828,6 +3100,10 @@ export type Users = {
   created_at: Scalars['timestamptz'];
   email?: Maybe<Scalars['String']>;
   email_verified?: Maybe<Scalars['timestamptz']>;
+  /** An array relationship */
+  group_join_requests: Array<Group_Join_Requests>;
+  /** An aggregated array relationship */
+  group_join_requests_aggregate: Group_Join_Requests_Aggregate;
   id: Scalars['uuid'];
   image?: Maybe<Scalars['String']>;
   last_seen?: Maybe<Scalars['timestamptz']>;
@@ -1844,6 +3120,26 @@ export type Users = {
   /** An aggregated array relationship */
   things_aggregate: Things_Aggregate;
   updated_at: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "users" */
+export type UsersGroup_Join_RequestsArgs = {
+  distinct_on?: Maybe<Array<Group_Join_Requests_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Join_Requests_Order_By>>;
+  where?: Maybe<Group_Join_Requests_Bool_Exp>;
+};
+
+
+/** columns and relationships of "users" */
+export type UsersGroup_Join_Requests_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Join_Requests_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Join_Requests_Order_By>>;
+  where?: Maybe<Group_Join_Requests_Bool_Exp>;
 };
 
 
@@ -1929,6 +3225,7 @@ export type Users_Bool_Exp = {
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   email?: Maybe<String_Comparison_Exp>;
   email_verified?: Maybe<Timestamptz_Comparison_Exp>;
+  group_join_requests?: Maybe<Group_Join_Requests_Bool_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   image?: Maybe<String_Comparison_Exp>;
   last_seen?: Maybe<Timestamptz_Comparison_Exp>;
@@ -1955,6 +3252,7 @@ export type Users_Insert_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
   email?: Maybe<Scalars['String']>;
   email_verified?: Maybe<Scalars['timestamptz']>;
+  group_join_requests?: Maybe<Group_Join_Requests_Arr_Rel_Insert_Input>;
   id?: Maybe<Scalars['uuid']>;
   image?: Maybe<Scalars['String']>;
   last_seen?: Maybe<Scalars['timestamptz']>;
@@ -2047,6 +3345,7 @@ export type Users_Order_By = {
   created_at?: Maybe<Order_By>;
   email?: Maybe<Order_By>;
   email_verified?: Maybe<Order_By>;
+  group_join_requests_aggregate?: Maybe<Group_Join_Requests_Aggregate_Order_By>;
   id?: Maybe<Order_By>;
   image?: Maybe<Order_By>;
   last_seen?: Maybe<Order_By>;
@@ -2441,6 +3740,15 @@ export type Verification_Requests_Variance_Order_By = {
   id?: Maybe<Order_By>;
 };
 
+export type GroupMemberCardFragment = (
+  { __typename?: 'group_members' }
+  & Pick<Group_Members, 'id' | 'role' | 'created_at'>
+  & { user: (
+    { __typename?: 'users' }
+    & UserCardFragment
+  ) }
+);
+
 export type GroupCardFragment = (
   { __typename?: 'groups' }
   & Pick<Groups, 'id' | 'name' | 'created_at' | 'description' | 'public'>
@@ -2453,19 +3761,21 @@ export type GroupCardFragment = (
   ) }
 );
 
-export type CreateGroupMutationVariables = Exact<{
-  input: CreateGroupInput;
-}>;
+export type GroupDetailsFragment = (
+  { __typename?: 'groups' }
+  & { memberships: Array<(
+    { __typename?: 'group_members' }
+    & GroupMemberCardFragment
+  )> }
+  & GroupCardFragment
+);
 
-
-export type CreateGroupMutation = (
-  { __typename?: 'mutation_root' }
-  & { createGroup: (
-    { __typename?: 'CreateGroupResult' }
-    & { group?: Maybe<(
-      { __typename?: 'groups' }
-      & GroupCardFragment
-    )> }
+export type GroupJoinRequestCardFragment = (
+  { __typename?: 'group_join_requests' }
+  & Pick<Group_Join_Requests, 'id' | 'created_at' | 'updated_at' | 'status' | 'group_id'>
+  & { user: (
+    { __typename?: 'users' }
+    & UserCardFragment
   ) }
 );
 
@@ -2487,6 +3797,103 @@ export type ListGroupsQuery = (
   ), groups: Array<(
     { __typename?: 'groups' }
     & GroupCardFragment
+  )> }
+);
+
+export type GroupDetailsQueryVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type GroupDetailsQuery = (
+  { __typename?: 'query_root' }
+  & { groups_by_pk?: Maybe<(
+    { __typename?: 'groups' }
+    & GroupDetailsFragment
+  )> }
+);
+
+export type GroupJoinRequestsQueryVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type GroupJoinRequestsQuery = (
+  { __typename?: 'query_root' }
+  & { group_join_requests: Array<(
+    { __typename?: 'group_join_requests' }
+    & GroupJoinRequestCardFragment
+  )> }
+);
+
+export type CreateGroupMutationVariables = Exact<{
+  input: CreateGroupInput;
+}>;
+
+
+export type CreateGroupMutation = (
+  { __typename?: 'mutation_root' }
+  & { createGroup: (
+    { __typename?: 'CreateGroupResult' }
+    & { group?: Maybe<(
+      { __typename?: 'groups' }
+      & GroupCardFragment
+    )> }
+  ) }
+);
+
+export type JoinGroupMutationVariables = Exact<{
+  groupId: Scalars['uuid'];
+}>;
+
+
+export type JoinGroupMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_group_members_one?: Maybe<(
+    { __typename?: 'group_members' }
+    & { user: (
+      { __typename?: 'users' }
+      & UserPrivateDetailFragment
+    ) }
+    & GroupMemberCardFragment
+  )> }
+);
+
+export type RequestJoinGroupMutationVariables = Exact<{
+  input: RequestJoinGroupInput;
+}>;
+
+
+export type RequestJoinGroupMutation = (
+  { __typename?: 'mutation_root' }
+  & { requestJoinGroup?: Maybe<(
+    { __typename?: 'RequestJoinGroupResult' }
+    & { group?: Maybe<(
+      { __typename?: 'groups' }
+      & GroupCardFragment
+    )>, user?: Maybe<(
+      { __typename?: 'users' }
+      & UserJoinRequestsFragment
+    )> }
+  )> }
+);
+
+export type CancelJoinRequestMutationVariables = Exact<{
+  requestId: Scalars['uuid'];
+}>;
+
+
+export type CancelJoinRequestMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_group_join_requests?: Maybe<(
+    { __typename?: 'group_join_requests_mutation_response' }
+    & { returning: Array<(
+      { __typename?: 'group_join_requests' }
+      & { user: (
+        { __typename?: 'users' }
+        & UserJoinRequestsFragment
+      ) }
+    )> }
   )> }
 );
 
@@ -2521,13 +3928,30 @@ export type UserDetailFragment = (
   & UserCardFragment
 );
 
+export type UserJoinRequestsFragment = (
+  { __typename?: 'users' }
+  & Pick<Users, 'id'>
+  & { group_join_requests: Array<(
+    { __typename?: 'group_join_requests' }
+    & GroupJoinRequestCardFragment
+  )> }
+);
+
 export type UserPrivateDetailFragment = (
   { __typename?: 'users' }
-  & { private_info?: Maybe<(
+  & { memberships: Array<(
+    { __typename?: 'group_members' }
+    & Pick<Group_Members, 'role'>
+    & { group: (
+      { __typename?: 'groups' }
+      & Pick<Groups, 'id' | 'name'>
+    ) }
+  )>, private_info?: Maybe<(
     { __typename?: 'user_private' }
     & Pick<User_Private, 'email'>
   )> }
   & UserDetailFragment
+  & UserJoinRequestsFragment
 );
 
 export type UserListQueryVariables = Exact<{ [key: string]: never; }>;
@@ -2591,6 +4015,25 @@ export const UserCardFragmentDoc = gql`
   image
 }
     `;
+export const GroupMemberCardFragmentDoc = gql`
+    fragment GroupMemberCard on group_members {
+  id
+  role
+  created_at
+  user {
+    ...UserCard
+  }
+}
+    ${UserCardFragmentDoc}`;
+export const GroupDetailsFragmentDoc = gql`
+    fragment GroupDetails on groups {
+  ...GroupCard
+  memberships {
+    ...GroupMemberCard
+  }
+}
+    ${GroupCardFragmentDoc}
+${GroupMemberCardFragmentDoc}`;
 export const ThingCardFragmentDoc = gql`
     fragment ThingCard on things {
   id
@@ -2606,48 +4049,43 @@ export const UserDetailFragmentDoc = gql`
   created_at
 }
     ${UserCardFragmentDoc}`;
+export const GroupJoinRequestCardFragmentDoc = gql`
+    fragment GroupJoinRequestCard on group_join_requests {
+  id
+  created_at
+  updated_at
+  status
+  group_id
+  user {
+    ...UserCard
+  }
+}
+    ${UserCardFragmentDoc}`;
+export const UserJoinRequestsFragmentDoc = gql`
+    fragment UserJoinRequests on users {
+  id
+  group_join_requests {
+    ...GroupJoinRequestCard
+  }
+}
+    ${GroupJoinRequestCardFragmentDoc}`;
 export const UserPrivateDetailFragmentDoc = gql`
     fragment UserPrivateDetail on users {
   ...UserDetail
+  ...UserJoinRequests
+  memberships {
+    group {
+      id
+      name
+    }
+    role
+  }
   private_info {
     email
   }
 }
-    ${UserDetailFragmentDoc}`;
-export const CreateGroupDocument = gql`
-    mutation CreateGroup($input: CreateGroupInput!) {
-  createGroup(input: $input) {
-    group {
-      ...GroupCard
-    }
-  }
-}
-    ${GroupCardFragmentDoc}`;
-export type CreateGroupMutationFn = Apollo.MutationFunction<CreateGroupMutation, CreateGroupMutationVariables>;
-
-/**
- * __useCreateGroupMutation__
- *
- * To run a mutation, you first call `useCreateGroupMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateGroupMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createGroupMutation, { data, loading, error }] = useCreateGroupMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useCreateGroupMutation(baseOptions?: Apollo.MutationHookOptions<CreateGroupMutation, CreateGroupMutationVariables>) {
-        return Apollo.useMutation<CreateGroupMutation, CreateGroupMutationVariables>(CreateGroupDocument, baseOptions);
-      }
-export type CreateGroupMutationHookResult = ReturnType<typeof useCreateGroupMutation>;
-export type CreateGroupMutationResult = Apollo.MutationResult<CreateGroupMutation>;
-export type CreateGroupMutationOptions = Apollo.BaseMutationOptions<CreateGroupMutation, CreateGroupMutationVariables>;
+    ${UserDetailFragmentDoc}
+${UserJoinRequestsFragmentDoc}`;
 export const ListGroupsDocument = gql`
     query ListGroups($limit: Int!, $offset: Int!, $where: groups_bool_exp) {
   groups_aggregate(where: $where) {
@@ -2691,6 +4129,222 @@ export type ListGroupsQueryResult = Apollo.QueryResult<ListGroupsQuery, ListGrou
 export function refetchListGroupsQuery(variables?: ListGroupsQueryVariables) {
       return { query: ListGroupsDocument, variables: variables }
     }
+export const GroupDetailsDocument = gql`
+    query GroupDetails($id: uuid!) {
+  groups_by_pk(id: $id) {
+    ...GroupDetails
+  }
+}
+    ${GroupDetailsFragmentDoc}`;
+
+/**
+ * __useGroupDetailsQuery__
+ *
+ * To run a query within a React component, call `useGroupDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGroupDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGroupDetailsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGroupDetailsQuery(baseOptions?: Apollo.QueryHookOptions<GroupDetailsQuery, GroupDetailsQueryVariables>) {
+        return Apollo.useQuery<GroupDetailsQuery, GroupDetailsQueryVariables>(GroupDetailsDocument, baseOptions);
+      }
+export function useGroupDetailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GroupDetailsQuery, GroupDetailsQueryVariables>) {
+          return Apollo.useLazyQuery<GroupDetailsQuery, GroupDetailsQueryVariables>(GroupDetailsDocument, baseOptions);
+        }
+export type GroupDetailsQueryHookResult = ReturnType<typeof useGroupDetailsQuery>;
+export type GroupDetailsLazyQueryHookResult = ReturnType<typeof useGroupDetailsLazyQuery>;
+export type GroupDetailsQueryResult = Apollo.QueryResult<GroupDetailsQuery, GroupDetailsQueryVariables>;
+export function refetchGroupDetailsQuery(variables?: GroupDetailsQueryVariables) {
+      return { query: GroupDetailsDocument, variables: variables }
+    }
+export const GroupJoinRequestsDocument = gql`
+    query GroupJoinRequests($id: uuid!) {
+  group_join_requests(where: {group_id: {_eq: $id}}) {
+    ...GroupJoinRequestCard
+  }
+}
+    ${GroupJoinRequestCardFragmentDoc}`;
+
+/**
+ * __useGroupJoinRequestsQuery__
+ *
+ * To run a query within a React component, call `useGroupJoinRequestsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGroupJoinRequestsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGroupJoinRequestsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGroupJoinRequestsQuery(baseOptions?: Apollo.QueryHookOptions<GroupJoinRequestsQuery, GroupJoinRequestsQueryVariables>) {
+        return Apollo.useQuery<GroupJoinRequestsQuery, GroupJoinRequestsQueryVariables>(GroupJoinRequestsDocument, baseOptions);
+      }
+export function useGroupJoinRequestsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GroupJoinRequestsQuery, GroupJoinRequestsQueryVariables>) {
+          return Apollo.useLazyQuery<GroupJoinRequestsQuery, GroupJoinRequestsQueryVariables>(GroupJoinRequestsDocument, baseOptions);
+        }
+export type GroupJoinRequestsQueryHookResult = ReturnType<typeof useGroupJoinRequestsQuery>;
+export type GroupJoinRequestsLazyQueryHookResult = ReturnType<typeof useGroupJoinRequestsLazyQuery>;
+export type GroupJoinRequestsQueryResult = Apollo.QueryResult<GroupJoinRequestsQuery, GroupJoinRequestsQueryVariables>;
+export function refetchGroupJoinRequestsQuery(variables?: GroupJoinRequestsQueryVariables) {
+      return { query: GroupJoinRequestsDocument, variables: variables }
+    }
+export const CreateGroupDocument = gql`
+    mutation CreateGroup($input: CreateGroupInput!) {
+  createGroup(input: $input) {
+    group {
+      ...GroupCard
+    }
+  }
+}
+    ${GroupCardFragmentDoc}`;
+export type CreateGroupMutationFn = Apollo.MutationFunction<CreateGroupMutation, CreateGroupMutationVariables>;
+
+/**
+ * __useCreateGroupMutation__
+ *
+ * To run a mutation, you first call `useCreateGroupMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateGroupMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createGroupMutation, { data, loading, error }] = useCreateGroupMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateGroupMutation(baseOptions?: Apollo.MutationHookOptions<CreateGroupMutation, CreateGroupMutationVariables>) {
+        return Apollo.useMutation<CreateGroupMutation, CreateGroupMutationVariables>(CreateGroupDocument, baseOptions);
+      }
+export type CreateGroupMutationHookResult = ReturnType<typeof useCreateGroupMutation>;
+export type CreateGroupMutationResult = Apollo.MutationResult<CreateGroupMutation>;
+export type CreateGroupMutationOptions = Apollo.BaseMutationOptions<CreateGroupMutation, CreateGroupMutationVariables>;
+export const JoinGroupDocument = gql`
+    mutation JoinGroup($groupId: uuid!) {
+  insert_group_members_one(object: {group_id: $groupId}) {
+    ...GroupMemberCard
+    user {
+      ...UserPrivateDetail
+    }
+  }
+}
+    ${GroupMemberCardFragmentDoc}
+${UserPrivateDetailFragmentDoc}`;
+export type JoinGroupMutationFn = Apollo.MutationFunction<JoinGroupMutation, JoinGroupMutationVariables>;
+
+/**
+ * __useJoinGroupMutation__
+ *
+ * To run a mutation, you first call `useJoinGroupMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useJoinGroupMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [joinGroupMutation, { data, loading, error }] = useJoinGroupMutation({
+ *   variables: {
+ *      groupId: // value for 'groupId'
+ *   },
+ * });
+ */
+export function useJoinGroupMutation(baseOptions?: Apollo.MutationHookOptions<JoinGroupMutation, JoinGroupMutationVariables>) {
+        return Apollo.useMutation<JoinGroupMutation, JoinGroupMutationVariables>(JoinGroupDocument, baseOptions);
+      }
+export type JoinGroupMutationHookResult = ReturnType<typeof useJoinGroupMutation>;
+export type JoinGroupMutationResult = Apollo.MutationResult<JoinGroupMutation>;
+export type JoinGroupMutationOptions = Apollo.BaseMutationOptions<JoinGroupMutation, JoinGroupMutationVariables>;
+export const RequestJoinGroupDocument = gql`
+    mutation RequestJoinGroup($input: RequestJoinGroupInput!) {
+  requestJoinGroup(input: $input) {
+    group {
+      ...GroupCard
+    }
+    user {
+      ...UserJoinRequests
+    }
+  }
+}
+    ${GroupCardFragmentDoc}
+${UserJoinRequestsFragmentDoc}`;
+export type RequestJoinGroupMutationFn = Apollo.MutationFunction<RequestJoinGroupMutation, RequestJoinGroupMutationVariables>;
+
+/**
+ * __useRequestJoinGroupMutation__
+ *
+ * To run a mutation, you first call `useRequestJoinGroupMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRequestJoinGroupMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [requestJoinGroupMutation, { data, loading, error }] = useRequestJoinGroupMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRequestJoinGroupMutation(baseOptions?: Apollo.MutationHookOptions<RequestJoinGroupMutation, RequestJoinGroupMutationVariables>) {
+        return Apollo.useMutation<RequestJoinGroupMutation, RequestJoinGroupMutationVariables>(RequestJoinGroupDocument, baseOptions);
+      }
+export type RequestJoinGroupMutationHookResult = ReturnType<typeof useRequestJoinGroupMutation>;
+export type RequestJoinGroupMutationResult = Apollo.MutationResult<RequestJoinGroupMutation>;
+export type RequestJoinGroupMutationOptions = Apollo.BaseMutationOptions<RequestJoinGroupMutation, RequestJoinGroupMutationVariables>;
+export const CancelJoinRequestDocument = gql`
+    mutation CancelJoinRequest($requestId: uuid!) {
+  delete_group_join_requests(where: {id: {_eq: $requestId}}) {
+    returning {
+      user {
+        ...UserJoinRequests
+      }
+    }
+  }
+}
+    ${UserJoinRequestsFragmentDoc}`;
+export type CancelJoinRequestMutationFn = Apollo.MutationFunction<CancelJoinRequestMutation, CancelJoinRequestMutationVariables>;
+
+/**
+ * __useCancelJoinRequestMutation__
+ *
+ * To run a mutation, you first call `useCancelJoinRequestMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCancelJoinRequestMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [cancelJoinRequestMutation, { data, loading, error }] = useCancelJoinRequestMutation({
+ *   variables: {
+ *      requestId: // value for 'requestId'
+ *   },
+ * });
+ */
+export function useCancelJoinRequestMutation(baseOptions?: Apollo.MutationHookOptions<CancelJoinRequestMutation, CancelJoinRequestMutationVariables>) {
+        return Apollo.useMutation<CancelJoinRequestMutation, CancelJoinRequestMutationVariables>(CancelJoinRequestDocument, baseOptions);
+      }
+export type CancelJoinRequestMutationHookResult = ReturnType<typeof useCancelJoinRequestMutation>;
+export type CancelJoinRequestMutationResult = Apollo.MutationResult<CancelJoinRequestMutation>;
+export type CancelJoinRequestMutationOptions = Apollo.BaseMutationOptions<CancelJoinRequestMutation, CancelJoinRequestMutationVariables>;
 export const ThingListDocument = gql`
     query ThingList {
   things {
@@ -2845,19 +4499,28 @@ export type RegisterUserMutationOptions = Apollo.BaseMutationOptions<RegisterUse
 export const GqlOps = {
   Query: {
     ListGroups: 'ListGroups',
+    GroupDetails: 'GroupDetails',
+    GroupJoinRequests: 'GroupJoinRequests',
     ThingList: 'ThingList',
     UserList: 'UserList',
     UserPrivateDetails: 'UserPrivateDetails'
   },
   Mutation: {
     CreateGroup: 'CreateGroup',
+    JoinGroup: 'JoinGroup',
+    RequestJoinGroup: 'RequestJoinGroup',
+    CancelJoinRequest: 'CancelJoinRequest',
     RegisterUser: 'RegisterUser'
   },
   Fragment: {
+    GroupMemberCard: 'GroupMemberCard',
     GroupCard: 'GroupCard',
+    GroupDetails: 'GroupDetails',
+    GroupJoinRequestCard: 'GroupJoinRequestCard',
     ThingCard: 'ThingCard',
     UserCard: 'UserCard',
     UserDetail: 'UserDetail',
+    UserJoinRequests: 'UserJoinRequests',
     UserPrivateDetail: 'UserPrivateDetail'
   }
 }

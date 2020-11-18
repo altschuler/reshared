@@ -27,9 +27,10 @@ export const GroupEditor = ({ state, loading, error, onSubmit }: GroupEditorProp
                         <Alert type="error" message={error} />
                     </Form.Item>
                 )}
+
                 <Form.Item rules={[{ required: true, min: 5 }]}>
                     <Input
-                        placeholder="Group name"
+                        placeholder="Name"
                         value={present.name}
                         onChange={(e) => state.update({ name: e.target.value })}
                     />
@@ -37,14 +38,18 @@ export const GroupEditor = ({ state, loading, error, onSubmit }: GroupEditorProp
 
                 <Form.Item rules={[{ required: true, min: 10 }]}>
                     <Input
-                        placeholder="Group name"
+                        placeholder="Description"
                         value={present.description || ''}
                         onChange={(e) => state.update({ description: e.target.value })}
                     />
                 </Form.Item>
 
-                <Form.Item valuePropName="checked" extra="Public groups are open to all users">
-                    <Checkbox>Public</Checkbox>
+                <Form.Item extra="A public group is open for anyone to join">
+                    <Checkbox
+                        checked={present.public}
+                        onChange={(e) => state.update({ public: e.target.checked })}>
+                        Public
+                    </Checkbox>
                 </Form.Item>
 
                 <Form.Item>

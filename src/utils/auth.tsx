@@ -1,9 +1,9 @@
 ﻿import { useSession } from 'next-auth/client';
-import { UserDetailFragment, useUserPrivateDetailsLazyQuery } from '../generated/graphql';
+import { UserPrivateDetailFragment, useUserPrivateDetailsLazyQuery } from '../generated/graphql';
 import { createContext, ReactNode, useContext, useEffect, useMemo } from 'react';
 
 export interface AuthContextState {
-    user: UserDetailFragment | null;
+    user: UserPrivateDetailFragment | null;
     loading: boolean;
 }
 

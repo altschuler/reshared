@@ -1,4 +1,15 @@
-﻿fragment GroupCard on groups {
+﻿# Fragments
+
+fragment GroupMemberCard on group_members {
+    id
+    role
+    created_at
+    user {
+        ...UserCard
+    }
+}
+
+fragment GroupCard on groups {
     id
     name
     created_at
@@ -12,13 +23,27 @@
     }
 }
 
-mutation CreateGroup($input: CreateGroupInput!) {
-    createGroup(input: $input) {
-        group {
-            ...GroupCard
-        }
+fragment GroupDetails on groups {
+    ...GroupCard
+
+    memberships {
+        ...GroupMemberCard
     }
 }
+
+fragment GroupJoinRequestCard on group_join_requests {
+    id
+    created_at
+    updated_at
+    status
+    group_id
+
+    user {
+        ...UserCard
+    }
+}
+
+# Queries
 
 query ListGroups($limit: Int!, $offset: Int!, $where: groups_bool_exp) {
     groups_aggregate(where: $where) {
@@ -29,5 +54,58 @@ query ListGroups($limit: Int!, $offset: Int!, $where: groups_bool_exp) {
 
     groups(limit: $limit, offset: $offset, where: $where) {
         ...GroupCard
+    }
+}
+
+query GroupDetails($id: uuid!) {
+    groups_by_pk(id: $id) {
+        ...GroupDetails
+    }
+}
+
+query GroupJoinRequests($id: uuid!) {
+    group_join_requests(where: { group_id: { _eq: $id } }) {
+        ...GroupJoinRequestCard
+    }
+}
+
+# Mutations
+
+mutation CreateGroup($input: CreateGroupInput!) {
+    createGroup(input: $input) {
+        group {
+            ...GroupCard
+        }
+    }
+}
+
+mutation JoinGroup($groupId: uuid!) {
+    insert_group_members_one(object: { group_id: $groupId }) {
+        ...GroupMemberCard
+        user {
+            ...UserPrivateDetail
+        }
+    }
+}
+
+mutation RequestJoinGroup($input: RequestJoinGroupInput!) {
+    requestJoinGroup(input: $input) {
+        group {
+            ...GroupCard
+        }
+
+        user {
+            ...UserJoinRequests
+        }
+    }
+}
+
+mutation CancelJoinRequest($requestId: uuid!) {
+    delete_group_join_requests(where: { id: { _eq: $requestId } }) {
+        returning {
+            user {
+                ...UserJoinRequests
+            }
+        }
     }
 }
