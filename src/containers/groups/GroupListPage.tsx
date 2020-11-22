@@ -59,9 +59,7 @@ export const GroupListPage = () => {
         [data?.groups_aggregate.aggregate?.count, handlePaginationChange, page, pageSize],
     );
 
-    const handleCreateGroup = useCallback(() => {
-        dialogs.showDialog(CreateGroupDrawer).then((g) => g.id);
-    }, [dialogs]);
+    const handleCreateGroup = useCallback(() => dialogs.showDialog(CreateGroupDrawer), [dialogs]);
 
     const groups = data?.groups || [];
 
