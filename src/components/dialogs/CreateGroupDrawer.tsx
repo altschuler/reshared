@@ -29,6 +29,7 @@ export const CreateGroupDrawer = (props: DialogProps<GroupCardFragment | null>) 
                 error={createMutation.error?.message}
                 state={editorState}
                 loading={createMutation.loading}
+                submitLabel="Create Group"
                 onSubmit={handleCreateGroup}
             />
         </Drawer>

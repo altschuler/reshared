@@ -58,7 +58,7 @@ export const RegisterForm = (props: RegisterFormProps) => {
                 <Form.Item
                     name="name"
                     rules={[{ required: true, min: 3 }]}
-                    extra="Name as it is shown to other users">
+                    extra="Name as it appears to other users">
                     <Input placeholder="Name" />
                 </Form.Item>
 

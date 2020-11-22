@@ -30,10 +30,36 @@ type CreateGroupResult {
   group_id: uuid!
 }
 
+input CreateJoinTokenInput {
+  group_id: uuid!
+}
+
+type CreateJoinTokenResult {
+  group: groups
+  group_id: uuid!
+  join_token: group_join_tokens
+  join_token_id: uuid!
+}
+
 input CredentialsInput {
   email: String
   name: String!
   password: String!
+}
+
+input HandleJoinRequestInput {
+  accepted: Boolean!
+  join_request_id: uuid!
+  response: String
+}
+
+type HandleJoinRequestOutput {
+  join_request_id: uuid!
+}
+
+type HandleJoinRequestResult {
+  join_request: group_join_requests
+  join_request_id: uuid!
 }
 
 """
@@ -575,6 +601,253 @@ enum group_join_requests_update_column {
 
   """column name"""
   user_id
+}
+
+"""
+columns and relationships of "group_join_tokens"
+"""
+type group_join_tokens {
+  created_at: timestamptz!
+  disabled: Boolean!
+
+  """An object relationship"""
+  group: groups!
+  group_id: uuid!
+  id: uuid!
+  note: String
+  token: String!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "group_join_tokens"
+"""
+type group_join_tokens_aggregate {
+  aggregate: group_join_tokens_aggregate_fields
+  nodes: [group_join_tokens!]!
+}
+
+"""
+aggregate fields of "group_join_tokens"
+"""
+type group_join_tokens_aggregate_fields {
+  count(columns: [group_join_tokens_select_column!], distinct: Boolean): Int
+  max: group_join_tokens_max_fields
+  min: group_join_tokens_min_fields
+}
+
+"""
+order by aggregate values of table "group_join_tokens"
+"""
+input group_join_tokens_aggregate_order_by {
+  count: order_by
+  max: group_join_tokens_max_order_by
+  min: group_join_tokens_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "group_join_tokens"
+"""
+input group_join_tokens_arr_rel_insert_input {
+  data: [group_join_tokens_insert_input!]!
+  on_conflict: group_join_tokens_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "group_join_tokens". All fields are combined with a logical 'AND'.
+"""
+input group_join_tokens_bool_exp {
+  _and: [group_join_tokens_bool_exp]
+  _not: group_join_tokens_bool_exp
+  _or: [group_join_tokens_bool_exp]
+  created_at: timestamptz_comparison_exp
+  disabled: Boolean_comparison_exp
+  group: groups_bool_exp
+  group_id: uuid_comparison_exp
+  id: uuid_comparison_exp
+  note: String_comparison_exp
+  token: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "group_join_tokens"
+"""
+enum group_join_tokens_constraint {
+  """unique or primary key constraint"""
+  group_join_token_pkey
+}
+
+"""
+input type for inserting data into table "group_join_tokens"
+"""
+input group_join_tokens_insert_input {
+  created_at: timestamptz
+  disabled: Boolean
+  group: groups_obj_rel_insert_input
+  group_id: uuid
+  id: uuid
+  note: String
+  token: String
+  updated_at: timestamptz
+}
+
+"""aggregate max on columns"""
+type group_join_tokens_max_fields {
+  created_at: timestamptz
+  group_id: uuid
+  id: uuid
+  note: String
+  token: String
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "group_join_tokens"
+"""
+input group_join_tokens_max_order_by {
+  created_at: order_by
+  group_id: order_by
+  id: order_by
+  note: order_by
+  token: order_by
+  updated_at: order_by
+}
+
+"""aggregate min on columns"""
+type group_join_tokens_min_fields {
+  created_at: timestamptz
+  group_id: uuid
+  id: uuid
+  note: String
+  token: String
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "group_join_tokens"
+"""
+input group_join_tokens_min_order_by {
+  created_at: order_by
+  group_id: order_by
+  id: order_by
+  note: order_by
+  token: order_by
+  updated_at: order_by
+}
+
+"""
+response of any mutation on the table "group_join_tokens"
+"""
+type group_join_tokens_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [group_join_tokens!]!
+}
+
+"""
+input type for inserting object relation for remote table "group_join_tokens"
+"""
+input group_join_tokens_obj_rel_insert_input {
+  data: group_join_tokens_insert_input!
+  on_conflict: group_join_tokens_on_conflict
+}
+
+"""
+on conflict condition type for table "group_join_tokens"
+"""
+input group_join_tokens_on_conflict {
+  constraint: group_join_tokens_constraint!
+  update_columns: [group_join_tokens_update_column!]!
+  where: group_join_tokens_bool_exp
+}
+
+"""
+ordering options when selecting data from "group_join_tokens"
+"""
+input group_join_tokens_order_by {
+  created_at: order_by
+  disabled: order_by
+  group: groups_order_by
+  group_id: order_by
+  id: order_by
+  note: order_by
+  token: order_by
+  updated_at: order_by
+}
+
+"""
+primary key columns input for table: "group_join_tokens"
+"""
+input group_join_tokens_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "group_join_tokens"
+"""
+enum group_join_tokens_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  disabled
+
+  """column name"""
+  group_id
+
+  """column name"""
+  id
+
+  """column name"""
+  note
+
+  """column name"""
+  token
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "group_join_tokens"
+"""
+input group_join_tokens_set_input {
+  created_at: timestamptz
+  disabled: Boolean
+  group_id: uuid
+  id: uuid
+  note: String
+  token: String
+  updated_at: timestamptz
+}
+
+"""
+update columns of table "group_join_tokens"
+"""
+enum group_join_tokens_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  disabled
+
+  """column name"""
+  group_id
+
+  """column name"""
+  id
+
+  """column name"""
+  note
+
+  """column name"""
+  token
+
+  """column name"""
+  updated_at
 }
 
 """
@@ -1739,6 +2012,11 @@ type mutation_root {
   createGroup(input: CreateGroupInput!): CreateGroupResult!
 
   """
+  perform the action: "createJoinToken"
+  """
+  createJoinToken(input: CreateJoinTokenInput!): CreateJoinTokenResult
+
+  """
   delete data from the table: "group_join_request_status"
   """
   delete_group_join_request_status(
@@ -1763,6 +2041,19 @@ type mutation_root {
   delete single row from the table: "group_join_requests"
   """
   delete_group_join_requests_by_pk(id: uuid!): group_join_requests
+
+  """
+  delete data from the table: "group_join_tokens"
+  """
+  delete_group_join_tokens(
+    """filter the rows which have to be deleted"""
+    where: group_join_tokens_bool_exp!
+  ): group_join_tokens_mutation_response
+
+  """
+  delete single row from the table: "group_join_tokens"
+  """
+  delete_group_join_tokens_by_pk(id: uuid!): group_join_tokens
 
   """
   delete data from the table: "group_members"
@@ -1877,6 +2168,11 @@ type mutation_root {
   delete_verification_requests_by_pk(id: Int!): verification_requests
 
   """
+  perform the action: "handleJoinRequest"
+  """
+  handleJoinRequest(input: HandleJoinRequestInput!): HandleJoinRequestResult!
+
+  """
   insert data into the table: "group_join_request_status"
   """
   insert_group_join_request_status(
@@ -1919,6 +2215,28 @@ type mutation_root {
     """on conflict condition"""
     on_conflict: group_join_requests_on_conflict
   ): group_join_requests
+
+  """
+  insert data into the table: "group_join_tokens"
+  """
+  insert_group_join_tokens(
+    """the rows to be inserted"""
+    objects: [group_join_tokens_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: group_join_tokens_on_conflict
+  ): group_join_tokens_mutation_response
+
+  """
+  insert a single row into the table: "group_join_tokens"
+  """
+  insert_group_join_tokens_one(
+    """the row to be inserted"""
+    object: group_join_tokens_insert_input!
+
+    """on conflict condition"""
+    on_conflict: group_join_tokens_on_conflict
+  ): group_join_tokens
 
   """
   insert data into the table: "group_members"
@@ -2161,6 +2479,26 @@ type mutation_root {
     _set: group_join_requests_set_input
     pk_columns: group_join_requests_pk_columns_input!
   ): group_join_requests
+
+  """
+  update data of the table: "group_join_tokens"
+  """
+  update_group_join_tokens(
+    """sets the columns of the filtered rows to the given values"""
+    _set: group_join_tokens_set_input
+
+    """filter the rows which have to be updated"""
+    where: group_join_tokens_bool_exp!
+  ): group_join_tokens_mutation_response
+
+  """
+  update single row of the table: "group_join_tokens"
+  """
+  update_group_join_tokens_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: group_join_tokens_set_input
+    pk_columns: group_join_tokens_pk_columns_input!
+  ): group_join_tokens
 
   """
   update data of the table: "group_members"
@@ -2452,6 +2790,51 @@ type query_root {
   fetch data from the table: "group_join_requests" using primary key columns
   """
   group_join_requests_by_pk(id: uuid!): group_join_requests
+
+  """
+  fetch data from the table: "group_join_tokens"
+  """
+  group_join_tokens(
+    """distinct select on columns"""
+    distinct_on: [group_join_tokens_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_join_tokens_order_by!]
+
+    """filter the rows returned"""
+    where: group_join_tokens_bool_exp
+  ): [group_join_tokens!]!
+
+  """
+  fetch aggregated fields from the table: "group_join_tokens"
+  """
+  group_join_tokens_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_join_tokens_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_join_tokens_order_by!]
+
+    """filter the rows returned"""
+    where: group_join_tokens_bool_exp
+  ): group_join_tokens_aggregate!
+
+  """
+  fetch data from the table: "group_join_tokens" using primary key columns
+  """
+  group_join_tokens_by_pk(id: uuid!): group_join_tokens
 
   """
   fetch data from the table: "group_members"
@@ -2931,6 +3314,51 @@ type subscription_root {
   fetch data from the table: "group_join_requests" using primary key columns
   """
   group_join_requests_by_pk(id: uuid!): group_join_requests
+
+  """
+  fetch data from the table: "group_join_tokens"
+  """
+  group_join_tokens(
+    """distinct select on columns"""
+    distinct_on: [group_join_tokens_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_join_tokens_order_by!]
+
+    """filter the rows returned"""
+    where: group_join_tokens_bool_exp
+  ): [group_join_tokens!]!
+
+  """
+  fetch aggregated fields from the table: "group_join_tokens"
+  """
+  group_join_tokens_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_join_tokens_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_join_tokens_order_by!]
+
+    """filter the rows returned"""
+    where: group_join_tokens_bool_exp
+  ): group_join_tokens_aggregate!
+
+  """
+  fetch data from the table: "group_join_tokens" using primary key columns
+  """
+  group_join_tokens_by_pk(id: uuid!): group_join_tokens
 
   """
   fetch data from the table: "group_members"

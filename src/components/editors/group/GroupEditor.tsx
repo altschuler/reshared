@@ -1,6 +1,6 @@
 ﻿import { Alert, Button, Checkbox, Form, Input } from 'antd';
 import { createUseEditor, EditorState } from '../AbstractEditor';
-import { CreateGroupInput } from '../../../generated/graphql';
+import { CreateGroupInput, GroupDetailsFragment } from '../../../generated/graphql';
 
 export interface EditorGroup {
     name: string;
@@ -8,27 +8,40 @@ export interface EditorGroup {
     public: boolean;
 }
 
+export const makeEditorGroup = (source?: GroupDetailsFragment): EditorGroup => ({
+    name: source?.name || '',
+    description: source?.description || '',
+    public: source?.public || false,
+});
+
 export type GroupEditorState = EditorState<EditorGroup>;
 
 export interface GroupEditorProps {
     state: GroupEditorState;
     loading?: boolean;
     error?: string;
+    submitLabel?: string;
     onSubmit: (state: GroupEditorState) => unknown;
 }
 
-export const GroupEditor = ({ state, loading, error, onSubmit }: GroupEditorProps) => {
+export const GroupEditor = (props: GroupEditorProps) => {
+    const { state, loading, error, submitLabel, onSubmit } = props;
     const { present } = state;
     return (
         <div>
-            <Form name="basic" validateTrigger="onBlur" onFinish={onSubmit}>
+            <Form
+                name="basic"
+                validateTrigger="onBlur"
+                onFinish={onSubmit}
+                labelCol={{ xs: 24, md: 4 }}
+                labelAlign="left">
                 {error && (
                     <Form.Item>
                         <Alert type="error" message={error} />
                     </Form.Item>
                 )}
 
-                <Form.Item rules={[{ required: true, min: 5 }]}>
+                <Form.Item label="Name" rules={[{ required: true, min: 5 }]}>
                     <Input
                         placeholder="Name"
                         value={present.name}
@@ -36,7 +49,7 @@ export const GroupEditor = ({ state, loading, error, onSubmit }: GroupEditorProp
                     />
                 </Form.Item>
 
-                <Form.Item rules={[{ required: true, min: 10 }]}>
+                <Form.Item label="Description" rules={[{ required: true, min: 10 }]}>
                     <Input
                         placeholder="Description"
                         value={present.description || ''}
@@ -54,7 +67,7 @@ export const GroupEditor = ({ state, loading, error, onSubmit }: GroupEditorProp
 
                 <Form.Item>
                     <Button loading={loading} disabled={loading} type="primary" htmlType="submit">
-                        Save
+                        {props.submitLabel || 'Save'}
                     </Button>
                 </Form.Item>
             </Form>
@@ -62,11 +75,7 @@ export const GroupEditor = ({ state, loading, error, onSubmit }: GroupEditorProp
     );
 };
 
-export const useGroupEditor = createUseEditor<EditorGroup>({
-    name: '',
-    description: '',
-    public: false,
-});
+export const useGroupEditor = createUseEditor<EditorGroup>(makeEditorGroup());
 
 export const asCreateInput = ({ present }: GroupEditorState): CreateGroupInput => ({
     name: present.name,

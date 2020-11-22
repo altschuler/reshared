@@ -1,4 +1,19 @@
-﻿mutation ServerInsertGroup($input: groups_insert_input!) {
+﻿query ServerFindGroupJoinRequest($id: uuid!) {
+    group_join_requests_by_pk(id: $id) {
+        id
+        group_id
+        user_id
+    }
+}
+
+mutation ServerInsertGroupJoinToken($input: group_join_tokens_insert_input!) {
+    insert_group_join_tokens_one(object: $input) {
+        id
+        group_id
+    }
+}
+
+mutation ServerInsertGroup($input: groups_insert_input!) {
     insert_groups_one(object: $input) {
         id
     }
@@ -8,5 +23,35 @@ mutation ServerInsertGroupJoinRequest($input: group_join_requests_insert_input!)
     insert_group_join_requests_one(object: $input) {
         group_id
         status
+    }
+}
+
+mutation ServerAcceptGroupJoinRequest(
+    $id: uuid!
+    $group_id: uuid!
+    $user_id: uuid!
+    $response: String
+    $responder_id: uuid!
+) {
+    update_group_join_requests_by_pk(
+        pk_columns: { id: $id }
+        _set: { status: accepted, response: $response, responder_id: $responder_id }
+    ) {
+        id
+        group_id
+    }
+
+    insert_group_members_one(object: { group_id: $group_id, user_id: $user_id, role: user }) {
+        id
+    }
+}
+
+mutation ServerRejectGroupJoinRequest($id: uuid!, $response: String, $responder_id: uuid!) {
+    update_group_join_requests_by_pk(
+        pk_columns: { id: $id }
+        _set: { status: rejected, response: $response, responder_id: $responder_id }
+    ) {
+        id
+        group_id
     }
 }

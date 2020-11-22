@@ -37,22 +37,32 @@ fragment GroupJoinRequestCard on group_join_requests {
     updated_at
     status
     group_id
+    message
 
     user {
         ...UserCard
     }
 }
 
+fragment GroupJoinTokenCard on group_join_tokens {
+    id
+    created_at
+    updated_at
+    token
+    disabled
+    note
+}
+
 # Queries
 
-query ListGroups($limit: Int!, $offset: Int!, $where: groups_bool_exp) {
+query ListGroups($limit: Int!, $offset: Int!, $orderBy: groups_order_by!, $where: groups_bool_exp) {
     groups_aggregate(where: $where) {
         aggregate {
             count
         }
     }
 
-    groups(limit: $limit, offset: $offset, where: $where) {
+    groups(limit: $limit, offset: $offset, where: $where, order_by: [$orderBy]) {
         ...GroupCard
     }
 }
@@ -63,9 +73,15 @@ query GroupDetails($id: uuid!) {
     }
 }
 
-query GroupJoinRequests($id: uuid!) {
-    group_join_requests(where: { group_id: { _eq: $id } }) {
+query GroupJoinRequests($where: group_join_requests_bool_exp!) {
+    group_join_requests(where: $where) {
         ...GroupJoinRequestCard
+    }
+}
+
+query GroupJoinTokens($where: group_join_tokens_bool_exp!) {
+    group_join_tokens(where: $where) {
+        ...GroupJoinTokenCard
     }
 }
 
@@ -107,5 +123,31 @@ mutation CancelJoinRequest($requestId: uuid!) {
                 ...UserJoinRequests
             }
         }
+    }
+}
+
+mutation HandleJoinRequest($input: HandleJoinRequestInput!) {
+    handleJoinRequest(input: $input) {
+        join_request {
+            ...GroupJoinRequestCard
+        }
+    }
+}
+
+mutation CreateJoinToken($input: group_join_tokens_insert_input!) {
+    insert_group_join_tokens_one(object: $input) {
+        ...GroupJoinTokenCard
+    }
+}
+
+mutation DeleteJoinToken($id: uuid!) {
+    delete_group_join_tokens_by_pk(id: $id) {
+        ...GroupJoinTokenCard
+    }
+}
+
+mutation UpdateJoinToken($id: uuid!, $input: group_join_tokens_set_input!) {
+    update_group_join_tokens_by_pk(pk_columns: { id: $id }, _set: $input) {
+        ...GroupJoinTokenCard
     }
 }

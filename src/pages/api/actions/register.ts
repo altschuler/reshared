@@ -3,8 +3,7 @@ import bcrypt from 'bcryptjs';
 import Joi from 'joi';
 import { isEmpty } from 'lodash';
 import { RegisterUserMutationVariables, RegistrationResult } from '../../../generated/graphql';
-import { hasuraClient } from '../../../server/hasuraClient';
-import { makeHandler } from '../../../server/utils';
+import { hasuraClient, makeHandler } from '../../../server';
 
 const makePasswordHash = (password: string) =>
     new Promise<string>((resolve, reject) => {

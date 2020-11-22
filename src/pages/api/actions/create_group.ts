@@ -1,7 +1,6 @@
 ﻿import { ServerInsertGroupDocument } from '../../../generated/server-queries';
 import Joi from 'joi';
-import { hasuraClient } from '../../../server/hasuraClient';
-import { makeHandler } from '../../../server/utils';
+import { makeAuthorizedHandler } from '../../../server/utils';
 import {
     CreateGroupInput,
     CreateGroupMutationVariables,
@@ -10,7 +9,7 @@ import {
 } from '../../../generated/graphql';
 import { MailTemplate, sendMail } from '../../../server/mail';
 
-export default makeHandler<CreateGroupMutationVariables, CreateGroupResult>(
+export default makeAuthorizedHandler<CreateGroupMutationVariables, CreateGroupResult>(
     Joi.object<CreateGroupMutationVariables>({
         input: Joi.object<CreateGroupInput>({
             name: Joi.string().min(3),
@@ -19,7 +18,7 @@ export default makeHandler<CreateGroupMutationVariables, CreateGroupResult>(
         }),
     }),
     async (args, ctx) => {
-        const mutation = await hasuraClient.mutate({
+        const mutation = await ctx.userClient.mutate({
             mutation: ServerInsertGroupDocument,
             variables: {
                 input: {

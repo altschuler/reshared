@@ -27,6 +27,7 @@
         "apollo-server-micro": "^2.19.0",
         "bcryptjs": "^2.4.3",
         "clsx": "^1.1.1",
+        "date-fns": "^2.16.1",
         "dotenv": "^8.2.0",
         "graphql": "^15.4.0",
         "graphql-scalars": "^1.4.1",

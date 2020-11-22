@@ -11,7 +11,7 @@ fragment UserDetail on users {
 
 fragment UserJoinRequests on users {
     id
-    group_join_requests {
+    group_join_requests(where: { status: { _eq: pending } }) {
         ...GroupJoinRequestCard
     }
 }
@@ -21,11 +21,11 @@ fragment UserPrivateDetail on users {
     ...UserJoinRequests
 
     memberships {
-        group {
-            id
-            name
-        }
+        id
         role
+        group {
+            ...GroupCard
+        }
     }
 
     private_info {

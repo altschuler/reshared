@@ -10,7 +10,7 @@ export type Scalars = {
   Int: number;
   Float: number;
   json: any;
-  timestamptz: any;
+  timestamptz: string;
   uuid: string;
 };
 
@@ -39,10 +39,39 @@ export type CreateGroupResult = {
   group_id: Scalars['uuid'];
 };
 
+export type CreateJoinTokenInput = {
+  group_id: Scalars['uuid'];
+};
+
+export type CreateJoinTokenResult = {
+  __typename?: 'CreateJoinTokenResult';
+  group?: Maybe<Groups>;
+  group_id: Scalars['uuid'];
+  join_token?: Maybe<Group_Join_Tokens>;
+  join_token_id: Scalars['uuid'];
+};
+
 export type CredentialsInput = {
   email?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   password: Scalars['String'];
+};
+
+export type HandleJoinRequestInput = {
+  accepted: Scalars['Boolean'];
+  join_request_id: Scalars['uuid'];
+  response?: Maybe<Scalars['String']>;
+};
+
+export type HandleJoinRequestOutput = {
+  __typename?: 'HandleJoinRequestOutput';
+  join_request_id: Scalars['uuid'];
+};
+
+export type HandleJoinRequestResult = {
+  __typename?: 'HandleJoinRequestResult';
+  join_request?: Maybe<Group_Join_Requests>;
+  join_request_id: Scalars['uuid'];
 };
 
 /** expression to compare columns of type Int. All fields are combined with logical 'AND'. */
@@ -510,6 +539,216 @@ export enum Group_Join_Requests_Update_Column {
   UpdatedAt = 'updated_at',
   /** column name */
   UserId = 'user_id'
+}
+
+/** columns and relationships of "group_join_tokens" */
+export type Group_Join_Tokens = {
+  __typename?: 'group_join_tokens';
+  created_at: Scalars['timestamptz'];
+  disabled: Scalars['Boolean'];
+  /** An object relationship */
+  group: Groups;
+  group_id: Scalars['uuid'];
+  id: Scalars['uuid'];
+  note?: Maybe<Scalars['String']>;
+  token: Scalars['String'];
+  updated_at: Scalars['timestamptz'];
+};
+
+/** aggregated selection of "group_join_tokens" */
+export type Group_Join_Tokens_Aggregate = {
+  __typename?: 'group_join_tokens_aggregate';
+  aggregate?: Maybe<Group_Join_Tokens_Aggregate_Fields>;
+  nodes: Array<Group_Join_Tokens>;
+};
+
+/** aggregate fields of "group_join_tokens" */
+export type Group_Join_Tokens_Aggregate_Fields = {
+  __typename?: 'group_join_tokens_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Group_Join_Tokens_Max_Fields>;
+  min?: Maybe<Group_Join_Tokens_Min_Fields>;
+};
+
+
+/** aggregate fields of "group_join_tokens" */
+export type Group_Join_Tokens_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Group_Join_Tokens_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "group_join_tokens" */
+export type Group_Join_Tokens_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Group_Join_Tokens_Max_Order_By>;
+  min?: Maybe<Group_Join_Tokens_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "group_join_tokens" */
+export type Group_Join_Tokens_Arr_Rel_Insert_Input = {
+  data: Array<Group_Join_Tokens_Insert_Input>;
+  on_conflict?: Maybe<Group_Join_Tokens_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "group_join_tokens". All fields are combined with a logical 'AND'. */
+export type Group_Join_Tokens_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Group_Join_Tokens_Bool_Exp>>>;
+  _not?: Maybe<Group_Join_Tokens_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Group_Join_Tokens_Bool_Exp>>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  disabled?: Maybe<Boolean_Comparison_Exp>;
+  group?: Maybe<Groups_Bool_Exp>;
+  group_id?: Maybe<Uuid_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  note?: Maybe<String_Comparison_Exp>;
+  token?: Maybe<String_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "group_join_tokens" */
+export enum Group_Join_Tokens_Constraint {
+  /** unique or primary key constraint */
+  GroupJoinTokenPkey = 'group_join_token_pkey'
+}
+
+/** input type for inserting data into table "group_join_tokens" */
+export type Group_Join_Tokens_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  disabled?: Maybe<Scalars['Boolean']>;
+  group?: Maybe<Groups_Obj_Rel_Insert_Input>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  note?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Group_Join_Tokens_Max_Fields = {
+  __typename?: 'group_join_tokens_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  note?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "group_join_tokens" */
+export type Group_Join_Tokens_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  note?: Maybe<Order_By>;
+  token?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Group_Join_Tokens_Min_Fields = {
+  __typename?: 'group_join_tokens_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  note?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "group_join_tokens" */
+export type Group_Join_Tokens_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  note?: Maybe<Order_By>;
+  token?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "group_join_tokens" */
+export type Group_Join_Tokens_Mutation_Response = {
+  __typename?: 'group_join_tokens_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Group_Join_Tokens>;
+};
+
+/** input type for inserting object relation for remote table "group_join_tokens" */
+export type Group_Join_Tokens_Obj_Rel_Insert_Input = {
+  data: Group_Join_Tokens_Insert_Input;
+  on_conflict?: Maybe<Group_Join_Tokens_On_Conflict>;
+};
+
+/** on conflict condition type for table "group_join_tokens" */
+export type Group_Join_Tokens_On_Conflict = {
+  constraint: Group_Join_Tokens_Constraint;
+  update_columns: Array<Group_Join_Tokens_Update_Column>;
+  where?: Maybe<Group_Join_Tokens_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "group_join_tokens" */
+export type Group_Join_Tokens_Order_By = {
+  created_at?: Maybe<Order_By>;
+  disabled?: Maybe<Order_By>;
+  group?: Maybe<Groups_Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  note?: Maybe<Order_By>;
+  token?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "group_join_tokens" */
+export type Group_Join_Tokens_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "group_join_tokens" */
+export enum Group_Join_Tokens_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Disabled = 'disabled',
+  /** column name */
+  GroupId = 'group_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Note = 'note',
+  /** column name */
+  Token = 'token',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "group_join_tokens" */
+export type Group_Join_Tokens_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  disabled?: Maybe<Scalars['Boolean']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  note?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "group_join_tokens" */
+export enum Group_Join_Tokens_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Disabled = 'disabled',
+  /** column name */
+  GroupId = 'group_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Note = 'note',
+  /** column name */
+  Token = 'token',
+  /** column name */
+  UpdatedAt = 'updated_at'
 }
 
 /** columns and relationships of "group_members" */
@@ -1483,6 +1722,8 @@ export type Mutation_Root = {
   __typename?: 'mutation_root';
   /** perform the action: "createGroup" */
   createGroup: CreateGroupResult;
+  /** perform the action: "createJoinToken" */
+  createJoinToken?: Maybe<CreateJoinTokenResult>;
   /** delete data from the table: "group_join_request_status" */
   delete_group_join_request_status?: Maybe<Group_Join_Request_Status_Mutation_Response>;
   /** delete single row from the table: "group_join_request_status" */
@@ -1491,6 +1732,10 @@ export type Mutation_Root = {
   delete_group_join_requests?: Maybe<Group_Join_Requests_Mutation_Response>;
   /** delete single row from the table: "group_join_requests" */
   delete_group_join_requests_by_pk?: Maybe<Group_Join_Requests>;
+  /** delete data from the table: "group_join_tokens" */
+  delete_group_join_tokens?: Maybe<Group_Join_Tokens_Mutation_Response>;
+  /** delete single row from the table: "group_join_tokens" */
+  delete_group_join_tokens_by_pk?: Maybe<Group_Join_Tokens>;
   /** delete data from the table: "group_members" */
   delete_group_members?: Maybe<Group_Members_Mutation_Response>;
   /** delete single row from the table: "group_members" */
@@ -1525,6 +1770,8 @@ export type Mutation_Root = {
   delete_verification_requests?: Maybe<Verification_Requests_Mutation_Response>;
   /** delete single row from the table: "verification_requests" */
   delete_verification_requests_by_pk?: Maybe<Verification_Requests>;
+  /** perform the action: "handleJoinRequest" */
+  handleJoinRequest: HandleJoinRequestResult;
   /** insert data into the table: "group_join_request_status" */
   insert_group_join_request_status?: Maybe<Group_Join_Request_Status_Mutation_Response>;
   /** insert a single row into the table: "group_join_request_status" */
@@ -1533,6 +1780,10 @@ export type Mutation_Root = {
   insert_group_join_requests?: Maybe<Group_Join_Requests_Mutation_Response>;
   /** insert a single row into the table: "group_join_requests" */
   insert_group_join_requests_one?: Maybe<Group_Join_Requests>;
+  /** insert data into the table: "group_join_tokens" */
+  insert_group_join_tokens?: Maybe<Group_Join_Tokens_Mutation_Response>;
+  /** insert a single row into the table: "group_join_tokens" */
+  insert_group_join_tokens_one?: Maybe<Group_Join_Tokens>;
   /** insert data into the table: "group_members" */
   insert_group_members?: Maybe<Group_Members_Mutation_Response>;
   /** insert a single row into the table: "group_members" */
@@ -1581,6 +1832,10 @@ export type Mutation_Root = {
   update_group_join_requests?: Maybe<Group_Join_Requests_Mutation_Response>;
   /** update single row of the table: "group_join_requests" */
   update_group_join_requests_by_pk?: Maybe<Group_Join_Requests>;
+  /** update data of the table: "group_join_tokens" */
+  update_group_join_tokens?: Maybe<Group_Join_Tokens_Mutation_Response>;
+  /** update single row of the table: "group_join_tokens" */
+  update_group_join_tokens_by_pk?: Maybe<Group_Join_Tokens>;
   /** update data of the table: "group_members" */
   update_group_members?: Maybe<Group_Members_Mutation_Response>;
   /** update single row of the table: "group_members" */
@@ -1625,6 +1880,12 @@ export type Mutation_RootCreateGroupArgs = {
 
 
 /** mutation root */
+export type Mutation_RootCreateJoinTokenArgs = {
+  input: CreateJoinTokenInput;
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_Group_Join_Request_StatusArgs = {
   where: Group_Join_Request_Status_Bool_Exp;
 };
@@ -1644,6 +1905,18 @@ export type Mutation_RootDelete_Group_Join_RequestsArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Group_Join_Requests_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_Join_TokensArgs = {
+  where: Group_Join_Tokens_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_Join_Tokens_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -1751,6 +2024,12 @@ export type Mutation_RootDelete_Verification_Requests_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootHandleJoinRequestArgs = {
+  input: HandleJoinRequestInput;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_Group_Join_Request_StatusArgs = {
   objects: Array<Group_Join_Request_Status_Insert_Input>;
   on_conflict?: Maybe<Group_Join_Request_Status_On_Conflict>;
@@ -1775,6 +2054,20 @@ export type Mutation_RootInsert_Group_Join_RequestsArgs = {
 export type Mutation_RootInsert_Group_Join_Requests_OneArgs = {
   object: Group_Join_Requests_Insert_Input;
   on_conflict?: Maybe<Group_Join_Requests_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Group_Join_TokensArgs = {
+  objects: Array<Group_Join_Tokens_Insert_Input>;
+  on_conflict?: Maybe<Group_Join_Tokens_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Group_Join_Tokens_OneArgs = {
+  object: Group_Join_Tokens_Insert_Input;
+  on_conflict?: Maybe<Group_Join_Tokens_On_Conflict>;
 };
 
 
@@ -1943,6 +2236,20 @@ export type Mutation_RootUpdate_Group_Join_Requests_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Group_Join_TokensArgs = {
+  _set?: Maybe<Group_Join_Tokens_Set_Input>;
+  where: Group_Join_Tokens_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_Join_Tokens_By_PkArgs = {
+  _set?: Maybe<Group_Join_Tokens_Set_Input>;
+  pk_columns: Group_Join_Tokens_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Group_MembersArgs = {
   _set?: Maybe<Group_Members_Set_Input>;
   where: Group_Members_Bool_Exp;
@@ -2093,6 +2400,12 @@ export type Query_Root = {
   group_join_requests_aggregate: Group_Join_Requests_Aggregate;
   /** fetch data from the table: "group_join_requests" using primary key columns */
   group_join_requests_by_pk?: Maybe<Group_Join_Requests>;
+  /** fetch data from the table: "group_join_tokens" */
+  group_join_tokens: Array<Group_Join_Tokens>;
+  /** fetch aggregated fields from the table: "group_join_tokens" */
+  group_join_tokens_aggregate: Group_Join_Tokens_Aggregate;
+  /** fetch data from the table: "group_join_tokens" using primary key columns */
+  group_join_tokens_by_pk?: Maybe<Group_Join_Tokens>;
   /** fetch data from the table: "group_members" */
   group_members: Array<Group_Members>;
   /** fetch aggregated fields from the table: "group_members" */
@@ -2196,6 +2509,32 @@ export type Query_RootGroup_Join_Requests_AggregateArgs = {
 
 /** query root */
 export type Query_RootGroup_Join_Requests_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** query root */
+export type Query_RootGroup_Join_TokensArgs = {
+  distinct_on?: Maybe<Array<Group_Join_Tokens_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Join_Tokens_Order_By>>;
+  where?: Maybe<Group_Join_Tokens_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootGroup_Join_Tokens_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Join_Tokens_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Join_Tokens_Order_By>>;
+  where?: Maybe<Group_Join_Tokens_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootGroup_Join_Tokens_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -2442,6 +2781,12 @@ export type Subscription_Root = {
   group_join_requests_aggregate: Group_Join_Requests_Aggregate;
   /** fetch data from the table: "group_join_requests" using primary key columns */
   group_join_requests_by_pk?: Maybe<Group_Join_Requests>;
+  /** fetch data from the table: "group_join_tokens" */
+  group_join_tokens: Array<Group_Join_Tokens>;
+  /** fetch aggregated fields from the table: "group_join_tokens" */
+  group_join_tokens_aggregate: Group_Join_Tokens_Aggregate;
+  /** fetch data from the table: "group_join_tokens" using primary key columns */
+  group_join_tokens_by_pk?: Maybe<Group_Join_Tokens>;
   /** fetch data from the table: "group_members" */
   group_members: Array<Group_Members>;
   /** fetch aggregated fields from the table: "group_members" */
@@ -2545,6 +2890,32 @@ export type Subscription_RootGroup_Join_Requests_AggregateArgs = {
 
 /** subscription root */
 export type Subscription_RootGroup_Join_Requests_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** subscription root */
+export type Subscription_RootGroup_Join_TokensArgs = {
+  distinct_on?: Maybe<Array<Group_Join_Tokens_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Join_Tokens_Order_By>>;
+  where?: Maybe<Group_Join_Tokens_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootGroup_Join_Tokens_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Join_Tokens_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Join_Tokens_Order_By>>;
+  where?: Maybe<Group_Join_Tokens_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootGroup_Join_Tokens_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -3772,16 +4143,22 @@ export type GroupDetailsFragment = (
 
 export type GroupJoinRequestCardFragment = (
   { __typename?: 'group_join_requests' }
-  & Pick<Group_Join_Requests, 'id' | 'created_at' | 'updated_at' | 'status' | 'group_id'>
+  & Pick<Group_Join_Requests, 'id' | 'created_at' | 'updated_at' | 'status' | 'group_id' | 'message'>
   & { user: (
     { __typename?: 'users' }
     & UserCardFragment
   ) }
 );
 
+export type GroupJoinTokenCardFragment = (
+  { __typename?: 'group_join_tokens' }
+  & Pick<Group_Join_Tokens, 'id' | 'created_at' | 'updated_at' | 'token' | 'disabled' | 'note'>
+);
+
 export type ListGroupsQueryVariables = Exact<{
   limit: Scalars['Int'];
   offset: Scalars['Int'];
+  orderBy: Groups_Order_By;
   where?: Maybe<Groups_Bool_Exp>;
 }>;
 
@@ -3814,7 +4191,7 @@ export type GroupDetailsQuery = (
 );
 
 export type GroupJoinRequestsQueryVariables = Exact<{
-  id: Scalars['uuid'];
+  where: Group_Join_Requests_Bool_Exp;
 }>;
 
 
@@ -3823,6 +4200,19 @@ export type GroupJoinRequestsQuery = (
   & { group_join_requests: Array<(
     { __typename?: 'group_join_requests' }
     & GroupJoinRequestCardFragment
+  )> }
+);
+
+export type GroupJoinTokensQueryVariables = Exact<{
+  where: Group_Join_Tokens_Bool_Exp;
+}>;
+
+
+export type GroupJoinTokensQuery = (
+  { __typename?: 'query_root' }
+  & { group_join_tokens: Array<(
+    { __typename?: 'group_join_tokens' }
+    & GroupJoinTokenCardFragment
   )> }
 );
 
@@ -3897,6 +4287,62 @@ export type CancelJoinRequestMutation = (
   )> }
 );
 
+export type HandleJoinRequestMutationVariables = Exact<{
+  input: HandleJoinRequestInput;
+}>;
+
+
+export type HandleJoinRequestMutation = (
+  { __typename?: 'mutation_root' }
+  & { handleJoinRequest: (
+    { __typename?: 'HandleJoinRequestResult' }
+    & { join_request?: Maybe<(
+      { __typename?: 'group_join_requests' }
+      & GroupJoinRequestCardFragment
+    )> }
+  ) }
+);
+
+export type CreateJoinTokenMutationVariables = Exact<{
+  input: Group_Join_Tokens_Insert_Input;
+}>;
+
+
+export type CreateJoinTokenMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_group_join_tokens_one?: Maybe<(
+    { __typename?: 'group_join_tokens' }
+    & GroupJoinTokenCardFragment
+  )> }
+);
+
+export type DeleteJoinTokenMutationVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type DeleteJoinTokenMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_group_join_tokens_by_pk?: Maybe<(
+    { __typename?: 'group_join_tokens' }
+    & GroupJoinTokenCardFragment
+  )> }
+);
+
+export type UpdateJoinTokenMutationVariables = Exact<{
+  id: Scalars['uuid'];
+  input: Group_Join_Tokens_Set_Input;
+}>;
+
+
+export type UpdateJoinTokenMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_group_join_tokens_by_pk?: Maybe<(
+    { __typename?: 'group_join_tokens' }
+    & GroupJoinTokenCardFragment
+  )> }
+);
+
 export type ThingCardFragment = (
   { __typename?: 'things' }
   & Pick<Things, 'id' | 'name'>
@@ -3941,10 +4387,10 @@ export type UserPrivateDetailFragment = (
   { __typename?: 'users' }
   & { memberships: Array<(
     { __typename?: 'group_members' }
-    & Pick<Group_Members, 'role'>
+    & Pick<Group_Members, 'id' | 'role'>
     & { group: (
       { __typename?: 'groups' }
-      & Pick<Groups, 'id' | 'name'>
+      & GroupCardFragment
     ) }
   )>, private_info?: Maybe<(
     { __typename?: 'user_private' }
@@ -4034,6 +4480,16 @@ export const GroupDetailsFragmentDoc = gql`
 }
     ${GroupCardFragmentDoc}
 ${GroupMemberCardFragmentDoc}`;
+export const GroupJoinTokenCardFragmentDoc = gql`
+    fragment GroupJoinTokenCard on group_join_tokens {
+  id
+  created_at
+  updated_at
+  token
+  disabled
+  note
+}
+    `;
 export const ThingCardFragmentDoc = gql`
     fragment ThingCard on things {
   id
@@ -4056,6 +4512,7 @@ export const GroupJoinRequestCardFragmentDoc = gql`
   updated_at
   status
   group_id
+  message
   user {
     ...UserCard
   }
@@ -4064,7 +4521,7 @@ export const GroupJoinRequestCardFragmentDoc = gql`
 export const UserJoinRequestsFragmentDoc = gql`
     fragment UserJoinRequests on users {
   id
-  group_join_requests {
+  group_join_requests(where: {status: {_eq: pending}}) {
     ...GroupJoinRequestCard
   }
 }
@@ -4074,26 +4531,27 @@ export const UserPrivateDetailFragmentDoc = gql`
   ...UserDetail
   ...UserJoinRequests
   memberships {
-    group {
-      id
-      name
-    }
+    id
     role
+    group {
+      ...GroupCard
+    }
   }
   private_info {
     email
   }
 }
     ${UserDetailFragmentDoc}
-${UserJoinRequestsFragmentDoc}`;
+${UserJoinRequestsFragmentDoc}
+${GroupCardFragmentDoc}`;
 export const ListGroupsDocument = gql`
-    query ListGroups($limit: Int!, $offset: Int!, $where: groups_bool_exp) {
+    query ListGroups($limit: Int!, $offset: Int!, $orderBy: groups_order_by!, $where: groups_bool_exp) {
   groups_aggregate(where: $where) {
     aggregate {
       count
     }
   }
-  groups(limit: $limit, offset: $offset, where: $where) {
+  groups(limit: $limit, offset: $offset, where: $where, order_by: [$orderBy]) {
     ...GroupCard
   }
 }
@@ -4113,6 +4571,7 @@ export const ListGroupsDocument = gql`
  *   variables: {
  *      limit: // value for 'limit'
  *      offset: // value for 'offset'
+ *      orderBy: // value for 'orderBy'
  *      where: // value for 'where'
  *   },
  * });
@@ -4166,8 +4625,8 @@ export function refetchGroupDetailsQuery(variables?: GroupDetailsQueryVariables)
       return { query: GroupDetailsDocument, variables: variables }
     }
 export const GroupJoinRequestsDocument = gql`
-    query GroupJoinRequests($id: uuid!) {
-  group_join_requests(where: {group_id: {_eq: $id}}) {
+    query GroupJoinRequests($where: group_join_requests_bool_exp!) {
+  group_join_requests(where: $where) {
     ...GroupJoinRequestCard
   }
 }
@@ -4185,7 +4644,7 @@ export const GroupJoinRequestsDocument = gql`
  * @example
  * const { data, loading, error } = useGroupJoinRequestsQuery({
  *   variables: {
- *      id: // value for 'id'
+ *      where: // value for 'where'
  *   },
  * });
  */
@@ -4200,6 +4659,42 @@ export type GroupJoinRequestsLazyQueryHookResult = ReturnType<typeof useGroupJoi
 export type GroupJoinRequestsQueryResult = Apollo.QueryResult<GroupJoinRequestsQuery, GroupJoinRequestsQueryVariables>;
 export function refetchGroupJoinRequestsQuery(variables?: GroupJoinRequestsQueryVariables) {
       return { query: GroupJoinRequestsDocument, variables: variables }
+    }
+export const GroupJoinTokensDocument = gql`
+    query GroupJoinTokens($where: group_join_tokens_bool_exp!) {
+  group_join_tokens(where: $where) {
+    ...GroupJoinTokenCard
+  }
+}
+    ${GroupJoinTokenCardFragmentDoc}`;
+
+/**
+ * __useGroupJoinTokensQuery__
+ *
+ * To run a query within a React component, call `useGroupJoinTokensQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGroupJoinTokensQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGroupJoinTokensQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useGroupJoinTokensQuery(baseOptions?: Apollo.QueryHookOptions<GroupJoinTokensQuery, GroupJoinTokensQueryVariables>) {
+        return Apollo.useQuery<GroupJoinTokensQuery, GroupJoinTokensQueryVariables>(GroupJoinTokensDocument, baseOptions);
+      }
+export function useGroupJoinTokensLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GroupJoinTokensQuery, GroupJoinTokensQueryVariables>) {
+          return Apollo.useLazyQuery<GroupJoinTokensQuery, GroupJoinTokensQueryVariables>(GroupJoinTokensDocument, baseOptions);
+        }
+export type GroupJoinTokensQueryHookResult = ReturnType<typeof useGroupJoinTokensQuery>;
+export type GroupJoinTokensLazyQueryHookResult = ReturnType<typeof useGroupJoinTokensLazyQuery>;
+export type GroupJoinTokensQueryResult = Apollo.QueryResult<GroupJoinTokensQuery, GroupJoinTokensQueryVariables>;
+export function refetchGroupJoinTokensQuery(variables?: GroupJoinTokensQueryVariables) {
+      return { query: GroupJoinTokensDocument, variables: variables }
     }
 export const CreateGroupDocument = gql`
     mutation CreateGroup($input: CreateGroupInput!) {
@@ -4345,6 +4840,137 @@ export function useCancelJoinRequestMutation(baseOptions?: Apollo.MutationHookOp
 export type CancelJoinRequestMutationHookResult = ReturnType<typeof useCancelJoinRequestMutation>;
 export type CancelJoinRequestMutationResult = Apollo.MutationResult<CancelJoinRequestMutation>;
 export type CancelJoinRequestMutationOptions = Apollo.BaseMutationOptions<CancelJoinRequestMutation, CancelJoinRequestMutationVariables>;
+export const HandleJoinRequestDocument = gql`
+    mutation HandleJoinRequest($input: HandleJoinRequestInput!) {
+  handleJoinRequest(input: $input) {
+    join_request {
+      ...GroupJoinRequestCard
+    }
+  }
+}
+    ${GroupJoinRequestCardFragmentDoc}`;
+export type HandleJoinRequestMutationFn = Apollo.MutationFunction<HandleJoinRequestMutation, HandleJoinRequestMutationVariables>;
+
+/**
+ * __useHandleJoinRequestMutation__
+ *
+ * To run a mutation, you first call `useHandleJoinRequestMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useHandleJoinRequestMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [handleJoinRequestMutation, { data, loading, error }] = useHandleJoinRequestMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useHandleJoinRequestMutation(baseOptions?: Apollo.MutationHookOptions<HandleJoinRequestMutation, HandleJoinRequestMutationVariables>) {
+        return Apollo.useMutation<HandleJoinRequestMutation, HandleJoinRequestMutationVariables>(HandleJoinRequestDocument, baseOptions);
+      }
+export type HandleJoinRequestMutationHookResult = ReturnType<typeof useHandleJoinRequestMutation>;
+export type HandleJoinRequestMutationResult = Apollo.MutationResult<HandleJoinRequestMutation>;
+export type HandleJoinRequestMutationOptions = Apollo.BaseMutationOptions<HandleJoinRequestMutation, HandleJoinRequestMutationVariables>;
+export const CreateJoinTokenDocument = gql`
+    mutation CreateJoinToken($input: group_join_tokens_insert_input!) {
+  insert_group_join_tokens_one(object: $input) {
+    ...GroupJoinTokenCard
+  }
+}
+    ${GroupJoinTokenCardFragmentDoc}`;
+export type CreateJoinTokenMutationFn = Apollo.MutationFunction<CreateJoinTokenMutation, CreateJoinTokenMutationVariables>;
+
+/**
+ * __useCreateJoinTokenMutation__
+ *
+ * To run a mutation, you first call `useCreateJoinTokenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateJoinTokenMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createJoinTokenMutation, { data, loading, error }] = useCreateJoinTokenMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateJoinTokenMutation(baseOptions?: Apollo.MutationHookOptions<CreateJoinTokenMutation, CreateJoinTokenMutationVariables>) {
+        return Apollo.useMutation<CreateJoinTokenMutation, CreateJoinTokenMutationVariables>(CreateJoinTokenDocument, baseOptions);
+      }
+export type CreateJoinTokenMutationHookResult = ReturnType<typeof useCreateJoinTokenMutation>;
+export type CreateJoinTokenMutationResult = Apollo.MutationResult<CreateJoinTokenMutation>;
+export type CreateJoinTokenMutationOptions = Apollo.BaseMutationOptions<CreateJoinTokenMutation, CreateJoinTokenMutationVariables>;
+export const DeleteJoinTokenDocument = gql`
+    mutation DeleteJoinToken($id: uuid!) {
+  delete_group_join_tokens_by_pk(id: $id) {
+    ...GroupJoinTokenCard
+  }
+}
+    ${GroupJoinTokenCardFragmentDoc}`;
+export type DeleteJoinTokenMutationFn = Apollo.MutationFunction<DeleteJoinTokenMutation, DeleteJoinTokenMutationVariables>;
+
+/**
+ * __useDeleteJoinTokenMutation__
+ *
+ * To run a mutation, you first call `useDeleteJoinTokenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteJoinTokenMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteJoinTokenMutation, { data, loading, error }] = useDeleteJoinTokenMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteJoinTokenMutation(baseOptions?: Apollo.MutationHookOptions<DeleteJoinTokenMutation, DeleteJoinTokenMutationVariables>) {
+        return Apollo.useMutation<DeleteJoinTokenMutation, DeleteJoinTokenMutationVariables>(DeleteJoinTokenDocument, baseOptions);
+      }
+export type DeleteJoinTokenMutationHookResult = ReturnType<typeof useDeleteJoinTokenMutation>;
+export type DeleteJoinTokenMutationResult = Apollo.MutationResult<DeleteJoinTokenMutation>;
+export type DeleteJoinTokenMutationOptions = Apollo.BaseMutationOptions<DeleteJoinTokenMutation, DeleteJoinTokenMutationVariables>;
+export const UpdateJoinTokenDocument = gql`
+    mutation UpdateJoinToken($id: uuid!, $input: group_join_tokens_set_input!) {
+  update_group_join_tokens_by_pk(pk_columns: {id: $id}, _set: $input) {
+    ...GroupJoinTokenCard
+  }
+}
+    ${GroupJoinTokenCardFragmentDoc}`;
+export type UpdateJoinTokenMutationFn = Apollo.MutationFunction<UpdateJoinTokenMutation, UpdateJoinTokenMutationVariables>;
+
+/**
+ * __useUpdateJoinTokenMutation__
+ *
+ * To run a mutation, you first call `useUpdateJoinTokenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateJoinTokenMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateJoinTokenMutation, { data, loading, error }] = useUpdateJoinTokenMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateJoinTokenMutation(baseOptions?: Apollo.MutationHookOptions<UpdateJoinTokenMutation, UpdateJoinTokenMutationVariables>) {
+        return Apollo.useMutation<UpdateJoinTokenMutation, UpdateJoinTokenMutationVariables>(UpdateJoinTokenDocument, baseOptions);
+      }
+export type UpdateJoinTokenMutationHookResult = ReturnType<typeof useUpdateJoinTokenMutation>;
+export type UpdateJoinTokenMutationResult = Apollo.MutationResult<UpdateJoinTokenMutation>;
+export type UpdateJoinTokenMutationOptions = Apollo.BaseMutationOptions<UpdateJoinTokenMutation, UpdateJoinTokenMutationVariables>;
 export const ThingListDocument = gql`
     query ThingList {
   things {
@@ -4501,6 +5127,7 @@ export const GqlOps = {
     ListGroups: 'ListGroups',
     GroupDetails: 'GroupDetails',
     GroupJoinRequests: 'GroupJoinRequests',
+    GroupJoinTokens: 'GroupJoinTokens',
     ThingList: 'ThingList',
     UserList: 'UserList',
     UserPrivateDetails: 'UserPrivateDetails'
@@ -4510,6 +5137,10 @@ export const GqlOps = {
     JoinGroup: 'JoinGroup',
     RequestJoinGroup: 'RequestJoinGroup',
     CancelJoinRequest: 'CancelJoinRequest',
+    HandleJoinRequest: 'HandleJoinRequest',
+    CreateJoinToken: 'CreateJoinToken',
+    DeleteJoinToken: 'DeleteJoinToken',
+    UpdateJoinToken: 'UpdateJoinToken',
     RegisterUser: 'RegisterUser'
   },
   Fragment: {
@@ -4517,6 +5148,7 @@ export const GqlOps = {
     GroupCard: 'GroupCard',
     GroupDetails: 'GroupDetails',
     GroupJoinRequestCard: 'GroupJoinRequestCard',
+    GroupJoinTokenCard: 'GroupJoinTokenCard',
     ThingCard: 'ThingCard',
     UserCard: 'UserCard',
     UserDetail: 'UserDetail',

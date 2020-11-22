@@ -10,3 +10,15 @@ export const hasuraClient = new ApolloClient({
     }),
     cache: new InMemoryCache(),
 });
+
+export const makeHasuraUserClient = (jwt: string) =>
+    new ApolloClient({
+        link: new HttpLink({
+            fetch,
+            uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
+            headers: {
+                Authorization: jwt,
+            },
+        }),
+        cache: new InMemoryCache(),
+    });

@@ -40,10 +40,39 @@ export type CreateGroupResult = {
   group_id: Scalars['uuid'];
 };
 
+export type CreateJoinTokenInput = {
+  group_id: Scalars['uuid'];
+};
+
+export type CreateJoinTokenResult = {
+  __typename?: 'CreateJoinTokenResult';
+  group?: Maybe<Groups>;
+  group_id: Scalars['uuid'];
+  join_token?: Maybe<Group_Join_Tokens>;
+  join_token_id: Scalars['uuid'];
+};
+
 export type CredentialsInput = {
   email?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   password: Scalars['String'];
+};
+
+export type HandleJoinRequestInput = {
+  accepted: Scalars['Boolean'];
+  join_request_id: Scalars['uuid'];
+  response?: Maybe<Scalars['String']>;
+};
+
+export type HandleJoinRequestOutput = {
+  __typename?: 'HandleJoinRequestOutput';
+  join_request_id: Scalars['uuid'];
+};
+
+export type HandleJoinRequestResult = {
+  __typename?: 'HandleJoinRequestResult';
+  join_request?: Maybe<Group_Join_Requests>;
+  join_request_id: Scalars['uuid'];
 };
 
 /** expression to compare columns of type Int. All fields are combined with logical 'AND'. */
@@ -511,6 +540,216 @@ export enum Group_Join_Requests_Update_Column {
   UpdatedAt = 'updated_at',
   /** column name */
   UserId = 'user_id'
+}
+
+/** columns and relationships of "group_join_tokens" */
+export type Group_Join_Tokens = {
+  __typename?: 'group_join_tokens';
+  created_at: Scalars['timestamptz'];
+  disabled: Scalars['Boolean'];
+  /** An object relationship */
+  group: Groups;
+  group_id: Scalars['uuid'];
+  id: Scalars['uuid'];
+  note?: Maybe<Scalars['String']>;
+  token: Scalars['String'];
+  updated_at: Scalars['timestamptz'];
+};
+
+/** aggregated selection of "group_join_tokens" */
+export type Group_Join_Tokens_Aggregate = {
+  __typename?: 'group_join_tokens_aggregate';
+  aggregate?: Maybe<Group_Join_Tokens_Aggregate_Fields>;
+  nodes: Array<Group_Join_Tokens>;
+};
+
+/** aggregate fields of "group_join_tokens" */
+export type Group_Join_Tokens_Aggregate_Fields = {
+  __typename?: 'group_join_tokens_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Group_Join_Tokens_Max_Fields>;
+  min?: Maybe<Group_Join_Tokens_Min_Fields>;
+};
+
+
+/** aggregate fields of "group_join_tokens" */
+export type Group_Join_Tokens_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Group_Join_Tokens_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "group_join_tokens" */
+export type Group_Join_Tokens_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Group_Join_Tokens_Max_Order_By>;
+  min?: Maybe<Group_Join_Tokens_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "group_join_tokens" */
+export type Group_Join_Tokens_Arr_Rel_Insert_Input = {
+  data: Array<Group_Join_Tokens_Insert_Input>;
+  on_conflict?: Maybe<Group_Join_Tokens_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "group_join_tokens". All fields are combined with a logical 'AND'. */
+export type Group_Join_Tokens_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Group_Join_Tokens_Bool_Exp>>>;
+  _not?: Maybe<Group_Join_Tokens_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Group_Join_Tokens_Bool_Exp>>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  disabled?: Maybe<Boolean_Comparison_Exp>;
+  group?: Maybe<Groups_Bool_Exp>;
+  group_id?: Maybe<Uuid_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  note?: Maybe<String_Comparison_Exp>;
+  token?: Maybe<String_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "group_join_tokens" */
+export enum Group_Join_Tokens_Constraint {
+  /** unique or primary key constraint */
+  GroupJoinTokenPkey = 'group_join_token_pkey'
+}
+
+/** input type for inserting data into table "group_join_tokens" */
+export type Group_Join_Tokens_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  disabled?: Maybe<Scalars['Boolean']>;
+  group?: Maybe<Groups_Obj_Rel_Insert_Input>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  note?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Group_Join_Tokens_Max_Fields = {
+  __typename?: 'group_join_tokens_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  note?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "group_join_tokens" */
+export type Group_Join_Tokens_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  note?: Maybe<Order_By>;
+  token?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Group_Join_Tokens_Min_Fields = {
+  __typename?: 'group_join_tokens_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  note?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "group_join_tokens" */
+export type Group_Join_Tokens_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  note?: Maybe<Order_By>;
+  token?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "group_join_tokens" */
+export type Group_Join_Tokens_Mutation_Response = {
+  __typename?: 'group_join_tokens_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Group_Join_Tokens>;
+};
+
+/** input type for inserting object relation for remote table "group_join_tokens" */
+export type Group_Join_Tokens_Obj_Rel_Insert_Input = {
+  data: Group_Join_Tokens_Insert_Input;
+  on_conflict?: Maybe<Group_Join_Tokens_On_Conflict>;
+};
+
+/** on conflict condition type for table "group_join_tokens" */
+export type Group_Join_Tokens_On_Conflict = {
+  constraint: Group_Join_Tokens_Constraint;
+  update_columns: Array<Group_Join_Tokens_Update_Column>;
+  where?: Maybe<Group_Join_Tokens_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "group_join_tokens" */
+export type Group_Join_Tokens_Order_By = {
+  created_at?: Maybe<Order_By>;
+  disabled?: Maybe<Order_By>;
+  group?: Maybe<Groups_Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  note?: Maybe<Order_By>;
+  token?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "group_join_tokens" */
+export type Group_Join_Tokens_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "group_join_tokens" */
+export enum Group_Join_Tokens_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Disabled = 'disabled',
+  /** column name */
+  GroupId = 'group_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Note = 'note',
+  /** column name */
+  Token = 'token',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "group_join_tokens" */
+export type Group_Join_Tokens_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  disabled?: Maybe<Scalars['Boolean']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  note?: Maybe<Scalars['String']>;
+  token?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "group_join_tokens" */
+export enum Group_Join_Tokens_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Disabled = 'disabled',
+  /** column name */
+  GroupId = 'group_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Note = 'note',
+  /** column name */
+  Token = 'token',
+  /** column name */
+  UpdatedAt = 'updated_at'
 }
 
 /** columns and relationships of "group_members" */
@@ -1484,6 +1723,8 @@ export type Mutation_Root = {
   __typename?: 'mutation_root';
   /** perform the action: "createGroup" */
   createGroup: CreateGroupResult;
+  /** perform the action: "createJoinToken" */
+  createJoinToken?: Maybe<CreateJoinTokenResult>;
   /** delete data from the table: "group_join_request_status" */
   delete_group_join_request_status?: Maybe<Group_Join_Request_Status_Mutation_Response>;
   /** delete single row from the table: "group_join_request_status" */
@@ -1492,6 +1733,10 @@ export type Mutation_Root = {
   delete_group_join_requests?: Maybe<Group_Join_Requests_Mutation_Response>;
   /** delete single row from the table: "group_join_requests" */
   delete_group_join_requests_by_pk?: Maybe<Group_Join_Requests>;
+  /** delete data from the table: "group_join_tokens" */
+  delete_group_join_tokens?: Maybe<Group_Join_Tokens_Mutation_Response>;
+  /** delete single row from the table: "group_join_tokens" */
+  delete_group_join_tokens_by_pk?: Maybe<Group_Join_Tokens>;
   /** delete data from the table: "group_members" */
   delete_group_members?: Maybe<Group_Members_Mutation_Response>;
   /** delete single row from the table: "group_members" */
@@ -1526,6 +1771,8 @@ export type Mutation_Root = {
   delete_verification_requests?: Maybe<Verification_Requests_Mutation_Response>;
   /** delete single row from the table: "verification_requests" */
   delete_verification_requests_by_pk?: Maybe<Verification_Requests>;
+  /** perform the action: "handleJoinRequest" */
+  handleJoinRequest: HandleJoinRequestResult;
   /** insert data into the table: "group_join_request_status" */
   insert_group_join_request_status?: Maybe<Group_Join_Request_Status_Mutation_Response>;
   /** insert a single row into the table: "group_join_request_status" */
@@ -1534,6 +1781,10 @@ export type Mutation_Root = {
   insert_group_join_requests?: Maybe<Group_Join_Requests_Mutation_Response>;
   /** insert a single row into the table: "group_join_requests" */
   insert_group_join_requests_one?: Maybe<Group_Join_Requests>;
+  /** insert data into the table: "group_join_tokens" */
+  insert_group_join_tokens?: Maybe<Group_Join_Tokens_Mutation_Response>;
+  /** insert a single row into the table: "group_join_tokens" */
+  insert_group_join_tokens_one?: Maybe<Group_Join_Tokens>;
   /** insert data into the table: "group_members" */
   insert_group_members?: Maybe<Group_Members_Mutation_Response>;
   /** insert a single row into the table: "group_members" */
@@ -1582,6 +1833,10 @@ export type Mutation_Root = {
   update_group_join_requests?: Maybe<Group_Join_Requests_Mutation_Response>;
   /** update single row of the table: "group_join_requests" */
   update_group_join_requests_by_pk?: Maybe<Group_Join_Requests>;
+  /** update data of the table: "group_join_tokens" */
+  update_group_join_tokens?: Maybe<Group_Join_Tokens_Mutation_Response>;
+  /** update single row of the table: "group_join_tokens" */
+  update_group_join_tokens_by_pk?: Maybe<Group_Join_Tokens>;
   /** update data of the table: "group_members" */
   update_group_members?: Maybe<Group_Members_Mutation_Response>;
   /** update single row of the table: "group_members" */
@@ -1626,6 +1881,12 @@ export type Mutation_RootCreateGroupArgs = {
 
 
 /** mutation root */
+export type Mutation_RootCreateJoinTokenArgs = {
+  input: CreateJoinTokenInput;
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_Group_Join_Request_StatusArgs = {
   where: Group_Join_Request_Status_Bool_Exp;
 };
@@ -1645,6 +1906,18 @@ export type Mutation_RootDelete_Group_Join_RequestsArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Group_Join_Requests_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_Join_TokensArgs = {
+  where: Group_Join_Tokens_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_Join_Tokens_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -1752,6 +2025,12 @@ export type Mutation_RootDelete_Verification_Requests_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootHandleJoinRequestArgs = {
+  input: HandleJoinRequestInput;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_Group_Join_Request_StatusArgs = {
   objects: Array<Group_Join_Request_Status_Insert_Input>;
   on_conflict?: Maybe<Group_Join_Request_Status_On_Conflict>;
@@ -1776,6 +2055,20 @@ export type Mutation_RootInsert_Group_Join_RequestsArgs = {
 export type Mutation_RootInsert_Group_Join_Requests_OneArgs = {
   object: Group_Join_Requests_Insert_Input;
   on_conflict?: Maybe<Group_Join_Requests_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Group_Join_TokensArgs = {
+  objects: Array<Group_Join_Tokens_Insert_Input>;
+  on_conflict?: Maybe<Group_Join_Tokens_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Group_Join_Tokens_OneArgs = {
+  object: Group_Join_Tokens_Insert_Input;
+  on_conflict?: Maybe<Group_Join_Tokens_On_Conflict>;
 };
 
 
@@ -1944,6 +2237,20 @@ export type Mutation_RootUpdate_Group_Join_Requests_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Group_Join_TokensArgs = {
+  _set?: Maybe<Group_Join_Tokens_Set_Input>;
+  where: Group_Join_Tokens_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_Join_Tokens_By_PkArgs = {
+  _set?: Maybe<Group_Join_Tokens_Set_Input>;
+  pk_columns: Group_Join_Tokens_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Group_MembersArgs = {
   _set?: Maybe<Group_Members_Set_Input>;
   where: Group_Members_Bool_Exp;
@@ -2094,6 +2401,12 @@ export type Query_Root = {
   group_join_requests_aggregate: Group_Join_Requests_Aggregate;
   /** fetch data from the table: "group_join_requests" using primary key columns */
   group_join_requests_by_pk?: Maybe<Group_Join_Requests>;
+  /** fetch data from the table: "group_join_tokens" */
+  group_join_tokens: Array<Group_Join_Tokens>;
+  /** fetch aggregated fields from the table: "group_join_tokens" */
+  group_join_tokens_aggregate: Group_Join_Tokens_Aggregate;
+  /** fetch data from the table: "group_join_tokens" using primary key columns */
+  group_join_tokens_by_pk?: Maybe<Group_Join_Tokens>;
   /** fetch data from the table: "group_members" */
   group_members: Array<Group_Members>;
   /** fetch aggregated fields from the table: "group_members" */
@@ -2197,6 +2510,32 @@ export type Query_RootGroup_Join_Requests_AggregateArgs = {
 
 /** query root */
 export type Query_RootGroup_Join_Requests_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** query root */
+export type Query_RootGroup_Join_TokensArgs = {
+  distinct_on?: Maybe<Array<Group_Join_Tokens_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Join_Tokens_Order_By>>;
+  where?: Maybe<Group_Join_Tokens_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootGroup_Join_Tokens_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Join_Tokens_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Join_Tokens_Order_By>>;
+  where?: Maybe<Group_Join_Tokens_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootGroup_Join_Tokens_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -2443,6 +2782,12 @@ export type Subscription_Root = {
   group_join_requests_aggregate: Group_Join_Requests_Aggregate;
   /** fetch data from the table: "group_join_requests" using primary key columns */
   group_join_requests_by_pk?: Maybe<Group_Join_Requests>;
+  /** fetch data from the table: "group_join_tokens" */
+  group_join_tokens: Array<Group_Join_Tokens>;
+  /** fetch aggregated fields from the table: "group_join_tokens" */
+  group_join_tokens_aggregate: Group_Join_Tokens_Aggregate;
+  /** fetch data from the table: "group_join_tokens" using primary key columns */
+  group_join_tokens_by_pk?: Maybe<Group_Join_Tokens>;
   /** fetch data from the table: "group_members" */
   group_members: Array<Group_Members>;
   /** fetch aggregated fields from the table: "group_members" */
@@ -2546,6 +2891,32 @@ export type Subscription_RootGroup_Join_Requests_AggregateArgs = {
 
 /** subscription root */
 export type Subscription_RootGroup_Join_Requests_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** subscription root */
+export type Subscription_RootGroup_Join_TokensArgs = {
+  distinct_on?: Maybe<Array<Group_Join_Tokens_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Join_Tokens_Order_By>>;
+  where?: Maybe<Group_Join_Tokens_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootGroup_Join_Tokens_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Join_Tokens_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Join_Tokens_Order_By>>;
+  where?: Maybe<Group_Join_Tokens_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootGroup_Join_Tokens_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -3741,6 +4112,32 @@ export type Verification_Requests_Variance_Order_By = {
   id?: Maybe<Order_By>;
 };
 
+export type ServerFindGroupJoinRequestQueryVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type ServerFindGroupJoinRequestQuery = (
+  { __typename?: 'query_root' }
+  & { group_join_requests_by_pk?: Maybe<(
+    { __typename?: 'group_join_requests' }
+    & Pick<Group_Join_Requests, 'id' | 'group_id' | 'user_id'>
+  )> }
+);
+
+export type ServerInsertGroupJoinTokenMutationVariables = Exact<{
+  input: Group_Join_Tokens_Insert_Input;
+}>;
+
+
+export type ServerInsertGroupJoinTokenMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_group_join_tokens_one?: Maybe<(
+    { __typename?: 'group_join_tokens' }
+    & Pick<Group_Join_Tokens, 'id' | 'group_id'>
+  )> }
+);
+
 export type ServerInsertGroupMutationVariables = Exact<{
   input: Groups_Insert_Input;
 }>;
@@ -3764,6 +4161,41 @@ export type ServerInsertGroupJoinRequestMutation = (
   & { insert_group_join_requests_one?: Maybe<(
     { __typename?: 'group_join_requests' }
     & Pick<Group_Join_Requests, 'group_id' | 'status'>
+  )> }
+);
+
+export type ServerAcceptGroupJoinRequestMutationVariables = Exact<{
+  id: Scalars['uuid'];
+  group_id: Scalars['uuid'];
+  user_id: Scalars['uuid'];
+  response?: Maybe<Scalars['String']>;
+  responder_id: Scalars['uuid'];
+}>;
+
+
+export type ServerAcceptGroupJoinRequestMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_group_join_requests_by_pk?: Maybe<(
+    { __typename?: 'group_join_requests' }
+    & Pick<Group_Join_Requests, 'id' | 'group_id'>
+  )>, insert_group_members_one?: Maybe<(
+    { __typename?: 'group_members' }
+    & Pick<Group_Members, 'id'>
+  )> }
+);
+
+export type ServerRejectGroupJoinRequestMutationVariables = Exact<{
+  id: Scalars['uuid'];
+  response?: Maybe<Scalars['String']>;
+  responder_id: Scalars['uuid'];
+}>;
+
+
+export type ServerRejectGroupJoinRequestMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_group_join_requests_by_pk?: Maybe<(
+    { __typename?: 'group_join_requests' }
+    & Pick<Group_Join_Requests, 'id' | 'group_id'>
   )> }
 );
 
@@ -3889,7 +4321,12 @@ export type ResolversTypes = {
   CreateGroupInput: CreateGroupInput;
   String: ResolverTypeWrapper<Scalars['String']>;
   CreateGroupResult: ResolverTypeWrapper<CreateGroupResult>;
+  CreateJoinTokenInput: CreateJoinTokenInput;
+  CreateJoinTokenResult: ResolverTypeWrapper<CreateJoinTokenResult>;
   CredentialsInput: CredentialsInput;
+  HandleJoinRequestInput: HandleJoinRequestInput;
+  HandleJoinRequestOutput: ResolverTypeWrapper<HandleJoinRequestOutput>;
+  HandleJoinRequestResult: ResolverTypeWrapper<HandleJoinRequestResult>;
   Int_comparison_exp: Int_Comparison_Exp;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   RegistrationResult: ResolverTypeWrapper<RegistrationResult>;
@@ -3940,6 +4377,26 @@ export type ResolversTypes = {
   group_join_requests_select_column: Group_Join_Requests_Select_Column;
   group_join_requests_set_input: Group_Join_Requests_Set_Input;
   group_join_requests_update_column: Group_Join_Requests_Update_Column;
+  group_join_tokens: ResolverTypeWrapper<Group_Join_Tokens>;
+  group_join_tokens_aggregate: ResolverTypeWrapper<Group_Join_Tokens_Aggregate>;
+  group_join_tokens_aggregate_fields: ResolverTypeWrapper<Group_Join_Tokens_Aggregate_Fields>;
+  group_join_tokens_aggregate_order_by: Group_Join_Tokens_Aggregate_Order_By;
+  group_join_tokens_arr_rel_insert_input: Group_Join_Tokens_Arr_Rel_Insert_Input;
+  group_join_tokens_bool_exp: Group_Join_Tokens_Bool_Exp;
+  group_join_tokens_constraint: Group_Join_Tokens_Constraint;
+  group_join_tokens_insert_input: Group_Join_Tokens_Insert_Input;
+  group_join_tokens_max_fields: ResolverTypeWrapper<Group_Join_Tokens_Max_Fields>;
+  group_join_tokens_max_order_by: Group_Join_Tokens_Max_Order_By;
+  group_join_tokens_min_fields: ResolverTypeWrapper<Group_Join_Tokens_Min_Fields>;
+  group_join_tokens_min_order_by: Group_Join_Tokens_Min_Order_By;
+  group_join_tokens_mutation_response: ResolverTypeWrapper<Group_Join_Tokens_Mutation_Response>;
+  group_join_tokens_obj_rel_insert_input: Group_Join_Tokens_Obj_Rel_Insert_Input;
+  group_join_tokens_on_conflict: Group_Join_Tokens_On_Conflict;
+  group_join_tokens_order_by: Group_Join_Tokens_Order_By;
+  group_join_tokens_pk_columns_input: Group_Join_Tokens_Pk_Columns_Input;
+  group_join_tokens_select_column: Group_Join_Tokens_Select_Column;
+  group_join_tokens_set_input: Group_Join_Tokens_Set_Input;
+  group_join_tokens_update_column: Group_Join_Tokens_Update_Column;
   group_members: ResolverTypeWrapper<Group_Members>;
   group_members_aggregate: ResolverTypeWrapper<Group_Members_Aggregate>;
   group_members_aggregate_fields: ResolverTypeWrapper<Group_Members_Aggregate_Fields>;
@@ -4154,7 +4611,12 @@ export type ResolversParentTypes = {
   CreateGroupInput: CreateGroupInput;
   String: Scalars['String'];
   CreateGroupResult: CreateGroupResult;
+  CreateJoinTokenInput: CreateJoinTokenInput;
+  CreateJoinTokenResult: CreateJoinTokenResult;
   CredentialsInput: CredentialsInput;
+  HandleJoinRequestInput: HandleJoinRequestInput;
+  HandleJoinRequestOutput: HandleJoinRequestOutput;
+  HandleJoinRequestResult: HandleJoinRequestResult;
   Int_comparison_exp: Int_Comparison_Exp;
   Int: Scalars['Int'];
   RegistrationResult: RegistrationResult;
@@ -4198,6 +4660,23 @@ export type ResolversParentTypes = {
   group_join_requests_order_by: Group_Join_Requests_Order_By;
   group_join_requests_pk_columns_input: Group_Join_Requests_Pk_Columns_Input;
   group_join_requests_set_input: Group_Join_Requests_Set_Input;
+  group_join_tokens: Group_Join_Tokens;
+  group_join_tokens_aggregate: Group_Join_Tokens_Aggregate;
+  group_join_tokens_aggregate_fields: Group_Join_Tokens_Aggregate_Fields;
+  group_join_tokens_aggregate_order_by: Group_Join_Tokens_Aggregate_Order_By;
+  group_join_tokens_arr_rel_insert_input: Group_Join_Tokens_Arr_Rel_Insert_Input;
+  group_join_tokens_bool_exp: Group_Join_Tokens_Bool_Exp;
+  group_join_tokens_insert_input: Group_Join_Tokens_Insert_Input;
+  group_join_tokens_max_fields: Group_Join_Tokens_Max_Fields;
+  group_join_tokens_max_order_by: Group_Join_Tokens_Max_Order_By;
+  group_join_tokens_min_fields: Group_Join_Tokens_Min_Fields;
+  group_join_tokens_min_order_by: Group_Join_Tokens_Min_Order_By;
+  group_join_tokens_mutation_response: Group_Join_Tokens_Mutation_Response;
+  group_join_tokens_obj_rel_insert_input: Group_Join_Tokens_Obj_Rel_Insert_Input;
+  group_join_tokens_on_conflict: Group_Join_Tokens_On_Conflict;
+  group_join_tokens_order_by: Group_Join_Tokens_Order_By;
+  group_join_tokens_pk_columns_input: Group_Join_Tokens_Pk_Columns_Input;
+  group_join_tokens_set_input: Group_Join_Tokens_Set_Input;
   group_members: Group_Members;
   group_members_aggregate: Group_Members_Aggregate;
   group_members_aggregate_fields: Group_Members_Aggregate_Fields;
@@ -4384,6 +4863,25 @@ export type CreateGroupResultResolvers<ContextType = any, ParentType extends Res
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type CreateJoinTokenResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateJoinTokenResult'] = ResolversParentTypes['CreateJoinTokenResult']> = {
+  group?: Resolver<Maybe<ResolversTypes['groups']>, ParentType, ContextType>;
+  group_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  join_token?: Resolver<Maybe<ResolversTypes['group_join_tokens']>, ParentType, ContextType>;
+  join_token_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type HandleJoinRequestOutputResolvers<ContextType = any, ParentType extends ResolversParentTypes['HandleJoinRequestOutput'] = ResolversParentTypes['HandleJoinRequestOutput']> = {
+  join_request_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type HandleJoinRequestResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['HandleJoinRequestResult'] = ResolversParentTypes['HandleJoinRequestResult']> = {
+  join_request?: Resolver<Maybe<ResolversTypes['group_join_requests']>, ParentType, ContextType>;
+  join_request_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type RegistrationResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['RegistrationResult'] = ResolversParentTypes['RegistrationResult']> = {
   user?: Resolver<Maybe<ResolversTypes['users']>, ParentType, ContextType>;
   user_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
@@ -4495,6 +4993,57 @@ export type Group_Join_Requests_Min_FieldsResolvers<ContextType = any, ParentTyp
 export type Group_Join_Requests_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_join_requests_mutation_response'] = ResolversParentTypes['group_join_requests_mutation_response']> = {
   affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   returning?: Resolver<Array<ResolversTypes['group_join_requests']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Join_TokensResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_join_tokens'] = ResolversParentTypes['group_join_tokens']> = {
+  created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  disabled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  group?: Resolver<ResolversTypes['groups'], ParentType, ContextType>;
+  group_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  note?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  updated_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Join_Tokens_AggregateResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_join_tokens_aggregate'] = ResolversParentTypes['group_join_tokens_aggregate']> = {
+  aggregate?: Resolver<Maybe<ResolversTypes['group_join_tokens_aggregate_fields']>, ParentType, ContextType>;
+  nodes?: Resolver<Array<ResolversTypes['group_join_tokens']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Join_Tokens_Aggregate_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_join_tokens_aggregate_fields'] = ResolversParentTypes['group_join_tokens_aggregate_fields']> = {
+  count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<Group_Join_Tokens_Aggregate_FieldsCountArgs, never>>;
+  max?: Resolver<Maybe<ResolversTypes['group_join_tokens_max_fields']>, ParentType, ContextType>;
+  min?: Resolver<Maybe<ResolversTypes['group_join_tokens_min_fields']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Join_Tokens_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_join_tokens_max_fields'] = ResolversParentTypes['group_join_tokens_max_fields']> = {
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  note?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Join_Tokens_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_join_tokens_min_fields'] = ResolversParentTypes['group_join_tokens_min_fields']> = {
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  note?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Join_Tokens_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_join_tokens_mutation_response'] = ResolversParentTypes['group_join_tokens_mutation_response']> = {
+  affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  returning?: Resolver<Array<ResolversTypes['group_join_tokens']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -4730,10 +5279,13 @@ export type Messages_Mutation_ResponseResolvers<ContextType = any, ParentType ex
 
 export type Mutation_RootResolvers<ContextType = any, ParentType extends ResolversParentTypes['mutation_root'] = ResolversParentTypes['mutation_root']> = {
   createGroup?: Resolver<ResolversTypes['CreateGroupResult'], ParentType, ContextType, RequireFields<Mutation_RootCreateGroupArgs, 'input'>>;
+  createJoinToken?: Resolver<Maybe<ResolversTypes['CreateJoinTokenResult']>, ParentType, ContextType, RequireFields<Mutation_RootCreateJoinTokenArgs, 'input'>>;
   delete_group_join_request_status?: Resolver<Maybe<ResolversTypes['group_join_request_status_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_Join_Request_StatusArgs, 'where'>>;
   delete_group_join_request_status_by_pk?: Resolver<Maybe<ResolversTypes['group_join_request_status']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_Join_Request_Status_By_PkArgs, 'value'>>;
   delete_group_join_requests?: Resolver<Maybe<ResolversTypes['group_join_requests_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_Join_RequestsArgs, 'where'>>;
   delete_group_join_requests_by_pk?: Resolver<Maybe<ResolversTypes['group_join_requests']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_Join_Requests_By_PkArgs, 'id'>>;
+  delete_group_join_tokens?: Resolver<Maybe<ResolversTypes['group_join_tokens_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_Join_TokensArgs, 'where'>>;
+  delete_group_join_tokens_by_pk?: Resolver<Maybe<ResolversTypes['group_join_tokens']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_Join_Tokens_By_PkArgs, 'id'>>;
   delete_group_members?: Resolver<Maybe<ResolversTypes['group_members_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_MembersArgs, 'where'>>;
   delete_group_members_by_pk?: Resolver<Maybe<ResolversTypes['group_members']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_Members_By_PkArgs, 'id'>>;
   delete_group_role?: Resolver<Maybe<ResolversTypes['group_role_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_RoleArgs, 'where'>>;
@@ -4751,10 +5303,13 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   delete_users_by_pk?: Resolver<Maybe<ResolversTypes['users']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Users_By_PkArgs, 'id'>>;
   delete_verification_requests?: Resolver<Maybe<ResolversTypes['verification_requests_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Verification_RequestsArgs, 'where'>>;
   delete_verification_requests_by_pk?: Resolver<Maybe<ResolversTypes['verification_requests']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Verification_Requests_By_PkArgs, 'id'>>;
+  handleJoinRequest?: Resolver<ResolversTypes['HandleJoinRequestResult'], ParentType, ContextType, RequireFields<Mutation_RootHandleJoinRequestArgs, 'input'>>;
   insert_group_join_request_status?: Resolver<Maybe<ResolversTypes['group_join_request_status_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_Join_Request_StatusArgs, 'objects'>>;
   insert_group_join_request_status_one?: Resolver<Maybe<ResolversTypes['group_join_request_status']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_Join_Request_Status_OneArgs, 'object'>>;
   insert_group_join_requests?: Resolver<Maybe<ResolversTypes['group_join_requests_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_Join_RequestsArgs, 'objects'>>;
   insert_group_join_requests_one?: Resolver<Maybe<ResolversTypes['group_join_requests']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_Join_Requests_OneArgs, 'object'>>;
+  insert_group_join_tokens?: Resolver<Maybe<ResolversTypes['group_join_tokens_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_Join_TokensArgs, 'objects'>>;
+  insert_group_join_tokens_one?: Resolver<Maybe<ResolversTypes['group_join_tokens']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_Join_Tokens_OneArgs, 'object'>>;
   insert_group_members?: Resolver<Maybe<ResolversTypes['group_members_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_MembersArgs, 'objects'>>;
   insert_group_members_one?: Resolver<Maybe<ResolversTypes['group_members']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_Members_OneArgs, 'object'>>;
   insert_group_role?: Resolver<Maybe<ResolversTypes['group_role_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_RoleArgs, 'objects'>>;
@@ -4779,6 +5334,8 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   update_group_join_request_status_by_pk?: Resolver<Maybe<ResolversTypes['group_join_request_status']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_Join_Request_Status_By_PkArgs, 'pk_columns'>>;
   update_group_join_requests?: Resolver<Maybe<ResolversTypes['group_join_requests_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_Join_RequestsArgs, 'where'>>;
   update_group_join_requests_by_pk?: Resolver<Maybe<ResolversTypes['group_join_requests']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_Join_Requests_By_PkArgs, 'pk_columns'>>;
+  update_group_join_tokens?: Resolver<Maybe<ResolversTypes['group_join_tokens_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_Join_TokensArgs, 'where'>>;
+  update_group_join_tokens_by_pk?: Resolver<Maybe<ResolversTypes['group_join_tokens']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_Join_Tokens_By_PkArgs, 'pk_columns'>>;
   update_group_members?: Resolver<Maybe<ResolversTypes['group_members_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_MembersArgs, 'where'>>;
   update_group_members_by_pk?: Resolver<Maybe<ResolversTypes['group_members']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_Members_By_PkArgs, 'pk_columns'>>;
   update_group_role?: Resolver<Maybe<ResolversTypes['group_role_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_RoleArgs, 'where'>>;
@@ -4805,6 +5362,9 @@ export type Query_RootResolvers<ContextType = any, ParentType extends ResolversP
   group_join_requests?: Resolver<Array<ResolversTypes['group_join_requests']>, ParentType, ContextType, RequireFields<Query_RootGroup_Join_RequestsArgs, never>>;
   group_join_requests_aggregate?: Resolver<ResolversTypes['group_join_requests_aggregate'], ParentType, ContextType, RequireFields<Query_RootGroup_Join_Requests_AggregateArgs, never>>;
   group_join_requests_by_pk?: Resolver<Maybe<ResolversTypes['group_join_requests']>, ParentType, ContextType, RequireFields<Query_RootGroup_Join_Requests_By_PkArgs, 'id'>>;
+  group_join_tokens?: Resolver<Array<ResolversTypes['group_join_tokens']>, ParentType, ContextType, RequireFields<Query_RootGroup_Join_TokensArgs, never>>;
+  group_join_tokens_aggregate?: Resolver<ResolversTypes['group_join_tokens_aggregate'], ParentType, ContextType, RequireFields<Query_RootGroup_Join_Tokens_AggregateArgs, never>>;
+  group_join_tokens_by_pk?: Resolver<Maybe<ResolversTypes['group_join_tokens']>, ParentType, ContextType, RequireFields<Query_RootGroup_Join_Tokens_By_PkArgs, 'id'>>;
   group_members?: Resolver<Array<ResolversTypes['group_members']>, ParentType, ContextType, RequireFields<Query_RootGroup_MembersArgs, never>>;
   group_members_aggregate?: Resolver<ResolversTypes['group_members_aggregate'], ParentType, ContextType, RequireFields<Query_RootGroup_Members_AggregateArgs, never>>;
   group_members_by_pk?: Resolver<Maybe<ResolversTypes['group_members']>, ParentType, ContextType, RequireFields<Query_RootGroup_Members_By_PkArgs, 'id'>>;
@@ -4840,6 +5400,9 @@ export type Subscription_RootResolvers<ContextType = any, ParentType extends Res
   group_join_requests?: SubscriptionResolver<Array<ResolversTypes['group_join_requests']>, "group_join_requests", ParentType, ContextType, RequireFields<Subscription_RootGroup_Join_RequestsArgs, never>>;
   group_join_requests_aggregate?: SubscriptionResolver<ResolversTypes['group_join_requests_aggregate'], "group_join_requests_aggregate", ParentType, ContextType, RequireFields<Subscription_RootGroup_Join_Requests_AggregateArgs, never>>;
   group_join_requests_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['group_join_requests']>, "group_join_requests_by_pk", ParentType, ContextType, RequireFields<Subscription_RootGroup_Join_Requests_By_PkArgs, 'id'>>;
+  group_join_tokens?: SubscriptionResolver<Array<ResolversTypes['group_join_tokens']>, "group_join_tokens", ParentType, ContextType, RequireFields<Subscription_RootGroup_Join_TokensArgs, never>>;
+  group_join_tokens_aggregate?: SubscriptionResolver<ResolversTypes['group_join_tokens_aggregate'], "group_join_tokens_aggregate", ParentType, ContextType, RequireFields<Subscription_RootGroup_Join_Tokens_AggregateArgs, never>>;
+  group_join_tokens_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['group_join_tokens']>, "group_join_tokens_by_pk", ParentType, ContextType, RequireFields<Subscription_RootGroup_Join_Tokens_By_PkArgs, 'id'>>;
   group_members?: SubscriptionResolver<Array<ResolversTypes['group_members']>, "group_members", ParentType, ContextType, RequireFields<Subscription_RootGroup_MembersArgs, never>>;
   group_members_aggregate?: SubscriptionResolver<ResolversTypes['group_members_aggregate'], "group_members_aggregate", ParentType, ContextType, RequireFields<Subscription_RootGroup_Members_AggregateArgs, never>>;
   group_members_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['group_members']>, "group_members_by_pk", ParentType, ContextType, RequireFields<Subscription_RootGroup_Members_By_PkArgs, 'id'>>;
@@ -5124,6 +5687,9 @@ export type Verification_Requests_Variance_FieldsResolvers<ContextType = any, Pa
 
 export type Resolvers<ContextType = any> = {
   CreateGroupResult?: CreateGroupResultResolvers<ContextType>;
+  CreateJoinTokenResult?: CreateJoinTokenResultResolvers<ContextType>;
+  HandleJoinRequestOutput?: HandleJoinRequestOutputResolvers<ContextType>;
+  HandleJoinRequestResult?: HandleJoinRequestResultResolvers<ContextType>;
   RegistrationResult?: RegistrationResultResolvers<ContextType>;
   RequestJoinGroupResult?: RequestJoinGroupResultResolvers<ContextType>;
   create_group_result?: Create_Group_ResultResolvers<ContextType>;
@@ -5139,6 +5705,12 @@ export type Resolvers<ContextType = any> = {
   group_join_requests_max_fields?: Group_Join_Requests_Max_FieldsResolvers<ContextType>;
   group_join_requests_min_fields?: Group_Join_Requests_Min_FieldsResolvers<ContextType>;
   group_join_requests_mutation_response?: Group_Join_Requests_Mutation_ResponseResolvers<ContextType>;
+  group_join_tokens?: Group_Join_TokensResolvers<ContextType>;
+  group_join_tokens_aggregate?: Group_Join_Tokens_AggregateResolvers<ContextType>;
+  group_join_tokens_aggregate_fields?: Group_Join_Tokens_Aggregate_FieldsResolvers<ContextType>;
+  group_join_tokens_max_fields?: Group_Join_Tokens_Max_FieldsResolvers<ContextType>;
+  group_join_tokens_min_fields?: Group_Join_Tokens_Min_FieldsResolvers<ContextType>;
+  group_join_tokens_mutation_response?: Group_Join_Tokens_Mutation_ResponseResolvers<ContextType>;
   group_members?: Group_MembersResolvers<ContextType>;
   group_members_aggregate?: Group_Members_AggregateResolvers<ContextType>;
   group_members_aggregate_fields?: Group_Members_Aggregate_FieldsResolvers<ContextType>;
@@ -5217,8 +5789,12 @@ export type Resolvers<ContextType = any> = {
 export type IResolvers<ContextType = any> = Resolvers<ContextType>;
 
 
+export const ServerFindGroupJoinRequestDocument: DocumentNode<ServerFindGroupJoinRequestQuery, ServerFindGroupJoinRequestQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindGroupJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_join_requests_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"user_id"},"arguments":[],"directives":[]}]}}]}}]};
+export const ServerInsertGroupJoinTokenDocument: DocumentNode<ServerInsertGroupJoinTokenMutation, ServerInsertGroupJoinTokenMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertGroupJoinToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_join_tokens_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerInsertGroupDocument: DocumentNode<ServerInsertGroupMutation, ServerInsertGroupMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"groups_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_groups_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerInsertGroupJoinRequestDocument: DocumentNode<ServerInsertGroupJoinRequestMutation, ServerInsertGroupJoinRequestMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertGroupJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_requests_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_join_requests_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"status"},"arguments":[],"directives":[]}]}}]}}]};
+export const ServerAcceptGroupJoinRequestDocument: DocumentNode<ServerAcceptGroupJoinRequestMutation, ServerAcceptGroupJoinRequestMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerAcceptGroupJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"group_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"response"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"responder_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_group_join_requests_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"status"},"value":{"kind":"EnumValue","value":"accepted"}},{"kind":"ObjectField","name":{"kind":"Name","value":"response"},"value":{"kind":"Variable","name":{"kind":"Name","value":"response"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"responder_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"responder_id"}}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"insert_group_members_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"group_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"role"},"value":{"kind":"EnumValue","value":"user"}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]};
+export const ServerRejectGroupJoinRequestDocument: DocumentNode<ServerRejectGroupJoinRequestMutation, ServerRejectGroupJoinRequestMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerRejectGroupJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"response"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"responder_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_group_join_requests_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"status"},"value":{"kind":"EnumValue","value":"rejected"}},{"kind":"ObjectField","name":{"kind":"Name","value":"response"},"value":{"kind":"Variable","name":{"kind":"Name","value":"response"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"responder_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"responder_id"}}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]}]}}]}}]};
 export const UserCredentialsDocument: DocumentNode<UserCredentialsQuery, UserCredentialsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserCredentials"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"password_hash"},"arguments":[],"directives":[]}]}}]}}]};
 export const FindUserDocument: DocumentNode<FindUserQuery, FindUserQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"FindUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"email"},"arguments":[],"directives":[]}]}}]}}]};
 export const InsertUserDocument: DocumentNode<InsertUserMutation, InsertUserMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InsertUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"users_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_users_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]};
