@@ -1,17 +1,5 @@
-interface Props {
-    url?: string;
-}
-
-const Home = (props: Props) => {
-    return <div>{props.url}</div>;
+const Home = () => {
+    return <div>Jamen goddag</div>;
 };
-
-export async function getServerSideProps() {
-    return {
-        props: {
-            url: process.env.NEXTAUTH_URL,
-        },
-    };
-}
 
 export default Home;

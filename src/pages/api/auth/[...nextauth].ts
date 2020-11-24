@@ -2,8 +2,7 @@
 import Providers from 'next-auth/providers';
 import bcrypt from 'bcryptjs';
 import { UserCredentialsDocument } from '../../../generated/server-queries';
-import { hasuraClient } from '../../../server/hasuraClient';
-import { decodeToken, encodeToken } from '../../../server/auth';
+import { hasuraClient, decodeToken, encodeToken } from '../../../server';
 
 const options = {
     database: process.env.POSTGRES_URL,
