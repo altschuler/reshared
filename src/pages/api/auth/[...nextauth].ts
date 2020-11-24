@@ -34,10 +34,10 @@ const options = {
     },
 
     providers: [
-        Providers.GitHub({
-            clientId: process.env.GITHUB_CLIENT_ID!,
-            clientSecret: process.env.GITHUB_SECRET!,
-        }),
+        // Providers.GitHub({
+        //     clientId: process.env.GITHUB_CLIENT_ID!,
+        //     clientSecret: process.env.GITHUB_SECRET!,
+        // }),
         Providers.Credentials({
             name: 'credentials',
             credentials: {
