@@ -1,15 +1,17 @@
-import Link from 'next/link';
+interface Props {
+    url?: string;
+}
 
-const Home = () => {
-    return (
-        <div>
-            <h1>
-                Welcome to <a href="https://nextjs.org">Next.js!</a>
-            </h1>
-
-            <Link href="/sharables">List</Link>
-        </div>
-    );
+const Home = (props: Props) => {
+    return <div>{props.url}</div>;
 };
+
+export async function getServerSideProps() {
+    return {
+        props: {
+            url: process.env.NEXTAUTH_URL,
+        },
+    };
+}
 
 export default Home;
