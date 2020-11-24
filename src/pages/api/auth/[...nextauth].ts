@@ -7,7 +7,6 @@ import { decodeToken, encodeToken } from '../../../server/auth';
 
 const options = {
     database: process.env.POSTGRES_URL,
-    secret: process.env.NEXT_AUTH_SECRET,
     jwt: {
         encode: async (options) =>
             encodeToken({
@@ -34,10 +33,10 @@ const options = {
     },
 
     providers: [
-        // Providers.GitHub({
-        //     clientId: process.env.GITHUB_CLIENT_ID!,
-        //     clientSecret: process.env.GITHUB_SECRET!,
-        // }),
+        Providers.GitHub({
+            clientId: process.env.GITHUB_CLIENT_ID!,
+            clientSecret: process.env.GITHUB_SECRET!,
+        }),
         Providers.Credentials({
             name: 'credentials',
             credentials: {
