@@ -1,15 +1,18 @@
-﻿import { Button, PageHeader } from 'antd';
+﻿import { Button, Dropdown, Menu, message, Modal, PageHeader, Popconfirm, Typography } from 'antd';
 import Link from 'next/link';
-import { ReactNode } from 'react';
-import { GroupCardFragment } from '../../generated/graphql';
+import { ReactNode, useCallback } from 'react';
+import { GqlOps, GroupCardFragment, useLeaveGroupMutation } from '../../generated/graphql';
 import { EllipsisOutlined } from '@ant-design/icons';
 import { createUseStyles } from 'react-jss';
-import { useIsAdmin } from '../../utils/group';
+import { useMembership } from '../../utils/group';
+import { useRouter } from 'next/router';
+import { urlFor } from '../../utils/urls';
+import { JoinButton } from './JoinButton';
 
 export type GroupPage = 'home' | 'members' | 'settings';
 
 export interface GroupLayoutProps {
-    activePage: GroupPage;
+    activePage?: GroupPage;
     group: GroupCardFragment;
     children?: ReactNode;
 }
@@ -30,8 +33,69 @@ const useStyles = createUseStyles({
 
 export const GroupLayout = (props: GroupLayoutProps) => {
     const classes = useStyles();
-    const isAdmin = useIsAdmin(props.group);
+    const router = useRouter();
+    const { isAdmin, isMember, user } = useMembership(props.group);
     const btnClass = (page: GroupPage) => (props.activePage === page ? classes.active : undefined);
+
+    const [leave, mutation] = useLeaveGroupMutation({
+        refetchQueries: [GqlOps.Query.UserPrivateDetails],
+        awaitRefetchQueries: true,
+    });
+
+    const handleLeave = useCallback(() => {
+        if (!user) {
+            return;
+        }
+
+        leave({
+            variables: { groupId: props.group.id, userId: user.id },
+        }).then((res) => {
+            if (res.data?.delete_group_members?.affected_rows === 1) {
+                message.info(`You have left the group ${props.group.name}`);
+                return router.push(urlFor.group.home(props.group));
+            } else {
+                Modal.error({
+                    title: 'Could not leave group',
+                    content: (
+                        <Typography.Paragraph>
+                            If you are the only administrator in this group, you must appoint
+                            another user the administrator role before leaving. If you are the only
+                            member of the group you cannot leave, but you can delete the group under
+                            Settings.
+                        </Typography.Paragraph>
+                    ),
+                });
+            }
+        });
+    }, [leave, props.group, router, user]);
+
+    const menu = (
+        <Menu>
+            <Menu.Item>
+                <Popconfirm
+                    key="leave"
+                    okText="Leave"
+                    okType="danger"
+                    onConfirm={handleLeave}
+                    title={
+                        <div style={{ maxWidth: 400 }}>
+                            <Typography.Paragraph>
+                                Do you want to leave the group <strong>{props.group.name}</strong>?
+                            </Typography.Paragraph>
+
+                            <Typography.Paragraph>
+                                Any things you shared in the group will be removed (only from this
+                                group, not your account or other groups in which they are shared).
+                            </Typography.Paragraph>
+                        </div>
+                    }>
+                    <Button type="primary" danger loading={mutation.loading}>
+                        Leave Group
+                    </Button>
+                </Popconfirm>
+            </Menu.Item>
+        </Menu>
+    );
 
     return (
         <PageHeader
@@ -58,7 +122,11 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                     </Link>
                 ),
 
-                <Button key="more" icon={<EllipsisOutlined />} />,
+                !isMember && <JoinButton key="join" group={props.group} />,
+
+                <Dropdown key="more" overlay={menu}>
+                    <Button icon={<EllipsisOutlined />} />
+                </Dropdown>,
             ]}>
             {props.children}
         </PageHeader>

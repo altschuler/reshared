@@ -88,6 +88,19 @@ export type Int_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['Int']>>;
 };
 
+export type JoinGroupInput = {
+  group_id: Scalars['uuid'];
+  join_token?: Maybe<Scalars['String']>;
+};
+
+export type JoinGroupResult = {
+  __typename?: 'JoinGroupResult';
+  group?: Maybe<Groups>;
+  group_id: Scalars['uuid'];
+  user?: Maybe<Users>;
+  user_id: Scalars['uuid'];
+};
+
 export type RegistrationResult = {
   __typename?: 'RegistrationResult';
   user?: Maybe<Users>;
@@ -1315,6 +1328,7 @@ export type Groups = {
   memberships_aggregate: Group_Members_Aggregate;
   name: Scalars['String'];
   public: Scalars['Boolean'];
+  slug?: Maybe<Scalars['String']>;
   updated_at: Scalars['timestamptz'];
 };
 
@@ -1405,6 +1419,7 @@ export type Groups_Bool_Exp = {
   memberships?: Maybe<Group_Members_Bool_Exp>;
   name?: Maybe<String_Comparison_Exp>;
   public?: Maybe<Boolean_Comparison_Exp>;
+  slug?: Maybe<String_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
 };
 
@@ -1425,6 +1440,7 @@ export type Groups_Insert_Input = {
   memberships?: Maybe<Group_Members_Arr_Rel_Insert_Input>;
   name?: Maybe<Scalars['String']>;
   public?: Maybe<Scalars['Boolean']>;
+  slug?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -1435,6 +1451,7 @@ export type Groups_Max_Fields = {
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -1444,6 +1461,7 @@ export type Groups_Max_Order_By = {
   description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
+  slug?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
@@ -1454,6 +1472,7 @@ export type Groups_Min_Fields = {
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -1463,6 +1482,7 @@ export type Groups_Min_Order_By = {
   description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
+  slug?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
@@ -1497,6 +1517,7 @@ export type Groups_Order_By = {
   memberships_aggregate?: Maybe<Group_Members_Aggregate_Order_By>;
   name?: Maybe<Order_By>;
   public?: Maybe<Order_By>;
+  slug?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
@@ -1518,6 +1539,8 @@ export enum Groups_Select_Column {
   /** column name */
   Public = 'public',
   /** column name */
+  Slug = 'slug',
+  /** column name */
   UpdatedAt = 'updated_at'
 }
 
@@ -1528,6 +1551,7 @@ export type Groups_Set_Input = {
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
   public?: Maybe<Scalars['Boolean']>;
+  slug?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -1543,6 +1567,8 @@ export enum Groups_Update_Column {
   Name = 'name',
   /** column name */
   Public = 'public',
+  /** column name */
+  Slug = 'slug',
   /** column name */
   UpdatedAt = 'updated_at'
 }
@@ -1821,6 +1847,8 @@ export type Mutation_Root = {
   insert_verification_requests?: Maybe<Verification_Requests_Mutation_Response>;
   /** insert a single row into the table: "verification_requests" */
   insert_verification_requests_one?: Maybe<Verification_Requests>;
+  /** perform the action: "joinGroup" */
+  joinGroup?: Maybe<JoinGroupResult>;
   /** perform the action: "registerCredentials" */
   registerCredentials?: Maybe<RegistrationResult>;
   /** perform the action: "requestJoinGroup" */
@@ -2193,6 +2221,12 @@ export type Mutation_RootInsert_Verification_RequestsArgs = {
 export type Mutation_RootInsert_Verification_Requests_OneArgs = {
   object: Verification_Requests_Insert_Input;
   on_conflict?: Maybe<Verification_Requests_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootJoinGroupArgs = {
+  input: JoinGroupInput;
 };
 
 
@@ -4112,6 +4146,19 @@ export type Verification_Requests_Variance_Order_By = {
   id?: Maybe<Order_By>;
 };
 
+export type ServerFindGroupQueryVariables = Exact<{
+  where?: Maybe<Groups_Bool_Exp>;
+}>;
+
+
+export type ServerFindGroupQuery = (
+  { __typename?: 'query_root' }
+  & { groups: Array<(
+    { __typename?: 'groups' }
+    & Pick<Groups, 'id' | 'name'>
+  )> }
+);
+
 export type ServerFindGroupJoinRequestQueryVariables = Exact<{
   id: Scalars['uuid'];
 }>;
@@ -4122,6 +4169,19 @@ export type ServerFindGroupJoinRequestQuery = (
   & { group_join_requests_by_pk?: Maybe<(
     { __typename?: 'group_join_requests' }
     & Pick<Group_Join_Requests, 'id' | 'group_id' | 'user_id'>
+  )> }
+);
+
+export type ServerFindJoinTokenQueryVariables = Exact<{
+  where: Group_Join_Tokens_Bool_Exp;
+}>;
+
+
+export type ServerFindJoinTokenQuery = (
+  { __typename?: 'query_root' }
+  & { group_join_tokens: Array<(
+    { __typename?: 'group_join_tokens' }
+    & Pick<Group_Join_Tokens, 'id' | 'token'>
   )> }
 );
 
@@ -4161,6 +4221,19 @@ export type ServerInsertGroupJoinRequestMutation = (
   & { insert_group_join_requests_one?: Maybe<(
     { __typename?: 'group_join_requests' }
     & Pick<Group_Join_Requests, 'group_id' | 'status'>
+  )> }
+);
+
+export type ServerInsertGroupMemberMutationVariables = Exact<{
+  input: Group_Members_Insert_Input;
+}>;
+
+
+export type ServerInsertGroupMemberMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_group_members_one?: Maybe<(
+    { __typename?: 'group_members' }
+    & Pick<Group_Members, 'id'>
   )> }
 );
 
@@ -4329,6 +4402,8 @@ export type ResolversTypes = {
   HandleJoinRequestResult: ResolverTypeWrapper<HandleJoinRequestResult>;
   Int_comparison_exp: Int_Comparison_Exp;
   Int: ResolverTypeWrapper<Scalars['Int']>;
+  JoinGroupInput: JoinGroupInput;
+  JoinGroupResult: ResolverTypeWrapper<JoinGroupResult>;
   RegistrationResult: ResolverTypeWrapper<RegistrationResult>;
   RequestJoinGroupInput: RequestJoinGroupInput;
   RequestJoinGroupResult: ResolverTypeWrapper<RequestJoinGroupResult>;
@@ -4619,6 +4694,8 @@ export type ResolversParentTypes = {
   HandleJoinRequestResult: HandleJoinRequestResult;
   Int_comparison_exp: Int_Comparison_Exp;
   Int: Scalars['Int'];
+  JoinGroupInput: JoinGroupInput;
+  JoinGroupResult: JoinGroupResult;
   RegistrationResult: RegistrationResult;
   RequestJoinGroupInput: RequestJoinGroupInput;
   RequestJoinGroupResult: RequestJoinGroupResult;
@@ -4879,6 +4956,14 @@ export type HandleJoinRequestOutputResolvers<ContextType = any, ParentType exten
 export type HandleJoinRequestResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['HandleJoinRequestResult'] = ResolversParentTypes['HandleJoinRequestResult']> = {
   join_request?: Resolver<Maybe<ResolversTypes['group_join_requests']>, ParentType, ContextType>;
   join_request_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type JoinGroupResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['JoinGroupResult'] = ResolversParentTypes['JoinGroupResult']> = {
+  group?: Resolver<Maybe<ResolversTypes['groups']>, ParentType, ContextType>;
+  group_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  user?: Resolver<Maybe<ResolversTypes['users']>, ParentType, ContextType>;
+  user_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -5189,6 +5274,7 @@ export type GroupsResolvers<ContextType = any, ParentType extends ResolversParen
   memberships_aggregate?: Resolver<ResolversTypes['group_members_aggregate'], ParentType, ContextType, RequireFields<GroupsMemberships_AggregateArgs, never>>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   public?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  slug?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   updated_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -5211,6 +5297,7 @@ export type Groups_Max_FieldsResolvers<ContextType = any, ParentType extends Res
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  slug?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -5220,6 +5307,7 @@ export type Groups_Min_FieldsResolvers<ContextType = any, ParentType extends Res
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  slug?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -5328,6 +5416,7 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   insert_users_one?: Resolver<Maybe<ResolversTypes['users']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Users_OneArgs, 'object'>>;
   insert_verification_requests?: Resolver<Maybe<ResolversTypes['verification_requests_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Verification_RequestsArgs, 'objects'>>;
   insert_verification_requests_one?: Resolver<Maybe<ResolversTypes['verification_requests']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Verification_Requests_OneArgs, 'object'>>;
+  joinGroup?: Resolver<Maybe<ResolversTypes['JoinGroupResult']>, ParentType, ContextType, RequireFields<Mutation_RootJoinGroupArgs, 'input'>>;
   registerCredentials?: Resolver<Maybe<ResolversTypes['RegistrationResult']>, ParentType, ContextType, RequireFields<Mutation_RootRegisterCredentialsArgs, 'input'>>;
   requestJoinGroup?: Resolver<Maybe<ResolversTypes['RequestJoinGroupResult']>, ParentType, ContextType, RequireFields<Mutation_RootRequestJoinGroupArgs, 'input'>>;
   update_group_join_request_status?: Resolver<Maybe<ResolversTypes['group_join_request_status_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_Join_Request_StatusArgs, 'where'>>;
@@ -5690,6 +5779,7 @@ export type Resolvers<ContextType = any> = {
   CreateJoinTokenResult?: CreateJoinTokenResultResolvers<ContextType>;
   HandleJoinRequestOutput?: HandleJoinRequestOutputResolvers<ContextType>;
   HandleJoinRequestResult?: HandleJoinRequestResultResolvers<ContextType>;
+  JoinGroupResult?: JoinGroupResultResolvers<ContextType>;
   RegistrationResult?: RegistrationResultResolvers<ContextType>;
   RequestJoinGroupResult?: RequestJoinGroupResultResolvers<ContextType>;
   create_group_result?: Create_Group_ResultResolvers<ContextType>;
@@ -5789,10 +5879,13 @@ export type Resolvers<ContextType = any> = {
 export type IResolvers<ContextType = any> = Resolvers<ContextType>;
 
 
+export const ServerFindGroupDocument: DocumentNode<ServerFindGroupQuery, ServerFindGroupQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"groups_bool_exp"}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerFindGroupJoinRequestDocument: DocumentNode<ServerFindGroupJoinRequestQuery, ServerFindGroupJoinRequestQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindGroupJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_join_requests_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"user_id"},"arguments":[],"directives":[]}]}}]}}]};
+export const ServerFindJoinTokenDocument: DocumentNode<ServerFindJoinTokenQuery, ServerFindJoinTokenQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindJoinToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens_bool_exp"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_join_tokens"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"token"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerInsertGroupJoinTokenDocument: DocumentNode<ServerInsertGroupJoinTokenMutation, ServerInsertGroupJoinTokenMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertGroupJoinToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_join_tokens_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerInsertGroupDocument: DocumentNode<ServerInsertGroupMutation, ServerInsertGroupMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"groups_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_groups_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerInsertGroupJoinRequestDocument: DocumentNode<ServerInsertGroupJoinRequestMutation, ServerInsertGroupJoinRequestMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertGroupJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_requests_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_join_requests_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"status"},"arguments":[],"directives":[]}]}}]}}]};
+export const ServerInsertGroupMemberDocument: DocumentNode<ServerInsertGroupMemberMutation, ServerInsertGroupMemberMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertGroupMember"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_members_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_members_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerAcceptGroupJoinRequestDocument: DocumentNode<ServerAcceptGroupJoinRequestMutation, ServerAcceptGroupJoinRequestMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerAcceptGroupJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"group_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"response"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"responder_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_group_join_requests_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"status"},"value":{"kind":"EnumValue","value":"accepted"}},{"kind":"ObjectField","name":{"kind":"Name","value":"response"},"value":{"kind":"Variable","name":{"kind":"Name","value":"response"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"responder_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"responder_id"}}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"insert_group_members_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"group_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"role"},"value":{"kind":"EnumValue","value":"user"}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerRejectGroupJoinRequestDocument: DocumentNode<ServerRejectGroupJoinRequestMutation, ServerRejectGroupJoinRequestMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerRejectGroupJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"response"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"responder_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_group_join_requests_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"status"},"value":{"kind":"EnumValue","value":"rejected"}},{"kind":"ObjectField","name":{"kind":"Name","value":"response"},"value":{"kind":"Variable","name":{"kind":"Name","value":"response"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"responder_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"responder_id"}}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]}]}}]}}]};
 export const UserCredentialsDocument: DocumentNode<UserCredentialsQuery, UserCredentialsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserCredentials"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"password_hash"},"arguments":[],"directives":[]}]}}]}}]};

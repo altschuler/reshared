@@ -1,6 +1,6 @@
 ﻿import { useSession } from 'next-auth/client';
-import { UserPrivateDetailFragment, useUserPrivateDetailsLazyQuery } from '../generated/graphql';
-import { createContext, ReactNode, useContext, useEffect, useMemo } from 'react';
+import { UserPrivateDetailFragment, useUserPrivateDetailsQuery } from '../generated/graphql';
+import { createContext, ReactNode, useContext, useMemo } from 'react';
 
 export interface AuthContextState {
     user: UserPrivateDetailFragment | null;
@@ -18,16 +18,13 @@ export interface AuthProviderProps {
 }
 export const AuthProvider = (props: AuthProviderProps) => {
     const [session, sessionLoading] = useSession();
-    const [getMe, getMeQuery] = useUserPrivateDetailsLazyQuery();
 
-    useEffect(() => {
-        if (session?.user) {
-            getMe({ variables: { id: session.id } });
-        }
-    }, [getMe, session]);
+    const id = session?.id;
 
-    const loading = sessionLoading || getMeQuery.loading;
-    const user = getMeQuery.data?.users_by_pk || null;
+    const meQuery = useUserPrivateDetailsQuery({ skip: !id, variables: { id } });
+
+    const loading = sessionLoading || meQuery.loading;
+    const user = meQuery.data?.users_by_pk || null;
 
     const ctxValue = useMemo(() => ({ user, loading }), [user, loading]);
 

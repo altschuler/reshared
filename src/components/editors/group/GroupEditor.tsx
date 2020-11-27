@@ -29,18 +29,7 @@ export const GroupEditor = (props: GroupEditorProps) => {
     const { present } = state;
     return (
         <div>
-            <Form
-                name="basic"
-                validateTrigger="onBlur"
-                onFinish={onSubmit}
-                labelCol={{ xs: 24, md: 4 }}
-                labelAlign="left">
-                {error && (
-                    <Form.Item>
-                        <Alert type="error" message={error} />
-                    </Form.Item>
-                )}
-
+            <Form name="basic" layout="vertical" validateTrigger="onBlur" onFinish={onSubmit}>
                 <Form.Item label="Name" rules={[{ required: true, min: 5 }]}>
                     <Input
                         placeholder="Name"
@@ -50,7 +39,9 @@ export const GroupEditor = (props: GroupEditorProps) => {
                 </Form.Item>
 
                 <Form.Item label="Description" rules={[{ required: true, min: 10 }]}>
-                    <Input
+                    <Input.TextArea
+                        showCount
+                        maxLength={250}
                         placeholder="Description"
                         value={present.description || ''}
                         onChange={(e) => state.update({ description: e.target.value })}
@@ -67,9 +58,15 @@ export const GroupEditor = (props: GroupEditorProps) => {
 
                 <Form.Item>
                     <Button loading={loading} disabled={loading} type="primary" htmlType="submit">
-                        {props.submitLabel || 'Save'}
+                        {submitLabel || 'Save'}
                     </Button>
                 </Form.Item>
+
+                {error && (
+                    <Form.Item>
+                        <Alert type="error" message={error} />
+                    </Form.Item>
+                )}
             </Form>
         </div>
     );

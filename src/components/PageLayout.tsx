@@ -1,6 +1,6 @@
 ﻿import type { ReactNode } from 'react';
 import Link from 'next/link';
-import { Layout, Button, Space, Avatar, Popover } from 'antd';
+import { Layout, Button, Space, Popover } from 'antd';
 import { useState } from 'react';
 import { UserDetailFragment } from '../generated/graphql';
 import { signOut } from 'next-auth/client';
@@ -10,9 +10,10 @@ import clsx from 'clsx';
 
 import { CaretDownOutlined } from '@ant-design/icons';
 import { createUseStyles } from 'react-jss';
+import { UserAvatar } from './display';
 
 const { Content, Footer } = Layout;
-const useStyles = createUseStyles((theme) => ({
+const useStyles = createUseStyles({
     header: {
         display: 'flex',
         alignItems: 'center',
@@ -54,7 +55,7 @@ const useStyles = createUseStyles((theme) => ({
     root: {
         backgroundColor: 'white',
     },
-}));
+});
 
 interface UserButtonProps {
     user: UserDetailFragment;
@@ -73,7 +74,7 @@ const UserButton = ({ user }: UserButtonProps) => {
             placement="bottomRight"
             title={'Signed in as ' + user.name}
             trigger="click">
-            <Avatar src={user.image || undefined}>{!user.image && user.name.slice(0, 2)}</Avatar>
+            <UserAvatar user={user} />
             <CaretDownOutlined />
         </Popover>
     );

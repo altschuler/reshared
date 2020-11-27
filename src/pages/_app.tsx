@@ -28,7 +28,6 @@ const apolloClient = new ApolloClient({
 const theme = {};
 
 const App = ({ Component, pageProps }: AppProps) => {
-    console.log('url', process.env.NEXTAUTH_URL);
     return (
         <Provider session={pageProps.session}>
             <ApolloProvider client={apolloClient}>

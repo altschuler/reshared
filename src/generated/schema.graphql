@@ -77,6 +77,18 @@ input Int_comparison_exp {
   _nin: [Int!]
 }
 
+input JoinGroupInput {
+  group_id: uuid!
+  join_token: String
+}
+
+type JoinGroupResult {
+  group: groups
+  group_id: uuid!
+  user: users
+  user_id: uuid!
+}
+
 type RegistrationResult {
   user: users
   user_id: uuid!
@@ -1576,6 +1588,7 @@ type groups {
   ): group_members_aggregate!
   name: String!
   public: Boolean!
+  slug: String
   updated_at: timestamptz!
 }
 
@@ -1627,6 +1640,7 @@ input groups_bool_exp {
   memberships: group_members_bool_exp
   name: String_comparison_exp
   public: Boolean_comparison_exp
+  slug: String_comparison_exp
   updated_at: timestamptz_comparison_exp
 }
 
@@ -1652,6 +1666,7 @@ input groups_insert_input {
   memberships: group_members_arr_rel_insert_input
   name: String
   public: Boolean
+  slug: String
   updated_at: timestamptz
 }
 
@@ -1661,6 +1676,7 @@ type groups_max_fields {
   description: String
   id: uuid
   name: String
+  slug: String
   updated_at: timestamptz
 }
 
@@ -1672,6 +1688,7 @@ input groups_max_order_by {
   description: order_by
   id: order_by
   name: order_by
+  slug: order_by
   updated_at: order_by
 }
 
@@ -1681,6 +1698,7 @@ type groups_min_fields {
   description: String
   id: uuid
   name: String
+  slug: String
   updated_at: timestamptz
 }
 
@@ -1692,6 +1710,7 @@ input groups_min_order_by {
   description: order_by
   id: order_by
   name: order_by
+  slug: order_by
   updated_at: order_by
 }
 
@@ -1734,6 +1753,7 @@ input groups_order_by {
   memberships_aggregate: group_members_aggregate_order_by
   name: order_by
   public: order_by
+  slug: order_by
   updated_at: order_by
 }
 
@@ -1764,6 +1784,9 @@ enum groups_select_column {
   public
 
   """column name"""
+  slug
+
+  """column name"""
   updated_at
 }
 
@@ -1776,6 +1799,7 @@ input groups_set_input {
   id: uuid
   name: String
   public: Boolean
+  slug: String
   updated_at: timestamptz
 }
 
@@ -1797,6 +1821,9 @@ enum groups_update_column {
 
   """column name"""
   public
+
+  """column name"""
+  slug
 
   """column name"""
   updated_at
@@ -2429,6 +2456,11 @@ type mutation_root {
     """on conflict condition"""
     on_conflict: verification_requests_on_conflict
   ): verification_requests
+
+  """
+  perform the action: "joinGroup"
+  """
+  joinGroup(input: JoinGroupInput!): JoinGroupResult
 
   """
   perform the action: "registerCredentials"

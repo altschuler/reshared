@@ -1,4 +1,4 @@
-﻿import { Order_By, useListGroupsQuery } from '../../generated/graphql';
+﻿import { GroupCardFragment, Order_By, useListGroupsQuery } from '../../generated/graphql';
 import { createUseStyles } from 'react-jss';
 import { Avatar, Button, List, Space, Typography } from 'antd';
 import Link from 'next/link';
@@ -8,6 +8,7 @@ import { useDialogs } from '../../components/dialogs/DialogProvider';
 import { CreateGroupDrawer } from '../../components/dialogs/CreateGroupDrawer';
 import { JoinButton } from './JoinButton';
 import { PaginationConfig } from 'antd/lib/pagination';
+import { useRouter } from 'next/router';
 
 const useStyles = createUseStyles((theme) => ({
     root: {
@@ -35,6 +36,7 @@ const IconText = ({ icon, text }: { icon: ReactNode; text: string | number }) =>
 export const GroupListPage = () => {
     const dialogs = useDialogs();
     const classes = useStyles();
+    const router = useRouter();
     const [page, setPage] = useState(0);
     const [pageSize, setPageSize] = useState(10);
 
@@ -59,7 +61,13 @@ export const GroupListPage = () => {
         [data?.groups_aggregate.aggregate?.count, handlePaginationChange, page, pageSize],
     );
 
-    const handleCreateGroup = useCallback(() => dialogs.showDialog(CreateGroupDrawer), [dialogs]);
+    const handleCreateGroup = useCallback(
+        () =>
+            dialogs
+                .showDialog(CreateGroupDrawer)
+                .then((group: GroupCardFragment) => router.push(`/groups/${group.id}`)),
+        [dialogs, router],
+    );
 
     const groups = data?.groups || [];
 

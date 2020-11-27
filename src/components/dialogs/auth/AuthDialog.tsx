@@ -1,6 +1,4 @@
-﻿import { useRegisterUserMutation } from '../../../generated/graphql';
-import { Button, Modal } from 'antd';
-import { useRouter } from 'next/router';
+﻿import { Modal } from 'antd';
 import { useState } from 'react';
 import { LoginForm } from './LoginForm';
 import { RegisterForm } from './RegisterForm';
@@ -13,7 +11,6 @@ interface AuthDialogProps {
 
 export const AuthDialog = (props: AuthDialogProps) => {
     const { visible } = props;
-    const router = useRouter();
     const [showRegister, setShowRegister] = useState(props.startOnRegister);
 
     return (

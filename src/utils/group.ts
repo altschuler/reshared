@@ -20,10 +20,17 @@ export const isMember = (
 export const isAdmin = (
     group?: GroupCardFragment | null,
     user?: UserPrivateDetailFragment | null,
-) => isMember(group, user);
+) => isMember(group, user, Group_Role_Enum.Admin);
 
-export const useIsAdmin = (group?: GroupCardFragment | null) => {
+export const useMembership = (group?: GroupCardFragment | null) => {
     const auth = useAuth();
 
-    return useMemo(() => isAdmin(group, auth.user), [auth.user, group]);
+    return useMemo(
+        () => ({
+            isAdmin: isAdmin(group, auth.user),
+            isMember: isMember(group, auth.user),
+            user: auth.user,
+        }),
+        [auth.user, group],
+    );
 };

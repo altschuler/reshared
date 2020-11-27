@@ -95,9 +95,33 @@ mutation CreateGroup($input: CreateGroupInput!) {
     }
 }
 
+mutation DeleteGroup($id: uuid!) {
+    delete_groups_by_pk(id: $id) {
+        ...GroupCard
+    }
+}
+
+mutation LeaveGroup($groupId: uuid!, $userId: uuid!) {
+    delete_group_members(where: { group_id: { _eq: $groupId }, user_id: { _eq: $userId } }) {
+        affected_rows
+    }
+}
+
 mutation JoinGroup($groupId: uuid!) {
     insert_group_members_one(object: { group_id: $groupId }) {
         ...GroupMemberCard
+        user {
+            ...UserPrivateDetail
+        }
+    }
+}
+
+mutation JoinGroupWithToken($input: JoinGroupInput!) {
+    joinGroup(input: $input) {
+        group {
+            id
+        }
+
         user {
             ...UserPrivateDetail
         }

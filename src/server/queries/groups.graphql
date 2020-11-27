@@ -1,8 +1,22 @@
-﻿query ServerFindGroupJoinRequest($id: uuid!) {
+﻿query ServerFindGroup($where: groups_bool_exp) {
+    groups(where: $where) {
+        id
+        name
+    }
+}
+
+query ServerFindGroupJoinRequest($id: uuid!) {
     group_join_requests_by_pk(id: $id) {
         id
         group_id
         user_id
+    }
+}
+
+query ServerFindJoinToken($where: group_join_tokens_bool_exp!) {
+    group_join_tokens(where: $where) {
+        id
+        token
     }
 }
 
@@ -23,6 +37,12 @@ mutation ServerInsertGroupJoinRequest($input: group_join_requests_insert_input!)
     insert_group_join_requests_one(object: $input) {
         group_id
         status
+    }
+}
+
+mutation ServerInsertGroupMember($input: group_members_insert_input!) {
+    insert_group_members_one(object: $input) {
+        id
     }
 }
 

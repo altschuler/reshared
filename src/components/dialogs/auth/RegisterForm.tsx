@@ -14,6 +14,7 @@ interface RegisterFormValues {
 interface RegisterFormProps {
     providers?: { [key: string]: SessionProvider };
     onLogin: () => any;
+    submitLabel?: string;
 }
 
 export const RegisterForm = (props: RegisterFormProps) => {
@@ -79,7 +80,7 @@ export const RegisterForm = (props: RegisterFormProps) => {
                         type="primary"
                         htmlType="submit"
                         loading={registerMutation.loading}>
-                        Register
+                        {props.submitLabel || 'Register'}
                     </Button>
                     <Typography.Text className="signup-text">
                         Already have an account?{' '}

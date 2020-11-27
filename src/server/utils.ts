@@ -1,7 +1,7 @@
 ﻿import { NextApiRequest, NextApiResponse } from 'next';
 import Joi from 'joi';
 import { decodeToken, JwtToken } from './auth';
-import { makeHasuraUserClient } from './hasuraClient';
+import { hasuraClient, makeHasuraUserClient } from './hasuraClient';
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 
 export const errorReply = (res: NextApiResponse, status: number, message: string) => {
@@ -15,6 +15,7 @@ export interface HandlerContext<TOutput> {
     token: JwtToken | null;
     error: (msg: string, code?: number) => void;
     success: (output: TOutput) => void;
+    adminClient: ApolloClient<NormalizedCacheObject>;
 }
 
 export interface AuthorizedHandlerContext<TOutput> {
@@ -22,6 +23,7 @@ export interface AuthorizedHandlerContext<TOutput> {
     res: NextApiResponse;
     token: JwtToken;
     userClient: ApolloClient<NormalizedCacheObject>;
+    adminClient: ApolloClient<NormalizedCacheObject>;
     error: (msg: string, code?: number) => void;
     success: (output: TOutput) => void;
 }
@@ -49,6 +51,7 @@ export const makeHandler = <TInput, TOutput>(
                 req,
                 res,
                 token,
+                adminClient: hasuraClient,
                 error: (msg: string, status = 400) => errorReply(res, status, msg),
                 success: (output: TOutput) => res.json(output),
             });
@@ -85,11 +88,13 @@ export const makeAuthorizedHandler = <TInput, TOutput>(
                 req,
                 res,
                 token,
+                adminClient: hasuraClient,
                 userClient: makeHasuraUserClient(req.headers.authorization),
                 error: (msg: string, status = 400) => errorReply(res, status, msg),
                 success: (output: TOutput) => res.json(output),
             });
-        } catch {
+        } catch (err) {
+            console.log(err);
             errorReply(res, 400, 'An error occured while processing the request.');
         }
     };

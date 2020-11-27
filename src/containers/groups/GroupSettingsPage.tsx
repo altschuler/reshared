@@ -1,10 +1,11 @@
-﻿import { useGroupDetailsQuery } from '../../generated/graphql';
+﻿import { useDeleteGroupMutation, useGroupDetailsQuery } from '../../generated/graphql';
 import { useRouter } from 'next/router';
-import { Alert, Divider, Spin, Typography } from 'antd';
+import { Alert, Button, Divider, message, Spin, Typography } from 'antd';
 import { GroupLayout } from './GroupLayout';
 import { GroupEditor, makeEditorGroup, useGroupEditor } from '../../components/editors';
 import { useCallback } from 'react';
 import { JoinLinkList } from './JoinLinkList';
+import { DeleteButton } from './DeleteButton';
 
 export const GroupSettingsPage = () => {
     const router = useRouter();
@@ -36,11 +37,19 @@ export const GroupSettingsPage = () => {
 
     return (
         <GroupLayout activePage="settings" group={group}>
-            <Typography.Title level={5}>Group Details</Typography.Title>
+            <Typography.Title level={4}>Group Details</Typography.Title>
             <GroupEditor state={editorState} onSubmit={handleSave} submitLabel="Update" />
 
             <Divider dashed type="horizontal" />
+
             <JoinLinkList group={group} />
+
+            <Divider dashed type="horizontal" />
+
+            <Typography.Title type="danger" level={4}>
+                Danger zone
+            </Typography.Title>
+            <DeleteButton group={group} />
         </GroupLayout>
     );
 };

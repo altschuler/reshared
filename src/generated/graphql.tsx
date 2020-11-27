@@ -87,6 +87,19 @@ export type Int_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['Int']>>;
 };
 
+export type JoinGroupInput = {
+  group_id: Scalars['uuid'];
+  join_token?: Maybe<Scalars['String']>;
+};
+
+export type JoinGroupResult = {
+  __typename?: 'JoinGroupResult';
+  group?: Maybe<Groups>;
+  group_id: Scalars['uuid'];
+  user?: Maybe<Users>;
+  user_id: Scalars['uuid'];
+};
+
 export type RegistrationResult = {
   __typename?: 'RegistrationResult';
   user?: Maybe<Users>;
@@ -1314,6 +1327,7 @@ export type Groups = {
   memberships_aggregate: Group_Members_Aggregate;
   name: Scalars['String'];
   public: Scalars['Boolean'];
+  slug?: Maybe<Scalars['String']>;
   updated_at: Scalars['timestamptz'];
 };
 
@@ -1404,6 +1418,7 @@ export type Groups_Bool_Exp = {
   memberships?: Maybe<Group_Members_Bool_Exp>;
   name?: Maybe<String_Comparison_Exp>;
   public?: Maybe<Boolean_Comparison_Exp>;
+  slug?: Maybe<String_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
 };
 
@@ -1424,6 +1439,7 @@ export type Groups_Insert_Input = {
   memberships?: Maybe<Group_Members_Arr_Rel_Insert_Input>;
   name?: Maybe<Scalars['String']>;
   public?: Maybe<Scalars['Boolean']>;
+  slug?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -1434,6 +1450,7 @@ export type Groups_Max_Fields = {
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -1443,6 +1460,7 @@ export type Groups_Max_Order_By = {
   description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
+  slug?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
@@ -1453,6 +1471,7 @@ export type Groups_Min_Fields = {
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -1462,6 +1481,7 @@ export type Groups_Min_Order_By = {
   description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
+  slug?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
@@ -1496,6 +1516,7 @@ export type Groups_Order_By = {
   memberships_aggregate?: Maybe<Group_Members_Aggregate_Order_By>;
   name?: Maybe<Order_By>;
   public?: Maybe<Order_By>;
+  slug?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
@@ -1517,6 +1538,8 @@ export enum Groups_Select_Column {
   /** column name */
   Public = 'public',
   /** column name */
+  Slug = 'slug',
+  /** column name */
   UpdatedAt = 'updated_at'
 }
 
@@ -1527,6 +1550,7 @@ export type Groups_Set_Input = {
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
   public?: Maybe<Scalars['Boolean']>;
+  slug?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -1542,6 +1566,8 @@ export enum Groups_Update_Column {
   Name = 'name',
   /** column name */
   Public = 'public',
+  /** column name */
+  Slug = 'slug',
   /** column name */
   UpdatedAt = 'updated_at'
 }
@@ -1820,6 +1846,8 @@ export type Mutation_Root = {
   insert_verification_requests?: Maybe<Verification_Requests_Mutation_Response>;
   /** insert a single row into the table: "verification_requests" */
   insert_verification_requests_one?: Maybe<Verification_Requests>;
+  /** perform the action: "joinGroup" */
+  joinGroup?: Maybe<JoinGroupResult>;
   /** perform the action: "registerCredentials" */
   registerCredentials?: Maybe<RegistrationResult>;
   /** perform the action: "requestJoinGroup" */
@@ -2192,6 +2220,12 @@ export type Mutation_RootInsert_Verification_RequestsArgs = {
 export type Mutation_RootInsert_Verification_Requests_OneArgs = {
   object: Verification_Requests_Insert_Input;
   on_conflict?: Maybe<Verification_Requests_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootJoinGroupArgs = {
+  input: JoinGroupInput;
 };
 
 
@@ -4232,6 +4266,33 @@ export type CreateGroupMutation = (
   ) }
 );
 
+export type DeleteGroupMutationVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type DeleteGroupMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_groups_by_pk?: Maybe<(
+    { __typename?: 'groups' }
+    & GroupCardFragment
+  )> }
+);
+
+export type LeaveGroupMutationVariables = Exact<{
+  groupId: Scalars['uuid'];
+  userId: Scalars['uuid'];
+}>;
+
+
+export type LeaveGroupMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_group_members?: Maybe<(
+    { __typename?: 'group_members_mutation_response' }
+    & Pick<Group_Members_Mutation_Response, 'affected_rows'>
+  )> }
+);
+
 export type JoinGroupMutationVariables = Exact<{
   groupId: Scalars['uuid'];
 }>;
@@ -4246,6 +4307,25 @@ export type JoinGroupMutation = (
       & UserPrivateDetailFragment
     ) }
     & GroupMemberCardFragment
+  )> }
+);
+
+export type JoinGroupWithTokenMutationVariables = Exact<{
+  input: JoinGroupInput;
+}>;
+
+
+export type JoinGroupWithTokenMutation = (
+  { __typename?: 'mutation_root' }
+  & { joinGroup?: Maybe<(
+    { __typename?: 'JoinGroupResult' }
+    & { group?: Maybe<(
+      { __typename?: 'groups' }
+      & Pick<Groups, 'id'>
+    )>, user?: Maybe<(
+      { __typename?: 'users' }
+      & UserPrivateDetailFragment
+    )> }
   )> }
 );
 
@@ -4730,6 +4810,73 @@ export function useCreateGroupMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateGroupMutationHookResult = ReturnType<typeof useCreateGroupMutation>;
 export type CreateGroupMutationResult = Apollo.MutationResult<CreateGroupMutation>;
 export type CreateGroupMutationOptions = Apollo.BaseMutationOptions<CreateGroupMutation, CreateGroupMutationVariables>;
+export const DeleteGroupDocument = gql`
+    mutation DeleteGroup($id: uuid!) {
+  delete_groups_by_pk(id: $id) {
+    ...GroupCard
+  }
+}
+    ${GroupCardFragmentDoc}`;
+export type DeleteGroupMutationFn = Apollo.MutationFunction<DeleteGroupMutation, DeleteGroupMutationVariables>;
+
+/**
+ * __useDeleteGroupMutation__
+ *
+ * To run a mutation, you first call `useDeleteGroupMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteGroupMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteGroupMutation, { data, loading, error }] = useDeleteGroupMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteGroupMutation(baseOptions?: Apollo.MutationHookOptions<DeleteGroupMutation, DeleteGroupMutationVariables>) {
+        return Apollo.useMutation<DeleteGroupMutation, DeleteGroupMutationVariables>(DeleteGroupDocument, baseOptions);
+      }
+export type DeleteGroupMutationHookResult = ReturnType<typeof useDeleteGroupMutation>;
+export type DeleteGroupMutationResult = Apollo.MutationResult<DeleteGroupMutation>;
+export type DeleteGroupMutationOptions = Apollo.BaseMutationOptions<DeleteGroupMutation, DeleteGroupMutationVariables>;
+export const LeaveGroupDocument = gql`
+    mutation LeaveGroup($groupId: uuid!, $userId: uuid!) {
+  delete_group_members(
+    where: {group_id: {_eq: $groupId}, user_id: {_eq: $userId}}
+  ) {
+    affected_rows
+  }
+}
+    `;
+export type LeaveGroupMutationFn = Apollo.MutationFunction<LeaveGroupMutation, LeaveGroupMutationVariables>;
+
+/**
+ * __useLeaveGroupMutation__
+ *
+ * To run a mutation, you first call `useLeaveGroupMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLeaveGroupMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [leaveGroupMutation, { data, loading, error }] = useLeaveGroupMutation({
+ *   variables: {
+ *      groupId: // value for 'groupId'
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useLeaveGroupMutation(baseOptions?: Apollo.MutationHookOptions<LeaveGroupMutation, LeaveGroupMutationVariables>) {
+        return Apollo.useMutation<LeaveGroupMutation, LeaveGroupMutationVariables>(LeaveGroupDocument, baseOptions);
+      }
+export type LeaveGroupMutationHookResult = ReturnType<typeof useLeaveGroupMutation>;
+export type LeaveGroupMutationResult = Apollo.MutationResult<LeaveGroupMutation>;
+export type LeaveGroupMutationOptions = Apollo.BaseMutationOptions<LeaveGroupMutation, LeaveGroupMutationVariables>;
 export const JoinGroupDocument = gql`
     mutation JoinGroup($groupId: uuid!) {
   insert_group_members_one(object: {group_id: $groupId}) {
@@ -4766,6 +4913,43 @@ export function useJoinGroupMutation(baseOptions?: Apollo.MutationHookOptions<Jo
 export type JoinGroupMutationHookResult = ReturnType<typeof useJoinGroupMutation>;
 export type JoinGroupMutationResult = Apollo.MutationResult<JoinGroupMutation>;
 export type JoinGroupMutationOptions = Apollo.BaseMutationOptions<JoinGroupMutation, JoinGroupMutationVariables>;
+export const JoinGroupWithTokenDocument = gql`
+    mutation JoinGroupWithToken($input: JoinGroupInput!) {
+  joinGroup(input: $input) {
+    group {
+      id
+    }
+    user {
+      ...UserPrivateDetail
+    }
+  }
+}
+    ${UserPrivateDetailFragmentDoc}`;
+export type JoinGroupWithTokenMutationFn = Apollo.MutationFunction<JoinGroupWithTokenMutation, JoinGroupWithTokenMutationVariables>;
+
+/**
+ * __useJoinGroupWithTokenMutation__
+ *
+ * To run a mutation, you first call `useJoinGroupWithTokenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useJoinGroupWithTokenMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [joinGroupWithTokenMutation, { data, loading, error }] = useJoinGroupWithTokenMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useJoinGroupWithTokenMutation(baseOptions?: Apollo.MutationHookOptions<JoinGroupWithTokenMutation, JoinGroupWithTokenMutationVariables>) {
+        return Apollo.useMutation<JoinGroupWithTokenMutation, JoinGroupWithTokenMutationVariables>(JoinGroupWithTokenDocument, baseOptions);
+      }
+export type JoinGroupWithTokenMutationHookResult = ReturnType<typeof useJoinGroupWithTokenMutation>;
+export type JoinGroupWithTokenMutationResult = Apollo.MutationResult<JoinGroupWithTokenMutation>;
+export type JoinGroupWithTokenMutationOptions = Apollo.BaseMutationOptions<JoinGroupWithTokenMutation, JoinGroupWithTokenMutationVariables>;
 export const RequestJoinGroupDocument = gql`
     mutation RequestJoinGroup($input: RequestJoinGroupInput!) {
   requestJoinGroup(input: $input) {
@@ -5134,7 +5318,10 @@ export const GqlOps = {
   },
   Mutation: {
     CreateGroup: 'CreateGroup',
+    DeleteGroup: 'DeleteGroup',
+    LeaveGroup: 'LeaveGroup',
     JoinGroup: 'JoinGroup',
+    JoinGroupWithToken: 'JoinGroupWithToken',
     RequestJoinGroup: 'RequestJoinGroup',
     CancelJoinRequest: 'CancelJoinRequest',
     HandleJoinRequest: 'HandleJoinRequest',

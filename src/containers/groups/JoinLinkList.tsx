@@ -10,6 +10,7 @@ import {
     useUpdateJoinTokenMutation,
 } from '../../generated/graphql';
 import { format } from 'date-fns';
+import { urlFor } from '../../utils/urls';
 
 export interface JoinRequestListProps {
     group: GroupDetailsFragment;
@@ -35,8 +36,6 @@ export const JoinLinkList = (props: JoinRequestListProps) => {
     const [update, updateMutation] = useUpdateJoinTokenMutation();
 
     const requests = data?.group_join_tokens || [];
-    const makeUrl = (token: string) =>
-        `${process.env.NEXT_PUBLIC_ROOT_URL}/join/${props.group.id}/${token}`;
 
     const handleCreate = useCallback(() => {
         create({
@@ -84,7 +83,7 @@ export const JoinLinkList = (props: JoinRequestListProps) => {
 
     return (
         <div>
-            <Typography.Title level={5}>Join Links</Typography.Title>
+            <Typography.Title level={4}>Join Links</Typography.Title>
 
             <Typography.Paragraph>
                 Create and share a Join Link with a trusted group of people to easily allow them to
@@ -128,7 +127,9 @@ export const JoinLinkList = (props: JoinRequestListProps) => {
                         ]}>
                         <List.Item.Meta
                             title={
-                                <Typography.Link copyable>{makeUrl(token.token)}</Typography.Link>
+                                <Typography.Link copyable>
+                                    {urlFor.group.joinLink(props.group, token.token)}
+                                </Typography.Link>
                             }
                         />
                         <Typography.Text

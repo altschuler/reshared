@@ -25,6 +25,8 @@ interface LoginFormValues {
 interface LoginFormProps {
     providers?: { [key: string]: SessionProvider };
     onRegister: () => any;
+    submitLabel?: string;
+    callbackUrl?: string;
 }
 
 export const LoginForm = (props: LoginFormProps) => {
@@ -39,20 +41,22 @@ export const LoginForm = (props: LoginFormProps) => {
             return null;
         }
         return fromQuery;
-    }, []);
+    }, [router.query.error]);
 
     useEffect(() => {
         if (!providers) {
-            getProviders().then((r) => setProviders(r!));
+            getProviders().then((r) => r && setProviders(r));
         }
     }, [providers]);
 
     const handleCredentialsLogin = () => {
         const values = form.getFieldsValue();
 
-        signIn('credentials', { email: values.email, password: values.password }).then((res) =>
-            router.push('/browse'),
-        );
+        signIn('credentials', {
+            email: values.email,
+            password: values.password,
+            callbackUrl: props.callbackUrl,
+        }).catch((e) => console.log(e));
     };
     return (
         <div className={classes.root}>
@@ -76,11 +80,12 @@ export const LoginForm = (props: LoginFormProps) => {
 
                 <Form.Item>
                     <Button className={classes.login} type="primary" htmlType="submit">
-                        Log in
+                        {props.submitLabel || 'Log in'}
                     </Button>
                     <Typography.Text className="signup-text">
                         Don't have an account?{' '}
-                        <Typography.Link onClick={props.onRegister}>Sign up</Typography.Link> here.
+                        <Typography.Link onClick={props.onRegister}>Sign up</Typography.Link>{' '}
+                        instead.
                     </Typography.Text>
                 </Form.Item>
                 {error && <Alert message={error} type="error" />}
@@ -92,7 +97,9 @@ export const LoginForm = (props: LoginFormProps) => {
                 {values(providers)
                     .filter((p) => p.name !== 'credentials')
                     .map((provider) => (
-                        <Button key={provider.name} onClick={() => signIn(provider.id)}>
+                        <Button
+                            key={provider.name}
+                            onClick={() => signIn(provider.id, { callbackUrl: props.callbackUrl })}>
                             Sign in with {provider.name}
                         </Button>
                     ))}

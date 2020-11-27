@@ -1,4 +1,7 @@
-﻿import { ServerInsertGroupDocument } from '../../../generated/server-queries';
+﻿import {
+    ServerInsertGroupDocument,
+    ServerFindGroupDocument,
+} from '../../../generated/server-queries';
 import Joi from 'joi';
 import { makeAuthorizedHandler } from '../../../server/utils';
 import {
@@ -8,17 +11,28 @@ import {
     Group_Role_Enum,
 } from '../../../generated/graphql';
 import { MailTemplate, sendMail } from '../../../server/mail';
+import { hasuraClient } from '../../../server';
+import { isEmpty } from 'lodash';
 
 export default makeAuthorizedHandler<CreateGroupMutationVariables, CreateGroupResult>(
     Joi.object<CreateGroupMutationVariables>({
         input: Joi.object<CreateGroupInput>({
             name: Joi.string().min(3),
-            description: Joi.string().optional(),
+            description: Joi.string().max(250).allow('').optional(),
             public: Joi.boolean().optional().default(false),
         }),
     }),
     async (args, ctx) => {
-        const mutation = await ctx.userClient.mutate({
+        const existing = await hasuraClient.query({
+            query: ServerFindGroupDocument,
+            variables: { where: { name: { _eq: args.input.name } } },
+        });
+
+        if (!isEmpty(existing.data.groups)) {
+            return ctx.error('Name is already taken');
+        }
+
+        const mutation = await hasuraClient.mutate({
             mutation: ServerInsertGroupDocument,
             variables: {
                 input: {
