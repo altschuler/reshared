@@ -3,6 +3,7 @@ import Providers from 'next-auth/providers';
 import bcrypt from 'bcryptjs';
 import { UserCredentialsDocument } from '../../../generated/server-queries';
 import { hasuraClient, decodeToken, encodeToken } from '../../../server';
+import { getUnixTime, addHours } from 'date-fns';
 
 const options = {
     database: process.env.POSTGRES_URL,
@@ -20,7 +21,7 @@ const options = {
                     'x-hasura-user-id': options.token.id,
                 },
                 iat: Date.now() / 1000,
-                exp: Math.floor(Date.now() / 1000) + 24 * 60 * 60,
+                exp: getUnixTime(addHours(Date.now(), 1)),
                 sub: options.token.id,
             }),
         decode: async (options) => (decodeToken(options.token) as unknown) as string,

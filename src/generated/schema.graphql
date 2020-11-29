@@ -1165,6 +1165,9 @@ enum group_role_enum {
   """group administrator role"""
   admin
 
+  """the owner of the group"""
+  owner
+
   """regular member"""
   user
 }

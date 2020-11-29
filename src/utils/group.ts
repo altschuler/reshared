@@ -9,25 +9,21 @@ import { useAuth } from './auth';
 export const isMember = (
     group?: GroupCardFragment | null,
     user?: UserPrivateDetailFragment | null,
-    role?: Group_Role_Enum,
+    roles?: Group_Role_Enum[],
 ) => {
     return (
         group &&
-        user?.memberships.some((m) => m.group.id === group.id && (!role || m.role === role))
+        user?.memberships.some((m) => m.group.id === group.id && (!roles || roles.includes(m.role)))
     );
 };
-
-export const isAdmin = (
-    group?: GroupCardFragment | null,
-    user?: UserPrivateDetailFragment | null,
-) => isMember(group, user, Group_Role_Enum.Admin);
 
 export const useMembership = (group?: GroupCardFragment | null) => {
     const auth = useAuth();
 
     return useMemo(
         () => ({
-            isAdmin: isAdmin(group, auth.user),
+            isOwner: isMember(group, auth.user, [Group_Role_Enum.Owner]),
+            isAdmin: isMember(group, auth.user, [Group_Role_Enum.Admin, Group_Role_Enum.Owner]),
             isMember: isMember(group, auth.user),
             user: auth.user,
         }),

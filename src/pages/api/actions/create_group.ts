@@ -38,7 +38,7 @@ export default makeAuthorizedHandler<CreateGroupMutationVariables, CreateGroupRe
                 input: {
                     ...args.input,
                     memberships: {
-                        data: [{ user_id: ctx.token?.id, role: Group_Role_Enum.Admin }],
+                        data: [{ user_id: ctx.token?.id, role: Group_Role_Enum.Owner }],
                     },
                 },
             },

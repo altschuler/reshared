@@ -1027,6 +1027,8 @@ export enum Group_Role_Constraint {
 export enum Group_Role_Enum {
   /** group administrator role */
   Admin = 'admin',
+  /** the owner of the group */
+  Owner = 'owner',
   /** regular member */
   User = 'user'
 }

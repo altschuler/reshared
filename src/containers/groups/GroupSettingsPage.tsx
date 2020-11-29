@@ -6,6 +6,7 @@ import { GroupEditor, makeEditorGroup, useGroupEditor } from '../../components/e
 import { useCallback } from 'react';
 import { JoinLinkList } from './JoinLinkList';
 import { DeleteButton } from './DeleteButton';
+import { useMembership } from '../../utils/group';
 
 export const GroupSettingsPage = () => {
     const router = useRouter();
@@ -27,6 +28,8 @@ export const GroupSettingsPage = () => {
 
     const group = data?.groups_by_pk;
 
+    const { isOwner } = useMembership(group);
+
     if (loading) {
         return <Spin />;
     }
@@ -46,10 +49,14 @@ export const GroupSettingsPage = () => {
 
             <Divider dashed type="horizontal" />
 
-            <Typography.Title type="danger" level={4}>
-                Danger zone
-            </Typography.Title>
-            <DeleteButton group={group} />
+            {isOwner && (
+                <>
+                    <Typography.Title type="danger" level={4}>
+                        Danger zone
+                    </Typography.Title>
+                    <DeleteButton group={group} />
+                </>
+            )}
         </GroupLayout>
     );
 };
