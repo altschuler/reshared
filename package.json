@@ -17,7 +17,7 @@
         "trailingComma": "all"
     },
     "dependencies": {
-        "@apollo/client": "^3.2.5",
+        "@apollo/client": "^3.3.4",
         "@graphql-codegen/typed-document-node": "^1.17.9",
         "@graphql-codegen/typescript-resolvers": "^1.17.10",
         "@sendgrid/mail": "^7.4.0",
@@ -42,7 +42,8 @@
         "react-dom": "17.0.1",
         "react-jss": "^10.4.0",
         "sass": "^1.28.0",
-        "shortid": "^2.2.16"
+        "shortid": "^2.2.16",
+        "subscriptions-transport-ws": "^0.9.18"
     },
     "devDependencies": {
         "@graphql-codegen/cli": "^1.19.0",

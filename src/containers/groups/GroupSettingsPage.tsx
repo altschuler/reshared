@@ -1,6 +1,6 @@
-﻿import { useDeleteGroupMutation, useGroupDetailsQuery } from '../../generated/graphql';
+﻿import { useGroupDetailsQuery } from '../../generated/graphql';
 import { useRouter } from 'next/router';
-import { Alert, Button, Divider, message, Spin, Typography } from 'antd';
+import { Alert, Divider, Spin, Typography } from 'antd';
 import { GroupLayout } from './GroupLayout';
 import { GroupEditor, makeEditorGroup, useGroupEditor } from '../../components/editors';
 import { useCallback } from 'react';

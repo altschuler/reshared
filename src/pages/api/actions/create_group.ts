@@ -25,7 +25,7 @@ export default makeAuthorizedHandler<CreateGroupMutationVariables, CreateGroupRe
     async (args, ctx) => {
         const existing = await hasuraClient.query({
             query: ServerFindGroupDocument,
-            variables: { where: { name: { _eq: args.input.name } } },
+            variables: { where: { name: { _ilike: args.input.name } } },
         });
 
         if (!isEmpty(existing.data.groups)) {

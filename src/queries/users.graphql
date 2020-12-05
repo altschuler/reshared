@@ -1,4 +1,6 @@
-﻿fragment UserCard on users {
+﻿# Fragments
+
+fragment UserCard on users {
     id
     name
     image
@@ -33,6 +35,44 @@ fragment UserPrivateDetail on users {
     }
 }
 
+fragment ActivityCard on activities {
+    id
+    created_at
+    verb
+    entity {
+        id
+        group {
+            id
+            name
+        }
+        thing {
+            id
+            name
+        }
+        user {
+            id
+            name
+        }
+        group_join_request {
+            id
+        }
+    }
+    actor {
+        ...UserCard
+    }
+}
+
+fragment NotificationCard on notifications {
+    id
+    read_at
+    created_at
+    activity {
+        ...ActivityCard
+    }
+}
+
+# Queries
+
 query UserList {
     users {
         ...UserCard
@@ -42,6 +82,34 @@ query UserList {
 query UserPrivateDetails($id: uuid!) {
     users_by_pk(id: $id) {
         ...UserPrivateDetail
+    }
+}
+
+# Subscriptions
+subscription Notifications($userId: uuid!) {
+    notifications(
+        limit: 50
+        order_by: [{ created_at: desc }]
+        where: { user_id: { _eq: $userId } }
+    ) {
+        ...NotificationCard
+    }
+}
+
+# Mutations
+
+mutation MarkNotificationRead($id: uuid!, $readAt: timestamptz!) {
+    update_notifications_by_pk(pk_columns: { id: $id }, _set: { read_at: $readAt }) {
+        ...NotificationCard
+    }
+}
+
+mutation MarkAllNotificationsRead($userId: uuid!, $readAt: timestamptz!) {
+    update_notifications(where: { user_id: { _eq: $userId } }, _set: { read_at: $readAt }) {
+        affected_rows
+        returning {
+            ...NotificationCard
+        }
     }
 }
 

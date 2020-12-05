@@ -2,15 +2,16 @@
 import Link from 'next/link';
 import { Layout, Button, Space, Popover } from 'antd';
 import { useState } from 'react';
-import { UserDetailFragment } from '../generated/graphql';
+import { UserDetailFragment } from '../../generated/graphql';
 import { signOut } from 'next-auth/client';
-import { useAuth } from '../utils/auth';
-import { AuthDialog } from './dialogs';
+import { useAuth } from '../../utils/auth';
+import { AuthDialog } from '../../components/dialogs';
 import clsx from 'clsx';
 
 import { CaretDownOutlined } from '@ant-design/icons';
 import { createUseStyles } from 'react-jss';
-import { UserAvatar } from './display';
+import { UserAvatar } from '../../components/display';
+import { NotificationsButton } from './NotificationList';
 
 const { Content, Footer } = Layout;
 const useStyles = createUseStyles({
@@ -122,7 +123,13 @@ export const PageLayout = (props: PageLayoutProps) => {
                             </Button>
                         </div>
                     )}
-                    {auth.user && <UserButton user={auth.user} />}
+
+                    {auth.user && (
+                        <Space size="large">
+                            <NotificationsButton />
+                            <UserButton user={auth.user} />
+                        </Space>
+                    )}
                 </div>
             </header>
             <Content className={classes.content}>

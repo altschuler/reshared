@@ -10,14 +10,15 @@ export interface DateDisplayProps {
 }
 
 const formats: { [P in DateDisplayMode]: string } = {
-    datetime: 'do. MMM yy, HH:mm',
-    date: 'do. MMM yy',
+    datetime: 'MMM do. yy, HH:mm',
+    date: 'MMM do. yy',
     time: 'HH:mm',
 };
 
 export const DateDisplay = (props: DateDisplayProps) => {
     const utc =
         props.utc && (isDate(props.utc) ? (props.utc as Date) : parseISO(props.utc as string));
+
     return (
         <span>
             {utc ? format(utc, formats[props.mode || 'date']) : '-'}

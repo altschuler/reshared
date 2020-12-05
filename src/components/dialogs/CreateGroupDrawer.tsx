@@ -3,7 +3,7 @@ import { Drawer, message } from 'antd';
 import { useCallback } from 'react';
 import { GqlOps, GroupCardFragment, useCreateGroupMutation } from '../../generated/graphql';
 import { DialogProps } from './DialogProvider';
-import { asCreateInput, GroupEditor, useGroupEditor } from '../editors';
+import { asGroupCreateInput, GroupEditor, useGroupEditor } from '../editors';
 
 export const CreateGroupDrawer = (props: DialogProps<GroupCardFragment | null>) => {
     const { resolve, dispose, visible } = props;
@@ -14,7 +14,7 @@ export const CreateGroupDrawer = (props: DialogProps<GroupCardFragment | null>) 
     });
 
     const handleCreateGroup = useCallback(() => {
-        const input = asCreateInput(editorState);
+        const input = asGroupCreateInput(editorState);
         createGroup({ variables: { input } })
             .then(({ data }) => {
                 if (data?.createGroup.group) {

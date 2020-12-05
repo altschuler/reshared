@@ -138,6 +138,396 @@ export type String_Comparison_Exp = {
   _similar?: Maybe<Scalars['String']>;
 };
 
+/** columns and relationships of "activities" */
+export type Activities = {
+  __typename?: 'activities';
+  /** An object relationship */
+  actor?: Maybe<Users>;
+  actor_id?: Maybe<Scalars['uuid']>;
+  created_at: Scalars['timestamptz'];
+  /** An object relationship */
+  entity: Entities;
+  entity_id: Scalars['uuid'];
+  id: Scalars['uuid'];
+  /** An array relationship */
+  notifications: Array<Notifications>;
+  /** An aggregated array relationship */
+  notifications_aggregate: Notifications_Aggregate;
+  verb: Activity_Verb_Enum;
+};
+
+
+/** columns and relationships of "activities" */
+export type ActivitiesNotificationsArgs = {
+  distinct_on?: Maybe<Array<Notifications_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Notifications_Order_By>>;
+  where?: Maybe<Notifications_Bool_Exp>;
+};
+
+
+/** columns and relationships of "activities" */
+export type ActivitiesNotifications_AggregateArgs = {
+  distinct_on?: Maybe<Array<Notifications_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Notifications_Order_By>>;
+  where?: Maybe<Notifications_Bool_Exp>;
+};
+
+/** aggregated selection of "activities" */
+export type Activities_Aggregate = {
+  __typename?: 'activities_aggregate';
+  aggregate?: Maybe<Activities_Aggregate_Fields>;
+  nodes: Array<Activities>;
+};
+
+/** aggregate fields of "activities" */
+export type Activities_Aggregate_Fields = {
+  __typename?: 'activities_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Activities_Max_Fields>;
+  min?: Maybe<Activities_Min_Fields>;
+};
+
+
+/** aggregate fields of "activities" */
+export type Activities_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Activities_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "activities" */
+export type Activities_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Activities_Max_Order_By>;
+  min?: Maybe<Activities_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "activities" */
+export type Activities_Arr_Rel_Insert_Input = {
+  data: Array<Activities_Insert_Input>;
+  on_conflict?: Maybe<Activities_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "activities". All fields are combined with a logical 'AND'. */
+export type Activities_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Activities_Bool_Exp>>>;
+  _not?: Maybe<Activities_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Activities_Bool_Exp>>>;
+  actor?: Maybe<Users_Bool_Exp>;
+  actor_id?: Maybe<Uuid_Comparison_Exp>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  entity?: Maybe<Entities_Bool_Exp>;
+  entity_id?: Maybe<Uuid_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  notifications?: Maybe<Notifications_Bool_Exp>;
+  verb?: Maybe<Activity_Verb_Enum_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "activities" */
+export enum Activities_Constraint {
+  /** unique or primary key constraint */
+  ActivitiesPkey = 'activities_pkey'
+}
+
+/** input type for inserting data into table "activities" */
+export type Activities_Insert_Input = {
+  actor?: Maybe<Users_Obj_Rel_Insert_Input>;
+  actor_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  entity?: Maybe<Entities_Obj_Rel_Insert_Input>;
+  entity_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  notifications?: Maybe<Notifications_Arr_Rel_Insert_Input>;
+  verb?: Maybe<Activity_Verb_Enum>;
+};
+
+/** aggregate max on columns */
+export type Activities_Max_Fields = {
+  __typename?: 'activities_max_fields';
+  actor_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  entity_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "activities" */
+export type Activities_Max_Order_By = {
+  actor_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  entity_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Activities_Min_Fields = {
+  __typename?: 'activities_min_fields';
+  actor_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  entity_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "activities" */
+export type Activities_Min_Order_By = {
+  actor_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  entity_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "activities" */
+export type Activities_Mutation_Response = {
+  __typename?: 'activities_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Activities>;
+};
+
+/** input type for inserting object relation for remote table "activities" */
+export type Activities_Obj_Rel_Insert_Input = {
+  data: Activities_Insert_Input;
+  on_conflict?: Maybe<Activities_On_Conflict>;
+};
+
+/** on conflict condition type for table "activities" */
+export type Activities_On_Conflict = {
+  constraint: Activities_Constraint;
+  update_columns: Array<Activities_Update_Column>;
+  where?: Maybe<Activities_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "activities" */
+export type Activities_Order_By = {
+  actor?: Maybe<Users_Order_By>;
+  actor_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  entity?: Maybe<Entities_Order_By>;
+  entity_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  notifications_aggregate?: Maybe<Notifications_Aggregate_Order_By>;
+  verb?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "activities" */
+export type Activities_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "activities" */
+export enum Activities_Select_Column {
+  /** column name */
+  ActorId = 'actor_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  EntityId = 'entity_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Verb = 'verb'
+}
+
+/** input type for updating data in table "activities" */
+export type Activities_Set_Input = {
+  actor_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  entity_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  verb?: Maybe<Activity_Verb_Enum>;
+};
+
+/** update columns of table "activities" */
+export enum Activities_Update_Column {
+  /** column name */
+  ActorId = 'actor_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  EntityId = 'entity_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Verb = 'verb'
+}
+
+/** columns and relationships of "activity_verb" */
+export type Activity_Verb = {
+  __typename?: 'activity_verb';
+  comment: Scalars['String'];
+  value: Scalars['String'];
+};
+
+/** aggregated selection of "activity_verb" */
+export type Activity_Verb_Aggregate = {
+  __typename?: 'activity_verb_aggregate';
+  aggregate?: Maybe<Activity_Verb_Aggregate_Fields>;
+  nodes: Array<Activity_Verb>;
+};
+
+/** aggregate fields of "activity_verb" */
+export type Activity_Verb_Aggregate_Fields = {
+  __typename?: 'activity_verb_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Activity_Verb_Max_Fields>;
+  min?: Maybe<Activity_Verb_Min_Fields>;
+};
+
+
+/** aggregate fields of "activity_verb" */
+export type Activity_Verb_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Activity_Verb_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "activity_verb" */
+export type Activity_Verb_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Activity_Verb_Max_Order_By>;
+  min?: Maybe<Activity_Verb_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "activity_verb" */
+export type Activity_Verb_Arr_Rel_Insert_Input = {
+  data: Array<Activity_Verb_Insert_Input>;
+  on_conflict?: Maybe<Activity_Verb_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "activity_verb". All fields are combined with a logical 'AND'. */
+export type Activity_Verb_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Activity_Verb_Bool_Exp>>>;
+  _not?: Maybe<Activity_Verb_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Activity_Verb_Bool_Exp>>>;
+  comment?: Maybe<String_Comparison_Exp>;
+  value?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "activity_verb" */
+export enum Activity_Verb_Constraint {
+  /** unique or primary key constraint */
+  ActivityVerbPkey = 'activity_verb_pkey'
+}
+
+export enum Activity_Verb_Enum {
+  /** accepted */
+  Accepted = 'accepted',
+  /** added */
+  Added = 'added',
+  /** commented */
+  Commented = 'commented',
+  /** joined */
+  Joined = 'joined',
+  /** posted */
+  Posted = 'posted',
+  /** rejected */
+  Rejected = 'rejected',
+  /** requested_to_join */
+  RequestedToJoin = 'requested_to_join',
+  /** showed_interest */
+  ShowedInterest = 'showed_interest',
+  /** updated */
+  Updated = 'updated'
+}
+
+/** expression to compare columns of type activity_verb_enum. All fields are combined with logical 'AND'. */
+export type Activity_Verb_Enum_Comparison_Exp = {
+  _eq?: Maybe<Activity_Verb_Enum>;
+  _in?: Maybe<Array<Activity_Verb_Enum>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _neq?: Maybe<Activity_Verb_Enum>;
+  _nin?: Maybe<Array<Activity_Verb_Enum>>;
+};
+
+/** input type for inserting data into table "activity_verb" */
+export type Activity_Verb_Insert_Input = {
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Activity_Verb_Max_Fields = {
+  __typename?: 'activity_verb_max_fields';
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "activity_verb" */
+export type Activity_Verb_Max_Order_By = {
+  comment?: Maybe<Order_By>;
+  value?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Activity_Verb_Min_Fields = {
+  __typename?: 'activity_verb_min_fields';
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "activity_verb" */
+export type Activity_Verb_Min_Order_By = {
+  comment?: Maybe<Order_By>;
+  value?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "activity_verb" */
+export type Activity_Verb_Mutation_Response = {
+  __typename?: 'activity_verb_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Activity_Verb>;
+};
+
+/** input type for inserting object relation for remote table "activity_verb" */
+export type Activity_Verb_Obj_Rel_Insert_Input = {
+  data: Activity_Verb_Insert_Input;
+  on_conflict?: Maybe<Activity_Verb_On_Conflict>;
+};
+
+/** on conflict condition type for table "activity_verb" */
+export type Activity_Verb_On_Conflict = {
+  constraint: Activity_Verb_Constraint;
+  update_columns: Array<Activity_Verb_Update_Column>;
+  where?: Maybe<Activity_Verb_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "activity_verb" */
+export type Activity_Verb_Order_By = {
+  comment?: Maybe<Order_By>;
+  value?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "activity_verb" */
+export type Activity_Verb_Pk_Columns_Input = {
+  value: Scalars['String'];
+};
+
+/** select columns of table "activity_verb" */
+export enum Activity_Verb_Select_Column {
+  /** column name */
+  Comment = 'comment',
+  /** column name */
+  Value = 'value'
+}
+
+/** input type for updating data in table "activity_verb" */
+export type Activity_Verb_Set_Input = {
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "activity_verb" */
+export enum Activity_Verb_Update_Column {
+  /** column name */
+  Comment = 'comment',
+  /** column name */
+  Value = 'value'
+}
+
 export type Create_Group_Input = {
   description: Scalars['String'];
   name: Scalars['String'];
@@ -148,6 +538,217 @@ export type Create_Group_Result = {
   __typename?: 'create_group_result';
   group_id: Scalars['uuid'];
 };
+
+/** columns and relationships of "entities" */
+export type Entities = {
+  __typename?: 'entities';
+  /** An object relationship */
+  group?: Maybe<Groups>;
+  group_id?: Maybe<Scalars['uuid']>;
+  /** An object relationship */
+  group_join_request?: Maybe<Group_Join_Requests>;
+  id: Scalars['uuid'];
+  join_request_id?: Maybe<Scalars['uuid']>;
+  /** An object relationship */
+  thing?: Maybe<Things>;
+  thing_id?: Maybe<Scalars['uuid']>;
+  /** An object relationship */
+  user?: Maybe<Users>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregated selection of "entities" */
+export type Entities_Aggregate = {
+  __typename?: 'entities_aggregate';
+  aggregate?: Maybe<Entities_Aggregate_Fields>;
+  nodes: Array<Entities>;
+};
+
+/** aggregate fields of "entities" */
+export type Entities_Aggregate_Fields = {
+  __typename?: 'entities_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Entities_Max_Fields>;
+  min?: Maybe<Entities_Min_Fields>;
+};
+
+
+/** aggregate fields of "entities" */
+export type Entities_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Entities_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "entities" */
+export type Entities_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Entities_Max_Order_By>;
+  min?: Maybe<Entities_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "entities" */
+export type Entities_Arr_Rel_Insert_Input = {
+  data: Array<Entities_Insert_Input>;
+  on_conflict?: Maybe<Entities_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "entities". All fields are combined with a logical 'AND'. */
+export type Entities_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Entities_Bool_Exp>>>;
+  _not?: Maybe<Entities_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Entities_Bool_Exp>>>;
+  group?: Maybe<Groups_Bool_Exp>;
+  group_id?: Maybe<Uuid_Comparison_Exp>;
+  group_join_request?: Maybe<Group_Join_Requests_Bool_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  join_request_id?: Maybe<Uuid_Comparison_Exp>;
+  thing?: Maybe<Things_Bool_Exp>;
+  thing_id?: Maybe<Uuid_Comparison_Exp>;
+  user?: Maybe<Users_Bool_Exp>;
+  user_id?: Maybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "entities" */
+export enum Entities_Constraint {
+  /** unique or primary key constraint */
+  EntitiesGroupIdKey = 'entities_group_id_key',
+  /** unique or primary key constraint */
+  EntitiesJoinRequestIdKey = 'entities_join_request_id_key',
+  /** unique or primary key constraint */
+  EntitiesPkey = 'entities_pkey',
+  /** unique or primary key constraint */
+  EntitiesThingIdKey = 'entities_thing_id_key',
+  /** unique or primary key constraint */
+  EntitiesUserIdKey = 'entities_user_id_key'
+}
+
+/** input type for inserting data into table "entities" */
+export type Entities_Insert_Input = {
+  group?: Maybe<Groups_Obj_Rel_Insert_Input>;
+  group_id?: Maybe<Scalars['uuid']>;
+  group_join_request?: Maybe<Group_Join_Requests_Obj_Rel_Insert_Input>;
+  id?: Maybe<Scalars['uuid']>;
+  join_request_id?: Maybe<Scalars['uuid']>;
+  thing?: Maybe<Things_Obj_Rel_Insert_Input>;
+  thing_id?: Maybe<Scalars['uuid']>;
+  user?: Maybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type Entities_Max_Fields = {
+  __typename?: 'entities_max_fields';
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  join_request_id?: Maybe<Scalars['uuid']>;
+  thing_id?: Maybe<Scalars['uuid']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "entities" */
+export type Entities_Max_Order_By = {
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  join_request_id?: Maybe<Order_By>;
+  thing_id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Entities_Min_Fields = {
+  __typename?: 'entities_min_fields';
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  join_request_id?: Maybe<Scalars['uuid']>;
+  thing_id?: Maybe<Scalars['uuid']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "entities" */
+export type Entities_Min_Order_By = {
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  join_request_id?: Maybe<Order_By>;
+  thing_id?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "entities" */
+export type Entities_Mutation_Response = {
+  __typename?: 'entities_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Entities>;
+};
+
+/** input type for inserting object relation for remote table "entities" */
+export type Entities_Obj_Rel_Insert_Input = {
+  data: Entities_Insert_Input;
+  on_conflict?: Maybe<Entities_On_Conflict>;
+};
+
+/** on conflict condition type for table "entities" */
+export type Entities_On_Conflict = {
+  constraint: Entities_Constraint;
+  update_columns: Array<Entities_Update_Column>;
+  where?: Maybe<Entities_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "entities" */
+export type Entities_Order_By = {
+  group?: Maybe<Groups_Order_By>;
+  group_id?: Maybe<Order_By>;
+  group_join_request?: Maybe<Group_Join_Requests_Order_By>;
+  id?: Maybe<Order_By>;
+  join_request_id?: Maybe<Order_By>;
+  thing?: Maybe<Things_Order_By>;
+  thing_id?: Maybe<Order_By>;
+  user?: Maybe<Users_Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "entities" */
+export type Entities_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "entities" */
+export enum Entities_Select_Column {
+  /** column name */
+  GroupId = 'group_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  JoinRequestId = 'join_request_id',
+  /** column name */
+  ThingId = 'thing_id',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "entities" */
+export type Entities_Set_Input = {
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  join_request_id?: Maybe<Scalars['uuid']>;
+  thing_id?: Maybe<Scalars['uuid']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** update columns of table "entities" */
+export enum Entities_Update_Column {
+  /** column name */
+  GroupId = 'group_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  JoinRequestId = 'join_request_id',
+  /** column name */
+  ThingId = 'thing_id',
+  /** column name */
+  UserId = 'user_id'
+}
 
 /** columns and relationships of "group_join_request_status" */
 export type Group_Join_Request_Status = {
@@ -1132,8 +1733,12 @@ export enum Group_Role_Update_Column {
 export type Group_Thing = {
   __typename?: 'group_thing';
   created_at: Scalars['timestamptz'];
+  /** An object relationship */
+  group: Groups;
   group_id: Scalars['uuid'];
   id: Scalars['uuid'];
+  /** An object relationship */
+  thing: Things;
   thing_id: Scalars['uuid'];
   updated_at: Scalars['timestamptz'];
 };
@@ -1179,8 +1784,10 @@ export type Group_Thing_Bool_Exp = {
   _not?: Maybe<Group_Thing_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Group_Thing_Bool_Exp>>>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  group?: Maybe<Groups_Bool_Exp>;
   group_id?: Maybe<Uuid_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
+  thing?: Maybe<Things_Bool_Exp>;
   thing_id?: Maybe<Uuid_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
 };
@@ -1196,8 +1803,10 @@ export enum Group_Thing_Constraint {
 /** input type for inserting data into table "group_thing" */
 export type Group_Thing_Insert_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
+  group?: Maybe<Groups_Obj_Rel_Insert_Input>;
   group_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
+  thing?: Maybe<Things_Obj_Rel_Insert_Input>;
   thing_id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
@@ -1265,8 +1874,10 @@ export type Group_Thing_On_Conflict = {
 /** ordering options when selecting data from "group_thing" */
 export type Group_Thing_Order_By = {
   created_at?: Maybe<Order_By>;
+  group?: Maybe<Groups_Order_By>;
   group_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  thing?: Maybe<Things_Order_By>;
   thing_id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
@@ -1324,12 +1935,20 @@ export type Groups = {
   /** An aggregated array relationship */
   join_requests_aggregate: Group_Join_Requests_Aggregate;
   /** An array relationship */
+  join_tokens: Array<Group_Join_Tokens>;
+  /** An aggregated array relationship */
+  join_tokens_aggregate: Group_Join_Tokens_Aggregate;
+  /** An array relationship */
   memberships: Array<Group_Members>;
   /** An aggregated array relationship */
   memberships_aggregate: Group_Members_Aggregate;
   name: Scalars['String'];
   public: Scalars['Boolean'];
   slug?: Maybe<Scalars['String']>;
+  /** An array relationship */
+  thing_relations: Array<Group_Thing>;
+  /** An aggregated array relationship */
+  thing_relations_aggregate: Group_Thing_Aggregate;
   updated_at: Scalars['timestamptz'];
 };
 
@@ -1355,6 +1974,26 @@ export type GroupsJoin_Requests_AggregateArgs = {
 
 
 /** columns and relationships of "groups" */
+export type GroupsJoin_TokensArgs = {
+  distinct_on?: Maybe<Array<Group_Join_Tokens_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Join_Tokens_Order_By>>;
+  where?: Maybe<Group_Join_Tokens_Bool_Exp>;
+};
+
+
+/** columns and relationships of "groups" */
+export type GroupsJoin_Tokens_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Join_Tokens_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Join_Tokens_Order_By>>;
+  where?: Maybe<Group_Join_Tokens_Bool_Exp>;
+};
+
+
+/** columns and relationships of "groups" */
 export type GroupsMembershipsArgs = {
   distinct_on?: Maybe<Array<Group_Members_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -1371,6 +2010,26 @@ export type GroupsMemberships_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Group_Members_Order_By>>;
   where?: Maybe<Group_Members_Bool_Exp>;
+};
+
+
+/** columns and relationships of "groups" */
+export type GroupsThing_RelationsArgs = {
+  distinct_on?: Maybe<Array<Group_Thing_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Thing_Order_By>>;
+  where?: Maybe<Group_Thing_Bool_Exp>;
+};
+
+
+/** columns and relationships of "groups" */
+export type GroupsThing_Relations_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Thing_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Thing_Order_By>>;
+  where?: Maybe<Group_Thing_Bool_Exp>;
 };
 
 /** aggregated selection of "groups" */
@@ -1417,10 +2076,12 @@ export type Groups_Bool_Exp = {
   description?: Maybe<String_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   join_requests?: Maybe<Group_Join_Requests_Bool_Exp>;
+  join_tokens?: Maybe<Group_Join_Tokens_Bool_Exp>;
   memberships?: Maybe<Group_Members_Bool_Exp>;
   name?: Maybe<String_Comparison_Exp>;
   public?: Maybe<Boolean_Comparison_Exp>;
   slug?: Maybe<String_Comparison_Exp>;
+  thing_relations?: Maybe<Group_Thing_Bool_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
 };
 
@@ -1438,10 +2099,12 @@ export type Groups_Insert_Input = {
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   join_requests?: Maybe<Group_Join_Requests_Arr_Rel_Insert_Input>;
+  join_tokens?: Maybe<Group_Join_Tokens_Arr_Rel_Insert_Input>;
   memberships?: Maybe<Group_Members_Arr_Rel_Insert_Input>;
   name?: Maybe<Scalars['String']>;
   public?: Maybe<Scalars['Boolean']>;
   slug?: Maybe<Scalars['String']>;
+  thing_relations?: Maybe<Group_Thing_Arr_Rel_Insert_Input>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -1515,10 +2178,12 @@ export type Groups_Order_By = {
   description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   join_requests_aggregate?: Maybe<Group_Join_Requests_Aggregate_Order_By>;
+  join_tokens_aggregate?: Maybe<Group_Join_Tokens_Aggregate_Order_By>;
   memberships_aggregate?: Maybe<Group_Members_Aggregate_Order_By>;
   name?: Maybe<Order_By>;
   public?: Maybe<Order_By>;
   slug?: Maybe<Order_By>;
+  thing_relations_aggregate?: Maybe<Group_Thing_Aggregate_Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
@@ -1752,6 +2417,18 @@ export type Mutation_Root = {
   createGroup: CreateGroupResult;
   /** perform the action: "createJoinToken" */
   createJoinToken?: Maybe<CreateJoinTokenResult>;
+  /** delete data from the table: "activities" */
+  delete_activities?: Maybe<Activities_Mutation_Response>;
+  /** delete single row from the table: "activities" */
+  delete_activities_by_pk?: Maybe<Activities>;
+  /** delete data from the table: "activity_verb" */
+  delete_activity_verb?: Maybe<Activity_Verb_Mutation_Response>;
+  /** delete single row from the table: "activity_verb" */
+  delete_activity_verb_by_pk?: Maybe<Activity_Verb>;
+  /** delete data from the table: "entities" */
+  delete_entities?: Maybe<Entities_Mutation_Response>;
+  /** delete single row from the table: "entities" */
+  delete_entities_by_pk?: Maybe<Entities>;
   /** delete data from the table: "group_join_request_status" */
   delete_group_join_request_status?: Maybe<Group_Join_Request_Status_Mutation_Response>;
   /** delete single row from the table: "group_join_request_status" */
@@ -1784,6 +2461,10 @@ export type Mutation_Root = {
   delete_messages?: Maybe<Messages_Mutation_Response>;
   /** delete single row from the table: "messages" */
   delete_messages_by_pk?: Maybe<Messages>;
+  /** delete data from the table: "notifications" */
+  delete_notifications?: Maybe<Notifications_Mutation_Response>;
+  /** delete single row from the table: "notifications" */
+  delete_notifications_by_pk?: Maybe<Notifications>;
   /** delete data from the table: "things" */
   delete_things?: Maybe<Things_Mutation_Response>;
   /** delete single row from the table: "things" */
@@ -1800,6 +2481,18 @@ export type Mutation_Root = {
   delete_verification_requests_by_pk?: Maybe<Verification_Requests>;
   /** perform the action: "handleJoinRequest" */
   handleJoinRequest: HandleJoinRequestResult;
+  /** insert data into the table: "activities" */
+  insert_activities?: Maybe<Activities_Mutation_Response>;
+  /** insert a single row into the table: "activities" */
+  insert_activities_one?: Maybe<Activities>;
+  /** insert data into the table: "activity_verb" */
+  insert_activity_verb?: Maybe<Activity_Verb_Mutation_Response>;
+  /** insert a single row into the table: "activity_verb" */
+  insert_activity_verb_one?: Maybe<Activity_Verb>;
+  /** insert data into the table: "entities" */
+  insert_entities?: Maybe<Entities_Mutation_Response>;
+  /** insert a single row into the table: "entities" */
+  insert_entities_one?: Maybe<Entities>;
   /** insert data into the table: "group_join_request_status" */
   insert_group_join_request_status?: Maybe<Group_Join_Request_Status_Mutation_Response>;
   /** insert a single row into the table: "group_join_request_status" */
@@ -1832,6 +2525,10 @@ export type Mutation_Root = {
   insert_messages?: Maybe<Messages_Mutation_Response>;
   /** insert a single row into the table: "messages" */
   insert_messages_one?: Maybe<Messages>;
+  /** insert data into the table: "notifications" */
+  insert_notifications?: Maybe<Notifications_Mutation_Response>;
+  /** insert a single row into the table: "notifications" */
+  insert_notifications_one?: Maybe<Notifications>;
   /** insert data into the table: "things" */
   insert_things?: Maybe<Things_Mutation_Response>;
   /** insert a single row into the table: "things" */
@@ -1854,6 +2551,18 @@ export type Mutation_Root = {
   registerCredentials?: Maybe<RegistrationResult>;
   /** perform the action: "requestJoinGroup" */
   requestJoinGroup?: Maybe<RequestJoinGroupResult>;
+  /** update data of the table: "activities" */
+  update_activities?: Maybe<Activities_Mutation_Response>;
+  /** update single row of the table: "activities" */
+  update_activities_by_pk?: Maybe<Activities>;
+  /** update data of the table: "activity_verb" */
+  update_activity_verb?: Maybe<Activity_Verb_Mutation_Response>;
+  /** update single row of the table: "activity_verb" */
+  update_activity_verb_by_pk?: Maybe<Activity_Verb>;
+  /** update data of the table: "entities" */
+  update_entities?: Maybe<Entities_Mutation_Response>;
+  /** update single row of the table: "entities" */
+  update_entities_by_pk?: Maybe<Entities>;
   /** update data of the table: "group_join_request_status" */
   update_group_join_request_status?: Maybe<Group_Join_Request_Status_Mutation_Response>;
   /** update single row of the table: "group_join_request_status" */
@@ -1886,6 +2595,10 @@ export type Mutation_Root = {
   update_messages?: Maybe<Messages_Mutation_Response>;
   /** update single row of the table: "messages" */
   update_messages_by_pk?: Maybe<Messages>;
+  /** update data of the table: "notifications" */
+  update_notifications?: Maybe<Notifications_Mutation_Response>;
+  /** update single row of the table: "notifications" */
+  update_notifications_by_pk?: Maybe<Notifications>;
   /** update data of the table: "things" */
   update_things?: Maybe<Things_Mutation_Response>;
   /** update single row of the table: "things" */
@@ -1912,6 +2625,42 @@ export type Mutation_RootCreateGroupArgs = {
 /** mutation root */
 export type Mutation_RootCreateJoinTokenArgs = {
   input: CreateJoinTokenInput;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_ActivitiesArgs = {
+  where: Activities_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Activities_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Activity_VerbArgs = {
+  where: Activity_Verb_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Activity_Verb_By_PkArgs = {
+  value: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_EntitiesArgs = {
+  where: Entities_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Entities_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -2012,6 +2761,18 @@ export type Mutation_RootDelete_Messages_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_NotificationsArgs = {
+  where: Notifications_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Notifications_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_ThingsArgs = {
   where: Things_Bool_Exp;
 };
@@ -2056,6 +2817,48 @@ export type Mutation_RootDelete_Verification_Requests_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootHandleJoinRequestArgs = {
   input: HandleJoinRequestInput;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_ActivitiesArgs = {
+  objects: Array<Activities_Insert_Input>;
+  on_conflict?: Maybe<Activities_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Activities_OneArgs = {
+  object: Activities_Insert_Input;
+  on_conflict?: Maybe<Activities_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Activity_VerbArgs = {
+  objects: Array<Activity_Verb_Insert_Input>;
+  on_conflict?: Maybe<Activity_Verb_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Activity_Verb_OneArgs = {
+  object: Activity_Verb_Insert_Input;
+  on_conflict?: Maybe<Activity_Verb_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_EntitiesArgs = {
+  objects: Array<Entities_Insert_Input>;
+  on_conflict?: Maybe<Entities_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Entities_OneArgs = {
+  object: Entities_Insert_Input;
+  on_conflict?: Maybe<Entities_On_Conflict>;
 };
 
 
@@ -2172,6 +2975,20 @@ export type Mutation_RootInsert_Messages_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_NotificationsArgs = {
+  objects: Array<Notifications_Insert_Input>;
+  on_conflict?: Maybe<Notifications_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Notifications_OneArgs = {
+  object: Notifications_Insert_Input;
+  on_conflict?: Maybe<Notifications_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_ThingsArgs = {
   objects: Array<Things_Insert_Input>;
   on_conflict?: Maybe<Things_On_Conflict>;
@@ -2240,6 +3057,48 @@ export type Mutation_RootRegisterCredentialsArgs = {
 /** mutation root */
 export type Mutation_RootRequestJoinGroupArgs = {
   input: RequestJoinGroupInput;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_ActivitiesArgs = {
+  _set?: Maybe<Activities_Set_Input>;
+  where: Activities_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Activities_By_PkArgs = {
+  _set?: Maybe<Activities_Set_Input>;
+  pk_columns: Activities_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Activity_VerbArgs = {
+  _set?: Maybe<Activity_Verb_Set_Input>;
+  where: Activity_Verb_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Activity_Verb_By_PkArgs = {
+  _set?: Maybe<Activity_Verb_Set_Input>;
+  pk_columns: Activity_Verb_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_EntitiesArgs = {
+  _set?: Maybe<Entities_Set_Input>;
+  where: Entities_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Entities_By_PkArgs = {
+  _set?: Maybe<Entities_Set_Input>;
+  pk_columns: Entities_Pk_Columns_Input;
 };
 
 
@@ -2356,6 +3215,20 @@ export type Mutation_RootUpdate_Messages_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_NotificationsArgs = {
+  _set?: Maybe<Notifications_Set_Input>;
+  where: Notifications_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Notifications_By_PkArgs = {
+  _set?: Maybe<Notifications_Set_Input>;
+  pk_columns: Notifications_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_ThingsArgs = {
   _set?: Maybe<Things_Set_Input>;
   where: Things_Bool_Exp;
@@ -2405,6 +3278,199 @@ export type Mutation_RootUpdate_Verification_Requests_By_PkArgs = {
   pk_columns: Verification_Requests_Pk_Columns_Input;
 };
 
+/** columns and relationships of "notifications" */
+export type Notifications = {
+  __typename?: 'notifications';
+  /** An object relationship */
+  activity: Activities;
+  activity_id: Scalars['uuid'];
+  created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  read_at?: Maybe<Scalars['timestamptz']>;
+  /** An object relationship */
+  user: Users;
+  user_id: Scalars['uuid'];
+};
+
+/** aggregated selection of "notifications" */
+export type Notifications_Aggregate = {
+  __typename?: 'notifications_aggregate';
+  aggregate?: Maybe<Notifications_Aggregate_Fields>;
+  nodes: Array<Notifications>;
+};
+
+/** aggregate fields of "notifications" */
+export type Notifications_Aggregate_Fields = {
+  __typename?: 'notifications_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Notifications_Max_Fields>;
+  min?: Maybe<Notifications_Min_Fields>;
+};
+
+
+/** aggregate fields of "notifications" */
+export type Notifications_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Notifications_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "notifications" */
+export type Notifications_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Notifications_Max_Order_By>;
+  min?: Maybe<Notifications_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "notifications" */
+export type Notifications_Arr_Rel_Insert_Input = {
+  data: Array<Notifications_Insert_Input>;
+  on_conflict?: Maybe<Notifications_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "notifications". All fields are combined with a logical 'AND'. */
+export type Notifications_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Notifications_Bool_Exp>>>;
+  _not?: Maybe<Notifications_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Notifications_Bool_Exp>>>;
+  activity?: Maybe<Activities_Bool_Exp>;
+  activity_id?: Maybe<Uuid_Comparison_Exp>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  read_at?: Maybe<Timestamptz_Comparison_Exp>;
+  user?: Maybe<Users_Bool_Exp>;
+  user_id?: Maybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "notifications" */
+export enum Notifications_Constraint {
+  /** unique or primary key constraint */
+  NotificationsPkey = 'notifications_pkey'
+}
+
+/** input type for inserting data into table "notifications" */
+export type Notifications_Insert_Input = {
+  activity?: Maybe<Activities_Obj_Rel_Insert_Input>;
+  activity_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  read_at?: Maybe<Scalars['timestamptz']>;
+  user?: Maybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type Notifications_Max_Fields = {
+  __typename?: 'notifications_max_fields';
+  activity_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  read_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "notifications" */
+export type Notifications_Max_Order_By = {
+  activity_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  read_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Notifications_Min_Fields = {
+  __typename?: 'notifications_min_fields';
+  activity_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  read_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "notifications" */
+export type Notifications_Min_Order_By = {
+  activity_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  read_at?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "notifications" */
+export type Notifications_Mutation_Response = {
+  __typename?: 'notifications_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Notifications>;
+};
+
+/** input type for inserting object relation for remote table "notifications" */
+export type Notifications_Obj_Rel_Insert_Input = {
+  data: Notifications_Insert_Input;
+  on_conflict?: Maybe<Notifications_On_Conflict>;
+};
+
+/** on conflict condition type for table "notifications" */
+export type Notifications_On_Conflict = {
+  constraint: Notifications_Constraint;
+  update_columns: Array<Notifications_Update_Column>;
+  where?: Maybe<Notifications_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "notifications" */
+export type Notifications_Order_By = {
+  activity?: Maybe<Activities_Order_By>;
+  activity_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  read_at?: Maybe<Order_By>;
+  user?: Maybe<Users_Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "notifications" */
+export type Notifications_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "notifications" */
+export enum Notifications_Select_Column {
+  /** column name */
+  ActivityId = 'activity_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  ReadAt = 'read_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "notifications" */
+export type Notifications_Set_Input = {
+  activity_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  read_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** update columns of table "notifications" */
+export enum Notifications_Update_Column {
+  /** column name */
+  ActivityId = 'activity_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  ReadAt = 'read_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
 /** column ordering options */
 export enum Order_By {
   /** in the ascending order, nulls last */
@@ -2424,6 +3490,24 @@ export enum Order_By {
 /** query root */
 export type Query_Root = {
   __typename?: 'query_root';
+  /** fetch data from the table: "activities" */
+  activities: Array<Activities>;
+  /** fetch aggregated fields from the table: "activities" */
+  activities_aggregate: Activities_Aggregate;
+  /** fetch data from the table: "activities" using primary key columns */
+  activities_by_pk?: Maybe<Activities>;
+  /** fetch data from the table: "activity_verb" */
+  activity_verb: Array<Activity_Verb>;
+  /** fetch aggregated fields from the table: "activity_verb" */
+  activity_verb_aggregate: Activity_Verb_Aggregate;
+  /** fetch data from the table: "activity_verb" using primary key columns */
+  activity_verb_by_pk?: Maybe<Activity_Verb>;
+  /** fetch data from the table: "entities" */
+  entities: Array<Entities>;
+  /** fetch aggregated fields from the table: "entities" */
+  entities_aggregate: Entities_Aggregate;
+  /** fetch data from the table: "entities" using primary key columns */
+  entities_by_pk?: Maybe<Entities>;
   /** fetch data from the table: "group_join_request_status" */
   group_join_request_status: Array<Group_Join_Request_Status>;
   /** fetch aggregated fields from the table: "group_join_request_status" */
@@ -2472,6 +3556,12 @@ export type Query_Root = {
   messages_aggregate: Messages_Aggregate;
   /** fetch data from the table: "messages" using primary key columns */
   messages_by_pk?: Maybe<Messages>;
+  /** fetch data from the table: "notifications" */
+  notifications: Array<Notifications>;
+  /** fetch aggregated fields from the table: "notifications" */
+  notifications_aggregate: Notifications_Aggregate;
+  /** fetch data from the table: "notifications" using primary key columns */
+  notifications_by_pk?: Maybe<Notifications>;
   /** fetch data from the table: "things" */
   things: Array<Things>;
   /** fetch aggregated fields from the table: "things" */
@@ -2494,6 +3584,84 @@ export type Query_Root = {
   verification_requests_aggregate: Verification_Requests_Aggregate;
   /** fetch data from the table: "verification_requests" using primary key columns */
   verification_requests_by_pk?: Maybe<Verification_Requests>;
+};
+
+
+/** query root */
+export type Query_RootActivitiesArgs = {
+  distinct_on?: Maybe<Array<Activities_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Activities_Order_By>>;
+  where?: Maybe<Activities_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootActivities_AggregateArgs = {
+  distinct_on?: Maybe<Array<Activities_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Activities_Order_By>>;
+  where?: Maybe<Activities_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootActivities_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** query root */
+export type Query_RootActivity_VerbArgs = {
+  distinct_on?: Maybe<Array<Activity_Verb_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Activity_Verb_Order_By>>;
+  where?: Maybe<Activity_Verb_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootActivity_Verb_AggregateArgs = {
+  distinct_on?: Maybe<Array<Activity_Verb_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Activity_Verb_Order_By>>;
+  where?: Maybe<Activity_Verb_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootActivity_Verb_By_PkArgs = {
+  value: Scalars['String'];
+};
+
+
+/** query root */
+export type Query_RootEntitiesArgs = {
+  distinct_on?: Maybe<Array<Entities_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Entities_Order_By>>;
+  where?: Maybe<Entities_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootEntities_AggregateArgs = {
+  distinct_on?: Maybe<Array<Entities_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Entities_Order_By>>;
+  where?: Maybe<Entities_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootEntities_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -2706,6 +3874,32 @@ export type Query_RootMessages_By_PkArgs = {
 
 
 /** query root */
+export type Query_RootNotificationsArgs = {
+  distinct_on?: Maybe<Array<Notifications_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Notifications_Order_By>>;
+  where?: Maybe<Notifications_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootNotifications_AggregateArgs = {
+  distinct_on?: Maybe<Array<Notifications_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Notifications_Order_By>>;
+  where?: Maybe<Notifications_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootNotifications_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** query root */
 export type Query_RootThingsArgs = {
   distinct_on?: Maybe<Array<Things_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -2805,6 +3999,24 @@ export type Query_RootVerification_Requests_By_PkArgs = {
 /** subscription root */
 export type Subscription_Root = {
   __typename?: 'subscription_root';
+  /** fetch data from the table: "activities" */
+  activities: Array<Activities>;
+  /** fetch aggregated fields from the table: "activities" */
+  activities_aggregate: Activities_Aggregate;
+  /** fetch data from the table: "activities" using primary key columns */
+  activities_by_pk?: Maybe<Activities>;
+  /** fetch data from the table: "activity_verb" */
+  activity_verb: Array<Activity_Verb>;
+  /** fetch aggregated fields from the table: "activity_verb" */
+  activity_verb_aggregate: Activity_Verb_Aggregate;
+  /** fetch data from the table: "activity_verb" using primary key columns */
+  activity_verb_by_pk?: Maybe<Activity_Verb>;
+  /** fetch data from the table: "entities" */
+  entities: Array<Entities>;
+  /** fetch aggregated fields from the table: "entities" */
+  entities_aggregate: Entities_Aggregate;
+  /** fetch data from the table: "entities" using primary key columns */
+  entities_by_pk?: Maybe<Entities>;
   /** fetch data from the table: "group_join_request_status" */
   group_join_request_status: Array<Group_Join_Request_Status>;
   /** fetch aggregated fields from the table: "group_join_request_status" */
@@ -2853,6 +4065,12 @@ export type Subscription_Root = {
   messages_aggregate: Messages_Aggregate;
   /** fetch data from the table: "messages" using primary key columns */
   messages_by_pk?: Maybe<Messages>;
+  /** fetch data from the table: "notifications" */
+  notifications: Array<Notifications>;
+  /** fetch aggregated fields from the table: "notifications" */
+  notifications_aggregate: Notifications_Aggregate;
+  /** fetch data from the table: "notifications" using primary key columns */
+  notifications_by_pk?: Maybe<Notifications>;
   /** fetch data from the table: "things" */
   things: Array<Things>;
   /** fetch aggregated fields from the table: "things" */
@@ -2875,6 +4093,84 @@ export type Subscription_Root = {
   verification_requests_aggregate: Verification_Requests_Aggregate;
   /** fetch data from the table: "verification_requests" using primary key columns */
   verification_requests_by_pk?: Maybe<Verification_Requests>;
+};
+
+
+/** subscription root */
+export type Subscription_RootActivitiesArgs = {
+  distinct_on?: Maybe<Array<Activities_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Activities_Order_By>>;
+  where?: Maybe<Activities_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootActivities_AggregateArgs = {
+  distinct_on?: Maybe<Array<Activities_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Activities_Order_By>>;
+  where?: Maybe<Activities_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootActivities_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** subscription root */
+export type Subscription_RootActivity_VerbArgs = {
+  distinct_on?: Maybe<Array<Activity_Verb_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Activity_Verb_Order_By>>;
+  where?: Maybe<Activity_Verb_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootActivity_Verb_AggregateArgs = {
+  distinct_on?: Maybe<Array<Activity_Verb_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Activity_Verb_Order_By>>;
+  where?: Maybe<Activity_Verb_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootActivity_Verb_By_PkArgs = {
+  value: Scalars['String'];
+};
+
+
+/** subscription root */
+export type Subscription_RootEntitiesArgs = {
+  distinct_on?: Maybe<Array<Entities_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Entities_Order_By>>;
+  where?: Maybe<Entities_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootEntities_AggregateArgs = {
+  distinct_on?: Maybe<Array<Entities_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Entities_Order_By>>;
+  where?: Maybe<Entities_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootEntities_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -3087,6 +4383,32 @@ export type Subscription_RootMessages_By_PkArgs = {
 
 
 /** subscription root */
+export type Subscription_RootNotificationsArgs = {
+  distinct_on?: Maybe<Array<Notifications_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Notifications_Order_By>>;
+  where?: Maybe<Notifications_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootNotifications_AggregateArgs = {
+  distinct_on?: Maybe<Array<Notifications_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Notifications_Order_By>>;
+  where?: Maybe<Notifications_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootNotifications_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** subscription root */
 export type Subscription_RootThingsArgs = {
   distinct_on?: Maybe<Array<Things_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -3187,12 +4509,36 @@ export type Subscription_RootVerification_Requests_By_PkArgs = {
 export type Things = {
   __typename?: 'things';
   created_at: Scalars['timestamptz'];
+  /** An array relationship */
+  group_relations: Array<Group_Thing>;
+  /** An aggregated array relationship */
+  group_relations_aggregate: Group_Thing_Aggregate;
   id: Scalars['uuid'];
   name: Scalars['String'];
   /** An object relationship */
   owner: Users;
   owner_id: Scalars['uuid'];
   updated_at: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "things" */
+export type ThingsGroup_RelationsArgs = {
+  distinct_on?: Maybe<Array<Group_Thing_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Thing_Order_By>>;
+  where?: Maybe<Group_Thing_Bool_Exp>;
+};
+
+
+/** columns and relationships of "things" */
+export type ThingsGroup_Relations_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Thing_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Thing_Order_By>>;
+  where?: Maybe<Group_Thing_Bool_Exp>;
 };
 
 /** aggregated selection of "things" */
@@ -3236,6 +4582,7 @@ export type Things_Bool_Exp = {
   _not?: Maybe<Things_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Things_Bool_Exp>>>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  group_relations?: Maybe<Group_Thing_Bool_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   name?: Maybe<String_Comparison_Exp>;
   owner?: Maybe<Users_Bool_Exp>;
@@ -3252,6 +4599,7 @@ export enum Things_Constraint {
 /** input type for inserting data into table "things" */
 export type Things_Insert_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
+  group_relations?: Maybe<Group_Thing_Arr_Rel_Insert_Input>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
   owner?: Maybe<Users_Obj_Rel_Insert_Input>;
@@ -3322,6 +4670,7 @@ export type Things_On_Conflict = {
 /** ordering options when selecting data from "things" */
 export type Things_Order_By = {
   created_at?: Maybe<Order_By>;
+  group_relations_aggregate?: Maybe<Group_Thing_Aggregate_Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   owner?: Maybe<Users_Order_By>;
@@ -4165,6 +5514,12 @@ export type GroupCardFragment = (
       { __typename?: 'group_members_aggregate_fields' }
       & Pick<Group_Members_Aggregate_Fields, 'count'>
     )> }
+  ), thing_relations_aggregate: (
+    { __typename?: 'group_thing_aggregate' }
+    & { aggregate?: Maybe<(
+      { __typename?: 'group_thing_aggregate_fields' }
+      & Pick<Group_Thing_Aggregate_Fields, 'count'>
+    )> }
   ) }
 );
 
@@ -4434,7 +5789,24 @@ export type ThingCardFragment = (
   ) }
 );
 
-export type ThingListQueryVariables = Exact<{ [key: string]: never; }>;
+export type ThingDetailsFragment = (
+  { __typename?: 'things' }
+  & { group_relations: Array<(
+    { __typename?: 'group_thing' }
+    & { group: (
+      { __typename?: 'groups' }
+      & GroupCardFragment
+    ) }
+  )> }
+  & ThingCardFragment
+);
+
+export type ThingListQueryVariables = Exact<{
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  orderBy?: Maybe<Array<Things_Order_By>>;
+  where: Things_Bool_Exp;
+}>;
 
 
 export type ThingListQuery = (
@@ -4442,6 +5814,19 @@ export type ThingListQuery = (
   & { things: Array<(
     { __typename?: 'things' }
     & ThingCardFragment
+  )> }
+);
+
+export type CreateThingMutationVariables = Exact<{
+  input: Things_Insert_Input;
+}>;
+
+
+export type CreateThingMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_things_one?: Maybe<(
+    { __typename?: 'things' }
+    & ThingDetailsFragment
   )> }
 );
 
@@ -4482,6 +5867,40 @@ export type UserPrivateDetailFragment = (
   & UserJoinRequestsFragment
 );
 
+export type ActivityCardFragment = (
+  { __typename?: 'activities' }
+  & Pick<Activities, 'id' | 'created_at' | 'verb'>
+  & { entity: (
+    { __typename?: 'entities' }
+    & Pick<Entities, 'id'>
+    & { group?: Maybe<(
+      { __typename?: 'groups' }
+      & Pick<Groups, 'id' | 'name'>
+    )>, thing?: Maybe<(
+      { __typename?: 'things' }
+      & Pick<Things, 'id' | 'name'>
+    )>, user?: Maybe<(
+      { __typename?: 'users' }
+      & Pick<Users, 'id' | 'name'>
+    )>, group_join_request?: Maybe<(
+      { __typename?: 'group_join_requests' }
+      & Pick<Group_Join_Requests, 'id'>
+    )> }
+  ), actor?: Maybe<(
+    { __typename?: 'users' }
+    & UserCardFragment
+  )> }
+);
+
+export type NotificationCardFragment = (
+  { __typename?: 'notifications' }
+  & Pick<Notifications, 'id' | 'read_at' | 'created_at'>
+  & { activity: (
+    { __typename?: 'activities' }
+    & ActivityCardFragment
+  ) }
+);
+
 export type UserListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -4503,6 +5922,51 @@ export type UserPrivateDetailsQuery = (
   & { users_by_pk?: Maybe<(
     { __typename?: 'users' }
     & UserPrivateDetailFragment
+  )> }
+);
+
+export type NotificationsSubscriptionVariables = Exact<{
+  userId: Scalars['uuid'];
+}>;
+
+
+export type NotificationsSubscription = (
+  { __typename?: 'subscription_root' }
+  & { notifications: Array<(
+    { __typename?: 'notifications' }
+    & NotificationCardFragment
+  )> }
+);
+
+export type MarkNotificationReadMutationVariables = Exact<{
+  id: Scalars['uuid'];
+  readAt: Scalars['timestamptz'];
+}>;
+
+
+export type MarkNotificationReadMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_notifications_by_pk?: Maybe<(
+    { __typename?: 'notifications' }
+    & NotificationCardFragment
+  )> }
+);
+
+export type MarkAllNotificationsReadMutationVariables = Exact<{
+  userId: Scalars['uuid'];
+  readAt: Scalars['timestamptz'];
+}>;
+
+
+export type MarkAllNotificationsReadMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_notifications?: Maybe<(
+    { __typename?: 'notifications_mutation_response' }
+    & Pick<Notifications_Mutation_Response, 'affected_rows'>
+    & { returning: Array<(
+      { __typename?: 'notifications' }
+      & NotificationCardFragment
+    )> }
   )> }
 );
 
@@ -4530,6 +5994,11 @@ export const GroupCardFragmentDoc = gql`
   description
   public
   memberships_aggregate {
+    aggregate {
+      count
+    }
+  }
+  thing_relations_aggregate {
     aggregate {
       count
     }
@@ -4581,6 +6050,17 @@ export const ThingCardFragmentDoc = gql`
   }
 }
     ${UserCardFragmentDoc}`;
+export const ThingDetailsFragmentDoc = gql`
+    fragment ThingDetails on things {
+  ...ThingCard
+  group_relations {
+    group {
+      ...GroupCard
+    }
+  }
+}
+    ${ThingCardFragmentDoc}
+${GroupCardFragmentDoc}`;
 export const UserDetailFragmentDoc = gql`
     fragment UserDetail on users {
   ...UserCard
@@ -4626,6 +6106,44 @@ export const UserPrivateDetailFragmentDoc = gql`
     ${UserDetailFragmentDoc}
 ${UserJoinRequestsFragmentDoc}
 ${GroupCardFragmentDoc}`;
+export const ActivityCardFragmentDoc = gql`
+    fragment ActivityCard on activities {
+  id
+  created_at
+  verb
+  entity {
+    id
+    group {
+      id
+      name
+    }
+    thing {
+      id
+      name
+    }
+    user {
+      id
+      name
+    }
+    group_join_request {
+      id
+    }
+  }
+  actor {
+    ...UserCard
+  }
+}
+    ${UserCardFragmentDoc}`;
+export const NotificationCardFragmentDoc = gql`
+    fragment NotificationCard on notifications {
+  id
+  read_at
+  created_at
+  activity {
+    ...ActivityCard
+  }
+}
+    ${ActivityCardFragmentDoc}`;
 export const ListGroupsDocument = gql`
     query ListGroups($limit: Int!, $offset: Int!, $orderBy: groups_order_by!, $where: groups_bool_exp) {
   groups_aggregate(where: $where) {
@@ -5158,8 +6676,8 @@ export type UpdateJoinTokenMutationHookResult = ReturnType<typeof useUpdateJoinT
 export type UpdateJoinTokenMutationResult = Apollo.MutationResult<UpdateJoinTokenMutation>;
 export type UpdateJoinTokenMutationOptions = Apollo.BaseMutationOptions<UpdateJoinTokenMutation, UpdateJoinTokenMutationVariables>;
 export const ThingListDocument = gql`
-    query ThingList {
-  things {
+    query ThingList($limit: Int, $offset: Int, $orderBy: [things_order_by!], $where: things_bool_exp!) {
+  things(where: $where, limit: $limit, offset: $offset, order_by: $orderBy) {
     ...ThingCard
   }
 }
@@ -5177,6 +6695,10 @@ export const ThingListDocument = gql`
  * @example
  * const { data, loading, error } = useThingListQuery({
  *   variables: {
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
+ *      orderBy: // value for 'orderBy'
+ *      where: // value for 'where'
  *   },
  * });
  */
@@ -5192,6 +6714,38 @@ export type ThingListQueryResult = Apollo.QueryResult<ThingListQuery, ThingListQ
 export function refetchThingListQuery(variables?: ThingListQueryVariables) {
       return { query: ThingListDocument, variables: variables }
     }
+export const CreateThingDocument = gql`
+    mutation CreateThing($input: things_insert_input!) {
+  insert_things_one(object: $input) {
+    ...ThingDetails
+  }
+}
+    ${ThingDetailsFragmentDoc}`;
+export type CreateThingMutationFn = Apollo.MutationFunction<CreateThingMutation, CreateThingMutationVariables>;
+
+/**
+ * __useCreateThingMutation__
+ *
+ * To run a mutation, you first call `useCreateThingMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateThingMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createThingMutation, { data, loading, error }] = useCreateThingMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateThingMutation(baseOptions?: Apollo.MutationHookOptions<CreateThingMutation, CreateThingMutationVariables>) {
+        return Apollo.useMutation<CreateThingMutation, CreateThingMutationVariables>(CreateThingDocument, baseOptions);
+      }
+export type CreateThingMutationHookResult = ReturnType<typeof useCreateThingMutation>;
+export type CreateThingMutationResult = Apollo.MutationResult<CreateThingMutation>;
+export type CreateThingMutationOptions = Apollo.BaseMutationOptions<CreateThingMutation, CreateThingMutationVariables>;
 export const UserListDocument = gql`
     query UserList {
   users {
@@ -5263,6 +6817,108 @@ export type UserPrivateDetailsQueryResult = Apollo.QueryResult<UserPrivateDetail
 export function refetchUserPrivateDetailsQuery(variables?: UserPrivateDetailsQueryVariables) {
       return { query: UserPrivateDetailsDocument, variables: variables }
     }
+export const NotificationsDocument = gql`
+    subscription Notifications($userId: uuid!) {
+  notifications(
+    limit: 50
+    order_by: [{created_at: desc}]
+    where: {user_id: {_eq: $userId}}
+  ) {
+    ...NotificationCard
+  }
+}
+    ${NotificationCardFragmentDoc}`;
+
+/**
+ * __useNotificationsSubscription__
+ *
+ * To run a query within a React component, call `useNotificationsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useNotificationsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useNotificationsSubscription({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *   },
+ * });
+ */
+export function useNotificationsSubscription(baseOptions?: Apollo.SubscriptionHookOptions<NotificationsSubscription, NotificationsSubscriptionVariables>) {
+        return Apollo.useSubscription<NotificationsSubscription, NotificationsSubscriptionVariables>(NotificationsDocument, baseOptions);
+      }
+export type NotificationsSubscriptionHookResult = ReturnType<typeof useNotificationsSubscription>;
+export type NotificationsSubscriptionResult = Apollo.SubscriptionResult<NotificationsSubscription>;
+export const MarkNotificationReadDocument = gql`
+    mutation MarkNotificationRead($id: uuid!, $readAt: timestamptz!) {
+  update_notifications_by_pk(pk_columns: {id: $id}, _set: {read_at: $readAt}) {
+    ...NotificationCard
+  }
+}
+    ${NotificationCardFragmentDoc}`;
+export type MarkNotificationReadMutationFn = Apollo.MutationFunction<MarkNotificationReadMutation, MarkNotificationReadMutationVariables>;
+
+/**
+ * __useMarkNotificationReadMutation__
+ *
+ * To run a mutation, you first call `useMarkNotificationReadMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMarkNotificationReadMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [markNotificationReadMutation, { data, loading, error }] = useMarkNotificationReadMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      readAt: // value for 'readAt'
+ *   },
+ * });
+ */
+export function useMarkNotificationReadMutation(baseOptions?: Apollo.MutationHookOptions<MarkNotificationReadMutation, MarkNotificationReadMutationVariables>) {
+        return Apollo.useMutation<MarkNotificationReadMutation, MarkNotificationReadMutationVariables>(MarkNotificationReadDocument, baseOptions);
+      }
+export type MarkNotificationReadMutationHookResult = ReturnType<typeof useMarkNotificationReadMutation>;
+export type MarkNotificationReadMutationResult = Apollo.MutationResult<MarkNotificationReadMutation>;
+export type MarkNotificationReadMutationOptions = Apollo.BaseMutationOptions<MarkNotificationReadMutation, MarkNotificationReadMutationVariables>;
+export const MarkAllNotificationsReadDocument = gql`
+    mutation MarkAllNotificationsRead($userId: uuid!, $readAt: timestamptz!) {
+  update_notifications(where: {user_id: {_eq: $userId}}, _set: {read_at: $readAt}) {
+    affected_rows
+    returning {
+      ...NotificationCard
+    }
+  }
+}
+    ${NotificationCardFragmentDoc}`;
+export type MarkAllNotificationsReadMutationFn = Apollo.MutationFunction<MarkAllNotificationsReadMutation, MarkAllNotificationsReadMutationVariables>;
+
+/**
+ * __useMarkAllNotificationsReadMutation__
+ *
+ * To run a mutation, you first call `useMarkAllNotificationsReadMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMarkAllNotificationsReadMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [markAllNotificationsReadMutation, { data, loading, error }] = useMarkAllNotificationsReadMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      readAt: // value for 'readAt'
+ *   },
+ * });
+ */
+export function useMarkAllNotificationsReadMutation(baseOptions?: Apollo.MutationHookOptions<MarkAllNotificationsReadMutation, MarkAllNotificationsReadMutationVariables>) {
+        return Apollo.useMutation<MarkAllNotificationsReadMutation, MarkAllNotificationsReadMutationVariables>(MarkAllNotificationsReadDocument, baseOptions);
+      }
+export type MarkAllNotificationsReadMutationHookResult = ReturnType<typeof useMarkAllNotificationsReadMutation>;
+export type MarkAllNotificationsReadMutationResult = Apollo.MutationResult<MarkAllNotificationsReadMutation>;
+export type MarkAllNotificationsReadMutationOptions = Apollo.BaseMutationOptions<MarkAllNotificationsReadMutation, MarkAllNotificationsReadMutationVariables>;
 export const RegisterUserDocument = gql`
     mutation RegisterUser($input: CredentialsInput!) {
   registerCredentials(input: $input) {
@@ -5330,7 +6986,13 @@ export const GqlOps = {
     CreateJoinToken: 'CreateJoinToken',
     DeleteJoinToken: 'DeleteJoinToken',
     UpdateJoinToken: 'UpdateJoinToken',
+    CreateThing: 'CreateThing',
+    MarkNotificationRead: 'MarkNotificationRead',
+    MarkAllNotificationsRead: 'MarkAllNotificationsRead',
     RegisterUser: 'RegisterUser'
+  },
+  Subscription: {
+    Notifications: 'Notifications'
   },
   Fragment: {
     GroupMemberCard: 'GroupMemberCard',
@@ -5339,9 +7001,12 @@ export const GqlOps = {
     GroupJoinRequestCard: 'GroupJoinRequestCard',
     GroupJoinTokenCard: 'GroupJoinTokenCard',
     ThingCard: 'ThingCard',
+    ThingDetails: 'ThingDetails',
     UserCard: 'UserCard',
     UserDetail: 'UserDetail',
     UserJoinRequests: 'UserJoinRequests',
-    UserPrivateDetail: 'UserPrivateDetail'
+    UserPrivateDetail: 'UserPrivateDetail',
+    ActivityCard: 'ActivityCard',
+    NotificationCard: 'NotificationCard'
   }
 }

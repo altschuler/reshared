@@ -1,0 +1,26 @@
+﻿query FetchThingDetails($id: uuid!) {
+    things_by_pk(id: $id) {
+        id
+        created_at
+
+        owner {
+            id
+            name
+        }
+
+        group_relations {
+            id
+            group {
+                id
+                public
+                name
+                memberships {
+                    role
+                    user {
+                        id
+                    }
+                }
+            }
+        }
+    }
+}

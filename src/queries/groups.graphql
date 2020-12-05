@@ -21,6 +21,12 @@ fragment GroupCard on groups {
             count
         }
     }
+
+    thing_relations_aggregate {
+        aggregate {
+            count
+        }
+    }
 }
 
 fragment GroupDetails on groups {

@@ -9,6 +9,14 @@ export const errorReply = (res: NextApiResponse, status: number, message: string
     res.json({ message });
 };
 
+export interface EventHandlerContext {
+    req: NextApiRequest;
+    res: NextApiResponse;
+    error: (msg: string, code?: number) => void;
+    success: (output: unknown) => void;
+    adminClient: ApolloClient<NormalizedCacheObject>;
+}
+
 export interface HandlerContext<TOutput> {
     req: NextApiRequest;
     res: NextApiResponse;
@@ -98,4 +106,43 @@ export const makeAuthorizedHandler = <TInput, TOutput>(
             errorReply(res, 400, 'An error occured while processing the request.');
         }
     };
+};
+
+export interface HasuraEventPayload<T> {
+    event: {
+        session_variables: { [key: string]: string };
+        op: 'INSERT' | 'UPDATE' | 'DELETE' | 'MANUAL';
+        data: { old: T; new: null } | { old: null; new: T } | { old: T; new: T };
+    };
+    created_at: string;
+    id: string;
+    trigger: {
+        name: string;
+    };
+    table: {
+        schema: string;
+        name: string;
+    };
+}
+export const makeEventHandler = <T>(
+    handler: (args: HasuraEventPayload<T>, ctx: EventHandlerContext) => Promise<void>,
+) => async (req: NextApiRequest, res: NextApiResponse) => {
+    // Verify secret
+    const secret = req.headers['x-webhook-secret'];
+    if (!secret || secret !== process.env.EVENT_WEBHOOK_SECRET) {
+        return errorReply(res, 401, 'Wrong or missing secret');
+    }
+
+    try {
+        await handler(req.body, {
+            req,
+            res,
+            adminClient: hasuraClient,
+            error: (msg: string, status = 400) => errorReply(res, status, msg),
+            success: (output: unknown) => res.json(output),
+        });
+    } catch (err) {
+        console.log(err);
+        errorReply(res, 400, 'Error: ' + err.message);
+    }
 };

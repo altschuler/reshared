@@ -95,7 +95,11 @@ export const GroupListPage = () => {
                                 text={group.memberships_aggregate.aggregate?.count || 0}
                                 key="members"
                             />,
-                            <IconText icon={<GiftOutlined />} text={12} key="things" />,
+                            <IconText
+                                icon={<GiftOutlined />}
+                                text={group.thing_relations_aggregate.aggregate?.count || 0}
+                                key="things"
+                            />,
                             <IconText
                                 icon={group.public ? <EyeOutlined /> : <EyeInvisibleOutlined />}
                                 text={group.public ? 'Public' : 'Private'}

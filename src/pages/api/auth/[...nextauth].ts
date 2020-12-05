@@ -7,6 +7,7 @@ import { getUnixTime, addHours } from 'date-fns';
 
 const options = {
     database: process.env.POSTGRES_URL,
+    debug: true,
     jwt: {
         encode: async (options) =>
             encodeToken({

@@ -74,7 +74,7 @@ export const GroupEditor = (props: GroupEditorProps) => {
 
 export const useGroupEditor = createUseEditor<EditorGroup>(makeEditorGroup());
 
-export const asCreateInput = ({ present }: GroupEditorState): CreateGroupInput => ({
+export const asGroupCreateInput = ({ present }: GroupEditorState): CreateGroupInput => ({
     name: present.name,
     description: present.description || '',
     public: present.public,

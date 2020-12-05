@@ -127,6 +127,477 @@ input String_comparison_exp {
   _similar: String
 }
 
+"""
+columns and relationships of "activities"
+"""
+type activities {
+  """An object relationship"""
+  actor: users
+  actor_id: uuid
+  created_at: timestamptz!
+
+  """An object relationship"""
+  entity: entities!
+  entity_id: uuid!
+  id: uuid!
+
+  """An array relationship"""
+  notifications(
+    """distinct select on columns"""
+    distinct_on: [notifications_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [notifications_order_by!]
+
+    """filter the rows returned"""
+    where: notifications_bool_exp
+  ): [notifications!]!
+
+  """An aggregated array relationship"""
+  notifications_aggregate(
+    """distinct select on columns"""
+    distinct_on: [notifications_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [notifications_order_by!]
+
+    """filter the rows returned"""
+    where: notifications_bool_exp
+  ): notifications_aggregate!
+  verb: activity_verb_enum!
+}
+
+"""
+aggregated selection of "activities"
+"""
+type activities_aggregate {
+  aggregate: activities_aggregate_fields
+  nodes: [activities!]!
+}
+
+"""
+aggregate fields of "activities"
+"""
+type activities_aggregate_fields {
+  count(columns: [activities_select_column!], distinct: Boolean): Int
+  max: activities_max_fields
+  min: activities_min_fields
+}
+
+"""
+order by aggregate values of table "activities"
+"""
+input activities_aggregate_order_by {
+  count: order_by
+  max: activities_max_order_by
+  min: activities_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "activities"
+"""
+input activities_arr_rel_insert_input {
+  data: [activities_insert_input!]!
+  on_conflict: activities_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "activities". All fields are combined with a logical 'AND'.
+"""
+input activities_bool_exp {
+  _and: [activities_bool_exp]
+  _not: activities_bool_exp
+  _or: [activities_bool_exp]
+  actor: users_bool_exp
+  actor_id: uuid_comparison_exp
+  created_at: timestamptz_comparison_exp
+  entity: entities_bool_exp
+  entity_id: uuid_comparison_exp
+  id: uuid_comparison_exp
+  notifications: notifications_bool_exp
+  verb: activity_verb_enum_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "activities"
+"""
+enum activities_constraint {
+  """unique or primary key constraint"""
+  activities_pkey
+}
+
+"""
+input type for inserting data into table "activities"
+"""
+input activities_insert_input {
+  actor: users_obj_rel_insert_input
+  actor_id: uuid
+  created_at: timestamptz
+  entity: entities_obj_rel_insert_input
+  entity_id: uuid
+  id: uuid
+  notifications: notifications_arr_rel_insert_input
+  verb: activity_verb_enum
+}
+
+"""aggregate max on columns"""
+type activities_max_fields {
+  actor_id: uuid
+  created_at: timestamptz
+  entity_id: uuid
+  id: uuid
+}
+
+"""
+order by max() on columns of table "activities"
+"""
+input activities_max_order_by {
+  actor_id: order_by
+  created_at: order_by
+  entity_id: order_by
+  id: order_by
+}
+
+"""aggregate min on columns"""
+type activities_min_fields {
+  actor_id: uuid
+  created_at: timestamptz
+  entity_id: uuid
+  id: uuid
+}
+
+"""
+order by min() on columns of table "activities"
+"""
+input activities_min_order_by {
+  actor_id: order_by
+  created_at: order_by
+  entity_id: order_by
+  id: order_by
+}
+
+"""
+response of any mutation on the table "activities"
+"""
+type activities_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [activities!]!
+}
+
+"""
+input type for inserting object relation for remote table "activities"
+"""
+input activities_obj_rel_insert_input {
+  data: activities_insert_input!
+  on_conflict: activities_on_conflict
+}
+
+"""
+on conflict condition type for table "activities"
+"""
+input activities_on_conflict {
+  constraint: activities_constraint!
+  update_columns: [activities_update_column!]!
+  where: activities_bool_exp
+}
+
+"""
+ordering options when selecting data from "activities"
+"""
+input activities_order_by {
+  actor: users_order_by
+  actor_id: order_by
+  created_at: order_by
+  entity: entities_order_by
+  entity_id: order_by
+  id: order_by
+  notifications_aggregate: notifications_aggregate_order_by
+  verb: order_by
+}
+
+"""
+primary key columns input for table: "activities"
+"""
+input activities_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "activities"
+"""
+enum activities_select_column {
+  """column name"""
+  actor_id
+
+  """column name"""
+  created_at
+
+  """column name"""
+  entity_id
+
+  """column name"""
+  id
+
+  """column name"""
+  verb
+}
+
+"""
+input type for updating data in table "activities"
+"""
+input activities_set_input {
+  actor_id: uuid
+  created_at: timestamptz
+  entity_id: uuid
+  id: uuid
+  verb: activity_verb_enum
+}
+
+"""
+update columns of table "activities"
+"""
+enum activities_update_column {
+  """column name"""
+  actor_id
+
+  """column name"""
+  created_at
+
+  """column name"""
+  entity_id
+
+  """column name"""
+  id
+
+  """column name"""
+  verb
+}
+
+"""
+columns and relationships of "activity_verb"
+"""
+type activity_verb {
+  comment: String!
+  value: String!
+}
+
+"""
+aggregated selection of "activity_verb"
+"""
+type activity_verb_aggregate {
+  aggregate: activity_verb_aggregate_fields
+  nodes: [activity_verb!]!
+}
+
+"""
+aggregate fields of "activity_verb"
+"""
+type activity_verb_aggregate_fields {
+  count(columns: [activity_verb_select_column!], distinct: Boolean): Int
+  max: activity_verb_max_fields
+  min: activity_verb_min_fields
+}
+
+"""
+order by aggregate values of table "activity_verb"
+"""
+input activity_verb_aggregate_order_by {
+  count: order_by
+  max: activity_verb_max_order_by
+  min: activity_verb_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "activity_verb"
+"""
+input activity_verb_arr_rel_insert_input {
+  data: [activity_verb_insert_input!]!
+  on_conflict: activity_verb_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "activity_verb". All fields are combined with a logical 'AND'.
+"""
+input activity_verb_bool_exp {
+  _and: [activity_verb_bool_exp]
+  _not: activity_verb_bool_exp
+  _or: [activity_verb_bool_exp]
+  comment: String_comparison_exp
+  value: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "activity_verb"
+"""
+enum activity_verb_constraint {
+  """unique or primary key constraint"""
+  activity_verb_pkey
+}
+
+enum activity_verb_enum {
+  """accepted"""
+  accepted
+
+  """added"""
+  added
+
+  """commented"""
+  commented
+
+  """joined"""
+  joined
+
+  """posted"""
+  posted
+
+  """rejected"""
+  rejected
+
+  """requested_to_join"""
+  requested_to_join
+
+  """showed_interest"""
+  showed_interest
+
+  """updated"""
+  updated
+}
+
+"""
+expression to compare columns of type activity_verb_enum. All fields are combined with logical 'AND'.
+"""
+input activity_verb_enum_comparison_exp {
+  _eq: activity_verb_enum
+  _in: [activity_verb_enum!]
+  _is_null: Boolean
+  _neq: activity_verb_enum
+  _nin: [activity_verb_enum!]
+}
+
+"""
+input type for inserting data into table "activity_verb"
+"""
+input activity_verb_insert_input {
+  comment: String
+  value: String
+}
+
+"""aggregate max on columns"""
+type activity_verb_max_fields {
+  comment: String
+  value: String
+}
+
+"""
+order by max() on columns of table "activity_verb"
+"""
+input activity_verb_max_order_by {
+  comment: order_by
+  value: order_by
+}
+
+"""aggregate min on columns"""
+type activity_verb_min_fields {
+  comment: String
+  value: String
+}
+
+"""
+order by min() on columns of table "activity_verb"
+"""
+input activity_verb_min_order_by {
+  comment: order_by
+  value: order_by
+}
+
+"""
+response of any mutation on the table "activity_verb"
+"""
+type activity_verb_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [activity_verb!]!
+}
+
+"""
+input type for inserting object relation for remote table "activity_verb"
+"""
+input activity_verb_obj_rel_insert_input {
+  data: activity_verb_insert_input!
+  on_conflict: activity_verb_on_conflict
+}
+
+"""
+on conflict condition type for table "activity_verb"
+"""
+input activity_verb_on_conflict {
+  constraint: activity_verb_constraint!
+  update_columns: [activity_verb_update_column!]!
+  where: activity_verb_bool_exp
+}
+
+"""
+ordering options when selecting data from "activity_verb"
+"""
+input activity_verb_order_by {
+  comment: order_by
+  value: order_by
+}
+
+"""
+primary key columns input for table: "activity_verb"
+"""
+input activity_verb_pk_columns_input {
+  value: String!
+}
+
+"""
+select columns of table "activity_verb"
+"""
+enum activity_verb_select_column {
+  """column name"""
+  comment
+
+  """column name"""
+  value
+}
+
+"""
+input type for updating data in table "activity_verb"
+"""
+input activity_verb_set_input {
+  comment: String
+  value: String
+}
+
+"""
+update columns of table "activity_verb"
+"""
+enum activity_verb_update_column {
+  """column name"""
+  comment
+
+  """column name"""
+  value
+}
+
 input create_group_input {
   description: String!
   name: String!
@@ -135,6 +606,256 @@ input create_group_input {
 
 type create_group_result {
   group_id: uuid!
+}
+
+"""
+columns and relationships of "entities"
+"""
+type entities {
+  """An object relationship"""
+  group: groups
+  group_id: uuid
+
+  """An object relationship"""
+  group_join_request: group_join_requests
+  id: uuid!
+  join_request_id: uuid
+
+  """An object relationship"""
+  thing: things
+  thing_id: uuid
+
+  """An object relationship"""
+  user: users
+  user_id: uuid
+}
+
+"""
+aggregated selection of "entities"
+"""
+type entities_aggregate {
+  aggregate: entities_aggregate_fields
+  nodes: [entities!]!
+}
+
+"""
+aggregate fields of "entities"
+"""
+type entities_aggregate_fields {
+  count(columns: [entities_select_column!], distinct: Boolean): Int
+  max: entities_max_fields
+  min: entities_min_fields
+}
+
+"""
+order by aggregate values of table "entities"
+"""
+input entities_aggregate_order_by {
+  count: order_by
+  max: entities_max_order_by
+  min: entities_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "entities"
+"""
+input entities_arr_rel_insert_input {
+  data: [entities_insert_input!]!
+  on_conflict: entities_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "entities". All fields are combined with a logical 'AND'.
+"""
+input entities_bool_exp {
+  _and: [entities_bool_exp]
+  _not: entities_bool_exp
+  _or: [entities_bool_exp]
+  group: groups_bool_exp
+  group_id: uuid_comparison_exp
+  group_join_request: group_join_requests_bool_exp
+  id: uuid_comparison_exp
+  join_request_id: uuid_comparison_exp
+  thing: things_bool_exp
+  thing_id: uuid_comparison_exp
+  user: users_bool_exp
+  user_id: uuid_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "entities"
+"""
+enum entities_constraint {
+  """unique or primary key constraint"""
+  entities_group_id_key
+
+  """unique or primary key constraint"""
+  entities_join_request_id_key
+
+  """unique or primary key constraint"""
+  entities_pkey
+
+  """unique or primary key constraint"""
+  entities_thing_id_key
+
+  """unique or primary key constraint"""
+  entities_user_id_key
+}
+
+"""
+input type for inserting data into table "entities"
+"""
+input entities_insert_input {
+  group: groups_obj_rel_insert_input
+  group_id: uuid
+  group_join_request: group_join_requests_obj_rel_insert_input
+  id: uuid
+  join_request_id: uuid
+  thing: things_obj_rel_insert_input
+  thing_id: uuid
+  user: users_obj_rel_insert_input
+  user_id: uuid
+}
+
+"""aggregate max on columns"""
+type entities_max_fields {
+  group_id: uuid
+  id: uuid
+  join_request_id: uuid
+  thing_id: uuid
+  user_id: uuid
+}
+
+"""
+order by max() on columns of table "entities"
+"""
+input entities_max_order_by {
+  group_id: order_by
+  id: order_by
+  join_request_id: order_by
+  thing_id: order_by
+  user_id: order_by
+}
+
+"""aggregate min on columns"""
+type entities_min_fields {
+  group_id: uuid
+  id: uuid
+  join_request_id: uuid
+  thing_id: uuid
+  user_id: uuid
+}
+
+"""
+order by min() on columns of table "entities"
+"""
+input entities_min_order_by {
+  group_id: order_by
+  id: order_by
+  join_request_id: order_by
+  thing_id: order_by
+  user_id: order_by
+}
+
+"""
+response of any mutation on the table "entities"
+"""
+type entities_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [entities!]!
+}
+
+"""
+input type for inserting object relation for remote table "entities"
+"""
+input entities_obj_rel_insert_input {
+  data: entities_insert_input!
+  on_conflict: entities_on_conflict
+}
+
+"""
+on conflict condition type for table "entities"
+"""
+input entities_on_conflict {
+  constraint: entities_constraint!
+  update_columns: [entities_update_column!]!
+  where: entities_bool_exp
+}
+
+"""
+ordering options when selecting data from "entities"
+"""
+input entities_order_by {
+  group: groups_order_by
+  group_id: order_by
+  group_join_request: group_join_requests_order_by
+  id: order_by
+  join_request_id: order_by
+  thing: things_order_by
+  thing_id: order_by
+  user: users_order_by
+  user_id: order_by
+}
+
+"""
+primary key columns input for table: "entities"
+"""
+input entities_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "entities"
+"""
+enum entities_select_column {
+  """column name"""
+  group_id
+
+  """column name"""
+  id
+
+  """column name"""
+  join_request_id
+
+  """column name"""
+  thing_id
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "entities"
+"""
+input entities_set_input {
+  group_id: uuid
+  id: uuid
+  join_request_id: uuid
+  thing_id: uuid
+  user_id: uuid
+}
+
+"""
+update columns of table "entities"
+"""
+enum entities_update_column {
+  """column name"""
+  group_id
+
+  """column name"""
+  id
+
+  """column name"""
+  join_request_id
+
+  """column name"""
+  thing_id
+
+  """column name"""
+  user_id
 }
 
 """
@@ -1297,8 +2018,14 @@ columns and relationships of "group_thing"
 """
 type group_thing {
   created_at: timestamptz!
+
+  """An object relationship"""
+  group: groups!
   group_id: uuid!
   id: uuid!
+
+  """An object relationship"""
+  thing: things!
   thing_id: uuid!
   updated_at: timestamptz!
 }
@@ -1345,8 +2072,10 @@ input group_thing_bool_exp {
   _not: group_thing_bool_exp
   _or: [group_thing_bool_exp]
   created_at: timestamptz_comparison_exp
+  group: groups_bool_exp
   group_id: uuid_comparison_exp
   id: uuid_comparison_exp
+  thing: things_bool_exp
   thing_id: uuid_comparison_exp
   updated_at: timestamptz_comparison_exp
 }
@@ -1367,8 +2096,10 @@ input type for inserting data into table "group_thing"
 """
 input group_thing_insert_input {
   created_at: timestamptz
+  group: groups_obj_rel_insert_input
   group_id: uuid
   id: uuid
+  thing: things_obj_rel_insert_input
   thing_id: uuid
   updated_at: timestamptz
 }
@@ -1446,8 +2177,10 @@ ordering options when selecting data from "group_thing"
 """
 input group_thing_order_by {
   created_at: order_by
+  group: groups_order_by
   group_id: order_by
   id: order_by
+  thing: things_order_by
   thing_id: order_by
   updated_at: order_by
 }
@@ -1555,6 +2288,42 @@ type groups {
   ): group_join_requests_aggregate!
 
   """An array relationship"""
+  join_tokens(
+    """distinct select on columns"""
+    distinct_on: [group_join_tokens_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_join_tokens_order_by!]
+
+    """filter the rows returned"""
+    where: group_join_tokens_bool_exp
+  ): [group_join_tokens!]!
+
+  """An aggregated array relationship"""
+  join_tokens_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_join_tokens_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_join_tokens_order_by!]
+
+    """filter the rows returned"""
+    where: group_join_tokens_bool_exp
+  ): group_join_tokens_aggregate!
+
+  """An array relationship"""
   memberships(
     """distinct select on columns"""
     distinct_on: [group_members_select_column!]
@@ -1592,6 +2361,42 @@ type groups {
   name: String!
   public: Boolean!
   slug: String
+
+  """An array relationship"""
+  thing_relations(
+    """distinct select on columns"""
+    distinct_on: [group_thing_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_thing_order_by!]
+
+    """filter the rows returned"""
+    where: group_thing_bool_exp
+  ): [group_thing!]!
+
+  """An aggregated array relationship"""
+  thing_relations_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_thing_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_thing_order_by!]
+
+    """filter the rows returned"""
+    where: group_thing_bool_exp
+  ): group_thing_aggregate!
   updated_at: timestamptz!
 }
 
@@ -1640,10 +2445,12 @@ input groups_bool_exp {
   description: String_comparison_exp
   id: uuid_comparison_exp
   join_requests: group_join_requests_bool_exp
+  join_tokens: group_join_tokens_bool_exp
   memberships: group_members_bool_exp
   name: String_comparison_exp
   public: Boolean_comparison_exp
   slug: String_comparison_exp
+  thing_relations: group_thing_bool_exp
   updated_at: timestamptz_comparison_exp
 }
 
@@ -1666,10 +2473,12 @@ input groups_insert_input {
   description: String
   id: uuid
   join_requests: group_join_requests_arr_rel_insert_input
+  join_tokens: group_join_tokens_arr_rel_insert_input
   memberships: group_members_arr_rel_insert_input
   name: String
   public: Boolean
   slug: String
+  thing_relations: group_thing_arr_rel_insert_input
   updated_at: timestamptz
 }
 
@@ -1753,10 +2562,12 @@ input groups_order_by {
   description: order_by
   id: order_by
   join_requests_aggregate: group_join_requests_aggregate_order_by
+  join_tokens_aggregate: group_join_tokens_aggregate_order_by
   memberships_aggregate: group_members_aggregate_order_by
   name: order_by
   public: order_by
   slug: order_by
+  thing_relations_aggregate: group_thing_aggregate_order_by
   updated_at: order_by
 }
 
@@ -2047,6 +2858,45 @@ type mutation_root {
   createJoinToken(input: CreateJoinTokenInput!): CreateJoinTokenResult
 
   """
+  delete data from the table: "activities"
+  """
+  delete_activities(
+    """filter the rows which have to be deleted"""
+    where: activities_bool_exp!
+  ): activities_mutation_response
+
+  """
+  delete single row from the table: "activities"
+  """
+  delete_activities_by_pk(id: uuid!): activities
+
+  """
+  delete data from the table: "activity_verb"
+  """
+  delete_activity_verb(
+    """filter the rows which have to be deleted"""
+    where: activity_verb_bool_exp!
+  ): activity_verb_mutation_response
+
+  """
+  delete single row from the table: "activity_verb"
+  """
+  delete_activity_verb_by_pk(value: String!): activity_verb
+
+  """
+  delete data from the table: "entities"
+  """
+  delete_entities(
+    """filter the rows which have to be deleted"""
+    where: entities_bool_exp!
+  ): entities_mutation_response
+
+  """
+  delete single row from the table: "entities"
+  """
+  delete_entities_by_pk(id: uuid!): entities
+
+  """
   delete data from the table: "group_join_request_status"
   """
   delete_group_join_request_status(
@@ -2151,6 +3001,19 @@ type mutation_root {
   delete_messages_by_pk(id: uuid!): messages
 
   """
+  delete data from the table: "notifications"
+  """
+  delete_notifications(
+    """filter the rows which have to be deleted"""
+    where: notifications_bool_exp!
+  ): notifications_mutation_response
+
+  """
+  delete single row from the table: "notifications"
+  """
+  delete_notifications_by_pk(id: uuid!): notifications
+
+  """
   delete data from the table: "things"
   """
   delete_things(
@@ -2201,6 +3064,72 @@ type mutation_root {
   perform the action: "handleJoinRequest"
   """
   handleJoinRequest(input: HandleJoinRequestInput!): HandleJoinRequestResult!
+
+  """
+  insert data into the table: "activities"
+  """
+  insert_activities(
+    """the rows to be inserted"""
+    objects: [activities_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: activities_on_conflict
+  ): activities_mutation_response
+
+  """
+  insert a single row into the table: "activities"
+  """
+  insert_activities_one(
+    """the row to be inserted"""
+    object: activities_insert_input!
+
+    """on conflict condition"""
+    on_conflict: activities_on_conflict
+  ): activities
+
+  """
+  insert data into the table: "activity_verb"
+  """
+  insert_activity_verb(
+    """the rows to be inserted"""
+    objects: [activity_verb_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: activity_verb_on_conflict
+  ): activity_verb_mutation_response
+
+  """
+  insert a single row into the table: "activity_verb"
+  """
+  insert_activity_verb_one(
+    """the row to be inserted"""
+    object: activity_verb_insert_input!
+
+    """on conflict condition"""
+    on_conflict: activity_verb_on_conflict
+  ): activity_verb
+
+  """
+  insert data into the table: "entities"
+  """
+  insert_entities(
+    """the rows to be inserted"""
+    objects: [entities_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: entities_on_conflict
+  ): entities_mutation_response
+
+  """
+  insert a single row into the table: "entities"
+  """
+  insert_entities_one(
+    """the row to be inserted"""
+    object: entities_insert_input!
+
+    """on conflict condition"""
+    on_conflict: entities_on_conflict
+  ): entities
 
   """
   insert data into the table: "group_join_request_status"
@@ -2379,6 +3308,28 @@ type mutation_root {
   ): messages
 
   """
+  insert data into the table: "notifications"
+  """
+  insert_notifications(
+    """the rows to be inserted"""
+    objects: [notifications_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: notifications_on_conflict
+  ): notifications_mutation_response
+
+  """
+  insert a single row into the table: "notifications"
+  """
+  insert_notifications_one(
+    """the row to be inserted"""
+    object: notifications_insert_input!
+
+    """on conflict condition"""
+    on_conflict: notifications_on_conflict
+  ): notifications
+
+  """
   insert data into the table: "things"
   """
   insert_things(
@@ -2474,6 +3425,66 @@ type mutation_root {
   perform the action: "requestJoinGroup"
   """
   requestJoinGroup(input: RequestJoinGroupInput!): RequestJoinGroupResult
+
+  """
+  update data of the table: "activities"
+  """
+  update_activities(
+    """sets the columns of the filtered rows to the given values"""
+    _set: activities_set_input
+
+    """filter the rows which have to be updated"""
+    where: activities_bool_exp!
+  ): activities_mutation_response
+
+  """
+  update single row of the table: "activities"
+  """
+  update_activities_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: activities_set_input
+    pk_columns: activities_pk_columns_input!
+  ): activities
+
+  """
+  update data of the table: "activity_verb"
+  """
+  update_activity_verb(
+    """sets the columns of the filtered rows to the given values"""
+    _set: activity_verb_set_input
+
+    """filter the rows which have to be updated"""
+    where: activity_verb_bool_exp!
+  ): activity_verb_mutation_response
+
+  """
+  update single row of the table: "activity_verb"
+  """
+  update_activity_verb_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: activity_verb_set_input
+    pk_columns: activity_verb_pk_columns_input!
+  ): activity_verb
+
+  """
+  update data of the table: "entities"
+  """
+  update_entities(
+    """sets the columns of the filtered rows to the given values"""
+    _set: entities_set_input
+
+    """filter the rows which have to be updated"""
+    where: entities_bool_exp!
+  ): entities_mutation_response
+
+  """
+  update single row of the table: "entities"
+  """
+  update_entities_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: entities_set_input
+    pk_columns: entities_pk_columns_input!
+  ): entities
 
   """
   update data of the table: "group_join_request_status"
@@ -2636,6 +3647,26 @@ type mutation_root {
   ): messages
 
   """
+  update data of the table: "notifications"
+  """
+  update_notifications(
+    """sets the columns of the filtered rows to the given values"""
+    _set: notifications_set_input
+
+    """filter the rows which have to be updated"""
+    where: notifications_bool_exp!
+  ): notifications_mutation_response
+
+  """
+  update single row of the table: "notifications"
+  """
+  update_notifications_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: notifications_set_input
+    pk_columns: notifications_pk_columns_input!
+  ): notifications
+
+  """
   update data of the table: "things"
   """
   update_things(
@@ -2713,6 +3744,232 @@ type mutation_root {
   ): verification_requests
 }
 
+"""
+columns and relationships of "notifications"
+"""
+type notifications {
+  """An object relationship"""
+  activity: activities!
+  activity_id: uuid!
+  created_at: timestamptz!
+  id: uuid!
+  read_at: timestamptz
+
+  """An object relationship"""
+  user: users!
+  user_id: uuid!
+}
+
+"""
+aggregated selection of "notifications"
+"""
+type notifications_aggregate {
+  aggregate: notifications_aggregate_fields
+  nodes: [notifications!]!
+}
+
+"""
+aggregate fields of "notifications"
+"""
+type notifications_aggregate_fields {
+  count(columns: [notifications_select_column!], distinct: Boolean): Int
+  max: notifications_max_fields
+  min: notifications_min_fields
+}
+
+"""
+order by aggregate values of table "notifications"
+"""
+input notifications_aggregate_order_by {
+  count: order_by
+  max: notifications_max_order_by
+  min: notifications_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "notifications"
+"""
+input notifications_arr_rel_insert_input {
+  data: [notifications_insert_input!]!
+  on_conflict: notifications_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "notifications". All fields are combined with a logical 'AND'.
+"""
+input notifications_bool_exp {
+  _and: [notifications_bool_exp]
+  _not: notifications_bool_exp
+  _or: [notifications_bool_exp]
+  activity: activities_bool_exp
+  activity_id: uuid_comparison_exp
+  created_at: timestamptz_comparison_exp
+  id: uuid_comparison_exp
+  read_at: timestamptz_comparison_exp
+  user: users_bool_exp
+  user_id: uuid_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "notifications"
+"""
+enum notifications_constraint {
+  """unique or primary key constraint"""
+  notifications_pkey
+}
+
+"""
+input type for inserting data into table "notifications"
+"""
+input notifications_insert_input {
+  activity: activities_obj_rel_insert_input
+  activity_id: uuid
+  created_at: timestamptz
+  id: uuid
+  read_at: timestamptz
+  user: users_obj_rel_insert_input
+  user_id: uuid
+}
+
+"""aggregate max on columns"""
+type notifications_max_fields {
+  activity_id: uuid
+  created_at: timestamptz
+  id: uuid
+  read_at: timestamptz
+  user_id: uuid
+}
+
+"""
+order by max() on columns of table "notifications"
+"""
+input notifications_max_order_by {
+  activity_id: order_by
+  created_at: order_by
+  id: order_by
+  read_at: order_by
+  user_id: order_by
+}
+
+"""aggregate min on columns"""
+type notifications_min_fields {
+  activity_id: uuid
+  created_at: timestamptz
+  id: uuid
+  read_at: timestamptz
+  user_id: uuid
+}
+
+"""
+order by min() on columns of table "notifications"
+"""
+input notifications_min_order_by {
+  activity_id: order_by
+  created_at: order_by
+  id: order_by
+  read_at: order_by
+  user_id: order_by
+}
+
+"""
+response of any mutation on the table "notifications"
+"""
+type notifications_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [notifications!]!
+}
+
+"""
+input type for inserting object relation for remote table "notifications"
+"""
+input notifications_obj_rel_insert_input {
+  data: notifications_insert_input!
+  on_conflict: notifications_on_conflict
+}
+
+"""
+on conflict condition type for table "notifications"
+"""
+input notifications_on_conflict {
+  constraint: notifications_constraint!
+  update_columns: [notifications_update_column!]!
+  where: notifications_bool_exp
+}
+
+"""
+ordering options when selecting data from "notifications"
+"""
+input notifications_order_by {
+  activity: activities_order_by
+  activity_id: order_by
+  created_at: order_by
+  id: order_by
+  read_at: order_by
+  user: users_order_by
+  user_id: order_by
+}
+
+"""
+primary key columns input for table: "notifications"
+"""
+input notifications_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "notifications"
+"""
+enum notifications_select_column {
+  """column name"""
+  activity_id
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  read_at
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "notifications"
+"""
+input notifications_set_input {
+  activity_id: uuid
+  created_at: timestamptz
+  id: uuid
+  read_at: timestamptz
+  user_id: uuid
+}
+
+"""
+update columns of table "notifications"
+"""
+enum notifications_update_column {
+  """column name"""
+  activity_id
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  read_at
+
+  """column name"""
+  user_id
+}
+
 """column ordering options"""
 enum order_by {
   """in the ascending order, nulls last"""
@@ -2736,6 +3993,135 @@ enum order_by {
 
 """query root"""
 type query_root {
+  """
+  fetch data from the table: "activities"
+  """
+  activities(
+    """distinct select on columns"""
+    distinct_on: [activities_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [activities_order_by!]
+
+    """filter the rows returned"""
+    where: activities_bool_exp
+  ): [activities!]!
+
+  """
+  fetch aggregated fields from the table: "activities"
+  """
+  activities_aggregate(
+    """distinct select on columns"""
+    distinct_on: [activities_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [activities_order_by!]
+
+    """filter the rows returned"""
+    where: activities_bool_exp
+  ): activities_aggregate!
+
+  """fetch data from the table: "activities" using primary key columns"""
+  activities_by_pk(id: uuid!): activities
+
+  """
+  fetch data from the table: "activity_verb"
+  """
+  activity_verb(
+    """distinct select on columns"""
+    distinct_on: [activity_verb_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [activity_verb_order_by!]
+
+    """filter the rows returned"""
+    where: activity_verb_bool_exp
+  ): [activity_verb!]!
+
+  """
+  fetch aggregated fields from the table: "activity_verb"
+  """
+  activity_verb_aggregate(
+    """distinct select on columns"""
+    distinct_on: [activity_verb_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [activity_verb_order_by!]
+
+    """filter the rows returned"""
+    where: activity_verb_bool_exp
+  ): activity_verb_aggregate!
+
+  """fetch data from the table: "activity_verb" using primary key columns"""
+  activity_verb_by_pk(value: String!): activity_verb
+
+  """
+  fetch data from the table: "entities"
+  """
+  entities(
+    """distinct select on columns"""
+    distinct_on: [entities_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [entities_order_by!]
+
+    """filter the rows returned"""
+    where: entities_bool_exp
+  ): [entities!]!
+
+  """
+  fetch aggregated fields from the table: "entities"
+  """
+  entities_aggregate(
+    """distinct select on columns"""
+    distinct_on: [entities_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [entities_order_by!]
+
+    """filter the rows returned"""
+    where: entities_bool_exp
+  ): entities_aggregate!
+
+  """fetch data from the table: "entities" using primary key columns"""
+  entities_by_pk(id: uuid!): entities
+
   """
   fetch data from the table: "group_join_request_status"
   """
@@ -3085,6 +4471,49 @@ type query_root {
 
   """fetch data from the table: "messages" using primary key columns"""
   messages_by_pk(id: uuid!): messages
+
+  """
+  fetch data from the table: "notifications"
+  """
+  notifications(
+    """distinct select on columns"""
+    distinct_on: [notifications_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [notifications_order_by!]
+
+    """filter the rows returned"""
+    where: notifications_bool_exp
+  ): [notifications!]!
+
+  """
+  fetch aggregated fields from the table: "notifications"
+  """
+  notifications_aggregate(
+    """distinct select on columns"""
+    distinct_on: [notifications_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [notifications_order_by!]
+
+    """filter the rows returned"""
+    where: notifications_bool_exp
+  ): notifications_aggregate!
+
+  """fetch data from the table: "notifications" using primary key columns"""
+  notifications_by_pk(id: uuid!): notifications
 
   """
   fetch data from the table: "things"
@@ -3261,6 +4690,135 @@ type query_root {
 """subscription root"""
 type subscription_root {
   """
+  fetch data from the table: "activities"
+  """
+  activities(
+    """distinct select on columns"""
+    distinct_on: [activities_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [activities_order_by!]
+
+    """filter the rows returned"""
+    where: activities_bool_exp
+  ): [activities!]!
+
+  """
+  fetch aggregated fields from the table: "activities"
+  """
+  activities_aggregate(
+    """distinct select on columns"""
+    distinct_on: [activities_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [activities_order_by!]
+
+    """filter the rows returned"""
+    where: activities_bool_exp
+  ): activities_aggregate!
+
+  """fetch data from the table: "activities" using primary key columns"""
+  activities_by_pk(id: uuid!): activities
+
+  """
+  fetch data from the table: "activity_verb"
+  """
+  activity_verb(
+    """distinct select on columns"""
+    distinct_on: [activity_verb_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [activity_verb_order_by!]
+
+    """filter the rows returned"""
+    where: activity_verb_bool_exp
+  ): [activity_verb!]!
+
+  """
+  fetch aggregated fields from the table: "activity_verb"
+  """
+  activity_verb_aggregate(
+    """distinct select on columns"""
+    distinct_on: [activity_verb_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [activity_verb_order_by!]
+
+    """filter the rows returned"""
+    where: activity_verb_bool_exp
+  ): activity_verb_aggregate!
+
+  """fetch data from the table: "activity_verb" using primary key columns"""
+  activity_verb_by_pk(value: String!): activity_verb
+
+  """
+  fetch data from the table: "entities"
+  """
+  entities(
+    """distinct select on columns"""
+    distinct_on: [entities_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [entities_order_by!]
+
+    """filter the rows returned"""
+    where: entities_bool_exp
+  ): [entities!]!
+
+  """
+  fetch aggregated fields from the table: "entities"
+  """
+  entities_aggregate(
+    """distinct select on columns"""
+    distinct_on: [entities_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [entities_order_by!]
+
+    """filter the rows returned"""
+    where: entities_bool_exp
+  ): entities_aggregate!
+
+  """fetch data from the table: "entities" using primary key columns"""
+  entities_by_pk(id: uuid!): entities
+
+  """
   fetch data from the table: "group_join_request_status"
   """
   group_join_request_status(
@@ -3609,6 +5167,49 @@ type subscription_root {
 
   """fetch data from the table: "messages" using primary key columns"""
   messages_by_pk(id: uuid!): messages
+
+  """
+  fetch data from the table: "notifications"
+  """
+  notifications(
+    """distinct select on columns"""
+    distinct_on: [notifications_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [notifications_order_by!]
+
+    """filter the rows returned"""
+    where: notifications_bool_exp
+  ): [notifications!]!
+
+  """
+  fetch aggregated fields from the table: "notifications"
+  """
+  notifications_aggregate(
+    """distinct select on columns"""
+    distinct_on: [notifications_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [notifications_order_by!]
+
+    """filter the rows returned"""
+    where: notifications_bool_exp
+  ): notifications_aggregate!
+
+  """fetch data from the table: "notifications" using primary key columns"""
+  notifications_by_pk(id: uuid!): notifications
 
   """
   fetch data from the table: "things"
@@ -3787,6 +5388,42 @@ columns and relationships of "things"
 """
 type things {
   created_at: timestamptz!
+
+  """An array relationship"""
+  group_relations(
+    """distinct select on columns"""
+    distinct_on: [group_thing_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_thing_order_by!]
+
+    """filter the rows returned"""
+    where: group_thing_bool_exp
+  ): [group_thing!]!
+
+  """An aggregated array relationship"""
+  group_relations_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_thing_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_thing_order_by!]
+
+    """filter the rows returned"""
+    where: group_thing_bool_exp
+  ): group_thing_aggregate!
   id: uuid!
   name: String!
 
@@ -3838,6 +5475,7 @@ input things_bool_exp {
   _not: things_bool_exp
   _or: [things_bool_exp]
   created_at: timestamptz_comparison_exp
+  group_relations: group_thing_bool_exp
   id: uuid_comparison_exp
   name: String_comparison_exp
   owner: users_bool_exp
@@ -3858,6 +5496,7 @@ input type for inserting data into table "things"
 """
 input things_insert_input {
   created_at: timestamptz
+  group_relations: group_thing_arr_rel_insert_input
   id: uuid
   name: String
   owner: users_obj_rel_insert_input
@@ -3938,6 +5577,7 @@ ordering options when selecting data from "things"
 """
 input things_order_by {
   created_at: order_by
+  group_relations_aggregate: group_thing_aggregate_order_by
   id: order_by
   name: order_by
   owner: users_order_by

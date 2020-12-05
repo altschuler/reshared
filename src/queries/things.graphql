@@ -1,13 +1,35 @@
-﻿fragment ThingCard on things {
+﻿# Fragments
+
+fragment ThingCard on things {
     id
     name
+
     owner {
         ...UserCard
     }
 }
 
-query ThingList {
-    things {
+fragment ThingDetails on things {
+    ...ThingCard
+    group_relations {
+        group {
+            ...GroupCard
+        }
+    }
+}
+
+# Queries
+
+query ThingList($limit: Int, $offset: Int, $orderBy: [things_order_by!], $where: things_bool_exp!) {
+    things(where: $where, limit: $limit, offset: $offset, order_by: $orderBy) {
         ...ThingCard
+    }
+}
+
+# Mutations
+
+mutation CreateThing($input: things_insert_input!) {
+    insert_things_one(object: $input) {
+        ...ThingDetails
     }
 }

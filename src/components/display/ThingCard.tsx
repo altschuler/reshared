@@ -1,6 +1,7 @@
 ﻿import { ThingCardFragment } from '../../generated/graphql';
-import { Avatar, Card } from 'antd';
+import { Card } from 'antd';
 import { SettingOutlined, EllipsisOutlined, EditOutlined } from '@ant-design/icons';
+import { UserAvatar } from './UserAvatar';
 
 export interface ThingCardProps {
     thing: ThingCardFragment;
@@ -22,9 +23,7 @@ export const ThingCard = ({ thing }: ThingCardProps) => {
                 <EllipsisOutlined key="ellipsis" />,
             ]}>
             <Card.Meta
-                avatar={
-                    <Avatar alt={thing.owner.name || 'anonymous'} src={thing.owner.image || ''} />
-                }
+                avatar={<UserAvatar user={thing.owner} />}
                 title={thing.name}
                 description={'A thing wow'}
             />
