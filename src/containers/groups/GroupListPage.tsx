@@ -3,14 +3,14 @@ import { createUseStyles } from 'react-jss';
 import { Avatar, Button, List, Space, Typography } from 'antd';
 import Link from 'next/link';
 import { EyeInvisibleOutlined, EyeOutlined, GiftOutlined, TeamOutlined } from '@ant-design/icons';
-import { ReactNode, useCallback, useMemo, useState } from 'react';
+import { ReactNode, useCallback, useEffect } from 'react';
 import { useDialogs } from '../../components/dialogs/DialogProvider';
 import { CreateGroupDrawer } from '../../components/dialogs/CreateGroupDrawer';
 import { JoinButton } from './JoinButton';
-import { PaginationConfig } from 'antd/lib/pagination';
 import { useRouter } from 'next/router';
+import { usePagination } from '../../utils/list';
 
-const useStyles = createUseStyles((theme) => ({
+const useStyles = createUseStyles({
     root: {
         display: 'flex',
         flexDirection: 'column',
@@ -24,7 +24,7 @@ const useStyles = createUseStyles((theme) => ({
         justifyContent: 'space-between',
         alignItems: 'baseline',
     },
-}));
+});
 
 const IconText = ({ icon, text }: { icon: ReactNode; text: string | number }) => (
     <Space>
@@ -37,29 +37,18 @@ export const GroupListPage = () => {
     const dialogs = useDialogs();
     const classes = useStyles();
     const router = useRouter();
-    const [page, setPage] = useState(0);
-    const [pageSize, setPageSize] = useState(10);
-
-    const handlePaginationChange = useCallback((page: number, pageSize: number) => {
-        setPage(page);
-        setPageSize(pageSize);
-    }, []);
+    const pgn = usePagination();
 
     const { data, loading, error } = useListGroupsQuery({
-        variables: { limit: 10, offset: 0, orderBy: { created_at: Order_By.Desc } },
+        variables: {
+            limit: pgn.limit,
+            offset: pgn.offset,
+            orderBy: { created_at: Order_By.Desc },
+        },
     });
 
-    const pagination = useMemo(
-        () =>
-            ({
-                hideOnSinglePage: true,
-                onChange: handlePaginationChange,
-                current: page,
-                pageSize,
-                total: data?.groups_aggregate.aggregate?.count || 0,
-            } as PaginationConfig),
-        [data?.groups_aggregate.aggregate?.count, handlePaginationChange, page, pageSize],
-    );
+    const total = data?.groups_aggregate.aggregate?.count || 0;
+    useEffect(() => pgn.setTotal(total), [pgn, total]);
 
     const handleCreateGroup = useCallback(
         () =>
@@ -84,7 +73,7 @@ export const GroupListPage = () => {
                 loading={loading}
                 itemLayout="horizontal"
                 size="large"
-                pagination={pagination}
+                pagination={pgn.config}
                 dataSource={groups}
                 renderItem={(group) => (
                     <List.Item

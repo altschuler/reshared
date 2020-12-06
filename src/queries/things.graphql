@@ -24,6 +24,12 @@ query ThingList($limit: Int, $offset: Int, $orderBy: [things_order_by!], $where:
     things(where: $where, limit: $limit, offset: $offset, order_by: $orderBy) {
         ...ThingCard
     }
+
+    things_aggregate(where: $where) {
+        aggregate {
+            count
+        }
+    }
 }
 
 # Mutations

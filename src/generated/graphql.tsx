@@ -5814,7 +5814,13 @@ export type ThingListQuery = (
   & { things: Array<(
     { __typename?: 'things' }
     & ThingCardFragment
-  )> }
+  )>, things_aggregate: (
+    { __typename?: 'things_aggregate' }
+    & { aggregate?: Maybe<(
+      { __typename?: 'things_aggregate_fields' }
+      & Pick<Things_Aggregate_Fields, 'count'>
+    )> }
+  ) }
 );
 
 export type CreateThingMutationVariables = Exact<{
@@ -6680,6 +6686,11 @@ export const ThingListDocument = gql`
   things(where: $where, limit: $limit, offset: $offset, order_by: $orderBy) {
     ...ThingCard
   }
+  things_aggregate(where: $where) {
+    aggregate {
+      count
+    }
+  }
 }
     ${ThingCardFragmentDoc}`;
 
@@ -6885,7 +6896,10 @@ export type MarkNotificationReadMutationResult = Apollo.MutationResult<MarkNotif
 export type MarkNotificationReadMutationOptions = Apollo.BaseMutationOptions<MarkNotificationReadMutation, MarkNotificationReadMutationVariables>;
 export const MarkAllNotificationsReadDocument = gql`
     mutation MarkAllNotificationsRead($userId: uuid!, $readAt: timestamptz!) {
-  update_notifications(where: {user_id: {_eq: $userId}}, _set: {read_at: $readAt}) {
+  update_notifications(
+    where: {user_id: {_eq: $userId}, read_at: {_is_null: true}}
+    _set: {read_at: $readAt}
+  ) {
     affected_rows
     returning {
       ...NotificationCard
