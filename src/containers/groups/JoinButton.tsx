@@ -9,7 +9,7 @@ import { useCallback, useState } from 'react';
 import { Button, Input, message, Popconfirm } from 'antd';
 import { createUseStyles } from 'react-jss';
 
-const useStyles = createUseStyles(() => ({
+const useStyles = createUseStyles( ({
     requestForm: {
         display: 'flex',
         flexDirection: 'column',

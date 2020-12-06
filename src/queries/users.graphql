@@ -35,27 +35,34 @@ fragment UserPrivateDetail on users {
     }
 }
 
+fragment EntityCard on entities {
+    id
+    group {
+        id
+        name
+    }
+    thing {
+        id
+        name
+    }
+    user {
+        id
+        name
+    }
+    group_join_request {
+        id
+    }
+}
+
 fragment ActivityCard on activities {
     id
     created_at
     verb
     entity {
-        id
-        group {
-            id
-            name
-        }
-        thing {
-            id
-            name
-        }
-        user {
-            id
-            name
-        }
-        group_join_request {
-            id
-        }
+        ...EntityCard
+    }
+    secondary_entity {
+        ...EntityCard
     }
     actor {
         ...UserCard

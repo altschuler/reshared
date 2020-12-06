@@ -1,18 +1,18 @@
-﻿query UserCredentials($email: String!) {
+﻿query ServerUserCredentials($email: String!) {
     users(limit: 1, where: { email: { _eq: $email } }) {
         id
         password_hash
     }
 }
 
-query FindUser($email: String) {
+query ServerFindUser($email: String) {
     users(limit: 1, where: { email: { _eq: $email } }) {
         id
         email
     }
 }
 
-mutation InsertUser($input: users_insert_input!) {
+mutation ServerInsertUser($input: users_insert_input!) {
     insert_users_one(object: $input) {
         id
     }

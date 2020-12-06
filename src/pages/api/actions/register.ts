@@ -1,4 +1,7 @@
-﻿import { FindUserDocument, InsertUserDocument } from '../../../generated/server-queries';
+﻿import {
+    ServerFindUserDocument,
+    ServerInsertUserDocument,
+} from '../../../generated/server-queries';
 import bcrypt from 'bcryptjs';
 import Joi from 'joi';
 import { isEmpty } from 'lodash';
@@ -28,7 +31,7 @@ export default makeHandler<RegisterUserMutationVariables, RegistrationResult>(
     }),
     async (args, ctx) => {
         const existing = await hasuraClient.query({
-            query: FindUserDocument,
+            query: ServerFindUserDocument,
             variables: { email: args.input.email },
         });
 
@@ -39,7 +42,7 @@ export default makeHandler<RegisterUserMutationVariables, RegistrationResult>(
         const password_hash = await makePasswordHash(args.input.password);
 
         const query = await hasuraClient.mutate({
-            mutation: InsertUserDocument,
+            mutation: ServerInsertUserDocument,
             variables: { input: { email: args.input.email, name: args.input.name, password_hash } },
         });
 

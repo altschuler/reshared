@@ -1,7 +1,7 @@
 ﻿import NextAuth from 'next-auth';
 import Providers from 'next-auth/providers';
 import bcrypt from 'bcryptjs';
-import { UserCredentialsDocument } from '../../../generated/server-queries';
+import { ServerUserCredentialsDocument } from '../../../generated/server-queries';
 import { hasuraClient, decodeToken, encodeToken } from '../../../server';
 import { getUnixTime, addHours } from 'date-fns';
 
@@ -46,7 +46,7 @@ const options = {
             },
             authorize: async (credentials) => {
                 const userQuery = await hasuraClient.query({
-                    query: UserCredentialsDocument,
+                    query: ServerUserCredentialsDocument,
                     variables: { email: credentials.email },
                 });
 

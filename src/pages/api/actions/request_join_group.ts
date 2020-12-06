@@ -1,11 +1,10 @@
 ﻿import { ServerInsertGroupJoinRequestDocument } from '../../../generated/server-queries';
 import Joi from 'joi';
-import { makeAuthorizedHandler } from '../../../server/utils';
+import { makeAuthorizedHandler } from '../../../server';
 import {
     RequestJoinGroupMutationVariables,
     RequestJoinGroupInput,
     RequestJoinGroupResult,
-    Group_Join_Request_Status_Enum,
 } from '../../../generated/graphql';
 
 export default makeAuthorizedHandler<RequestJoinGroupMutationVariables, RequestJoinGroupResult>(
@@ -20,10 +19,9 @@ export default makeAuthorizedHandler<RequestJoinGroupMutationVariables, RequestJ
             mutation: ServerInsertGroupJoinRequestDocument,
             variables: {
                 input: {
-                    user_id: ctx.token.id,
+                    // Status and user id is set automatically by hasura
                     group_id: args.input.group_id,
                     message: args.input.message,
-                    status: Group_Join_Request_Status_Enum.Pending,
                 },
             },
         });
@@ -32,17 +30,5 @@ export default makeAuthorizedHandler<RequestJoinGroupMutationVariables, RequestJ
             group_id: mutation.data?.insert_group_join_requests_one?.group_id,
             user_id: ctx.token.id,
         });
-
-        // Send mail
-        //
-        // sendMail({
-        //     to: 'simon@altschuler.dk',
-        //     templateId: MailTemplate.VerifyEmail,
-        //     dynamicTemplateData: {
-        //         token: 'thisisnotreal',
-        //     },
-        // })
-        //     .then(() => console.log('mail sent'))
-        //     .catch((err) => console.log(err));
     },
 );

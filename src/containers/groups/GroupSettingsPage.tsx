@@ -1,8 +1,13 @@
-﻿import { useGroupDetailsQuery } from '../../generated/graphql';
+﻿import { useGroupDetailsQuery, useUpdateGroupMutation } from '../../generated/graphql';
 import { useRouter } from 'next/router';
-import { Alert, Divider, Spin, Typography } from 'antd';
+import { Alert, Divider, message, Modal, Spin, Typography } from 'antd';
 import { GroupLayout } from './GroupLayout';
-import { GroupEditor, makeEditorGroup, useGroupEditor } from '../../components/editors';
+import {
+    asGroupUpdateInput,
+    GroupEditor,
+    makeEditorGroup,
+    useGroupEditor,
+} from '../../components/editors';
 import { useCallback } from 'react';
 import { JoinLinkList } from './JoinLinkList';
 import { DeleteButton } from './DeleteButton';
@@ -13,6 +18,7 @@ export const GroupSettingsPage = () => {
     const { id } = router.query;
     const editorState = useGroupEditor();
 
+    const [updateGroup, updateMutation] = useUpdateGroupMutation();
     const { data, loading, error } = useGroupDetailsQuery({
         variables: { id: id as string },
         onCompleted: (data) => {
@@ -21,12 +27,17 @@ export const GroupSettingsPage = () => {
             }
         },
     });
+    const group = data?.groups_by_pk;
 
     const handleSave = useCallback(() => {
-        console.log('save', editorState);
-    }, [editorState]);
+        if (!group) {
+            return;
+        }
 
-    const group = data?.groups_by_pk;
+        updateGroup({ variables: { id: group.id, input: asGroupUpdateInput(editorState) } })
+            .then(() => message.success('Group updated'))
+            .catch((err) => Modal.error({ title: 'Failed to update group', content: err.message }));
+    }, [editorState, group, updateGroup]);
 
     const { isOwner } = useMembership(group);
 
@@ -41,7 +52,12 @@ export const GroupSettingsPage = () => {
     return (
         <GroupLayout activePage="settings" group={group}>
             <Typography.Title level={4}>Group Details</Typography.Title>
-            <GroupEditor state={editorState} onSubmit={handleSave} submitLabel="Update" />
+            <GroupEditor
+                state={editorState}
+                onSubmit={handleSave}
+                loading={updateMutation.loading}
+                submitLabel="Update"
+            />
 
             <Divider dashed type="horizontal" />
 

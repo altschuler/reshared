@@ -1,4 +1,6 @@
-﻿query ServerFindGroup($where: groups_bool_exp) {
+﻿# Queries
+
+query ServerFindGroup($where: groups_bool_exp) {
     groups(where: $where) {
         id
         name
@@ -19,6 +21,18 @@ query ServerFindJoinToken($where: group_join_tokens_bool_exp!) {
         token
     }
 }
+
+query ServerFindGroupMembers($groupId: uuid!, $where: group_members_bool_exp) {
+    groups_by_pk(id: $groupId) {
+        memberships(where: $where) {
+            user {
+                id
+            }
+        }
+    }
+}
+
+# Mutations
 
 mutation ServerInsertGroupJoinToken($input: group_join_tokens_insert_input!) {
     insert_group_join_tokens_one(object: $input) {
@@ -46,31 +60,8 @@ mutation ServerInsertGroupMember($input: group_members_insert_input!) {
     }
 }
 
-mutation ServerAcceptGroupJoinRequest(
-    $id: uuid!
-    $group_id: uuid!
-    $user_id: uuid!
-    $response: String
-    $responder_id: uuid!
-) {
-    update_group_join_requests_by_pk(
-        pk_columns: { id: $id }
-        _set: { status: accepted, response: $response, responder_id: $responder_id }
-    ) {
-        id
-        group_id
-    }
-
-    insert_group_members_one(object: { group_id: $group_id, user_id: $user_id, role: user }) {
-        id
-    }
-}
-
-mutation ServerRejectGroupJoinRequest($id: uuid!, $response: String, $responder_id: uuid!) {
-    update_group_join_requests_by_pk(
-        pk_columns: { id: $id }
-        _set: { status: rejected, response: $response, responder_id: $responder_id }
-    ) {
+mutation ServerUpdateGroupJoinRequest($id: uuid!, $input: group_join_requests_set_input!) {
+    update_group_join_requests_by_pk(pk_columns: { id: $id }, _set: $input) {
         id
         group_id
     }

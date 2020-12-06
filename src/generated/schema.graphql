@@ -176,6 +176,10 @@ type activities {
     """filter the rows returned"""
     where: notifications_bool_exp
   ): notifications_aggregate!
+
+  """An object relationship"""
+  secondary_entity: entities
+  secondary_entity_id: uuid
   verb: activity_verb_enum!
 }
 
@@ -227,6 +231,8 @@ input activities_bool_exp {
   entity_id: uuid_comparison_exp
   id: uuid_comparison_exp
   notifications: notifications_bool_exp
+  secondary_entity: entities_bool_exp
+  secondary_entity_id: uuid_comparison_exp
   verb: activity_verb_enum_comparison_exp
 }
 
@@ -249,6 +255,8 @@ input activities_insert_input {
   entity_id: uuid
   id: uuid
   notifications: notifications_arr_rel_insert_input
+  secondary_entity: entities_obj_rel_insert_input
+  secondary_entity_id: uuid
   verb: activity_verb_enum
 }
 
@@ -258,6 +266,7 @@ type activities_max_fields {
   created_at: timestamptz
   entity_id: uuid
   id: uuid
+  secondary_entity_id: uuid
 }
 
 """
@@ -268,6 +277,7 @@ input activities_max_order_by {
   created_at: order_by
   entity_id: order_by
   id: order_by
+  secondary_entity_id: order_by
 }
 
 """aggregate min on columns"""
@@ -276,6 +286,7 @@ type activities_min_fields {
   created_at: timestamptz
   entity_id: uuid
   id: uuid
+  secondary_entity_id: uuid
 }
 
 """
@@ -286,6 +297,7 @@ input activities_min_order_by {
   created_at: order_by
   entity_id: order_by
   id: order_by
+  secondary_entity_id: order_by
 }
 
 """
@@ -327,6 +339,8 @@ input activities_order_by {
   entity_id: order_by
   id: order_by
   notifications_aggregate: notifications_aggregate_order_by
+  secondary_entity: entities_order_by
+  secondary_entity_id: order_by
   verb: order_by
 }
 
@@ -354,6 +368,9 @@ enum activities_select_column {
   id
 
   """column name"""
+  secondary_entity_id
+
+  """column name"""
   verb
 }
 
@@ -365,6 +382,7 @@ input activities_set_input {
   created_at: timestamptz
   entity_id: uuid
   id: uuid
+  secondary_entity_id: uuid
   verb: activity_verb_enum
 }
 
@@ -383,6 +401,9 @@ enum activities_update_column {
 
   """column name"""
   id
+
+  """column name"""
+  secondary_entity_id
 
   """column name"""
   verb
@@ -458,6 +479,9 @@ enum activity_verb_enum {
 
   """commented"""
   commented
+
+  """deleted"""
+  deleted
 
   """joined"""
   joined

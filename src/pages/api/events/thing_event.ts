@@ -1,57 +1,40 @@
 ﻿import { makeEventHandler } from '../../../server';
-import { Activity_Verb_Enum, Entities_Constraint, Things } from '../../../generated/graphql';
-import {
-    FetchThingDetailsDocument,
-    InsertActivitiesDocument,
-} from '../../../generated/server-queries';
+import { Things } from '../../../generated/graphql';
+import { ServerFetchThingDetailsDocument } from '../../../generated/server-queries';
+import { ActivityInput, insertActivities, opToVerb } from '../../../server/activity';
 
 export default makeEventHandler<Things>(async (args, ctx) => {
-    if (args.event.op === 'INSERT') {
-        const id = (args.event.data.new || args.event.data.old).id;
-        const details = await ctx.adminClient.query({
-            query: FetchThingDetailsDocument,
-            variables: { id },
-        });
+    const id = (args.event.data.new || args.event.data.old).id;
+    const details = await ctx.adminClient.query({
+        query: ServerFetchThingDetailsDocument,
+        variables: { id },
+    });
 
-        const thing = details.data.things_by_pk;
+    const thing = details.data.things_by_pk;
 
-        if (!thing) {
-            return ctx.error('Thing not found');
-        }
-
-        const groups = thing.group_relations.map((r) => r.group);
-
-        await Promise.all(
-            groups.map((group) => {
-                const receivers = group.memberships
-                    .map((m) => m.user)
-                    .filter((u) => u.id !== thing.owner.id);
-
-                return ctx.adminClient.mutate({
-                    mutation: InsertActivitiesDocument,
-                    variables: {
-                        input: [
-                            {
-                                actor_id: thing.owner.id,
-                                verb: Activity_Verb_Enum.Added,
-                                entity: {
-                                    data: { thing_id: id },
-                                    on_conflict: {
-                                        constraint: Entities_Constraint.EntitiesThingIdKey,
-                                        update_columns: [],
-                                    },
-                                },
-                                // Notify all users in group except thing owner
-                                notifications: {
-                                    data: receivers.map((u) => ({ user_id: u.id })),
-                                },
-                            },
-                        ],
-                    },
-                });
-            }),
-        );
+    if (!thing) {
+        return ctx.error('Thing not found');
     }
+
+    const groups = thing.group_relations.map((r) => r.group);
+
+    const inserts = groups.map(
+        (group): ActivityInput => ({
+            actorId: ctx.userId,
+            entity: { thing_id: id },
+            verb: opToVerb(args.event.op),
+            secondaryEntity: { group_id: group.id },
+            // Notify all users in group except thing owner, and only on insert
+            receivers:
+                args.event.op === 'INSERT'
+                    ? group.memberships
+                          .filter((m) => m.user.id !== thing.owner.id)
+                          .map((m) => m.user.id)
+                    : [],
+        }),
+    );
+
+    await insertActivities(ctx, inserts);
 
     ctx.success({ success: true });
 });

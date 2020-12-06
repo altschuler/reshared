@@ -3,7 +3,7 @@ import { ThingCard } from '../../components/display';
 import { createUseStyles } from 'react-jss';
 import { Spin } from 'antd';
 
-const useStyles = createUseStyles((theme) => ({
+const useStyles = createUseStyles( ({
     root: {
         display: 'flex',
     },

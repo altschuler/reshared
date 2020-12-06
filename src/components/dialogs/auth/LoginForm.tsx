@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { createUseStyles } from 'react-jss';
 
-const useStyles = createUseStyles((theme) => ({
+const useStyles = createUseStyles( ({
     root: {
         display: 'flex',
         flexDirection: 'column',

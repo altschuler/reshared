@@ -1,6 +1,10 @@
 ﻿import { Alert, Button, Checkbox, Form, Input } from 'antd';
 import { createUseEditor, EditorState } from '../AbstractEditor';
-import { CreateGroupInput, GroupDetailsFragment } from '../../../generated/graphql';
+import {
+    CreateGroupInput,
+    GroupDetailsFragment,
+    Groups_Set_Input,
+} from '../../../generated/graphql';
 
 export interface EditorGroup {
     name: string;
@@ -77,5 +81,11 @@ export const useGroupEditor = createUseEditor<EditorGroup>(makeEditorGroup());
 export const asGroupCreateInput = ({ present }: GroupEditorState): CreateGroupInput => ({
     name: present.name,
     description: present.description || '',
+    public: present.public,
+});
+
+export const asGroupUpdateInput = ({ present }: GroupEditorState): Groups_Set_Input => ({
+    name: present.name,
+    description: present.description,
     public: present.public,
 });

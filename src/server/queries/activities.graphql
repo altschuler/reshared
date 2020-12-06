@@ -1,4 +1,4 @@
-﻿mutation InsertActivities($input: [activities_insert_input!]!) {
+﻿mutation ServerInsertActivities($input: [activities_insert_input!]!) {
     insert_activities(objects: $input) {
         returning {
             id

@@ -101,6 +101,12 @@ mutation CreateGroup($input: CreateGroupInput!) {
     }
 }
 
+mutation UpdateGroup($id: uuid!, $input: groups_set_input!) {
+    update_groups_by_pk(pk_columns: { id: $id }, _set: $input) {
+        ...GroupDetails
+    }
+}
+
 mutation DeleteGroup($id: uuid!) {
     delete_groups_by_pk(id: $id) {
         ...GroupCard

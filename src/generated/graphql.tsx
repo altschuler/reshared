@@ -153,6 +153,9 @@ export type Activities = {
   notifications: Array<Notifications>;
   /** An aggregated array relationship */
   notifications_aggregate: Notifications_Aggregate;
+  /** An object relationship */
+  secondary_entity?: Maybe<Entities>;
+  secondary_entity_id?: Maybe<Scalars['uuid']>;
   verb: Activity_Verb_Enum;
 };
 
@@ -223,6 +226,8 @@ export type Activities_Bool_Exp = {
   entity_id?: Maybe<Uuid_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   notifications?: Maybe<Notifications_Bool_Exp>;
+  secondary_entity?: Maybe<Entities_Bool_Exp>;
+  secondary_entity_id?: Maybe<Uuid_Comparison_Exp>;
   verb?: Maybe<Activity_Verb_Enum_Comparison_Exp>;
 };
 
@@ -241,6 +246,8 @@ export type Activities_Insert_Input = {
   entity_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   notifications?: Maybe<Notifications_Arr_Rel_Insert_Input>;
+  secondary_entity?: Maybe<Entities_Obj_Rel_Insert_Input>;
+  secondary_entity_id?: Maybe<Scalars['uuid']>;
   verb?: Maybe<Activity_Verb_Enum>;
 };
 
@@ -251,6 +258,7 @@ export type Activities_Max_Fields = {
   created_at?: Maybe<Scalars['timestamptz']>;
   entity_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
+  secondary_entity_id?: Maybe<Scalars['uuid']>;
 };
 
 /** order by max() on columns of table "activities" */
@@ -259,6 +267,7 @@ export type Activities_Max_Order_By = {
   created_at?: Maybe<Order_By>;
   entity_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  secondary_entity_id?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -268,6 +277,7 @@ export type Activities_Min_Fields = {
   created_at?: Maybe<Scalars['timestamptz']>;
   entity_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
+  secondary_entity_id?: Maybe<Scalars['uuid']>;
 };
 
 /** order by min() on columns of table "activities" */
@@ -276,6 +286,7 @@ export type Activities_Min_Order_By = {
   created_at?: Maybe<Order_By>;
   entity_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  secondary_entity_id?: Maybe<Order_By>;
 };
 
 /** response of any mutation on the table "activities" */
@@ -309,6 +320,8 @@ export type Activities_Order_By = {
   entity_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   notifications_aggregate?: Maybe<Notifications_Aggregate_Order_By>;
+  secondary_entity?: Maybe<Entities_Order_By>;
+  secondary_entity_id?: Maybe<Order_By>;
   verb?: Maybe<Order_By>;
 };
 
@@ -328,6 +341,8 @@ export enum Activities_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  SecondaryEntityId = 'secondary_entity_id',
+  /** column name */
   Verb = 'verb'
 }
 
@@ -337,6 +352,7 @@ export type Activities_Set_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
   entity_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
+  secondary_entity_id?: Maybe<Scalars['uuid']>;
   verb?: Maybe<Activity_Verb_Enum>;
 };
 
@@ -350,6 +366,8 @@ export enum Activities_Update_Column {
   EntityId = 'entity_id',
   /** column name */
   Id = 'id',
+  /** column name */
+  SecondaryEntityId = 'secondary_entity_id',
   /** column name */
   Verb = 'verb'
 }
@@ -418,6 +436,8 @@ export enum Activity_Verb_Enum {
   Added = 'added',
   /** commented */
   Commented = 'commented',
+  /** deleted */
+  Deleted = 'deleted',
   /** joined */
   Joined = 'joined',
   /** posted */
@@ -5623,6 +5643,20 @@ export type CreateGroupMutation = (
   ) }
 );
 
+export type UpdateGroupMutationVariables = Exact<{
+  id: Scalars['uuid'];
+  input: Groups_Set_Input;
+}>;
+
+
+export type UpdateGroupMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_groups_by_pk?: Maybe<(
+    { __typename?: 'groups' }
+    & GroupDetailsFragment
+  )> }
+);
+
 export type DeleteGroupMutationVariables = Exact<{
   id: Scalars['uuid'];
 }>;
@@ -5873,26 +5907,34 @@ export type UserPrivateDetailFragment = (
   & UserJoinRequestsFragment
 );
 
+export type EntityCardFragment = (
+  { __typename?: 'entities' }
+  & Pick<Entities, 'id'>
+  & { group?: Maybe<(
+    { __typename?: 'groups' }
+    & Pick<Groups, 'id' | 'name'>
+  )>, thing?: Maybe<(
+    { __typename?: 'things' }
+    & Pick<Things, 'id' | 'name'>
+  )>, user?: Maybe<(
+    { __typename?: 'users' }
+    & Pick<Users, 'id' | 'name'>
+  )>, group_join_request?: Maybe<(
+    { __typename?: 'group_join_requests' }
+    & Pick<Group_Join_Requests, 'id'>
+  )> }
+);
+
 export type ActivityCardFragment = (
   { __typename?: 'activities' }
   & Pick<Activities, 'id' | 'created_at' | 'verb'>
   & { entity: (
     { __typename?: 'entities' }
-    & Pick<Entities, 'id'>
-    & { group?: Maybe<(
-      { __typename?: 'groups' }
-      & Pick<Groups, 'id' | 'name'>
-    )>, thing?: Maybe<(
-      { __typename?: 'things' }
-      & Pick<Things, 'id' | 'name'>
-    )>, user?: Maybe<(
-      { __typename?: 'users' }
-      & Pick<Users, 'id' | 'name'>
-    )>, group_join_request?: Maybe<(
-      { __typename?: 'group_join_requests' }
-      & Pick<Group_Join_Requests, 'id'>
-    )> }
-  ), actor?: Maybe<(
+    & EntityCardFragment
+  ), secondary_entity?: Maybe<(
+    { __typename?: 'entities' }
+    & EntityCardFragment
+  )>, actor?: Maybe<(
     { __typename?: 'users' }
     & UserCardFragment
   )> }
@@ -6112,34 +6154,43 @@ export const UserPrivateDetailFragmentDoc = gql`
     ${UserDetailFragmentDoc}
 ${UserJoinRequestsFragmentDoc}
 ${GroupCardFragmentDoc}`;
+export const EntityCardFragmentDoc = gql`
+    fragment EntityCard on entities {
+  id
+  group {
+    id
+    name
+  }
+  thing {
+    id
+    name
+  }
+  user {
+    id
+    name
+  }
+  group_join_request {
+    id
+  }
+}
+    `;
 export const ActivityCardFragmentDoc = gql`
     fragment ActivityCard on activities {
   id
   created_at
   verb
   entity {
-    id
-    group {
-      id
-      name
-    }
-    thing {
-      id
-      name
-    }
-    user {
-      id
-      name
-    }
-    group_join_request {
-      id
-    }
+    ...EntityCard
+  }
+  secondary_entity {
+    ...EntityCard
   }
   actor {
     ...UserCard
   }
 }
-    ${UserCardFragmentDoc}`;
+    ${EntityCardFragmentDoc}
+${UserCardFragmentDoc}`;
 export const NotificationCardFragmentDoc = gql`
     fragment NotificationCard on notifications {
   id
@@ -6336,6 +6387,39 @@ export function useCreateGroupMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateGroupMutationHookResult = ReturnType<typeof useCreateGroupMutation>;
 export type CreateGroupMutationResult = Apollo.MutationResult<CreateGroupMutation>;
 export type CreateGroupMutationOptions = Apollo.BaseMutationOptions<CreateGroupMutation, CreateGroupMutationVariables>;
+export const UpdateGroupDocument = gql`
+    mutation UpdateGroup($id: uuid!, $input: groups_set_input!) {
+  update_groups_by_pk(pk_columns: {id: $id}, _set: $input) {
+    ...GroupDetails
+  }
+}
+    ${GroupDetailsFragmentDoc}`;
+export type UpdateGroupMutationFn = Apollo.MutationFunction<UpdateGroupMutation, UpdateGroupMutationVariables>;
+
+/**
+ * __useUpdateGroupMutation__
+ *
+ * To run a mutation, you first call `useUpdateGroupMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateGroupMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateGroupMutation, { data, loading, error }] = useUpdateGroupMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateGroupMutation(baseOptions?: Apollo.MutationHookOptions<UpdateGroupMutation, UpdateGroupMutationVariables>) {
+        return Apollo.useMutation<UpdateGroupMutation, UpdateGroupMutationVariables>(UpdateGroupDocument, baseOptions);
+      }
+export type UpdateGroupMutationHookResult = ReturnType<typeof useUpdateGroupMutation>;
+export type UpdateGroupMutationResult = Apollo.MutationResult<UpdateGroupMutation>;
+export type UpdateGroupMutationOptions = Apollo.BaseMutationOptions<UpdateGroupMutation, UpdateGroupMutationVariables>;
 export const DeleteGroupDocument = gql`
     mutation DeleteGroup($id: uuid!) {
   delete_groups_by_pk(id: $id) {
@@ -6990,6 +7074,7 @@ export const GqlOps = {
   },
   Mutation: {
     CreateGroup: 'CreateGroup',
+    UpdateGroup: 'UpdateGroup',
     DeleteGroup: 'DeleteGroup',
     LeaveGroup: 'LeaveGroup',
     JoinGroup: 'JoinGroup',
@@ -7020,6 +7105,7 @@ export const GqlOps = {
     UserDetail: 'UserDetail',
     UserJoinRequests: 'UserJoinRequests',
     UserPrivateDetail: 'UserPrivateDetail',
+    EntityCard: 'EntityCard',
     ActivityCard: 'ActivityCard',
     NotificationCard: 'NotificationCard'
   }

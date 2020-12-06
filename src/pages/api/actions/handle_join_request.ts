@@ -1,14 +1,16 @@
 ﻿import Joi from 'joi';
 import { hasuraClient, makeAuthorizedHandler } from '../../../server';
 import {
+    Group_Join_Request_Status_Enum,
+    Group_Role_Enum,
     HandleJoinRequestInput,
     HandleJoinRequestMutationVariables,
     HandleJoinRequestResult,
 } from '../../../generated/graphql';
 import {
-    ServerAcceptGroupJoinRequestDocument,
-    ServerRejectGroupJoinRequestDocument,
     ServerFindGroupJoinRequestDocument,
+    ServerInsertGroupMemberDocument,
+    ServerUpdateGroupJoinRequestDocument,
 } from '../../../generated/server-queries';
 
 export default makeAuthorizedHandler<HandleJoinRequestMutationVariables, HandleJoinRequestResult>(
@@ -32,39 +34,35 @@ export default makeAuthorizedHandler<HandleJoinRequestMutationVariables, HandleJ
             return ctx.error('Request not found');
         }
 
-        if (args.input.accepted) {
-            await ctx.userClient.mutate({
-                mutation: ServerAcceptGroupJoinRequestDocument,
-                variables: {
-                    id: args.input.join_request_id,
+        // Update the join request
+        await ctx.userClient.mutate({
+            mutation: ServerUpdateGroupJoinRequestDocument,
+            variables: {
+                id: args.input.join_request_id,
+                input: {
                     response: args.input.response,
                     responder_id: ctx.token?.id,
-                    group_id: request.group_id,
-                    user_id: request.user_id,
+                    status: args.input.accepted
+                        ? Group_Join_Request_Status_Enum.Accepted
+                        : Group_Join_Request_Status_Enum.Rejected,
                 },
-            });
-        } else {
-            await ctx.userClient.mutate({
-                mutation: ServerRejectGroupJoinRequestDocument,
+            },
+        });
+
+        // If it was accepted then add the new member to the group
+        if (args.input.accepted) {
+            await ctx.adminClient.mutate({
+                mutation: ServerInsertGroupMemberDocument,
                 variables: {
-                    id: args.input.join_request_id,
-                    response: args.input.response,
-                    responder_id: ctx.token?.id,
+                    input: {
+                        user_id: request.user_id,
+                        group_id: request.group_id,
+                        role: Group_Role_Enum.User,
+                    },
                 },
             });
         }
 
         ctx.success({ join_request_id: args.input.join_request_id });
-        // TODO: email requestee
-        //
-        // sendMail({
-        //     to: 'simon@altschuler.dk',
-        //     templateId: MailTemplate.VerifyEmail,
-        //     dynamicTemplateData: {
-        //         token: 'thisisnotreal',
-        //     },
-        // })
-        //     .then(() => console.log('mail sent'))
-        //     .catch((err) => console.log(err));
     },
 );

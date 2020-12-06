@@ -12,6 +12,7 @@ export const errorReply = (res: NextApiResponse, status: number, message: string
 export interface EventHandlerContext {
     req: NextApiRequest;
     res: NextApiResponse;
+    userId: string;
     error: (msg: string, code?: number) => void;
     success: (output: unknown) => void;
     adminClient: ApolloClient<NormalizedCacheObject>;
@@ -124,8 +125,10 @@ export interface HasuraEventPayload<T> {
         name: string;
     };
 }
+
 export const makeEventHandler = <T>(
     handler: (args: HasuraEventPayload<T>, ctx: EventHandlerContext) => Promise<void>,
+    allowUnauthorized?: boolean,
 ) => async (req: NextApiRequest, res: NextApiResponse) => {
     // Verify secret
     const secret = req.headers['x-webhook-secret'];
@@ -133,10 +136,22 @@ export const makeEventHandler = <T>(
         return errorReply(res, 401, 'Wrong or missing secret');
     }
 
+    const payload = req.body as HasuraEventPayload<T>;
+
+    const userId = payload.event.session_variables['x-hasura-user-id'] as string;
+
+    if (!allowUnauthorized && (payload.event.op === 'MANUAL' || !userId)) {
+        return res.json({
+            success: true,
+            message: 'ok: skipping manual trigger or missing user',
+        });
+    }
+
     try {
         await handler(req.body, {
             req,
             res,
+            userId,
             adminClient: hasuraClient,
             error: (msg: string, status = 400) => errorReply(res, status, msg),
             success: (output: unknown) => res.json(output),
