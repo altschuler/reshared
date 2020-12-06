@@ -98,7 +98,7 @@ export const PageLayout = (props: PageLayoutProps) => {
             <header className={clsx(classes.header, 'ant-layout-header')}>
                 <div className={classes.title}>
                     <Link href="/">
-                        <h3>Reshar.ed</h3>
+                        <h3>Reshared</h3>
                     </Link>
                 </div>
                 <div className={classes.nav}>
@@ -140,7 +140,7 @@ export const PageLayout = (props: PageLayoutProps) => {
                 {/*</Breadcrumb>*/}
                 <div>{props.children}</div>
             </Content>
-            <Footer className={classes.footer}>Reshar.ed</Footer>
+            <Footer className={classes.footer}>Reshared</Footer>
         </Layout>
     );
 };

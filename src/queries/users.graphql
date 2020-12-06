@@ -105,7 +105,10 @@ mutation MarkNotificationRead($id: uuid!, $readAt: timestamptz!) {
 }
 
 mutation MarkAllNotificationsRead($userId: uuid!, $readAt: timestamptz!) {
-    update_notifications(where: { user_id: { _eq: $userId } }, _set: { read_at: $readAt }) {
+    update_notifications(
+        where: { user_id: { _eq: $userId }, read_at: { _is_null: true } }
+        _set: { read_at: $readAt }
+    ) {
         affected_rows
         returning {
             ...NotificationCard

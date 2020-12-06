@@ -60,7 +60,6 @@ export const GroupSelect = (props: GroupSelectProps) => {
 
     const handleChange = useCallback(
         (id: string, options: GroupOption | GroupOption[]) => {
-            console.log(options);
             if (props.multiple) {
                 props.onChange((options as GroupOption[]).map((o) => o.group));
             } else {
@@ -70,8 +69,15 @@ export const GroupSelect = (props: GroupSelectProps) => {
         [props],
     );
 
+    const filterGroup = useCallback(
+        (input: string, option: GroupOption) =>
+            option.group.name.toLowerCase().indexOf(input.toLowerCase()) !== -1,
+        [],
+    );
+
     return (
         <Select
+            filterOption={filterGroup}
             placeholder={props.placeholder}
             allowClear={props.allowClear}
             className={classes.root}
