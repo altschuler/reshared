@@ -46,20 +46,24 @@ const entityConstraint = (input: Entities_Insert_Input): Entities_Constraint => 
     throw new Error('Invalid entity: no id specified');
 };
 
-const makeEntityInsert = (input: Entities_Insert_Input): Entities_Obj_Rel_Insert_Input => ({
-    data: input,
-    on_conflict: {
-        constraint: entityConstraint(input),
-        // We just update ID because otherwise the request fails with "zero rows affected"
-        update_columns: [Entities_Update_Column.Id],
-    },
-});
+const makeEntityInsert = (
+    input?: Entities_Insert_Input,
+): Entities_Obj_Rel_Insert_Input | undefined =>
+    input && {
+        data: input,
+        on_conflict: {
+            constraint: entityConstraint(input),
+            // We just update ID because otherwise the request fails with "zero rows affected"
+            update_columns: [Entities_Update_Column.Id],
+        },
+    };
 
 const toInsert = (input: ActivityInput): Activities_Insert_Input => {
     return {
         actor_id: input.actorId,
         verb: input.verb,
         entity: makeEntityInsert(input.entity),
+        secondary_entity: makeEntityInsert(input.secondaryEntity),
         // Notify all users in group except thing owner
         notifications: {
             data: input.receivers?.map((userId) => ({ user_id: userId })) || [],

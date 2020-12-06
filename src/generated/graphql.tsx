@@ -5921,7 +5921,7 @@ export type EntityCardFragment = (
     & Pick<Users, 'id' | 'name'>
   )>, group_join_request?: Maybe<(
     { __typename?: 'group_join_requests' }
-    & Pick<Group_Join_Requests, 'id'>
+    & Pick<Group_Join_Requests, 'id' | 'response'>
   )> }
 );
 
@@ -6171,6 +6171,7 @@ export const EntityCardFragmentDoc = gql`
   }
   group_join_request {
     id
+    response
   }
 }
     `;

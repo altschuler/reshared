@@ -1,6 +1,6 @@
 ﻿import { List, Space, Tag, Typography } from 'antd';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { DateDisplay, UserAvatar } from '../../components/display';
 import Link from 'next/link';
 import {
@@ -8,6 +8,7 @@ import {
     GroupCardFragment,
     GroupMemberCardFragment,
 } from '../../generated/graphql';
+import { usePagination } from '../../utils/list';
 
 export interface MemberListProps {
     group: GroupCardFragment;
@@ -15,9 +16,16 @@ export interface MemberListProps {
 }
 
 export const MemberList = ({ memberships }: MemberListProps) => {
+    // TODO: do actual pagination
+    const pgn = usePagination();
+    useEffect(() => {
+        pgn.setTotal(memberships.length);
+    }, [memberships.length, pgn]);
+
     return (
         <List
             header={<Typography.Title level={5}>Current Members</Typography.Title>}
+            pagination={pgn.config}
             itemLayout="horizontal"
             dataSource={memberships}
             renderItem={(member) => (

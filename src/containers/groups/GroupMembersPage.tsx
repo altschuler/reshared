@@ -11,6 +11,7 @@ const useStyles = createUseStyles({});
 
 export const GroupMembersPage = () => {
     const router = useRouter();
+
     const classes = useStyles();
     const { id } = router.query;
 
