@@ -138,6 +138,32 @@ export type String_Comparison_Exp = {
   _similar?: Maybe<Scalars['String']>;
 };
 
+export type UpdateGroupThing = {
+  groupId: Scalars['uuid'];
+};
+
+export type UpdateThingImage = {
+  description: Scalars['String'];
+  fileId: Scalars['uuid'];
+  order: Scalars['Int'];
+};
+
+export type UpdateThingInput = {
+  category?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  groups?: Maybe<Array<UpdateGroupThing>>;
+  id?: Maybe<Scalars['uuid']>;
+  images?: Maybe<Array<UpdateThingImage>>;
+  name?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
+};
+
+export type UpdateThingResult = {
+  __typename?: 'UpdateThingResult';
+  thing?: Maybe<Things>;
+  thing_id: Scalars['uuid'];
+};
+
 /** columns and relationships of "activities" */
 export type Activities = {
   __typename?: 'activities';
@@ -769,6 +795,344 @@ export enum Entities_Update_Column {
   /** column name */
   UserId = 'user_id'
 }
+
+/** columns and relationships of "file_uploads" */
+export type File_Uploads = {
+  __typename?: 'file_uploads';
+  created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  mime_type?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  /** An object relationship */
+  owner?: Maybe<Users>;
+  owner_id?: Maybe<Scalars['uuid']>;
+  size: Scalars['Int'];
+  updated_at: Scalars['timestamptz'];
+  url: Scalars['String'];
+};
+
+/** aggregated selection of "file_uploads" */
+export type File_Uploads_Aggregate = {
+  __typename?: 'file_uploads_aggregate';
+  aggregate?: Maybe<File_Uploads_Aggregate_Fields>;
+  nodes: Array<File_Uploads>;
+};
+
+/** aggregate fields of "file_uploads" */
+export type File_Uploads_Aggregate_Fields = {
+  __typename?: 'file_uploads_aggregate_fields';
+  avg?: Maybe<File_Uploads_Avg_Fields>;
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<File_Uploads_Max_Fields>;
+  min?: Maybe<File_Uploads_Min_Fields>;
+  stddev?: Maybe<File_Uploads_Stddev_Fields>;
+  stddev_pop?: Maybe<File_Uploads_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<File_Uploads_Stddev_Samp_Fields>;
+  sum?: Maybe<File_Uploads_Sum_Fields>;
+  var_pop?: Maybe<File_Uploads_Var_Pop_Fields>;
+  var_samp?: Maybe<File_Uploads_Var_Samp_Fields>;
+  variance?: Maybe<File_Uploads_Variance_Fields>;
+};
+
+
+/** aggregate fields of "file_uploads" */
+export type File_Uploads_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<File_Uploads_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "file_uploads" */
+export type File_Uploads_Aggregate_Order_By = {
+  avg?: Maybe<File_Uploads_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<File_Uploads_Max_Order_By>;
+  min?: Maybe<File_Uploads_Min_Order_By>;
+  stddev?: Maybe<File_Uploads_Stddev_Order_By>;
+  stddev_pop?: Maybe<File_Uploads_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<File_Uploads_Stddev_Samp_Order_By>;
+  sum?: Maybe<File_Uploads_Sum_Order_By>;
+  var_pop?: Maybe<File_Uploads_Var_Pop_Order_By>;
+  var_samp?: Maybe<File_Uploads_Var_Samp_Order_By>;
+  variance?: Maybe<File_Uploads_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "file_uploads" */
+export type File_Uploads_Arr_Rel_Insert_Input = {
+  data: Array<File_Uploads_Insert_Input>;
+  on_conflict?: Maybe<File_Uploads_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type File_Uploads_Avg_Fields = {
+  __typename?: 'file_uploads_avg_fields';
+  size?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "file_uploads" */
+export type File_Uploads_Avg_Order_By = {
+  size?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "file_uploads". All fields are combined with a logical 'AND'. */
+export type File_Uploads_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<File_Uploads_Bool_Exp>>>;
+  _not?: Maybe<File_Uploads_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<File_Uploads_Bool_Exp>>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  mime_type?: Maybe<String_Comparison_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
+  owner?: Maybe<Users_Bool_Exp>;
+  owner_id?: Maybe<Uuid_Comparison_Exp>;
+  size?: Maybe<Int_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+  url?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "file_uploads" */
+export enum File_Uploads_Constraint {
+  /** unique or primary key constraint */
+  FileUploadsPkey = 'file_uploads_pkey',
+  /** unique or primary key constraint */
+  FileUploadsUrlKey = 'file_uploads_url_key'
+}
+
+/** input type for incrementing integer column in table "file_uploads" */
+export type File_Uploads_Inc_Input = {
+  size?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "file_uploads" */
+export type File_Uploads_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  mime_type?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  owner?: Maybe<Users_Obj_Rel_Insert_Input>;
+  owner_id?: Maybe<Scalars['uuid']>;
+  size?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  url?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type File_Uploads_Max_Fields = {
+  __typename?: 'file_uploads_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  mime_type?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  owner_id?: Maybe<Scalars['uuid']>;
+  size?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  url?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "file_uploads" */
+export type File_Uploads_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  mime_type?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  owner_id?: Maybe<Order_By>;
+  size?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  url?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type File_Uploads_Min_Fields = {
+  __typename?: 'file_uploads_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  mime_type?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  owner_id?: Maybe<Scalars['uuid']>;
+  size?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  url?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "file_uploads" */
+export type File_Uploads_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  mime_type?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  owner_id?: Maybe<Order_By>;
+  size?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  url?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "file_uploads" */
+export type File_Uploads_Mutation_Response = {
+  __typename?: 'file_uploads_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<File_Uploads>;
+};
+
+/** input type for inserting object relation for remote table "file_uploads" */
+export type File_Uploads_Obj_Rel_Insert_Input = {
+  data: File_Uploads_Insert_Input;
+  on_conflict?: Maybe<File_Uploads_On_Conflict>;
+};
+
+/** on conflict condition type for table "file_uploads" */
+export type File_Uploads_On_Conflict = {
+  constraint: File_Uploads_Constraint;
+  update_columns: Array<File_Uploads_Update_Column>;
+  where?: Maybe<File_Uploads_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "file_uploads" */
+export type File_Uploads_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  mime_type?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  owner?: Maybe<Users_Order_By>;
+  owner_id?: Maybe<Order_By>;
+  size?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  url?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "file_uploads" */
+export type File_Uploads_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "file_uploads" */
+export enum File_Uploads_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  MimeType = 'mime_type',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  OwnerId = 'owner_id',
+  /** column name */
+  Size = 'size',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  Url = 'url'
+}
+
+/** input type for updating data in table "file_uploads" */
+export type File_Uploads_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  mime_type?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  owner_id?: Maybe<Scalars['uuid']>;
+  size?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  url?: Maybe<Scalars['String']>;
+};
+
+/** aggregate stddev on columns */
+export type File_Uploads_Stddev_Fields = {
+  __typename?: 'file_uploads_stddev_fields';
+  size?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "file_uploads" */
+export type File_Uploads_Stddev_Order_By = {
+  size?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type File_Uploads_Stddev_Pop_Fields = {
+  __typename?: 'file_uploads_stddev_pop_fields';
+  size?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "file_uploads" */
+export type File_Uploads_Stddev_Pop_Order_By = {
+  size?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type File_Uploads_Stddev_Samp_Fields = {
+  __typename?: 'file_uploads_stddev_samp_fields';
+  size?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "file_uploads" */
+export type File_Uploads_Stddev_Samp_Order_By = {
+  size?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type File_Uploads_Sum_Fields = {
+  __typename?: 'file_uploads_sum_fields';
+  size?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "file_uploads" */
+export type File_Uploads_Sum_Order_By = {
+  size?: Maybe<Order_By>;
+};
+
+/** update columns of table "file_uploads" */
+export enum File_Uploads_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  MimeType = 'mime_type',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  OwnerId = 'owner_id',
+  /** column name */
+  Size = 'size',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  Url = 'url'
+}
+
+/** aggregate var_pop on columns */
+export type File_Uploads_Var_Pop_Fields = {
+  __typename?: 'file_uploads_var_pop_fields';
+  size?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "file_uploads" */
+export type File_Uploads_Var_Pop_Order_By = {
+  size?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type File_Uploads_Var_Samp_Fields = {
+  __typename?: 'file_uploads_var_samp_fields';
+  size?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "file_uploads" */
+export type File_Uploads_Var_Samp_Order_By = {
+  size?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type File_Uploads_Variance_Fields = {
+  __typename?: 'file_uploads_variance_fields';
+  size?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "file_uploads" */
+export type File_Uploads_Variance_Order_By = {
+  size?: Maybe<Order_By>;
+};
 
 /** columns and relationships of "group_join_request_status" */
 export type Group_Join_Request_Status = {
@@ -2449,6 +2813,10 @@ export type Mutation_Root = {
   delete_entities?: Maybe<Entities_Mutation_Response>;
   /** delete single row from the table: "entities" */
   delete_entities_by_pk?: Maybe<Entities>;
+  /** delete data from the table: "file_uploads" */
+  delete_file_uploads?: Maybe<File_Uploads_Mutation_Response>;
+  /** delete single row from the table: "file_uploads" */
+  delete_file_uploads_by_pk?: Maybe<File_Uploads>;
   /** delete data from the table: "group_join_request_status" */
   delete_group_join_request_status?: Maybe<Group_Join_Request_Status_Mutation_Response>;
   /** delete single row from the table: "group_join_request_status" */
@@ -2485,6 +2853,14 @@ export type Mutation_Root = {
   delete_notifications?: Maybe<Notifications_Mutation_Response>;
   /** delete single row from the table: "notifications" */
   delete_notifications_by_pk?: Maybe<Notifications>;
+  /** delete data from the table: "thing_images" */
+  delete_thing_images?: Maybe<Thing_Images_Mutation_Response>;
+  /** delete single row from the table: "thing_images" */
+  delete_thing_images_by_pk?: Maybe<Thing_Images>;
+  /** delete data from the table: "thing_type" */
+  delete_thing_type?: Maybe<Thing_Type_Mutation_Response>;
+  /** delete single row from the table: "thing_type" */
+  delete_thing_type_by_pk?: Maybe<Thing_Type>;
   /** delete data from the table: "things" */
   delete_things?: Maybe<Things_Mutation_Response>;
   /** delete single row from the table: "things" */
@@ -2513,6 +2889,10 @@ export type Mutation_Root = {
   insert_entities?: Maybe<Entities_Mutation_Response>;
   /** insert a single row into the table: "entities" */
   insert_entities_one?: Maybe<Entities>;
+  /** insert data into the table: "file_uploads" */
+  insert_file_uploads?: Maybe<File_Uploads_Mutation_Response>;
+  /** insert a single row into the table: "file_uploads" */
+  insert_file_uploads_one?: Maybe<File_Uploads>;
   /** insert data into the table: "group_join_request_status" */
   insert_group_join_request_status?: Maybe<Group_Join_Request_Status_Mutation_Response>;
   /** insert a single row into the table: "group_join_request_status" */
@@ -2549,6 +2929,14 @@ export type Mutation_Root = {
   insert_notifications?: Maybe<Notifications_Mutation_Response>;
   /** insert a single row into the table: "notifications" */
   insert_notifications_one?: Maybe<Notifications>;
+  /** insert data into the table: "thing_images" */
+  insert_thing_images?: Maybe<Thing_Images_Mutation_Response>;
+  /** insert a single row into the table: "thing_images" */
+  insert_thing_images_one?: Maybe<Thing_Images>;
+  /** insert data into the table: "thing_type" */
+  insert_thing_type?: Maybe<Thing_Type_Mutation_Response>;
+  /** insert a single row into the table: "thing_type" */
+  insert_thing_type_one?: Maybe<Thing_Type>;
   /** insert data into the table: "things" */
   insert_things?: Maybe<Things_Mutation_Response>;
   /** insert a single row into the table: "things" */
@@ -2571,6 +2959,8 @@ export type Mutation_Root = {
   registerCredentials?: Maybe<RegistrationResult>;
   /** perform the action: "requestJoinGroup" */
   requestJoinGroup?: Maybe<RequestJoinGroupResult>;
+  /** perform the action: "updateThing" */
+  updateThing?: Maybe<UpdateThingResult>;
   /** update data of the table: "activities" */
   update_activities?: Maybe<Activities_Mutation_Response>;
   /** update single row of the table: "activities" */
@@ -2583,6 +2973,10 @@ export type Mutation_Root = {
   update_entities?: Maybe<Entities_Mutation_Response>;
   /** update single row of the table: "entities" */
   update_entities_by_pk?: Maybe<Entities>;
+  /** update data of the table: "file_uploads" */
+  update_file_uploads?: Maybe<File_Uploads_Mutation_Response>;
+  /** update single row of the table: "file_uploads" */
+  update_file_uploads_by_pk?: Maybe<File_Uploads>;
   /** update data of the table: "group_join_request_status" */
   update_group_join_request_status?: Maybe<Group_Join_Request_Status_Mutation_Response>;
   /** update single row of the table: "group_join_request_status" */
@@ -2619,6 +3013,14 @@ export type Mutation_Root = {
   update_notifications?: Maybe<Notifications_Mutation_Response>;
   /** update single row of the table: "notifications" */
   update_notifications_by_pk?: Maybe<Notifications>;
+  /** update data of the table: "thing_images" */
+  update_thing_images?: Maybe<Thing_Images_Mutation_Response>;
+  /** update single row of the table: "thing_images" */
+  update_thing_images_by_pk?: Maybe<Thing_Images>;
+  /** update data of the table: "thing_type" */
+  update_thing_type?: Maybe<Thing_Type_Mutation_Response>;
+  /** update single row of the table: "thing_type" */
+  update_thing_type_by_pk?: Maybe<Thing_Type>;
   /** update data of the table: "things" */
   update_things?: Maybe<Things_Mutation_Response>;
   /** update single row of the table: "things" */
@@ -2680,6 +3082,18 @@ export type Mutation_RootDelete_EntitiesArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Entities_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_File_UploadsArgs = {
+  where: File_Uploads_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_File_Uploads_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -2793,6 +3207,30 @@ export type Mutation_RootDelete_Notifications_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Thing_ImagesArgs = {
+  where: Thing_Images_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Thing_Images_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Thing_TypeArgs = {
+  where: Thing_Type_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Thing_Type_By_PkArgs = {
+  value: Scalars['String'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_ThingsArgs = {
   where: Things_Bool_Exp;
 };
@@ -2879,6 +3317,20 @@ export type Mutation_RootInsert_EntitiesArgs = {
 export type Mutation_RootInsert_Entities_OneArgs = {
   object: Entities_Insert_Input;
   on_conflict?: Maybe<Entities_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_File_UploadsArgs = {
+  objects: Array<File_Uploads_Insert_Input>;
+  on_conflict?: Maybe<File_Uploads_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_File_Uploads_OneArgs = {
+  object: File_Uploads_Insert_Input;
+  on_conflict?: Maybe<File_Uploads_On_Conflict>;
 };
 
 
@@ -3009,6 +3461,34 @@ export type Mutation_RootInsert_Notifications_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_Thing_ImagesArgs = {
+  objects: Array<Thing_Images_Insert_Input>;
+  on_conflict?: Maybe<Thing_Images_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Thing_Images_OneArgs = {
+  object: Thing_Images_Insert_Input;
+  on_conflict?: Maybe<Thing_Images_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Thing_TypeArgs = {
+  objects: Array<Thing_Type_Insert_Input>;
+  on_conflict?: Maybe<Thing_Type_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Thing_Type_OneArgs = {
+  object: Thing_Type_Insert_Input;
+  on_conflict?: Maybe<Thing_Type_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_ThingsArgs = {
   objects: Array<Things_Insert_Input>;
   on_conflict?: Maybe<Things_On_Conflict>;
@@ -3081,6 +3561,12 @@ export type Mutation_RootRequestJoinGroupArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdateThingArgs = {
+  input: UpdateThingInput;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_ActivitiesArgs = {
   _set?: Maybe<Activities_Set_Input>;
   where: Activities_Bool_Exp;
@@ -3119,6 +3605,22 @@ export type Mutation_RootUpdate_EntitiesArgs = {
 export type Mutation_RootUpdate_Entities_By_PkArgs = {
   _set?: Maybe<Entities_Set_Input>;
   pk_columns: Entities_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_File_UploadsArgs = {
+  _inc?: Maybe<File_Uploads_Inc_Input>;
+  _set?: Maybe<File_Uploads_Set_Input>;
+  where: File_Uploads_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_File_Uploads_By_PkArgs = {
+  _inc?: Maybe<File_Uploads_Inc_Input>;
+  _set?: Maybe<File_Uploads_Set_Input>;
+  pk_columns: File_Uploads_Pk_Columns_Input;
 };
 
 
@@ -3245,6 +3747,36 @@ export type Mutation_RootUpdate_NotificationsArgs = {
 export type Mutation_RootUpdate_Notifications_By_PkArgs = {
   _set?: Maybe<Notifications_Set_Input>;
   pk_columns: Notifications_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Thing_ImagesArgs = {
+  _inc?: Maybe<Thing_Images_Inc_Input>;
+  _set?: Maybe<Thing_Images_Set_Input>;
+  where: Thing_Images_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Thing_Images_By_PkArgs = {
+  _inc?: Maybe<Thing_Images_Inc_Input>;
+  _set?: Maybe<Thing_Images_Set_Input>;
+  pk_columns: Thing_Images_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Thing_TypeArgs = {
+  _set?: Maybe<Thing_Type_Set_Input>;
+  where: Thing_Type_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Thing_Type_By_PkArgs = {
+  _set?: Maybe<Thing_Type_Set_Input>;
+  pk_columns: Thing_Type_Pk_Columns_Input;
 };
 
 
@@ -3528,6 +4060,12 @@ export type Query_Root = {
   entities_aggregate: Entities_Aggregate;
   /** fetch data from the table: "entities" using primary key columns */
   entities_by_pk?: Maybe<Entities>;
+  /** fetch data from the table: "file_uploads" */
+  file_uploads: Array<File_Uploads>;
+  /** fetch aggregated fields from the table: "file_uploads" */
+  file_uploads_aggregate: File_Uploads_Aggregate;
+  /** fetch data from the table: "file_uploads" using primary key columns */
+  file_uploads_by_pk?: Maybe<File_Uploads>;
   /** fetch data from the table: "group_join_request_status" */
   group_join_request_status: Array<Group_Join_Request_Status>;
   /** fetch aggregated fields from the table: "group_join_request_status" */
@@ -3582,6 +4120,18 @@ export type Query_Root = {
   notifications_aggregate: Notifications_Aggregate;
   /** fetch data from the table: "notifications" using primary key columns */
   notifications_by_pk?: Maybe<Notifications>;
+  /** fetch data from the table: "thing_images" */
+  thing_images: Array<Thing_Images>;
+  /** fetch aggregated fields from the table: "thing_images" */
+  thing_images_aggregate: Thing_Images_Aggregate;
+  /** fetch data from the table: "thing_images" using primary key columns */
+  thing_images_by_pk?: Maybe<Thing_Images>;
+  /** fetch data from the table: "thing_type" */
+  thing_type: Array<Thing_Type>;
+  /** fetch aggregated fields from the table: "thing_type" */
+  thing_type_aggregate: Thing_Type_Aggregate;
+  /** fetch data from the table: "thing_type" using primary key columns */
+  thing_type_by_pk?: Maybe<Thing_Type>;
   /** fetch data from the table: "things" */
   things: Array<Things>;
   /** fetch aggregated fields from the table: "things" */
@@ -3681,6 +4231,32 @@ export type Query_RootEntities_AggregateArgs = {
 
 /** query root */
 export type Query_RootEntities_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** query root */
+export type Query_RootFile_UploadsArgs = {
+  distinct_on?: Maybe<Array<File_Uploads_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<File_Uploads_Order_By>>;
+  where?: Maybe<File_Uploads_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootFile_Uploads_AggregateArgs = {
+  distinct_on?: Maybe<Array<File_Uploads_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<File_Uploads_Order_By>>;
+  where?: Maybe<File_Uploads_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootFile_Uploads_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -3920,6 +4496,58 @@ export type Query_RootNotifications_By_PkArgs = {
 
 
 /** query root */
+export type Query_RootThing_ImagesArgs = {
+  distinct_on?: Maybe<Array<Thing_Images_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Thing_Images_Order_By>>;
+  where?: Maybe<Thing_Images_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootThing_Images_AggregateArgs = {
+  distinct_on?: Maybe<Array<Thing_Images_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Thing_Images_Order_By>>;
+  where?: Maybe<Thing_Images_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootThing_Images_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** query root */
+export type Query_RootThing_TypeArgs = {
+  distinct_on?: Maybe<Array<Thing_Type_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Thing_Type_Order_By>>;
+  where?: Maybe<Thing_Type_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootThing_Type_AggregateArgs = {
+  distinct_on?: Maybe<Array<Thing_Type_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Thing_Type_Order_By>>;
+  where?: Maybe<Thing_Type_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootThing_Type_By_PkArgs = {
+  value: Scalars['String'];
+};
+
+
+/** query root */
 export type Query_RootThingsArgs = {
   distinct_on?: Maybe<Array<Things_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4037,6 +4665,12 @@ export type Subscription_Root = {
   entities_aggregate: Entities_Aggregate;
   /** fetch data from the table: "entities" using primary key columns */
   entities_by_pk?: Maybe<Entities>;
+  /** fetch data from the table: "file_uploads" */
+  file_uploads: Array<File_Uploads>;
+  /** fetch aggregated fields from the table: "file_uploads" */
+  file_uploads_aggregate: File_Uploads_Aggregate;
+  /** fetch data from the table: "file_uploads" using primary key columns */
+  file_uploads_by_pk?: Maybe<File_Uploads>;
   /** fetch data from the table: "group_join_request_status" */
   group_join_request_status: Array<Group_Join_Request_Status>;
   /** fetch aggregated fields from the table: "group_join_request_status" */
@@ -4091,6 +4725,18 @@ export type Subscription_Root = {
   notifications_aggregate: Notifications_Aggregate;
   /** fetch data from the table: "notifications" using primary key columns */
   notifications_by_pk?: Maybe<Notifications>;
+  /** fetch data from the table: "thing_images" */
+  thing_images: Array<Thing_Images>;
+  /** fetch aggregated fields from the table: "thing_images" */
+  thing_images_aggregate: Thing_Images_Aggregate;
+  /** fetch data from the table: "thing_images" using primary key columns */
+  thing_images_by_pk?: Maybe<Thing_Images>;
+  /** fetch data from the table: "thing_type" */
+  thing_type: Array<Thing_Type>;
+  /** fetch aggregated fields from the table: "thing_type" */
+  thing_type_aggregate: Thing_Type_Aggregate;
+  /** fetch data from the table: "thing_type" using primary key columns */
+  thing_type_by_pk?: Maybe<Thing_Type>;
   /** fetch data from the table: "things" */
   things: Array<Things>;
   /** fetch aggregated fields from the table: "things" */
@@ -4190,6 +4836,32 @@ export type Subscription_RootEntities_AggregateArgs = {
 
 /** subscription root */
 export type Subscription_RootEntities_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** subscription root */
+export type Subscription_RootFile_UploadsArgs = {
+  distinct_on?: Maybe<Array<File_Uploads_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<File_Uploads_Order_By>>;
+  where?: Maybe<File_Uploads_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootFile_Uploads_AggregateArgs = {
+  distinct_on?: Maybe<Array<File_Uploads_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<File_Uploads_Order_By>>;
+  where?: Maybe<File_Uploads_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootFile_Uploads_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -4429,6 +5101,58 @@ export type Subscription_RootNotifications_By_PkArgs = {
 
 
 /** subscription root */
+export type Subscription_RootThing_ImagesArgs = {
+  distinct_on?: Maybe<Array<Thing_Images_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Thing_Images_Order_By>>;
+  where?: Maybe<Thing_Images_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootThing_Images_AggregateArgs = {
+  distinct_on?: Maybe<Array<Thing_Images_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Thing_Images_Order_By>>;
+  where?: Maybe<Thing_Images_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootThing_Images_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** subscription root */
+export type Subscription_RootThing_TypeArgs = {
+  distinct_on?: Maybe<Array<Thing_Type_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Thing_Type_Order_By>>;
+  where?: Maybe<Thing_Type_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootThing_Type_AggregateArgs = {
+  distinct_on?: Maybe<Array<Thing_Type_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Thing_Type_Order_By>>;
+  where?: Maybe<Thing_Type_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootThing_Type_By_PkArgs = {
+  value: Scalars['String'];
+};
+
+
+/** subscription root */
 export type Subscription_RootThingsArgs = {
   distinct_on?: Maybe<Array<Things_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4525,19 +5249,520 @@ export type Subscription_RootVerification_Requests_By_PkArgs = {
   id: Scalars['Int'];
 };
 
+/** columns and relationships of "thing_images" */
+export type Thing_Images = {
+  __typename?: 'thing_images';
+  created_at: Scalars['timestamptz'];
+  description: Scalars['String'];
+  /** An object relationship */
+  file: File_Uploads;
+  file_id: Scalars['uuid'];
+  id: Scalars['uuid'];
+  order: Scalars['Int'];
+  /** An object relationship */
+  thing: Things;
+  thing_id: Scalars['uuid'];
+  updated_at: Scalars['timestamptz'];
+};
+
+/** aggregated selection of "thing_images" */
+export type Thing_Images_Aggregate = {
+  __typename?: 'thing_images_aggregate';
+  aggregate?: Maybe<Thing_Images_Aggregate_Fields>;
+  nodes: Array<Thing_Images>;
+};
+
+/** aggregate fields of "thing_images" */
+export type Thing_Images_Aggregate_Fields = {
+  __typename?: 'thing_images_aggregate_fields';
+  avg?: Maybe<Thing_Images_Avg_Fields>;
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Thing_Images_Max_Fields>;
+  min?: Maybe<Thing_Images_Min_Fields>;
+  stddev?: Maybe<Thing_Images_Stddev_Fields>;
+  stddev_pop?: Maybe<Thing_Images_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Thing_Images_Stddev_Samp_Fields>;
+  sum?: Maybe<Thing_Images_Sum_Fields>;
+  var_pop?: Maybe<Thing_Images_Var_Pop_Fields>;
+  var_samp?: Maybe<Thing_Images_Var_Samp_Fields>;
+  variance?: Maybe<Thing_Images_Variance_Fields>;
+};
+
+
+/** aggregate fields of "thing_images" */
+export type Thing_Images_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Thing_Images_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "thing_images" */
+export type Thing_Images_Aggregate_Order_By = {
+  avg?: Maybe<Thing_Images_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Thing_Images_Max_Order_By>;
+  min?: Maybe<Thing_Images_Min_Order_By>;
+  stddev?: Maybe<Thing_Images_Stddev_Order_By>;
+  stddev_pop?: Maybe<Thing_Images_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Thing_Images_Stddev_Samp_Order_By>;
+  sum?: Maybe<Thing_Images_Sum_Order_By>;
+  var_pop?: Maybe<Thing_Images_Var_Pop_Order_By>;
+  var_samp?: Maybe<Thing_Images_Var_Samp_Order_By>;
+  variance?: Maybe<Thing_Images_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "thing_images" */
+export type Thing_Images_Arr_Rel_Insert_Input = {
+  data: Array<Thing_Images_Insert_Input>;
+  on_conflict?: Maybe<Thing_Images_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Thing_Images_Avg_Fields = {
+  __typename?: 'thing_images_avg_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "thing_images" */
+export type Thing_Images_Avg_Order_By = {
+  order?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "thing_images". All fields are combined with a logical 'AND'. */
+export type Thing_Images_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Thing_Images_Bool_Exp>>>;
+  _not?: Maybe<Thing_Images_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Thing_Images_Bool_Exp>>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  description?: Maybe<String_Comparison_Exp>;
+  file?: Maybe<File_Uploads_Bool_Exp>;
+  file_id?: Maybe<Uuid_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  order?: Maybe<Int_Comparison_Exp>;
+  thing?: Maybe<Things_Bool_Exp>;
+  thing_id?: Maybe<Uuid_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "thing_images" */
+export enum Thing_Images_Constraint {
+  /** unique or primary key constraint */
+  ThingImagesFileIdKey = 'thing_images_file_id_key',
+  /** unique or primary key constraint */
+  ThingImagesPkey = 'thing_images_pkey'
+}
+
+/** input type for incrementing integer column in table "thing_images" */
+export type Thing_Images_Inc_Input = {
+  order?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "thing_images" */
+export type Thing_Images_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
+  file?: Maybe<File_Uploads_Obj_Rel_Insert_Input>;
+  file_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  order?: Maybe<Scalars['Int']>;
+  thing?: Maybe<Things_Obj_Rel_Insert_Input>;
+  thing_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Thing_Images_Max_Fields = {
+  __typename?: 'thing_images_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
+  file_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  order?: Maybe<Scalars['Int']>;
+  thing_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "thing_images" */
+export type Thing_Images_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  description?: Maybe<Order_By>;
+  file_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  order?: Maybe<Order_By>;
+  thing_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Thing_Images_Min_Fields = {
+  __typename?: 'thing_images_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
+  file_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  order?: Maybe<Scalars['Int']>;
+  thing_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "thing_images" */
+export type Thing_Images_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  description?: Maybe<Order_By>;
+  file_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  order?: Maybe<Order_By>;
+  thing_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "thing_images" */
+export type Thing_Images_Mutation_Response = {
+  __typename?: 'thing_images_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Thing_Images>;
+};
+
+/** input type for inserting object relation for remote table "thing_images" */
+export type Thing_Images_Obj_Rel_Insert_Input = {
+  data: Thing_Images_Insert_Input;
+  on_conflict?: Maybe<Thing_Images_On_Conflict>;
+};
+
+/** on conflict condition type for table "thing_images" */
+export type Thing_Images_On_Conflict = {
+  constraint: Thing_Images_Constraint;
+  update_columns: Array<Thing_Images_Update_Column>;
+  where?: Maybe<Thing_Images_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "thing_images" */
+export type Thing_Images_Order_By = {
+  created_at?: Maybe<Order_By>;
+  description?: Maybe<Order_By>;
+  file?: Maybe<File_Uploads_Order_By>;
+  file_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  order?: Maybe<Order_By>;
+  thing?: Maybe<Things_Order_By>;
+  thing_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "thing_images" */
+export type Thing_Images_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "thing_images" */
+export enum Thing_Images_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  FileId = 'file_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Order = 'order',
+  /** column name */
+  ThingId = 'thing_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "thing_images" */
+export type Thing_Images_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
+  file_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  order?: Maybe<Scalars['Int']>;
+  thing_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate stddev on columns */
+export type Thing_Images_Stddev_Fields = {
+  __typename?: 'thing_images_stddev_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "thing_images" */
+export type Thing_Images_Stddev_Order_By = {
+  order?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Thing_Images_Stddev_Pop_Fields = {
+  __typename?: 'thing_images_stddev_pop_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "thing_images" */
+export type Thing_Images_Stddev_Pop_Order_By = {
+  order?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Thing_Images_Stddev_Samp_Fields = {
+  __typename?: 'thing_images_stddev_samp_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "thing_images" */
+export type Thing_Images_Stddev_Samp_Order_By = {
+  order?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Thing_Images_Sum_Fields = {
+  __typename?: 'thing_images_sum_fields';
+  order?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "thing_images" */
+export type Thing_Images_Sum_Order_By = {
+  order?: Maybe<Order_By>;
+};
+
+/** update columns of table "thing_images" */
+export enum Thing_Images_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  FileId = 'file_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Order = 'order',
+  /** column name */
+  ThingId = 'thing_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** aggregate var_pop on columns */
+export type Thing_Images_Var_Pop_Fields = {
+  __typename?: 'thing_images_var_pop_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "thing_images" */
+export type Thing_Images_Var_Pop_Order_By = {
+  order?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Thing_Images_Var_Samp_Fields = {
+  __typename?: 'thing_images_var_samp_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "thing_images" */
+export type Thing_Images_Var_Samp_Order_By = {
+  order?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Thing_Images_Variance_Fields = {
+  __typename?: 'thing_images_variance_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "thing_images" */
+export type Thing_Images_Variance_Order_By = {
+  order?: Maybe<Order_By>;
+};
+
+/** columns and relationships of "thing_type" */
+export type Thing_Type = {
+  __typename?: 'thing_type';
+  comment: Scalars['String'];
+  value: Scalars['String'];
+};
+
+/** aggregated selection of "thing_type" */
+export type Thing_Type_Aggregate = {
+  __typename?: 'thing_type_aggregate';
+  aggregate?: Maybe<Thing_Type_Aggregate_Fields>;
+  nodes: Array<Thing_Type>;
+};
+
+/** aggregate fields of "thing_type" */
+export type Thing_Type_Aggregate_Fields = {
+  __typename?: 'thing_type_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Thing_Type_Max_Fields>;
+  min?: Maybe<Thing_Type_Min_Fields>;
+};
+
+
+/** aggregate fields of "thing_type" */
+export type Thing_Type_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Thing_Type_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "thing_type" */
+export type Thing_Type_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Thing_Type_Max_Order_By>;
+  min?: Maybe<Thing_Type_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "thing_type" */
+export type Thing_Type_Arr_Rel_Insert_Input = {
+  data: Array<Thing_Type_Insert_Input>;
+  on_conflict?: Maybe<Thing_Type_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "thing_type". All fields are combined with a logical 'AND'. */
+export type Thing_Type_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Thing_Type_Bool_Exp>>>;
+  _not?: Maybe<Thing_Type_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Thing_Type_Bool_Exp>>>;
+  comment?: Maybe<String_Comparison_Exp>;
+  value?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "thing_type" */
+export enum Thing_Type_Constraint {
+  /** unique or primary key constraint */
+  ThingTypePkey = 'thing_type_pkey'
+}
+
+export enum Thing_Type_Enum {
+  /** give away */
+  Give = 'give',
+  /** have parts of it */
+  HaveSome = 'have_some',
+  /** borrow and bring back */
+  Lend = 'lend',
+  /** something else */
+  Other = 'other'
+}
+
+/** expression to compare columns of type thing_type_enum. All fields are combined with logical 'AND'. */
+export type Thing_Type_Enum_Comparison_Exp = {
+  _eq?: Maybe<Thing_Type_Enum>;
+  _in?: Maybe<Array<Thing_Type_Enum>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _neq?: Maybe<Thing_Type_Enum>;
+  _nin?: Maybe<Array<Thing_Type_Enum>>;
+};
+
+/** input type for inserting data into table "thing_type" */
+export type Thing_Type_Insert_Input = {
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Thing_Type_Max_Fields = {
+  __typename?: 'thing_type_max_fields';
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "thing_type" */
+export type Thing_Type_Max_Order_By = {
+  comment?: Maybe<Order_By>;
+  value?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Thing_Type_Min_Fields = {
+  __typename?: 'thing_type_min_fields';
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "thing_type" */
+export type Thing_Type_Min_Order_By = {
+  comment?: Maybe<Order_By>;
+  value?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "thing_type" */
+export type Thing_Type_Mutation_Response = {
+  __typename?: 'thing_type_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Thing_Type>;
+};
+
+/** input type for inserting object relation for remote table "thing_type" */
+export type Thing_Type_Obj_Rel_Insert_Input = {
+  data: Thing_Type_Insert_Input;
+  on_conflict?: Maybe<Thing_Type_On_Conflict>;
+};
+
+/** on conflict condition type for table "thing_type" */
+export type Thing_Type_On_Conflict = {
+  constraint: Thing_Type_Constraint;
+  update_columns: Array<Thing_Type_Update_Column>;
+  where?: Maybe<Thing_Type_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "thing_type" */
+export type Thing_Type_Order_By = {
+  comment?: Maybe<Order_By>;
+  value?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "thing_type" */
+export type Thing_Type_Pk_Columns_Input = {
+  value: Scalars['String'];
+};
+
+/** select columns of table "thing_type" */
+export enum Thing_Type_Select_Column {
+  /** column name */
+  Comment = 'comment',
+  /** column name */
+  Value = 'value'
+}
+
+/** input type for updating data in table "thing_type" */
+export type Thing_Type_Set_Input = {
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "thing_type" */
+export enum Thing_Type_Update_Column {
+  /** column name */
+  Comment = 'comment',
+  /** column name */
+  Value = 'value'
+}
+
 /** columns and relationships of "things" */
 export type Things = {
   __typename?: 'things';
+  category?: Maybe<Scalars['String']>;
   created_at: Scalars['timestamptz'];
+  description: Scalars['String'];
   /** An array relationship */
   group_relations: Array<Group_Thing>;
   /** An aggregated array relationship */
   group_relations_aggregate: Group_Thing_Aggregate;
   id: Scalars['uuid'];
+  /** An array relationship */
+  images: Array<Thing_Images>;
+  /** An aggregated array relationship */
+  images_aggregate: Thing_Images_Aggregate;
   name: Scalars['String'];
   /** An object relationship */
   owner: Users;
   owner_id: Scalars['uuid'];
+  type?: Maybe<Thing_Type_Enum>;
   updated_at: Scalars['timestamptz'];
 };
 
@@ -4559,6 +5784,26 @@ export type ThingsGroup_Relations_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Group_Thing_Order_By>>;
   where?: Maybe<Group_Thing_Bool_Exp>;
+};
+
+
+/** columns and relationships of "things" */
+export type ThingsImagesArgs = {
+  distinct_on?: Maybe<Array<Thing_Images_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Thing_Images_Order_By>>;
+  where?: Maybe<Thing_Images_Bool_Exp>;
+};
+
+
+/** columns and relationships of "things" */
+export type ThingsImages_AggregateArgs = {
+  distinct_on?: Maybe<Array<Thing_Images_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Thing_Images_Order_By>>;
+  where?: Maybe<Thing_Images_Bool_Exp>;
 };
 
 /** aggregated selection of "things" */
@@ -4601,12 +5846,16 @@ export type Things_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Things_Bool_Exp>>>;
   _not?: Maybe<Things_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Things_Bool_Exp>>>;
+  category?: Maybe<String_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  description?: Maybe<String_Comparison_Exp>;
   group_relations?: Maybe<Group_Thing_Bool_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
+  images?: Maybe<Thing_Images_Bool_Exp>;
   name?: Maybe<String_Comparison_Exp>;
   owner?: Maybe<Users_Bool_Exp>;
   owner_id?: Maybe<Uuid_Comparison_Exp>;
+  type?: Maybe<Thing_Type_Enum_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
 };
 
@@ -4618,19 +5867,25 @@ export enum Things_Constraint {
 
 /** input type for inserting data into table "things" */
 export type Things_Insert_Input = {
+  category?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
   group_relations?: Maybe<Group_Thing_Arr_Rel_Insert_Input>;
   id?: Maybe<Scalars['uuid']>;
+  images?: Maybe<Thing_Images_Arr_Rel_Insert_Input>;
   name?: Maybe<Scalars['String']>;
   owner?: Maybe<Users_Obj_Rel_Insert_Input>;
   owner_id?: Maybe<Scalars['uuid']>;
+  type?: Maybe<Thing_Type_Enum>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
 /** aggregate max on columns */
 export type Things_Max_Fields = {
   __typename?: 'things_max_fields';
+  category?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
   owner_id?: Maybe<Scalars['uuid']>;
@@ -4639,7 +5894,9 @@ export type Things_Max_Fields = {
 
 /** order by max() on columns of table "things" */
 export type Things_Max_Order_By = {
+  category?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   owner_id?: Maybe<Order_By>;
@@ -4649,7 +5906,9 @@ export type Things_Max_Order_By = {
 /** aggregate min on columns */
 export type Things_Min_Fields = {
   __typename?: 'things_min_fields';
+  category?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
   owner_id?: Maybe<Scalars['uuid']>;
@@ -4658,7 +5917,9 @@ export type Things_Min_Fields = {
 
 /** order by min() on columns of table "things" */
 export type Things_Min_Order_By = {
+  category?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   owner_id?: Maybe<Order_By>;
@@ -4689,12 +5950,16 @@ export type Things_On_Conflict = {
 
 /** ordering options when selecting data from "things" */
 export type Things_Order_By = {
+  category?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  description?: Maybe<Order_By>;
   group_relations_aggregate?: Maybe<Group_Thing_Aggregate_Order_By>;
   id?: Maybe<Order_By>;
+  images_aggregate?: Maybe<Thing_Images_Aggregate_Order_By>;
   name?: Maybe<Order_By>;
   owner?: Maybe<Users_Order_By>;
   owner_id?: Maybe<Order_By>;
+  type?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
@@ -4706,36 +5971,51 @@ export type Things_Pk_Columns_Input = {
 /** select columns of table "things" */
 export enum Things_Select_Column {
   /** column name */
+  Category = 'category',
+  /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  Description = 'description',
   /** column name */
   Id = 'id',
   /** column name */
   Name = 'name',
   /** column name */
   OwnerId = 'owner_id',
+  /** column name */
+  Type = 'type',
   /** column name */
   UpdatedAt = 'updated_at'
 }
 
 /** input type for updating data in table "things" */
 export type Things_Set_Input = {
+  category?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
   owner_id?: Maybe<Scalars['uuid']>;
+  type?: Maybe<Thing_Type_Enum>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
 /** update columns of table "things" */
 export enum Things_Update_Column {
   /** column name */
+  Category = 'category',
+  /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  Description = 'description',
   /** column name */
   Id = 'id',
   /** column name */
   Name = 'name',
   /** column name */
   OwnerId = 'owner_id',
+  /** column name */
+  Type = 'type',
   /** column name */
   UpdatedAt = 'updated_at'
 }
@@ -5816,10 +7096,22 @@ export type UpdateJoinTokenMutation = (
 
 export type ThingCardFragment = (
   { __typename?: 'things' }
-  & Pick<Things, 'id' | 'name'>
-  & { owner: (
+  & Pick<Things, 'id' | 'name' | 'description' | 'category' | 'type'>
+  & { images: Array<(
+    { __typename?: 'thing_images' }
+    & ThingImageCardFragment
+  )>, owner: (
     { __typename?: 'users' }
     & UserCardFragment
+  ) }
+);
+
+export type ThingImageCardFragment = (
+  { __typename?: 'thing_images' }
+  & Pick<Thing_Images, 'id' | 'description' | 'order'>
+  & { file: (
+    { __typename?: 'file_uploads' }
+    & FileUploadCardFragment
   ) }
 );
 
@@ -5857,6 +7149,19 @@ export type ThingListQuery = (
   ) }
 );
 
+export type ThingDetailsQueryVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type ThingDetailsQuery = (
+  { __typename?: 'query_root' }
+  & { things_by_pk?: Maybe<(
+    { __typename?: 'things' }
+    & ThingDetailsFragment
+  )> }
+);
+
 export type CreateThingMutationVariables = Exact<{
   input: Things_Insert_Input;
 }>;
@@ -5867,6 +7172,40 @@ export type CreateThingMutation = (
   & { insert_things_one?: Maybe<(
     { __typename?: 'things' }
     & ThingDetailsFragment
+  )> }
+);
+
+export type UpdateThingMutationVariables = Exact<{
+  input: UpdateThingInput;
+}>;
+
+
+export type UpdateThingMutation = (
+  { __typename?: 'mutation_root' }
+  & { updateThing?: Maybe<(
+    { __typename?: 'UpdateThingResult' }
+    & { thing?: Maybe<(
+      { __typename?: 'things' }
+      & ThingDetailsFragment
+    )> }
+  )> }
+);
+
+export type FileUploadCardFragment = (
+  { __typename?: 'file_uploads' }
+  & Pick<File_Uploads, 'id' | 'name' | 'url' | 'mime_type' | 'size'>
+);
+
+export type InsertFileUploadMutationVariables = Exact<{
+  input: File_Uploads_Insert_Input;
+}>;
+
+
+export type InsertFileUploadMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_file_uploads_one?: Maybe<(
+    { __typename?: 'file_uploads' }
+    & FileUploadCardFragment
   )> }
 );
 
@@ -6089,15 +7428,41 @@ export const GroupJoinTokenCardFragmentDoc = gql`
   note
 }
     `;
+export const FileUploadCardFragmentDoc = gql`
+    fragment FileUploadCard on file_uploads {
+  id
+  name
+  url
+  mime_type
+  size
+}
+    `;
+export const ThingImageCardFragmentDoc = gql`
+    fragment ThingImageCard on thing_images {
+  id
+  description
+  order
+  file {
+    ...FileUploadCard
+  }
+}
+    ${FileUploadCardFragmentDoc}`;
 export const ThingCardFragmentDoc = gql`
     fragment ThingCard on things {
   id
   name
+  description
+  category
+  type
+  images {
+    ...ThingImageCard
+  }
   owner {
     ...UserCard
   }
 }
-    ${UserCardFragmentDoc}`;
+    ${ThingImageCardFragmentDoc}
+${UserCardFragmentDoc}`;
 export const ThingDetailsFragmentDoc = gql`
     fragment ThingDetails on things {
   ...ThingCard
@@ -6810,6 +8175,42 @@ export type ThingListQueryResult = Apollo.QueryResult<ThingListQuery, ThingListQ
 export function refetchThingListQuery(variables?: ThingListQueryVariables) {
       return { query: ThingListDocument, variables: variables }
     }
+export const ThingDetailsDocument = gql`
+    query ThingDetails($id: uuid!) {
+  things_by_pk(id: $id) {
+    ...ThingDetails
+  }
+}
+    ${ThingDetailsFragmentDoc}`;
+
+/**
+ * __useThingDetailsQuery__
+ *
+ * To run a query within a React component, call `useThingDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useThingDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useThingDetailsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useThingDetailsQuery(baseOptions?: Apollo.QueryHookOptions<ThingDetailsQuery, ThingDetailsQueryVariables>) {
+        return Apollo.useQuery<ThingDetailsQuery, ThingDetailsQueryVariables>(ThingDetailsDocument, baseOptions);
+      }
+export function useThingDetailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ThingDetailsQuery, ThingDetailsQueryVariables>) {
+          return Apollo.useLazyQuery<ThingDetailsQuery, ThingDetailsQueryVariables>(ThingDetailsDocument, baseOptions);
+        }
+export type ThingDetailsQueryHookResult = ReturnType<typeof useThingDetailsQuery>;
+export type ThingDetailsLazyQueryHookResult = ReturnType<typeof useThingDetailsLazyQuery>;
+export type ThingDetailsQueryResult = Apollo.QueryResult<ThingDetailsQuery, ThingDetailsQueryVariables>;
+export function refetchThingDetailsQuery(variables?: ThingDetailsQueryVariables) {
+      return { query: ThingDetailsDocument, variables: variables }
+    }
 export const CreateThingDocument = gql`
     mutation CreateThing($input: things_insert_input!) {
   insert_things_one(object: $input) {
@@ -6842,6 +8243,72 @@ export function useCreateThingMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateThingMutationHookResult = ReturnType<typeof useCreateThingMutation>;
 export type CreateThingMutationResult = Apollo.MutationResult<CreateThingMutation>;
 export type CreateThingMutationOptions = Apollo.BaseMutationOptions<CreateThingMutation, CreateThingMutationVariables>;
+export const UpdateThingDocument = gql`
+    mutation UpdateThing($input: UpdateThingInput!) {
+  updateThing(input: $input) {
+    thing {
+      ...ThingDetails
+    }
+  }
+}
+    ${ThingDetailsFragmentDoc}`;
+export type UpdateThingMutationFn = Apollo.MutationFunction<UpdateThingMutation, UpdateThingMutationVariables>;
+
+/**
+ * __useUpdateThingMutation__
+ *
+ * To run a mutation, you first call `useUpdateThingMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateThingMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateThingMutation, { data, loading, error }] = useUpdateThingMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateThingMutation(baseOptions?: Apollo.MutationHookOptions<UpdateThingMutation, UpdateThingMutationVariables>) {
+        return Apollo.useMutation<UpdateThingMutation, UpdateThingMutationVariables>(UpdateThingDocument, baseOptions);
+      }
+export type UpdateThingMutationHookResult = ReturnType<typeof useUpdateThingMutation>;
+export type UpdateThingMutationResult = Apollo.MutationResult<UpdateThingMutation>;
+export type UpdateThingMutationOptions = Apollo.BaseMutationOptions<UpdateThingMutation, UpdateThingMutationVariables>;
+export const InsertFileUploadDocument = gql`
+    mutation InsertFileUpload($input: file_uploads_insert_input!) {
+  insert_file_uploads_one(object: $input) {
+    ...FileUploadCard
+  }
+}
+    ${FileUploadCardFragmentDoc}`;
+export type InsertFileUploadMutationFn = Apollo.MutationFunction<InsertFileUploadMutation, InsertFileUploadMutationVariables>;
+
+/**
+ * __useInsertFileUploadMutation__
+ *
+ * To run a mutation, you first call `useInsertFileUploadMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertFileUploadMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertFileUploadMutation, { data, loading, error }] = useInsertFileUploadMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useInsertFileUploadMutation(baseOptions?: Apollo.MutationHookOptions<InsertFileUploadMutation, InsertFileUploadMutationVariables>) {
+        return Apollo.useMutation<InsertFileUploadMutation, InsertFileUploadMutationVariables>(InsertFileUploadDocument, baseOptions);
+      }
+export type InsertFileUploadMutationHookResult = ReturnType<typeof useInsertFileUploadMutation>;
+export type InsertFileUploadMutationResult = Apollo.MutationResult<InsertFileUploadMutation>;
+export type InsertFileUploadMutationOptions = Apollo.BaseMutationOptions<InsertFileUploadMutation, InsertFileUploadMutationVariables>;
 export const UserListDocument = gql`
     query UserList {
   users {
@@ -7070,6 +8537,7 @@ export const GqlOps = {
     GroupJoinRequests: 'GroupJoinRequests',
     GroupJoinTokens: 'GroupJoinTokens',
     ThingList: 'ThingList',
+    ThingDetails: 'ThingDetails',
     UserList: 'UserList',
     UserPrivateDetails: 'UserPrivateDetails'
   },
@@ -7087,6 +8555,8 @@ export const GqlOps = {
     DeleteJoinToken: 'DeleteJoinToken',
     UpdateJoinToken: 'UpdateJoinToken',
     CreateThing: 'CreateThing',
+    UpdateThing: 'UpdateThing',
+    InsertFileUpload: 'InsertFileUpload',
     MarkNotificationRead: 'MarkNotificationRead',
     MarkAllNotificationsRead: 'MarkAllNotificationsRead',
     RegisterUser: 'RegisterUser'
@@ -7101,7 +8571,9 @@ export const GqlOps = {
     GroupJoinRequestCard: 'GroupJoinRequestCard',
     GroupJoinTokenCard: 'GroupJoinTokenCard',
     ThingCard: 'ThingCard',
+    ThingImageCard: 'ThingImageCard',
     ThingDetails: 'ThingDetails',
+    FileUploadCard: 'FileUploadCard',
     UserCard: 'UserCard',
     UserDetail: 'UserDetail',
     UserJoinRequests: 'UserJoinRequests',

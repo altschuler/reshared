@@ -22,5 +22,38 @@
                 }
             }
         }
+
+        images {
+            id
+            file_id
+            order
+            description
+        }
+    }
+}
+
+mutation ServerUpdateThing(
+    $id: uuid!
+    $input: things_insert_input!
+    $deletedFileIds: [uuid!]!
+    $deletedGroupIds: [uuid!]!
+) {
+    insert_things_one(
+        object: $input
+        on_conflict: {
+            constraint: things_pkey
+            update_columns: [name, description, type, category]
+        }
+    ) {
+        id
+    }
+
+    # Adding thing_id just as a safety measure
+    delete_thing_images(where: { thing_id: { _eq: $id }, file_id: { _in: $deletedFileIds } }) {
+        affected_rows
+    }
+
+    delete_group_thing(where: { thing_id: { _eq: $id }, group_id: { _in: $deletedGroupIds } }) {
+        affected_rows
     }
 }

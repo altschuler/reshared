@@ -7,17 +7,16 @@ import { AuthProvider } from '../utils/auth';
 
 import '../styles/globals.scss';
 import { ThemeProvider } from 'react-jss';
-import { DialogsProvider } from '../components/dialogs/DialogProvider';
+import { DialogsProvider } from '../components/dialogs';
 import { PageLayout } from '../containers/root/PageLayout';
-import { makeApolloClient } from '../api/apolloClient';
+import { defaultApolloClient } from '../api/apolloClient';
 
 const theme = {};
-const apolloClient = makeApolloClient(false);
 
 const App = ({ Component, pageProps }: AppProps) => {
     return (
         <Provider session={pageProps.session}>
-            <ApolloProvider client={apolloClient}>
+            <ApolloProvider client={defaultApolloClient}>
                 <AuthProvider>
                     <ThemeProvider theme={theme}>
                         <DialogsProvider>

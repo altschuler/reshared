@@ -49,3 +49,5 @@ export const makeApolloClient = (ssr: boolean) =>
         link: ApolloLink.from([authLink, splitLink]),
         cache: new InMemoryCache(),
     });
+
+export const defaultApolloClient = makeApolloClient(!process.env.browser);

@@ -4,6 +4,7 @@ export interface EditorState<T> {
     present: T;
     set: (state: T) => void;
     reset: (forceDefault?: boolean) => void;
+    resetTo: (value: T) => void;
     update: (update: Partial<T>) => void;
 }
 
@@ -24,10 +25,15 @@ export const createUseEditor = <T>(defaultState: T) => (initial?: T): EditorStat
         [initial],
     );
 
+    const resetTo = useCallback((value: T) => {
+        setState(value);
+    }, []);
+
     return {
         present: state,
         set: setState,
         reset,
+        resetTo,
         update,
     };
 };

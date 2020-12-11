@@ -1,13 +1,19 @@
 ﻿import { Button, Dropdown, Menu, message, Modal, PageHeader, Popconfirm, Typography } from 'antd';
 import Link from 'next/link';
 import { ReactNode, useCallback } from 'react';
-import { GqlOps, GroupCardFragment, useLeaveGroupMutation } from '../../generated/graphql';
+import {
+    GqlOps,
+    GroupCardFragment,
+    ThingCardFragment,
+    useLeaveGroupMutation,
+} from '../../generated/graphql';
 import { EllipsisOutlined } from '@ant-design/icons';
 import { createUseStyles } from 'react-jss';
 import { useMembership } from '../../utils/group';
 import { useRouter } from 'next/router';
 import { urlFor } from '../../utils/urls';
 import { JoinButton } from './JoinButton';
+import { useDialogs, CreateThingDrawer } from '../../components/dialogs';
 
 export type GroupPage = 'home' | 'members' | 'settings';
 
@@ -33,6 +39,7 @@ const useStyles = createUseStyles({
 
 export const GroupLayout = (props: GroupLayoutProps) => {
     const classes = useStyles();
+    const dialogs = useDialogs();
     const router = useRouter();
     const { isAdmin, isMember, user } = useMembership(props.group);
     const btnClass = (page: GroupPage) => (props.activePage === page ? classes.active : undefined);
@@ -69,6 +76,10 @@ export const GroupLayout = (props: GroupLayoutProps) => {
         });
     }, [leave, props.group, router, user]);
 
+    const handleShare = useCallback(() => {
+        dialogs.showDialog(CreateThingDrawer, { group: props.group }).then(console.log);
+    }, [dialogs, props.group]);
+
     const menu = (
         <Menu>
             <Menu.Item>
@@ -102,6 +113,10 @@ export const GroupLayout = (props: GroupLayoutProps) => {
             className={classes.header}
             title={props.group.name}
             extra={[
+                <Button key="share" type="primary" onClick={handleShare}>
+                    Share a thing
+                </Button>,
+
                 <Link key="home" href={`/groups/${props.group.id}`}>
                     <Button type="default" className={btnClass('home')}>
                         Home

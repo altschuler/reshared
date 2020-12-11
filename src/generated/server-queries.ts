@@ -139,6 +139,32 @@ export type String_Comparison_Exp = {
   _similar?: Maybe<Scalars['String']>;
 };
 
+export type UpdateGroupThing = {
+  groupId: Scalars['uuid'];
+};
+
+export type UpdateThingImage = {
+  description: Scalars['String'];
+  fileId: Scalars['uuid'];
+  order: Scalars['Int'];
+};
+
+export type UpdateThingInput = {
+  category?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  groups?: Maybe<Array<UpdateGroupThing>>;
+  id?: Maybe<Scalars['uuid']>;
+  images?: Maybe<Array<UpdateThingImage>>;
+  name?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
+};
+
+export type UpdateThingResult = {
+  __typename?: 'UpdateThingResult';
+  thing?: Maybe<Things>;
+  thing_id: Scalars['uuid'];
+};
+
 /** columns and relationships of "activities" */
 export type Activities = {
   __typename?: 'activities';
@@ -770,6 +796,344 @@ export enum Entities_Update_Column {
   /** column name */
   UserId = 'user_id'
 }
+
+/** columns and relationships of "file_uploads" */
+export type File_Uploads = {
+  __typename?: 'file_uploads';
+  created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  mime_type?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  /** An object relationship */
+  owner?: Maybe<Users>;
+  owner_id?: Maybe<Scalars['uuid']>;
+  size: Scalars['Int'];
+  updated_at: Scalars['timestamptz'];
+  url: Scalars['String'];
+};
+
+/** aggregated selection of "file_uploads" */
+export type File_Uploads_Aggregate = {
+  __typename?: 'file_uploads_aggregate';
+  aggregate?: Maybe<File_Uploads_Aggregate_Fields>;
+  nodes: Array<File_Uploads>;
+};
+
+/** aggregate fields of "file_uploads" */
+export type File_Uploads_Aggregate_Fields = {
+  __typename?: 'file_uploads_aggregate_fields';
+  avg?: Maybe<File_Uploads_Avg_Fields>;
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<File_Uploads_Max_Fields>;
+  min?: Maybe<File_Uploads_Min_Fields>;
+  stddev?: Maybe<File_Uploads_Stddev_Fields>;
+  stddev_pop?: Maybe<File_Uploads_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<File_Uploads_Stddev_Samp_Fields>;
+  sum?: Maybe<File_Uploads_Sum_Fields>;
+  var_pop?: Maybe<File_Uploads_Var_Pop_Fields>;
+  var_samp?: Maybe<File_Uploads_Var_Samp_Fields>;
+  variance?: Maybe<File_Uploads_Variance_Fields>;
+};
+
+
+/** aggregate fields of "file_uploads" */
+export type File_Uploads_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<File_Uploads_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "file_uploads" */
+export type File_Uploads_Aggregate_Order_By = {
+  avg?: Maybe<File_Uploads_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<File_Uploads_Max_Order_By>;
+  min?: Maybe<File_Uploads_Min_Order_By>;
+  stddev?: Maybe<File_Uploads_Stddev_Order_By>;
+  stddev_pop?: Maybe<File_Uploads_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<File_Uploads_Stddev_Samp_Order_By>;
+  sum?: Maybe<File_Uploads_Sum_Order_By>;
+  var_pop?: Maybe<File_Uploads_Var_Pop_Order_By>;
+  var_samp?: Maybe<File_Uploads_Var_Samp_Order_By>;
+  variance?: Maybe<File_Uploads_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "file_uploads" */
+export type File_Uploads_Arr_Rel_Insert_Input = {
+  data: Array<File_Uploads_Insert_Input>;
+  on_conflict?: Maybe<File_Uploads_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type File_Uploads_Avg_Fields = {
+  __typename?: 'file_uploads_avg_fields';
+  size?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "file_uploads" */
+export type File_Uploads_Avg_Order_By = {
+  size?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "file_uploads". All fields are combined with a logical 'AND'. */
+export type File_Uploads_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<File_Uploads_Bool_Exp>>>;
+  _not?: Maybe<File_Uploads_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<File_Uploads_Bool_Exp>>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  mime_type?: Maybe<String_Comparison_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
+  owner?: Maybe<Users_Bool_Exp>;
+  owner_id?: Maybe<Uuid_Comparison_Exp>;
+  size?: Maybe<Int_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+  url?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "file_uploads" */
+export enum File_Uploads_Constraint {
+  /** unique or primary key constraint */
+  FileUploadsPkey = 'file_uploads_pkey',
+  /** unique or primary key constraint */
+  FileUploadsUrlKey = 'file_uploads_url_key'
+}
+
+/** input type for incrementing integer column in table "file_uploads" */
+export type File_Uploads_Inc_Input = {
+  size?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "file_uploads" */
+export type File_Uploads_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  mime_type?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  owner?: Maybe<Users_Obj_Rel_Insert_Input>;
+  owner_id?: Maybe<Scalars['uuid']>;
+  size?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  url?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type File_Uploads_Max_Fields = {
+  __typename?: 'file_uploads_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  mime_type?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  owner_id?: Maybe<Scalars['uuid']>;
+  size?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  url?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "file_uploads" */
+export type File_Uploads_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  mime_type?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  owner_id?: Maybe<Order_By>;
+  size?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  url?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type File_Uploads_Min_Fields = {
+  __typename?: 'file_uploads_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  mime_type?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  owner_id?: Maybe<Scalars['uuid']>;
+  size?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  url?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "file_uploads" */
+export type File_Uploads_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  mime_type?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  owner_id?: Maybe<Order_By>;
+  size?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  url?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "file_uploads" */
+export type File_Uploads_Mutation_Response = {
+  __typename?: 'file_uploads_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<File_Uploads>;
+};
+
+/** input type for inserting object relation for remote table "file_uploads" */
+export type File_Uploads_Obj_Rel_Insert_Input = {
+  data: File_Uploads_Insert_Input;
+  on_conflict?: Maybe<File_Uploads_On_Conflict>;
+};
+
+/** on conflict condition type for table "file_uploads" */
+export type File_Uploads_On_Conflict = {
+  constraint: File_Uploads_Constraint;
+  update_columns: Array<File_Uploads_Update_Column>;
+  where?: Maybe<File_Uploads_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "file_uploads" */
+export type File_Uploads_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  mime_type?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  owner?: Maybe<Users_Order_By>;
+  owner_id?: Maybe<Order_By>;
+  size?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+  url?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "file_uploads" */
+export type File_Uploads_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "file_uploads" */
+export enum File_Uploads_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  MimeType = 'mime_type',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  OwnerId = 'owner_id',
+  /** column name */
+  Size = 'size',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  Url = 'url'
+}
+
+/** input type for updating data in table "file_uploads" */
+export type File_Uploads_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  mime_type?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  owner_id?: Maybe<Scalars['uuid']>;
+  size?: Maybe<Scalars['Int']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  url?: Maybe<Scalars['String']>;
+};
+
+/** aggregate stddev on columns */
+export type File_Uploads_Stddev_Fields = {
+  __typename?: 'file_uploads_stddev_fields';
+  size?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "file_uploads" */
+export type File_Uploads_Stddev_Order_By = {
+  size?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type File_Uploads_Stddev_Pop_Fields = {
+  __typename?: 'file_uploads_stddev_pop_fields';
+  size?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "file_uploads" */
+export type File_Uploads_Stddev_Pop_Order_By = {
+  size?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type File_Uploads_Stddev_Samp_Fields = {
+  __typename?: 'file_uploads_stddev_samp_fields';
+  size?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "file_uploads" */
+export type File_Uploads_Stddev_Samp_Order_By = {
+  size?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type File_Uploads_Sum_Fields = {
+  __typename?: 'file_uploads_sum_fields';
+  size?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "file_uploads" */
+export type File_Uploads_Sum_Order_By = {
+  size?: Maybe<Order_By>;
+};
+
+/** update columns of table "file_uploads" */
+export enum File_Uploads_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  MimeType = 'mime_type',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  OwnerId = 'owner_id',
+  /** column name */
+  Size = 'size',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  Url = 'url'
+}
+
+/** aggregate var_pop on columns */
+export type File_Uploads_Var_Pop_Fields = {
+  __typename?: 'file_uploads_var_pop_fields';
+  size?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "file_uploads" */
+export type File_Uploads_Var_Pop_Order_By = {
+  size?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type File_Uploads_Var_Samp_Fields = {
+  __typename?: 'file_uploads_var_samp_fields';
+  size?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "file_uploads" */
+export type File_Uploads_Var_Samp_Order_By = {
+  size?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type File_Uploads_Variance_Fields = {
+  __typename?: 'file_uploads_variance_fields';
+  size?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "file_uploads" */
+export type File_Uploads_Variance_Order_By = {
+  size?: Maybe<Order_By>;
+};
 
 /** columns and relationships of "group_join_request_status" */
 export type Group_Join_Request_Status = {
@@ -2450,6 +2814,10 @@ export type Mutation_Root = {
   delete_entities?: Maybe<Entities_Mutation_Response>;
   /** delete single row from the table: "entities" */
   delete_entities_by_pk?: Maybe<Entities>;
+  /** delete data from the table: "file_uploads" */
+  delete_file_uploads?: Maybe<File_Uploads_Mutation_Response>;
+  /** delete single row from the table: "file_uploads" */
+  delete_file_uploads_by_pk?: Maybe<File_Uploads>;
   /** delete data from the table: "group_join_request_status" */
   delete_group_join_request_status?: Maybe<Group_Join_Request_Status_Mutation_Response>;
   /** delete single row from the table: "group_join_request_status" */
@@ -2486,6 +2854,14 @@ export type Mutation_Root = {
   delete_notifications?: Maybe<Notifications_Mutation_Response>;
   /** delete single row from the table: "notifications" */
   delete_notifications_by_pk?: Maybe<Notifications>;
+  /** delete data from the table: "thing_images" */
+  delete_thing_images?: Maybe<Thing_Images_Mutation_Response>;
+  /** delete single row from the table: "thing_images" */
+  delete_thing_images_by_pk?: Maybe<Thing_Images>;
+  /** delete data from the table: "thing_type" */
+  delete_thing_type?: Maybe<Thing_Type_Mutation_Response>;
+  /** delete single row from the table: "thing_type" */
+  delete_thing_type_by_pk?: Maybe<Thing_Type>;
   /** delete data from the table: "things" */
   delete_things?: Maybe<Things_Mutation_Response>;
   /** delete single row from the table: "things" */
@@ -2514,6 +2890,10 @@ export type Mutation_Root = {
   insert_entities?: Maybe<Entities_Mutation_Response>;
   /** insert a single row into the table: "entities" */
   insert_entities_one?: Maybe<Entities>;
+  /** insert data into the table: "file_uploads" */
+  insert_file_uploads?: Maybe<File_Uploads_Mutation_Response>;
+  /** insert a single row into the table: "file_uploads" */
+  insert_file_uploads_one?: Maybe<File_Uploads>;
   /** insert data into the table: "group_join_request_status" */
   insert_group_join_request_status?: Maybe<Group_Join_Request_Status_Mutation_Response>;
   /** insert a single row into the table: "group_join_request_status" */
@@ -2550,6 +2930,14 @@ export type Mutation_Root = {
   insert_notifications?: Maybe<Notifications_Mutation_Response>;
   /** insert a single row into the table: "notifications" */
   insert_notifications_one?: Maybe<Notifications>;
+  /** insert data into the table: "thing_images" */
+  insert_thing_images?: Maybe<Thing_Images_Mutation_Response>;
+  /** insert a single row into the table: "thing_images" */
+  insert_thing_images_one?: Maybe<Thing_Images>;
+  /** insert data into the table: "thing_type" */
+  insert_thing_type?: Maybe<Thing_Type_Mutation_Response>;
+  /** insert a single row into the table: "thing_type" */
+  insert_thing_type_one?: Maybe<Thing_Type>;
   /** insert data into the table: "things" */
   insert_things?: Maybe<Things_Mutation_Response>;
   /** insert a single row into the table: "things" */
@@ -2572,6 +2960,8 @@ export type Mutation_Root = {
   registerCredentials?: Maybe<RegistrationResult>;
   /** perform the action: "requestJoinGroup" */
   requestJoinGroup?: Maybe<RequestJoinGroupResult>;
+  /** perform the action: "updateThing" */
+  updateThing?: Maybe<UpdateThingResult>;
   /** update data of the table: "activities" */
   update_activities?: Maybe<Activities_Mutation_Response>;
   /** update single row of the table: "activities" */
@@ -2584,6 +2974,10 @@ export type Mutation_Root = {
   update_entities?: Maybe<Entities_Mutation_Response>;
   /** update single row of the table: "entities" */
   update_entities_by_pk?: Maybe<Entities>;
+  /** update data of the table: "file_uploads" */
+  update_file_uploads?: Maybe<File_Uploads_Mutation_Response>;
+  /** update single row of the table: "file_uploads" */
+  update_file_uploads_by_pk?: Maybe<File_Uploads>;
   /** update data of the table: "group_join_request_status" */
   update_group_join_request_status?: Maybe<Group_Join_Request_Status_Mutation_Response>;
   /** update single row of the table: "group_join_request_status" */
@@ -2620,6 +3014,14 @@ export type Mutation_Root = {
   update_notifications?: Maybe<Notifications_Mutation_Response>;
   /** update single row of the table: "notifications" */
   update_notifications_by_pk?: Maybe<Notifications>;
+  /** update data of the table: "thing_images" */
+  update_thing_images?: Maybe<Thing_Images_Mutation_Response>;
+  /** update single row of the table: "thing_images" */
+  update_thing_images_by_pk?: Maybe<Thing_Images>;
+  /** update data of the table: "thing_type" */
+  update_thing_type?: Maybe<Thing_Type_Mutation_Response>;
+  /** update single row of the table: "thing_type" */
+  update_thing_type_by_pk?: Maybe<Thing_Type>;
   /** update data of the table: "things" */
   update_things?: Maybe<Things_Mutation_Response>;
   /** update single row of the table: "things" */
@@ -2681,6 +3083,18 @@ export type Mutation_RootDelete_EntitiesArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Entities_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_File_UploadsArgs = {
+  where: File_Uploads_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_File_Uploads_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -2794,6 +3208,30 @@ export type Mutation_RootDelete_Notifications_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_Thing_ImagesArgs = {
+  where: Thing_Images_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Thing_Images_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Thing_TypeArgs = {
+  where: Thing_Type_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Thing_Type_By_PkArgs = {
+  value: Scalars['String'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_ThingsArgs = {
   where: Things_Bool_Exp;
 };
@@ -2880,6 +3318,20 @@ export type Mutation_RootInsert_EntitiesArgs = {
 export type Mutation_RootInsert_Entities_OneArgs = {
   object: Entities_Insert_Input;
   on_conflict?: Maybe<Entities_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_File_UploadsArgs = {
+  objects: Array<File_Uploads_Insert_Input>;
+  on_conflict?: Maybe<File_Uploads_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_File_Uploads_OneArgs = {
+  object: File_Uploads_Insert_Input;
+  on_conflict?: Maybe<File_Uploads_On_Conflict>;
 };
 
 
@@ -3010,6 +3462,34 @@ export type Mutation_RootInsert_Notifications_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_Thing_ImagesArgs = {
+  objects: Array<Thing_Images_Insert_Input>;
+  on_conflict?: Maybe<Thing_Images_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Thing_Images_OneArgs = {
+  object: Thing_Images_Insert_Input;
+  on_conflict?: Maybe<Thing_Images_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Thing_TypeArgs = {
+  objects: Array<Thing_Type_Insert_Input>;
+  on_conflict?: Maybe<Thing_Type_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Thing_Type_OneArgs = {
+  object: Thing_Type_Insert_Input;
+  on_conflict?: Maybe<Thing_Type_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_ThingsArgs = {
   objects: Array<Things_Insert_Input>;
   on_conflict?: Maybe<Things_On_Conflict>;
@@ -3082,6 +3562,12 @@ export type Mutation_RootRequestJoinGroupArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdateThingArgs = {
+  input: UpdateThingInput;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_ActivitiesArgs = {
   _set?: Maybe<Activities_Set_Input>;
   where: Activities_Bool_Exp;
@@ -3120,6 +3606,22 @@ export type Mutation_RootUpdate_EntitiesArgs = {
 export type Mutation_RootUpdate_Entities_By_PkArgs = {
   _set?: Maybe<Entities_Set_Input>;
   pk_columns: Entities_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_File_UploadsArgs = {
+  _inc?: Maybe<File_Uploads_Inc_Input>;
+  _set?: Maybe<File_Uploads_Set_Input>;
+  where: File_Uploads_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_File_Uploads_By_PkArgs = {
+  _inc?: Maybe<File_Uploads_Inc_Input>;
+  _set?: Maybe<File_Uploads_Set_Input>;
+  pk_columns: File_Uploads_Pk_Columns_Input;
 };
 
 
@@ -3246,6 +3748,36 @@ export type Mutation_RootUpdate_NotificationsArgs = {
 export type Mutation_RootUpdate_Notifications_By_PkArgs = {
   _set?: Maybe<Notifications_Set_Input>;
   pk_columns: Notifications_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Thing_ImagesArgs = {
+  _inc?: Maybe<Thing_Images_Inc_Input>;
+  _set?: Maybe<Thing_Images_Set_Input>;
+  where: Thing_Images_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Thing_Images_By_PkArgs = {
+  _inc?: Maybe<Thing_Images_Inc_Input>;
+  _set?: Maybe<Thing_Images_Set_Input>;
+  pk_columns: Thing_Images_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Thing_TypeArgs = {
+  _set?: Maybe<Thing_Type_Set_Input>;
+  where: Thing_Type_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Thing_Type_By_PkArgs = {
+  _set?: Maybe<Thing_Type_Set_Input>;
+  pk_columns: Thing_Type_Pk_Columns_Input;
 };
 
 
@@ -3529,6 +4061,12 @@ export type Query_Root = {
   entities_aggregate: Entities_Aggregate;
   /** fetch data from the table: "entities" using primary key columns */
   entities_by_pk?: Maybe<Entities>;
+  /** fetch data from the table: "file_uploads" */
+  file_uploads: Array<File_Uploads>;
+  /** fetch aggregated fields from the table: "file_uploads" */
+  file_uploads_aggregate: File_Uploads_Aggregate;
+  /** fetch data from the table: "file_uploads" using primary key columns */
+  file_uploads_by_pk?: Maybe<File_Uploads>;
   /** fetch data from the table: "group_join_request_status" */
   group_join_request_status: Array<Group_Join_Request_Status>;
   /** fetch aggregated fields from the table: "group_join_request_status" */
@@ -3583,6 +4121,18 @@ export type Query_Root = {
   notifications_aggregate: Notifications_Aggregate;
   /** fetch data from the table: "notifications" using primary key columns */
   notifications_by_pk?: Maybe<Notifications>;
+  /** fetch data from the table: "thing_images" */
+  thing_images: Array<Thing_Images>;
+  /** fetch aggregated fields from the table: "thing_images" */
+  thing_images_aggregate: Thing_Images_Aggregate;
+  /** fetch data from the table: "thing_images" using primary key columns */
+  thing_images_by_pk?: Maybe<Thing_Images>;
+  /** fetch data from the table: "thing_type" */
+  thing_type: Array<Thing_Type>;
+  /** fetch aggregated fields from the table: "thing_type" */
+  thing_type_aggregate: Thing_Type_Aggregate;
+  /** fetch data from the table: "thing_type" using primary key columns */
+  thing_type_by_pk?: Maybe<Thing_Type>;
   /** fetch data from the table: "things" */
   things: Array<Things>;
   /** fetch aggregated fields from the table: "things" */
@@ -3682,6 +4232,32 @@ export type Query_RootEntities_AggregateArgs = {
 
 /** query root */
 export type Query_RootEntities_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** query root */
+export type Query_RootFile_UploadsArgs = {
+  distinct_on?: Maybe<Array<File_Uploads_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<File_Uploads_Order_By>>;
+  where?: Maybe<File_Uploads_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootFile_Uploads_AggregateArgs = {
+  distinct_on?: Maybe<Array<File_Uploads_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<File_Uploads_Order_By>>;
+  where?: Maybe<File_Uploads_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootFile_Uploads_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -3921,6 +4497,58 @@ export type Query_RootNotifications_By_PkArgs = {
 
 
 /** query root */
+export type Query_RootThing_ImagesArgs = {
+  distinct_on?: Maybe<Array<Thing_Images_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Thing_Images_Order_By>>;
+  where?: Maybe<Thing_Images_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootThing_Images_AggregateArgs = {
+  distinct_on?: Maybe<Array<Thing_Images_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Thing_Images_Order_By>>;
+  where?: Maybe<Thing_Images_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootThing_Images_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** query root */
+export type Query_RootThing_TypeArgs = {
+  distinct_on?: Maybe<Array<Thing_Type_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Thing_Type_Order_By>>;
+  where?: Maybe<Thing_Type_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootThing_Type_AggregateArgs = {
+  distinct_on?: Maybe<Array<Thing_Type_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Thing_Type_Order_By>>;
+  where?: Maybe<Thing_Type_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootThing_Type_By_PkArgs = {
+  value: Scalars['String'];
+};
+
+
+/** query root */
 export type Query_RootThingsArgs = {
   distinct_on?: Maybe<Array<Things_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4038,6 +4666,12 @@ export type Subscription_Root = {
   entities_aggregate: Entities_Aggregate;
   /** fetch data from the table: "entities" using primary key columns */
   entities_by_pk?: Maybe<Entities>;
+  /** fetch data from the table: "file_uploads" */
+  file_uploads: Array<File_Uploads>;
+  /** fetch aggregated fields from the table: "file_uploads" */
+  file_uploads_aggregate: File_Uploads_Aggregate;
+  /** fetch data from the table: "file_uploads" using primary key columns */
+  file_uploads_by_pk?: Maybe<File_Uploads>;
   /** fetch data from the table: "group_join_request_status" */
   group_join_request_status: Array<Group_Join_Request_Status>;
   /** fetch aggregated fields from the table: "group_join_request_status" */
@@ -4092,6 +4726,18 @@ export type Subscription_Root = {
   notifications_aggregate: Notifications_Aggregate;
   /** fetch data from the table: "notifications" using primary key columns */
   notifications_by_pk?: Maybe<Notifications>;
+  /** fetch data from the table: "thing_images" */
+  thing_images: Array<Thing_Images>;
+  /** fetch aggregated fields from the table: "thing_images" */
+  thing_images_aggregate: Thing_Images_Aggregate;
+  /** fetch data from the table: "thing_images" using primary key columns */
+  thing_images_by_pk?: Maybe<Thing_Images>;
+  /** fetch data from the table: "thing_type" */
+  thing_type: Array<Thing_Type>;
+  /** fetch aggregated fields from the table: "thing_type" */
+  thing_type_aggregate: Thing_Type_Aggregate;
+  /** fetch data from the table: "thing_type" using primary key columns */
+  thing_type_by_pk?: Maybe<Thing_Type>;
   /** fetch data from the table: "things" */
   things: Array<Things>;
   /** fetch aggregated fields from the table: "things" */
@@ -4191,6 +4837,32 @@ export type Subscription_RootEntities_AggregateArgs = {
 
 /** subscription root */
 export type Subscription_RootEntities_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** subscription root */
+export type Subscription_RootFile_UploadsArgs = {
+  distinct_on?: Maybe<Array<File_Uploads_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<File_Uploads_Order_By>>;
+  where?: Maybe<File_Uploads_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootFile_Uploads_AggregateArgs = {
+  distinct_on?: Maybe<Array<File_Uploads_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<File_Uploads_Order_By>>;
+  where?: Maybe<File_Uploads_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootFile_Uploads_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -4430,6 +5102,58 @@ export type Subscription_RootNotifications_By_PkArgs = {
 
 
 /** subscription root */
+export type Subscription_RootThing_ImagesArgs = {
+  distinct_on?: Maybe<Array<Thing_Images_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Thing_Images_Order_By>>;
+  where?: Maybe<Thing_Images_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootThing_Images_AggregateArgs = {
+  distinct_on?: Maybe<Array<Thing_Images_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Thing_Images_Order_By>>;
+  where?: Maybe<Thing_Images_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootThing_Images_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** subscription root */
+export type Subscription_RootThing_TypeArgs = {
+  distinct_on?: Maybe<Array<Thing_Type_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Thing_Type_Order_By>>;
+  where?: Maybe<Thing_Type_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootThing_Type_AggregateArgs = {
+  distinct_on?: Maybe<Array<Thing_Type_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Thing_Type_Order_By>>;
+  where?: Maybe<Thing_Type_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootThing_Type_By_PkArgs = {
+  value: Scalars['String'];
+};
+
+
+/** subscription root */
 export type Subscription_RootThingsArgs = {
   distinct_on?: Maybe<Array<Things_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4526,19 +5250,520 @@ export type Subscription_RootVerification_Requests_By_PkArgs = {
   id: Scalars['Int'];
 };
 
+/** columns and relationships of "thing_images" */
+export type Thing_Images = {
+  __typename?: 'thing_images';
+  created_at: Scalars['timestamptz'];
+  description: Scalars['String'];
+  /** An object relationship */
+  file: File_Uploads;
+  file_id: Scalars['uuid'];
+  id: Scalars['uuid'];
+  order: Scalars['Int'];
+  /** An object relationship */
+  thing: Things;
+  thing_id: Scalars['uuid'];
+  updated_at: Scalars['timestamptz'];
+};
+
+/** aggregated selection of "thing_images" */
+export type Thing_Images_Aggregate = {
+  __typename?: 'thing_images_aggregate';
+  aggregate?: Maybe<Thing_Images_Aggregate_Fields>;
+  nodes: Array<Thing_Images>;
+};
+
+/** aggregate fields of "thing_images" */
+export type Thing_Images_Aggregate_Fields = {
+  __typename?: 'thing_images_aggregate_fields';
+  avg?: Maybe<Thing_Images_Avg_Fields>;
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Thing_Images_Max_Fields>;
+  min?: Maybe<Thing_Images_Min_Fields>;
+  stddev?: Maybe<Thing_Images_Stddev_Fields>;
+  stddev_pop?: Maybe<Thing_Images_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Thing_Images_Stddev_Samp_Fields>;
+  sum?: Maybe<Thing_Images_Sum_Fields>;
+  var_pop?: Maybe<Thing_Images_Var_Pop_Fields>;
+  var_samp?: Maybe<Thing_Images_Var_Samp_Fields>;
+  variance?: Maybe<Thing_Images_Variance_Fields>;
+};
+
+
+/** aggregate fields of "thing_images" */
+export type Thing_Images_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Thing_Images_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "thing_images" */
+export type Thing_Images_Aggregate_Order_By = {
+  avg?: Maybe<Thing_Images_Avg_Order_By>;
+  count?: Maybe<Order_By>;
+  max?: Maybe<Thing_Images_Max_Order_By>;
+  min?: Maybe<Thing_Images_Min_Order_By>;
+  stddev?: Maybe<Thing_Images_Stddev_Order_By>;
+  stddev_pop?: Maybe<Thing_Images_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Thing_Images_Stddev_Samp_Order_By>;
+  sum?: Maybe<Thing_Images_Sum_Order_By>;
+  var_pop?: Maybe<Thing_Images_Var_Pop_Order_By>;
+  var_samp?: Maybe<Thing_Images_Var_Samp_Order_By>;
+  variance?: Maybe<Thing_Images_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "thing_images" */
+export type Thing_Images_Arr_Rel_Insert_Input = {
+  data: Array<Thing_Images_Insert_Input>;
+  on_conflict?: Maybe<Thing_Images_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type Thing_Images_Avg_Fields = {
+  __typename?: 'thing_images_avg_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "thing_images" */
+export type Thing_Images_Avg_Order_By = {
+  order?: Maybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "thing_images". All fields are combined with a logical 'AND'. */
+export type Thing_Images_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Thing_Images_Bool_Exp>>>;
+  _not?: Maybe<Thing_Images_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Thing_Images_Bool_Exp>>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  description?: Maybe<String_Comparison_Exp>;
+  file?: Maybe<File_Uploads_Bool_Exp>;
+  file_id?: Maybe<Uuid_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  order?: Maybe<Int_Comparison_Exp>;
+  thing?: Maybe<Things_Bool_Exp>;
+  thing_id?: Maybe<Uuid_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "thing_images" */
+export enum Thing_Images_Constraint {
+  /** unique or primary key constraint */
+  ThingImagesFileIdKey = 'thing_images_file_id_key',
+  /** unique or primary key constraint */
+  ThingImagesPkey = 'thing_images_pkey'
+}
+
+/** input type for incrementing integer column in table "thing_images" */
+export type Thing_Images_Inc_Input = {
+  order?: Maybe<Scalars['Int']>;
+};
+
+/** input type for inserting data into table "thing_images" */
+export type Thing_Images_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
+  file?: Maybe<File_Uploads_Obj_Rel_Insert_Input>;
+  file_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  order?: Maybe<Scalars['Int']>;
+  thing?: Maybe<Things_Obj_Rel_Insert_Input>;
+  thing_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Thing_Images_Max_Fields = {
+  __typename?: 'thing_images_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
+  file_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  order?: Maybe<Scalars['Int']>;
+  thing_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "thing_images" */
+export type Thing_Images_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  description?: Maybe<Order_By>;
+  file_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  order?: Maybe<Order_By>;
+  thing_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Thing_Images_Min_Fields = {
+  __typename?: 'thing_images_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
+  file_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  order?: Maybe<Scalars['Int']>;
+  thing_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "thing_images" */
+export type Thing_Images_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  description?: Maybe<Order_By>;
+  file_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  order?: Maybe<Order_By>;
+  thing_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "thing_images" */
+export type Thing_Images_Mutation_Response = {
+  __typename?: 'thing_images_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Thing_Images>;
+};
+
+/** input type for inserting object relation for remote table "thing_images" */
+export type Thing_Images_Obj_Rel_Insert_Input = {
+  data: Thing_Images_Insert_Input;
+  on_conflict?: Maybe<Thing_Images_On_Conflict>;
+};
+
+/** on conflict condition type for table "thing_images" */
+export type Thing_Images_On_Conflict = {
+  constraint: Thing_Images_Constraint;
+  update_columns: Array<Thing_Images_Update_Column>;
+  where?: Maybe<Thing_Images_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "thing_images" */
+export type Thing_Images_Order_By = {
+  created_at?: Maybe<Order_By>;
+  description?: Maybe<Order_By>;
+  file?: Maybe<File_Uploads_Order_By>;
+  file_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  order?: Maybe<Order_By>;
+  thing?: Maybe<Things_Order_By>;
+  thing_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "thing_images" */
+export type Thing_Images_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "thing_images" */
+export enum Thing_Images_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  FileId = 'file_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Order = 'order',
+  /** column name */
+  ThingId = 'thing_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "thing_images" */
+export type Thing_Images_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
+  file_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  order?: Maybe<Scalars['Int']>;
+  thing_id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate stddev on columns */
+export type Thing_Images_Stddev_Fields = {
+  __typename?: 'thing_images_stddev_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "thing_images" */
+export type Thing_Images_Stddev_Order_By = {
+  order?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Thing_Images_Stddev_Pop_Fields = {
+  __typename?: 'thing_images_stddev_pop_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "thing_images" */
+export type Thing_Images_Stddev_Pop_Order_By = {
+  order?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Thing_Images_Stddev_Samp_Fields = {
+  __typename?: 'thing_images_stddev_samp_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "thing_images" */
+export type Thing_Images_Stddev_Samp_Order_By = {
+  order?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Thing_Images_Sum_Fields = {
+  __typename?: 'thing_images_sum_fields';
+  order?: Maybe<Scalars['Int']>;
+};
+
+/** order by sum() on columns of table "thing_images" */
+export type Thing_Images_Sum_Order_By = {
+  order?: Maybe<Order_By>;
+};
+
+/** update columns of table "thing_images" */
+export enum Thing_Images_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Description = 'description',
+  /** column name */
+  FileId = 'file_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Order = 'order',
+  /** column name */
+  ThingId = 'thing_id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** aggregate var_pop on columns */
+export type Thing_Images_Var_Pop_Fields = {
+  __typename?: 'thing_images_var_pop_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "thing_images" */
+export type Thing_Images_Var_Pop_Order_By = {
+  order?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Thing_Images_Var_Samp_Fields = {
+  __typename?: 'thing_images_var_samp_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "thing_images" */
+export type Thing_Images_Var_Samp_Order_By = {
+  order?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Thing_Images_Variance_Fields = {
+  __typename?: 'thing_images_variance_fields';
+  order?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "thing_images" */
+export type Thing_Images_Variance_Order_By = {
+  order?: Maybe<Order_By>;
+};
+
+/** columns and relationships of "thing_type" */
+export type Thing_Type = {
+  __typename?: 'thing_type';
+  comment: Scalars['String'];
+  value: Scalars['String'];
+};
+
+/** aggregated selection of "thing_type" */
+export type Thing_Type_Aggregate = {
+  __typename?: 'thing_type_aggregate';
+  aggregate?: Maybe<Thing_Type_Aggregate_Fields>;
+  nodes: Array<Thing_Type>;
+};
+
+/** aggregate fields of "thing_type" */
+export type Thing_Type_Aggregate_Fields = {
+  __typename?: 'thing_type_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Thing_Type_Max_Fields>;
+  min?: Maybe<Thing_Type_Min_Fields>;
+};
+
+
+/** aggregate fields of "thing_type" */
+export type Thing_Type_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Thing_Type_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "thing_type" */
+export type Thing_Type_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Thing_Type_Max_Order_By>;
+  min?: Maybe<Thing_Type_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "thing_type" */
+export type Thing_Type_Arr_Rel_Insert_Input = {
+  data: Array<Thing_Type_Insert_Input>;
+  on_conflict?: Maybe<Thing_Type_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "thing_type". All fields are combined with a logical 'AND'. */
+export type Thing_Type_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Thing_Type_Bool_Exp>>>;
+  _not?: Maybe<Thing_Type_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Thing_Type_Bool_Exp>>>;
+  comment?: Maybe<String_Comparison_Exp>;
+  value?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "thing_type" */
+export enum Thing_Type_Constraint {
+  /** unique or primary key constraint */
+  ThingTypePkey = 'thing_type_pkey'
+}
+
+export enum Thing_Type_Enum {
+  /** give away */
+  Give = 'give',
+  /** have parts of it */
+  HaveSome = 'have_some',
+  /** borrow and bring back */
+  Lend = 'lend',
+  /** something else */
+  Other = 'other'
+}
+
+/** expression to compare columns of type thing_type_enum. All fields are combined with logical 'AND'. */
+export type Thing_Type_Enum_Comparison_Exp = {
+  _eq?: Maybe<Thing_Type_Enum>;
+  _in?: Maybe<Array<Thing_Type_Enum>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _neq?: Maybe<Thing_Type_Enum>;
+  _nin?: Maybe<Array<Thing_Type_Enum>>;
+};
+
+/** input type for inserting data into table "thing_type" */
+export type Thing_Type_Insert_Input = {
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Thing_Type_Max_Fields = {
+  __typename?: 'thing_type_max_fields';
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** order by max() on columns of table "thing_type" */
+export type Thing_Type_Max_Order_By = {
+  comment?: Maybe<Order_By>;
+  value?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Thing_Type_Min_Fields = {
+  __typename?: 'thing_type_min_fields';
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** order by min() on columns of table "thing_type" */
+export type Thing_Type_Min_Order_By = {
+  comment?: Maybe<Order_By>;
+  value?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "thing_type" */
+export type Thing_Type_Mutation_Response = {
+  __typename?: 'thing_type_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Thing_Type>;
+};
+
+/** input type for inserting object relation for remote table "thing_type" */
+export type Thing_Type_Obj_Rel_Insert_Input = {
+  data: Thing_Type_Insert_Input;
+  on_conflict?: Maybe<Thing_Type_On_Conflict>;
+};
+
+/** on conflict condition type for table "thing_type" */
+export type Thing_Type_On_Conflict = {
+  constraint: Thing_Type_Constraint;
+  update_columns: Array<Thing_Type_Update_Column>;
+  where?: Maybe<Thing_Type_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "thing_type" */
+export type Thing_Type_Order_By = {
+  comment?: Maybe<Order_By>;
+  value?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "thing_type" */
+export type Thing_Type_Pk_Columns_Input = {
+  value: Scalars['String'];
+};
+
+/** select columns of table "thing_type" */
+export enum Thing_Type_Select_Column {
+  /** column name */
+  Comment = 'comment',
+  /** column name */
+  Value = 'value'
+}
+
+/** input type for updating data in table "thing_type" */
+export type Thing_Type_Set_Input = {
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "thing_type" */
+export enum Thing_Type_Update_Column {
+  /** column name */
+  Comment = 'comment',
+  /** column name */
+  Value = 'value'
+}
+
 /** columns and relationships of "things" */
 export type Things = {
   __typename?: 'things';
+  category?: Maybe<Scalars['String']>;
   created_at: Scalars['timestamptz'];
+  description: Scalars['String'];
   /** An array relationship */
   group_relations: Array<Group_Thing>;
   /** An aggregated array relationship */
   group_relations_aggregate: Group_Thing_Aggregate;
   id: Scalars['uuid'];
+  /** An array relationship */
+  images: Array<Thing_Images>;
+  /** An aggregated array relationship */
+  images_aggregate: Thing_Images_Aggregate;
   name: Scalars['String'];
   /** An object relationship */
   owner: Users;
   owner_id: Scalars['uuid'];
+  type?: Maybe<Thing_Type_Enum>;
   updated_at: Scalars['timestamptz'];
 };
 
@@ -4560,6 +5785,26 @@ export type ThingsGroup_Relations_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Group_Thing_Order_By>>;
   where?: Maybe<Group_Thing_Bool_Exp>;
+};
+
+
+/** columns and relationships of "things" */
+export type ThingsImagesArgs = {
+  distinct_on?: Maybe<Array<Thing_Images_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Thing_Images_Order_By>>;
+  where?: Maybe<Thing_Images_Bool_Exp>;
+};
+
+
+/** columns and relationships of "things" */
+export type ThingsImages_AggregateArgs = {
+  distinct_on?: Maybe<Array<Thing_Images_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Thing_Images_Order_By>>;
+  where?: Maybe<Thing_Images_Bool_Exp>;
 };
 
 /** aggregated selection of "things" */
@@ -4602,12 +5847,16 @@ export type Things_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Things_Bool_Exp>>>;
   _not?: Maybe<Things_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Things_Bool_Exp>>>;
+  category?: Maybe<String_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  description?: Maybe<String_Comparison_Exp>;
   group_relations?: Maybe<Group_Thing_Bool_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
+  images?: Maybe<Thing_Images_Bool_Exp>;
   name?: Maybe<String_Comparison_Exp>;
   owner?: Maybe<Users_Bool_Exp>;
   owner_id?: Maybe<Uuid_Comparison_Exp>;
+  type?: Maybe<Thing_Type_Enum_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
 };
 
@@ -4619,19 +5868,25 @@ export enum Things_Constraint {
 
 /** input type for inserting data into table "things" */
 export type Things_Insert_Input = {
+  category?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
   group_relations?: Maybe<Group_Thing_Arr_Rel_Insert_Input>;
   id?: Maybe<Scalars['uuid']>;
+  images?: Maybe<Thing_Images_Arr_Rel_Insert_Input>;
   name?: Maybe<Scalars['String']>;
   owner?: Maybe<Users_Obj_Rel_Insert_Input>;
   owner_id?: Maybe<Scalars['uuid']>;
+  type?: Maybe<Thing_Type_Enum>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
 /** aggregate max on columns */
 export type Things_Max_Fields = {
   __typename?: 'things_max_fields';
+  category?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
   owner_id?: Maybe<Scalars['uuid']>;
@@ -4640,7 +5895,9 @@ export type Things_Max_Fields = {
 
 /** order by max() on columns of table "things" */
 export type Things_Max_Order_By = {
+  category?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   owner_id?: Maybe<Order_By>;
@@ -4650,7 +5907,9 @@ export type Things_Max_Order_By = {
 /** aggregate min on columns */
 export type Things_Min_Fields = {
   __typename?: 'things_min_fields';
+  category?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
   owner_id?: Maybe<Scalars['uuid']>;
@@ -4659,7 +5918,9 @@ export type Things_Min_Fields = {
 
 /** order by min() on columns of table "things" */
 export type Things_Min_Order_By = {
+  category?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   owner_id?: Maybe<Order_By>;
@@ -4690,12 +5951,16 @@ export type Things_On_Conflict = {
 
 /** ordering options when selecting data from "things" */
 export type Things_Order_By = {
+  category?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  description?: Maybe<Order_By>;
   group_relations_aggregate?: Maybe<Group_Thing_Aggregate_Order_By>;
   id?: Maybe<Order_By>;
+  images_aggregate?: Maybe<Thing_Images_Aggregate_Order_By>;
   name?: Maybe<Order_By>;
   owner?: Maybe<Users_Order_By>;
   owner_id?: Maybe<Order_By>;
+  type?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
@@ -4707,36 +5972,51 @@ export type Things_Pk_Columns_Input = {
 /** select columns of table "things" */
 export enum Things_Select_Column {
   /** column name */
+  Category = 'category',
+  /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  Description = 'description',
   /** column name */
   Id = 'id',
   /** column name */
   Name = 'name',
   /** column name */
   OwnerId = 'owner_id',
+  /** column name */
+  Type = 'type',
   /** column name */
   UpdatedAt = 'updated_at'
 }
 
 /** input type for updating data in table "things" */
 export type Things_Set_Input = {
+  category?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
   owner_id?: Maybe<Scalars['uuid']>;
+  type?: Maybe<Thing_Type_Enum>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
 /** update columns of table "things" */
 export enum Things_Update_Column {
   /** column name */
+  Category = 'category',
+  /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  Description = 'description',
   /** column name */
   Id = 'id',
   /** column name */
   Name = 'name',
   /** column name */
   OwnerId = 'owner_id',
+  /** column name */
+  Type = 'type',
   /** column name */
   UpdatedAt = 'updated_at'
 }
@@ -5686,7 +6966,32 @@ export type ServerFetchThingDetailsQuery = (
           ) }
         )> }
       ) }
+    )>, images: Array<(
+      { __typename?: 'thing_images' }
+      & Pick<Thing_Images, 'id' | 'file_id' | 'order' | 'description'>
     )> }
+  )> }
+);
+
+export type ServerUpdateThingMutationVariables = Exact<{
+  id: Scalars['uuid'];
+  input: Things_Insert_Input;
+  deletedFileIds: Array<Scalars['uuid']>;
+  deletedGroupIds: Array<Scalars['uuid']>;
+}>;
+
+
+export type ServerUpdateThingMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_things_one?: Maybe<(
+    { __typename?: 'things' }
+    & Pick<Things, 'id'>
+  )>, delete_thing_images?: Maybe<(
+    { __typename?: 'thing_images_mutation_response' }
+    & Pick<Thing_Images_Mutation_Response, 'affected_rows'>
+  )>, delete_group_thing?: Maybe<(
+    { __typename?: 'group_thing_mutation_response' }
+    & Pick<Group_Thing_Mutation_Response, 'affected_rows'>
   )> }
 );
 
@@ -5826,6 +7131,10 @@ export type ResolversTypes = {
   RequestJoinGroupInput: RequestJoinGroupInput;
   RequestJoinGroupResult: ResolverTypeWrapper<RequestJoinGroupResult>;
   String_comparison_exp: String_Comparison_Exp;
+  UpdateGroupThing: UpdateGroupThing;
+  UpdateThingImage: UpdateThingImage;
+  UpdateThingInput: UpdateThingInput;
+  UpdateThingResult: ResolverTypeWrapper<UpdateThingResult>;
   activities: ResolverTypeWrapper<Activities>;
   activities_aggregate: ResolverTypeWrapper<Activities_Aggregate>;
   activities_aggregate_fields: ResolverTypeWrapper<Activities_Aggregate_Fields>;
@@ -5890,6 +7199,44 @@ export type ResolversTypes = {
   entities_select_column: Entities_Select_Column;
   entities_set_input: Entities_Set_Input;
   entities_update_column: Entities_Update_Column;
+  file_uploads: ResolverTypeWrapper<File_Uploads>;
+  file_uploads_aggregate: ResolverTypeWrapper<File_Uploads_Aggregate>;
+  file_uploads_aggregate_fields: ResolverTypeWrapper<File_Uploads_Aggregate_Fields>;
+  file_uploads_aggregate_order_by: File_Uploads_Aggregate_Order_By;
+  file_uploads_arr_rel_insert_input: File_Uploads_Arr_Rel_Insert_Input;
+  file_uploads_avg_fields: ResolverTypeWrapper<File_Uploads_Avg_Fields>;
+  Float: ResolverTypeWrapper<Scalars['Float']>;
+  file_uploads_avg_order_by: File_Uploads_Avg_Order_By;
+  file_uploads_bool_exp: File_Uploads_Bool_Exp;
+  file_uploads_constraint: File_Uploads_Constraint;
+  file_uploads_inc_input: File_Uploads_Inc_Input;
+  file_uploads_insert_input: File_Uploads_Insert_Input;
+  file_uploads_max_fields: ResolverTypeWrapper<File_Uploads_Max_Fields>;
+  file_uploads_max_order_by: File_Uploads_Max_Order_By;
+  file_uploads_min_fields: ResolverTypeWrapper<File_Uploads_Min_Fields>;
+  file_uploads_min_order_by: File_Uploads_Min_Order_By;
+  file_uploads_mutation_response: ResolverTypeWrapper<File_Uploads_Mutation_Response>;
+  file_uploads_obj_rel_insert_input: File_Uploads_Obj_Rel_Insert_Input;
+  file_uploads_on_conflict: File_Uploads_On_Conflict;
+  file_uploads_order_by: File_Uploads_Order_By;
+  file_uploads_pk_columns_input: File_Uploads_Pk_Columns_Input;
+  file_uploads_select_column: File_Uploads_Select_Column;
+  file_uploads_set_input: File_Uploads_Set_Input;
+  file_uploads_stddev_fields: ResolverTypeWrapper<File_Uploads_Stddev_Fields>;
+  file_uploads_stddev_order_by: File_Uploads_Stddev_Order_By;
+  file_uploads_stddev_pop_fields: ResolverTypeWrapper<File_Uploads_Stddev_Pop_Fields>;
+  file_uploads_stddev_pop_order_by: File_Uploads_Stddev_Pop_Order_By;
+  file_uploads_stddev_samp_fields: ResolverTypeWrapper<File_Uploads_Stddev_Samp_Fields>;
+  file_uploads_stddev_samp_order_by: File_Uploads_Stddev_Samp_Order_By;
+  file_uploads_sum_fields: ResolverTypeWrapper<File_Uploads_Sum_Fields>;
+  file_uploads_sum_order_by: File_Uploads_Sum_Order_By;
+  file_uploads_update_column: File_Uploads_Update_Column;
+  file_uploads_var_pop_fields: ResolverTypeWrapper<File_Uploads_Var_Pop_Fields>;
+  file_uploads_var_pop_order_by: File_Uploads_Var_Pop_Order_By;
+  file_uploads_var_samp_fields: ResolverTypeWrapper<File_Uploads_Var_Samp_Fields>;
+  file_uploads_var_samp_order_by: File_Uploads_Var_Samp_Order_By;
+  file_uploads_variance_fields: ResolverTypeWrapper<File_Uploads_Variance_Fields>;
+  file_uploads_variance_order_by: File_Uploads_Variance_Order_By;
   group_join_request_status: ResolverTypeWrapper<Group_Join_Request_Status>;
   group_join_request_status_aggregate: ResolverTypeWrapper<Group_Join_Request_Status_Aggregate>;
   group_join_request_status_aggregate_fields: ResolverTypeWrapper<Group_Join_Request_Status_Aggregate_Fields>;
@@ -6079,6 +7426,65 @@ export type ResolversTypes = {
   order_by: Order_By;
   query_root: ResolverTypeWrapper<{}>;
   subscription_root: ResolverTypeWrapper<{}>;
+  thing_images: ResolverTypeWrapper<Thing_Images>;
+  thing_images_aggregate: ResolverTypeWrapper<Thing_Images_Aggregate>;
+  thing_images_aggregate_fields: ResolverTypeWrapper<Thing_Images_Aggregate_Fields>;
+  thing_images_aggregate_order_by: Thing_Images_Aggregate_Order_By;
+  thing_images_arr_rel_insert_input: Thing_Images_Arr_Rel_Insert_Input;
+  thing_images_avg_fields: ResolverTypeWrapper<Thing_Images_Avg_Fields>;
+  thing_images_avg_order_by: Thing_Images_Avg_Order_By;
+  thing_images_bool_exp: Thing_Images_Bool_Exp;
+  thing_images_constraint: Thing_Images_Constraint;
+  thing_images_inc_input: Thing_Images_Inc_Input;
+  thing_images_insert_input: Thing_Images_Insert_Input;
+  thing_images_max_fields: ResolverTypeWrapper<Thing_Images_Max_Fields>;
+  thing_images_max_order_by: Thing_Images_Max_Order_By;
+  thing_images_min_fields: ResolverTypeWrapper<Thing_Images_Min_Fields>;
+  thing_images_min_order_by: Thing_Images_Min_Order_By;
+  thing_images_mutation_response: ResolverTypeWrapper<Thing_Images_Mutation_Response>;
+  thing_images_obj_rel_insert_input: Thing_Images_Obj_Rel_Insert_Input;
+  thing_images_on_conflict: Thing_Images_On_Conflict;
+  thing_images_order_by: Thing_Images_Order_By;
+  thing_images_pk_columns_input: Thing_Images_Pk_Columns_Input;
+  thing_images_select_column: Thing_Images_Select_Column;
+  thing_images_set_input: Thing_Images_Set_Input;
+  thing_images_stddev_fields: ResolverTypeWrapper<Thing_Images_Stddev_Fields>;
+  thing_images_stddev_order_by: Thing_Images_Stddev_Order_By;
+  thing_images_stddev_pop_fields: ResolverTypeWrapper<Thing_Images_Stddev_Pop_Fields>;
+  thing_images_stddev_pop_order_by: Thing_Images_Stddev_Pop_Order_By;
+  thing_images_stddev_samp_fields: ResolverTypeWrapper<Thing_Images_Stddev_Samp_Fields>;
+  thing_images_stddev_samp_order_by: Thing_Images_Stddev_Samp_Order_By;
+  thing_images_sum_fields: ResolverTypeWrapper<Thing_Images_Sum_Fields>;
+  thing_images_sum_order_by: Thing_Images_Sum_Order_By;
+  thing_images_update_column: Thing_Images_Update_Column;
+  thing_images_var_pop_fields: ResolverTypeWrapper<Thing_Images_Var_Pop_Fields>;
+  thing_images_var_pop_order_by: Thing_Images_Var_Pop_Order_By;
+  thing_images_var_samp_fields: ResolverTypeWrapper<Thing_Images_Var_Samp_Fields>;
+  thing_images_var_samp_order_by: Thing_Images_Var_Samp_Order_By;
+  thing_images_variance_fields: ResolverTypeWrapper<Thing_Images_Variance_Fields>;
+  thing_images_variance_order_by: Thing_Images_Variance_Order_By;
+  thing_type: ResolverTypeWrapper<Thing_Type>;
+  thing_type_aggregate: ResolverTypeWrapper<Thing_Type_Aggregate>;
+  thing_type_aggregate_fields: ResolverTypeWrapper<Thing_Type_Aggregate_Fields>;
+  thing_type_aggregate_order_by: Thing_Type_Aggregate_Order_By;
+  thing_type_arr_rel_insert_input: Thing_Type_Arr_Rel_Insert_Input;
+  thing_type_bool_exp: Thing_Type_Bool_Exp;
+  thing_type_constraint: Thing_Type_Constraint;
+  thing_type_enum: Thing_Type_Enum;
+  thing_type_enum_comparison_exp: Thing_Type_Enum_Comparison_Exp;
+  thing_type_insert_input: Thing_Type_Insert_Input;
+  thing_type_max_fields: ResolverTypeWrapper<Thing_Type_Max_Fields>;
+  thing_type_max_order_by: Thing_Type_Max_Order_By;
+  thing_type_min_fields: ResolverTypeWrapper<Thing_Type_Min_Fields>;
+  thing_type_min_order_by: Thing_Type_Min_Order_By;
+  thing_type_mutation_response: ResolverTypeWrapper<Thing_Type_Mutation_Response>;
+  thing_type_obj_rel_insert_input: Thing_Type_Obj_Rel_Insert_Input;
+  thing_type_on_conflict: Thing_Type_On_Conflict;
+  thing_type_order_by: Thing_Type_Order_By;
+  thing_type_pk_columns_input: Thing_Type_Pk_Columns_Input;
+  thing_type_select_column: Thing_Type_Select_Column;
+  thing_type_set_input: Thing_Type_Set_Input;
+  thing_type_update_column: Thing_Type_Update_Column;
   things: ResolverTypeWrapper<Things>;
   things_aggregate: ResolverTypeWrapper<Things_Aggregate>;
   things_aggregate_fields: ResolverTypeWrapper<Things_Aggregate_Fields>;
@@ -6145,7 +7551,6 @@ export type ResolversTypes = {
   verification_requests_aggregate_order_by: Verification_Requests_Aggregate_Order_By;
   verification_requests_arr_rel_insert_input: Verification_Requests_Arr_Rel_Insert_Input;
   verification_requests_avg_fields: ResolverTypeWrapper<Verification_Requests_Avg_Fields>;
-  Float: ResolverTypeWrapper<Scalars['Float']>;
   verification_requests_avg_order_by: Verification_Requests_Avg_Order_By;
   verification_requests_bool_exp: Verification_Requests_Bool_Exp;
   verification_requests_constraint: Verification_Requests_Constraint;
@@ -6200,6 +7605,10 @@ export type ResolversParentTypes = {
   RequestJoinGroupInput: RequestJoinGroupInput;
   RequestJoinGroupResult: RequestJoinGroupResult;
   String_comparison_exp: String_Comparison_Exp;
+  UpdateGroupThing: UpdateGroupThing;
+  UpdateThingImage: UpdateThingImage;
+  UpdateThingInput: UpdateThingInput;
+  UpdateThingResult: UpdateThingResult;
   activities: Activities;
   activities_aggregate: Activities_Aggregate;
   activities_aggregate_fields: Activities_Aggregate_Fields;
@@ -6254,6 +7663,41 @@ export type ResolversParentTypes = {
   entities_order_by: Entities_Order_By;
   entities_pk_columns_input: Entities_Pk_Columns_Input;
   entities_set_input: Entities_Set_Input;
+  file_uploads: File_Uploads;
+  file_uploads_aggregate: File_Uploads_Aggregate;
+  file_uploads_aggregate_fields: File_Uploads_Aggregate_Fields;
+  file_uploads_aggregate_order_by: File_Uploads_Aggregate_Order_By;
+  file_uploads_arr_rel_insert_input: File_Uploads_Arr_Rel_Insert_Input;
+  file_uploads_avg_fields: File_Uploads_Avg_Fields;
+  Float: Scalars['Float'];
+  file_uploads_avg_order_by: File_Uploads_Avg_Order_By;
+  file_uploads_bool_exp: File_Uploads_Bool_Exp;
+  file_uploads_inc_input: File_Uploads_Inc_Input;
+  file_uploads_insert_input: File_Uploads_Insert_Input;
+  file_uploads_max_fields: File_Uploads_Max_Fields;
+  file_uploads_max_order_by: File_Uploads_Max_Order_By;
+  file_uploads_min_fields: File_Uploads_Min_Fields;
+  file_uploads_min_order_by: File_Uploads_Min_Order_By;
+  file_uploads_mutation_response: File_Uploads_Mutation_Response;
+  file_uploads_obj_rel_insert_input: File_Uploads_Obj_Rel_Insert_Input;
+  file_uploads_on_conflict: File_Uploads_On_Conflict;
+  file_uploads_order_by: File_Uploads_Order_By;
+  file_uploads_pk_columns_input: File_Uploads_Pk_Columns_Input;
+  file_uploads_set_input: File_Uploads_Set_Input;
+  file_uploads_stddev_fields: File_Uploads_Stddev_Fields;
+  file_uploads_stddev_order_by: File_Uploads_Stddev_Order_By;
+  file_uploads_stddev_pop_fields: File_Uploads_Stddev_Pop_Fields;
+  file_uploads_stddev_pop_order_by: File_Uploads_Stddev_Pop_Order_By;
+  file_uploads_stddev_samp_fields: File_Uploads_Stddev_Samp_Fields;
+  file_uploads_stddev_samp_order_by: File_Uploads_Stddev_Samp_Order_By;
+  file_uploads_sum_fields: File_Uploads_Sum_Fields;
+  file_uploads_sum_order_by: File_Uploads_Sum_Order_By;
+  file_uploads_var_pop_fields: File_Uploads_Var_Pop_Fields;
+  file_uploads_var_pop_order_by: File_Uploads_Var_Pop_Order_By;
+  file_uploads_var_samp_fields: File_Uploads_Var_Samp_Fields;
+  file_uploads_var_samp_order_by: File_Uploads_Var_Samp_Order_By;
+  file_uploads_variance_fields: File_Uploads_Variance_Fields;
+  file_uploads_variance_order_by: File_Uploads_Variance_Order_By;
   group_join_request_status: Group_Join_Request_Status;
   group_join_request_status_aggregate: Group_Join_Request_Status_Aggregate;
   group_join_request_status_aggregate_fields: Group_Join_Request_Status_Aggregate_Fields;
@@ -6413,6 +7857,58 @@ export type ResolversParentTypes = {
   notifications_set_input: Notifications_Set_Input;
   query_root: {};
   subscription_root: {};
+  thing_images: Thing_Images;
+  thing_images_aggregate: Thing_Images_Aggregate;
+  thing_images_aggregate_fields: Thing_Images_Aggregate_Fields;
+  thing_images_aggregate_order_by: Thing_Images_Aggregate_Order_By;
+  thing_images_arr_rel_insert_input: Thing_Images_Arr_Rel_Insert_Input;
+  thing_images_avg_fields: Thing_Images_Avg_Fields;
+  thing_images_avg_order_by: Thing_Images_Avg_Order_By;
+  thing_images_bool_exp: Thing_Images_Bool_Exp;
+  thing_images_inc_input: Thing_Images_Inc_Input;
+  thing_images_insert_input: Thing_Images_Insert_Input;
+  thing_images_max_fields: Thing_Images_Max_Fields;
+  thing_images_max_order_by: Thing_Images_Max_Order_By;
+  thing_images_min_fields: Thing_Images_Min_Fields;
+  thing_images_min_order_by: Thing_Images_Min_Order_By;
+  thing_images_mutation_response: Thing_Images_Mutation_Response;
+  thing_images_obj_rel_insert_input: Thing_Images_Obj_Rel_Insert_Input;
+  thing_images_on_conflict: Thing_Images_On_Conflict;
+  thing_images_order_by: Thing_Images_Order_By;
+  thing_images_pk_columns_input: Thing_Images_Pk_Columns_Input;
+  thing_images_set_input: Thing_Images_Set_Input;
+  thing_images_stddev_fields: Thing_Images_Stddev_Fields;
+  thing_images_stddev_order_by: Thing_Images_Stddev_Order_By;
+  thing_images_stddev_pop_fields: Thing_Images_Stddev_Pop_Fields;
+  thing_images_stddev_pop_order_by: Thing_Images_Stddev_Pop_Order_By;
+  thing_images_stddev_samp_fields: Thing_Images_Stddev_Samp_Fields;
+  thing_images_stddev_samp_order_by: Thing_Images_Stddev_Samp_Order_By;
+  thing_images_sum_fields: Thing_Images_Sum_Fields;
+  thing_images_sum_order_by: Thing_Images_Sum_Order_By;
+  thing_images_var_pop_fields: Thing_Images_Var_Pop_Fields;
+  thing_images_var_pop_order_by: Thing_Images_Var_Pop_Order_By;
+  thing_images_var_samp_fields: Thing_Images_Var_Samp_Fields;
+  thing_images_var_samp_order_by: Thing_Images_Var_Samp_Order_By;
+  thing_images_variance_fields: Thing_Images_Variance_Fields;
+  thing_images_variance_order_by: Thing_Images_Variance_Order_By;
+  thing_type: Thing_Type;
+  thing_type_aggregate: Thing_Type_Aggregate;
+  thing_type_aggregate_fields: Thing_Type_Aggregate_Fields;
+  thing_type_aggregate_order_by: Thing_Type_Aggregate_Order_By;
+  thing_type_arr_rel_insert_input: Thing_Type_Arr_Rel_Insert_Input;
+  thing_type_bool_exp: Thing_Type_Bool_Exp;
+  thing_type_enum_comparison_exp: Thing_Type_Enum_Comparison_Exp;
+  thing_type_insert_input: Thing_Type_Insert_Input;
+  thing_type_max_fields: Thing_Type_Max_Fields;
+  thing_type_max_order_by: Thing_Type_Max_Order_By;
+  thing_type_min_fields: Thing_Type_Min_Fields;
+  thing_type_min_order_by: Thing_Type_Min_Order_By;
+  thing_type_mutation_response: Thing_Type_Mutation_Response;
+  thing_type_obj_rel_insert_input: Thing_Type_Obj_Rel_Insert_Input;
+  thing_type_on_conflict: Thing_Type_On_Conflict;
+  thing_type_order_by: Thing_Type_Order_By;
+  thing_type_pk_columns_input: Thing_Type_Pk_Columns_Input;
+  thing_type_set_input: Thing_Type_Set_Input;
   things: Things;
   things_aggregate: Things_Aggregate;
   things_aggregate_fields: Things_Aggregate_Fields;
@@ -6472,7 +7968,6 @@ export type ResolversParentTypes = {
   verification_requests_aggregate_order_by: Verification_Requests_Aggregate_Order_By;
   verification_requests_arr_rel_insert_input: Verification_Requests_Arr_Rel_Insert_Input;
   verification_requests_avg_fields: Verification_Requests_Avg_Fields;
-  Float: Scalars['Float'];
   verification_requests_avg_order_by: Verification_Requests_Avg_Order_By;
   verification_requests_bool_exp: Verification_Requests_Bool_Exp;
   verification_requests_inc_input: Verification_Requests_Inc_Input;
@@ -6547,6 +8042,12 @@ export type RequestJoinGroupResultResolvers<ContextType = any, ParentType extend
   group_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   user?: Resolver<Maybe<ResolversTypes['users']>, ParentType, ContextType>;
   user_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type UpdateThingResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['UpdateThingResult'] = ResolversParentTypes['UpdateThingResult']> = {
+  thing?: Resolver<Maybe<ResolversTypes['things']>, ParentType, ContextType>;
+  thing_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -6691,6 +8192,110 @@ export type Entities_Min_FieldsResolvers<ContextType = any, ParentType extends R
 export type Entities_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['entities_mutation_response'] = ResolversParentTypes['entities_mutation_response']> = {
   affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   returning?: Resolver<Array<ResolversTypes['entities']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type File_UploadsResolvers<ContextType = any, ParentType extends ResolversParentTypes['file_uploads'] = ResolversParentTypes['file_uploads']> = {
+  created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  mime_type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  owner?: Resolver<Maybe<ResolversTypes['users']>, ParentType, ContextType>;
+  owner_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  size?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  updated_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type File_Uploads_AggregateResolvers<ContextType = any, ParentType extends ResolversParentTypes['file_uploads_aggregate'] = ResolversParentTypes['file_uploads_aggregate']> = {
+  aggregate?: Resolver<Maybe<ResolversTypes['file_uploads_aggregate_fields']>, ParentType, ContextType>;
+  nodes?: Resolver<Array<ResolversTypes['file_uploads']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type File_Uploads_Aggregate_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['file_uploads_aggregate_fields'] = ResolversParentTypes['file_uploads_aggregate_fields']> = {
+  avg?: Resolver<Maybe<ResolversTypes['file_uploads_avg_fields']>, ParentType, ContextType>;
+  count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<File_Uploads_Aggregate_FieldsCountArgs, never>>;
+  max?: Resolver<Maybe<ResolversTypes['file_uploads_max_fields']>, ParentType, ContextType>;
+  min?: Resolver<Maybe<ResolversTypes['file_uploads_min_fields']>, ParentType, ContextType>;
+  stddev?: Resolver<Maybe<ResolversTypes['file_uploads_stddev_fields']>, ParentType, ContextType>;
+  stddev_pop?: Resolver<Maybe<ResolversTypes['file_uploads_stddev_pop_fields']>, ParentType, ContextType>;
+  stddev_samp?: Resolver<Maybe<ResolversTypes['file_uploads_stddev_samp_fields']>, ParentType, ContextType>;
+  sum?: Resolver<Maybe<ResolversTypes['file_uploads_sum_fields']>, ParentType, ContextType>;
+  var_pop?: Resolver<Maybe<ResolversTypes['file_uploads_var_pop_fields']>, ParentType, ContextType>;
+  var_samp?: Resolver<Maybe<ResolversTypes['file_uploads_var_samp_fields']>, ParentType, ContextType>;
+  variance?: Resolver<Maybe<ResolversTypes['file_uploads_variance_fields']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type File_Uploads_Avg_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['file_uploads_avg_fields'] = ResolversParentTypes['file_uploads_avg_fields']> = {
+  size?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type File_Uploads_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['file_uploads_max_fields'] = ResolversParentTypes['file_uploads_max_fields']> = {
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  mime_type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  owner_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  size?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  url?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type File_Uploads_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['file_uploads_min_fields'] = ResolversParentTypes['file_uploads_min_fields']> = {
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  mime_type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  owner_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  size?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  url?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type File_Uploads_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['file_uploads_mutation_response'] = ResolversParentTypes['file_uploads_mutation_response']> = {
+  affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  returning?: Resolver<Array<ResolversTypes['file_uploads']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type File_Uploads_Stddev_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['file_uploads_stddev_fields'] = ResolversParentTypes['file_uploads_stddev_fields']> = {
+  size?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type File_Uploads_Stddev_Pop_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['file_uploads_stddev_pop_fields'] = ResolversParentTypes['file_uploads_stddev_pop_fields']> = {
+  size?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type File_Uploads_Stddev_Samp_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['file_uploads_stddev_samp_fields'] = ResolversParentTypes['file_uploads_stddev_samp_fields']> = {
+  size?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type File_Uploads_Sum_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['file_uploads_sum_fields'] = ResolversParentTypes['file_uploads_sum_fields']> = {
+  size?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type File_Uploads_Var_Pop_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['file_uploads_var_pop_fields'] = ResolversParentTypes['file_uploads_var_pop_fields']> = {
+  size?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type File_Uploads_Var_Samp_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['file_uploads_var_samp_fields'] = ResolversParentTypes['file_uploads_var_samp_fields']> = {
+  size?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type File_Uploads_Variance_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['file_uploads_variance_fields'] = ResolversParentTypes['file_uploads_variance_fields']> = {
+  size?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -7088,6 +8693,8 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   delete_activity_verb_by_pk?: Resolver<Maybe<ResolversTypes['activity_verb']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Activity_Verb_By_PkArgs, 'value'>>;
   delete_entities?: Resolver<Maybe<ResolversTypes['entities_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_EntitiesArgs, 'where'>>;
   delete_entities_by_pk?: Resolver<Maybe<ResolversTypes['entities']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Entities_By_PkArgs, 'id'>>;
+  delete_file_uploads?: Resolver<Maybe<ResolversTypes['file_uploads_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_File_UploadsArgs, 'where'>>;
+  delete_file_uploads_by_pk?: Resolver<Maybe<ResolversTypes['file_uploads']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_File_Uploads_By_PkArgs, 'id'>>;
   delete_group_join_request_status?: Resolver<Maybe<ResolversTypes['group_join_request_status_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_Join_Request_StatusArgs, 'where'>>;
   delete_group_join_request_status_by_pk?: Resolver<Maybe<ResolversTypes['group_join_request_status']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_Join_Request_Status_By_PkArgs, 'value'>>;
   delete_group_join_requests?: Resolver<Maybe<ResolversTypes['group_join_requests_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_Join_RequestsArgs, 'where'>>;
@@ -7106,6 +8713,10 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   delete_messages_by_pk?: Resolver<Maybe<ResolversTypes['messages']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Messages_By_PkArgs, 'id'>>;
   delete_notifications?: Resolver<Maybe<ResolversTypes['notifications_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_NotificationsArgs, 'where'>>;
   delete_notifications_by_pk?: Resolver<Maybe<ResolversTypes['notifications']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Notifications_By_PkArgs, 'id'>>;
+  delete_thing_images?: Resolver<Maybe<ResolversTypes['thing_images_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Thing_ImagesArgs, 'where'>>;
+  delete_thing_images_by_pk?: Resolver<Maybe<ResolversTypes['thing_images']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Thing_Images_By_PkArgs, 'id'>>;
+  delete_thing_type?: Resolver<Maybe<ResolversTypes['thing_type_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Thing_TypeArgs, 'where'>>;
+  delete_thing_type_by_pk?: Resolver<Maybe<ResolversTypes['thing_type']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Thing_Type_By_PkArgs, 'value'>>;
   delete_things?: Resolver<Maybe<ResolversTypes['things_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_ThingsArgs, 'where'>>;
   delete_things_by_pk?: Resolver<Maybe<ResolversTypes['things']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Things_By_PkArgs, 'id'>>;
   delete_user_private?: Resolver<Maybe<ResolversTypes['user_private_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_User_PrivateArgs, 'where'>>;
@@ -7120,6 +8731,8 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   insert_activity_verb_one?: Resolver<Maybe<ResolversTypes['activity_verb']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Activity_Verb_OneArgs, 'object'>>;
   insert_entities?: Resolver<Maybe<ResolversTypes['entities_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_EntitiesArgs, 'objects'>>;
   insert_entities_one?: Resolver<Maybe<ResolversTypes['entities']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Entities_OneArgs, 'object'>>;
+  insert_file_uploads?: Resolver<Maybe<ResolversTypes['file_uploads_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_File_UploadsArgs, 'objects'>>;
+  insert_file_uploads_one?: Resolver<Maybe<ResolversTypes['file_uploads']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_File_Uploads_OneArgs, 'object'>>;
   insert_group_join_request_status?: Resolver<Maybe<ResolversTypes['group_join_request_status_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_Join_Request_StatusArgs, 'objects'>>;
   insert_group_join_request_status_one?: Resolver<Maybe<ResolversTypes['group_join_request_status']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_Join_Request_Status_OneArgs, 'object'>>;
   insert_group_join_requests?: Resolver<Maybe<ResolversTypes['group_join_requests_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_Join_RequestsArgs, 'objects'>>;
@@ -7138,6 +8751,10 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   insert_messages_one?: Resolver<Maybe<ResolversTypes['messages']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Messages_OneArgs, 'object'>>;
   insert_notifications?: Resolver<Maybe<ResolversTypes['notifications_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_NotificationsArgs, 'objects'>>;
   insert_notifications_one?: Resolver<Maybe<ResolversTypes['notifications']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Notifications_OneArgs, 'object'>>;
+  insert_thing_images?: Resolver<Maybe<ResolversTypes['thing_images_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Thing_ImagesArgs, 'objects'>>;
+  insert_thing_images_one?: Resolver<Maybe<ResolversTypes['thing_images']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Thing_Images_OneArgs, 'object'>>;
+  insert_thing_type?: Resolver<Maybe<ResolversTypes['thing_type_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Thing_TypeArgs, 'objects'>>;
+  insert_thing_type_one?: Resolver<Maybe<ResolversTypes['thing_type']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Thing_Type_OneArgs, 'object'>>;
   insert_things?: Resolver<Maybe<ResolversTypes['things_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_ThingsArgs, 'objects'>>;
   insert_things_one?: Resolver<Maybe<ResolversTypes['things']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Things_OneArgs, 'object'>>;
   insert_user_private?: Resolver<Maybe<ResolversTypes['user_private_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_User_PrivateArgs, 'objects'>>;
@@ -7149,12 +8766,15 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   joinGroup?: Resolver<Maybe<ResolversTypes['JoinGroupResult']>, ParentType, ContextType, RequireFields<Mutation_RootJoinGroupArgs, 'input'>>;
   registerCredentials?: Resolver<Maybe<ResolversTypes['RegistrationResult']>, ParentType, ContextType, RequireFields<Mutation_RootRegisterCredentialsArgs, 'input'>>;
   requestJoinGroup?: Resolver<Maybe<ResolversTypes['RequestJoinGroupResult']>, ParentType, ContextType, RequireFields<Mutation_RootRequestJoinGroupArgs, 'input'>>;
+  updateThing?: Resolver<Maybe<ResolversTypes['UpdateThingResult']>, ParentType, ContextType, RequireFields<Mutation_RootUpdateThingArgs, 'input'>>;
   update_activities?: Resolver<Maybe<ResolversTypes['activities_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_ActivitiesArgs, 'where'>>;
   update_activities_by_pk?: Resolver<Maybe<ResolversTypes['activities']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Activities_By_PkArgs, 'pk_columns'>>;
   update_activity_verb?: Resolver<Maybe<ResolversTypes['activity_verb_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Activity_VerbArgs, 'where'>>;
   update_activity_verb_by_pk?: Resolver<Maybe<ResolversTypes['activity_verb']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Activity_Verb_By_PkArgs, 'pk_columns'>>;
   update_entities?: Resolver<Maybe<ResolversTypes['entities_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_EntitiesArgs, 'where'>>;
   update_entities_by_pk?: Resolver<Maybe<ResolversTypes['entities']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Entities_By_PkArgs, 'pk_columns'>>;
+  update_file_uploads?: Resolver<Maybe<ResolversTypes['file_uploads_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_File_UploadsArgs, 'where'>>;
+  update_file_uploads_by_pk?: Resolver<Maybe<ResolversTypes['file_uploads']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_File_Uploads_By_PkArgs, 'pk_columns'>>;
   update_group_join_request_status?: Resolver<Maybe<ResolversTypes['group_join_request_status_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_Join_Request_StatusArgs, 'where'>>;
   update_group_join_request_status_by_pk?: Resolver<Maybe<ResolversTypes['group_join_request_status']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_Join_Request_Status_By_PkArgs, 'pk_columns'>>;
   update_group_join_requests?: Resolver<Maybe<ResolversTypes['group_join_requests_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_Join_RequestsArgs, 'where'>>;
@@ -7173,6 +8793,10 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   update_messages_by_pk?: Resolver<Maybe<ResolversTypes['messages']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Messages_By_PkArgs, 'pk_columns'>>;
   update_notifications?: Resolver<Maybe<ResolversTypes['notifications_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_NotificationsArgs, 'where'>>;
   update_notifications_by_pk?: Resolver<Maybe<ResolversTypes['notifications']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Notifications_By_PkArgs, 'pk_columns'>>;
+  update_thing_images?: Resolver<Maybe<ResolversTypes['thing_images_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Thing_ImagesArgs, 'where'>>;
+  update_thing_images_by_pk?: Resolver<Maybe<ResolversTypes['thing_images']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Thing_Images_By_PkArgs, 'pk_columns'>>;
+  update_thing_type?: Resolver<Maybe<ResolversTypes['thing_type_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Thing_TypeArgs, 'where'>>;
+  update_thing_type_by_pk?: Resolver<Maybe<ResolversTypes['thing_type']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Thing_Type_By_PkArgs, 'pk_columns'>>;
   update_things?: Resolver<Maybe<ResolversTypes['things_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_ThingsArgs, 'where'>>;
   update_things_by_pk?: Resolver<Maybe<ResolversTypes['things']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Things_By_PkArgs, 'pk_columns'>>;
   update_user_private?: Resolver<Maybe<ResolversTypes['user_private_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_User_PrivateArgs, 'where'>>;
@@ -7240,6 +8864,9 @@ export type Query_RootResolvers<ContextType = any, ParentType extends ResolversP
   entities?: Resolver<Array<ResolversTypes['entities']>, ParentType, ContextType, RequireFields<Query_RootEntitiesArgs, never>>;
   entities_aggregate?: Resolver<ResolversTypes['entities_aggregate'], ParentType, ContextType, RequireFields<Query_RootEntities_AggregateArgs, never>>;
   entities_by_pk?: Resolver<Maybe<ResolversTypes['entities']>, ParentType, ContextType, RequireFields<Query_RootEntities_By_PkArgs, 'id'>>;
+  file_uploads?: Resolver<Array<ResolversTypes['file_uploads']>, ParentType, ContextType, RequireFields<Query_RootFile_UploadsArgs, never>>;
+  file_uploads_aggregate?: Resolver<ResolversTypes['file_uploads_aggregate'], ParentType, ContextType, RequireFields<Query_RootFile_Uploads_AggregateArgs, never>>;
+  file_uploads_by_pk?: Resolver<Maybe<ResolversTypes['file_uploads']>, ParentType, ContextType, RequireFields<Query_RootFile_Uploads_By_PkArgs, 'id'>>;
   group_join_request_status?: Resolver<Array<ResolversTypes['group_join_request_status']>, ParentType, ContextType, RequireFields<Query_RootGroup_Join_Request_StatusArgs, never>>;
   group_join_request_status_aggregate?: Resolver<ResolversTypes['group_join_request_status_aggregate'], ParentType, ContextType, RequireFields<Query_RootGroup_Join_Request_Status_AggregateArgs, never>>;
   group_join_request_status_by_pk?: Resolver<Maybe<ResolversTypes['group_join_request_status']>, ParentType, ContextType, RequireFields<Query_RootGroup_Join_Request_Status_By_PkArgs, 'value'>>;
@@ -7267,6 +8894,12 @@ export type Query_RootResolvers<ContextType = any, ParentType extends ResolversP
   notifications?: Resolver<Array<ResolversTypes['notifications']>, ParentType, ContextType, RequireFields<Query_RootNotificationsArgs, never>>;
   notifications_aggregate?: Resolver<ResolversTypes['notifications_aggregate'], ParentType, ContextType, RequireFields<Query_RootNotifications_AggregateArgs, never>>;
   notifications_by_pk?: Resolver<Maybe<ResolversTypes['notifications']>, ParentType, ContextType, RequireFields<Query_RootNotifications_By_PkArgs, 'id'>>;
+  thing_images?: Resolver<Array<ResolversTypes['thing_images']>, ParentType, ContextType, RequireFields<Query_RootThing_ImagesArgs, never>>;
+  thing_images_aggregate?: Resolver<ResolversTypes['thing_images_aggregate'], ParentType, ContextType, RequireFields<Query_RootThing_Images_AggregateArgs, never>>;
+  thing_images_by_pk?: Resolver<Maybe<ResolversTypes['thing_images']>, ParentType, ContextType, RequireFields<Query_RootThing_Images_By_PkArgs, 'id'>>;
+  thing_type?: Resolver<Array<ResolversTypes['thing_type']>, ParentType, ContextType, RequireFields<Query_RootThing_TypeArgs, never>>;
+  thing_type_aggregate?: Resolver<ResolversTypes['thing_type_aggregate'], ParentType, ContextType, RequireFields<Query_RootThing_Type_AggregateArgs, never>>;
+  thing_type_by_pk?: Resolver<Maybe<ResolversTypes['thing_type']>, ParentType, ContextType, RequireFields<Query_RootThing_Type_By_PkArgs, 'value'>>;
   things?: Resolver<Array<ResolversTypes['things']>, ParentType, ContextType, RequireFields<Query_RootThingsArgs, never>>;
   things_aggregate?: Resolver<ResolversTypes['things_aggregate'], ParentType, ContextType, RequireFields<Query_RootThings_AggregateArgs, never>>;
   things_by_pk?: Resolver<Maybe<ResolversTypes['things']>, ParentType, ContextType, RequireFields<Query_RootThings_By_PkArgs, 'id'>>;
@@ -7290,6 +8923,9 @@ export type Subscription_RootResolvers<ContextType = any, ParentType extends Res
   entities?: SubscriptionResolver<Array<ResolversTypes['entities']>, "entities", ParentType, ContextType, RequireFields<Subscription_RootEntitiesArgs, never>>;
   entities_aggregate?: SubscriptionResolver<ResolversTypes['entities_aggregate'], "entities_aggregate", ParentType, ContextType, RequireFields<Subscription_RootEntities_AggregateArgs, never>>;
   entities_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['entities']>, "entities_by_pk", ParentType, ContextType, RequireFields<Subscription_RootEntities_By_PkArgs, 'id'>>;
+  file_uploads?: SubscriptionResolver<Array<ResolversTypes['file_uploads']>, "file_uploads", ParentType, ContextType, RequireFields<Subscription_RootFile_UploadsArgs, never>>;
+  file_uploads_aggregate?: SubscriptionResolver<ResolversTypes['file_uploads_aggregate'], "file_uploads_aggregate", ParentType, ContextType, RequireFields<Subscription_RootFile_Uploads_AggregateArgs, never>>;
+  file_uploads_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['file_uploads']>, "file_uploads_by_pk", ParentType, ContextType, RequireFields<Subscription_RootFile_Uploads_By_PkArgs, 'id'>>;
   group_join_request_status?: SubscriptionResolver<Array<ResolversTypes['group_join_request_status']>, "group_join_request_status", ParentType, ContextType, RequireFields<Subscription_RootGroup_Join_Request_StatusArgs, never>>;
   group_join_request_status_aggregate?: SubscriptionResolver<ResolversTypes['group_join_request_status_aggregate'], "group_join_request_status_aggregate", ParentType, ContextType, RequireFields<Subscription_RootGroup_Join_Request_Status_AggregateArgs, never>>;
   group_join_request_status_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['group_join_request_status']>, "group_join_request_status_by_pk", ParentType, ContextType, RequireFields<Subscription_RootGroup_Join_Request_Status_By_PkArgs, 'value'>>;
@@ -7317,6 +8953,12 @@ export type Subscription_RootResolvers<ContextType = any, ParentType extends Res
   notifications?: SubscriptionResolver<Array<ResolversTypes['notifications']>, "notifications", ParentType, ContextType, RequireFields<Subscription_RootNotificationsArgs, never>>;
   notifications_aggregate?: SubscriptionResolver<ResolversTypes['notifications_aggregate'], "notifications_aggregate", ParentType, ContextType, RequireFields<Subscription_RootNotifications_AggregateArgs, never>>;
   notifications_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['notifications']>, "notifications_by_pk", ParentType, ContextType, RequireFields<Subscription_RootNotifications_By_PkArgs, 'id'>>;
+  thing_images?: SubscriptionResolver<Array<ResolversTypes['thing_images']>, "thing_images", ParentType, ContextType, RequireFields<Subscription_RootThing_ImagesArgs, never>>;
+  thing_images_aggregate?: SubscriptionResolver<ResolversTypes['thing_images_aggregate'], "thing_images_aggregate", ParentType, ContextType, RequireFields<Subscription_RootThing_Images_AggregateArgs, never>>;
+  thing_images_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['thing_images']>, "thing_images_by_pk", ParentType, ContextType, RequireFields<Subscription_RootThing_Images_By_PkArgs, 'id'>>;
+  thing_type?: SubscriptionResolver<Array<ResolversTypes['thing_type']>, "thing_type", ParentType, ContextType, RequireFields<Subscription_RootThing_TypeArgs, never>>;
+  thing_type_aggregate?: SubscriptionResolver<ResolversTypes['thing_type_aggregate'], "thing_type_aggregate", ParentType, ContextType, RequireFields<Subscription_RootThing_Type_AggregateArgs, never>>;
+  thing_type_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['thing_type']>, "thing_type_by_pk", ParentType, ContextType, RequireFields<Subscription_RootThing_Type_By_PkArgs, 'value'>>;
   things?: SubscriptionResolver<Array<ResolversTypes['things']>, "things", ParentType, ContextType, RequireFields<Subscription_RootThingsArgs, never>>;
   things_aggregate?: SubscriptionResolver<ResolversTypes['things_aggregate'], "things_aggregate", ParentType, ContextType, RequireFields<Subscription_RootThings_AggregateArgs, never>>;
   things_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['things']>, "things_by_pk", ParentType, ContextType, RequireFields<Subscription_RootThings_By_PkArgs, 'id'>>;
@@ -7330,14 +8972,158 @@ export type Subscription_RootResolvers<ContextType = any, ParentType extends Res
   verification_requests_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['verification_requests']>, "verification_requests_by_pk", ParentType, ContextType, RequireFields<Subscription_RootVerification_Requests_By_PkArgs, 'id'>>;
 };
 
-export type ThingsResolvers<ContextType = any, ParentType extends ResolversParentTypes['things'] = ResolversParentTypes['things']> = {
+export type Thing_ImagesResolvers<ContextType = any, ParentType extends ResolversParentTypes['thing_images'] = ResolversParentTypes['thing_images']> = {
   created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  file?: Resolver<ResolversTypes['file_uploads'], ParentType, ContextType>;
+  file_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  order?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  thing?: Resolver<ResolversTypes['things'], ParentType, ContextType>;
+  thing_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  updated_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Thing_Images_AggregateResolvers<ContextType = any, ParentType extends ResolversParentTypes['thing_images_aggregate'] = ResolversParentTypes['thing_images_aggregate']> = {
+  aggregate?: Resolver<Maybe<ResolversTypes['thing_images_aggregate_fields']>, ParentType, ContextType>;
+  nodes?: Resolver<Array<ResolversTypes['thing_images']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Thing_Images_Aggregate_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['thing_images_aggregate_fields'] = ResolversParentTypes['thing_images_aggregate_fields']> = {
+  avg?: Resolver<Maybe<ResolversTypes['thing_images_avg_fields']>, ParentType, ContextType>;
+  count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<Thing_Images_Aggregate_FieldsCountArgs, never>>;
+  max?: Resolver<Maybe<ResolversTypes['thing_images_max_fields']>, ParentType, ContextType>;
+  min?: Resolver<Maybe<ResolversTypes['thing_images_min_fields']>, ParentType, ContextType>;
+  stddev?: Resolver<Maybe<ResolversTypes['thing_images_stddev_fields']>, ParentType, ContextType>;
+  stddev_pop?: Resolver<Maybe<ResolversTypes['thing_images_stddev_pop_fields']>, ParentType, ContextType>;
+  stddev_samp?: Resolver<Maybe<ResolversTypes['thing_images_stddev_samp_fields']>, ParentType, ContextType>;
+  sum?: Resolver<Maybe<ResolversTypes['thing_images_sum_fields']>, ParentType, ContextType>;
+  var_pop?: Resolver<Maybe<ResolversTypes['thing_images_var_pop_fields']>, ParentType, ContextType>;
+  var_samp?: Resolver<Maybe<ResolversTypes['thing_images_var_samp_fields']>, ParentType, ContextType>;
+  variance?: Resolver<Maybe<ResolversTypes['thing_images_variance_fields']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Thing_Images_Avg_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['thing_images_avg_fields'] = ResolversParentTypes['thing_images_avg_fields']> = {
+  order?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Thing_Images_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['thing_images_max_fields'] = ResolversParentTypes['thing_images_max_fields']> = {
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  file_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  order?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  thing_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Thing_Images_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['thing_images_min_fields'] = ResolversParentTypes['thing_images_min_fields']> = {
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  file_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  order?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  thing_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Thing_Images_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['thing_images_mutation_response'] = ResolversParentTypes['thing_images_mutation_response']> = {
+  affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  returning?: Resolver<Array<ResolversTypes['thing_images']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Thing_Images_Stddev_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['thing_images_stddev_fields'] = ResolversParentTypes['thing_images_stddev_fields']> = {
+  order?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Thing_Images_Stddev_Pop_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['thing_images_stddev_pop_fields'] = ResolversParentTypes['thing_images_stddev_pop_fields']> = {
+  order?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Thing_Images_Stddev_Samp_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['thing_images_stddev_samp_fields'] = ResolversParentTypes['thing_images_stddev_samp_fields']> = {
+  order?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Thing_Images_Sum_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['thing_images_sum_fields'] = ResolversParentTypes['thing_images_sum_fields']> = {
+  order?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Thing_Images_Var_Pop_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['thing_images_var_pop_fields'] = ResolversParentTypes['thing_images_var_pop_fields']> = {
+  order?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Thing_Images_Var_Samp_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['thing_images_var_samp_fields'] = ResolversParentTypes['thing_images_var_samp_fields']> = {
+  order?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Thing_Images_Variance_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['thing_images_variance_fields'] = ResolversParentTypes['thing_images_variance_fields']> = {
+  order?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Thing_TypeResolvers<ContextType = any, ParentType extends ResolversParentTypes['thing_type'] = ResolversParentTypes['thing_type']> = {
+  comment?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  value?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Thing_Type_AggregateResolvers<ContextType = any, ParentType extends ResolversParentTypes['thing_type_aggregate'] = ResolversParentTypes['thing_type_aggregate']> = {
+  aggregate?: Resolver<Maybe<ResolversTypes['thing_type_aggregate_fields']>, ParentType, ContextType>;
+  nodes?: Resolver<Array<ResolversTypes['thing_type']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Thing_Type_Aggregate_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['thing_type_aggregate_fields'] = ResolversParentTypes['thing_type_aggregate_fields']> = {
+  count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<Thing_Type_Aggregate_FieldsCountArgs, never>>;
+  max?: Resolver<Maybe<ResolversTypes['thing_type_max_fields']>, ParentType, ContextType>;
+  min?: Resolver<Maybe<ResolversTypes['thing_type_min_fields']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Thing_Type_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['thing_type_max_fields'] = ResolversParentTypes['thing_type_max_fields']> = {
+  comment?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  value?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Thing_Type_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['thing_type_min_fields'] = ResolversParentTypes['thing_type_min_fields']> = {
+  comment?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  value?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Thing_Type_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['thing_type_mutation_response'] = ResolversParentTypes['thing_type_mutation_response']> = {
+  affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  returning?: Resolver<Array<ResolversTypes['thing_type']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ThingsResolvers<ContextType = any, ParentType extends ResolversParentTypes['things'] = ResolversParentTypes['things']> = {
+  category?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   group_relations?: Resolver<Array<ResolversTypes['group_thing']>, ParentType, ContextType, RequireFields<ThingsGroup_RelationsArgs, never>>;
   group_relations_aggregate?: Resolver<ResolversTypes['group_thing_aggregate'], ParentType, ContextType, RequireFields<ThingsGroup_Relations_AggregateArgs, never>>;
   id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  images?: Resolver<Array<ResolversTypes['thing_images']>, ParentType, ContextType, RequireFields<ThingsImagesArgs, never>>;
+  images_aggregate?: Resolver<ResolversTypes['thing_images_aggregate'], ParentType, ContextType, RequireFields<ThingsImages_AggregateArgs, never>>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   owner?: Resolver<ResolversTypes['users'], ParentType, ContextType>;
   owner_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  type?: Resolver<Maybe<ResolversTypes['thing_type_enum']>, ParentType, ContextType>;
   updated_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -7356,7 +9142,9 @@ export type Things_Aggregate_FieldsResolvers<ContextType = any, ParentType exten
 };
 
 export type Things_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['things_max_fields'] = ResolversParentTypes['things_max_fields']> = {
+  category?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   owner_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
@@ -7365,7 +9153,9 @@ export type Things_Max_FieldsResolvers<ContextType = any, ParentType extends Res
 };
 
 export type Things_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['things_min_fields'] = ResolversParentTypes['things_min_fields']> = {
+  category?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   owner_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
@@ -7594,6 +9384,7 @@ export type Resolvers<ContextType = any> = {
   JoinGroupResult?: JoinGroupResultResolvers<ContextType>;
   RegistrationResult?: RegistrationResultResolvers<ContextType>;
   RequestJoinGroupResult?: RequestJoinGroupResultResolvers<ContextType>;
+  UpdateThingResult?: UpdateThingResultResolvers<ContextType>;
   activities?: ActivitiesResolvers<ContextType>;
   activities_aggregate?: Activities_AggregateResolvers<ContextType>;
   activities_aggregate_fields?: Activities_Aggregate_FieldsResolvers<ContextType>;
@@ -7613,6 +9404,20 @@ export type Resolvers<ContextType = any> = {
   entities_max_fields?: Entities_Max_FieldsResolvers<ContextType>;
   entities_min_fields?: Entities_Min_FieldsResolvers<ContextType>;
   entities_mutation_response?: Entities_Mutation_ResponseResolvers<ContextType>;
+  file_uploads?: File_UploadsResolvers<ContextType>;
+  file_uploads_aggregate?: File_Uploads_AggregateResolvers<ContextType>;
+  file_uploads_aggregate_fields?: File_Uploads_Aggregate_FieldsResolvers<ContextType>;
+  file_uploads_avg_fields?: File_Uploads_Avg_FieldsResolvers<ContextType>;
+  file_uploads_max_fields?: File_Uploads_Max_FieldsResolvers<ContextType>;
+  file_uploads_min_fields?: File_Uploads_Min_FieldsResolvers<ContextType>;
+  file_uploads_mutation_response?: File_Uploads_Mutation_ResponseResolvers<ContextType>;
+  file_uploads_stddev_fields?: File_Uploads_Stddev_FieldsResolvers<ContextType>;
+  file_uploads_stddev_pop_fields?: File_Uploads_Stddev_Pop_FieldsResolvers<ContextType>;
+  file_uploads_stddev_samp_fields?: File_Uploads_Stddev_Samp_FieldsResolvers<ContextType>;
+  file_uploads_sum_fields?: File_Uploads_Sum_FieldsResolvers<ContextType>;
+  file_uploads_var_pop_fields?: File_Uploads_Var_Pop_FieldsResolvers<ContextType>;
+  file_uploads_var_samp_fields?: File_Uploads_Var_Samp_FieldsResolvers<ContextType>;
+  file_uploads_variance_fields?: File_Uploads_Variance_FieldsResolvers<ContextType>;
   group_join_request_status?: Group_Join_Request_StatusResolvers<ContextType>;
   group_join_request_status_aggregate?: Group_Join_Request_Status_AggregateResolvers<ContextType>;
   group_join_request_status_aggregate_fields?: Group_Join_Request_Status_Aggregate_FieldsResolvers<ContextType>;
@@ -7671,6 +9476,26 @@ export type Resolvers<ContextType = any> = {
   notifications_mutation_response?: Notifications_Mutation_ResponseResolvers<ContextType>;
   query_root?: Query_RootResolvers<ContextType>;
   subscription_root?: Subscription_RootResolvers<ContextType>;
+  thing_images?: Thing_ImagesResolvers<ContextType>;
+  thing_images_aggregate?: Thing_Images_AggregateResolvers<ContextType>;
+  thing_images_aggregate_fields?: Thing_Images_Aggregate_FieldsResolvers<ContextType>;
+  thing_images_avg_fields?: Thing_Images_Avg_FieldsResolvers<ContextType>;
+  thing_images_max_fields?: Thing_Images_Max_FieldsResolvers<ContextType>;
+  thing_images_min_fields?: Thing_Images_Min_FieldsResolvers<ContextType>;
+  thing_images_mutation_response?: Thing_Images_Mutation_ResponseResolvers<ContextType>;
+  thing_images_stddev_fields?: Thing_Images_Stddev_FieldsResolvers<ContextType>;
+  thing_images_stddev_pop_fields?: Thing_Images_Stddev_Pop_FieldsResolvers<ContextType>;
+  thing_images_stddev_samp_fields?: Thing_Images_Stddev_Samp_FieldsResolvers<ContextType>;
+  thing_images_sum_fields?: Thing_Images_Sum_FieldsResolvers<ContextType>;
+  thing_images_var_pop_fields?: Thing_Images_Var_Pop_FieldsResolvers<ContextType>;
+  thing_images_var_samp_fields?: Thing_Images_Var_Samp_FieldsResolvers<ContextType>;
+  thing_images_variance_fields?: Thing_Images_Variance_FieldsResolvers<ContextType>;
+  thing_type?: Thing_TypeResolvers<ContextType>;
+  thing_type_aggregate?: Thing_Type_AggregateResolvers<ContextType>;
+  thing_type_aggregate_fields?: Thing_Type_Aggregate_FieldsResolvers<ContextType>;
+  thing_type_max_fields?: Thing_Type_Max_FieldsResolvers<ContextType>;
+  thing_type_min_fields?: Thing_Type_Min_FieldsResolvers<ContextType>;
+  thing_type_mutation_response?: Thing_Type_Mutation_ResponseResolvers<ContextType>;
   things?: ThingsResolvers<ContextType>;
   things_aggregate?: Things_AggregateResolvers<ContextType>;
   things_aggregate_fields?: Things_Aggregate_FieldsResolvers<ContextType>;
@@ -7725,7 +9550,8 @@ export const ServerInsertGroupDocument: DocumentNode<ServerInsertGroupMutation, 
 export const ServerInsertGroupJoinRequestDocument: DocumentNode<ServerInsertGroupJoinRequestMutation, ServerInsertGroupJoinRequestMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertGroupJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_requests_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_join_requests_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"status"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerInsertGroupMemberDocument: DocumentNode<ServerInsertGroupMemberMutation, ServerInsertGroupMemberMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertGroupMember"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_members_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_members_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerUpdateGroupJoinRequestDocument: DocumentNode<ServerUpdateGroupJoinRequestMutation, ServerUpdateGroupJoinRequestMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerUpdateGroupJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_requests_set_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_group_join_requests_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]}]}}]}}]};
-export const ServerFetchThingDetailsDocument: DocumentNode<ServerFetchThingDetailsQuery, ServerFetchThingDetailsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFetchThingDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"things_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"owner"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"group_relations"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"memberships"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"role"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]}}]}}]}}]}}]};
+export const ServerFetchThingDetailsDocument: DocumentNode<ServerFetchThingDetailsQuery, ServerFetchThingDetailsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFetchThingDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"things_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"owner"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"group_relations"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"memberships"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"role"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"images"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"file_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"order"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"description"},"arguments":[],"directives":[]}]}}]}}]}}]};
+export const ServerUpdateThingDocument: DocumentNode<ServerUpdateThingMutation, ServerUpdateThingMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerUpdateThing"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"things_insert_input"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"deletedFileIds"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"deletedGroupIds"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_things_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}},{"kind":"Argument","name":{"kind":"Name","value":"on_conflict"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"constraint"},"value":{"kind":"EnumValue","value":"things_pkey"}},{"kind":"ObjectField","name":{"kind":"Name","value":"update_columns"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"name"},{"kind":"EnumValue","value":"description"},{"kind":"EnumValue","value":"type"},{"kind":"EnumValue","value":"category"}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"delete_thing_images"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"thing_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"file_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"deletedFileIds"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"delete_group_thing"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"thing_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"group_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"deletedGroupIds"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerUserCredentialsDocument: DocumentNode<ServerUserCredentialsQuery, ServerUserCredentialsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerUserCredentials"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"password_hash"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerFindUserDocument: DocumentNode<ServerFindUserQuery, ServerFindUserQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"email"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerInsertUserDocument: DocumentNode<ServerInsertUserMutation, ServerInsertUserMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"users_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_users_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]};

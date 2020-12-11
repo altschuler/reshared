@@ -3,9 +3,25 @@
 fragment ThingCard on things {
     id
     name
+    description
+    category
+    type
+
+    images {
+        ...ThingImageCard
+    }
 
     owner {
         ...UserCard
+    }
+}
+
+fragment ThingImageCard on thing_images {
+    id
+    description
+    order
+    file {
+        ...FileUploadCard
     }
 }
 
@@ -32,10 +48,24 @@ query ThingList($limit: Int, $offset: Int, $orderBy: [things_order_by!], $where:
     }
 }
 
+query ThingDetails($id: uuid!) {
+    things_by_pk(id: $id) {
+        ...ThingDetails
+    }
+}
+
 # Mutations
 
 mutation CreateThing($input: things_insert_input!) {
     insert_things_one(object: $input) {
         ...ThingDetails
+    }
+}
+
+mutation UpdateThing($input: UpdateThingInput!) {
+    updateThing(input: $input) {
+        thing {
+            ...ThingDetails
+        }
     }
 }
