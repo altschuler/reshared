@@ -6919,7 +6919,7 @@ type things {
   """An object relationship"""
   owner: users!
   owner_id: uuid!
-  type: thing_type_enum
+  type: thing_type_enum!
   updated_at: timestamptz!
 }
 

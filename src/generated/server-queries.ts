@@ -5763,7 +5763,7 @@ export type Things = {
   /** An object relationship */
   owner: Users;
   owner_id: Scalars['uuid'];
-  type?: Maybe<Thing_Type_Enum>;
+  type: Thing_Type_Enum;
   updated_at: Scalars['timestamptz'];
 };
 
@@ -9123,7 +9123,7 @@ export type ThingsResolvers<ContextType = any, ParentType extends ResolversParen
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   owner?: Resolver<ResolversTypes['users'], ParentType, ContextType>;
   owner_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
-  type?: Resolver<Maybe<ResolversTypes['thing_type_enum']>, ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['thing_type_enum'], ParentType, ContextType>;
   updated_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

@@ -1,12 +1,58 @@
-﻿import { UserCardFragment } from '../../generated/graphql';
-import { Avatar } from 'antd';
+﻿import { GroupCardFragment, UserCardFragment } from '../../generated/graphql';
+import { Avatar, Popover, Card, Skeleton } from 'antd';
+import { MessageOutlined, ProfileOutlined } from '@ant-design/icons';
+import { createUseStyles } from 'react-jss';
 
-export const UserAvatar = ({ user }: { user?: UserCardFragment | null }) => {
+const useStyles = createUseStyles({
+    overlay: {
+        '& .ant-popover-inner-content': {
+            padding: 0,
+        },
+    },
+});
+
+export const UserAvatar = ({
+    user,
+    group,
+}: {
+    user: UserCardFragment;
+    group?: GroupCardFragment;
+}) => {
+    const classes = useStyles();
+    const popover = (
+        <Card
+            style={{ width: 300, marginTop: 16 }}
+            actions={[<MessageOutlined key="message" />, <ProfileOutlined key="profile" />]}>
+            <Skeleton loading={false} avatar active>
+                <Card.Meta
+                    avatar={
+                        <Avatar size="large" src={user?.image || undefined}>
+                            <span style={{ userSelect: 'none' }}>
+                                {!user.image && (user.name.slice(0, 2).toUpperCase() || '?')}
+                            </span>
+                        </Avatar>
+                    }
+                    title={user.name}
+                    description={'Something'}
+                />
+            </Skeleton>
+        </Card>
+    );
+
+    // const handleShow = useCallback(() => {}, []);
+    // onVisibleChange={handleShow}
+
     return (
-        <Avatar size="small" src={user?.image || undefined}>
-            <span style={{ userSelect: 'none' }}>
-                {!user?.image && (user?.name.slice(0, 2).toUpperCase() || '?')}
-            </span>
-        </Avatar>
+        <Popover
+            arrowPointAtCenter
+            destroyTooltipOnHide
+            overlayClassName={classes.overlay}
+            content={popover}>
+            <Avatar size="small" src={user.image || undefined}>
+                <span style={{ userSelect: 'none' }}>
+                    {!user.image && (user.name.slice(0, 2).toUpperCase() || '?')}
+                </span>
+            </Avatar>
+        </Popover>
     );
 };

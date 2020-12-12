@@ -5762,7 +5762,7 @@ export type Things = {
   /** An object relationship */
   owner: Users;
   owner_id: Scalars['uuid'];
-  type?: Maybe<Thing_Type_Enum>;
+  type: Thing_Type_Enum;
   updated_at: Scalars['timestamptz'];
 };
 

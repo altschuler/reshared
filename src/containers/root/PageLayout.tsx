@@ -109,6 +109,9 @@ export const PageLayout = (props: PageLayoutProps) => {
                         <Link href="/groups">
                             <Button type="primary">Groups</Button>
                         </Link>
+                        <Link href="/my-things">
+                            <Button type="primary">My Things</Button>
+                        </Link>
                     </Space>
                 </div>
                 <div className={classes.user}>

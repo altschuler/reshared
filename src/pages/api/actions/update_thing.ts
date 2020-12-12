@@ -34,7 +34,7 @@ export default makeAuthorizedHandler<UpdateThingMutationVariables, UpdateThingRe
             images: Joi.array().items(
                 Joi.object<UpdateThingImage>({
                     fileId: Joi.string().uuid({ version: 'uuidv4' }),
-                    description: Joi.string().optional(),
+                    description: Joi.string().optional().allow(''),
                     order: Joi.number().integer().min(0),
                 }),
             ),

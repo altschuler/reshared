@@ -61,7 +61,7 @@ export const ThingEditor = (props: ThingEditorProps) => {
 
     return (
         <div>
-            <Form name="basic" layout="vertical" validateTrigger="onBlur" onFinish={onSubmit}>
+            <Form layout="vertical" validateTrigger="onBlur" onFinish={onSubmit}>
                 <Form.Item label="Name" rules={[{ required: true, min: 5 }]}>
                     <Input
                         placeholder="Name"
