@@ -10,6 +10,30 @@ import {
     UpdateThingInput,
 } from '../../../generated/graphql';
 import { DatePicker, GroupSelect, ImageInput, ThingTypeSelect } from '../../forms';
+import * as Joi from 'joi';
+import { useCallback } from 'react';
+
+export const thingSchema = Joi.object<EditorThing>({
+    id: Joi.string().uuid({ version: 'uuidv4' }).optional().allow(null),
+    name: Joi.string().min(2).max(50).messages({
+        'string.empty': 'Required',
+        'string.min': 'Minimum two characters',
+        'string.max': 'Maximum 50 characters',
+    }),
+    description: Joi.string().max(500).allow('').message('Maximum 500 characters'),
+    category: Joi.string().optional().allow(''),
+    type: Joi.string().valid('give', 'have_some', 'lend', 'other'),
+    enabled: Joi.boolean(),
+    expiry: Joi.date().optional().allow(null),
+    groups: Joi.array().items(Joi.any()),
+    images: Joi.array().items(
+        Joi.object<EditorThingImage>({
+            id: Joi.string().uuid({ version: 'uuidv4' }).optional().allow(null),
+            description: Joi.string().max(200).allow('').message('Maximum 200 characters'),
+            order: Joi.number().integer(),
+        }),
+    ),
+});
 
 export interface EditorThingImage {
     id?: string;
@@ -65,26 +89,32 @@ export const ThingEditor = (props: ThingEditorProps) => {
     const { state, loading, error, submitLabel, deleteLoading, onSubmit, onDelete } = props;
     const { present } = state;
 
+    const handleSubmit = useCallback(() => state.submit() && onSubmit(state), [onSubmit, state]);
+
     return (
         <div>
-            <Form layout="vertical" validateTrigger="onBlur" onFinish={onSubmit}>
-                <Form.Item label="Name">
+            <Form layout="vertical">
+                <Form.Item label="Name" {...state.ant('name')}>
                     <Input
                         placeholder="Name"
                         value={present.name}
+                        onBlur={() => state.touch('name')}
                         onChange={(e) => state.update({ name: e.target.value })}
                     />
                 </Form.Item>
 
-                <Form.Item label="Description">
-                    <Input
+                <Form.Item label="Description" {...state.ant('description')}>
+                    <Input.TextArea
+                        showCount
+                        maxLength={250}
                         placeholder="Description"
                         value={present.description}
+                        onBlur={() => state.touch('description')}
                         onChange={(e) => state.update({ description: e.target.value })}
                     />
                 </Form.Item>
 
-                <Form.Item label="Type">
+                <Form.Item label="Type" {...state.ant('type')}>
                     <ThingTypeSelect
                         value={present.type}
                         onChange={(type) => state.update({ type })}
@@ -123,6 +153,8 @@ export const ThingEditor = (props: ThingEditorProps) => {
 
                 <Form.Item label="Images">
                     <ImageInput
+                        onTouch={state.touch}
+                        errors={state.errors.touched}
                         value={present.images}
                         onChange={(images) => state.update({ images })}
                     />
@@ -153,7 +185,7 @@ export const ThingEditor = (props: ThingEditorProps) => {
                             loading={loading}
                             disabled={loading}
                             type="primary"
-                            htmlType="submit">
+                            onClick={handleSubmit}>
                             {submitLabel || 'Save'}
                         </Button>
                     </Space>
@@ -169,7 +201,7 @@ export const ThingEditor = (props: ThingEditorProps) => {
     );
 };
 
-export const useThingEditor = createUseEditor<EditorThing>(makeEditorThing());
+export const useThingEditor = createUseEditor(makeEditorThing(), thingSchema);
 
 export const asThingCreateInput = ({ present }: ThingEditorState): Things_Insert_Input => ({
     name: present.name,

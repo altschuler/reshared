@@ -1,8 +1,8 @@
 ﻿import { ChangeEvent, useCallback, useState } from 'react';
-import { isEmpty } from 'lodash';
+import { isEmpty, get } from 'lodash';
 
-import { Button, Input, Modal, Space, Spin } from 'antd';
-import { DeleteFilled, PlusOutlined } from '@ant-design/icons';
+import { Form, Button, Input, Modal, Space, Spin } from 'antd';
+import { DeleteFilled } from '@ant-design/icons';
 import { createUseStyles } from 'react-jss';
 import Image from 'next/image';
 
@@ -12,7 +12,9 @@ import { removeAt } from '../../utils/array';
 
 export interface ImageInputProps {
     value: EditorThingImage[];
+    errors: any;
     onChange: (value: EditorThingImage[]) => unknown;
+    onTouch: (path: string[]) => unknown;
 }
 
 const useStyles = createUseStyles({
@@ -62,7 +64,7 @@ const useStyles = createUseStyles({
     },
 });
 
-export const ImageInput = ({ value, onChange }: ImageInputProps) => {
+export const ImageInput = ({ value, errors, onChange, onTouch }: ImageInputProps) => {
     const classes = useStyles();
     const [loading, setLoading] = useState(false);
 
@@ -108,6 +110,7 @@ export const ImageInput = ({ value, onChange }: ImageInputProps) => {
         },
         [onChange, value],
     );
+    console.log(errors);
 
     return (
         <div className={classes.root}>
@@ -128,28 +131,40 @@ export const ImageInput = ({ value, onChange }: ImageInputProps) => {
 
             <div className={classes.imageList}>
                 <Space direction="vertical">
-                    {value.map((img, index) => (
-                        <Space key={img.file?.id} className={classes.imageItem}>
-                            <Image
-                                className={classes.thumbnail}
-                                src={img.file.url}
-                                width={80}
-                                height={80}
-                            />
-                            <Input.TextArea
-                                value={img.description}
-                                placeholder="Description (optional)"
-                                rows={2}
-                                onChange={(e) => handleDescriptionChange(index, e.target.value)}
-                            />
-                            <Button
-                                size="small"
-                                shape="circle"
-                                icon={<DeleteFilled />}
-                                onClick={() => handleRemoveImage(index)}
-                            />
-                        </Space>
-                    ))}
+                    {value.map((img, index) => {
+                        const descriptionError = get(errors, ['images', index, 'description']);
+                        return (
+                            <Space key={img.file?.id} className={classes.imageItem}>
+                                <Image
+                                    className={classes.thumbnail}
+                                    src={img.file.url}
+                                    width={80}
+                                    height={80}
+                                />
+                                <Form.Item
+                                    validateStatus={descriptionError ? 'error' : 'success'}
+                                    help={descriptionError}>
+                                    <Input.TextArea
+                                        onBlur={() =>
+                                            onTouch(['images', `${index}`, 'description'])
+                                        }
+                                        value={img.description}
+                                        placeholder="Description (optional)"
+                                        rows={2}
+                                        onChange={(e) =>
+                                            handleDescriptionChange(index, e.target.value)
+                                        }
+                                    />
+                                </Form.Item>
+                                <Button
+                                    size="small"
+                                    shape="circle"
+                                    icon={<DeleteFilled />}
+                                    onClick={() => handleRemoveImage(index)}
+                                />
+                            </Space>
+                        );
+                    })}
                 </Space>
             </div>
         </div>

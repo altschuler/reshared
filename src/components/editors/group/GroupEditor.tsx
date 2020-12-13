@@ -5,10 +5,21 @@ import {
     GroupDetailsFragment,
     Groups_Set_Input,
 } from '../../../generated/graphql';
+import * as Joi from 'joi';
+import { useCallback } from 'react';
+
+export const groupSchema = Joi.object<EditorGroup>({
+    name: Joi.string().min(2).max(50).messages({
+        'string.empty': 'Required',
+        'string.min': 'Minimum two characters',
+        'string.max': 'Maximum 100 characters',
+    }),
+    description: Joi.string().max(250).allow('').message('Maximum 250 characters'),
+});
 
 export interface EditorGroup {
     name: string;
-    description: string | null;
+    description: string;
     public: boolean;
 }
 
@@ -31,23 +42,28 @@ export interface GroupEditorProps {
 export const GroupEditor = (props: GroupEditorProps) => {
     const { state, loading, error, submitLabel, onSubmit } = props;
     const { present } = state;
+
+    const handleSubmit = useCallback(() => state.submit() && onSubmit(state), [onSubmit, state]);
+
     return (
         <div>
-            <Form name="basic" layout="vertical" validateTrigger="onBlur" onFinish={onSubmit}>
-                <Form.Item label="Name" rules={[{ required: true, min: 5 }]}>
+            <Form name="basic" layout="vertical">
+                <Form.Item label="Name" {...state.ant('name')}>
                     <Input
                         placeholder="Name"
                         value={present.name}
+                        onBlur={() => state.touch('name')}
                         onChange={(e) => state.update({ name: e.target.value })}
                     />
                 </Form.Item>
 
-                <Form.Item label="Description" rules={[{ required: true, min: 10 }]}>
+                <Form.Item label="Description" {...state.ant('description')}>
                     <Input.TextArea
                         showCount
                         maxLength={250}
                         placeholder="Description"
                         value={present.description || ''}
+                        onBlur={() => state.touch('description')}
                         onChange={(e) => state.update({ description: e.target.value })}
                     />
                 </Form.Item>
@@ -61,7 +77,11 @@ export const GroupEditor = (props: GroupEditorProps) => {
                 </Form.Item>
 
                 <Form.Item>
-                    <Button loading={loading} disabled={loading} type="primary" htmlType="submit">
+                    <Button
+                        loading={loading}
+                        disabled={loading}
+                        type="primary"
+                        onClick={handleSubmit}>
                         {submitLabel || 'Save'}
                     </Button>
                 </Form.Item>
@@ -76,7 +96,7 @@ export const GroupEditor = (props: GroupEditorProps) => {
     );
 };
 
-export const useGroupEditor = createUseEditor<EditorGroup>(makeEditorGroup());
+export const useGroupEditor = createUseEditor(makeEditorGroup(), groupSchema);
 
 export const asGroupCreateInput = ({ present }: GroupEditorState): CreateGroupInput => ({
     name: present.name,
