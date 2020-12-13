@@ -5784,6 +5784,7 @@ export type Things = {
   /** An object relationship */
   owner: Users;
   owner_id: Scalars['uuid'];
+  short_id: Scalars['String'];
   type: Thing_Type_Enum;
   updated_at: Scalars['timestamptz'];
 };
@@ -5879,6 +5880,7 @@ export type Things_Bool_Exp = {
   name?: Maybe<String_Comparison_Exp>;
   owner?: Maybe<Users_Bool_Exp>;
   owner_id?: Maybe<Uuid_Comparison_Exp>;
+  short_id?: Maybe<String_Comparison_Exp>;
   type?: Maybe<Thing_Type_Enum_Comparison_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
 };
@@ -5886,7 +5888,9 @@ export type Things_Bool_Exp = {
 /** unique or primary key constraints on table "things" */
 export enum Things_Constraint {
   /** unique or primary key constraint */
-  ThingsPkey = 'things_pkey'
+  ThingsPkey = 'things_pkey',
+  /** unique or primary key constraint */
+  ThingsShortIdKey = 'things_short_id_key'
 }
 
 /** input type for inserting data into table "things" */
@@ -5902,6 +5906,7 @@ export type Things_Insert_Input = {
   name?: Maybe<Scalars['String']>;
   owner?: Maybe<Users_Obj_Rel_Insert_Input>;
   owner_id?: Maybe<Scalars['uuid']>;
+  short_id?: Maybe<Scalars['String']>;
   type?: Maybe<Thing_Type_Enum>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
@@ -5916,6 +5921,7 @@ export type Things_Max_Fields = {
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
   owner_id?: Maybe<Scalars['uuid']>;
+  short_id?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -5928,6 +5934,7 @@ export type Things_Max_Order_By = {
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   owner_id?: Maybe<Order_By>;
+  short_id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
@@ -5941,6 +5948,7 @@ export type Things_Min_Fields = {
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
   owner_id?: Maybe<Scalars['uuid']>;
+  short_id?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -5953,6 +5961,7 @@ export type Things_Min_Order_By = {
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   owner_id?: Maybe<Order_By>;
+  short_id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
@@ -5991,6 +6000,7 @@ export type Things_Order_By = {
   name?: Maybe<Order_By>;
   owner?: Maybe<Users_Order_By>;
   owner_id?: Maybe<Order_By>;
+  short_id?: Maybe<Order_By>;
   type?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
@@ -6019,6 +6029,8 @@ export enum Things_Select_Column {
   /** column name */
   OwnerId = 'owner_id',
   /** column name */
+  ShortId = 'short_id',
+  /** column name */
   Type = 'type',
   /** column name */
   UpdatedAt = 'updated_at'
@@ -6034,6 +6046,7 @@ export type Things_Set_Input = {
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
   owner_id?: Maybe<Scalars['uuid']>;
+  short_id?: Maybe<Scalars['String']>;
   type?: Maybe<Thing_Type_Enum>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
@@ -6056,6 +6069,8 @@ export enum Things_Update_Column {
   Name = 'name',
   /** column name */
   OwnerId = 'owner_id',
+  /** column name */
+  ShortId = 'short_id',
   /** column name */
   Type = 'type',
   /** column name */
@@ -9174,6 +9189,7 @@ export type ThingsResolvers<ContextType = any, ParentType extends ResolversParen
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   owner?: Resolver<ResolversTypes['users'], ParentType, ContextType>;
   owner_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  short_id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   type?: Resolver<ResolversTypes['thing_type_enum'], ParentType, ContextType>;
   updated_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -9200,6 +9216,7 @@ export type Things_Max_FieldsResolvers<ContextType = any, ParentType extends Res
   id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   owner_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  short_id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -9212,6 +9229,7 @@ export type Things_Min_FieldsResolvers<ContextType = any, ParentType extends Res
   id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   owner_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  short_id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

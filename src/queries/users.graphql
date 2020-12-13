@@ -39,10 +39,12 @@ fragment EntityCard on entities {
     id
     group {
         id
+        short_id
         name
     }
     thing {
         id
+        short_id
         name
     }
     user {

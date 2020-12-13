@@ -6943,6 +6943,7 @@ type things {
   """An object relationship"""
   owner: users!
   owner_id: uuid!
+  short_id: String!
   type: thing_type_enum!
   updated_at: timestamptz!
 }
@@ -6999,6 +7000,7 @@ input things_bool_exp {
   name: String_comparison_exp
   owner: users_bool_exp
   owner_id: uuid_comparison_exp
+  short_id: String_comparison_exp
   type: thing_type_enum_comparison_exp
   updated_at: timestamptz_comparison_exp
 }
@@ -7009,6 +7011,9 @@ unique or primary key constraints on table "things"
 enum things_constraint {
   """unique or primary key constraint"""
   things_pkey
+
+  """unique or primary key constraint"""
+  things_short_id_key
 }
 
 """
@@ -7026,6 +7031,7 @@ input things_insert_input {
   name: String
   owner: users_obj_rel_insert_input
   owner_id: uuid
+  short_id: String
   type: thing_type_enum
   updated_at: timestamptz
 }
@@ -7039,6 +7045,7 @@ type things_max_fields {
   id: uuid
   name: String
   owner_id: uuid
+  short_id: String
   updated_at: timestamptz
 }
 
@@ -7053,6 +7060,7 @@ input things_max_order_by {
   id: order_by
   name: order_by
   owner_id: order_by
+  short_id: order_by
   updated_at: order_by
 }
 
@@ -7065,6 +7073,7 @@ type things_min_fields {
   id: uuid
   name: String
   owner_id: uuid
+  short_id: String
   updated_at: timestamptz
 }
 
@@ -7079,6 +7088,7 @@ input things_min_order_by {
   id: order_by
   name: order_by
   owner_id: order_by
+  short_id: order_by
   updated_at: order_by
 }
 
@@ -7125,6 +7135,7 @@ input things_order_by {
   name: order_by
   owner: users_order_by
   owner_id: order_by
+  short_id: order_by
   type: order_by
   updated_at: order_by
 }
@@ -7165,6 +7176,9 @@ enum things_select_column {
   owner_id
 
   """column name"""
+  short_id
+
+  """column name"""
   type
 
   """column name"""
@@ -7183,6 +7197,7 @@ input things_set_input {
   id: uuid
   name: String
   owner_id: uuid
+  short_id: String
   type: thing_type_enum
   updated_at: timestamptz
 }
@@ -7214,6 +7229,9 @@ enum things_update_column {
 
   """column name"""
   owner_id
+
+  """column name"""
+  short_id
 
   """column name"""
   type
