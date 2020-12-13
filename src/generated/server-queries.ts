@@ -2346,7 +2346,7 @@ export type Groups = {
   memberships_aggregate: Group_Members_Aggregate;
   name: Scalars['String'];
   public: Scalars['Boolean'];
-  slug?: Maybe<Scalars['String']>;
+  short_id: Scalars['String'];
   /** An array relationship */
   thing_relations: Array<Group_Thing>;
   /** An aggregated array relationship */
@@ -2482,7 +2482,7 @@ export type Groups_Bool_Exp = {
   memberships?: Maybe<Group_Members_Bool_Exp>;
   name?: Maybe<String_Comparison_Exp>;
   public?: Maybe<Boolean_Comparison_Exp>;
-  slug?: Maybe<String_Comparison_Exp>;
+  short_id?: Maybe<String_Comparison_Exp>;
   thing_relations?: Maybe<Group_Thing_Bool_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
 };
@@ -2492,7 +2492,9 @@ export enum Groups_Constraint {
   /** unique or primary key constraint */
   GroupsNameKey = 'groups_name_key',
   /** unique or primary key constraint */
-  GroupsPkey = 'groups_pkey'
+  GroupsPkey = 'groups_pkey',
+  /** unique or primary key constraint */
+  GroupsShortIdKey = 'groups_short_id_key'
 }
 
 /** input type for inserting data into table "groups" */
@@ -2505,7 +2507,7 @@ export type Groups_Insert_Input = {
   memberships?: Maybe<Group_Members_Arr_Rel_Insert_Input>;
   name?: Maybe<Scalars['String']>;
   public?: Maybe<Scalars['Boolean']>;
-  slug?: Maybe<Scalars['String']>;
+  short_id?: Maybe<Scalars['String']>;
   thing_relations?: Maybe<Group_Thing_Arr_Rel_Insert_Input>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
@@ -2517,7 +2519,7 @@ export type Groups_Max_Fields = {
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
-  slug?: Maybe<Scalars['String']>;
+  short_id?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -2527,7 +2529,7 @@ export type Groups_Max_Order_By = {
   description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
-  slug?: Maybe<Order_By>;
+  short_id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
@@ -2538,7 +2540,7 @@ export type Groups_Min_Fields = {
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
-  slug?: Maybe<Scalars['String']>;
+  short_id?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -2548,7 +2550,7 @@ export type Groups_Min_Order_By = {
   description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
-  slug?: Maybe<Order_By>;
+  short_id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
@@ -2584,7 +2586,7 @@ export type Groups_Order_By = {
   memberships_aggregate?: Maybe<Group_Members_Aggregate_Order_By>;
   name?: Maybe<Order_By>;
   public?: Maybe<Order_By>;
-  slug?: Maybe<Order_By>;
+  short_id?: Maybe<Order_By>;
   thing_relations_aggregate?: Maybe<Group_Thing_Aggregate_Order_By>;
   updated_at?: Maybe<Order_By>;
 };
@@ -2607,7 +2609,7 @@ export enum Groups_Select_Column {
   /** column name */
   Public = 'public',
   /** column name */
-  Slug = 'slug',
+  ShortId = 'short_id',
   /** column name */
   UpdatedAt = 'updated_at'
 }
@@ -2619,7 +2621,7 @@ export type Groups_Set_Input = {
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
   public?: Maybe<Scalars['Boolean']>;
-  slug?: Maybe<Scalars['String']>;
+  short_id?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -2636,7 +2638,7 @@ export enum Groups_Update_Column {
   /** column name */
   Public = 'public',
   /** column name */
-  Slug = 'slug',
+  ShortId = 'short_id',
   /** column name */
   UpdatedAt = 'updated_at'
 }
@@ -8638,7 +8640,7 @@ export type GroupsResolvers<ContextType = any, ParentType extends ResolversParen
   memberships_aggregate?: Resolver<ResolversTypes['group_members_aggregate'], ParentType, ContextType, RequireFields<GroupsMemberships_AggregateArgs, never>>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   public?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  slug?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  short_id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   thing_relations?: Resolver<Array<ResolversTypes['group_thing']>, ParentType, ContextType, RequireFields<GroupsThing_RelationsArgs, never>>;
   thing_relations_aggregate?: Resolver<ResolversTypes['group_thing_aggregate'], ParentType, ContextType, RequireFields<GroupsThing_Relations_AggregateArgs, never>>;
   updated_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
@@ -8663,7 +8665,7 @@ export type Groups_Max_FieldsResolvers<ContextType = any, ParentType extends Res
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  slug?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  short_id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -8673,7 +8675,7 @@ export type Groups_Min_FieldsResolvers<ContextType = any, ParentType extends Res
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  slug?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  short_id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

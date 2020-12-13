@@ -25,7 +25,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                     <ThemeProvider theme={theme}>
                         <DialogsProvider>
                             <Head>
-                                <title>Reshar.ed</title>
+                                <title>Reshared</title>
                                 <link rel="icon" href="/favicon.ico" />
                             </Head>
 

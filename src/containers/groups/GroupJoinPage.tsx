@@ -3,6 +3,7 @@
     useGroupDetailsQuery,
     useJoinGroupWithTokenMutation,
 } from '../../generated/graphql';
+import { head } from 'lodash';
 import { useRouter } from 'next/router';
 import { Alert, Button, message, Space, Spin, Typography } from 'antd';
 import { GroupLayout } from './GroupLayout';
@@ -27,9 +28,9 @@ export const GroupJoinPage = (props: GroupJoinPageProps) => {
     const classes = useStyles();
     const { id, token } = router.query;
 
-    const { data, loading, error } = useGroupDetailsQuery({ variables: { id: id as string } });
+    const { data, loading, error } = useGroupDetailsQuery({ variables: { shortId: id as string } });
 
-    const group = data?.groups_by_pk;
+    const group = head(data?.groups);
     const { isMember } = useMembership(group);
 
     if (loading) {
@@ -131,7 +132,7 @@ const AlreadyMemberContent = ({ group }: { group: GroupCardFragment }) => (
             You're already a member of <i>{group.name}</i>
         </Typography.Title>
 
-        <Link href={`/groups/${group.id}`}>
+        <Link href={urlFor.group.home(group)}>
             <Button type="link">Go to group home</Button>
         </Link>
     </Space>

@@ -8,6 +8,7 @@ import { useDialogs, CreateGroupDrawer } from '../../components/dialogs';
 import { JoinButton } from './JoinButton';
 import { useRouter } from 'next/router';
 import { usePagination } from '../../utils/list';
+import { urlFor } from '../../utils/urls';
 
 const useStyles = createUseStyles({
     root: {
@@ -98,7 +99,7 @@ export const GroupListPage = () => {
                         ]}>
                         <List.Item.Meta
                             avatar={<Avatar src={''} />}
-                            title={<Link href={`/groups/${group.id}`}>{group.name}</Link>}
+                            title={<Link href={urlFor.group.home(group)}>{group.name}</Link>}
                             description={group.description}
                         />
                     </List.Item>

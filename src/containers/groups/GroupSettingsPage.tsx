@@ -1,4 +1,5 @@
 ﻿import { useGroupDetailsQuery, useUpdateGroupMutation } from '../../generated/graphql';
+import { head } from 'lodash';
 import { useRouter } from 'next/router';
 import { Alert, Divider, message, Modal, Spin, Typography } from 'antd';
 import { GroupLayout } from './GroupLayout';
@@ -20,14 +21,15 @@ export const GroupSettingsPage = () => {
 
     const [updateGroup, updateMutation] = useUpdateGroupMutation();
     const { data, loading, error } = useGroupDetailsQuery({
-        variables: { id: id as string },
+        variables: { shortId: id as string },
         onCompleted: (data) => {
-            if (data.groups_by_pk) {
-                editorState.set(makeEditorGroup(data?.groups_by_pk));
+            const group = head(data.groups);
+            if (group) {
+                editorState.set(makeEditorGroup(group));
             }
         },
     });
-    const group = data?.groups_by_pk;
+    const group = head(data?.groups);
 
     const handleSave = useCallback(() => {
         if (!group) {

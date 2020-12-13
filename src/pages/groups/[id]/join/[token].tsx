@@ -17,7 +17,7 @@ export const getServerSideProps: GetServerSideProps<
         variables: {
             where: {
                 disabled: { _eq: false },
-                group_id: { _eq: id },
+                group: { short_id: { _eq: id } },
                 token: { _eq: token },
             },
         },

@@ -117,20 +117,20 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                     Share a thing
                 </Button>,
 
-                <Link key="home" href={`/groups/${props.group.id}`}>
+                <Link key="home" href={urlFor.group.home(props.group)}>
                     <Button type="default" className={btnClass('home')}>
                         Home
                     </Button>
                 </Link>,
 
-                <Link key="members" href={`/groups/${props.group.id}/members`}>
+                <Link key="members" href={urlFor.group.members(props.group)}>
                     <Button type="default" className={btnClass('members')}>
                         Members
                     </Button>
                 </Link>,
 
                 isAdmin && (
-                    <Link key="settings" href={`/groups/${props.group.id}/settings`}>
+                    <Link key="settings" href={urlFor.group.settings(props.group)}>
                         <Button type="default" className={btnClass('settings')}>
                             Settings
                         </Button>

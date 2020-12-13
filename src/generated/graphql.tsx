@@ -2345,7 +2345,7 @@ export type Groups = {
   memberships_aggregate: Group_Members_Aggregate;
   name: Scalars['String'];
   public: Scalars['Boolean'];
-  slug?: Maybe<Scalars['String']>;
+  short_id: Scalars['String'];
   /** An array relationship */
   thing_relations: Array<Group_Thing>;
   /** An aggregated array relationship */
@@ -2481,7 +2481,7 @@ export type Groups_Bool_Exp = {
   memberships?: Maybe<Group_Members_Bool_Exp>;
   name?: Maybe<String_Comparison_Exp>;
   public?: Maybe<Boolean_Comparison_Exp>;
-  slug?: Maybe<String_Comparison_Exp>;
+  short_id?: Maybe<String_Comparison_Exp>;
   thing_relations?: Maybe<Group_Thing_Bool_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
 };
@@ -2491,7 +2491,9 @@ export enum Groups_Constraint {
   /** unique or primary key constraint */
   GroupsNameKey = 'groups_name_key',
   /** unique or primary key constraint */
-  GroupsPkey = 'groups_pkey'
+  GroupsPkey = 'groups_pkey',
+  /** unique or primary key constraint */
+  GroupsShortIdKey = 'groups_short_id_key'
 }
 
 /** input type for inserting data into table "groups" */
@@ -2504,7 +2506,7 @@ export type Groups_Insert_Input = {
   memberships?: Maybe<Group_Members_Arr_Rel_Insert_Input>;
   name?: Maybe<Scalars['String']>;
   public?: Maybe<Scalars['Boolean']>;
-  slug?: Maybe<Scalars['String']>;
+  short_id?: Maybe<Scalars['String']>;
   thing_relations?: Maybe<Group_Thing_Arr_Rel_Insert_Input>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
@@ -2516,7 +2518,7 @@ export type Groups_Max_Fields = {
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
-  slug?: Maybe<Scalars['String']>;
+  short_id?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -2526,7 +2528,7 @@ export type Groups_Max_Order_By = {
   description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
-  slug?: Maybe<Order_By>;
+  short_id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
@@ -2537,7 +2539,7 @@ export type Groups_Min_Fields = {
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
-  slug?: Maybe<Scalars['String']>;
+  short_id?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -2547,7 +2549,7 @@ export type Groups_Min_Order_By = {
   description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
-  slug?: Maybe<Order_By>;
+  short_id?: Maybe<Order_By>;
   updated_at?: Maybe<Order_By>;
 };
 
@@ -2583,7 +2585,7 @@ export type Groups_Order_By = {
   memberships_aggregate?: Maybe<Group_Members_Aggregate_Order_By>;
   name?: Maybe<Order_By>;
   public?: Maybe<Order_By>;
-  slug?: Maybe<Order_By>;
+  short_id?: Maybe<Order_By>;
   thing_relations_aggregate?: Maybe<Group_Thing_Aggregate_Order_By>;
   updated_at?: Maybe<Order_By>;
 };
@@ -2606,7 +2608,7 @@ export enum Groups_Select_Column {
   /** column name */
   Public = 'public',
   /** column name */
-  Slug = 'slug',
+  ShortId = 'short_id',
   /** column name */
   UpdatedAt = 'updated_at'
 }
@@ -2618,7 +2620,7 @@ export type Groups_Set_Input = {
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
   public?: Maybe<Scalars['Boolean']>;
-  slug?: Maybe<Scalars['String']>;
+  short_id?: Maybe<Scalars['String']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
@@ -2635,7 +2637,7 @@ export enum Groups_Update_Column {
   /** column name */
   Public = 'public',
   /** column name */
-  Slug = 'slug',
+  ShortId = 'short_id',
   /** column name */
   UpdatedAt = 'updated_at'
 }
@@ -6846,7 +6848,7 @@ export type GroupMemberCardFragment = (
 
 export type GroupCardFragment = (
   { __typename?: 'groups' }
-  & Pick<Groups, 'id' | 'name' | 'created_at' | 'description' | 'public'>
+  & Pick<Groups, 'id' | 'short_id' | 'name' | 'created_at' | 'description' | 'public'>
   & { memberships_aggregate: (
     { __typename?: 'group_members_aggregate' }
     & { aggregate?: Maybe<(
@@ -6908,13 +6910,13 @@ export type ListGroupsQuery = (
 );
 
 export type GroupDetailsQueryVariables = Exact<{
-  id: Scalars['uuid'];
+  shortId: Scalars['String'];
 }>;
 
 
 export type GroupDetailsQuery = (
   { __typename?: 'query_root' }
-  & { groups_by_pk?: Maybe<(
+  & { groups: Array<(
     { __typename?: 'groups' }
     & GroupDetailsFragment
   )> }
@@ -7429,6 +7431,7 @@ export type RegisterUserMutation = (
 export const GroupCardFragmentDoc = gql`
     fragment GroupCard on groups {
   id
+  short_id
   name
   created_at
   description
@@ -7667,8 +7670,8 @@ export function refetchListGroupsQuery(variables?: ListGroupsQueryVariables) {
       return { query: ListGroupsDocument, variables: variables }
     }
 export const GroupDetailsDocument = gql`
-    query GroupDetails($id: uuid!) {
-  groups_by_pk(id: $id) {
+    query GroupDetails($shortId: String!) {
+  groups(where: {short_id: {_eq: $shortId}}) {
     ...GroupDetails
   }
 }
@@ -7686,7 +7689,7 @@ export const GroupDetailsDocument = gql`
  * @example
  * const { data, loading, error } = useGroupDetailsQuery({
  *   variables: {
- *      id: // value for 'id'
+ *      shortId: // value for 'shortId'
  *   },
  * });
  */

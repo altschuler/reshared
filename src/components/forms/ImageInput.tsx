@@ -110,7 +110,6 @@ export const ImageInput = ({ value, errors, onChange, onTouch }: ImageInputProps
         },
         [onChange, value],
     );
-    console.log(errors);
 
     return (
         <div className={classes.root}>

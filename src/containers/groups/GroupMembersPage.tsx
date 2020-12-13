@@ -1,4 +1,5 @@
 ﻿import { useGroupDetailsQuery } from '../../generated/graphql';
+import { head } from 'lodash';
 import { useRouter } from 'next/router';
 import { Alert, Spin, Row, Col } from 'antd';
 import { GroupLayout } from './GroupLayout';
@@ -15,16 +16,16 @@ export const GroupMembersPage = () => {
     const classes = useStyles();
     const { id } = router.query;
 
-    const { data, loading, error } = useGroupDetailsQuery({ variables: { id: id as string } });
+    const { data, loading, error } = useGroupDetailsQuery({ variables: { shortId: id as string } });
 
-    const group = data?.groups_by_pk;
+    const group = head(data?.groups);
     const { isAdmin } = useMembership(group);
 
     if (loading) {
         return <Spin />;
     }
 
-    if (!group || error || (!loading && !data?.groups_by_pk)) {
+    if (!group || error || (!loading && !group)) {
         return <Alert message={error?.message || 'Group does not exist'} />;
     }
 

@@ -11,6 +11,7 @@ fragment GroupMemberCard on group_members {
 
 fragment GroupCard on groups {
     id
+    short_id
     name
     created_at
     description
@@ -73,8 +74,8 @@ query ListGroups($limit: Int!, $offset: Int!, $orderBy: groups_order_by!, $where
     }
 }
 
-query GroupDetails($id: uuid!) {
-    groups_by_pk(id: $id) {
+query GroupDetails($shortId: String!) {
+    groups(where: { short_id: { _eq: $shortId } }) {
         ...GroupDetails
     }
 }

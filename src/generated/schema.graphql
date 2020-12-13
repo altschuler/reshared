@@ -2816,7 +2816,7 @@ type groups {
   ): group_members_aggregate!
   name: String!
   public: Boolean!
-  slug: String
+  short_id: String!
 
   """An array relationship"""
   thing_relations(
@@ -2905,7 +2905,7 @@ input groups_bool_exp {
   memberships: group_members_bool_exp
   name: String_comparison_exp
   public: Boolean_comparison_exp
-  slug: String_comparison_exp
+  short_id: String_comparison_exp
   thing_relations: group_thing_bool_exp
   updated_at: timestamptz_comparison_exp
 }
@@ -2919,6 +2919,9 @@ enum groups_constraint {
 
   """unique or primary key constraint"""
   groups_pkey
+
+  """unique or primary key constraint"""
+  groups_short_id_key
 }
 
 """
@@ -2933,7 +2936,7 @@ input groups_insert_input {
   memberships: group_members_arr_rel_insert_input
   name: String
   public: Boolean
-  slug: String
+  short_id: String
   thing_relations: group_thing_arr_rel_insert_input
   updated_at: timestamptz
 }
@@ -2944,7 +2947,7 @@ type groups_max_fields {
   description: String
   id: uuid
   name: String
-  slug: String
+  short_id: String
   updated_at: timestamptz
 }
 
@@ -2956,7 +2959,7 @@ input groups_max_order_by {
   description: order_by
   id: order_by
   name: order_by
-  slug: order_by
+  short_id: order_by
   updated_at: order_by
 }
 
@@ -2966,7 +2969,7 @@ type groups_min_fields {
   description: String
   id: uuid
   name: String
-  slug: String
+  short_id: String
   updated_at: timestamptz
 }
 
@@ -2978,7 +2981,7 @@ input groups_min_order_by {
   description: order_by
   id: order_by
   name: order_by
-  slug: order_by
+  short_id: order_by
   updated_at: order_by
 }
 
@@ -3022,7 +3025,7 @@ input groups_order_by {
   memberships_aggregate: group_members_aggregate_order_by
   name: order_by
   public: order_by
-  slug: order_by
+  short_id: order_by
   thing_relations_aggregate: group_thing_aggregate_order_by
   updated_at: order_by
 }
@@ -3054,7 +3057,7 @@ enum groups_select_column {
   public
 
   """column name"""
-  slug
+  short_id
 
   """column name"""
   updated_at
@@ -3069,7 +3072,7 @@ input groups_set_input {
   id: uuid
   name: String
   public: Boolean
-  slug: String
+  short_id: String
   updated_at: timestamptz
 }
 
@@ -3093,7 +3096,7 @@ enum groups_update_column {
   public
 
   """column name"""
-  slug
+  short_id
 
   """column name"""
   updated_at

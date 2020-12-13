@@ -1,4 +1,5 @@
 ﻿import { GroupHomePage, GroupHomePageProps } from '../../../containers/groups';
+import { head } from 'lodash';
 import { GetServerSideProps } from 'next';
 import { makeApolloClient } from '../../../api/apolloClient';
 import { GroupDetailsDocument, GroupDetailsQuery } from '../../../generated/graphql';
@@ -11,8 +12,10 @@ export const getServerSideProps: GetServerSideProps<GroupHomePageProps, { id: st
     const client = makeApolloClient(true);
     const query = await client.query<GroupDetailsQuery>({
         query: GroupDetailsDocument,
-        variables: { id: ctx.params!.id },
+        variables: { shortId: ctx.params!.id },
     });
+
+    const group = head(query.data.groups);
 
     if (query.error) {
         // TODO: redirect to some error page
@@ -20,12 +23,5 @@ export const getServerSideProps: GetServerSideProps<GroupHomePageProps, { id: st
         // return { props: { error: 'Something unexpected happened on our side, sorry!' } };
     }
 
-    if (!query.data.groups_by_pk) {
-        return { notFound: true };
-        //return { props: { error: 'Group not found' } };
-    }
-
-    return {
-        props: { group: query.data.groups_by_pk },
-    };
+    return group ? { props: { group } } : { notFound: true };
 };
