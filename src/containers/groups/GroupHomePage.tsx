@@ -1,9 +1,9 @@
 ﻿import { Alert } from 'antd';
 import { GroupLayout } from './GroupLayout';
-import { GroupDetailsFragment, ThingCardFragment } from '../../generated/graphql';
+import { GroupDetailsFragment, ThingCardFragment, Things_Bool_Exp } from '../../generated/graphql';
 import { useMembership } from '../../utils/group';
 import { ThingList } from '../../components/ThingList';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 export interface GroupHomePageProps {
     group: GroupDetailsFragment;
@@ -18,7 +18,17 @@ export const GroupHomePage = ({ group, error }: GroupHomePageProps) => {
         [group.id],
     );
 
-    if (error || !group) {
+    const where = useMemo(
+        () =>
+            ({
+                group_relations: { group_id: { _eq: group?.id } },
+                enabled: { _eq: true },
+                _or: [{ expiry: { _gt: 'now()' } }, { expiry: { _is_null: true } }],
+            } as Things_Bool_Exp),
+        [group?.id],
+    );
+
+    if (error) {
         return <Alert message={error} />;
     }
 
@@ -28,10 +38,7 @@ export const GroupHomePage = ({ group, error }: GroupHomePageProps) => {
 
             <hr />
 
-            <ThingList
-                makeUrl={makeUrl}
-                where={{ group_relations: { group_id: { _eq: group?.id } } }}
-            />
+            <ThingList makeUrl={makeUrl} where={where} />
         </GroupLayout>
     );
 };

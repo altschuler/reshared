@@ -42,7 +42,7 @@ mutation ServerUpdateThing(
         object: $input
         on_conflict: {
             constraint: things_pkey
-            update_columns: [name, description, type, category]
+            update_columns: [name, description, type, category, enabled, expiry]
         }
     ) {
         id

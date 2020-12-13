@@ -2,7 +2,9 @@
 import { Drawer, message, Spin } from 'antd';
 import { useCallback } from 'react';
 import {
+    GqlOps,
     ThingCardFragment,
+    useDeleteThingMutation,
     useThingDetailsQuery,
     useUpdateThingMutation,
 } from '../../generated/graphql';
@@ -18,7 +20,11 @@ export const EditThingDrawer = (props: EditThingDrawerProps) => {
 
     const editorState = useThingEditor();
 
-    const [updateThing, mutation] = useUpdateThingMutation();
+    const [updateThing, updateMutation] = useUpdateThingMutation();
+    const [deleteThing, deleteMutation] = useDeleteThingMutation({
+        refetchQueries: [GqlOps.Query.ThingList],
+        awaitRefetchQueries: true,
+    });
 
     const detailsQuery = useThingDetailsQuery({
         variables: { id: thing.id },
@@ -42,6 +48,13 @@ export const EditThingDrawer = (props: EditThingDrawerProps) => {
             .catch(noop);
     }, [editorState, resolve, updateThing]);
 
+    const handleDelete = useCallback(() => {
+        deleteThing({ variables: { id: thing.id } }).then(() => {
+            message.info(`${thing.name} deleted`);
+            dispose();
+        });
+    }, [deleteThing, dispose, thing.id, thing.name]);
+
     return (
         <Drawer
             bodyStyle={{ maxWidth: '100%' }}
@@ -52,11 +65,13 @@ export const EditThingDrawer = (props: EditThingDrawerProps) => {
             visible={visible}>
             <Spin spinning={detailsQuery.loading}>
                 <ThingEditor
-                    error={mutation.error?.message}
                     state={editorState}
-                    loading={mutation.loading}
+                    error={updateMutation.error?.message}
                     submitLabel="Save"
+                    loading={updateMutation.loading}
+                    deleteLoading={deleteMutation.loading}
                     onSubmit={handleSave}
+                    onDelete={handleDelete}
                 />
             </Spin>
         </Drawer>

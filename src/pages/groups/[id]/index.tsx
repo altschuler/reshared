@@ -15,10 +15,12 @@ export const getServerSideProps: GetServerSideProps<GroupHomePageProps, { id: st
     });
 
     if (query.error) {
-        return { props: { error: 'Something unexpected happened on our side, sorry!' } };
+        // TODO: redirect to some error page
+        return { notFound: true };
+        // return { props: { error: 'Something unexpected happened on our side, sorry!' } };
     }
 
-    if (!query.data) {
+    if (!query.data.groups_by_pk) {
         return { notFound: true };
         //return { props: { error: 'Group not found' } };
     }

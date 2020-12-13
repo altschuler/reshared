@@ -1,4 +1,4 @@
-﻿import { Alert, Button, Form, Input } from 'antd';
+﻿import { Alert, Button, Checkbox, Form, Input, Popconfirm, Space, Tooltip, Typography } from 'antd';
 import { createUseEditor, EditorState } from '../AbstractEditor';
 import {
     FileUploadCardFragment,
@@ -9,7 +9,7 @@ import {
     Things_Insert_Input,
     UpdateThingInput,
 } from '../../../generated/graphql';
-import { GroupSelect, ImageInput, ThingTypeSelect } from '../../forms';
+import { DatePicker, GroupSelect, ImageInput, ThingTypeSelect } from '../../forms';
 
 export interface EditorThingImage {
     id?: string;
@@ -33,6 +33,8 @@ export interface EditorThing {
     description: string;
     category: string;
     type: Thing_Type_Enum | null;
+    enabled: boolean;
+    expiry: Date | null;
 }
 
 export const makeEditorThing = (source?: ThingDetailsFragment): EditorThing => ({
@@ -43,6 +45,8 @@ export const makeEditorThing = (source?: ThingDetailsFragment): EditorThing => (
     category: source?.category || '',
     description: source?.description || '',
     type: source?.type || null,
+    enabled: source?.enabled || true,
+    expiry: source?.expiry || null,
 });
 
 export type ThingEditorState = EditorState<EditorThing>;
@@ -52,17 +56,19 @@ export interface ThingEditorProps {
     loading?: boolean;
     error?: string;
     submitLabel?: string;
+    deleteLoading?: boolean;
     onSubmit: (state: ThingEditorState) => unknown;
+    onDelete?: () => unknown;
 }
 
 export const ThingEditor = (props: ThingEditorProps) => {
-    const { state, loading, error, submitLabel, onSubmit } = props;
+    const { state, loading, error, submitLabel, deleteLoading, onSubmit, onDelete } = props;
     const { present } = state;
 
     return (
         <div>
             <Form layout="vertical" validateTrigger="onBlur" onFinish={onSubmit}>
-                <Form.Item label="Name" rules={[{ required: true, min: 5 }]}>
+                <Form.Item label="Name">
                     <Input
                         placeholder="Name"
                         value={present.name}
@@ -70,7 +76,7 @@ export const ThingEditor = (props: ThingEditorProps) => {
                     />
                 </Form.Item>
 
-                <Form.Item label="Description" rules={[{ required: true, max: 500 }]}>
+                <Form.Item label="Description">
                     <Input
                         placeholder="Description"
                         value={present.description}
@@ -85,13 +91,34 @@ export const ThingEditor = (props: ThingEditorProps) => {
                     />
                 </Form.Item>
 
-                <Form.Item label="Shared in these groups">
+                <Form.Item
+                    label="Shared in groups"
+                    tooltip="The thing can be shared in multiple groups, changes to the thing are applied in all groups. You can change which groups the thing is shared in at any time.">
                     <GroupSelect
                         placeholder="Select one or more groups"
                         multiple={true}
                         value={present.groups}
                         onChange={(groups) => state.update({ groups })}
                     />
+                </Form.Item>
+
+                <Form.Item
+                    label="Expiry"
+                    tooltip="Optionally select a date upon which the thing will be hidden. Useful when a thing has a last-use date, to mark the date when you will throw it out if no one has shown interest, etc. You can change or disable the expiry at any time.">
+                    <DatePicker
+                        value={present.expiry || undefined}
+                        onChange={(expiry) => state.update({ expiry })}
+                    />
+                </Form.Item>
+
+                <Form.Item>
+                    <Tooltip title="Hides the thing from others, useful if it's temporarily unavailable or you are using it yourself, etc.">
+                        <Checkbox
+                            checked={!present.enabled}
+                            onChange={(e) => state.update({ enabled: !e.target.checked })}>
+                            Hidden
+                        </Checkbox>
+                    </Tooltip>
                 </Form.Item>
 
                 <Form.Item label="Images">
@@ -102,9 +129,34 @@ export const ThingEditor = (props: ThingEditorProps) => {
                 </Form.Item>
 
                 <Form.Item>
-                    <Button loading={loading} disabled={loading} type="primary" htmlType="submit">
-                        {submitLabel || 'Save'}
-                    </Button>
+                    <Space>
+                        {onDelete && (
+                            <Popconfirm
+                                onConfirm={onDelete}
+                                okType="danger"
+                                title={
+                                    <Typography.Paragraph style={{ maxWidth: 300 }}>
+                                        Are you sure you want to delete? It is permanent and all
+                                        related data (images, comments) will be deleted as well.
+                                    </Typography.Paragraph>
+                                }>
+                                <Button
+                                    loading={deleteLoading}
+                                    disabled={loading || deleteLoading}
+                                    danger>
+                                    Delete
+                                </Button>
+                            </Popconfirm>
+                        )}
+
+                        <Button
+                            loading={loading}
+                            disabled={loading}
+                            type="primary"
+                            htmlType="submit">
+                            {submitLabel || 'Save'}
+                        </Button>
+                    </Space>
                 </Form.Item>
 
                 {error && (
@@ -125,6 +177,8 @@ export const asThingCreateInput = ({ present }: ThingEditorState): Things_Insert
     category: present.category,
     description: present.description,
     type: present.type,
+    expiry: present.expiry,
+    enabled: present.enabled,
     images: {
         data: present.images.map((i) => ({
             file_id: i.file.id,
@@ -141,6 +195,8 @@ export const asThingUpdateInput = ({ present }: ThingEditorState): UpdateThingIn
     category: present.category,
     description: present.description,
     type: present.type,
+    expiry: present.expiry,
+    enabled: present.enabled,
     images: present.images.map((i) => ({
         fileId: i.file.id,
         description: i.description,

@@ -6,6 +6,7 @@ fragment ThingCard on things {
     description
     category
     type
+    expiry
 
     images {
         ...ThingImageCard
@@ -27,6 +28,7 @@ fragment ThingImageCard on thing_images {
 
 fragment ThingDetails on things {
     ...ThingCard
+    enabled
     group_relations {
         group {
             ...GroupCard
@@ -67,5 +69,11 @@ mutation UpdateThing($input: UpdateThingInput!) {
         thing {
             ...ThingDetails
         }
+    }
+}
+
+mutation DeleteThing($id: uuid!) {
+    delete_things_by_pk(id: $id) {
+        ...ThingDetails
     }
 }

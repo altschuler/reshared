@@ -25,6 +25,8 @@ export const CreateThingDrawer = (props: CreateThingDrawerProps) => {
         type: Thing_Type_Enum.Lend,
         description: '',
         category: '',
+        expiry: null,
+        enabled: true,
     });
 
     const [createThing, createMutation] = useCreateThingMutation({

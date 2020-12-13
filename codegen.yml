@@ -35,6 +35,6 @@ generates:
       withHOC: false
       identifierName: GqlOps
       scalars:
-        timestamptz: string
-        timestamp: string
+        timestamptz: Date
+        timestamp: Date
         uuid: string

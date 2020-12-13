@@ -1,4 +1,4 @@
-﻿import React, { useCallback, useMemo, useRef, useState } from 'react';
+﻿import React, { useCallback, useMemo, useState } from 'react';
 import {
     Activity_Verb_Enum,
     NotificationCardFragment,
@@ -11,7 +11,6 @@ import { Badge, Button, List, message, Modal, Popover, Tooltip, Typography } fro
 import { DateDisplay, UserAvatar } from '../../components/display';
 import { CheckOutlined, NotificationOutlined } from '@ant-design/icons';
 import { createUseStyles } from 'react-jss';
-import { formatISO } from 'date-fns';
 import { useAuth } from '../../utils/auth';
 import { useRouter } from 'next/router';
 import { urlFor } from '../../utils/urls';
@@ -30,7 +29,7 @@ export const NotificationList = ({ notifications, loading, onSelect }: Notificat
     const handleMarkRead = useCallback(
         (notification: NotificationCardFragment) => {
             markRead({
-                variables: { id: notification.id, readAt: formatISO(new Date()) },
+                variables: { id: notification.id, readAt: new Date() },
             }).catch((err) =>
                 Modal.error({ title: 'Failed to mark notification read', content: err.message }),
             );
@@ -144,7 +143,7 @@ export const NotificationList = ({ notifications, loading, onSelect }: Notificat
                         )
                     }>
                     <List.Item.Meta
-                        avatar={<UserAvatar user={activity.actor} />}
+                        avatar={activity.actor && <UserAvatar user={activity.actor} />}
                         title={
                             <Typography.Link onClick={() => handleClick(notification)}>
                                 {renderNotificationMessage(notification)}
@@ -207,7 +206,7 @@ export const NotificationsButton = () => {
     });
 
     const [markAllRead, markAllMutation] = useMarkAllNotificationsReadMutation({
-        variables: { userId: user.id, readAt: formatISO(new Date()) },
+        variables: { userId: user.id, readAt: new Date() },
     });
 
     const notifications = useMemo(() => data?.notifications || [], [data?.notifications]);
@@ -267,7 +266,7 @@ export const NotificationsButton = () => {
                 </div>
             }>
             <Badge dot={hasNew} overflowCount={9}>
-                <NotificationOutlined style={{ cursor: 'pointer' }} />
+                <NotificationOutlined style={{ cursor: 'pointer', color: 'white' }} />
             </Badge>
         </Popover>
     );

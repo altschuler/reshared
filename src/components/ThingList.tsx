@@ -103,6 +103,7 @@ export const ThingList = (props: ThingListProps) => {
         <List
             header={
                 <Input.Search
+                    placeholder="Search..."
                     className={classes.search}
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
@@ -143,8 +144,8 @@ export const ThingList = (props: ThingListProps) => {
                                     title={img.description}
                                     width={40}
                                     height={40}
-                                    objectFit="contain"
-                                    alt={img.file.name}
+                                    objectFit="cover"
+                                    alt={img.description || img.file.name}
                                     src={img.file.url}
                                     onClick={() => handleShowGallery(thing, index)}
                                 />

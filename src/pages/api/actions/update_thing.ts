@@ -17,6 +17,7 @@ import {
     UpdateThingResult,
 } from '../../../generated/graphql';
 import { makeAuthorizedHandler, hasuraClient } from '../../../server';
+import { format, parseISO } from 'date-fns';
 
 export default makeAuthorizedHandler<UpdateThingMutationVariables, UpdateThingResult>(
     Joi.object<UpdateThingMutationVariables>({
@@ -26,6 +27,8 @@ export default makeAuthorizedHandler<UpdateThingMutationVariables, UpdateThingRe
             description: Joi.string().optional().allow(''),
             type: Joi.string().valid('give', 'have_some', 'lend', 'other').optional(),
             category: Joi.string().optional().allow(''),
+            expiry: Joi.date().optional().allow(null),
+            enabled: Joi.boolean().optional(),
             groups: Joi.array().items(
                 Joi.object<UpdateGroupThing>({
                     groupId: Joi.string().uuid({ version: 'uuidv4' }),
@@ -66,6 +69,9 @@ export default makeAuthorizedHandler<UpdateThingMutationVariables, UpdateThingRe
               )
             : [];
 
+        console.log(args.input.expiry);
+        console.log(args.input.expiry && format(args.input.expiry, 'yyyy-MM-dd'));
+
         // Update fields
         const mutation = await hasuraClient.mutate({
             mutation: ServerUpdateThingDocument,
@@ -80,6 +86,9 @@ export default makeAuthorizedHandler<UpdateThingMutationVariables, UpdateThingRe
                     name: args.input.name,
                     type: args.input.type as Thing_Type_Enum | undefined,
                     description: args.input.description,
+                    enabled: args.input.enabled,
+                    // format(args.input.expiry , 'yyyy-MM-dd')
+                    expiry: args.input.expiry,
                     group_relations: {
                         data: args.input.groups
                             ? args.input.groups.map((g) => ({ group_id: g.groupId }))

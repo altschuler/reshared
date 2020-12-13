@@ -9,8 +9,9 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  date: any;
   json: any;
-  timestamptz: string;
+  timestamptz: Date;
   uuid: string;
 };
 
@@ -151,6 +152,8 @@ export type UpdateThingImage = {
 export type UpdateThingInput = {
   category?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
+  enabled?: Maybe<Scalars['Boolean']>;
+  expiry?: Maybe<Scalars['timestamptz']>;
   groups?: Maybe<Array<UpdateGroupThing>>;
   id?: Maybe<Scalars['uuid']>;
   images?: Maybe<Array<UpdateThingImage>>;
@@ -583,6 +586,20 @@ export type Create_Group_Input = {
 export type Create_Group_Result = {
   __typename?: 'create_group_result';
   group_id: Scalars['uuid'];
+};
+
+
+/** expression to compare columns of type date. All fields are combined with logical 'AND'. */
+export type Date_Comparison_Exp = {
+  _eq?: Maybe<Scalars['date']>;
+  _gt?: Maybe<Scalars['date']>;
+  _gte?: Maybe<Scalars['date']>;
+  _in?: Maybe<Array<Scalars['date']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['date']>;
+  _lte?: Maybe<Scalars['date']>;
+  _neq?: Maybe<Scalars['date']>;
+  _nin?: Maybe<Array<Scalars['date']>>;
 };
 
 /** columns and relationships of "entities" */
@@ -5749,6 +5766,8 @@ export type Things = {
   category?: Maybe<Scalars['String']>;
   created_at: Scalars['timestamptz'];
   description: Scalars['String'];
+  enabled: Scalars['Boolean'];
+  expiry?: Maybe<Scalars['date']>;
   /** An array relationship */
   group_relations: Array<Group_Thing>;
   /** An aggregated array relationship */
@@ -5849,6 +5868,8 @@ export type Things_Bool_Exp = {
   category?: Maybe<String_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   description?: Maybe<String_Comparison_Exp>;
+  enabled?: Maybe<Boolean_Comparison_Exp>;
+  expiry?: Maybe<Date_Comparison_Exp>;
   group_relations?: Maybe<Group_Thing_Bool_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   images?: Maybe<Thing_Images_Bool_Exp>;
@@ -5870,6 +5891,8 @@ export type Things_Insert_Input = {
   category?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
+  enabled?: Maybe<Scalars['Boolean']>;
+  expiry?: Maybe<Scalars['date']>;
   group_relations?: Maybe<Group_Thing_Arr_Rel_Insert_Input>;
   id?: Maybe<Scalars['uuid']>;
   images?: Maybe<Thing_Images_Arr_Rel_Insert_Input>;
@@ -5886,6 +5909,7 @@ export type Things_Max_Fields = {
   category?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
+  expiry?: Maybe<Scalars['date']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
   owner_id?: Maybe<Scalars['uuid']>;
@@ -5897,6 +5921,7 @@ export type Things_Max_Order_By = {
   category?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
+  expiry?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   owner_id?: Maybe<Order_By>;
@@ -5909,6 +5934,7 @@ export type Things_Min_Fields = {
   category?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
+  expiry?: Maybe<Scalars['date']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
   owner_id?: Maybe<Scalars['uuid']>;
@@ -5920,6 +5946,7 @@ export type Things_Min_Order_By = {
   category?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
+  expiry?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   owner_id?: Maybe<Order_By>;
@@ -5953,6 +5980,8 @@ export type Things_Order_By = {
   category?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
+  enabled?: Maybe<Order_By>;
+  expiry?: Maybe<Order_By>;
   group_relations_aggregate?: Maybe<Group_Thing_Aggregate_Order_By>;
   id?: Maybe<Order_By>;
   images_aggregate?: Maybe<Thing_Images_Aggregate_Order_By>;
@@ -5977,6 +6006,10 @@ export enum Things_Select_Column {
   /** column name */
   Description = 'description',
   /** column name */
+  Enabled = 'enabled',
+  /** column name */
+  Expiry = 'expiry',
+  /** column name */
   Id = 'id',
   /** column name */
   Name = 'name',
@@ -5993,6 +6026,8 @@ export type Things_Set_Input = {
   category?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
+  enabled?: Maybe<Scalars['Boolean']>;
+  expiry?: Maybe<Scalars['date']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
   owner_id?: Maybe<Scalars['uuid']>;
@@ -6008,6 +6043,10 @@ export enum Things_Update_Column {
   CreatedAt = 'created_at',
   /** column name */
   Description = 'description',
+  /** column name */
+  Enabled = 'enabled',
+  /** column name */
+  Expiry = 'expiry',
   /** column name */
   Id = 'id',
   /** column name */
@@ -7096,7 +7135,7 @@ export type UpdateJoinTokenMutation = (
 
 export type ThingCardFragment = (
   { __typename?: 'things' }
-  & Pick<Things, 'id' | 'name' | 'description' | 'category' | 'type'>
+  & Pick<Things, 'id' | 'name' | 'description' | 'category' | 'type' | 'expiry'>
   & { images: Array<(
     { __typename?: 'thing_images' }
     & ThingImageCardFragment
@@ -7117,6 +7156,7 @@ export type ThingImageCardFragment = (
 
 export type ThingDetailsFragment = (
   { __typename?: 'things' }
+  & Pick<Things, 'enabled'>
   & { group_relations: Array<(
     { __typename?: 'group_thing' }
     & { group: (
@@ -7188,6 +7228,19 @@ export type UpdateThingMutation = (
       { __typename?: 'things' }
       & ThingDetailsFragment
     )> }
+  )> }
+);
+
+export type DeleteThingMutationVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type DeleteThingMutation = (
+  { __typename?: 'mutation_root' }
+  & { delete_things_by_pk?: Maybe<(
+    { __typename?: 'things' }
+    & ThingDetailsFragment
   )> }
 );
 
@@ -7454,6 +7507,7 @@ export const ThingCardFragmentDoc = gql`
   description
   category
   type
+  expiry
   images {
     ...ThingImageCard
   }
@@ -7466,6 +7520,7 @@ ${UserCardFragmentDoc}`;
 export const ThingDetailsFragmentDoc = gql`
     fragment ThingDetails on things {
   ...ThingCard
+  enabled
   group_relations {
     group {
       ...GroupCard
@@ -8277,6 +8332,38 @@ export function useUpdateThingMutation(baseOptions?: Apollo.MutationHookOptions<
 export type UpdateThingMutationHookResult = ReturnType<typeof useUpdateThingMutation>;
 export type UpdateThingMutationResult = Apollo.MutationResult<UpdateThingMutation>;
 export type UpdateThingMutationOptions = Apollo.BaseMutationOptions<UpdateThingMutation, UpdateThingMutationVariables>;
+export const DeleteThingDocument = gql`
+    mutation DeleteThing($id: uuid!) {
+  delete_things_by_pk(id: $id) {
+    ...ThingDetails
+  }
+}
+    ${ThingDetailsFragmentDoc}`;
+export type DeleteThingMutationFn = Apollo.MutationFunction<DeleteThingMutation, DeleteThingMutationVariables>;
+
+/**
+ * __useDeleteThingMutation__
+ *
+ * To run a mutation, you first call `useDeleteThingMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteThingMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteThingMutation, { data, loading, error }] = useDeleteThingMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteThingMutation(baseOptions?: Apollo.MutationHookOptions<DeleteThingMutation, DeleteThingMutationVariables>) {
+        return Apollo.useMutation<DeleteThingMutation, DeleteThingMutationVariables>(DeleteThingDocument, baseOptions);
+      }
+export type DeleteThingMutationHookResult = ReturnType<typeof useDeleteThingMutation>;
+export type DeleteThingMutationResult = Apollo.MutationResult<DeleteThingMutation>;
+export type DeleteThingMutationOptions = Apollo.BaseMutationOptions<DeleteThingMutation, DeleteThingMutationVariables>;
 export const InsertFileUploadDocument = gql`
     mutation InsertFileUpload($input: file_uploads_insert_input!) {
   insert_file_uploads_one(object: $input) {
@@ -8556,6 +8643,7 @@ export const GqlOps = {
     UpdateJoinToken: 'UpdateJoinToken',
     CreateThing: 'CreateThing',
     UpdateThing: 'UpdateThing',
+    DeleteThing: 'DeleteThing',
     InsertFileUpload: 'InsertFileUpload',
     MarkNotificationRead: 'MarkNotificationRead',
     MarkAllNotificationsRead: 'MarkAllNotificationsRead',
