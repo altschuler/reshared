@@ -34,7 +34,9 @@ export const GroupHomePage = ({ group, error }: GroupHomePageProps) => {
 
     return (
         <GroupLayout activePage="home" group={group}>
-            {isAdmin && <span>Invite others to join your group.</span>}
+            {isAdmin && (
+                <span onClick={() => (null as any).boom()}>Invite others to join your group.</span>
+            )}
 
             <hr />
 

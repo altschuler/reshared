@@ -11,6 +11,10 @@ import { DialogsProvider } from '../components/dialogs';
 import { PageLayout } from '../containers/root/PageLayout';
 import { defaultApolloClient } from '../api/apolloClient';
 
+import { initSentry } from '../utils/sentry';
+
+initSentry();
+
 const theme = {};
 
 const App = ({ Component, pageProps }: AppProps) => {
