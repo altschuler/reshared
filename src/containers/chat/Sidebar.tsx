@@ -8,15 +8,28 @@ import { useAuth } from '../../utils/auth';
 import { urlFor } from '../../utils/urls';
 import Link from 'next/link';
 import clsx from 'clsx';
-import { ButtonProps } from 'antd/lib/button/button';
 import { FormOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
+import { useMedia } from '../../utils/hooks';
 
 const useStyles = createUseStyles({
     root: {
         display: 'flex',
         flexDirection: 'column',
         padding: '1em',
+        borderRight: '1px solid #EEE',
+        marginRight: '1em',
+        overflowX: 'hidden',
+        overflowY: 'auto',
+        transition: 'width 0.3s',
+    },
+
+    rootExpanded: {
+        width: 300,
+    },
+
+    rootCollapsed: {
+        width: 70,
     },
 
     newButton: {
@@ -48,14 +61,20 @@ export interface SidebarProps {
 
 export const Sidebar = (props: SidebarProps) => {
     const auth = useAuth();
+    const collapsed = useMedia(['(max-width: 800px)'], [true], false);
+
     const router = useRouter();
     const classes = useStyles();
 
     return (
-        <div className={classes.root}>
+        <div
+            className={clsx(
+                classes.root,
+                collapsed ? classes.rootCollapsed : classes.rootExpanded,
+            )}>
             <Link href={urlFor.chat.new()} passHref>
                 <Button className={classes.newButton} icon={<FormOutlined />}>
-                    New Message
+                    {!collapsed && 'New Message'}
                 </Button>
             </Link>
 
@@ -82,11 +101,13 @@ export const Sidebar = (props: SidebarProps) => {
                             )}>
                             <List.Item.Meta
                                 avatar={<UserAvatarList users={otherMembers} />}
-                                title={otherMembers.map((u) => u.name).join(', ')}
+                                title={!collapsed && otherMembers.map((u) => u.name).join(', ')}
                                 description={
-                                    <Typography.Text className={classes.lastMessage} ellipsis>
-                                        {formatted}
-                                    </Typography.Text>
+                                    !collapsed && (
+                                        <Typography.Text className={classes.lastMessage} ellipsis>
+                                            {formatted}
+                                        </Typography.Text>
+                                    )
                                 }
                             />
                         </List.Item>

@@ -20,8 +20,8 @@ const useStyles = createUseStyles({
     },
     sidebar: {
         flex: 'none',
+        display: 'flex',
         background: '#FFF',
-        width: 300,
     },
     messages: {
         display: 'flex',
