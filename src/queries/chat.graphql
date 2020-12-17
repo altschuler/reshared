@@ -3,6 +3,9 @@
     sender_id
     message
     created_at
+    entity {
+        ...EntityCard
+    }
 }
 
 fragment ChatGroupCard on chat_groups {

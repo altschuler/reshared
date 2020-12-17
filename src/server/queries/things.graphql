@@ -1,6 +1,7 @@
 ﻿query ServerFetchThingDetails($id: uuid!) {
     things_by_pk(id: $id) {
         id
+        short_id
         created_at
 
         owner {

@@ -25,7 +25,7 @@ const basePath = '';
 
 module.exports = withSourceMaps({
     images: {
-        domains: [`${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com`],
+        domains: [`${process.env.RS_AWS_BUCKET_NAME}.s3.amazonaws.com`],
     },
     env: {
         // Make the COMMIT_SHA available to the client so that Sentry events can be

@@ -18,3 +18,9 @@ mutation ServerCreateChatGroup($input: chat_groups_insert_input!) {
         id
     }
 }
+
+mutation ServerCreateChatMessage($input: chat_messages_insert_input!) {
+    insert_chat_messages_one(object: $input) {
+        id
+    }
+}

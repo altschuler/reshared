@@ -3,6 +3,7 @@ import { Button, Input } from 'antd';
 import { createUseStyles } from 'react-jss';
 import { SendOutlined } from '@ant-design/icons';
 import { ChatGroupCardFragment, useCreateChatMessageMutation } from '../../generated/graphql';
+import { useAuth } from '../../utils/auth';
 
 const useStyles = createUseStyles({
     root: {
@@ -15,6 +16,7 @@ const useStyles = createUseStyles({
     },
     textarea: {
         resize: 'none',
+        marginRight: '0.5em',
     },
 });
 
@@ -26,6 +28,7 @@ export interface NewMessageFormProps {
 
 export const NewMessageForm = (props: NewMessageFormProps) => {
     const classes = useStyles();
+    const auth = useAuth();
     const [message, setMessage] = useState('');
 
     const [createMessage] = useCreateChatMessageMutation();
@@ -34,15 +37,19 @@ export const NewMessageForm = (props: NewMessageFormProps) => {
             props.onSend(message);
         }
 
-        if (message.length > 0 && props.chatGroup) {
+        if (auth.user && message.length > 0 && props.chatGroup) {
             createMessage({
                 variables: {
-                    input: { chat_group_id: props.chatGroup.id, message: message.trim() },
+                    input: {
+                        chat_group_id: props.chatGroup.id,
+                        sender_id: auth.user.id,
+                        message: message.trim(),
+                    },
                 },
             });
             setMessage('');
         }
-    }, [createMessage, message, props]);
+    }, [auth.user, createMessage, message, props]);
 
     const handleMessageChange = useCallback((event: ChangeEvent<HTMLTextAreaElement>) => {
         setMessage(event.target.value);

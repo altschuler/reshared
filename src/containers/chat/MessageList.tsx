@@ -3,27 +3,30 @@ import { isEmpty, head, uniqBy, keyBy } from 'lodash';
 import {
     ChatGroupCardFragment,
     ChatMessageCardFragment,
+    EntityCardFragment,
     useChatMessagesFeedSubscription,
     useChatMessagesQuery,
     UserCardFragment,
 } from '../../generated/graphql';
 import { useAuth } from '../../utils/auth';
-import { Spin, Tooltip } from 'antd';
+import { Space, Spin, Tooltip } from 'antd';
 import clsx from 'clsx';
 import { createUseStyles } from 'react-jss';
 import { DateDisplay } from '../../components/display';
+import Link from 'next/link';
+import { urlFor } from '../../utils/urls';
+import Image from 'next/image';
 
 const useStyles = createUseStyles({
     list: {
         display: 'flex',
         flexDirection: 'column',
-        //    maxWidth: 1000,
     },
 
     bubble: {
         display: 'flex',
+        flexDirection: 'column',
         borderRadius: 3,
-        padding: '0.5em 0.7em',
         backgroundColor: '#eeeeee',
         marginBottom: '0.5em',
         maxWidth: 400,
@@ -33,6 +36,18 @@ const useStyles = createUseStyles({
     bubbleMe: {
         backgroundColor: '#b3d8ff',
         marginRight: '1em',
+    },
+
+    bubbleText: {
+        padding: '0.5em 0.7em',
+    },
+
+    bubbleExtra: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.1)',
+        borderRadius: '3px 3px 0 0',
+        borderBottom: '1px solid rgba(0, 0, 0, 0.2)',
+        padding: '0.5em',
     },
 
     messageGroup: {
@@ -147,23 +162,48 @@ export const MessageList = (props: MessageListProps) => {
                             {!mg.isMe && <div>{mg.sender.name}</div>}
 
                             {mg.messages.map((m) => (
-                                <Tooltip
+                                <div
                                     key={m.id}
-                                    title={<DateDisplay mode="datetime" utc={m.created_at} />}>
-                                    <div
-                                        className={clsx(
-                                            classes.bubble,
-                                            mg.isMe && classes.bubbleMe,
-                                        )}>
-                                        {m.message}
-                                    </div>
-                                </Tooltip>
+                                    className={clsx(classes.bubble, mg.isMe && classes.bubbleMe)}>
+                                    {m.entity && <BubbleExtra entity={m.entity} />}
+
+                                    <Tooltip
+                                        title={<DateDisplay mode="datetime" utc={m.created_at} />}>
+                                        <div className={classes.bubbleText}>{m.message}</div>
+                                    </Tooltip>
+                                </div>
                             ))}
                         </div>
                     ))}
                     <div ref={messagesEndRef} />
                 </div>
             </Spin>
+        </div>
+    );
+};
+
+const BubbleExtra = ({ entity }: { entity?: EntityCardFragment }) => {
+    const classes = useStyles();
+    // Only thing entities supported for now
+    if (!entity?.thing) {
+        return null;
+    }
+
+    const image = head(entity.thing.images);
+    return (
+        <div className={classes.bubbleExtra}>
+            <Space>
+                {image && (
+                    <Image
+                        width={20}
+                        height={20}
+                        objectFit="cover"
+                        alt="Thing thumbnail"
+                        src={image.file.url}
+                    />
+                )}
+                <Link href={urlFor.thing(entity.thing)}>{entity.thing.name}</Link>
+            </Space>
         </div>
     );
 };

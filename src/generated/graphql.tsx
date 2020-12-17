@@ -11,6 +11,7 @@ export type Scalars = {
   Float: number;
   date: any;
   json: any;
+  smallint: any;
   timestamptz: Date;
   uuid: string;
 };
@@ -31,6 +32,7 @@ export type Boolean_Comparison_Exp = {
 export type CreateChatGroupInput = {
   message?: Maybe<Scalars['String']>;
   receiverIds: Array<Scalars['uuid']>;
+  thing_id?: Maybe<Scalars['uuid']>;
 };
 
 export type CreateChatGroupResult = {
@@ -999,6 +1001,9 @@ export type Chat_Messages = {
   chat_group: Chat_Groups;
   chat_group_id: Scalars['uuid'];
   created_at: Scalars['timestamptz'];
+  /** An object relationship */
+  entity?: Maybe<Entities>;
+  entity_id?: Maybe<Scalars['uuid']>;
   id: Scalars['uuid'];
   message: Scalars['String'];
   /** An object relationship */
@@ -1049,6 +1054,8 @@ export type Chat_Messages_Bool_Exp = {
   chat_group?: Maybe<Chat_Groups_Bool_Exp>;
   chat_group_id?: Maybe<Uuid_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  entity?: Maybe<Entities_Bool_Exp>;
+  entity_id?: Maybe<Uuid_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   message?: Maybe<String_Comparison_Exp>;
   sender?: Maybe<Users_Bool_Exp>;
@@ -1066,6 +1073,8 @@ export type Chat_Messages_Insert_Input = {
   chat_group?: Maybe<Chat_Groups_Obj_Rel_Insert_Input>;
   chat_group_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  entity?: Maybe<Entities_Obj_Rel_Insert_Input>;
+  entity_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   message?: Maybe<Scalars['String']>;
   sender?: Maybe<Users_Obj_Rel_Insert_Input>;
@@ -1077,6 +1086,7 @@ export type Chat_Messages_Max_Fields = {
   __typename?: 'chat_messages_max_fields';
   chat_group_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  entity_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   message?: Maybe<Scalars['String']>;
   sender_id?: Maybe<Scalars['uuid']>;
@@ -1086,6 +1096,7 @@ export type Chat_Messages_Max_Fields = {
 export type Chat_Messages_Max_Order_By = {
   chat_group_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  entity_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   message?: Maybe<Order_By>;
   sender_id?: Maybe<Order_By>;
@@ -1096,6 +1107,7 @@ export type Chat_Messages_Min_Fields = {
   __typename?: 'chat_messages_min_fields';
   chat_group_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  entity_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   message?: Maybe<Scalars['String']>;
   sender_id?: Maybe<Scalars['uuid']>;
@@ -1105,6 +1117,7 @@ export type Chat_Messages_Min_Fields = {
 export type Chat_Messages_Min_Order_By = {
   chat_group_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  entity_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   message?: Maybe<Order_By>;
   sender_id?: Maybe<Order_By>;
@@ -1137,6 +1150,8 @@ export type Chat_Messages_Order_By = {
   chat_group?: Maybe<Chat_Groups_Order_By>;
   chat_group_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  entity?: Maybe<Entities_Order_By>;
+  entity_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   message?: Maybe<Order_By>;
   sender?: Maybe<Users_Order_By>;
@@ -1155,6 +1170,8 @@ export enum Chat_Messages_Select_Column {
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
+  EntityId = 'entity_id',
+  /** column name */
   Id = 'id',
   /** column name */
   Message = 'message',
@@ -1166,6 +1183,7 @@ export enum Chat_Messages_Select_Column {
 export type Chat_Messages_Set_Input = {
   chat_group_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  entity_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   message?: Maybe<Scalars['String']>;
   sender_id?: Maybe<Scalars['uuid']>;
@@ -1177,6 +1195,8 @@ export enum Chat_Messages_Update_Column {
   ChatGroupId = 'chat_group_id',
   /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  EntityId = 'entity_id',
   /** column name */
   Id = 'id',
   /** column name */
@@ -1213,6 +1233,7 @@ export type Date_Comparison_Exp = {
 /** columns and relationships of "entities" */
 export type Entities = {
   __typename?: 'entities';
+  dummy?: Maybe<Scalars['smallint']>;
   /** An object relationship */
   group?: Maybe<Groups>;
   group_id?: Maybe<Scalars['uuid']>;
@@ -1238,9 +1259,17 @@ export type Entities_Aggregate = {
 /** aggregate fields of "entities" */
 export type Entities_Aggregate_Fields = {
   __typename?: 'entities_aggregate_fields';
+  avg?: Maybe<Entities_Avg_Fields>;
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Entities_Max_Fields>;
   min?: Maybe<Entities_Min_Fields>;
+  stddev?: Maybe<Entities_Stddev_Fields>;
+  stddev_pop?: Maybe<Entities_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Entities_Stddev_Samp_Fields>;
+  sum?: Maybe<Entities_Sum_Fields>;
+  var_pop?: Maybe<Entities_Var_Pop_Fields>;
+  var_samp?: Maybe<Entities_Var_Samp_Fields>;
+  variance?: Maybe<Entities_Variance_Fields>;
 };
 
 
@@ -1252,9 +1281,17 @@ export type Entities_Aggregate_FieldsCountArgs = {
 
 /** order by aggregate values of table "entities" */
 export type Entities_Aggregate_Order_By = {
+  avg?: Maybe<Entities_Avg_Order_By>;
   count?: Maybe<Order_By>;
   max?: Maybe<Entities_Max_Order_By>;
   min?: Maybe<Entities_Min_Order_By>;
+  stddev?: Maybe<Entities_Stddev_Order_By>;
+  stddev_pop?: Maybe<Entities_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Entities_Stddev_Samp_Order_By>;
+  sum?: Maybe<Entities_Sum_Order_By>;
+  var_pop?: Maybe<Entities_Var_Pop_Order_By>;
+  var_samp?: Maybe<Entities_Var_Samp_Order_By>;
+  variance?: Maybe<Entities_Variance_Order_By>;
 };
 
 /** input type for inserting array relation for remote table "entities" */
@@ -1263,11 +1300,23 @@ export type Entities_Arr_Rel_Insert_Input = {
   on_conflict?: Maybe<Entities_On_Conflict>;
 };
 
+/** aggregate avg on columns */
+export type Entities_Avg_Fields = {
+  __typename?: 'entities_avg_fields';
+  dummy?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "entities" */
+export type Entities_Avg_Order_By = {
+  dummy?: Maybe<Order_By>;
+};
+
 /** Boolean expression to filter rows from the table "entities". All fields are combined with a logical 'AND'. */
 export type Entities_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Entities_Bool_Exp>>>;
   _not?: Maybe<Entities_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Entities_Bool_Exp>>>;
+  dummy?: Maybe<Smallint_Comparison_Exp>;
   group?: Maybe<Groups_Bool_Exp>;
   group_id?: Maybe<Uuid_Comparison_Exp>;
   group_join_request?: Maybe<Group_Join_Requests_Bool_Exp>;
@@ -1293,8 +1342,14 @@ export enum Entities_Constraint {
   EntitiesUserIdKey = 'entities_user_id_key'
 }
 
+/** input type for incrementing integer column in table "entities" */
+export type Entities_Inc_Input = {
+  dummy?: Maybe<Scalars['smallint']>;
+};
+
 /** input type for inserting data into table "entities" */
 export type Entities_Insert_Input = {
+  dummy?: Maybe<Scalars['smallint']>;
   group?: Maybe<Groups_Obj_Rel_Insert_Input>;
   group_id?: Maybe<Scalars['uuid']>;
   group_join_request?: Maybe<Group_Join_Requests_Obj_Rel_Insert_Input>;
@@ -1309,6 +1364,7 @@ export type Entities_Insert_Input = {
 /** aggregate max on columns */
 export type Entities_Max_Fields = {
   __typename?: 'entities_max_fields';
+  dummy?: Maybe<Scalars['smallint']>;
   group_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   join_request_id?: Maybe<Scalars['uuid']>;
@@ -1318,6 +1374,7 @@ export type Entities_Max_Fields = {
 
 /** order by max() on columns of table "entities" */
 export type Entities_Max_Order_By = {
+  dummy?: Maybe<Order_By>;
   group_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   join_request_id?: Maybe<Order_By>;
@@ -1328,6 +1385,7 @@ export type Entities_Max_Order_By = {
 /** aggregate min on columns */
 export type Entities_Min_Fields = {
   __typename?: 'entities_min_fields';
+  dummy?: Maybe<Scalars['smallint']>;
   group_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   join_request_id?: Maybe<Scalars['uuid']>;
@@ -1337,6 +1395,7 @@ export type Entities_Min_Fields = {
 
 /** order by min() on columns of table "entities" */
 export type Entities_Min_Order_By = {
+  dummy?: Maybe<Order_By>;
   group_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   join_request_id?: Maybe<Order_By>;
@@ -1368,6 +1427,7 @@ export type Entities_On_Conflict = {
 
 /** ordering options when selecting data from "entities" */
 export type Entities_Order_By = {
+  dummy?: Maybe<Order_By>;
   group?: Maybe<Groups_Order_By>;
   group_id?: Maybe<Order_By>;
   group_join_request?: Maybe<Group_Join_Requests_Order_By>;
@@ -1387,6 +1447,8 @@ export type Entities_Pk_Columns_Input = {
 /** select columns of table "entities" */
 export enum Entities_Select_Column {
   /** column name */
+  Dummy = 'dummy',
+  /** column name */
   GroupId = 'group_id',
   /** column name */
   Id = 'id',
@@ -1400,6 +1462,7 @@ export enum Entities_Select_Column {
 
 /** input type for updating data in table "entities" */
 export type Entities_Set_Input = {
+  dummy?: Maybe<Scalars['smallint']>;
   group_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   join_request_id?: Maybe<Scalars['uuid']>;
@@ -1407,8 +1470,54 @@ export type Entities_Set_Input = {
   user_id?: Maybe<Scalars['uuid']>;
 };
 
+/** aggregate stddev on columns */
+export type Entities_Stddev_Fields = {
+  __typename?: 'entities_stddev_fields';
+  dummy?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "entities" */
+export type Entities_Stddev_Order_By = {
+  dummy?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Entities_Stddev_Pop_Fields = {
+  __typename?: 'entities_stddev_pop_fields';
+  dummy?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "entities" */
+export type Entities_Stddev_Pop_Order_By = {
+  dummy?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Entities_Stddev_Samp_Fields = {
+  __typename?: 'entities_stddev_samp_fields';
+  dummy?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "entities" */
+export type Entities_Stddev_Samp_Order_By = {
+  dummy?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Entities_Sum_Fields = {
+  __typename?: 'entities_sum_fields';
+  dummy?: Maybe<Scalars['smallint']>;
+};
+
+/** order by sum() on columns of table "entities" */
+export type Entities_Sum_Order_By = {
+  dummy?: Maybe<Order_By>;
+};
+
 /** update columns of table "entities" */
 export enum Entities_Update_Column {
+  /** column name */
+  Dummy = 'dummy',
   /** column name */
   GroupId = 'group_id',
   /** column name */
@@ -1420,6 +1529,39 @@ export enum Entities_Update_Column {
   /** column name */
   UserId = 'user_id'
 }
+
+/** aggregate var_pop on columns */
+export type Entities_Var_Pop_Fields = {
+  __typename?: 'entities_var_pop_fields';
+  dummy?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "entities" */
+export type Entities_Var_Pop_Order_By = {
+  dummy?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Entities_Var_Samp_Fields = {
+  __typename?: 'entities_var_samp_fields';
+  dummy?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "entities" */
+export type Entities_Var_Samp_Order_By = {
+  dummy?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Entities_Variance_Fields = {
+  __typename?: 'entities_variance_fields';
+  dummy?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "entities" */
+export type Entities_Variance_Order_By = {
+  dummy?: Maybe<Order_By>;
+};
 
 /** columns and relationships of "file_uploads" */
 export type File_Uploads = {
@@ -4179,6 +4321,7 @@ export type Mutation_RootUpdate_Chat_Messages_By_PkArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_EntitiesArgs = {
+  _inc?: Maybe<Entities_Inc_Input>;
   _set?: Maybe<Entities_Set_Input>;
   where: Entities_Bool_Exp;
 };
@@ -4186,6 +4329,7 @@ export type Mutation_RootUpdate_EntitiesArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Entities_By_PkArgs = {
+  _inc?: Maybe<Entities_Inc_Input>;
   _set?: Maybe<Entities_Set_Input>;
   pk_columns: Entities_Pk_Columns_Input;
 };
@@ -5275,6 +5419,20 @@ export type Query_RootVerification_Requests_AggregateArgs = {
 /** query root */
 export type Query_RootVerification_Requests_By_PkArgs = {
   id: Scalars['Int'];
+};
+
+
+/** expression to compare columns of type smallint. All fields are combined with logical 'AND'. */
+export type Smallint_Comparison_Exp = {
+  _eq?: Maybe<Scalars['smallint']>;
+  _gt?: Maybe<Scalars['smallint']>;
+  _gte?: Maybe<Scalars['smallint']>;
+  _in?: Maybe<Array<Scalars['smallint']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['smallint']>;
+  _lte?: Maybe<Scalars['smallint']>;
+  _neq?: Maybe<Scalars['smallint']>;
+  _nin?: Maybe<Array<Scalars['smallint']>>;
 };
 
 /** subscription root */
@@ -7533,6 +7691,10 @@ export type Verification_Requests_Variance_Order_By = {
 export type ChatMessageCardFragment = (
   { __typename?: 'chat_messages' }
   & Pick<Chat_Messages, 'id' | 'sender_id' | 'message' | 'created_at'>
+  & { entity?: Maybe<(
+    { __typename?: 'entities' }
+    & EntityCardFragment
+  )> }
 );
 
 export type ChatGroupCardFragment = (
@@ -7921,7 +8083,7 @@ export type UpdateJoinTokenMutation = (
 
 export type ThingCardFragment = (
   { __typename?: 'things' }
-  & Pick<Things, 'id' | 'name' | 'description' | 'category' | 'type' | 'expiry'>
+  & Pick<Things, 'id' | 'name' | 'description' | 'category' | 'type' | 'expiry' | 'short_id'>
   & { images: Array<(
     { __typename?: 'thing_images' }
     & ThingImageCardFragment
@@ -8094,6 +8256,13 @@ export type EntityCardFragment = (
   )>, thing?: Maybe<(
     { __typename?: 'things' }
     & Pick<Things, 'id' | 'short_id' | 'name'>
+    & { images: Array<(
+      { __typename?: 'thing_images' }
+      & { file: (
+        { __typename?: 'file_uploads' }
+        & Pick<File_Uploads, 'url'>
+      ) }
+    )> }
   )>, user?: Maybe<(
     { __typename?: 'users' }
     & Pick<Users, 'id' | 'name'>
@@ -8216,14 +8385,45 @@ export type RegisterUserMutation = (
   )> }
 );
 
+export const EntityCardFragmentDoc = gql`
+    fragment EntityCard on entities {
+  id
+  group {
+    id
+    short_id
+    name
+  }
+  thing {
+    id
+    short_id
+    name
+    images(limit: 1) {
+      file {
+        url
+      }
+    }
+  }
+  user {
+    id
+    name
+  }
+  group_join_request {
+    id
+    response
+  }
+}
+    `;
 export const ChatMessageCardFragmentDoc = gql`
     fragment ChatMessageCard on chat_messages {
   id
   sender_id
   message
   created_at
+  entity {
+    ...EntityCard
+  }
 }
-    `;
+    ${EntityCardFragmentDoc}`;
 export const UserCardFragmentDoc = gql`
     fragment UserCard on users {
   id
@@ -8326,6 +8526,7 @@ export const ThingCardFragmentDoc = gql`
   category
   type
   expiry
+  short_id
   images {
     ...ThingImageCard
   }
@@ -8392,29 +8593,6 @@ export const UserPrivateDetailFragmentDoc = gql`
     ${UserDetailFragmentDoc}
 ${UserJoinRequestsFragmentDoc}
 ${GroupCardFragmentDoc}`;
-export const EntityCardFragmentDoc = gql`
-    fragment EntityCard on entities {
-  id
-  group {
-    id
-    short_id
-    name
-  }
-  thing {
-    id
-    short_id
-    name
-  }
-  user {
-    id
-    name
-  }
-  group_join_request {
-    id
-    response
-  }
-}
-    `;
 export const ActivityCardFragmentDoc = gql`
     fragment ActivityCard on activities {
   id

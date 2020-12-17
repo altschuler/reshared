@@ -81,6 +81,7 @@ export default makeAuthorizedHandler<UpdateThingMutationVariables, UpdateThingRe
                 deletedFileIds,
                 input: {
                     id: existing.id,
+                    short_id: existing.short_id,
                     owner_id: existing.owner.id,
                     category: args.input.category,
                     name: args.input.name,

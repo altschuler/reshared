@@ -4,9 +4,9 @@ import { tinyid } from '../../utils/random';
 // This generates a unique, signed url that can be used to upload files to the S3 bucket for 60 seconds
 export default async function handler(req, res) {
     aws.config.update({
-        accessKeyId: process.env.AWS_ACCESS_KEY,
-        secretAccessKey: process.env.AWS_SECRET_KEY,
-        region: process.env.AWS_REGION,
+        accessKeyId: process.env.RS_AWS_ACCESS_KEY,
+        secretAccessKey: process.env.RS_AWS_SECRET_KEY,
+        region: process.env.RS_AWS_REGION,
         signatureVersion: 'v4',
     });
 
@@ -14,7 +14,7 @@ export default async function handler(req, res) {
 
     const s3 = new aws.S3();
     const post = await s3.createPresignedPost({
-        Bucket: process.env.AWS_BUCKET_NAME,
+        Bucket: process.env.RS_AWS_BUCKET_NAME,
         Fields: { key },
         Expires: 60, // seconds
         Conditions: [

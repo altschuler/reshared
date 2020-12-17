@@ -6,6 +6,11 @@ const makeUrl = (absolute: boolean, path: string) =>
 interface GroupWithId {
     short_id: string;
 }
+
+interface ThingWithId {
+    short_id: string;
+}
+
 export const urlFor = {
     home: (absolute = false) => makeUrl(absolute, ''),
     chat: {
@@ -13,6 +18,7 @@ export const urlFor = {
         group: (chatGroup: ChatGroupCardFragment, absolute = false) =>
             makeUrl(absolute, `/chat/${chatGroup.id}`),
     },
+    thing: (thing: ThingWithId, absolute = false) => makeUrl(absolute, `/thing/${thing.short_id}`),
     group: {
         home: (group: GroupWithId, absolute = false) =>
             makeUrl(absolute, `/groups/${group.short_id}`),

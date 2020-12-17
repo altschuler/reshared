@@ -1,26 +1,31 @@
-﻿import {
+﻿import { head } from 'lodash';
+import Joi from 'joi';
+import {
     ServerCreateChatGroupDocument,
+    ServerCreateChatGroupMutationVariables,
+    ServerCreateChatMessageDocument,
     ServerFindChatGroupDocument,
 } from '../../../generated/server-queries';
-import Joi from 'joi';
 import {
     CreateChatGroupInput,
     CreateChatGroupMutationVariables,
     CreateChatGroupResult,
+    Entities_Constraint,
+    Entities_Update_Column,
 } from '../../../generated/graphql';
-import { hasuraClient, makeAuthorizedHandler } from '../../../server';
-import { head } from 'lodash';
+import { makeAuthorizedHandler } from '../../../server';
 
 export default makeAuthorizedHandler<CreateChatGroupMutationVariables, CreateChatGroupResult>(
     Joi.object<CreateChatGroupMutationVariables>({
         input: Joi.object<CreateChatGroupInput>({
             receiverIds: Joi.array().items(Joi.string().uuid({ version: 'uuidv4' })),
             message: Joi.string().optional().allow(''),
+            thing_id: Joi.string().uuid({ version: 'uuidv4' }).optional(),
         }),
     }),
     async (args, ctx) => {
         const memberIds = [ctx.token.id, ...args.input.receiverIds];
-        const existingQuery = await hasuraClient.query({
+        const existingQuery = await ctx.userClient.query({
             query: ServerFindChatGroupDocument,
             variables: {
                 where: {
@@ -33,11 +38,33 @@ export default makeAuthorizedHandler<CreateChatGroupMutationVariables, CreateCha
 
         const existing = head(existingQuery.data.chat_groups);
         if (existing) {
-            // TODO: add message
+            // Add message to existing chat group
+            // NOTE: using `dummy` here to be able to upsert the entity
+            await ctx.userClient.mutate({
+                mutation: ServerCreateChatMessageDocument,
+                variables: {
+                    input: {
+                        sender_id: ctx.token.id,
+                        chat_group_id: existing.id,
+                        message: args.input.message,
+                        ...(args.input.thing_id
+                            ? {
+                                  entity: {
+                                      data: { thing_id: args.input.thing_id, dummy: 1 },
+                                      on_conflict: {
+                                          constraint: Entities_Constraint.EntitiesThingIdKey,
+                                          update_columns: [Entities_Update_Column.Dummy],
+                                      },
+                                  },
+                              }
+                            : {}),
+                    },
+                },
+            });
             return ctx.success({ chat_group_id: existing.id });
         }
 
-        const mutation = await hasuraClient.mutate({
+        const mutation = await ctx.userClient.mutate({
             mutation: ServerCreateChatGroupDocument,
             variables: {
                 input: {

@@ -12,6 +12,7 @@ export type Scalars = {
   Float: number;
   date: any;
   json: any;
+  smallint: any;
   timestamptz: any;
   uuid: any;
 };
@@ -32,6 +33,7 @@ export type Boolean_Comparison_Exp = {
 export type CreateChatGroupInput = {
   message?: Maybe<Scalars['String']>;
   receiverIds: Array<Scalars['uuid']>;
+  thing_id?: Maybe<Scalars['uuid']>;
 };
 
 export type CreateChatGroupResult = {
@@ -1000,6 +1002,9 @@ export type Chat_Messages = {
   chat_group: Chat_Groups;
   chat_group_id: Scalars['uuid'];
   created_at: Scalars['timestamptz'];
+  /** An object relationship */
+  entity?: Maybe<Entities>;
+  entity_id?: Maybe<Scalars['uuid']>;
   id: Scalars['uuid'];
   message: Scalars['String'];
   /** An object relationship */
@@ -1050,6 +1055,8 @@ export type Chat_Messages_Bool_Exp = {
   chat_group?: Maybe<Chat_Groups_Bool_Exp>;
   chat_group_id?: Maybe<Uuid_Comparison_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  entity?: Maybe<Entities_Bool_Exp>;
+  entity_id?: Maybe<Uuid_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   message?: Maybe<String_Comparison_Exp>;
   sender?: Maybe<Users_Bool_Exp>;
@@ -1067,6 +1074,8 @@ export type Chat_Messages_Insert_Input = {
   chat_group?: Maybe<Chat_Groups_Obj_Rel_Insert_Input>;
   chat_group_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  entity?: Maybe<Entities_Obj_Rel_Insert_Input>;
+  entity_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   message?: Maybe<Scalars['String']>;
   sender?: Maybe<Users_Obj_Rel_Insert_Input>;
@@ -1078,6 +1087,7 @@ export type Chat_Messages_Max_Fields = {
   __typename?: 'chat_messages_max_fields';
   chat_group_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  entity_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   message?: Maybe<Scalars['String']>;
   sender_id?: Maybe<Scalars['uuid']>;
@@ -1087,6 +1097,7 @@ export type Chat_Messages_Max_Fields = {
 export type Chat_Messages_Max_Order_By = {
   chat_group_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  entity_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   message?: Maybe<Order_By>;
   sender_id?: Maybe<Order_By>;
@@ -1097,6 +1108,7 @@ export type Chat_Messages_Min_Fields = {
   __typename?: 'chat_messages_min_fields';
   chat_group_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  entity_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   message?: Maybe<Scalars['String']>;
   sender_id?: Maybe<Scalars['uuid']>;
@@ -1106,6 +1118,7 @@ export type Chat_Messages_Min_Fields = {
 export type Chat_Messages_Min_Order_By = {
   chat_group_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  entity_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   message?: Maybe<Order_By>;
   sender_id?: Maybe<Order_By>;
@@ -1138,6 +1151,8 @@ export type Chat_Messages_Order_By = {
   chat_group?: Maybe<Chat_Groups_Order_By>;
   chat_group_id?: Maybe<Order_By>;
   created_at?: Maybe<Order_By>;
+  entity?: Maybe<Entities_Order_By>;
+  entity_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   message?: Maybe<Order_By>;
   sender?: Maybe<Users_Order_By>;
@@ -1156,6 +1171,8 @@ export enum Chat_Messages_Select_Column {
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
+  EntityId = 'entity_id',
+  /** column name */
   Id = 'id',
   /** column name */
   Message = 'message',
@@ -1167,6 +1184,7 @@ export enum Chat_Messages_Select_Column {
 export type Chat_Messages_Set_Input = {
   chat_group_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  entity_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   message?: Maybe<Scalars['String']>;
   sender_id?: Maybe<Scalars['uuid']>;
@@ -1178,6 +1196,8 @@ export enum Chat_Messages_Update_Column {
   ChatGroupId = 'chat_group_id',
   /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  EntityId = 'entity_id',
   /** column name */
   Id = 'id',
   /** column name */
@@ -1214,6 +1234,7 @@ export type Date_Comparison_Exp = {
 /** columns and relationships of "entities" */
 export type Entities = {
   __typename?: 'entities';
+  dummy?: Maybe<Scalars['smallint']>;
   /** An object relationship */
   group?: Maybe<Groups>;
   group_id?: Maybe<Scalars['uuid']>;
@@ -1239,9 +1260,17 @@ export type Entities_Aggregate = {
 /** aggregate fields of "entities" */
 export type Entities_Aggregate_Fields = {
   __typename?: 'entities_aggregate_fields';
+  avg?: Maybe<Entities_Avg_Fields>;
   count?: Maybe<Scalars['Int']>;
   max?: Maybe<Entities_Max_Fields>;
   min?: Maybe<Entities_Min_Fields>;
+  stddev?: Maybe<Entities_Stddev_Fields>;
+  stddev_pop?: Maybe<Entities_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<Entities_Stddev_Samp_Fields>;
+  sum?: Maybe<Entities_Sum_Fields>;
+  var_pop?: Maybe<Entities_Var_Pop_Fields>;
+  var_samp?: Maybe<Entities_Var_Samp_Fields>;
+  variance?: Maybe<Entities_Variance_Fields>;
 };
 
 
@@ -1253,9 +1282,17 @@ export type Entities_Aggregate_FieldsCountArgs = {
 
 /** order by aggregate values of table "entities" */
 export type Entities_Aggregate_Order_By = {
+  avg?: Maybe<Entities_Avg_Order_By>;
   count?: Maybe<Order_By>;
   max?: Maybe<Entities_Max_Order_By>;
   min?: Maybe<Entities_Min_Order_By>;
+  stddev?: Maybe<Entities_Stddev_Order_By>;
+  stddev_pop?: Maybe<Entities_Stddev_Pop_Order_By>;
+  stddev_samp?: Maybe<Entities_Stddev_Samp_Order_By>;
+  sum?: Maybe<Entities_Sum_Order_By>;
+  var_pop?: Maybe<Entities_Var_Pop_Order_By>;
+  var_samp?: Maybe<Entities_Var_Samp_Order_By>;
+  variance?: Maybe<Entities_Variance_Order_By>;
 };
 
 /** input type for inserting array relation for remote table "entities" */
@@ -1264,11 +1301,23 @@ export type Entities_Arr_Rel_Insert_Input = {
   on_conflict?: Maybe<Entities_On_Conflict>;
 };
 
+/** aggregate avg on columns */
+export type Entities_Avg_Fields = {
+  __typename?: 'entities_avg_fields';
+  dummy?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "entities" */
+export type Entities_Avg_Order_By = {
+  dummy?: Maybe<Order_By>;
+};
+
 /** Boolean expression to filter rows from the table "entities". All fields are combined with a logical 'AND'. */
 export type Entities_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Entities_Bool_Exp>>>;
   _not?: Maybe<Entities_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Entities_Bool_Exp>>>;
+  dummy?: Maybe<Smallint_Comparison_Exp>;
   group?: Maybe<Groups_Bool_Exp>;
   group_id?: Maybe<Uuid_Comparison_Exp>;
   group_join_request?: Maybe<Group_Join_Requests_Bool_Exp>;
@@ -1294,8 +1343,14 @@ export enum Entities_Constraint {
   EntitiesUserIdKey = 'entities_user_id_key'
 }
 
+/** input type for incrementing integer column in table "entities" */
+export type Entities_Inc_Input = {
+  dummy?: Maybe<Scalars['smallint']>;
+};
+
 /** input type for inserting data into table "entities" */
 export type Entities_Insert_Input = {
+  dummy?: Maybe<Scalars['smallint']>;
   group?: Maybe<Groups_Obj_Rel_Insert_Input>;
   group_id?: Maybe<Scalars['uuid']>;
   group_join_request?: Maybe<Group_Join_Requests_Obj_Rel_Insert_Input>;
@@ -1310,6 +1365,7 @@ export type Entities_Insert_Input = {
 /** aggregate max on columns */
 export type Entities_Max_Fields = {
   __typename?: 'entities_max_fields';
+  dummy?: Maybe<Scalars['smallint']>;
   group_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   join_request_id?: Maybe<Scalars['uuid']>;
@@ -1319,6 +1375,7 @@ export type Entities_Max_Fields = {
 
 /** order by max() on columns of table "entities" */
 export type Entities_Max_Order_By = {
+  dummy?: Maybe<Order_By>;
   group_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   join_request_id?: Maybe<Order_By>;
@@ -1329,6 +1386,7 @@ export type Entities_Max_Order_By = {
 /** aggregate min on columns */
 export type Entities_Min_Fields = {
   __typename?: 'entities_min_fields';
+  dummy?: Maybe<Scalars['smallint']>;
   group_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   join_request_id?: Maybe<Scalars['uuid']>;
@@ -1338,6 +1396,7 @@ export type Entities_Min_Fields = {
 
 /** order by min() on columns of table "entities" */
 export type Entities_Min_Order_By = {
+  dummy?: Maybe<Order_By>;
   group_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   join_request_id?: Maybe<Order_By>;
@@ -1369,6 +1428,7 @@ export type Entities_On_Conflict = {
 
 /** ordering options when selecting data from "entities" */
 export type Entities_Order_By = {
+  dummy?: Maybe<Order_By>;
   group?: Maybe<Groups_Order_By>;
   group_id?: Maybe<Order_By>;
   group_join_request?: Maybe<Group_Join_Requests_Order_By>;
@@ -1388,6 +1448,8 @@ export type Entities_Pk_Columns_Input = {
 /** select columns of table "entities" */
 export enum Entities_Select_Column {
   /** column name */
+  Dummy = 'dummy',
+  /** column name */
   GroupId = 'group_id',
   /** column name */
   Id = 'id',
@@ -1401,6 +1463,7 @@ export enum Entities_Select_Column {
 
 /** input type for updating data in table "entities" */
 export type Entities_Set_Input = {
+  dummy?: Maybe<Scalars['smallint']>;
   group_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   join_request_id?: Maybe<Scalars['uuid']>;
@@ -1408,8 +1471,54 @@ export type Entities_Set_Input = {
   user_id?: Maybe<Scalars['uuid']>;
 };
 
+/** aggregate stddev on columns */
+export type Entities_Stddev_Fields = {
+  __typename?: 'entities_stddev_fields';
+  dummy?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "entities" */
+export type Entities_Stddev_Order_By = {
+  dummy?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type Entities_Stddev_Pop_Fields = {
+  __typename?: 'entities_stddev_pop_fields';
+  dummy?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "entities" */
+export type Entities_Stddev_Pop_Order_By = {
+  dummy?: Maybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type Entities_Stddev_Samp_Fields = {
+  __typename?: 'entities_stddev_samp_fields';
+  dummy?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "entities" */
+export type Entities_Stddev_Samp_Order_By = {
+  dummy?: Maybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type Entities_Sum_Fields = {
+  __typename?: 'entities_sum_fields';
+  dummy?: Maybe<Scalars['smallint']>;
+};
+
+/** order by sum() on columns of table "entities" */
+export type Entities_Sum_Order_By = {
+  dummy?: Maybe<Order_By>;
+};
+
 /** update columns of table "entities" */
 export enum Entities_Update_Column {
+  /** column name */
+  Dummy = 'dummy',
   /** column name */
   GroupId = 'group_id',
   /** column name */
@@ -1421,6 +1530,39 @@ export enum Entities_Update_Column {
   /** column name */
   UserId = 'user_id'
 }
+
+/** aggregate var_pop on columns */
+export type Entities_Var_Pop_Fields = {
+  __typename?: 'entities_var_pop_fields';
+  dummy?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "entities" */
+export type Entities_Var_Pop_Order_By = {
+  dummy?: Maybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type Entities_Var_Samp_Fields = {
+  __typename?: 'entities_var_samp_fields';
+  dummy?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "entities" */
+export type Entities_Var_Samp_Order_By = {
+  dummy?: Maybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type Entities_Variance_Fields = {
+  __typename?: 'entities_variance_fields';
+  dummy?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "entities" */
+export type Entities_Variance_Order_By = {
+  dummy?: Maybe<Order_By>;
+};
 
 /** columns and relationships of "file_uploads" */
 export type File_Uploads = {
@@ -4180,6 +4322,7 @@ export type Mutation_RootUpdate_Chat_Messages_By_PkArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_EntitiesArgs = {
+  _inc?: Maybe<Entities_Inc_Input>;
   _set?: Maybe<Entities_Set_Input>;
   where: Entities_Bool_Exp;
 };
@@ -4187,6 +4330,7 @@ export type Mutation_RootUpdate_EntitiesArgs = {
 
 /** mutation root */
 export type Mutation_RootUpdate_Entities_By_PkArgs = {
+  _inc?: Maybe<Entities_Inc_Input>;
   _set?: Maybe<Entities_Set_Input>;
   pk_columns: Entities_Pk_Columns_Input;
 };
@@ -5276,6 +5420,20 @@ export type Query_RootVerification_Requests_AggregateArgs = {
 /** query root */
 export type Query_RootVerification_Requests_By_PkArgs = {
   id: Scalars['Int'];
+};
+
+
+/** expression to compare columns of type smallint. All fields are combined with logical 'AND'. */
+export type Smallint_Comparison_Exp = {
+  _eq?: Maybe<Scalars['smallint']>;
+  _gt?: Maybe<Scalars['smallint']>;
+  _gte?: Maybe<Scalars['smallint']>;
+  _in?: Maybe<Array<Scalars['smallint']>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _lt?: Maybe<Scalars['smallint']>;
+  _lte?: Maybe<Scalars['smallint']>;
+  _neq?: Maybe<Scalars['smallint']>;
+  _nin?: Maybe<Array<Scalars['smallint']>>;
 };
 
 /** subscription root */
@@ -7585,6 +7743,19 @@ export type ServerCreateChatGroupMutation = (
   )> }
 );
 
+export type ServerCreateChatMessageMutationVariables = Exact<{
+  input: Chat_Messages_Insert_Input;
+}>;
+
+
+export type ServerCreateChatMessageMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_chat_messages_one?: Maybe<(
+    { __typename?: 'chat_messages' }
+    & Pick<Chat_Messages, 'id'>
+  )> }
+);
+
 export type ServerFindGroupQueryVariables = Exact<{
   where?: Maybe<Groups_Bool_Exp>;
 }>;
@@ -7719,7 +7890,7 @@ export type ServerFetchThingDetailsQuery = (
   { __typename?: 'query_root' }
   & { things_by_pk?: Maybe<(
     { __typename?: 'things' }
-    & Pick<Things, 'id' | 'created_at'>
+    & Pick<Things, 'id' | 'short_id' | 'created_at'>
     & { owner: (
       { __typename?: 'users' }
       & Pick<Users, 'id' | 'name'>
@@ -8020,8 +8191,12 @@ export type ResolversTypes = {
   entities_aggregate_fields: ResolverTypeWrapper<Entities_Aggregate_Fields>;
   entities_aggregate_order_by: Entities_Aggregate_Order_By;
   entities_arr_rel_insert_input: Entities_Arr_Rel_Insert_Input;
+  entities_avg_fields: ResolverTypeWrapper<Entities_Avg_Fields>;
+  Float: ResolverTypeWrapper<Scalars['Float']>;
+  entities_avg_order_by: Entities_Avg_Order_By;
   entities_bool_exp: Entities_Bool_Exp;
   entities_constraint: Entities_Constraint;
+  entities_inc_input: Entities_Inc_Input;
   entities_insert_input: Entities_Insert_Input;
   entities_max_fields: ResolverTypeWrapper<Entities_Max_Fields>;
   entities_max_order_by: Entities_Max_Order_By;
@@ -8034,14 +8209,27 @@ export type ResolversTypes = {
   entities_pk_columns_input: Entities_Pk_Columns_Input;
   entities_select_column: Entities_Select_Column;
   entities_set_input: Entities_Set_Input;
+  entities_stddev_fields: ResolverTypeWrapper<Entities_Stddev_Fields>;
+  entities_stddev_order_by: Entities_Stddev_Order_By;
+  entities_stddev_pop_fields: ResolverTypeWrapper<Entities_Stddev_Pop_Fields>;
+  entities_stddev_pop_order_by: Entities_Stddev_Pop_Order_By;
+  entities_stddev_samp_fields: ResolverTypeWrapper<Entities_Stddev_Samp_Fields>;
+  entities_stddev_samp_order_by: Entities_Stddev_Samp_Order_By;
+  entities_sum_fields: ResolverTypeWrapper<Entities_Sum_Fields>;
+  entities_sum_order_by: Entities_Sum_Order_By;
   entities_update_column: Entities_Update_Column;
+  entities_var_pop_fields: ResolverTypeWrapper<Entities_Var_Pop_Fields>;
+  entities_var_pop_order_by: Entities_Var_Pop_Order_By;
+  entities_var_samp_fields: ResolverTypeWrapper<Entities_Var_Samp_Fields>;
+  entities_var_samp_order_by: Entities_Var_Samp_Order_By;
+  entities_variance_fields: ResolverTypeWrapper<Entities_Variance_Fields>;
+  entities_variance_order_by: Entities_Variance_Order_By;
   file_uploads: ResolverTypeWrapper<File_Uploads>;
   file_uploads_aggregate: ResolverTypeWrapper<File_Uploads_Aggregate>;
   file_uploads_aggregate_fields: ResolverTypeWrapper<File_Uploads_Aggregate_Fields>;
   file_uploads_aggregate_order_by: File_Uploads_Aggregate_Order_By;
   file_uploads_arr_rel_insert_input: File_Uploads_Arr_Rel_Insert_Input;
   file_uploads_avg_fields: ResolverTypeWrapper<File_Uploads_Avg_Fields>;
-  Float: ResolverTypeWrapper<Scalars['Float']>;
   file_uploads_avg_order_by: File_Uploads_Avg_Order_By;
   file_uploads_bool_exp: File_Uploads_Bool_Exp;
   file_uploads_constraint: File_Uploads_Constraint;
@@ -8241,6 +8429,8 @@ export type ResolversTypes = {
   notifications_update_column: Notifications_Update_Column;
   order_by: Order_By;
   query_root: ResolverTypeWrapper<{}>;
+  smallint: ResolverTypeWrapper<Scalars['smallint']>;
+  smallint_comparison_exp: Smallint_Comparison_Exp;
   subscription_root: ResolverTypeWrapper<{}>;
   thing_images: ResolverTypeWrapper<Thing_Images>;
   thing_images_aggregate: ResolverTypeWrapper<Thing_Images_Aggregate>;
@@ -8522,7 +8712,11 @@ export type ResolversParentTypes = {
   entities_aggregate_fields: Entities_Aggregate_Fields;
   entities_aggregate_order_by: Entities_Aggregate_Order_By;
   entities_arr_rel_insert_input: Entities_Arr_Rel_Insert_Input;
+  entities_avg_fields: Entities_Avg_Fields;
+  Float: Scalars['Float'];
+  entities_avg_order_by: Entities_Avg_Order_By;
   entities_bool_exp: Entities_Bool_Exp;
+  entities_inc_input: Entities_Inc_Input;
   entities_insert_input: Entities_Insert_Input;
   entities_max_fields: Entities_Max_Fields;
   entities_max_order_by: Entities_Max_Order_By;
@@ -8534,13 +8728,26 @@ export type ResolversParentTypes = {
   entities_order_by: Entities_Order_By;
   entities_pk_columns_input: Entities_Pk_Columns_Input;
   entities_set_input: Entities_Set_Input;
+  entities_stddev_fields: Entities_Stddev_Fields;
+  entities_stddev_order_by: Entities_Stddev_Order_By;
+  entities_stddev_pop_fields: Entities_Stddev_Pop_Fields;
+  entities_stddev_pop_order_by: Entities_Stddev_Pop_Order_By;
+  entities_stddev_samp_fields: Entities_Stddev_Samp_Fields;
+  entities_stddev_samp_order_by: Entities_Stddev_Samp_Order_By;
+  entities_sum_fields: Entities_Sum_Fields;
+  entities_sum_order_by: Entities_Sum_Order_By;
+  entities_var_pop_fields: Entities_Var_Pop_Fields;
+  entities_var_pop_order_by: Entities_Var_Pop_Order_By;
+  entities_var_samp_fields: Entities_Var_Samp_Fields;
+  entities_var_samp_order_by: Entities_Var_Samp_Order_By;
+  entities_variance_fields: Entities_Variance_Fields;
+  entities_variance_order_by: Entities_Variance_Order_By;
   file_uploads: File_Uploads;
   file_uploads_aggregate: File_Uploads_Aggregate;
   file_uploads_aggregate_fields: File_Uploads_Aggregate_Fields;
   file_uploads_aggregate_order_by: File_Uploads_Aggregate_Order_By;
   file_uploads_arr_rel_insert_input: File_Uploads_Arr_Rel_Insert_Input;
   file_uploads_avg_fields: File_Uploads_Avg_Fields;
-  Float: Scalars['Float'];
   file_uploads_avg_order_by: File_Uploads_Avg_Order_By;
   file_uploads_bool_exp: File_Uploads_Bool_Exp;
   file_uploads_inc_input: File_Uploads_Inc_Input;
@@ -8710,6 +8917,8 @@ export type ResolversParentTypes = {
   notifications_pk_columns_input: Notifications_Pk_Columns_Input;
   notifications_set_input: Notifications_Set_Input;
   query_root: {};
+  smallint: Scalars['smallint'];
+  smallint_comparison_exp: Smallint_Comparison_Exp;
   subscription_root: {};
   thing_images: Thing_Images;
   thing_images_aggregate: Thing_Images_Aggregate;
@@ -9096,6 +9305,8 @@ export type Chat_MessagesResolvers<ContextType = any, ParentType extends Resolve
   chat_group?: Resolver<ResolversTypes['chat_groups'], ParentType, ContextType>;
   chat_group_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  entity?: Resolver<Maybe<ResolversTypes['entities']>, ParentType, ContextType>;
+  entity_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   sender?: Resolver<ResolversTypes['users'], ParentType, ContextType>;
@@ -9119,6 +9330,7 @@ export type Chat_Messages_Aggregate_FieldsResolvers<ContextType = any, ParentTyp
 export type Chat_Messages_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['chat_messages_max_fields'] = ResolversParentTypes['chat_messages_max_fields']> = {
   chat_group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  entity_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   sender_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
@@ -9128,6 +9340,7 @@ export type Chat_Messages_Max_FieldsResolvers<ContextType = any, ParentType exte
 export type Chat_Messages_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['chat_messages_min_fields'] = ResolversParentTypes['chat_messages_min_fields']> = {
   chat_group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  entity_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   sender_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
@@ -9150,6 +9363,7 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 }
 
 export type EntitiesResolvers<ContextType = any, ParentType extends ResolversParentTypes['entities'] = ResolversParentTypes['entities']> = {
+  dummy?: Resolver<Maybe<ResolversTypes['smallint']>, ParentType, ContextType>;
   group?: Resolver<Maybe<ResolversTypes['groups']>, ParentType, ContextType>;
   group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   group_join_request?: Resolver<Maybe<ResolversTypes['group_join_requests']>, ParentType, ContextType>;
@@ -9169,13 +9383,27 @@ export type Entities_AggregateResolvers<ContextType = any, ParentType extends Re
 };
 
 export type Entities_Aggregate_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['entities_aggregate_fields'] = ResolversParentTypes['entities_aggregate_fields']> = {
+  avg?: Resolver<Maybe<ResolversTypes['entities_avg_fields']>, ParentType, ContextType>;
   count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<Entities_Aggregate_FieldsCountArgs, never>>;
   max?: Resolver<Maybe<ResolversTypes['entities_max_fields']>, ParentType, ContextType>;
   min?: Resolver<Maybe<ResolversTypes['entities_min_fields']>, ParentType, ContextType>;
+  stddev?: Resolver<Maybe<ResolversTypes['entities_stddev_fields']>, ParentType, ContextType>;
+  stddev_pop?: Resolver<Maybe<ResolversTypes['entities_stddev_pop_fields']>, ParentType, ContextType>;
+  stddev_samp?: Resolver<Maybe<ResolversTypes['entities_stddev_samp_fields']>, ParentType, ContextType>;
+  sum?: Resolver<Maybe<ResolversTypes['entities_sum_fields']>, ParentType, ContextType>;
+  var_pop?: Resolver<Maybe<ResolversTypes['entities_var_pop_fields']>, ParentType, ContextType>;
+  var_samp?: Resolver<Maybe<ResolversTypes['entities_var_samp_fields']>, ParentType, ContextType>;
+  variance?: Resolver<Maybe<ResolversTypes['entities_variance_fields']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Entities_Avg_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['entities_avg_fields'] = ResolversParentTypes['entities_avg_fields']> = {
+  dummy?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type Entities_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['entities_max_fields'] = ResolversParentTypes['entities_max_fields']> = {
+  dummy?: Resolver<Maybe<ResolversTypes['smallint']>, ParentType, ContextType>;
   group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   join_request_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
@@ -9185,6 +9413,7 @@ export type Entities_Max_FieldsResolvers<ContextType = any, ParentType extends R
 };
 
 export type Entities_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['entities_min_fields'] = ResolversParentTypes['entities_min_fields']> = {
+  dummy?: Resolver<Maybe<ResolversTypes['smallint']>, ParentType, ContextType>;
   group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   join_request_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
@@ -9196,6 +9425,41 @@ export type Entities_Min_FieldsResolvers<ContextType = any, ParentType extends R
 export type Entities_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['entities_mutation_response'] = ResolversParentTypes['entities_mutation_response']> = {
   affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   returning?: Resolver<Array<ResolversTypes['entities']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Entities_Stddev_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['entities_stddev_fields'] = ResolversParentTypes['entities_stddev_fields']> = {
+  dummy?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Entities_Stddev_Pop_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['entities_stddev_pop_fields'] = ResolversParentTypes['entities_stddev_pop_fields']> = {
+  dummy?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Entities_Stddev_Samp_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['entities_stddev_samp_fields'] = ResolversParentTypes['entities_stddev_samp_fields']> = {
+  dummy?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Entities_Sum_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['entities_sum_fields'] = ResolversParentTypes['entities_sum_fields']> = {
+  dummy?: Resolver<Maybe<ResolversTypes['smallint']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Entities_Var_Pop_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['entities_var_pop_fields'] = ResolversParentTypes['entities_var_pop_fields']> = {
+  dummy?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Entities_Var_Samp_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['entities_var_samp_fields'] = ResolversParentTypes['entities_var_samp_fields']> = {
+  dummy?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Entities_Variance_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['entities_variance_fields'] = ResolversParentTypes['entities_variance_fields']> = {
+  dummy?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -9893,6 +10157,10 @@ export type Query_RootResolvers<ContextType = any, ParentType extends ResolversP
   verification_requests_by_pk?: Resolver<Maybe<ResolversTypes['verification_requests']>, ParentType, ContextType, RequireFields<Query_RootVerification_Requests_By_PkArgs, 'id'>>;
 };
 
+export interface SmallintScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['smallint'], any> {
+  name: 'smallint';
+}
+
 export type Subscription_RootResolvers<ContextType = any, ParentType extends ResolversParentTypes['subscription_root'] = ResolversParentTypes['subscription_root']> = {
   activities?: SubscriptionResolver<Array<ResolversTypes['activities']>, "activities", ParentType, ContextType, RequireFields<Subscription_RootActivitiesArgs, never>>;
   activities_aggregate?: SubscriptionResolver<ResolversTypes['activities_aggregate'], "activities_aggregate", ParentType, ContextType, RequireFields<Subscription_RootActivities_AggregateArgs, never>>;
@@ -10414,9 +10682,17 @@ export type Resolvers<ContextType = any> = {
   entities?: EntitiesResolvers<ContextType>;
   entities_aggregate?: Entities_AggregateResolvers<ContextType>;
   entities_aggregate_fields?: Entities_Aggregate_FieldsResolvers<ContextType>;
+  entities_avg_fields?: Entities_Avg_FieldsResolvers<ContextType>;
   entities_max_fields?: Entities_Max_FieldsResolvers<ContextType>;
   entities_min_fields?: Entities_Min_FieldsResolvers<ContextType>;
   entities_mutation_response?: Entities_Mutation_ResponseResolvers<ContextType>;
+  entities_stddev_fields?: Entities_Stddev_FieldsResolvers<ContextType>;
+  entities_stddev_pop_fields?: Entities_Stddev_Pop_FieldsResolvers<ContextType>;
+  entities_stddev_samp_fields?: Entities_Stddev_Samp_FieldsResolvers<ContextType>;
+  entities_sum_fields?: Entities_Sum_FieldsResolvers<ContextType>;
+  entities_var_pop_fields?: Entities_Var_Pop_FieldsResolvers<ContextType>;
+  entities_var_samp_fields?: Entities_Var_Samp_FieldsResolvers<ContextType>;
+  entities_variance_fields?: Entities_Variance_FieldsResolvers<ContextType>;
   file_uploads?: File_UploadsResolvers<ContextType>;
   file_uploads_aggregate?: File_Uploads_AggregateResolvers<ContextType>;
   file_uploads_aggregate_fields?: File_Uploads_Aggregate_FieldsResolvers<ContextType>;
@@ -10482,6 +10758,7 @@ export type Resolvers<ContextType = any> = {
   notifications_min_fields?: Notifications_Min_FieldsResolvers<ContextType>;
   notifications_mutation_response?: Notifications_Mutation_ResponseResolvers<ContextType>;
   query_root?: Query_RootResolvers<ContextType>;
+  smallint?: GraphQLScalarType;
   subscription_root?: Subscription_RootResolvers<ContextType>;
   thing_images?: Thing_ImagesResolvers<ContextType>;
   thing_images_aggregate?: Thing_Images_AggregateResolvers<ContextType>;
@@ -10550,6 +10827,7 @@ export const ServerChatGroupFragmentDoc: DocumentNode<ServerChatGroupFragment, u
 export const ServerInsertActivitiesDocument: DocumentNode<ServerInsertActivitiesMutation, ServerInsertActivitiesMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertActivities"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"activities_insert_input"}}}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_activities"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]}}]};
 export const ServerFindChatGroupDocument: DocumentNode<ServerFindChatGroupQuery, ServerFindChatGroupQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindChatGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_groups_bool_exp"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat_groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ServerChatGroup"},"directives":[]}]}}]}},...ServerChatGroupFragmentDoc.definitions]};
 export const ServerCreateChatGroupDocument: DocumentNode<ServerCreateChatGroupMutation, ServerCreateChatGroupMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerCreateChatGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_groups_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_chat_groups_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]};
+export const ServerCreateChatMessageDocument: DocumentNode<ServerCreateChatMessageMutation, ServerCreateChatMessageMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerCreateChatMessage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_messages_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_chat_messages_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerFindGroupDocument: DocumentNode<ServerFindGroupQuery, ServerFindGroupQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"groups_bool_exp"}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerFindGroupJoinRequestDocument: DocumentNode<ServerFindGroupJoinRequestQuery, ServerFindGroupJoinRequestQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindGroupJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_join_requests_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"user_id"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerFindJoinTokenDocument: DocumentNode<ServerFindJoinTokenQuery, ServerFindJoinTokenQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindJoinToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens_bool_exp"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_join_tokens"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"token"},"arguments":[],"directives":[]}]}}]}}]};
@@ -10559,7 +10837,7 @@ export const ServerInsertGroupDocument: DocumentNode<ServerInsertGroupMutation, 
 export const ServerInsertGroupJoinRequestDocument: DocumentNode<ServerInsertGroupJoinRequestMutation, ServerInsertGroupJoinRequestMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertGroupJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_requests_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_join_requests_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"status"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerInsertGroupMemberDocument: DocumentNode<ServerInsertGroupMemberMutation, ServerInsertGroupMemberMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertGroupMember"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_members_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_members_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerUpdateGroupJoinRequestDocument: DocumentNode<ServerUpdateGroupJoinRequestMutation, ServerUpdateGroupJoinRequestMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerUpdateGroupJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_requests_set_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_group_join_requests_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]}]}}]}}]};
-export const ServerFetchThingDetailsDocument: DocumentNode<ServerFetchThingDetailsQuery, ServerFetchThingDetailsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFetchThingDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"things_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"owner"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"group_relations"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"memberships"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"role"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"images"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"file_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"order"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"description"},"arguments":[],"directives":[]}]}}]}}]}}]};
+export const ServerFetchThingDetailsDocument: DocumentNode<ServerFetchThingDetailsQuery, ServerFetchThingDetailsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFetchThingDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"things_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"short_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"owner"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"group_relations"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"memberships"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"role"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"images"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"file_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"order"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"description"},"arguments":[],"directives":[]}]}}]}}]}}]};
 export const ServerUpdateThingDocument: DocumentNode<ServerUpdateThingMutation, ServerUpdateThingMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerUpdateThing"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"things_insert_input"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"deletedFileIds"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"deletedGroupIds"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_things_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}},{"kind":"Argument","name":{"kind":"Name","value":"on_conflict"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"constraint"},"value":{"kind":"EnumValue","value":"things_pkey"}},{"kind":"ObjectField","name":{"kind":"Name","value":"update_columns"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"name"},{"kind":"EnumValue","value":"description"},{"kind":"EnumValue","value":"type"},{"kind":"EnumValue","value":"category"},{"kind":"EnumValue","value":"enabled"},{"kind":"EnumValue","value":"expiry"}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"delete_thing_images"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"thing_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"file_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"deletedFileIds"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"delete_group_thing"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"thing_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"group_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"deletedGroupIds"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerUserCredentialsDocument: DocumentNode<ServerUserCredentialsQuery, ServerUserCredentialsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerUserCredentials"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"password_hash"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerFindUserDocument: DocumentNode<ServerFindUserQuery, ServerFindUserQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"email"},"arguments":[],"directives":[]}]}}]}}]};

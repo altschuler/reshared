@@ -46,6 +46,11 @@ fragment EntityCard on entities {
         id
         short_id
         name
+        images(limit: 1) {
+            file {
+                url
+            }
+        }
     }
     user {
         id
