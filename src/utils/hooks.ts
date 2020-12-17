@@ -27,8 +27,8 @@ export const useDebounce = (value, delay) => {
 };
 
 // Source:
-
-export const useMedia = <T>(queries: string[], values: T[], defaultValue: T) => {
+const useMediaSsr = <T>(queries: string[], values: T[], defaultValue: T) => defaultValue;
+const useMediaBrowser = <T>(queries: string[], values: T[], defaultValue: T) => {
     const mediaQueryLists = queries.map((q) => window.matchMedia(q));
 
     const getValue = () => {
@@ -45,7 +45,9 @@ export const useMedia = <T>(queries: string[], values: T[], defaultValue: T) => 
         mediaQueryLists.forEach((mql) => mql.addListener(handler));
 
         return () => mediaQueryLists.forEach((mql) => mql.removeListener(handler));
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return value;
 };
+
+export const useMedia = process.browser ? useMediaBrowser : useMediaSsr;

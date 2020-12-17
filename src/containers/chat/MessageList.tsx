@@ -50,6 +50,7 @@ const useStyles = createUseStyles({
     messageListRoot: {
         flex: 1,
         overflowY: 'auto',
+        paddingLeft: '1em',
     },
 });
 

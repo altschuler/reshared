@@ -16,6 +16,7 @@ const useStyles = createUseStyles({
 
     title: {
         marginRight: '1em',
+        paddingLeft: '0.5em',
     },
 
     select: {

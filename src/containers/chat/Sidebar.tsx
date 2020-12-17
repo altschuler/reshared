@@ -18,7 +18,6 @@ const useStyles = createUseStyles({
         flexDirection: 'column',
         padding: '1em',
         borderRight: '1px solid #EEE',
-        marginRight: '1em',
         overflowX: 'hidden',
         overflowY: 'auto',
         transition: 'width 0.3s',
