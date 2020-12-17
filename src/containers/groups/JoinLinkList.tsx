@@ -127,8 +127,8 @@ export const JoinLinkList = (props: JoinRequestListProps) => {
                         ]}>
                         <List.Item.Meta
                             title={
-                                <Typography.Link copyable>
-                                    {urlFor.group.joinLink(props.group, token.token)}
+                                <Typography.Link copyable ellipsis>
+                                    {urlFor.group.joinLink(props.group, token.token, true)}
                                 </Typography.Link>
                             }
                         />

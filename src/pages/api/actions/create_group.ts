@@ -3,7 +3,7 @@
     ServerFindGroupDocument,
 } from '../../../generated/server-queries';
 import Joi from 'joi';
-import { makeAuthorizedHandler } from '../../../server/utils';
+import { makeAuthorizedHandler, hasuraClient } from '../../../server';
 import {
     CreateGroupInput,
     CreateGroupMutationVariables,
@@ -11,7 +11,6 @@ import {
     Group_Role_Enum,
 } from '../../../generated/graphql';
 import { MailTemplate, sendMail } from '../../../server/mail';
-import { hasuraClient } from '../../../server';
 import { isEmpty } from 'lodash';
 
 export default makeAuthorizedHandler<CreateGroupMutationVariables, CreateGroupResult>(

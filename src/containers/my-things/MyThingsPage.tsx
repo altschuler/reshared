@@ -4,6 +4,7 @@ import { useAuth } from '../../utils/auth';
 import { ThingCardFragment } from '../../generated/graphql';
 import { Button, PageHeader, Typography } from 'antd';
 import { CreateThingDrawer, useDialogs } from '../../components/dialogs';
+import { PageLayout } from '../root/PageLayout';
 
 // export interface MyThingsPageProps {}
 // props: MyThingsPageProps
@@ -27,7 +28,7 @@ export const MyThingsPage = () => {
     }
 
     return (
-        <div>
+        <PageLayout>
             <PageHeader
                 title="Your Things"
                 subTitle="Things shared across all groups you are a member of"
@@ -35,9 +36,9 @@ export const MyThingsPage = () => {
                     <Button type="primary" onClick={handleShare}>
                         Share a thing
                     </Button>
-                }
-            />
-            <ThingList skip={!auth.user} makeUrl={makeUrl} where={where} />
-        </div>
+                }>
+                <ThingList skip={!auth.user} makeUrl={makeUrl} where={where} />
+            </PageHeader>
+        </PageLayout>
     );
 };

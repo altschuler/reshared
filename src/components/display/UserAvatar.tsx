@@ -14,9 +14,11 @@ const useStyles = createUseStyles({
 export const UserAvatar = ({
     user,
     group,
+    className,
 }: {
     user: UserCardFragment;
     group?: GroupCardFragment;
+    className?: string;
 }) => {
     const classes = useStyles();
     const popover = (
@@ -48,7 +50,7 @@ export const UserAvatar = ({
             destroyTooltipOnHide
             overlayClassName={classes.overlay}
             content={popover}>
-            <Avatar size="small" src={user.image || undefined}>
+            <Avatar size="small" src={user.image || undefined} className={className}>
                 <span style={{ userSelect: 'none' }}>
                     {!user.image && (user.name.slice(0, 2).toUpperCase() || '?')}
                 </span>
@@ -56,3 +58,17 @@ export const UserAvatar = ({
         </Popover>
     );
 };
+
+export const UserAvatarList = ({
+    users,
+    className,
+}: {
+    users: UserCardFragment[];
+    className?: string;
+}) => (
+    <Avatar.Group className={className} maxCount={3}>
+        {users.map((user) => (
+            <UserAvatar key={user.id} user={user} />
+        ))}
+    </Avatar.Group>
+);

@@ -28,6 +28,17 @@ export type Boolean_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['Boolean']>>;
 };
 
+export type CreateChatGroupInput = {
+  message?: Maybe<Scalars['String']>;
+  receiverIds: Array<Scalars['uuid']>;
+};
+
+export type CreateChatGroupResult = {
+  __typename?: 'CreateChatGroupResult';
+  chat_group?: Maybe<Chat_Groups>;
+  chat_group_id: Scalars['uuid'];
+};
+
 export type CreateGroupInput = {
   description: Scalars['String'];
   name: Scalars['String'];
@@ -575,6 +586,603 @@ export enum Activity_Verb_Update_Column {
   Comment = 'comment',
   /** column name */
   Value = 'value'
+}
+
+/** columns and relationships of "chat_group_members" */
+export type Chat_Group_Members = {
+  __typename?: 'chat_group_members';
+  /** An object relationship */
+  chat_group: Chat_Groups;
+  chat_group_id: Scalars['uuid'];
+  id: Scalars['uuid'];
+  last_read?: Maybe<Scalars['timestamptz']>;
+  /** An object relationship */
+  user: Users;
+  user_id: Scalars['uuid'];
+};
+
+/** aggregated selection of "chat_group_members" */
+export type Chat_Group_Members_Aggregate = {
+  __typename?: 'chat_group_members_aggregate';
+  aggregate?: Maybe<Chat_Group_Members_Aggregate_Fields>;
+  nodes: Array<Chat_Group_Members>;
+};
+
+/** aggregate fields of "chat_group_members" */
+export type Chat_Group_Members_Aggregate_Fields = {
+  __typename?: 'chat_group_members_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Chat_Group_Members_Max_Fields>;
+  min?: Maybe<Chat_Group_Members_Min_Fields>;
+};
+
+
+/** aggregate fields of "chat_group_members" */
+export type Chat_Group_Members_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Chat_Group_Members_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "chat_group_members" */
+export type Chat_Group_Members_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Chat_Group_Members_Max_Order_By>;
+  min?: Maybe<Chat_Group_Members_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "chat_group_members" */
+export type Chat_Group_Members_Arr_Rel_Insert_Input = {
+  data: Array<Chat_Group_Members_Insert_Input>;
+  on_conflict?: Maybe<Chat_Group_Members_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "chat_group_members". All fields are combined with a logical 'AND'. */
+export type Chat_Group_Members_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Chat_Group_Members_Bool_Exp>>>;
+  _not?: Maybe<Chat_Group_Members_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Chat_Group_Members_Bool_Exp>>>;
+  chat_group?: Maybe<Chat_Groups_Bool_Exp>;
+  chat_group_id?: Maybe<Uuid_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  last_read?: Maybe<Timestamptz_Comparison_Exp>;
+  user?: Maybe<Users_Bool_Exp>;
+  user_id?: Maybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "chat_group_members" */
+export enum Chat_Group_Members_Constraint {
+  /** unique or primary key constraint */
+  ChatGroupMembersPkey = 'chat_group_members_pkey'
+}
+
+/** input type for inserting data into table "chat_group_members" */
+export type Chat_Group_Members_Insert_Input = {
+  chat_group?: Maybe<Chat_Groups_Obj_Rel_Insert_Input>;
+  chat_group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  last_read?: Maybe<Scalars['timestamptz']>;
+  user?: Maybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type Chat_Group_Members_Max_Fields = {
+  __typename?: 'chat_group_members_max_fields';
+  chat_group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  last_read?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "chat_group_members" */
+export type Chat_Group_Members_Max_Order_By = {
+  chat_group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  last_read?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Chat_Group_Members_Min_Fields = {
+  __typename?: 'chat_group_members_min_fields';
+  chat_group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  last_read?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "chat_group_members" */
+export type Chat_Group_Members_Min_Order_By = {
+  chat_group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  last_read?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "chat_group_members" */
+export type Chat_Group_Members_Mutation_Response = {
+  __typename?: 'chat_group_members_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Chat_Group_Members>;
+};
+
+/** input type for inserting object relation for remote table "chat_group_members" */
+export type Chat_Group_Members_Obj_Rel_Insert_Input = {
+  data: Chat_Group_Members_Insert_Input;
+  on_conflict?: Maybe<Chat_Group_Members_On_Conflict>;
+};
+
+/** on conflict condition type for table "chat_group_members" */
+export type Chat_Group_Members_On_Conflict = {
+  constraint: Chat_Group_Members_Constraint;
+  update_columns: Array<Chat_Group_Members_Update_Column>;
+  where?: Maybe<Chat_Group_Members_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "chat_group_members" */
+export type Chat_Group_Members_Order_By = {
+  chat_group?: Maybe<Chat_Groups_Order_By>;
+  chat_group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  last_read?: Maybe<Order_By>;
+  user?: Maybe<Users_Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "chat_group_members" */
+export type Chat_Group_Members_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "chat_group_members" */
+export enum Chat_Group_Members_Select_Column {
+  /** column name */
+  ChatGroupId = 'chat_group_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  LastRead = 'last_read',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "chat_group_members" */
+export type Chat_Group_Members_Set_Input = {
+  chat_group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  last_read?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** update columns of table "chat_group_members" */
+export enum Chat_Group_Members_Update_Column {
+  /** column name */
+  ChatGroupId = 'chat_group_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  LastRead = 'last_read',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** columns and relationships of "chat_groups" */
+export type Chat_Groups = {
+  __typename?: 'chat_groups';
+  created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  /** An array relationship */
+  members: Array<Chat_Group_Members>;
+  /** An aggregated array relationship */
+  members_aggregate: Chat_Group_Members_Aggregate;
+  /** An array relationship */
+  messages: Array<Chat_Messages>;
+  /** An aggregated array relationship */
+  messages_aggregate: Chat_Messages_Aggregate;
+  name: Scalars['String'];
+  updated_at: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "chat_groups" */
+export type Chat_GroupsMembersArgs = {
+  distinct_on?: Maybe<Array<Chat_Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Group_Members_Order_By>>;
+  where?: Maybe<Chat_Group_Members_Bool_Exp>;
+};
+
+
+/** columns and relationships of "chat_groups" */
+export type Chat_GroupsMembers_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Group_Members_Order_By>>;
+  where?: Maybe<Chat_Group_Members_Bool_Exp>;
+};
+
+
+/** columns and relationships of "chat_groups" */
+export type Chat_GroupsMessagesArgs = {
+  distinct_on?: Maybe<Array<Chat_Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Messages_Order_By>>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
+};
+
+
+/** columns and relationships of "chat_groups" */
+export type Chat_GroupsMessages_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Messages_Order_By>>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
+};
+
+/** aggregated selection of "chat_groups" */
+export type Chat_Groups_Aggregate = {
+  __typename?: 'chat_groups_aggregate';
+  aggregate?: Maybe<Chat_Groups_Aggregate_Fields>;
+  nodes: Array<Chat_Groups>;
+};
+
+/** aggregate fields of "chat_groups" */
+export type Chat_Groups_Aggregate_Fields = {
+  __typename?: 'chat_groups_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Chat_Groups_Max_Fields>;
+  min?: Maybe<Chat_Groups_Min_Fields>;
+};
+
+
+/** aggregate fields of "chat_groups" */
+export type Chat_Groups_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Chat_Groups_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "chat_groups" */
+export type Chat_Groups_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Chat_Groups_Max_Order_By>;
+  min?: Maybe<Chat_Groups_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "chat_groups" */
+export type Chat_Groups_Arr_Rel_Insert_Input = {
+  data: Array<Chat_Groups_Insert_Input>;
+  on_conflict?: Maybe<Chat_Groups_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "chat_groups". All fields are combined with a logical 'AND'. */
+export type Chat_Groups_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Chat_Groups_Bool_Exp>>>;
+  _not?: Maybe<Chat_Groups_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Chat_Groups_Bool_Exp>>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  members?: Maybe<Chat_Group_Members_Bool_Exp>;
+  messages?: Maybe<Chat_Messages_Bool_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "chat_groups" */
+export enum Chat_Groups_Constraint {
+  /** unique or primary key constraint */
+  ChatGroupsPkey = 'chat_groups_pkey'
+}
+
+/** input type for inserting data into table "chat_groups" */
+export type Chat_Groups_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  members?: Maybe<Chat_Group_Members_Arr_Rel_Insert_Input>;
+  messages?: Maybe<Chat_Messages_Arr_Rel_Insert_Input>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Chat_Groups_Max_Fields = {
+  __typename?: 'chat_groups_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "chat_groups" */
+export type Chat_Groups_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Chat_Groups_Min_Fields = {
+  __typename?: 'chat_groups_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "chat_groups" */
+export type Chat_Groups_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "chat_groups" */
+export type Chat_Groups_Mutation_Response = {
+  __typename?: 'chat_groups_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Chat_Groups>;
+};
+
+/** input type for inserting object relation for remote table "chat_groups" */
+export type Chat_Groups_Obj_Rel_Insert_Input = {
+  data: Chat_Groups_Insert_Input;
+  on_conflict?: Maybe<Chat_Groups_On_Conflict>;
+};
+
+/** on conflict condition type for table "chat_groups" */
+export type Chat_Groups_On_Conflict = {
+  constraint: Chat_Groups_Constraint;
+  update_columns: Array<Chat_Groups_Update_Column>;
+  where?: Maybe<Chat_Groups_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "chat_groups" */
+export type Chat_Groups_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  members_aggregate?: Maybe<Chat_Group_Members_Aggregate_Order_By>;
+  messages_aggregate?: Maybe<Chat_Messages_Aggregate_Order_By>;
+  name?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "chat_groups" */
+export type Chat_Groups_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "chat_groups" */
+export enum Chat_Groups_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "chat_groups" */
+export type Chat_Groups_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "chat_groups" */
+export enum Chat_Groups_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** columns and relationships of "chat_messages" */
+export type Chat_Messages = {
+  __typename?: 'chat_messages';
+  /** An object relationship */
+  chat_group: Chat_Groups;
+  chat_group_id: Scalars['uuid'];
+  created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  message: Scalars['String'];
+  /** An object relationship */
+  sender: Users;
+  sender_id: Scalars['uuid'];
+};
+
+/** aggregated selection of "chat_messages" */
+export type Chat_Messages_Aggregate = {
+  __typename?: 'chat_messages_aggregate';
+  aggregate?: Maybe<Chat_Messages_Aggregate_Fields>;
+  nodes: Array<Chat_Messages>;
+};
+
+/** aggregate fields of "chat_messages" */
+export type Chat_Messages_Aggregate_Fields = {
+  __typename?: 'chat_messages_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Chat_Messages_Max_Fields>;
+  min?: Maybe<Chat_Messages_Min_Fields>;
+};
+
+
+/** aggregate fields of "chat_messages" */
+export type Chat_Messages_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Chat_Messages_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "chat_messages" */
+export type Chat_Messages_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Chat_Messages_Max_Order_By>;
+  min?: Maybe<Chat_Messages_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "chat_messages" */
+export type Chat_Messages_Arr_Rel_Insert_Input = {
+  data: Array<Chat_Messages_Insert_Input>;
+  on_conflict?: Maybe<Chat_Messages_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "chat_messages". All fields are combined with a logical 'AND'. */
+export type Chat_Messages_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Chat_Messages_Bool_Exp>>>;
+  _not?: Maybe<Chat_Messages_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Chat_Messages_Bool_Exp>>>;
+  chat_group?: Maybe<Chat_Groups_Bool_Exp>;
+  chat_group_id?: Maybe<Uuid_Comparison_Exp>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  message?: Maybe<String_Comparison_Exp>;
+  sender?: Maybe<Users_Bool_Exp>;
+  sender_id?: Maybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "chat_messages" */
+export enum Chat_Messages_Constraint {
+  /** unique or primary key constraint */
+  MessagesPkey = 'messages_pkey'
+}
+
+/** input type for inserting data into table "chat_messages" */
+export type Chat_Messages_Insert_Input = {
+  chat_group?: Maybe<Chat_Groups_Obj_Rel_Insert_Input>;
+  chat_group_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  message?: Maybe<Scalars['String']>;
+  sender?: Maybe<Users_Obj_Rel_Insert_Input>;
+  sender_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type Chat_Messages_Max_Fields = {
+  __typename?: 'chat_messages_max_fields';
+  chat_group_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  message?: Maybe<Scalars['String']>;
+  sender_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "chat_messages" */
+export type Chat_Messages_Max_Order_By = {
+  chat_group_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  message?: Maybe<Order_By>;
+  sender_id?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Chat_Messages_Min_Fields = {
+  __typename?: 'chat_messages_min_fields';
+  chat_group_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  message?: Maybe<Scalars['String']>;
+  sender_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "chat_messages" */
+export type Chat_Messages_Min_Order_By = {
+  chat_group_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  message?: Maybe<Order_By>;
+  sender_id?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "chat_messages" */
+export type Chat_Messages_Mutation_Response = {
+  __typename?: 'chat_messages_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Chat_Messages>;
+};
+
+/** input type for inserting object relation for remote table "chat_messages" */
+export type Chat_Messages_Obj_Rel_Insert_Input = {
+  data: Chat_Messages_Insert_Input;
+  on_conflict?: Maybe<Chat_Messages_On_Conflict>;
+};
+
+/** on conflict condition type for table "chat_messages" */
+export type Chat_Messages_On_Conflict = {
+  constraint: Chat_Messages_Constraint;
+  update_columns: Array<Chat_Messages_Update_Column>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "chat_messages" */
+export type Chat_Messages_Order_By = {
+  chat_group?: Maybe<Chat_Groups_Order_By>;
+  chat_group_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  message?: Maybe<Order_By>;
+  sender?: Maybe<Users_Order_By>;
+  sender_id?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "chat_messages" */
+export type Chat_Messages_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "chat_messages" */
+export enum Chat_Messages_Select_Column {
+  /** column name */
+  ChatGroupId = 'chat_group_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Message = 'message',
+  /** column name */
+  SenderId = 'sender_id'
+}
+
+/** input type for updating data in table "chat_messages" */
+export type Chat_Messages_Set_Input = {
+  chat_group_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  message?: Maybe<Scalars['String']>;
+  sender_id?: Maybe<Scalars['uuid']>;
+};
+
+/** update columns of table "chat_messages" */
+export enum Chat_Messages_Update_Column {
+  /** column name */
+  ChatGroupId = 'chat_group_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Message = 'message',
+  /** column name */
+  SenderId = 'sender_id'
 }
 
 export type Create_Group_Input = {
@@ -2643,179 +3251,11 @@ export enum Groups_Update_Column {
 }
 
 
-/** columns and relationships of "messages" */
-export type Messages = {
-  __typename?: 'messages';
-  created_at: Scalars['timestamptz'];
-  id: Scalars['uuid'];
-  receiver_id: Scalars['uuid'];
-  sender_id: Scalars['uuid'];
-};
-
-/** aggregated selection of "messages" */
-export type Messages_Aggregate = {
-  __typename?: 'messages_aggregate';
-  aggregate?: Maybe<Messages_Aggregate_Fields>;
-  nodes: Array<Messages>;
-};
-
-/** aggregate fields of "messages" */
-export type Messages_Aggregate_Fields = {
-  __typename?: 'messages_aggregate_fields';
-  count?: Maybe<Scalars['Int']>;
-  max?: Maybe<Messages_Max_Fields>;
-  min?: Maybe<Messages_Min_Fields>;
-};
-
-
-/** aggregate fields of "messages" */
-export type Messages_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Messages_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
-};
-
-/** order by aggregate values of table "messages" */
-export type Messages_Aggregate_Order_By = {
-  count?: Maybe<Order_By>;
-  max?: Maybe<Messages_Max_Order_By>;
-  min?: Maybe<Messages_Min_Order_By>;
-};
-
-/** input type for inserting array relation for remote table "messages" */
-export type Messages_Arr_Rel_Insert_Input = {
-  data: Array<Messages_Insert_Input>;
-  on_conflict?: Maybe<Messages_On_Conflict>;
-};
-
-/** Boolean expression to filter rows from the table "messages". All fields are combined with a logical 'AND'. */
-export type Messages_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Messages_Bool_Exp>>>;
-  _not?: Maybe<Messages_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<Messages_Bool_Exp>>>;
-  created_at?: Maybe<Timestamptz_Comparison_Exp>;
-  id?: Maybe<Uuid_Comparison_Exp>;
-  receiver_id?: Maybe<Uuid_Comparison_Exp>;
-  sender_id?: Maybe<Uuid_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "messages" */
-export enum Messages_Constraint {
-  /** unique or primary key constraint */
-  MessagesPkey = 'messages_pkey'
-}
-
-/** input type for inserting data into table "messages" */
-export type Messages_Insert_Input = {
-  created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
-  receiver_id?: Maybe<Scalars['uuid']>;
-  sender_id?: Maybe<Scalars['uuid']>;
-};
-
-/** aggregate max on columns */
-export type Messages_Max_Fields = {
-  __typename?: 'messages_max_fields';
-  created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
-  receiver_id?: Maybe<Scalars['uuid']>;
-  sender_id?: Maybe<Scalars['uuid']>;
-};
-
-/** order by max() on columns of table "messages" */
-export type Messages_Max_Order_By = {
-  created_at?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  receiver_id?: Maybe<Order_By>;
-  sender_id?: Maybe<Order_By>;
-};
-
-/** aggregate min on columns */
-export type Messages_Min_Fields = {
-  __typename?: 'messages_min_fields';
-  created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
-  receiver_id?: Maybe<Scalars['uuid']>;
-  sender_id?: Maybe<Scalars['uuid']>;
-};
-
-/** order by min() on columns of table "messages" */
-export type Messages_Min_Order_By = {
-  created_at?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  receiver_id?: Maybe<Order_By>;
-  sender_id?: Maybe<Order_By>;
-};
-
-/** response of any mutation on the table "messages" */
-export type Messages_Mutation_Response = {
-  __typename?: 'messages_mutation_response';
-  /** number of affected rows by the mutation */
-  affected_rows: Scalars['Int'];
-  /** data of the affected rows by the mutation */
-  returning: Array<Messages>;
-};
-
-/** input type for inserting object relation for remote table "messages" */
-export type Messages_Obj_Rel_Insert_Input = {
-  data: Messages_Insert_Input;
-  on_conflict?: Maybe<Messages_On_Conflict>;
-};
-
-/** on conflict condition type for table "messages" */
-export type Messages_On_Conflict = {
-  constraint: Messages_Constraint;
-  update_columns: Array<Messages_Update_Column>;
-  where?: Maybe<Messages_Bool_Exp>;
-};
-
-/** ordering options when selecting data from "messages" */
-export type Messages_Order_By = {
-  created_at?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  receiver_id?: Maybe<Order_By>;
-  sender_id?: Maybe<Order_By>;
-};
-
-/** primary key columns input for table: "messages" */
-export type Messages_Pk_Columns_Input = {
-  id: Scalars['uuid'];
-};
-
-/** select columns of table "messages" */
-export enum Messages_Select_Column {
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  ReceiverId = 'receiver_id',
-  /** column name */
-  SenderId = 'sender_id'
-}
-
-/** input type for updating data in table "messages" */
-export type Messages_Set_Input = {
-  created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
-  receiver_id?: Maybe<Scalars['uuid']>;
-  sender_id?: Maybe<Scalars['uuid']>;
-};
-
-/** update columns of table "messages" */
-export enum Messages_Update_Column {
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  ReceiverId = 'receiver_id',
-  /** column name */
-  SenderId = 'sender_id'
-}
-
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
+  /** perform the action: "createChatGroup" */
+  createChatGroup?: Maybe<CreateChatGroupResult>;
   /** perform the action: "createGroup" */
   createGroup: CreateGroupResult;
   /** perform the action: "createJoinToken" */
@@ -2828,6 +3268,18 @@ export type Mutation_Root = {
   delete_activity_verb?: Maybe<Activity_Verb_Mutation_Response>;
   /** delete single row from the table: "activity_verb" */
   delete_activity_verb_by_pk?: Maybe<Activity_Verb>;
+  /** delete data from the table: "chat_group_members" */
+  delete_chat_group_members?: Maybe<Chat_Group_Members_Mutation_Response>;
+  /** delete single row from the table: "chat_group_members" */
+  delete_chat_group_members_by_pk?: Maybe<Chat_Group_Members>;
+  /** delete data from the table: "chat_groups" */
+  delete_chat_groups?: Maybe<Chat_Groups_Mutation_Response>;
+  /** delete single row from the table: "chat_groups" */
+  delete_chat_groups_by_pk?: Maybe<Chat_Groups>;
+  /** delete data from the table: "chat_messages" */
+  delete_chat_messages?: Maybe<Chat_Messages_Mutation_Response>;
+  /** delete single row from the table: "chat_messages" */
+  delete_chat_messages_by_pk?: Maybe<Chat_Messages>;
   /** delete data from the table: "entities" */
   delete_entities?: Maybe<Entities_Mutation_Response>;
   /** delete single row from the table: "entities" */
@@ -2864,10 +3316,6 @@ export type Mutation_Root = {
   delete_groups?: Maybe<Groups_Mutation_Response>;
   /** delete single row from the table: "groups" */
   delete_groups_by_pk?: Maybe<Groups>;
-  /** delete data from the table: "messages" */
-  delete_messages?: Maybe<Messages_Mutation_Response>;
-  /** delete single row from the table: "messages" */
-  delete_messages_by_pk?: Maybe<Messages>;
   /** delete data from the table: "notifications" */
   delete_notifications?: Maybe<Notifications_Mutation_Response>;
   /** delete single row from the table: "notifications" */
@@ -2904,6 +3352,18 @@ export type Mutation_Root = {
   insert_activity_verb?: Maybe<Activity_Verb_Mutation_Response>;
   /** insert a single row into the table: "activity_verb" */
   insert_activity_verb_one?: Maybe<Activity_Verb>;
+  /** insert data into the table: "chat_group_members" */
+  insert_chat_group_members?: Maybe<Chat_Group_Members_Mutation_Response>;
+  /** insert a single row into the table: "chat_group_members" */
+  insert_chat_group_members_one?: Maybe<Chat_Group_Members>;
+  /** insert data into the table: "chat_groups" */
+  insert_chat_groups?: Maybe<Chat_Groups_Mutation_Response>;
+  /** insert a single row into the table: "chat_groups" */
+  insert_chat_groups_one?: Maybe<Chat_Groups>;
+  /** insert data into the table: "chat_messages" */
+  insert_chat_messages?: Maybe<Chat_Messages_Mutation_Response>;
+  /** insert a single row into the table: "chat_messages" */
+  insert_chat_messages_one?: Maybe<Chat_Messages>;
   /** insert data into the table: "entities" */
   insert_entities?: Maybe<Entities_Mutation_Response>;
   /** insert a single row into the table: "entities" */
@@ -2940,10 +3400,6 @@ export type Mutation_Root = {
   insert_groups?: Maybe<Groups_Mutation_Response>;
   /** insert a single row into the table: "groups" */
   insert_groups_one?: Maybe<Groups>;
-  /** insert data into the table: "messages" */
-  insert_messages?: Maybe<Messages_Mutation_Response>;
-  /** insert a single row into the table: "messages" */
-  insert_messages_one?: Maybe<Messages>;
   /** insert data into the table: "notifications" */
   insert_notifications?: Maybe<Notifications_Mutation_Response>;
   /** insert a single row into the table: "notifications" */
@@ -2988,6 +3444,18 @@ export type Mutation_Root = {
   update_activity_verb?: Maybe<Activity_Verb_Mutation_Response>;
   /** update single row of the table: "activity_verb" */
   update_activity_verb_by_pk?: Maybe<Activity_Verb>;
+  /** update data of the table: "chat_group_members" */
+  update_chat_group_members?: Maybe<Chat_Group_Members_Mutation_Response>;
+  /** update single row of the table: "chat_group_members" */
+  update_chat_group_members_by_pk?: Maybe<Chat_Group_Members>;
+  /** update data of the table: "chat_groups" */
+  update_chat_groups?: Maybe<Chat_Groups_Mutation_Response>;
+  /** update single row of the table: "chat_groups" */
+  update_chat_groups_by_pk?: Maybe<Chat_Groups>;
+  /** update data of the table: "chat_messages" */
+  update_chat_messages?: Maybe<Chat_Messages_Mutation_Response>;
+  /** update single row of the table: "chat_messages" */
+  update_chat_messages_by_pk?: Maybe<Chat_Messages>;
   /** update data of the table: "entities" */
   update_entities?: Maybe<Entities_Mutation_Response>;
   /** update single row of the table: "entities" */
@@ -3024,10 +3492,6 @@ export type Mutation_Root = {
   update_groups?: Maybe<Groups_Mutation_Response>;
   /** update single row of the table: "groups" */
   update_groups_by_pk?: Maybe<Groups>;
-  /** update data of the table: "messages" */
-  update_messages?: Maybe<Messages_Mutation_Response>;
-  /** update single row of the table: "messages" */
-  update_messages_by_pk?: Maybe<Messages>;
   /** update data of the table: "notifications" */
   update_notifications?: Maybe<Notifications_Mutation_Response>;
   /** update single row of the table: "notifications" */
@@ -3054,6 +3518,12 @@ export type Mutation_Root = {
   update_verification_requests?: Maybe<Verification_Requests_Mutation_Response>;
   /** update single row of the table: "verification_requests" */
   update_verification_requests_by_pk?: Maybe<Verification_Requests>;
+};
+
+
+/** mutation root */
+export type Mutation_RootCreateChatGroupArgs = {
+  input: CreateChatGroupInput;
 };
 
 
@@ -3090,6 +3560,42 @@ export type Mutation_RootDelete_Activity_VerbArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Activity_Verb_By_PkArgs = {
   value: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Chat_Group_MembersArgs = {
+  where: Chat_Group_Members_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Chat_Group_Members_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Chat_GroupsArgs = {
+  where: Chat_Groups_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Chat_Groups_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Chat_MessagesArgs = {
+  where: Chat_Messages_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Chat_Messages_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -3197,18 +3703,6 @@ export type Mutation_RootDelete_GroupsArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Groups_By_PkArgs = {
-  id: Scalars['uuid'];
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_MessagesArgs = {
-  where: Messages_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Messages_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -3322,6 +3816,48 @@ export type Mutation_RootInsert_Activity_VerbArgs = {
 export type Mutation_RootInsert_Activity_Verb_OneArgs = {
   object: Activity_Verb_Insert_Input;
   on_conflict?: Maybe<Activity_Verb_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Chat_Group_MembersArgs = {
+  objects: Array<Chat_Group_Members_Insert_Input>;
+  on_conflict?: Maybe<Chat_Group_Members_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Chat_Group_Members_OneArgs = {
+  object: Chat_Group_Members_Insert_Input;
+  on_conflict?: Maybe<Chat_Group_Members_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Chat_GroupsArgs = {
+  objects: Array<Chat_Groups_Insert_Input>;
+  on_conflict?: Maybe<Chat_Groups_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Chat_Groups_OneArgs = {
+  object: Chat_Groups_Insert_Input;
+  on_conflict?: Maybe<Chat_Groups_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Chat_MessagesArgs = {
+  objects: Array<Chat_Messages_Insert_Input>;
+  on_conflict?: Maybe<Chat_Messages_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Chat_Messages_OneArgs = {
+  object: Chat_Messages_Insert_Input;
+  on_conflict?: Maybe<Chat_Messages_On_Conflict>;
 };
 
 
@@ -3448,20 +3984,6 @@ export type Mutation_RootInsert_GroupsArgs = {
 export type Mutation_RootInsert_Groups_OneArgs = {
   object: Groups_Insert_Input;
   on_conflict?: Maybe<Groups_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_MessagesArgs = {
-  objects: Array<Messages_Insert_Input>;
-  on_conflict?: Maybe<Messages_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Messages_OneArgs = {
-  object: Messages_Insert_Input;
-  on_conflict?: Maybe<Messages_On_Conflict>;
 };
 
 
@@ -3614,6 +4136,48 @@ export type Mutation_RootUpdate_Activity_Verb_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Chat_Group_MembersArgs = {
+  _set?: Maybe<Chat_Group_Members_Set_Input>;
+  where: Chat_Group_Members_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Chat_Group_Members_By_PkArgs = {
+  _set?: Maybe<Chat_Group_Members_Set_Input>;
+  pk_columns: Chat_Group_Members_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Chat_GroupsArgs = {
+  _set?: Maybe<Chat_Groups_Set_Input>;
+  where: Chat_Groups_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Chat_Groups_By_PkArgs = {
+  _set?: Maybe<Chat_Groups_Set_Input>;
+  pk_columns: Chat_Groups_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Chat_MessagesArgs = {
+  _set?: Maybe<Chat_Messages_Set_Input>;
+  where: Chat_Messages_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Chat_Messages_By_PkArgs = {
+  _set?: Maybe<Chat_Messages_Set_Input>;
+  pk_columns: Chat_Messages_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_EntitiesArgs = {
   _set?: Maybe<Entities_Set_Input>;
   where: Entities_Bool_Exp;
@@ -3738,20 +4302,6 @@ export type Mutation_RootUpdate_GroupsArgs = {
 export type Mutation_RootUpdate_Groups_By_PkArgs = {
   _set?: Maybe<Groups_Set_Input>;
   pk_columns: Groups_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_MessagesArgs = {
-  _set?: Maybe<Messages_Set_Input>;
-  where: Messages_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Messages_By_PkArgs = {
-  _set?: Maybe<Messages_Set_Input>;
-  pk_columns: Messages_Pk_Columns_Input;
 };
 
 
@@ -4073,6 +4623,24 @@ export type Query_Root = {
   activity_verb_aggregate: Activity_Verb_Aggregate;
   /** fetch data from the table: "activity_verb" using primary key columns */
   activity_verb_by_pk?: Maybe<Activity_Verb>;
+  /** fetch data from the table: "chat_group_members" */
+  chat_group_members: Array<Chat_Group_Members>;
+  /** fetch aggregated fields from the table: "chat_group_members" */
+  chat_group_members_aggregate: Chat_Group_Members_Aggregate;
+  /** fetch data from the table: "chat_group_members" using primary key columns */
+  chat_group_members_by_pk?: Maybe<Chat_Group_Members>;
+  /** fetch data from the table: "chat_groups" */
+  chat_groups: Array<Chat_Groups>;
+  /** fetch aggregated fields from the table: "chat_groups" */
+  chat_groups_aggregate: Chat_Groups_Aggregate;
+  /** fetch data from the table: "chat_groups" using primary key columns */
+  chat_groups_by_pk?: Maybe<Chat_Groups>;
+  /** fetch data from the table: "chat_messages" */
+  chat_messages: Array<Chat_Messages>;
+  /** fetch aggregated fields from the table: "chat_messages" */
+  chat_messages_aggregate: Chat_Messages_Aggregate;
+  /** fetch data from the table: "chat_messages" using primary key columns */
+  chat_messages_by_pk?: Maybe<Chat_Messages>;
   /** fetch data from the table: "entities" */
   entities: Array<Entities>;
   /** fetch aggregated fields from the table: "entities" */
@@ -4127,12 +4695,6 @@ export type Query_Root = {
   groups_aggregate: Groups_Aggregate;
   /** fetch data from the table: "groups" using primary key columns */
   groups_by_pk?: Maybe<Groups>;
-  /** fetch data from the table: "messages" */
-  messages: Array<Messages>;
-  /** fetch aggregated fields from the table: "messages" */
-  messages_aggregate: Messages_Aggregate;
-  /** fetch data from the table: "messages" using primary key columns */
-  messages_by_pk?: Maybe<Messages>;
   /** fetch data from the table: "notifications" */
   notifications: Array<Notifications>;
   /** fetch aggregated fields from the table: "notifications" */
@@ -4225,6 +4787,84 @@ export type Query_RootActivity_Verb_AggregateArgs = {
 /** query root */
 export type Query_RootActivity_Verb_By_PkArgs = {
   value: Scalars['String'];
+};
+
+
+/** query root */
+export type Query_RootChat_Group_MembersArgs = {
+  distinct_on?: Maybe<Array<Chat_Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Group_Members_Order_By>>;
+  where?: Maybe<Chat_Group_Members_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootChat_Group_Members_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Group_Members_Order_By>>;
+  where?: Maybe<Chat_Group_Members_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootChat_Group_Members_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** query root */
+export type Query_RootChat_GroupsArgs = {
+  distinct_on?: Maybe<Array<Chat_Groups_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Groups_Order_By>>;
+  where?: Maybe<Chat_Groups_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootChat_Groups_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Groups_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Groups_Order_By>>;
+  where?: Maybe<Chat_Groups_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootChat_Groups_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** query root */
+export type Query_RootChat_MessagesArgs = {
+  distinct_on?: Maybe<Array<Chat_Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Messages_Order_By>>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootChat_Messages_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Messages_Order_By>>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootChat_Messages_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -4463,32 +5103,6 @@ export type Query_RootGroups_By_PkArgs = {
 
 
 /** query root */
-export type Query_RootMessagesArgs = {
-  distinct_on?: Maybe<Array<Messages_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Messages_Order_By>>;
-  where?: Maybe<Messages_Bool_Exp>;
-};
-
-
-/** query root */
-export type Query_RootMessages_AggregateArgs = {
-  distinct_on?: Maybe<Array<Messages_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Messages_Order_By>>;
-  where?: Maybe<Messages_Bool_Exp>;
-};
-
-
-/** query root */
-export type Query_RootMessages_By_PkArgs = {
-  id: Scalars['uuid'];
-};
-
-
-/** query root */
 export type Query_RootNotificationsArgs = {
   distinct_on?: Maybe<Array<Notifications_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4678,6 +5292,24 @@ export type Subscription_Root = {
   activity_verb_aggregate: Activity_Verb_Aggregate;
   /** fetch data from the table: "activity_verb" using primary key columns */
   activity_verb_by_pk?: Maybe<Activity_Verb>;
+  /** fetch data from the table: "chat_group_members" */
+  chat_group_members: Array<Chat_Group_Members>;
+  /** fetch aggregated fields from the table: "chat_group_members" */
+  chat_group_members_aggregate: Chat_Group_Members_Aggregate;
+  /** fetch data from the table: "chat_group_members" using primary key columns */
+  chat_group_members_by_pk?: Maybe<Chat_Group_Members>;
+  /** fetch data from the table: "chat_groups" */
+  chat_groups: Array<Chat_Groups>;
+  /** fetch aggregated fields from the table: "chat_groups" */
+  chat_groups_aggregate: Chat_Groups_Aggregate;
+  /** fetch data from the table: "chat_groups" using primary key columns */
+  chat_groups_by_pk?: Maybe<Chat_Groups>;
+  /** fetch data from the table: "chat_messages" */
+  chat_messages: Array<Chat_Messages>;
+  /** fetch aggregated fields from the table: "chat_messages" */
+  chat_messages_aggregate: Chat_Messages_Aggregate;
+  /** fetch data from the table: "chat_messages" using primary key columns */
+  chat_messages_by_pk?: Maybe<Chat_Messages>;
   /** fetch data from the table: "entities" */
   entities: Array<Entities>;
   /** fetch aggregated fields from the table: "entities" */
@@ -4732,12 +5364,6 @@ export type Subscription_Root = {
   groups_aggregate: Groups_Aggregate;
   /** fetch data from the table: "groups" using primary key columns */
   groups_by_pk?: Maybe<Groups>;
-  /** fetch data from the table: "messages" */
-  messages: Array<Messages>;
-  /** fetch aggregated fields from the table: "messages" */
-  messages_aggregate: Messages_Aggregate;
-  /** fetch data from the table: "messages" using primary key columns */
-  messages_by_pk?: Maybe<Messages>;
   /** fetch data from the table: "notifications" */
   notifications: Array<Notifications>;
   /** fetch aggregated fields from the table: "notifications" */
@@ -4830,6 +5456,84 @@ export type Subscription_RootActivity_Verb_AggregateArgs = {
 /** subscription root */
 export type Subscription_RootActivity_Verb_By_PkArgs = {
   value: Scalars['String'];
+};
+
+
+/** subscription root */
+export type Subscription_RootChat_Group_MembersArgs = {
+  distinct_on?: Maybe<Array<Chat_Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Group_Members_Order_By>>;
+  where?: Maybe<Chat_Group_Members_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootChat_Group_Members_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Group_Members_Order_By>>;
+  where?: Maybe<Chat_Group_Members_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootChat_Group_Members_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** subscription root */
+export type Subscription_RootChat_GroupsArgs = {
+  distinct_on?: Maybe<Array<Chat_Groups_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Groups_Order_By>>;
+  where?: Maybe<Chat_Groups_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootChat_Groups_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Groups_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Groups_Order_By>>;
+  where?: Maybe<Chat_Groups_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootChat_Groups_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** subscription root */
+export type Subscription_RootChat_MessagesArgs = {
+  distinct_on?: Maybe<Array<Chat_Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Messages_Order_By>>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootChat_Messages_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Messages_Order_By>>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootChat_Messages_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -5063,32 +5767,6 @@ export type Subscription_RootGroups_AggregateArgs = {
 
 /** subscription root */
 export type Subscription_RootGroups_By_PkArgs = {
-  id: Scalars['uuid'];
-};
-
-
-/** subscription root */
-export type Subscription_RootMessagesArgs = {
-  distinct_on?: Maybe<Array<Messages_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Messages_Order_By>>;
-  where?: Maybe<Messages_Bool_Exp>;
-};
-
-
-/** subscription root */
-export type Subscription_RootMessages_AggregateArgs = {
-  distinct_on?: Maybe<Array<Messages_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Messages_Order_By>>;
-  where?: Maybe<Messages_Bool_Exp>;
-};
-
-
-/** subscription root */
-export type Subscription_RootMessages_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -6852,6 +7530,97 @@ export type Verification_Requests_Variance_Order_By = {
   id?: Maybe<Order_By>;
 };
 
+export type ChatMessageCardFragment = (
+  { __typename?: 'chat_messages' }
+  & Pick<Chat_Messages, 'id' | 'sender_id' | 'message' | 'created_at'>
+);
+
+export type ChatGroupCardFragment = (
+  { __typename?: 'chat_groups' }
+  & Pick<Chat_Groups, 'id' | 'name'>
+  & { members: Array<(
+    { __typename?: 'chat_group_members' }
+    & { user: (
+      { __typename?: 'users' }
+      & UserCardFragment
+    ) }
+  )>, messages: Array<(
+    { __typename?: 'chat_messages' }
+    & Pick<Chat_Messages, 'message'>
+    & { sender: (
+      { __typename?: 'users' }
+      & UserCardFragment
+    ) }
+  )> }
+);
+
+export type ChatMessagesQueryVariables = Exact<{
+  where: Chat_Messages_Bool_Exp;
+  limit: Scalars['Int'];
+}>;
+
+
+export type ChatMessagesQuery = (
+  { __typename?: 'query_root' }
+  & { chat_messages: Array<(
+    { __typename?: 'chat_messages' }
+    & ChatMessageCardFragment
+  )> }
+);
+
+export type ChatGroupsSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ChatGroupsSubscription = (
+  { __typename?: 'subscription_root' }
+  & { chat_groups: Array<(
+    { __typename?: 'chat_groups' }
+    & ChatGroupCardFragment
+  )> }
+);
+
+export type ChatMessagesFeedSubscriptionVariables = Exact<{
+  where: Chat_Messages_Bool_Exp;
+}>;
+
+
+export type ChatMessagesFeedSubscription = (
+  { __typename?: 'subscription_root' }
+  & { chat_messages: Array<(
+    { __typename?: 'chat_messages' }
+    & ChatMessageCardFragment
+  )> }
+);
+
+export type CreateChatGroupMutationVariables = Exact<{
+  input: CreateChatGroupInput;
+}>;
+
+
+export type CreateChatGroupMutation = (
+  { __typename?: 'mutation_root' }
+  & { createChatGroup?: Maybe<(
+    { __typename?: 'CreateChatGroupResult' }
+    & { chat_group?: Maybe<(
+      { __typename?: 'chat_groups' }
+      & ChatGroupCardFragment
+    )> }
+  )> }
+);
+
+export type CreateChatMessageMutationVariables = Exact<{
+  input: Chat_Messages_Insert_Input;
+}>;
+
+
+export type CreateChatMessageMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_chat_messages_one?: Maybe<(
+    { __typename?: 'chat_messages' }
+    & ChatMessageCardFragment
+  )> }
+);
+
 export type GroupMemberCardFragment = (
   { __typename?: 'group_members' }
   & Pick<Group_Members, 'id' | 'role' | 'created_at'>
@@ -7358,7 +8127,11 @@ export type NotificationCardFragment = (
   ) }
 );
 
-export type UserListQueryVariables = Exact<{ [key: string]: never; }>;
+export type UserListQueryVariables = Exact<{
+  where?: Maybe<Users_Bool_Exp>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+}>;
 
 
 export type UserListQuery = (
@@ -7443,6 +8216,38 @@ export type RegisterUserMutation = (
   )> }
 );
 
+export const ChatMessageCardFragmentDoc = gql`
+    fragment ChatMessageCard on chat_messages {
+  id
+  sender_id
+  message
+  created_at
+}
+    `;
+export const UserCardFragmentDoc = gql`
+    fragment UserCard on users {
+  id
+  name
+  image
+}
+    `;
+export const ChatGroupCardFragmentDoc = gql`
+    fragment ChatGroupCard on chat_groups {
+  id
+  name
+  members {
+    user {
+      ...UserCard
+    }
+  }
+  messages(limit: 1, order_by: [{created_at: desc}]) {
+    sender {
+      ...UserCard
+    }
+    message
+  }
+}
+    ${UserCardFragmentDoc}`;
 export const GroupCardFragmentDoc = gql`
     fragment GroupCard on groups {
   id
@@ -7456,18 +8261,13 @@ export const GroupCardFragmentDoc = gql`
       count
     }
   }
-  thing_relations_aggregate {
+  thing_relations_aggregate(
+    where: {thing: {enabled: {_eq: true}, _or: [{expiry: {_gt: "now()"}}, {expiry: {_is_null: true}}]}}
+  ) {
     aggregate {
       count
     }
   }
-}
-    `;
-export const UserCardFragmentDoc = gql`
-    fragment UserCard on users {
-  id
-  name
-  image
 }
     `;
 export const GroupMemberCardFragmentDoc = gql`
@@ -7642,6 +8442,166 @@ export const NotificationCardFragmentDoc = gql`
   }
 }
     ${ActivityCardFragmentDoc}`;
+export const ChatMessagesDocument = gql`
+    query ChatMessages($where: chat_messages_bool_exp!, $limit: Int!) {
+  chat_messages(where: $where, order_by: [{created_at: desc}], limit: $limit) {
+    ...ChatMessageCard
+  }
+}
+    ${ChatMessageCardFragmentDoc}`;
+
+/**
+ * __useChatMessagesQuery__
+ *
+ * To run a query within a React component, call `useChatMessagesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChatMessagesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChatMessagesQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *      limit: // value for 'limit'
+ *   },
+ * });
+ */
+export function useChatMessagesQuery(baseOptions?: Apollo.QueryHookOptions<ChatMessagesQuery, ChatMessagesQueryVariables>) {
+        return Apollo.useQuery<ChatMessagesQuery, ChatMessagesQueryVariables>(ChatMessagesDocument, baseOptions);
+      }
+export function useChatMessagesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ChatMessagesQuery, ChatMessagesQueryVariables>) {
+          return Apollo.useLazyQuery<ChatMessagesQuery, ChatMessagesQueryVariables>(ChatMessagesDocument, baseOptions);
+        }
+export type ChatMessagesQueryHookResult = ReturnType<typeof useChatMessagesQuery>;
+export type ChatMessagesLazyQueryHookResult = ReturnType<typeof useChatMessagesLazyQuery>;
+export type ChatMessagesQueryResult = Apollo.QueryResult<ChatMessagesQuery, ChatMessagesQueryVariables>;
+export function refetchChatMessagesQuery(variables?: ChatMessagesQueryVariables) {
+      return { query: ChatMessagesDocument, variables: variables }
+    }
+export const ChatGroupsDocument = gql`
+    subscription ChatGroups {
+  chat_groups {
+    ...ChatGroupCard
+  }
+}
+    ${ChatGroupCardFragmentDoc}`;
+
+/**
+ * __useChatGroupsSubscription__
+ *
+ * To run a query within a React component, call `useChatGroupsSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useChatGroupsSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChatGroupsSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useChatGroupsSubscription(baseOptions?: Apollo.SubscriptionHookOptions<ChatGroupsSubscription, ChatGroupsSubscriptionVariables>) {
+        return Apollo.useSubscription<ChatGroupsSubscription, ChatGroupsSubscriptionVariables>(ChatGroupsDocument, baseOptions);
+      }
+export type ChatGroupsSubscriptionHookResult = ReturnType<typeof useChatGroupsSubscription>;
+export type ChatGroupsSubscriptionResult = Apollo.SubscriptionResult<ChatGroupsSubscription>;
+export const ChatMessagesFeedDocument = gql`
+    subscription ChatMessagesFeed($where: chat_messages_bool_exp!) {
+  chat_messages(where: $where, order_by: [{created_at: desc}]) {
+    ...ChatMessageCard
+  }
+}
+    ${ChatMessageCardFragmentDoc}`;
+
+/**
+ * __useChatMessagesFeedSubscription__
+ *
+ * To run a query within a React component, call `useChatMessagesFeedSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useChatMessagesFeedSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChatMessagesFeedSubscription({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useChatMessagesFeedSubscription(baseOptions?: Apollo.SubscriptionHookOptions<ChatMessagesFeedSubscription, ChatMessagesFeedSubscriptionVariables>) {
+        return Apollo.useSubscription<ChatMessagesFeedSubscription, ChatMessagesFeedSubscriptionVariables>(ChatMessagesFeedDocument, baseOptions);
+      }
+export type ChatMessagesFeedSubscriptionHookResult = ReturnType<typeof useChatMessagesFeedSubscription>;
+export type ChatMessagesFeedSubscriptionResult = Apollo.SubscriptionResult<ChatMessagesFeedSubscription>;
+export const CreateChatGroupDocument = gql`
+    mutation CreateChatGroup($input: CreateChatGroupInput!) {
+  createChatGroup(input: $input) {
+    chat_group {
+      ...ChatGroupCard
+    }
+  }
+}
+    ${ChatGroupCardFragmentDoc}`;
+export type CreateChatGroupMutationFn = Apollo.MutationFunction<CreateChatGroupMutation, CreateChatGroupMutationVariables>;
+
+/**
+ * __useCreateChatGroupMutation__
+ *
+ * To run a mutation, you first call `useCreateChatGroupMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateChatGroupMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createChatGroupMutation, { data, loading, error }] = useCreateChatGroupMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateChatGroupMutation(baseOptions?: Apollo.MutationHookOptions<CreateChatGroupMutation, CreateChatGroupMutationVariables>) {
+        return Apollo.useMutation<CreateChatGroupMutation, CreateChatGroupMutationVariables>(CreateChatGroupDocument, baseOptions);
+      }
+export type CreateChatGroupMutationHookResult = ReturnType<typeof useCreateChatGroupMutation>;
+export type CreateChatGroupMutationResult = Apollo.MutationResult<CreateChatGroupMutation>;
+export type CreateChatGroupMutationOptions = Apollo.BaseMutationOptions<CreateChatGroupMutation, CreateChatGroupMutationVariables>;
+export const CreateChatMessageDocument = gql`
+    mutation CreateChatMessage($input: chat_messages_insert_input!) {
+  insert_chat_messages_one(object: $input) {
+    ...ChatMessageCard
+  }
+}
+    ${ChatMessageCardFragmentDoc}`;
+export type CreateChatMessageMutationFn = Apollo.MutationFunction<CreateChatMessageMutation, CreateChatMessageMutationVariables>;
+
+/**
+ * __useCreateChatMessageMutation__
+ *
+ * To run a mutation, you first call `useCreateChatMessageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateChatMessageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createChatMessageMutation, { data, loading, error }] = useCreateChatMessageMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateChatMessageMutation(baseOptions?: Apollo.MutationHookOptions<CreateChatMessageMutation, CreateChatMessageMutationVariables>) {
+        return Apollo.useMutation<CreateChatMessageMutation, CreateChatMessageMutationVariables>(CreateChatMessageDocument, baseOptions);
+      }
+export type CreateChatMessageMutationHookResult = ReturnType<typeof useCreateChatMessageMutation>;
+export type CreateChatMessageMutationResult = Apollo.MutationResult<CreateChatMessageMutation>;
+export type CreateChatMessageMutationOptions = Apollo.BaseMutationOptions<CreateChatMessageMutation, CreateChatMessageMutationVariables>;
 export const ListGroupsDocument = gql`
     query ListGroups($limit: Int!, $offset: Int!, $orderBy: groups_order_by!, $where: groups_bool_exp) {
   groups_aggregate(where: $where) {
@@ -8417,8 +9377,8 @@ export type InsertFileUploadMutationHookResult = ReturnType<typeof useInsertFile
 export type InsertFileUploadMutationResult = Apollo.MutationResult<InsertFileUploadMutation>;
 export type InsertFileUploadMutationOptions = Apollo.BaseMutationOptions<InsertFileUploadMutation, InsertFileUploadMutationVariables>;
 export const UserListDocument = gql`
-    query UserList {
-  users {
+    query UserList($where: users_bool_exp, $limit: Int, $offset: Int) {
+  users(where: $where, limit: $limit, offset: $offset) {
     ...UserCard
   }
 }
@@ -8436,6 +9396,9 @@ export const UserListDocument = gql`
  * @example
  * const { data, loading, error } = useUserListQuery({
  *   variables: {
+ *      where: // value for 'where'
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
  *   },
  * });
  */
@@ -8639,6 +9602,7 @@ export type RegisterUserMutationOptions = Apollo.BaseMutationOptions<RegisterUse
     
 export const GqlOps = {
   Query: {
+    ChatMessages: 'ChatMessages',
     ListGroups: 'ListGroups',
     GroupDetails: 'GroupDetails',
     GroupJoinRequests: 'GroupJoinRequests',
@@ -8649,6 +9613,8 @@ export const GqlOps = {
     UserPrivateDetails: 'UserPrivateDetails'
   },
   Mutation: {
+    CreateChatGroup: 'CreateChatGroup',
+    CreateChatMessage: 'CreateChatMessage',
     CreateGroup: 'CreateGroup',
     UpdateGroup: 'UpdateGroup',
     DeleteGroup: 'DeleteGroup',
@@ -8670,9 +9636,13 @@ export const GqlOps = {
     RegisterUser: 'RegisterUser'
   },
   Subscription: {
+    ChatGroups: 'ChatGroups',
+    ChatMessagesFeed: 'ChatMessagesFeed',
     Notifications: 'Notifications'
   },
   Fragment: {
+    ChatMessageCard: 'ChatMessageCard',
+    ChatGroupCard: 'ChatGroupCard',
     GroupMemberCard: 'GroupMemberCard',
     GroupCard: 'GroupCard',
     GroupDetails: 'GroupDetails',

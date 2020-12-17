@@ -3,3 +3,4 @@ export * from './FileInput';
 export * from './ImageInput';
 export * from './ThingTypeSelect';
 export * from './DatePicker';
+export * from './UserSelect';

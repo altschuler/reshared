@@ -18,6 +18,7 @@ const wsLink = process.browser
     ? new WebSocketLink({
           uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT_WS!,
           options: {
+              lazy: true,
               reconnect: true,
               connectionParams: async () => {
                   const session = await getSession();

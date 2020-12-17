@@ -29,6 +29,17 @@ export type Boolean_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['Boolean']>>;
 };
 
+export type CreateChatGroupInput = {
+  message?: Maybe<Scalars['String']>;
+  receiverIds: Array<Scalars['uuid']>;
+};
+
+export type CreateChatGroupResult = {
+  __typename?: 'CreateChatGroupResult';
+  chat_group?: Maybe<Chat_Groups>;
+  chat_group_id: Scalars['uuid'];
+};
+
 export type CreateGroupInput = {
   description: Scalars['String'];
   name: Scalars['String'];
@@ -576,6 +587,603 @@ export enum Activity_Verb_Update_Column {
   Comment = 'comment',
   /** column name */
   Value = 'value'
+}
+
+/** columns and relationships of "chat_group_members" */
+export type Chat_Group_Members = {
+  __typename?: 'chat_group_members';
+  /** An object relationship */
+  chat_group: Chat_Groups;
+  chat_group_id: Scalars['uuid'];
+  id: Scalars['uuid'];
+  last_read?: Maybe<Scalars['timestamptz']>;
+  /** An object relationship */
+  user: Users;
+  user_id: Scalars['uuid'];
+};
+
+/** aggregated selection of "chat_group_members" */
+export type Chat_Group_Members_Aggregate = {
+  __typename?: 'chat_group_members_aggregate';
+  aggregate?: Maybe<Chat_Group_Members_Aggregate_Fields>;
+  nodes: Array<Chat_Group_Members>;
+};
+
+/** aggregate fields of "chat_group_members" */
+export type Chat_Group_Members_Aggregate_Fields = {
+  __typename?: 'chat_group_members_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Chat_Group_Members_Max_Fields>;
+  min?: Maybe<Chat_Group_Members_Min_Fields>;
+};
+
+
+/** aggregate fields of "chat_group_members" */
+export type Chat_Group_Members_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Chat_Group_Members_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "chat_group_members" */
+export type Chat_Group_Members_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Chat_Group_Members_Max_Order_By>;
+  min?: Maybe<Chat_Group_Members_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "chat_group_members" */
+export type Chat_Group_Members_Arr_Rel_Insert_Input = {
+  data: Array<Chat_Group_Members_Insert_Input>;
+  on_conflict?: Maybe<Chat_Group_Members_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "chat_group_members". All fields are combined with a logical 'AND'. */
+export type Chat_Group_Members_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Chat_Group_Members_Bool_Exp>>>;
+  _not?: Maybe<Chat_Group_Members_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Chat_Group_Members_Bool_Exp>>>;
+  chat_group?: Maybe<Chat_Groups_Bool_Exp>;
+  chat_group_id?: Maybe<Uuid_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  last_read?: Maybe<Timestamptz_Comparison_Exp>;
+  user?: Maybe<Users_Bool_Exp>;
+  user_id?: Maybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "chat_group_members" */
+export enum Chat_Group_Members_Constraint {
+  /** unique or primary key constraint */
+  ChatGroupMembersPkey = 'chat_group_members_pkey'
+}
+
+/** input type for inserting data into table "chat_group_members" */
+export type Chat_Group_Members_Insert_Input = {
+  chat_group?: Maybe<Chat_Groups_Obj_Rel_Insert_Input>;
+  chat_group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  last_read?: Maybe<Scalars['timestamptz']>;
+  user?: Maybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type Chat_Group_Members_Max_Fields = {
+  __typename?: 'chat_group_members_max_fields';
+  chat_group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  last_read?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "chat_group_members" */
+export type Chat_Group_Members_Max_Order_By = {
+  chat_group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  last_read?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Chat_Group_Members_Min_Fields = {
+  __typename?: 'chat_group_members_min_fields';
+  chat_group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  last_read?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "chat_group_members" */
+export type Chat_Group_Members_Min_Order_By = {
+  chat_group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  last_read?: Maybe<Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "chat_group_members" */
+export type Chat_Group_Members_Mutation_Response = {
+  __typename?: 'chat_group_members_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Chat_Group_Members>;
+};
+
+/** input type for inserting object relation for remote table "chat_group_members" */
+export type Chat_Group_Members_Obj_Rel_Insert_Input = {
+  data: Chat_Group_Members_Insert_Input;
+  on_conflict?: Maybe<Chat_Group_Members_On_Conflict>;
+};
+
+/** on conflict condition type for table "chat_group_members" */
+export type Chat_Group_Members_On_Conflict = {
+  constraint: Chat_Group_Members_Constraint;
+  update_columns: Array<Chat_Group_Members_Update_Column>;
+  where?: Maybe<Chat_Group_Members_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "chat_group_members" */
+export type Chat_Group_Members_Order_By = {
+  chat_group?: Maybe<Chat_Groups_Order_By>;
+  chat_group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  last_read?: Maybe<Order_By>;
+  user?: Maybe<Users_Order_By>;
+  user_id?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "chat_group_members" */
+export type Chat_Group_Members_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "chat_group_members" */
+export enum Chat_Group_Members_Select_Column {
+  /** column name */
+  ChatGroupId = 'chat_group_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  LastRead = 'last_read',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "chat_group_members" */
+export type Chat_Group_Members_Set_Input = {
+  chat_group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  last_read?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** update columns of table "chat_group_members" */
+export enum Chat_Group_Members_Update_Column {
+  /** column name */
+  ChatGroupId = 'chat_group_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  LastRead = 'last_read',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** columns and relationships of "chat_groups" */
+export type Chat_Groups = {
+  __typename?: 'chat_groups';
+  created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  /** An array relationship */
+  members: Array<Chat_Group_Members>;
+  /** An aggregated array relationship */
+  members_aggregate: Chat_Group_Members_Aggregate;
+  /** An array relationship */
+  messages: Array<Chat_Messages>;
+  /** An aggregated array relationship */
+  messages_aggregate: Chat_Messages_Aggregate;
+  name: Scalars['String'];
+  updated_at: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "chat_groups" */
+export type Chat_GroupsMembersArgs = {
+  distinct_on?: Maybe<Array<Chat_Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Group_Members_Order_By>>;
+  where?: Maybe<Chat_Group_Members_Bool_Exp>;
+};
+
+
+/** columns and relationships of "chat_groups" */
+export type Chat_GroupsMembers_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Group_Members_Order_By>>;
+  where?: Maybe<Chat_Group_Members_Bool_Exp>;
+};
+
+
+/** columns and relationships of "chat_groups" */
+export type Chat_GroupsMessagesArgs = {
+  distinct_on?: Maybe<Array<Chat_Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Messages_Order_By>>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
+};
+
+
+/** columns and relationships of "chat_groups" */
+export type Chat_GroupsMessages_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Messages_Order_By>>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
+};
+
+/** aggregated selection of "chat_groups" */
+export type Chat_Groups_Aggregate = {
+  __typename?: 'chat_groups_aggregate';
+  aggregate?: Maybe<Chat_Groups_Aggregate_Fields>;
+  nodes: Array<Chat_Groups>;
+};
+
+/** aggregate fields of "chat_groups" */
+export type Chat_Groups_Aggregate_Fields = {
+  __typename?: 'chat_groups_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Chat_Groups_Max_Fields>;
+  min?: Maybe<Chat_Groups_Min_Fields>;
+};
+
+
+/** aggregate fields of "chat_groups" */
+export type Chat_Groups_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Chat_Groups_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "chat_groups" */
+export type Chat_Groups_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Chat_Groups_Max_Order_By>;
+  min?: Maybe<Chat_Groups_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "chat_groups" */
+export type Chat_Groups_Arr_Rel_Insert_Input = {
+  data: Array<Chat_Groups_Insert_Input>;
+  on_conflict?: Maybe<Chat_Groups_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "chat_groups". All fields are combined with a logical 'AND'. */
+export type Chat_Groups_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Chat_Groups_Bool_Exp>>>;
+  _not?: Maybe<Chat_Groups_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Chat_Groups_Bool_Exp>>>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  members?: Maybe<Chat_Group_Members_Bool_Exp>;
+  messages?: Maybe<Chat_Messages_Bool_Exp>;
+  name?: Maybe<String_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "chat_groups" */
+export enum Chat_Groups_Constraint {
+  /** unique or primary key constraint */
+  ChatGroupsPkey = 'chat_groups_pkey'
+}
+
+/** input type for inserting data into table "chat_groups" */
+export type Chat_Groups_Insert_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  members?: Maybe<Chat_Group_Members_Arr_Rel_Insert_Input>;
+  messages?: Maybe<Chat_Messages_Arr_Rel_Insert_Input>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Chat_Groups_Max_Fields = {
+  __typename?: 'chat_groups_max_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "chat_groups" */
+export type Chat_Groups_Max_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Chat_Groups_Min_Fields = {
+  __typename?: 'chat_groups_min_fields';
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "chat_groups" */
+export type Chat_Groups_Min_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "chat_groups" */
+export type Chat_Groups_Mutation_Response = {
+  __typename?: 'chat_groups_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Chat_Groups>;
+};
+
+/** input type for inserting object relation for remote table "chat_groups" */
+export type Chat_Groups_Obj_Rel_Insert_Input = {
+  data: Chat_Groups_Insert_Input;
+  on_conflict?: Maybe<Chat_Groups_On_Conflict>;
+};
+
+/** on conflict condition type for table "chat_groups" */
+export type Chat_Groups_On_Conflict = {
+  constraint: Chat_Groups_Constraint;
+  update_columns: Array<Chat_Groups_Update_Column>;
+  where?: Maybe<Chat_Groups_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "chat_groups" */
+export type Chat_Groups_Order_By = {
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  members_aggregate?: Maybe<Chat_Group_Members_Aggregate_Order_By>;
+  messages_aggregate?: Maybe<Chat_Messages_Aggregate_Order_By>;
+  name?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "chat_groups" */
+export type Chat_Groups_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "chat_groups" */
+export enum Chat_Groups_Select_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "chat_groups" */
+export type Chat_Groups_Set_Input = {
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  name?: Maybe<Scalars['String']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "chat_groups" */
+export enum Chat_Groups_Update_Column {
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Name = 'name',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** columns and relationships of "chat_messages" */
+export type Chat_Messages = {
+  __typename?: 'chat_messages';
+  /** An object relationship */
+  chat_group: Chat_Groups;
+  chat_group_id: Scalars['uuid'];
+  created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  message: Scalars['String'];
+  /** An object relationship */
+  sender: Users;
+  sender_id: Scalars['uuid'];
+};
+
+/** aggregated selection of "chat_messages" */
+export type Chat_Messages_Aggregate = {
+  __typename?: 'chat_messages_aggregate';
+  aggregate?: Maybe<Chat_Messages_Aggregate_Fields>;
+  nodes: Array<Chat_Messages>;
+};
+
+/** aggregate fields of "chat_messages" */
+export type Chat_Messages_Aggregate_Fields = {
+  __typename?: 'chat_messages_aggregate_fields';
+  count?: Maybe<Scalars['Int']>;
+  max?: Maybe<Chat_Messages_Max_Fields>;
+  min?: Maybe<Chat_Messages_Min_Fields>;
+};
+
+
+/** aggregate fields of "chat_messages" */
+export type Chat_Messages_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Chat_Messages_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "chat_messages" */
+export type Chat_Messages_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Chat_Messages_Max_Order_By>;
+  min?: Maybe<Chat_Messages_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "chat_messages" */
+export type Chat_Messages_Arr_Rel_Insert_Input = {
+  data: Array<Chat_Messages_Insert_Input>;
+  on_conflict?: Maybe<Chat_Messages_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "chat_messages". All fields are combined with a logical 'AND'. */
+export type Chat_Messages_Bool_Exp = {
+  _and?: Maybe<Array<Maybe<Chat_Messages_Bool_Exp>>>;
+  _not?: Maybe<Chat_Messages_Bool_Exp>;
+  _or?: Maybe<Array<Maybe<Chat_Messages_Bool_Exp>>>;
+  chat_group?: Maybe<Chat_Groups_Bool_Exp>;
+  chat_group_id?: Maybe<Uuid_Comparison_Exp>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  message?: Maybe<String_Comparison_Exp>;
+  sender?: Maybe<Users_Bool_Exp>;
+  sender_id?: Maybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "chat_messages" */
+export enum Chat_Messages_Constraint {
+  /** unique or primary key constraint */
+  MessagesPkey = 'messages_pkey'
+}
+
+/** input type for inserting data into table "chat_messages" */
+export type Chat_Messages_Insert_Input = {
+  chat_group?: Maybe<Chat_Groups_Obj_Rel_Insert_Input>;
+  chat_group_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  message?: Maybe<Scalars['String']>;
+  sender?: Maybe<Users_Obj_Rel_Insert_Input>;
+  sender_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type Chat_Messages_Max_Fields = {
+  __typename?: 'chat_messages_max_fields';
+  chat_group_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  message?: Maybe<Scalars['String']>;
+  sender_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "chat_messages" */
+export type Chat_Messages_Max_Order_By = {
+  chat_group_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  message?: Maybe<Order_By>;
+  sender_id?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Chat_Messages_Min_Fields = {
+  __typename?: 'chat_messages_min_fields';
+  chat_group_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  message?: Maybe<Scalars['String']>;
+  sender_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "chat_messages" */
+export type Chat_Messages_Min_Order_By = {
+  chat_group_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  message?: Maybe<Order_By>;
+  sender_id?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "chat_messages" */
+export type Chat_Messages_Mutation_Response = {
+  __typename?: 'chat_messages_mutation_response';
+  /** number of affected rows by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data of the affected rows by the mutation */
+  returning: Array<Chat_Messages>;
+};
+
+/** input type for inserting object relation for remote table "chat_messages" */
+export type Chat_Messages_Obj_Rel_Insert_Input = {
+  data: Chat_Messages_Insert_Input;
+  on_conflict?: Maybe<Chat_Messages_On_Conflict>;
+};
+
+/** on conflict condition type for table "chat_messages" */
+export type Chat_Messages_On_Conflict = {
+  constraint: Chat_Messages_Constraint;
+  update_columns: Array<Chat_Messages_Update_Column>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
+};
+
+/** ordering options when selecting data from "chat_messages" */
+export type Chat_Messages_Order_By = {
+  chat_group?: Maybe<Chat_Groups_Order_By>;
+  chat_group_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  message?: Maybe<Order_By>;
+  sender?: Maybe<Users_Order_By>;
+  sender_id?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: "chat_messages" */
+export type Chat_Messages_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "chat_messages" */
+export enum Chat_Messages_Select_Column {
+  /** column name */
+  ChatGroupId = 'chat_group_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Message = 'message',
+  /** column name */
+  SenderId = 'sender_id'
+}
+
+/** input type for updating data in table "chat_messages" */
+export type Chat_Messages_Set_Input = {
+  chat_group_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  message?: Maybe<Scalars['String']>;
+  sender_id?: Maybe<Scalars['uuid']>;
+};
+
+/** update columns of table "chat_messages" */
+export enum Chat_Messages_Update_Column {
+  /** column name */
+  ChatGroupId = 'chat_group_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Message = 'message',
+  /** column name */
+  SenderId = 'sender_id'
 }
 
 export type Create_Group_Input = {
@@ -2644,179 +3252,11 @@ export enum Groups_Update_Column {
 }
 
 
-/** columns and relationships of "messages" */
-export type Messages = {
-  __typename?: 'messages';
-  created_at: Scalars['timestamptz'];
-  id: Scalars['uuid'];
-  receiver_id: Scalars['uuid'];
-  sender_id: Scalars['uuid'];
-};
-
-/** aggregated selection of "messages" */
-export type Messages_Aggregate = {
-  __typename?: 'messages_aggregate';
-  aggregate?: Maybe<Messages_Aggregate_Fields>;
-  nodes: Array<Messages>;
-};
-
-/** aggregate fields of "messages" */
-export type Messages_Aggregate_Fields = {
-  __typename?: 'messages_aggregate_fields';
-  count?: Maybe<Scalars['Int']>;
-  max?: Maybe<Messages_Max_Fields>;
-  min?: Maybe<Messages_Min_Fields>;
-};
-
-
-/** aggregate fields of "messages" */
-export type Messages_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Messages_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
-};
-
-/** order by aggregate values of table "messages" */
-export type Messages_Aggregate_Order_By = {
-  count?: Maybe<Order_By>;
-  max?: Maybe<Messages_Max_Order_By>;
-  min?: Maybe<Messages_Min_Order_By>;
-};
-
-/** input type for inserting array relation for remote table "messages" */
-export type Messages_Arr_Rel_Insert_Input = {
-  data: Array<Messages_Insert_Input>;
-  on_conflict?: Maybe<Messages_On_Conflict>;
-};
-
-/** Boolean expression to filter rows from the table "messages". All fields are combined with a logical 'AND'. */
-export type Messages_Bool_Exp = {
-  _and?: Maybe<Array<Maybe<Messages_Bool_Exp>>>;
-  _not?: Maybe<Messages_Bool_Exp>;
-  _or?: Maybe<Array<Maybe<Messages_Bool_Exp>>>;
-  created_at?: Maybe<Timestamptz_Comparison_Exp>;
-  id?: Maybe<Uuid_Comparison_Exp>;
-  receiver_id?: Maybe<Uuid_Comparison_Exp>;
-  sender_id?: Maybe<Uuid_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "messages" */
-export enum Messages_Constraint {
-  /** unique or primary key constraint */
-  MessagesPkey = 'messages_pkey'
-}
-
-/** input type for inserting data into table "messages" */
-export type Messages_Insert_Input = {
-  created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
-  receiver_id?: Maybe<Scalars['uuid']>;
-  sender_id?: Maybe<Scalars['uuid']>;
-};
-
-/** aggregate max on columns */
-export type Messages_Max_Fields = {
-  __typename?: 'messages_max_fields';
-  created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
-  receiver_id?: Maybe<Scalars['uuid']>;
-  sender_id?: Maybe<Scalars['uuid']>;
-};
-
-/** order by max() on columns of table "messages" */
-export type Messages_Max_Order_By = {
-  created_at?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  receiver_id?: Maybe<Order_By>;
-  sender_id?: Maybe<Order_By>;
-};
-
-/** aggregate min on columns */
-export type Messages_Min_Fields = {
-  __typename?: 'messages_min_fields';
-  created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
-  receiver_id?: Maybe<Scalars['uuid']>;
-  sender_id?: Maybe<Scalars['uuid']>;
-};
-
-/** order by min() on columns of table "messages" */
-export type Messages_Min_Order_By = {
-  created_at?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  receiver_id?: Maybe<Order_By>;
-  sender_id?: Maybe<Order_By>;
-};
-
-/** response of any mutation on the table "messages" */
-export type Messages_Mutation_Response = {
-  __typename?: 'messages_mutation_response';
-  /** number of affected rows by the mutation */
-  affected_rows: Scalars['Int'];
-  /** data of the affected rows by the mutation */
-  returning: Array<Messages>;
-};
-
-/** input type for inserting object relation for remote table "messages" */
-export type Messages_Obj_Rel_Insert_Input = {
-  data: Messages_Insert_Input;
-  on_conflict?: Maybe<Messages_On_Conflict>;
-};
-
-/** on conflict condition type for table "messages" */
-export type Messages_On_Conflict = {
-  constraint: Messages_Constraint;
-  update_columns: Array<Messages_Update_Column>;
-  where?: Maybe<Messages_Bool_Exp>;
-};
-
-/** ordering options when selecting data from "messages" */
-export type Messages_Order_By = {
-  created_at?: Maybe<Order_By>;
-  id?: Maybe<Order_By>;
-  receiver_id?: Maybe<Order_By>;
-  sender_id?: Maybe<Order_By>;
-};
-
-/** primary key columns input for table: "messages" */
-export type Messages_Pk_Columns_Input = {
-  id: Scalars['uuid'];
-};
-
-/** select columns of table "messages" */
-export enum Messages_Select_Column {
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  ReceiverId = 'receiver_id',
-  /** column name */
-  SenderId = 'sender_id'
-}
-
-/** input type for updating data in table "messages" */
-export type Messages_Set_Input = {
-  created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
-  receiver_id?: Maybe<Scalars['uuid']>;
-  sender_id?: Maybe<Scalars['uuid']>;
-};
-
-/** update columns of table "messages" */
-export enum Messages_Update_Column {
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  ReceiverId = 'receiver_id',
-  /** column name */
-  SenderId = 'sender_id'
-}
-
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
+  /** perform the action: "createChatGroup" */
+  createChatGroup?: Maybe<CreateChatGroupResult>;
   /** perform the action: "createGroup" */
   createGroup: CreateGroupResult;
   /** perform the action: "createJoinToken" */
@@ -2829,6 +3269,18 @@ export type Mutation_Root = {
   delete_activity_verb?: Maybe<Activity_Verb_Mutation_Response>;
   /** delete single row from the table: "activity_verb" */
   delete_activity_verb_by_pk?: Maybe<Activity_Verb>;
+  /** delete data from the table: "chat_group_members" */
+  delete_chat_group_members?: Maybe<Chat_Group_Members_Mutation_Response>;
+  /** delete single row from the table: "chat_group_members" */
+  delete_chat_group_members_by_pk?: Maybe<Chat_Group_Members>;
+  /** delete data from the table: "chat_groups" */
+  delete_chat_groups?: Maybe<Chat_Groups_Mutation_Response>;
+  /** delete single row from the table: "chat_groups" */
+  delete_chat_groups_by_pk?: Maybe<Chat_Groups>;
+  /** delete data from the table: "chat_messages" */
+  delete_chat_messages?: Maybe<Chat_Messages_Mutation_Response>;
+  /** delete single row from the table: "chat_messages" */
+  delete_chat_messages_by_pk?: Maybe<Chat_Messages>;
   /** delete data from the table: "entities" */
   delete_entities?: Maybe<Entities_Mutation_Response>;
   /** delete single row from the table: "entities" */
@@ -2865,10 +3317,6 @@ export type Mutation_Root = {
   delete_groups?: Maybe<Groups_Mutation_Response>;
   /** delete single row from the table: "groups" */
   delete_groups_by_pk?: Maybe<Groups>;
-  /** delete data from the table: "messages" */
-  delete_messages?: Maybe<Messages_Mutation_Response>;
-  /** delete single row from the table: "messages" */
-  delete_messages_by_pk?: Maybe<Messages>;
   /** delete data from the table: "notifications" */
   delete_notifications?: Maybe<Notifications_Mutation_Response>;
   /** delete single row from the table: "notifications" */
@@ -2905,6 +3353,18 @@ export type Mutation_Root = {
   insert_activity_verb?: Maybe<Activity_Verb_Mutation_Response>;
   /** insert a single row into the table: "activity_verb" */
   insert_activity_verb_one?: Maybe<Activity_Verb>;
+  /** insert data into the table: "chat_group_members" */
+  insert_chat_group_members?: Maybe<Chat_Group_Members_Mutation_Response>;
+  /** insert a single row into the table: "chat_group_members" */
+  insert_chat_group_members_one?: Maybe<Chat_Group_Members>;
+  /** insert data into the table: "chat_groups" */
+  insert_chat_groups?: Maybe<Chat_Groups_Mutation_Response>;
+  /** insert a single row into the table: "chat_groups" */
+  insert_chat_groups_one?: Maybe<Chat_Groups>;
+  /** insert data into the table: "chat_messages" */
+  insert_chat_messages?: Maybe<Chat_Messages_Mutation_Response>;
+  /** insert a single row into the table: "chat_messages" */
+  insert_chat_messages_one?: Maybe<Chat_Messages>;
   /** insert data into the table: "entities" */
   insert_entities?: Maybe<Entities_Mutation_Response>;
   /** insert a single row into the table: "entities" */
@@ -2941,10 +3401,6 @@ export type Mutation_Root = {
   insert_groups?: Maybe<Groups_Mutation_Response>;
   /** insert a single row into the table: "groups" */
   insert_groups_one?: Maybe<Groups>;
-  /** insert data into the table: "messages" */
-  insert_messages?: Maybe<Messages_Mutation_Response>;
-  /** insert a single row into the table: "messages" */
-  insert_messages_one?: Maybe<Messages>;
   /** insert data into the table: "notifications" */
   insert_notifications?: Maybe<Notifications_Mutation_Response>;
   /** insert a single row into the table: "notifications" */
@@ -2989,6 +3445,18 @@ export type Mutation_Root = {
   update_activity_verb?: Maybe<Activity_Verb_Mutation_Response>;
   /** update single row of the table: "activity_verb" */
   update_activity_verb_by_pk?: Maybe<Activity_Verb>;
+  /** update data of the table: "chat_group_members" */
+  update_chat_group_members?: Maybe<Chat_Group_Members_Mutation_Response>;
+  /** update single row of the table: "chat_group_members" */
+  update_chat_group_members_by_pk?: Maybe<Chat_Group_Members>;
+  /** update data of the table: "chat_groups" */
+  update_chat_groups?: Maybe<Chat_Groups_Mutation_Response>;
+  /** update single row of the table: "chat_groups" */
+  update_chat_groups_by_pk?: Maybe<Chat_Groups>;
+  /** update data of the table: "chat_messages" */
+  update_chat_messages?: Maybe<Chat_Messages_Mutation_Response>;
+  /** update single row of the table: "chat_messages" */
+  update_chat_messages_by_pk?: Maybe<Chat_Messages>;
   /** update data of the table: "entities" */
   update_entities?: Maybe<Entities_Mutation_Response>;
   /** update single row of the table: "entities" */
@@ -3025,10 +3493,6 @@ export type Mutation_Root = {
   update_groups?: Maybe<Groups_Mutation_Response>;
   /** update single row of the table: "groups" */
   update_groups_by_pk?: Maybe<Groups>;
-  /** update data of the table: "messages" */
-  update_messages?: Maybe<Messages_Mutation_Response>;
-  /** update single row of the table: "messages" */
-  update_messages_by_pk?: Maybe<Messages>;
   /** update data of the table: "notifications" */
   update_notifications?: Maybe<Notifications_Mutation_Response>;
   /** update single row of the table: "notifications" */
@@ -3055,6 +3519,12 @@ export type Mutation_Root = {
   update_verification_requests?: Maybe<Verification_Requests_Mutation_Response>;
   /** update single row of the table: "verification_requests" */
   update_verification_requests_by_pk?: Maybe<Verification_Requests>;
+};
+
+
+/** mutation root */
+export type Mutation_RootCreateChatGroupArgs = {
+  input: CreateChatGroupInput;
 };
 
 
@@ -3091,6 +3561,42 @@ export type Mutation_RootDelete_Activity_VerbArgs = {
 /** mutation root */
 export type Mutation_RootDelete_Activity_Verb_By_PkArgs = {
   value: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Chat_Group_MembersArgs = {
+  where: Chat_Group_Members_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Chat_Group_Members_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Chat_GroupsArgs = {
+  where: Chat_Groups_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Chat_Groups_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Chat_MessagesArgs = {
+  where: Chat_Messages_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Chat_Messages_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -3198,18 +3704,6 @@ export type Mutation_RootDelete_GroupsArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Groups_By_PkArgs = {
-  id: Scalars['uuid'];
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_MessagesArgs = {
-  where: Messages_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_Messages_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -3323,6 +3817,48 @@ export type Mutation_RootInsert_Activity_VerbArgs = {
 export type Mutation_RootInsert_Activity_Verb_OneArgs = {
   object: Activity_Verb_Insert_Input;
   on_conflict?: Maybe<Activity_Verb_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Chat_Group_MembersArgs = {
+  objects: Array<Chat_Group_Members_Insert_Input>;
+  on_conflict?: Maybe<Chat_Group_Members_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Chat_Group_Members_OneArgs = {
+  object: Chat_Group_Members_Insert_Input;
+  on_conflict?: Maybe<Chat_Group_Members_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Chat_GroupsArgs = {
+  objects: Array<Chat_Groups_Insert_Input>;
+  on_conflict?: Maybe<Chat_Groups_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Chat_Groups_OneArgs = {
+  object: Chat_Groups_Insert_Input;
+  on_conflict?: Maybe<Chat_Groups_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Chat_MessagesArgs = {
+  objects: Array<Chat_Messages_Insert_Input>;
+  on_conflict?: Maybe<Chat_Messages_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Chat_Messages_OneArgs = {
+  object: Chat_Messages_Insert_Input;
+  on_conflict?: Maybe<Chat_Messages_On_Conflict>;
 };
 
 
@@ -3449,20 +3985,6 @@ export type Mutation_RootInsert_GroupsArgs = {
 export type Mutation_RootInsert_Groups_OneArgs = {
   object: Groups_Insert_Input;
   on_conflict?: Maybe<Groups_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_MessagesArgs = {
-  objects: Array<Messages_Insert_Input>;
-  on_conflict?: Maybe<Messages_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_Messages_OneArgs = {
-  object: Messages_Insert_Input;
-  on_conflict?: Maybe<Messages_On_Conflict>;
 };
 
 
@@ -3615,6 +4137,48 @@ export type Mutation_RootUpdate_Activity_Verb_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Chat_Group_MembersArgs = {
+  _set?: Maybe<Chat_Group_Members_Set_Input>;
+  where: Chat_Group_Members_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Chat_Group_Members_By_PkArgs = {
+  _set?: Maybe<Chat_Group_Members_Set_Input>;
+  pk_columns: Chat_Group_Members_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Chat_GroupsArgs = {
+  _set?: Maybe<Chat_Groups_Set_Input>;
+  where: Chat_Groups_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Chat_Groups_By_PkArgs = {
+  _set?: Maybe<Chat_Groups_Set_Input>;
+  pk_columns: Chat_Groups_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Chat_MessagesArgs = {
+  _set?: Maybe<Chat_Messages_Set_Input>;
+  where: Chat_Messages_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Chat_Messages_By_PkArgs = {
+  _set?: Maybe<Chat_Messages_Set_Input>;
+  pk_columns: Chat_Messages_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_EntitiesArgs = {
   _set?: Maybe<Entities_Set_Input>;
   where: Entities_Bool_Exp;
@@ -3739,20 +4303,6 @@ export type Mutation_RootUpdate_GroupsArgs = {
 export type Mutation_RootUpdate_Groups_By_PkArgs = {
   _set?: Maybe<Groups_Set_Input>;
   pk_columns: Groups_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_MessagesArgs = {
-  _set?: Maybe<Messages_Set_Input>;
-  where: Messages_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_Messages_By_PkArgs = {
-  _set?: Maybe<Messages_Set_Input>;
-  pk_columns: Messages_Pk_Columns_Input;
 };
 
 
@@ -4074,6 +4624,24 @@ export type Query_Root = {
   activity_verb_aggregate: Activity_Verb_Aggregate;
   /** fetch data from the table: "activity_verb" using primary key columns */
   activity_verb_by_pk?: Maybe<Activity_Verb>;
+  /** fetch data from the table: "chat_group_members" */
+  chat_group_members: Array<Chat_Group_Members>;
+  /** fetch aggregated fields from the table: "chat_group_members" */
+  chat_group_members_aggregate: Chat_Group_Members_Aggregate;
+  /** fetch data from the table: "chat_group_members" using primary key columns */
+  chat_group_members_by_pk?: Maybe<Chat_Group_Members>;
+  /** fetch data from the table: "chat_groups" */
+  chat_groups: Array<Chat_Groups>;
+  /** fetch aggregated fields from the table: "chat_groups" */
+  chat_groups_aggregate: Chat_Groups_Aggregate;
+  /** fetch data from the table: "chat_groups" using primary key columns */
+  chat_groups_by_pk?: Maybe<Chat_Groups>;
+  /** fetch data from the table: "chat_messages" */
+  chat_messages: Array<Chat_Messages>;
+  /** fetch aggregated fields from the table: "chat_messages" */
+  chat_messages_aggregate: Chat_Messages_Aggregate;
+  /** fetch data from the table: "chat_messages" using primary key columns */
+  chat_messages_by_pk?: Maybe<Chat_Messages>;
   /** fetch data from the table: "entities" */
   entities: Array<Entities>;
   /** fetch aggregated fields from the table: "entities" */
@@ -4128,12 +4696,6 @@ export type Query_Root = {
   groups_aggregate: Groups_Aggregate;
   /** fetch data from the table: "groups" using primary key columns */
   groups_by_pk?: Maybe<Groups>;
-  /** fetch data from the table: "messages" */
-  messages: Array<Messages>;
-  /** fetch aggregated fields from the table: "messages" */
-  messages_aggregate: Messages_Aggregate;
-  /** fetch data from the table: "messages" using primary key columns */
-  messages_by_pk?: Maybe<Messages>;
   /** fetch data from the table: "notifications" */
   notifications: Array<Notifications>;
   /** fetch aggregated fields from the table: "notifications" */
@@ -4226,6 +4788,84 @@ export type Query_RootActivity_Verb_AggregateArgs = {
 /** query root */
 export type Query_RootActivity_Verb_By_PkArgs = {
   value: Scalars['String'];
+};
+
+
+/** query root */
+export type Query_RootChat_Group_MembersArgs = {
+  distinct_on?: Maybe<Array<Chat_Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Group_Members_Order_By>>;
+  where?: Maybe<Chat_Group_Members_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootChat_Group_Members_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Group_Members_Order_By>>;
+  where?: Maybe<Chat_Group_Members_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootChat_Group_Members_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** query root */
+export type Query_RootChat_GroupsArgs = {
+  distinct_on?: Maybe<Array<Chat_Groups_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Groups_Order_By>>;
+  where?: Maybe<Chat_Groups_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootChat_Groups_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Groups_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Groups_Order_By>>;
+  where?: Maybe<Chat_Groups_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootChat_Groups_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** query root */
+export type Query_RootChat_MessagesArgs = {
+  distinct_on?: Maybe<Array<Chat_Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Messages_Order_By>>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootChat_Messages_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Messages_Order_By>>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
+};
+
+
+/** query root */
+export type Query_RootChat_Messages_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -4464,32 +5104,6 @@ export type Query_RootGroups_By_PkArgs = {
 
 
 /** query root */
-export type Query_RootMessagesArgs = {
-  distinct_on?: Maybe<Array<Messages_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Messages_Order_By>>;
-  where?: Maybe<Messages_Bool_Exp>;
-};
-
-
-/** query root */
-export type Query_RootMessages_AggregateArgs = {
-  distinct_on?: Maybe<Array<Messages_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Messages_Order_By>>;
-  where?: Maybe<Messages_Bool_Exp>;
-};
-
-
-/** query root */
-export type Query_RootMessages_By_PkArgs = {
-  id: Scalars['uuid'];
-};
-
-
-/** query root */
 export type Query_RootNotificationsArgs = {
   distinct_on?: Maybe<Array<Notifications_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4679,6 +5293,24 @@ export type Subscription_Root = {
   activity_verb_aggregate: Activity_Verb_Aggregate;
   /** fetch data from the table: "activity_verb" using primary key columns */
   activity_verb_by_pk?: Maybe<Activity_Verb>;
+  /** fetch data from the table: "chat_group_members" */
+  chat_group_members: Array<Chat_Group_Members>;
+  /** fetch aggregated fields from the table: "chat_group_members" */
+  chat_group_members_aggregate: Chat_Group_Members_Aggregate;
+  /** fetch data from the table: "chat_group_members" using primary key columns */
+  chat_group_members_by_pk?: Maybe<Chat_Group_Members>;
+  /** fetch data from the table: "chat_groups" */
+  chat_groups: Array<Chat_Groups>;
+  /** fetch aggregated fields from the table: "chat_groups" */
+  chat_groups_aggregate: Chat_Groups_Aggregate;
+  /** fetch data from the table: "chat_groups" using primary key columns */
+  chat_groups_by_pk?: Maybe<Chat_Groups>;
+  /** fetch data from the table: "chat_messages" */
+  chat_messages: Array<Chat_Messages>;
+  /** fetch aggregated fields from the table: "chat_messages" */
+  chat_messages_aggregate: Chat_Messages_Aggregate;
+  /** fetch data from the table: "chat_messages" using primary key columns */
+  chat_messages_by_pk?: Maybe<Chat_Messages>;
   /** fetch data from the table: "entities" */
   entities: Array<Entities>;
   /** fetch aggregated fields from the table: "entities" */
@@ -4733,12 +5365,6 @@ export type Subscription_Root = {
   groups_aggregate: Groups_Aggregate;
   /** fetch data from the table: "groups" using primary key columns */
   groups_by_pk?: Maybe<Groups>;
-  /** fetch data from the table: "messages" */
-  messages: Array<Messages>;
-  /** fetch aggregated fields from the table: "messages" */
-  messages_aggregate: Messages_Aggregate;
-  /** fetch data from the table: "messages" using primary key columns */
-  messages_by_pk?: Maybe<Messages>;
   /** fetch data from the table: "notifications" */
   notifications: Array<Notifications>;
   /** fetch aggregated fields from the table: "notifications" */
@@ -4831,6 +5457,84 @@ export type Subscription_RootActivity_Verb_AggregateArgs = {
 /** subscription root */
 export type Subscription_RootActivity_Verb_By_PkArgs = {
   value: Scalars['String'];
+};
+
+
+/** subscription root */
+export type Subscription_RootChat_Group_MembersArgs = {
+  distinct_on?: Maybe<Array<Chat_Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Group_Members_Order_By>>;
+  where?: Maybe<Chat_Group_Members_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootChat_Group_Members_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Group_Members_Order_By>>;
+  where?: Maybe<Chat_Group_Members_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootChat_Group_Members_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** subscription root */
+export type Subscription_RootChat_GroupsArgs = {
+  distinct_on?: Maybe<Array<Chat_Groups_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Groups_Order_By>>;
+  where?: Maybe<Chat_Groups_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootChat_Groups_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Groups_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Groups_Order_By>>;
+  where?: Maybe<Chat_Groups_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootChat_Groups_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** subscription root */
+export type Subscription_RootChat_MessagesArgs = {
+  distinct_on?: Maybe<Array<Chat_Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Messages_Order_By>>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootChat_Messages_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Messages_Order_By>>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
+};
+
+
+/** subscription root */
+export type Subscription_RootChat_Messages_By_PkArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -5064,32 +5768,6 @@ export type Subscription_RootGroups_AggregateArgs = {
 
 /** subscription root */
 export type Subscription_RootGroups_By_PkArgs = {
-  id: Scalars['uuid'];
-};
-
-
-/** subscription root */
-export type Subscription_RootMessagesArgs = {
-  distinct_on?: Maybe<Array<Messages_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Messages_Order_By>>;
-  where?: Maybe<Messages_Bool_Exp>;
-};
-
-
-/** subscription root */
-export type Subscription_RootMessages_AggregateArgs = {
-  distinct_on?: Maybe<Array<Messages_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Messages_Order_By>>;
-  where?: Maybe<Messages_Bool_Exp>;
-};
-
-
-/** subscription root */
-export type Subscription_RootMessages_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -6869,6 +7547,44 @@ export type ServerInsertActivitiesMutation = (
   )> }
 );
 
+export type ServerChatGroupFragment = (
+  { __typename?: 'chat_groups' }
+  & Pick<Chat_Groups, 'id'>
+  & { members: Array<(
+    { __typename?: 'chat_group_members' }
+    & { user: (
+      { __typename?: 'users' }
+      & Pick<Users, 'id'>
+    ) }
+  )> }
+);
+
+export type ServerFindChatGroupQueryVariables = Exact<{
+  where: Chat_Groups_Bool_Exp;
+}>;
+
+
+export type ServerFindChatGroupQuery = (
+  { __typename?: 'query_root' }
+  & { chat_groups: Array<(
+    { __typename?: 'chat_groups' }
+    & ServerChatGroupFragment
+  )> }
+);
+
+export type ServerCreateChatGroupMutationVariables = Exact<{
+  input: Chat_Groups_Insert_Input;
+}>;
+
+
+export type ServerCreateChatGroupMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_chat_groups_one?: Maybe<(
+    { __typename?: 'chat_groups' }
+    & Pick<Chat_Groups, 'id'>
+  )> }
+);
+
 export type ServerFindGroupQueryVariables = Exact<{
   where?: Maybe<Groups_Bool_Exp>;
 }>;
@@ -7170,8 +7886,10 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Boolean_comparison_exp: Boolean_Comparison_Exp;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
-  CreateGroupInput: CreateGroupInput;
+  CreateChatGroupInput: CreateChatGroupInput;
   String: ResolverTypeWrapper<Scalars['String']>;
+  CreateChatGroupResult: ResolverTypeWrapper<CreateChatGroupResult>;
+  CreateGroupInput: CreateGroupInput;
   CreateGroupResult: ResolverTypeWrapper<CreateGroupResult>;
   CreateJoinTokenInput: CreateJoinTokenInput;
   CreateJoinTokenResult: ResolverTypeWrapper<CreateJoinTokenResult>;
@@ -7233,6 +7951,66 @@ export type ResolversTypes = {
   activity_verb_select_column: Activity_Verb_Select_Column;
   activity_verb_set_input: Activity_Verb_Set_Input;
   activity_verb_update_column: Activity_Verb_Update_Column;
+  chat_group_members: ResolverTypeWrapper<Chat_Group_Members>;
+  chat_group_members_aggregate: ResolverTypeWrapper<Chat_Group_Members_Aggregate>;
+  chat_group_members_aggregate_fields: ResolverTypeWrapper<Chat_Group_Members_Aggregate_Fields>;
+  chat_group_members_aggregate_order_by: Chat_Group_Members_Aggregate_Order_By;
+  chat_group_members_arr_rel_insert_input: Chat_Group_Members_Arr_Rel_Insert_Input;
+  chat_group_members_bool_exp: Chat_Group_Members_Bool_Exp;
+  chat_group_members_constraint: Chat_Group_Members_Constraint;
+  chat_group_members_insert_input: Chat_Group_Members_Insert_Input;
+  chat_group_members_max_fields: ResolverTypeWrapper<Chat_Group_Members_Max_Fields>;
+  chat_group_members_max_order_by: Chat_Group_Members_Max_Order_By;
+  chat_group_members_min_fields: ResolverTypeWrapper<Chat_Group_Members_Min_Fields>;
+  chat_group_members_min_order_by: Chat_Group_Members_Min_Order_By;
+  chat_group_members_mutation_response: ResolverTypeWrapper<Chat_Group_Members_Mutation_Response>;
+  chat_group_members_obj_rel_insert_input: Chat_Group_Members_Obj_Rel_Insert_Input;
+  chat_group_members_on_conflict: Chat_Group_Members_On_Conflict;
+  chat_group_members_order_by: Chat_Group_Members_Order_By;
+  chat_group_members_pk_columns_input: Chat_Group_Members_Pk_Columns_Input;
+  chat_group_members_select_column: Chat_Group_Members_Select_Column;
+  chat_group_members_set_input: Chat_Group_Members_Set_Input;
+  chat_group_members_update_column: Chat_Group_Members_Update_Column;
+  chat_groups: ResolverTypeWrapper<Chat_Groups>;
+  chat_groups_aggregate: ResolverTypeWrapper<Chat_Groups_Aggregate>;
+  chat_groups_aggregate_fields: ResolverTypeWrapper<Chat_Groups_Aggregate_Fields>;
+  chat_groups_aggregate_order_by: Chat_Groups_Aggregate_Order_By;
+  chat_groups_arr_rel_insert_input: Chat_Groups_Arr_Rel_Insert_Input;
+  chat_groups_bool_exp: Chat_Groups_Bool_Exp;
+  chat_groups_constraint: Chat_Groups_Constraint;
+  chat_groups_insert_input: Chat_Groups_Insert_Input;
+  chat_groups_max_fields: ResolverTypeWrapper<Chat_Groups_Max_Fields>;
+  chat_groups_max_order_by: Chat_Groups_Max_Order_By;
+  chat_groups_min_fields: ResolverTypeWrapper<Chat_Groups_Min_Fields>;
+  chat_groups_min_order_by: Chat_Groups_Min_Order_By;
+  chat_groups_mutation_response: ResolverTypeWrapper<Chat_Groups_Mutation_Response>;
+  chat_groups_obj_rel_insert_input: Chat_Groups_Obj_Rel_Insert_Input;
+  chat_groups_on_conflict: Chat_Groups_On_Conflict;
+  chat_groups_order_by: Chat_Groups_Order_By;
+  chat_groups_pk_columns_input: Chat_Groups_Pk_Columns_Input;
+  chat_groups_select_column: Chat_Groups_Select_Column;
+  chat_groups_set_input: Chat_Groups_Set_Input;
+  chat_groups_update_column: Chat_Groups_Update_Column;
+  chat_messages: ResolverTypeWrapper<Chat_Messages>;
+  chat_messages_aggregate: ResolverTypeWrapper<Chat_Messages_Aggregate>;
+  chat_messages_aggregate_fields: ResolverTypeWrapper<Chat_Messages_Aggregate_Fields>;
+  chat_messages_aggregate_order_by: Chat_Messages_Aggregate_Order_By;
+  chat_messages_arr_rel_insert_input: Chat_Messages_Arr_Rel_Insert_Input;
+  chat_messages_bool_exp: Chat_Messages_Bool_Exp;
+  chat_messages_constraint: Chat_Messages_Constraint;
+  chat_messages_insert_input: Chat_Messages_Insert_Input;
+  chat_messages_max_fields: ResolverTypeWrapper<Chat_Messages_Max_Fields>;
+  chat_messages_max_order_by: Chat_Messages_Max_Order_By;
+  chat_messages_min_fields: ResolverTypeWrapper<Chat_Messages_Min_Fields>;
+  chat_messages_min_order_by: Chat_Messages_Min_Order_By;
+  chat_messages_mutation_response: ResolverTypeWrapper<Chat_Messages_Mutation_Response>;
+  chat_messages_obj_rel_insert_input: Chat_Messages_Obj_Rel_Insert_Input;
+  chat_messages_on_conflict: Chat_Messages_On_Conflict;
+  chat_messages_order_by: Chat_Messages_Order_By;
+  chat_messages_pk_columns_input: Chat_Messages_Pk_Columns_Input;
+  chat_messages_select_column: Chat_Messages_Select_Column;
+  chat_messages_set_input: Chat_Messages_Set_Input;
+  chat_messages_update_column: Chat_Messages_Update_Column;
   create_group_input: Create_Group_Input;
   create_group_result: ResolverTypeWrapper<Create_Group_Result>;
   date: ResolverTypeWrapper<Scalars['date']>;
@@ -7440,26 +8218,6 @@ export type ResolversTypes = {
   groups_set_input: Groups_Set_Input;
   groups_update_column: Groups_Update_Column;
   json: ResolverTypeWrapper<Scalars['json']>;
-  messages: ResolverTypeWrapper<Messages>;
-  messages_aggregate: ResolverTypeWrapper<Messages_Aggregate>;
-  messages_aggregate_fields: ResolverTypeWrapper<Messages_Aggregate_Fields>;
-  messages_aggregate_order_by: Messages_Aggregate_Order_By;
-  messages_arr_rel_insert_input: Messages_Arr_Rel_Insert_Input;
-  messages_bool_exp: Messages_Bool_Exp;
-  messages_constraint: Messages_Constraint;
-  messages_insert_input: Messages_Insert_Input;
-  messages_max_fields: ResolverTypeWrapper<Messages_Max_Fields>;
-  messages_max_order_by: Messages_Max_Order_By;
-  messages_min_fields: ResolverTypeWrapper<Messages_Min_Fields>;
-  messages_min_order_by: Messages_Min_Order_By;
-  messages_mutation_response: ResolverTypeWrapper<Messages_Mutation_Response>;
-  messages_obj_rel_insert_input: Messages_Obj_Rel_Insert_Input;
-  messages_on_conflict: Messages_On_Conflict;
-  messages_order_by: Messages_Order_By;
-  messages_pk_columns_input: Messages_Pk_Columns_Input;
-  messages_select_column: Messages_Select_Column;
-  messages_set_input: Messages_Set_Input;
-  messages_update_column: Messages_Update_Column;
   mutation_root: ResolverTypeWrapper<{}>;
   notifications: ResolverTypeWrapper<Notifications>;
   notifications_aggregate: ResolverTypeWrapper<Notifications_Aggregate>;
@@ -7646,8 +8404,10 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Boolean_comparison_exp: Boolean_Comparison_Exp;
   Boolean: Scalars['Boolean'];
-  CreateGroupInput: CreateGroupInput;
+  CreateChatGroupInput: CreateChatGroupInput;
   String: Scalars['String'];
+  CreateChatGroupResult: CreateChatGroupResult;
+  CreateGroupInput: CreateGroupInput;
   CreateGroupResult: CreateGroupResult;
   CreateJoinTokenInput: CreateJoinTokenInput;
   CreateJoinTokenResult: CreateJoinTokenResult;
@@ -7702,6 +8462,57 @@ export type ResolversParentTypes = {
   activity_verb_order_by: Activity_Verb_Order_By;
   activity_verb_pk_columns_input: Activity_Verb_Pk_Columns_Input;
   activity_verb_set_input: Activity_Verb_Set_Input;
+  chat_group_members: Chat_Group_Members;
+  chat_group_members_aggregate: Chat_Group_Members_Aggregate;
+  chat_group_members_aggregate_fields: Chat_Group_Members_Aggregate_Fields;
+  chat_group_members_aggregate_order_by: Chat_Group_Members_Aggregate_Order_By;
+  chat_group_members_arr_rel_insert_input: Chat_Group_Members_Arr_Rel_Insert_Input;
+  chat_group_members_bool_exp: Chat_Group_Members_Bool_Exp;
+  chat_group_members_insert_input: Chat_Group_Members_Insert_Input;
+  chat_group_members_max_fields: Chat_Group_Members_Max_Fields;
+  chat_group_members_max_order_by: Chat_Group_Members_Max_Order_By;
+  chat_group_members_min_fields: Chat_Group_Members_Min_Fields;
+  chat_group_members_min_order_by: Chat_Group_Members_Min_Order_By;
+  chat_group_members_mutation_response: Chat_Group_Members_Mutation_Response;
+  chat_group_members_obj_rel_insert_input: Chat_Group_Members_Obj_Rel_Insert_Input;
+  chat_group_members_on_conflict: Chat_Group_Members_On_Conflict;
+  chat_group_members_order_by: Chat_Group_Members_Order_By;
+  chat_group_members_pk_columns_input: Chat_Group_Members_Pk_Columns_Input;
+  chat_group_members_set_input: Chat_Group_Members_Set_Input;
+  chat_groups: Chat_Groups;
+  chat_groups_aggregate: Chat_Groups_Aggregate;
+  chat_groups_aggregate_fields: Chat_Groups_Aggregate_Fields;
+  chat_groups_aggregate_order_by: Chat_Groups_Aggregate_Order_By;
+  chat_groups_arr_rel_insert_input: Chat_Groups_Arr_Rel_Insert_Input;
+  chat_groups_bool_exp: Chat_Groups_Bool_Exp;
+  chat_groups_insert_input: Chat_Groups_Insert_Input;
+  chat_groups_max_fields: Chat_Groups_Max_Fields;
+  chat_groups_max_order_by: Chat_Groups_Max_Order_By;
+  chat_groups_min_fields: Chat_Groups_Min_Fields;
+  chat_groups_min_order_by: Chat_Groups_Min_Order_By;
+  chat_groups_mutation_response: Chat_Groups_Mutation_Response;
+  chat_groups_obj_rel_insert_input: Chat_Groups_Obj_Rel_Insert_Input;
+  chat_groups_on_conflict: Chat_Groups_On_Conflict;
+  chat_groups_order_by: Chat_Groups_Order_By;
+  chat_groups_pk_columns_input: Chat_Groups_Pk_Columns_Input;
+  chat_groups_set_input: Chat_Groups_Set_Input;
+  chat_messages: Chat_Messages;
+  chat_messages_aggregate: Chat_Messages_Aggregate;
+  chat_messages_aggregate_fields: Chat_Messages_Aggregate_Fields;
+  chat_messages_aggregate_order_by: Chat_Messages_Aggregate_Order_By;
+  chat_messages_arr_rel_insert_input: Chat_Messages_Arr_Rel_Insert_Input;
+  chat_messages_bool_exp: Chat_Messages_Bool_Exp;
+  chat_messages_insert_input: Chat_Messages_Insert_Input;
+  chat_messages_max_fields: Chat_Messages_Max_Fields;
+  chat_messages_max_order_by: Chat_Messages_Max_Order_By;
+  chat_messages_min_fields: Chat_Messages_Min_Fields;
+  chat_messages_min_order_by: Chat_Messages_Min_Order_By;
+  chat_messages_mutation_response: Chat_Messages_Mutation_Response;
+  chat_messages_obj_rel_insert_input: Chat_Messages_Obj_Rel_Insert_Input;
+  chat_messages_on_conflict: Chat_Messages_On_Conflict;
+  chat_messages_order_by: Chat_Messages_Order_By;
+  chat_messages_pk_columns_input: Chat_Messages_Pk_Columns_Input;
+  chat_messages_set_input: Chat_Messages_Set_Input;
   create_group_input: Create_Group_Input;
   create_group_result: Create_Group_Result;
   date: Scalars['date'];
@@ -7880,23 +8691,6 @@ export type ResolversParentTypes = {
   groups_pk_columns_input: Groups_Pk_Columns_Input;
   groups_set_input: Groups_Set_Input;
   json: Scalars['json'];
-  messages: Messages;
-  messages_aggregate: Messages_Aggregate;
-  messages_aggregate_fields: Messages_Aggregate_Fields;
-  messages_aggregate_order_by: Messages_Aggregate_Order_By;
-  messages_arr_rel_insert_input: Messages_Arr_Rel_Insert_Input;
-  messages_bool_exp: Messages_Bool_Exp;
-  messages_insert_input: Messages_Insert_Input;
-  messages_max_fields: Messages_Max_Fields;
-  messages_max_order_by: Messages_Max_Order_By;
-  messages_min_fields: Messages_Min_Fields;
-  messages_min_order_by: Messages_Min_Order_By;
-  messages_mutation_response: Messages_Mutation_Response;
-  messages_obj_rel_insert_input: Messages_Obj_Rel_Insert_Input;
-  messages_on_conflict: Messages_On_Conflict;
-  messages_order_by: Messages_Order_By;
-  messages_pk_columns_input: Messages_Pk_Columns_Input;
-  messages_set_input: Messages_Set_Input;
   mutation_root: {};
   notifications: Notifications;
   notifications_aggregate: Notifications_Aggregate;
@@ -8058,6 +8852,12 @@ export type ResolversParentTypes = {
   verification_requests_variance_order_by: Verification_Requests_Variance_Order_By;
 };
 
+export type CreateChatGroupResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateChatGroupResult'] = ResolversParentTypes['CreateChatGroupResult']> = {
+  chat_group?: Resolver<Maybe<ResolversTypes['chat_groups']>, ParentType, ContextType>;
+  chat_group_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type CreateGroupResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateGroupResult'] = ResolversParentTypes['CreateGroupResult']> = {
   group?: Resolver<Maybe<ResolversTypes['groups']>, ParentType, ContextType>;
   group_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
@@ -8197,6 +8997,146 @@ export type Activity_Verb_Min_FieldsResolvers<ContextType = any, ParentType exte
 export type Activity_Verb_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['activity_verb_mutation_response'] = ResolversParentTypes['activity_verb_mutation_response']> = {
   affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   returning?: Resolver<Array<ResolversTypes['activity_verb']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Chat_Group_MembersResolvers<ContextType = any, ParentType extends ResolversParentTypes['chat_group_members'] = ResolversParentTypes['chat_group_members']> = {
+  chat_group?: Resolver<ResolversTypes['chat_groups'], ParentType, ContextType>;
+  chat_group_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  last_read?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['users'], ParentType, ContextType>;
+  user_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Chat_Group_Members_AggregateResolvers<ContextType = any, ParentType extends ResolversParentTypes['chat_group_members_aggregate'] = ResolversParentTypes['chat_group_members_aggregate']> = {
+  aggregate?: Resolver<Maybe<ResolversTypes['chat_group_members_aggregate_fields']>, ParentType, ContextType>;
+  nodes?: Resolver<Array<ResolversTypes['chat_group_members']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Chat_Group_Members_Aggregate_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['chat_group_members_aggregate_fields'] = ResolversParentTypes['chat_group_members_aggregate_fields']> = {
+  count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<Chat_Group_Members_Aggregate_FieldsCountArgs, never>>;
+  max?: Resolver<Maybe<ResolversTypes['chat_group_members_max_fields']>, ParentType, ContextType>;
+  min?: Resolver<Maybe<ResolversTypes['chat_group_members_min_fields']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Chat_Group_Members_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['chat_group_members_max_fields'] = ResolversParentTypes['chat_group_members_max_fields']> = {
+  chat_group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  last_read?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  user_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Chat_Group_Members_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['chat_group_members_min_fields'] = ResolversParentTypes['chat_group_members_min_fields']> = {
+  chat_group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  last_read?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  user_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Chat_Group_Members_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['chat_group_members_mutation_response'] = ResolversParentTypes['chat_group_members_mutation_response']> = {
+  affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  returning?: Resolver<Array<ResolversTypes['chat_group_members']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Chat_GroupsResolvers<ContextType = any, ParentType extends ResolversParentTypes['chat_groups'] = ResolversParentTypes['chat_groups']> = {
+  created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  members?: Resolver<Array<ResolversTypes['chat_group_members']>, ParentType, ContextType, RequireFields<Chat_GroupsMembersArgs, never>>;
+  members_aggregate?: Resolver<ResolversTypes['chat_group_members_aggregate'], ParentType, ContextType, RequireFields<Chat_GroupsMembers_AggregateArgs, never>>;
+  messages?: Resolver<Array<ResolversTypes['chat_messages']>, ParentType, ContextType, RequireFields<Chat_GroupsMessagesArgs, never>>;
+  messages_aggregate?: Resolver<ResolversTypes['chat_messages_aggregate'], ParentType, ContextType, RequireFields<Chat_GroupsMessages_AggregateArgs, never>>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  updated_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Chat_Groups_AggregateResolvers<ContextType = any, ParentType extends ResolversParentTypes['chat_groups_aggregate'] = ResolversParentTypes['chat_groups_aggregate']> = {
+  aggregate?: Resolver<Maybe<ResolversTypes['chat_groups_aggregate_fields']>, ParentType, ContextType>;
+  nodes?: Resolver<Array<ResolversTypes['chat_groups']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Chat_Groups_Aggregate_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['chat_groups_aggregate_fields'] = ResolversParentTypes['chat_groups_aggregate_fields']> = {
+  count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<Chat_Groups_Aggregate_FieldsCountArgs, never>>;
+  max?: Resolver<Maybe<ResolversTypes['chat_groups_max_fields']>, ParentType, ContextType>;
+  min?: Resolver<Maybe<ResolversTypes['chat_groups_min_fields']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Chat_Groups_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['chat_groups_max_fields'] = ResolversParentTypes['chat_groups_max_fields']> = {
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Chat_Groups_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['chat_groups_min_fields'] = ResolversParentTypes['chat_groups_min_fields']> = {
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Chat_Groups_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['chat_groups_mutation_response'] = ResolversParentTypes['chat_groups_mutation_response']> = {
+  affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  returning?: Resolver<Array<ResolversTypes['chat_groups']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Chat_MessagesResolvers<ContextType = any, ParentType extends ResolversParentTypes['chat_messages'] = ResolversParentTypes['chat_messages']> = {
+  chat_group?: Resolver<ResolversTypes['chat_groups'], ParentType, ContextType>;
+  chat_group_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  sender?: Resolver<ResolversTypes['users'], ParentType, ContextType>;
+  sender_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Chat_Messages_AggregateResolvers<ContextType = any, ParentType extends ResolversParentTypes['chat_messages_aggregate'] = ResolversParentTypes['chat_messages_aggregate']> = {
+  aggregate?: Resolver<Maybe<ResolversTypes['chat_messages_aggregate_fields']>, ParentType, ContextType>;
+  nodes?: Resolver<Array<ResolversTypes['chat_messages']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Chat_Messages_Aggregate_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['chat_messages_aggregate_fields'] = ResolversParentTypes['chat_messages_aggregate_fields']> = {
+  count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<Chat_Messages_Aggregate_FieldsCountArgs, never>>;
+  max?: Resolver<Maybe<ResolversTypes['chat_messages_max_fields']>, ParentType, ContextType>;
+  min?: Resolver<Maybe<ResolversTypes['chat_messages_min_fields']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Chat_Messages_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['chat_messages_max_fields'] = ResolversParentTypes['chat_messages_max_fields']> = {
+  chat_group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  sender_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Chat_Messages_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['chat_messages_min_fields'] = ResolversParentTypes['chat_messages_min_fields']> = {
+  chat_group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  message?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  sender_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Chat_Messages_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['chat_messages_mutation_response'] = ResolversParentTypes['chat_messages_mutation_response']> = {
+  affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  returning?: Resolver<Array<ResolversTypes['chat_messages']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -8705,56 +9645,20 @@ export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
   name: 'json';
 }
 
-export type MessagesResolvers<ContextType = any, ParentType extends ResolversParentTypes['messages'] = ResolversParentTypes['messages']> = {
-  created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
-  receiver_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
-  sender_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type Messages_AggregateResolvers<ContextType = any, ParentType extends ResolversParentTypes['messages_aggregate'] = ResolversParentTypes['messages_aggregate']> = {
-  aggregate?: Resolver<Maybe<ResolversTypes['messages_aggregate_fields']>, ParentType, ContextType>;
-  nodes?: Resolver<Array<ResolversTypes['messages']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type Messages_Aggregate_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['messages_aggregate_fields'] = ResolversParentTypes['messages_aggregate_fields']> = {
-  count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType, RequireFields<Messages_Aggregate_FieldsCountArgs, never>>;
-  max?: Resolver<Maybe<ResolversTypes['messages_max_fields']>, ParentType, ContextType>;
-  min?: Resolver<Maybe<ResolversTypes['messages_min_fields']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type Messages_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['messages_max_fields'] = ResolversParentTypes['messages_max_fields']> = {
-  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
-  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
-  receiver_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
-  sender_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type Messages_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['messages_min_fields'] = ResolversParentTypes['messages_min_fields']> = {
-  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
-  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
-  receiver_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
-  sender_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type Messages_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['messages_mutation_response'] = ResolversParentTypes['messages_mutation_response']> = {
-  affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  returning?: Resolver<Array<ResolversTypes['messages']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type Mutation_RootResolvers<ContextType = any, ParentType extends ResolversParentTypes['mutation_root'] = ResolversParentTypes['mutation_root']> = {
+  createChatGroup?: Resolver<Maybe<ResolversTypes['CreateChatGroupResult']>, ParentType, ContextType, RequireFields<Mutation_RootCreateChatGroupArgs, 'input'>>;
   createGroup?: Resolver<ResolversTypes['CreateGroupResult'], ParentType, ContextType, RequireFields<Mutation_RootCreateGroupArgs, 'input'>>;
   createJoinToken?: Resolver<Maybe<ResolversTypes['CreateJoinTokenResult']>, ParentType, ContextType, RequireFields<Mutation_RootCreateJoinTokenArgs, 'input'>>;
   delete_activities?: Resolver<Maybe<ResolversTypes['activities_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_ActivitiesArgs, 'where'>>;
   delete_activities_by_pk?: Resolver<Maybe<ResolversTypes['activities']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Activities_By_PkArgs, 'id'>>;
   delete_activity_verb?: Resolver<Maybe<ResolversTypes['activity_verb_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Activity_VerbArgs, 'where'>>;
   delete_activity_verb_by_pk?: Resolver<Maybe<ResolversTypes['activity_verb']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Activity_Verb_By_PkArgs, 'value'>>;
+  delete_chat_group_members?: Resolver<Maybe<ResolversTypes['chat_group_members_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Chat_Group_MembersArgs, 'where'>>;
+  delete_chat_group_members_by_pk?: Resolver<Maybe<ResolversTypes['chat_group_members']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Chat_Group_Members_By_PkArgs, 'id'>>;
+  delete_chat_groups?: Resolver<Maybe<ResolversTypes['chat_groups_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Chat_GroupsArgs, 'where'>>;
+  delete_chat_groups_by_pk?: Resolver<Maybe<ResolversTypes['chat_groups']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Chat_Groups_By_PkArgs, 'id'>>;
+  delete_chat_messages?: Resolver<Maybe<ResolversTypes['chat_messages_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Chat_MessagesArgs, 'where'>>;
+  delete_chat_messages_by_pk?: Resolver<Maybe<ResolversTypes['chat_messages']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Chat_Messages_By_PkArgs, 'id'>>;
   delete_entities?: Resolver<Maybe<ResolversTypes['entities_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_EntitiesArgs, 'where'>>;
   delete_entities_by_pk?: Resolver<Maybe<ResolversTypes['entities']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Entities_By_PkArgs, 'id'>>;
   delete_file_uploads?: Resolver<Maybe<ResolversTypes['file_uploads_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_File_UploadsArgs, 'where'>>;
@@ -8773,8 +9677,6 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   delete_group_thing_by_pk?: Resolver<Maybe<ResolversTypes['group_thing']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_Thing_By_PkArgs, 'id'>>;
   delete_groups?: Resolver<Maybe<ResolversTypes['groups_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_GroupsArgs, 'where'>>;
   delete_groups_by_pk?: Resolver<Maybe<ResolversTypes['groups']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Groups_By_PkArgs, 'id'>>;
-  delete_messages?: Resolver<Maybe<ResolversTypes['messages_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_MessagesArgs, 'where'>>;
-  delete_messages_by_pk?: Resolver<Maybe<ResolversTypes['messages']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Messages_By_PkArgs, 'id'>>;
   delete_notifications?: Resolver<Maybe<ResolversTypes['notifications_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_NotificationsArgs, 'where'>>;
   delete_notifications_by_pk?: Resolver<Maybe<ResolversTypes['notifications']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Notifications_By_PkArgs, 'id'>>;
   delete_thing_images?: Resolver<Maybe<ResolversTypes['thing_images_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Thing_ImagesArgs, 'where'>>;
@@ -8793,6 +9695,12 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   insert_activities_one?: Resolver<Maybe<ResolversTypes['activities']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Activities_OneArgs, 'object'>>;
   insert_activity_verb?: Resolver<Maybe<ResolversTypes['activity_verb_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Activity_VerbArgs, 'objects'>>;
   insert_activity_verb_one?: Resolver<Maybe<ResolversTypes['activity_verb']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Activity_Verb_OneArgs, 'object'>>;
+  insert_chat_group_members?: Resolver<Maybe<ResolversTypes['chat_group_members_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Chat_Group_MembersArgs, 'objects'>>;
+  insert_chat_group_members_one?: Resolver<Maybe<ResolversTypes['chat_group_members']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Chat_Group_Members_OneArgs, 'object'>>;
+  insert_chat_groups?: Resolver<Maybe<ResolversTypes['chat_groups_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Chat_GroupsArgs, 'objects'>>;
+  insert_chat_groups_one?: Resolver<Maybe<ResolversTypes['chat_groups']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Chat_Groups_OneArgs, 'object'>>;
+  insert_chat_messages?: Resolver<Maybe<ResolversTypes['chat_messages_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Chat_MessagesArgs, 'objects'>>;
+  insert_chat_messages_one?: Resolver<Maybe<ResolversTypes['chat_messages']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Chat_Messages_OneArgs, 'object'>>;
   insert_entities?: Resolver<Maybe<ResolversTypes['entities_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_EntitiesArgs, 'objects'>>;
   insert_entities_one?: Resolver<Maybe<ResolversTypes['entities']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Entities_OneArgs, 'object'>>;
   insert_file_uploads?: Resolver<Maybe<ResolversTypes['file_uploads_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_File_UploadsArgs, 'objects'>>;
@@ -8811,8 +9719,6 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   insert_group_thing_one?: Resolver<Maybe<ResolversTypes['group_thing']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_Thing_OneArgs, 'object'>>;
   insert_groups?: Resolver<Maybe<ResolversTypes['groups_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_GroupsArgs, 'objects'>>;
   insert_groups_one?: Resolver<Maybe<ResolversTypes['groups']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Groups_OneArgs, 'object'>>;
-  insert_messages?: Resolver<Maybe<ResolversTypes['messages_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_MessagesArgs, 'objects'>>;
-  insert_messages_one?: Resolver<Maybe<ResolversTypes['messages']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Messages_OneArgs, 'object'>>;
   insert_notifications?: Resolver<Maybe<ResolversTypes['notifications_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_NotificationsArgs, 'objects'>>;
   insert_notifications_one?: Resolver<Maybe<ResolversTypes['notifications']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Notifications_OneArgs, 'object'>>;
   insert_thing_images?: Resolver<Maybe<ResolversTypes['thing_images_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Thing_ImagesArgs, 'objects'>>;
@@ -8835,6 +9741,12 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   update_activities_by_pk?: Resolver<Maybe<ResolversTypes['activities']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Activities_By_PkArgs, 'pk_columns'>>;
   update_activity_verb?: Resolver<Maybe<ResolversTypes['activity_verb_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Activity_VerbArgs, 'where'>>;
   update_activity_verb_by_pk?: Resolver<Maybe<ResolversTypes['activity_verb']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Activity_Verb_By_PkArgs, 'pk_columns'>>;
+  update_chat_group_members?: Resolver<Maybe<ResolversTypes['chat_group_members_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Chat_Group_MembersArgs, 'where'>>;
+  update_chat_group_members_by_pk?: Resolver<Maybe<ResolversTypes['chat_group_members']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Chat_Group_Members_By_PkArgs, 'pk_columns'>>;
+  update_chat_groups?: Resolver<Maybe<ResolversTypes['chat_groups_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Chat_GroupsArgs, 'where'>>;
+  update_chat_groups_by_pk?: Resolver<Maybe<ResolversTypes['chat_groups']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Chat_Groups_By_PkArgs, 'pk_columns'>>;
+  update_chat_messages?: Resolver<Maybe<ResolversTypes['chat_messages_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Chat_MessagesArgs, 'where'>>;
+  update_chat_messages_by_pk?: Resolver<Maybe<ResolversTypes['chat_messages']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Chat_Messages_By_PkArgs, 'pk_columns'>>;
   update_entities?: Resolver<Maybe<ResolversTypes['entities_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_EntitiesArgs, 'where'>>;
   update_entities_by_pk?: Resolver<Maybe<ResolversTypes['entities']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Entities_By_PkArgs, 'pk_columns'>>;
   update_file_uploads?: Resolver<Maybe<ResolversTypes['file_uploads_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_File_UploadsArgs, 'where'>>;
@@ -8853,8 +9765,6 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   update_group_thing_by_pk?: Resolver<Maybe<ResolversTypes['group_thing']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_Thing_By_PkArgs, 'pk_columns'>>;
   update_groups?: Resolver<Maybe<ResolversTypes['groups_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_GroupsArgs, 'where'>>;
   update_groups_by_pk?: Resolver<Maybe<ResolversTypes['groups']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Groups_By_PkArgs, 'pk_columns'>>;
-  update_messages?: Resolver<Maybe<ResolversTypes['messages_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_MessagesArgs, 'where'>>;
-  update_messages_by_pk?: Resolver<Maybe<ResolversTypes['messages']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Messages_By_PkArgs, 'pk_columns'>>;
   update_notifications?: Resolver<Maybe<ResolversTypes['notifications_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_NotificationsArgs, 'where'>>;
   update_notifications_by_pk?: Resolver<Maybe<ResolversTypes['notifications']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Notifications_By_PkArgs, 'pk_columns'>>;
   update_thing_images?: Resolver<Maybe<ResolversTypes['thing_images_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Thing_ImagesArgs, 'where'>>;
@@ -8925,6 +9835,15 @@ export type Query_RootResolvers<ContextType = any, ParentType extends ResolversP
   activity_verb?: Resolver<Array<ResolversTypes['activity_verb']>, ParentType, ContextType, RequireFields<Query_RootActivity_VerbArgs, never>>;
   activity_verb_aggregate?: Resolver<ResolversTypes['activity_verb_aggregate'], ParentType, ContextType, RequireFields<Query_RootActivity_Verb_AggregateArgs, never>>;
   activity_verb_by_pk?: Resolver<Maybe<ResolversTypes['activity_verb']>, ParentType, ContextType, RequireFields<Query_RootActivity_Verb_By_PkArgs, 'value'>>;
+  chat_group_members?: Resolver<Array<ResolversTypes['chat_group_members']>, ParentType, ContextType, RequireFields<Query_RootChat_Group_MembersArgs, never>>;
+  chat_group_members_aggregate?: Resolver<ResolversTypes['chat_group_members_aggregate'], ParentType, ContextType, RequireFields<Query_RootChat_Group_Members_AggregateArgs, never>>;
+  chat_group_members_by_pk?: Resolver<Maybe<ResolversTypes['chat_group_members']>, ParentType, ContextType, RequireFields<Query_RootChat_Group_Members_By_PkArgs, 'id'>>;
+  chat_groups?: Resolver<Array<ResolversTypes['chat_groups']>, ParentType, ContextType, RequireFields<Query_RootChat_GroupsArgs, never>>;
+  chat_groups_aggregate?: Resolver<ResolversTypes['chat_groups_aggregate'], ParentType, ContextType, RequireFields<Query_RootChat_Groups_AggregateArgs, never>>;
+  chat_groups_by_pk?: Resolver<Maybe<ResolversTypes['chat_groups']>, ParentType, ContextType, RequireFields<Query_RootChat_Groups_By_PkArgs, 'id'>>;
+  chat_messages?: Resolver<Array<ResolversTypes['chat_messages']>, ParentType, ContextType, RequireFields<Query_RootChat_MessagesArgs, never>>;
+  chat_messages_aggregate?: Resolver<ResolversTypes['chat_messages_aggregate'], ParentType, ContextType, RequireFields<Query_RootChat_Messages_AggregateArgs, never>>;
+  chat_messages_by_pk?: Resolver<Maybe<ResolversTypes['chat_messages']>, ParentType, ContextType, RequireFields<Query_RootChat_Messages_By_PkArgs, 'id'>>;
   entities?: Resolver<Array<ResolversTypes['entities']>, ParentType, ContextType, RequireFields<Query_RootEntitiesArgs, never>>;
   entities_aggregate?: Resolver<ResolversTypes['entities_aggregate'], ParentType, ContextType, RequireFields<Query_RootEntities_AggregateArgs, never>>;
   entities_by_pk?: Resolver<Maybe<ResolversTypes['entities']>, ParentType, ContextType, RequireFields<Query_RootEntities_By_PkArgs, 'id'>>;
@@ -8952,9 +9871,6 @@ export type Query_RootResolvers<ContextType = any, ParentType extends ResolversP
   groups?: Resolver<Array<ResolversTypes['groups']>, ParentType, ContextType, RequireFields<Query_RootGroupsArgs, never>>;
   groups_aggregate?: Resolver<ResolversTypes['groups_aggregate'], ParentType, ContextType, RequireFields<Query_RootGroups_AggregateArgs, never>>;
   groups_by_pk?: Resolver<Maybe<ResolversTypes['groups']>, ParentType, ContextType, RequireFields<Query_RootGroups_By_PkArgs, 'id'>>;
-  messages?: Resolver<Array<ResolversTypes['messages']>, ParentType, ContextType, RequireFields<Query_RootMessagesArgs, never>>;
-  messages_aggregate?: Resolver<ResolversTypes['messages_aggregate'], ParentType, ContextType, RequireFields<Query_RootMessages_AggregateArgs, never>>;
-  messages_by_pk?: Resolver<Maybe<ResolversTypes['messages']>, ParentType, ContextType, RequireFields<Query_RootMessages_By_PkArgs, 'id'>>;
   notifications?: Resolver<Array<ResolversTypes['notifications']>, ParentType, ContextType, RequireFields<Query_RootNotificationsArgs, never>>;
   notifications_aggregate?: Resolver<ResolversTypes['notifications_aggregate'], ParentType, ContextType, RequireFields<Query_RootNotifications_AggregateArgs, never>>;
   notifications_by_pk?: Resolver<Maybe<ResolversTypes['notifications']>, ParentType, ContextType, RequireFields<Query_RootNotifications_By_PkArgs, 'id'>>;
@@ -8984,6 +9900,15 @@ export type Subscription_RootResolvers<ContextType = any, ParentType extends Res
   activity_verb?: SubscriptionResolver<Array<ResolversTypes['activity_verb']>, "activity_verb", ParentType, ContextType, RequireFields<Subscription_RootActivity_VerbArgs, never>>;
   activity_verb_aggregate?: SubscriptionResolver<ResolversTypes['activity_verb_aggregate'], "activity_verb_aggregate", ParentType, ContextType, RequireFields<Subscription_RootActivity_Verb_AggregateArgs, never>>;
   activity_verb_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['activity_verb']>, "activity_verb_by_pk", ParentType, ContextType, RequireFields<Subscription_RootActivity_Verb_By_PkArgs, 'value'>>;
+  chat_group_members?: SubscriptionResolver<Array<ResolversTypes['chat_group_members']>, "chat_group_members", ParentType, ContextType, RequireFields<Subscription_RootChat_Group_MembersArgs, never>>;
+  chat_group_members_aggregate?: SubscriptionResolver<ResolversTypes['chat_group_members_aggregate'], "chat_group_members_aggregate", ParentType, ContextType, RequireFields<Subscription_RootChat_Group_Members_AggregateArgs, never>>;
+  chat_group_members_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['chat_group_members']>, "chat_group_members_by_pk", ParentType, ContextType, RequireFields<Subscription_RootChat_Group_Members_By_PkArgs, 'id'>>;
+  chat_groups?: SubscriptionResolver<Array<ResolversTypes['chat_groups']>, "chat_groups", ParentType, ContextType, RequireFields<Subscription_RootChat_GroupsArgs, never>>;
+  chat_groups_aggregate?: SubscriptionResolver<ResolversTypes['chat_groups_aggregate'], "chat_groups_aggregate", ParentType, ContextType, RequireFields<Subscription_RootChat_Groups_AggregateArgs, never>>;
+  chat_groups_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['chat_groups']>, "chat_groups_by_pk", ParentType, ContextType, RequireFields<Subscription_RootChat_Groups_By_PkArgs, 'id'>>;
+  chat_messages?: SubscriptionResolver<Array<ResolversTypes['chat_messages']>, "chat_messages", ParentType, ContextType, RequireFields<Subscription_RootChat_MessagesArgs, never>>;
+  chat_messages_aggregate?: SubscriptionResolver<ResolversTypes['chat_messages_aggregate'], "chat_messages_aggregate", ParentType, ContextType, RequireFields<Subscription_RootChat_Messages_AggregateArgs, never>>;
+  chat_messages_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['chat_messages']>, "chat_messages_by_pk", ParentType, ContextType, RequireFields<Subscription_RootChat_Messages_By_PkArgs, 'id'>>;
   entities?: SubscriptionResolver<Array<ResolversTypes['entities']>, "entities", ParentType, ContextType, RequireFields<Subscription_RootEntitiesArgs, never>>;
   entities_aggregate?: SubscriptionResolver<ResolversTypes['entities_aggregate'], "entities_aggregate", ParentType, ContextType, RequireFields<Subscription_RootEntities_AggregateArgs, never>>;
   entities_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['entities']>, "entities_by_pk", ParentType, ContextType, RequireFields<Subscription_RootEntities_By_PkArgs, 'id'>>;
@@ -9011,9 +9936,6 @@ export type Subscription_RootResolvers<ContextType = any, ParentType extends Res
   groups?: SubscriptionResolver<Array<ResolversTypes['groups']>, "groups", ParentType, ContextType, RequireFields<Subscription_RootGroupsArgs, never>>;
   groups_aggregate?: SubscriptionResolver<ResolversTypes['groups_aggregate'], "groups_aggregate", ParentType, ContextType, RequireFields<Subscription_RootGroups_AggregateArgs, never>>;
   groups_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['groups']>, "groups_by_pk", ParentType, ContextType, RequireFields<Subscription_RootGroups_By_PkArgs, 'id'>>;
-  messages?: SubscriptionResolver<Array<ResolversTypes['messages']>, "messages", ParentType, ContextType, RequireFields<Subscription_RootMessagesArgs, never>>;
-  messages_aggregate?: SubscriptionResolver<ResolversTypes['messages_aggregate'], "messages_aggregate", ParentType, ContextType, RequireFields<Subscription_RootMessages_AggregateArgs, never>>;
-  messages_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['messages']>, "messages_by_pk", ParentType, ContextType, RequireFields<Subscription_RootMessages_By_PkArgs, 'id'>>;
   notifications?: SubscriptionResolver<Array<ResolversTypes['notifications']>, "notifications", ParentType, ContextType, RequireFields<Subscription_RootNotificationsArgs, never>>;
   notifications_aggregate?: SubscriptionResolver<ResolversTypes['notifications_aggregate'], "notifications_aggregate", ParentType, ContextType, RequireFields<Subscription_RootNotifications_AggregateArgs, never>>;
   notifications_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['notifications']>, "notifications_by_pk", ParentType, ContextType, RequireFields<Subscription_RootNotifications_By_PkArgs, 'id'>>;
@@ -9448,6 +10370,7 @@ export type Verification_Requests_Variance_FieldsResolvers<ContextType = any, Pa
 };
 
 export type Resolvers<ContextType = any> = {
+  CreateChatGroupResult?: CreateChatGroupResultResolvers<ContextType>;
   CreateGroupResult?: CreateGroupResultResolvers<ContextType>;
   CreateJoinTokenResult?: CreateJoinTokenResultResolvers<ContextType>;
   HandleJoinRequestOutput?: HandleJoinRequestOutputResolvers<ContextType>;
@@ -9468,6 +10391,24 @@ export type Resolvers<ContextType = any> = {
   activity_verb_max_fields?: Activity_Verb_Max_FieldsResolvers<ContextType>;
   activity_verb_min_fields?: Activity_Verb_Min_FieldsResolvers<ContextType>;
   activity_verb_mutation_response?: Activity_Verb_Mutation_ResponseResolvers<ContextType>;
+  chat_group_members?: Chat_Group_MembersResolvers<ContextType>;
+  chat_group_members_aggregate?: Chat_Group_Members_AggregateResolvers<ContextType>;
+  chat_group_members_aggregate_fields?: Chat_Group_Members_Aggregate_FieldsResolvers<ContextType>;
+  chat_group_members_max_fields?: Chat_Group_Members_Max_FieldsResolvers<ContextType>;
+  chat_group_members_min_fields?: Chat_Group_Members_Min_FieldsResolvers<ContextType>;
+  chat_group_members_mutation_response?: Chat_Group_Members_Mutation_ResponseResolvers<ContextType>;
+  chat_groups?: Chat_GroupsResolvers<ContextType>;
+  chat_groups_aggregate?: Chat_Groups_AggregateResolvers<ContextType>;
+  chat_groups_aggregate_fields?: Chat_Groups_Aggregate_FieldsResolvers<ContextType>;
+  chat_groups_max_fields?: Chat_Groups_Max_FieldsResolvers<ContextType>;
+  chat_groups_min_fields?: Chat_Groups_Min_FieldsResolvers<ContextType>;
+  chat_groups_mutation_response?: Chat_Groups_Mutation_ResponseResolvers<ContextType>;
+  chat_messages?: Chat_MessagesResolvers<ContextType>;
+  chat_messages_aggregate?: Chat_Messages_AggregateResolvers<ContextType>;
+  chat_messages_aggregate_fields?: Chat_Messages_Aggregate_FieldsResolvers<ContextType>;
+  chat_messages_max_fields?: Chat_Messages_Max_FieldsResolvers<ContextType>;
+  chat_messages_min_fields?: Chat_Messages_Min_FieldsResolvers<ContextType>;
+  chat_messages_mutation_response?: Chat_Messages_Mutation_ResponseResolvers<ContextType>;
   create_group_result?: Create_Group_ResultResolvers<ContextType>;
   date?: GraphQLScalarType;
   entities?: EntitiesResolvers<ContextType>;
@@ -9533,12 +10474,6 @@ export type Resolvers<ContextType = any> = {
   groups_min_fields?: Groups_Min_FieldsResolvers<ContextType>;
   groups_mutation_response?: Groups_Mutation_ResponseResolvers<ContextType>;
   json?: GraphQLScalarType;
-  messages?: MessagesResolvers<ContextType>;
-  messages_aggregate?: Messages_AggregateResolvers<ContextType>;
-  messages_aggregate_fields?: Messages_Aggregate_FieldsResolvers<ContextType>;
-  messages_max_fields?: Messages_Max_FieldsResolvers<ContextType>;
-  messages_min_fields?: Messages_Min_FieldsResolvers<ContextType>;
-  messages_mutation_response?: Messages_Mutation_ResponseResolvers<ContextType>;
   mutation_root?: Mutation_RootResolvers<ContextType>;
   notifications?: NotificationsResolvers<ContextType>;
   notifications_aggregate?: Notifications_AggregateResolvers<ContextType>;
@@ -9611,8 +10546,10 @@ export type Resolvers<ContextType = any> = {
  */
 export type IResolvers<ContextType = any> = Resolvers<ContextType>;
 
-
+export const ServerChatGroupFragmentDoc: DocumentNode<ServerChatGroupFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ServerChatGroup"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"chat_groups"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"members"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]}}]};
 export const ServerInsertActivitiesDocument: DocumentNode<ServerInsertActivitiesMutation, ServerInsertActivitiesMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertActivities"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"activities_insert_input"}}}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_activities"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]}}]};
+export const ServerFindChatGroupDocument: DocumentNode<ServerFindChatGroupQuery, ServerFindChatGroupQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindChatGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_groups_bool_exp"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat_groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ServerChatGroup"},"directives":[]}]}}]}},...ServerChatGroupFragmentDoc.definitions]};
+export const ServerCreateChatGroupDocument: DocumentNode<ServerCreateChatGroupMutation, ServerCreateChatGroupMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerCreateChatGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_groups_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_chat_groups_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerFindGroupDocument: DocumentNode<ServerFindGroupQuery, ServerFindGroupQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"groups_bool_exp"}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerFindGroupJoinRequestDocument: DocumentNode<ServerFindGroupJoinRequestQuery, ServerFindGroupJoinRequestQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindGroupJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_join_requests_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"user_id"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerFindJoinTokenDocument: DocumentNode<ServerFindJoinTokenQuery, ServerFindJoinTokenQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindJoinToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens_bool_exp"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_join_tokens"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"token"},"arguments":[],"directives":[]}]}}]}}]};

@@ -23,7 +23,14 @@ fragment GroupCard on groups {
         }
     }
 
-    thing_relations_aggregate {
+    thing_relations_aggregate(
+        where: {
+            thing: {
+                enabled: { _eq: true }
+                _or: [{ expiry: { _gt: "now()" } }, { expiry: { _is_null: true } }]
+            }
+        }
+    ) {
         aggregate {
             count
         }

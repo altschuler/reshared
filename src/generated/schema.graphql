@@ -19,6 +19,16 @@ input Boolean_comparison_exp {
   _nin: [Boolean!]
 }
 
+input CreateChatGroupInput {
+  message: String
+  receiverIds: [uuid!]!
+}
+
+type CreateChatGroupResult {
+  chat_group: chat_groups
+  chat_group_id: uuid!
+}
+
 input CreateGroupInput {
   description: String!
   name: String!
@@ -647,6 +657,721 @@ enum activity_verb_update_column {
 
   """column name"""
   value
+}
+
+"""
+columns and relationships of "chat_group_members"
+"""
+type chat_group_members {
+  """An object relationship"""
+  chat_group: chat_groups!
+  chat_group_id: uuid!
+  id: uuid!
+  last_read: timestamptz
+
+  """An object relationship"""
+  user: users!
+  user_id: uuid!
+}
+
+"""
+aggregated selection of "chat_group_members"
+"""
+type chat_group_members_aggregate {
+  aggregate: chat_group_members_aggregate_fields
+  nodes: [chat_group_members!]!
+}
+
+"""
+aggregate fields of "chat_group_members"
+"""
+type chat_group_members_aggregate_fields {
+  count(columns: [chat_group_members_select_column!], distinct: Boolean): Int
+  max: chat_group_members_max_fields
+  min: chat_group_members_min_fields
+}
+
+"""
+order by aggregate values of table "chat_group_members"
+"""
+input chat_group_members_aggregate_order_by {
+  count: order_by
+  max: chat_group_members_max_order_by
+  min: chat_group_members_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "chat_group_members"
+"""
+input chat_group_members_arr_rel_insert_input {
+  data: [chat_group_members_insert_input!]!
+  on_conflict: chat_group_members_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "chat_group_members". All fields are combined with a logical 'AND'.
+"""
+input chat_group_members_bool_exp {
+  _and: [chat_group_members_bool_exp]
+  _not: chat_group_members_bool_exp
+  _or: [chat_group_members_bool_exp]
+  chat_group: chat_groups_bool_exp
+  chat_group_id: uuid_comparison_exp
+  id: uuid_comparison_exp
+  last_read: timestamptz_comparison_exp
+  user: users_bool_exp
+  user_id: uuid_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "chat_group_members"
+"""
+enum chat_group_members_constraint {
+  """unique or primary key constraint"""
+  chat_group_members_pkey
+}
+
+"""
+input type for inserting data into table "chat_group_members"
+"""
+input chat_group_members_insert_input {
+  chat_group: chat_groups_obj_rel_insert_input
+  chat_group_id: uuid
+  id: uuid
+  last_read: timestamptz
+  user: users_obj_rel_insert_input
+  user_id: uuid
+}
+
+"""aggregate max on columns"""
+type chat_group_members_max_fields {
+  chat_group_id: uuid
+  id: uuid
+  last_read: timestamptz
+  user_id: uuid
+}
+
+"""
+order by max() on columns of table "chat_group_members"
+"""
+input chat_group_members_max_order_by {
+  chat_group_id: order_by
+  id: order_by
+  last_read: order_by
+  user_id: order_by
+}
+
+"""aggregate min on columns"""
+type chat_group_members_min_fields {
+  chat_group_id: uuid
+  id: uuid
+  last_read: timestamptz
+  user_id: uuid
+}
+
+"""
+order by min() on columns of table "chat_group_members"
+"""
+input chat_group_members_min_order_by {
+  chat_group_id: order_by
+  id: order_by
+  last_read: order_by
+  user_id: order_by
+}
+
+"""
+response of any mutation on the table "chat_group_members"
+"""
+type chat_group_members_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [chat_group_members!]!
+}
+
+"""
+input type for inserting object relation for remote table "chat_group_members"
+"""
+input chat_group_members_obj_rel_insert_input {
+  data: chat_group_members_insert_input!
+  on_conflict: chat_group_members_on_conflict
+}
+
+"""
+on conflict condition type for table "chat_group_members"
+"""
+input chat_group_members_on_conflict {
+  constraint: chat_group_members_constraint!
+  update_columns: [chat_group_members_update_column!]!
+  where: chat_group_members_bool_exp
+}
+
+"""
+ordering options when selecting data from "chat_group_members"
+"""
+input chat_group_members_order_by {
+  chat_group: chat_groups_order_by
+  chat_group_id: order_by
+  id: order_by
+  last_read: order_by
+  user: users_order_by
+  user_id: order_by
+}
+
+"""
+primary key columns input for table: "chat_group_members"
+"""
+input chat_group_members_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "chat_group_members"
+"""
+enum chat_group_members_select_column {
+  """column name"""
+  chat_group_id
+
+  """column name"""
+  id
+
+  """column name"""
+  last_read
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "chat_group_members"
+"""
+input chat_group_members_set_input {
+  chat_group_id: uuid
+  id: uuid
+  last_read: timestamptz
+  user_id: uuid
+}
+
+"""
+update columns of table "chat_group_members"
+"""
+enum chat_group_members_update_column {
+  """column name"""
+  chat_group_id
+
+  """column name"""
+  id
+
+  """column name"""
+  last_read
+
+  """column name"""
+  user_id
+}
+
+"""
+columns and relationships of "chat_groups"
+"""
+type chat_groups {
+  created_at: timestamptz!
+  id: uuid!
+
+  """An array relationship"""
+  members(
+    """distinct select on columns"""
+    distinct_on: [chat_group_members_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_group_members_order_by!]
+
+    """filter the rows returned"""
+    where: chat_group_members_bool_exp
+  ): [chat_group_members!]!
+
+  """An aggregated array relationship"""
+  members_aggregate(
+    """distinct select on columns"""
+    distinct_on: [chat_group_members_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_group_members_order_by!]
+
+    """filter the rows returned"""
+    where: chat_group_members_bool_exp
+  ): chat_group_members_aggregate!
+
+  """An array relationship"""
+  messages(
+    """distinct select on columns"""
+    distinct_on: [chat_messages_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_messages_order_by!]
+
+    """filter the rows returned"""
+    where: chat_messages_bool_exp
+  ): [chat_messages!]!
+
+  """An aggregated array relationship"""
+  messages_aggregate(
+    """distinct select on columns"""
+    distinct_on: [chat_messages_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_messages_order_by!]
+
+    """filter the rows returned"""
+    where: chat_messages_bool_exp
+  ): chat_messages_aggregate!
+  name: String!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "chat_groups"
+"""
+type chat_groups_aggregate {
+  aggregate: chat_groups_aggregate_fields
+  nodes: [chat_groups!]!
+}
+
+"""
+aggregate fields of "chat_groups"
+"""
+type chat_groups_aggregate_fields {
+  count(columns: [chat_groups_select_column!], distinct: Boolean): Int
+  max: chat_groups_max_fields
+  min: chat_groups_min_fields
+}
+
+"""
+order by aggregate values of table "chat_groups"
+"""
+input chat_groups_aggregate_order_by {
+  count: order_by
+  max: chat_groups_max_order_by
+  min: chat_groups_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "chat_groups"
+"""
+input chat_groups_arr_rel_insert_input {
+  data: [chat_groups_insert_input!]!
+  on_conflict: chat_groups_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "chat_groups". All fields are combined with a logical 'AND'.
+"""
+input chat_groups_bool_exp {
+  _and: [chat_groups_bool_exp]
+  _not: chat_groups_bool_exp
+  _or: [chat_groups_bool_exp]
+  created_at: timestamptz_comparison_exp
+  id: uuid_comparison_exp
+  members: chat_group_members_bool_exp
+  messages: chat_messages_bool_exp
+  name: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "chat_groups"
+"""
+enum chat_groups_constraint {
+  """unique or primary key constraint"""
+  chat_groups_pkey
+}
+
+"""
+input type for inserting data into table "chat_groups"
+"""
+input chat_groups_insert_input {
+  created_at: timestamptz
+  id: uuid
+  members: chat_group_members_arr_rel_insert_input
+  messages: chat_messages_arr_rel_insert_input
+  name: String
+  updated_at: timestamptz
+}
+
+"""aggregate max on columns"""
+type chat_groups_max_fields {
+  created_at: timestamptz
+  id: uuid
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "chat_groups"
+"""
+input chat_groups_max_order_by {
+  created_at: order_by
+  id: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""aggregate min on columns"""
+type chat_groups_min_fields {
+  created_at: timestamptz
+  id: uuid
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "chat_groups"
+"""
+input chat_groups_min_order_by {
+  created_at: order_by
+  id: order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""
+response of any mutation on the table "chat_groups"
+"""
+type chat_groups_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [chat_groups!]!
+}
+
+"""
+input type for inserting object relation for remote table "chat_groups"
+"""
+input chat_groups_obj_rel_insert_input {
+  data: chat_groups_insert_input!
+  on_conflict: chat_groups_on_conflict
+}
+
+"""
+on conflict condition type for table "chat_groups"
+"""
+input chat_groups_on_conflict {
+  constraint: chat_groups_constraint!
+  update_columns: [chat_groups_update_column!]!
+  where: chat_groups_bool_exp
+}
+
+"""
+ordering options when selecting data from "chat_groups"
+"""
+input chat_groups_order_by {
+  created_at: order_by
+  id: order_by
+  members_aggregate: chat_group_members_aggregate_order_by
+  messages_aggregate: chat_messages_aggregate_order_by
+  name: order_by
+  updated_at: order_by
+}
+
+"""
+primary key columns input for table: "chat_groups"
+"""
+input chat_groups_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "chat_groups"
+"""
+enum chat_groups_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "chat_groups"
+"""
+input chat_groups_set_input {
+  created_at: timestamptz
+  id: uuid
+  name: String
+  updated_at: timestamptz
+}
+
+"""
+update columns of table "chat_groups"
+"""
+enum chat_groups_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+
+  """column name"""
+  updated_at
+}
+
+"""
+columns and relationships of "chat_messages"
+"""
+type chat_messages {
+  """An object relationship"""
+  chat_group: chat_groups!
+  chat_group_id: uuid!
+  created_at: timestamptz!
+  id: uuid!
+  message: String!
+
+  """An object relationship"""
+  sender: users!
+  sender_id: uuid!
+}
+
+"""
+aggregated selection of "chat_messages"
+"""
+type chat_messages_aggregate {
+  aggregate: chat_messages_aggregate_fields
+  nodes: [chat_messages!]!
+}
+
+"""
+aggregate fields of "chat_messages"
+"""
+type chat_messages_aggregate_fields {
+  count(columns: [chat_messages_select_column!], distinct: Boolean): Int
+  max: chat_messages_max_fields
+  min: chat_messages_min_fields
+}
+
+"""
+order by aggregate values of table "chat_messages"
+"""
+input chat_messages_aggregate_order_by {
+  count: order_by
+  max: chat_messages_max_order_by
+  min: chat_messages_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "chat_messages"
+"""
+input chat_messages_arr_rel_insert_input {
+  data: [chat_messages_insert_input!]!
+  on_conflict: chat_messages_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "chat_messages". All fields are combined with a logical 'AND'.
+"""
+input chat_messages_bool_exp {
+  _and: [chat_messages_bool_exp]
+  _not: chat_messages_bool_exp
+  _or: [chat_messages_bool_exp]
+  chat_group: chat_groups_bool_exp
+  chat_group_id: uuid_comparison_exp
+  created_at: timestamptz_comparison_exp
+  id: uuid_comparison_exp
+  message: String_comparison_exp
+  sender: users_bool_exp
+  sender_id: uuid_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "chat_messages"
+"""
+enum chat_messages_constraint {
+  """unique or primary key constraint"""
+  messages_pkey
+}
+
+"""
+input type for inserting data into table "chat_messages"
+"""
+input chat_messages_insert_input {
+  chat_group: chat_groups_obj_rel_insert_input
+  chat_group_id: uuid
+  created_at: timestamptz
+  id: uuid
+  message: String
+  sender: users_obj_rel_insert_input
+  sender_id: uuid
+}
+
+"""aggregate max on columns"""
+type chat_messages_max_fields {
+  chat_group_id: uuid
+  created_at: timestamptz
+  id: uuid
+  message: String
+  sender_id: uuid
+}
+
+"""
+order by max() on columns of table "chat_messages"
+"""
+input chat_messages_max_order_by {
+  chat_group_id: order_by
+  created_at: order_by
+  id: order_by
+  message: order_by
+  sender_id: order_by
+}
+
+"""aggregate min on columns"""
+type chat_messages_min_fields {
+  chat_group_id: uuid
+  created_at: timestamptz
+  id: uuid
+  message: String
+  sender_id: uuid
+}
+
+"""
+order by min() on columns of table "chat_messages"
+"""
+input chat_messages_min_order_by {
+  chat_group_id: order_by
+  created_at: order_by
+  id: order_by
+  message: order_by
+  sender_id: order_by
+}
+
+"""
+response of any mutation on the table "chat_messages"
+"""
+type chat_messages_mutation_response {
+  """number of affected rows by the mutation"""
+  affected_rows: Int!
+
+  """data of the affected rows by the mutation"""
+  returning: [chat_messages!]!
+}
+
+"""
+input type for inserting object relation for remote table "chat_messages"
+"""
+input chat_messages_obj_rel_insert_input {
+  data: chat_messages_insert_input!
+  on_conflict: chat_messages_on_conflict
+}
+
+"""
+on conflict condition type for table "chat_messages"
+"""
+input chat_messages_on_conflict {
+  constraint: chat_messages_constraint!
+  update_columns: [chat_messages_update_column!]!
+  where: chat_messages_bool_exp
+}
+
+"""
+ordering options when selecting data from "chat_messages"
+"""
+input chat_messages_order_by {
+  chat_group: chat_groups_order_by
+  chat_group_id: order_by
+  created_at: order_by
+  id: order_by
+  message: order_by
+  sender: users_order_by
+  sender_id: order_by
+}
+
+"""
+primary key columns input for table: "chat_messages"
+"""
+input chat_messages_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "chat_messages"
+"""
+enum chat_messages_select_column {
+  """column name"""
+  chat_group_id
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  message
+
+  """column name"""
+  sender_id
+}
+
+"""
+input type for updating data in table "chat_messages"
+"""
+input chat_messages_set_input {
+  chat_group_id: uuid
+  created_at: timestamptz
+  id: uuid
+  message: String
+  sender_id: uuid
+}
+
+"""
+update columns of table "chat_messages"
+"""
+enum chat_messages_update_column {
+  """column name"""
+  chat_group_id
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  message
+
+  """column name"""
+  sender_id
 }
 
 input create_group_input {
@@ -3104,208 +3829,13 @@ enum groups_update_column {
 
 scalar json
 
-"""
-columns and relationships of "messages"
-"""
-type messages {
-  created_at: timestamptz!
-  id: uuid!
-  receiver_id: uuid!
-  sender_id: uuid!
-}
-
-"""
-aggregated selection of "messages"
-"""
-type messages_aggregate {
-  aggregate: messages_aggregate_fields
-  nodes: [messages!]!
-}
-
-"""
-aggregate fields of "messages"
-"""
-type messages_aggregate_fields {
-  count(columns: [messages_select_column!], distinct: Boolean): Int
-  max: messages_max_fields
-  min: messages_min_fields
-}
-
-"""
-order by aggregate values of table "messages"
-"""
-input messages_aggregate_order_by {
-  count: order_by
-  max: messages_max_order_by
-  min: messages_min_order_by
-}
-
-"""
-input type for inserting array relation for remote table "messages"
-"""
-input messages_arr_rel_insert_input {
-  data: [messages_insert_input!]!
-  on_conflict: messages_on_conflict
-}
-
-"""
-Boolean expression to filter rows from the table "messages". All fields are combined with a logical 'AND'.
-"""
-input messages_bool_exp {
-  _and: [messages_bool_exp]
-  _not: messages_bool_exp
-  _or: [messages_bool_exp]
-  created_at: timestamptz_comparison_exp
-  id: uuid_comparison_exp
-  receiver_id: uuid_comparison_exp
-  sender_id: uuid_comparison_exp
-}
-
-"""
-unique or primary key constraints on table "messages"
-"""
-enum messages_constraint {
-  """unique or primary key constraint"""
-  messages_pkey
-}
-
-"""
-input type for inserting data into table "messages"
-"""
-input messages_insert_input {
-  created_at: timestamptz
-  id: uuid
-  receiver_id: uuid
-  sender_id: uuid
-}
-
-"""aggregate max on columns"""
-type messages_max_fields {
-  created_at: timestamptz
-  id: uuid
-  receiver_id: uuid
-  sender_id: uuid
-}
-
-"""
-order by max() on columns of table "messages"
-"""
-input messages_max_order_by {
-  created_at: order_by
-  id: order_by
-  receiver_id: order_by
-  sender_id: order_by
-}
-
-"""aggregate min on columns"""
-type messages_min_fields {
-  created_at: timestamptz
-  id: uuid
-  receiver_id: uuid
-  sender_id: uuid
-}
-
-"""
-order by min() on columns of table "messages"
-"""
-input messages_min_order_by {
-  created_at: order_by
-  id: order_by
-  receiver_id: order_by
-  sender_id: order_by
-}
-
-"""
-response of any mutation on the table "messages"
-"""
-type messages_mutation_response {
-  """number of affected rows by the mutation"""
-  affected_rows: Int!
-
-  """data of the affected rows by the mutation"""
-  returning: [messages!]!
-}
-
-"""
-input type for inserting object relation for remote table "messages"
-"""
-input messages_obj_rel_insert_input {
-  data: messages_insert_input!
-  on_conflict: messages_on_conflict
-}
-
-"""
-on conflict condition type for table "messages"
-"""
-input messages_on_conflict {
-  constraint: messages_constraint!
-  update_columns: [messages_update_column!]!
-  where: messages_bool_exp
-}
-
-"""
-ordering options when selecting data from "messages"
-"""
-input messages_order_by {
-  created_at: order_by
-  id: order_by
-  receiver_id: order_by
-  sender_id: order_by
-}
-
-"""
-primary key columns input for table: "messages"
-"""
-input messages_pk_columns_input {
-  id: uuid!
-}
-
-"""
-select columns of table "messages"
-"""
-enum messages_select_column {
-  """column name"""
-  created_at
-
-  """column name"""
-  id
-
-  """column name"""
-  receiver_id
-
-  """column name"""
-  sender_id
-}
-
-"""
-input type for updating data in table "messages"
-"""
-input messages_set_input {
-  created_at: timestamptz
-  id: uuid
-  receiver_id: uuid
-  sender_id: uuid
-}
-
-"""
-update columns of table "messages"
-"""
-enum messages_update_column {
-  """column name"""
-  created_at
-
-  """column name"""
-  id
-
-  """column name"""
-  receiver_id
-
-  """column name"""
-  sender_id
-}
-
 """mutation root"""
 type mutation_root {
+  """
+  perform the action: "createChatGroup"
+  """
+  createChatGroup(input: CreateChatGroupInput!): CreateChatGroupResult
+
   """
   perform the action: "createGroup"
   """
@@ -3341,6 +3871,45 @@ type mutation_root {
   delete single row from the table: "activity_verb"
   """
   delete_activity_verb_by_pk(value: String!): activity_verb
+
+  """
+  delete data from the table: "chat_group_members"
+  """
+  delete_chat_group_members(
+    """filter the rows which have to be deleted"""
+    where: chat_group_members_bool_exp!
+  ): chat_group_members_mutation_response
+
+  """
+  delete single row from the table: "chat_group_members"
+  """
+  delete_chat_group_members_by_pk(id: uuid!): chat_group_members
+
+  """
+  delete data from the table: "chat_groups"
+  """
+  delete_chat_groups(
+    """filter the rows which have to be deleted"""
+    where: chat_groups_bool_exp!
+  ): chat_groups_mutation_response
+
+  """
+  delete single row from the table: "chat_groups"
+  """
+  delete_chat_groups_by_pk(id: uuid!): chat_groups
+
+  """
+  delete data from the table: "chat_messages"
+  """
+  delete_chat_messages(
+    """filter the rows which have to be deleted"""
+    where: chat_messages_bool_exp!
+  ): chat_messages_mutation_response
+
+  """
+  delete single row from the table: "chat_messages"
+  """
+  delete_chat_messages_by_pk(id: uuid!): chat_messages
 
   """
   delete data from the table: "entities"
@@ -3458,19 +4027,6 @@ type mutation_root {
   delete single row from the table: "groups"
   """
   delete_groups_by_pk(id: uuid!): groups
-
-  """
-  delete data from the table: "messages"
-  """
-  delete_messages(
-    """filter the rows which have to be deleted"""
-    where: messages_bool_exp!
-  ): messages_mutation_response
-
-  """
-  delete single row from the table: "messages"
-  """
-  delete_messages_by_pk(id: uuid!): messages
 
   """
   delete data from the table: "notifications"
@@ -3606,6 +4162,72 @@ type mutation_root {
     """on conflict condition"""
     on_conflict: activity_verb_on_conflict
   ): activity_verb
+
+  """
+  insert data into the table: "chat_group_members"
+  """
+  insert_chat_group_members(
+    """the rows to be inserted"""
+    objects: [chat_group_members_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: chat_group_members_on_conflict
+  ): chat_group_members_mutation_response
+
+  """
+  insert a single row into the table: "chat_group_members"
+  """
+  insert_chat_group_members_one(
+    """the row to be inserted"""
+    object: chat_group_members_insert_input!
+
+    """on conflict condition"""
+    on_conflict: chat_group_members_on_conflict
+  ): chat_group_members
+
+  """
+  insert data into the table: "chat_groups"
+  """
+  insert_chat_groups(
+    """the rows to be inserted"""
+    objects: [chat_groups_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: chat_groups_on_conflict
+  ): chat_groups_mutation_response
+
+  """
+  insert a single row into the table: "chat_groups"
+  """
+  insert_chat_groups_one(
+    """the row to be inserted"""
+    object: chat_groups_insert_input!
+
+    """on conflict condition"""
+    on_conflict: chat_groups_on_conflict
+  ): chat_groups
+
+  """
+  insert data into the table: "chat_messages"
+  """
+  insert_chat_messages(
+    """the rows to be inserted"""
+    objects: [chat_messages_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: chat_messages_on_conflict
+  ): chat_messages_mutation_response
+
+  """
+  insert a single row into the table: "chat_messages"
+  """
+  insert_chat_messages_one(
+    """the row to be inserted"""
+    object: chat_messages_insert_input!
+
+    """on conflict condition"""
+    on_conflict: chat_messages_on_conflict
+  ): chat_messages
 
   """
   insert data into the table: "entities"
@@ -3804,28 +4426,6 @@ type mutation_root {
     """on conflict condition"""
     on_conflict: groups_on_conflict
   ): groups
-
-  """
-  insert data into the table: "messages"
-  """
-  insert_messages(
-    """the rows to be inserted"""
-    objects: [messages_insert_input!]!
-
-    """on conflict condition"""
-    on_conflict: messages_on_conflict
-  ): messages_mutation_response
-
-  """
-  insert a single row into the table: "messages"
-  """
-  insert_messages_one(
-    """the row to be inserted"""
-    object: messages_insert_input!
-
-    """on conflict condition"""
-    on_conflict: messages_on_conflict
-  ): messages
 
   """
   insert data into the table: "notifications"
@@ -4036,6 +4636,66 @@ type mutation_root {
   ): activity_verb
 
   """
+  update data of the table: "chat_group_members"
+  """
+  update_chat_group_members(
+    """sets the columns of the filtered rows to the given values"""
+    _set: chat_group_members_set_input
+
+    """filter the rows which have to be updated"""
+    where: chat_group_members_bool_exp!
+  ): chat_group_members_mutation_response
+
+  """
+  update single row of the table: "chat_group_members"
+  """
+  update_chat_group_members_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: chat_group_members_set_input
+    pk_columns: chat_group_members_pk_columns_input!
+  ): chat_group_members
+
+  """
+  update data of the table: "chat_groups"
+  """
+  update_chat_groups(
+    """sets the columns of the filtered rows to the given values"""
+    _set: chat_groups_set_input
+
+    """filter the rows which have to be updated"""
+    where: chat_groups_bool_exp!
+  ): chat_groups_mutation_response
+
+  """
+  update single row of the table: "chat_groups"
+  """
+  update_chat_groups_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: chat_groups_set_input
+    pk_columns: chat_groups_pk_columns_input!
+  ): chat_groups
+
+  """
+  update data of the table: "chat_messages"
+  """
+  update_chat_messages(
+    """sets the columns of the filtered rows to the given values"""
+    _set: chat_messages_set_input
+
+    """filter the rows which have to be updated"""
+    where: chat_messages_bool_exp!
+  ): chat_messages_mutation_response
+
+  """
+  update single row of the table: "chat_messages"
+  """
+  update_chat_messages_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: chat_messages_set_input
+    pk_columns: chat_messages_pk_columns_input!
+  ): chat_messages
+
+  """
   update data of the table: "entities"
   """
   update_entities(
@@ -4220,26 +4880,6 @@ type mutation_root {
     _set: groups_set_input
     pk_columns: groups_pk_columns_input!
   ): groups
-
-  """
-  update data of the table: "messages"
-  """
-  update_messages(
-    """sets the columns of the filtered rows to the given values"""
-    _set: messages_set_input
-
-    """filter the rows which have to be updated"""
-    where: messages_bool_exp!
-  ): messages_mutation_response
-
-  """
-  update single row of the table: "messages"
-  """
-  update_messages_by_pk(
-    """sets the columns of the filtered rows to the given values"""
-    _set: messages_set_input
-    pk_columns: messages_pk_columns_input!
-  ): messages
 
   """
   update data of the table: "notifications"
@@ -4721,6 +5361,137 @@ type query_root {
   activity_verb_by_pk(value: String!): activity_verb
 
   """
+  fetch data from the table: "chat_group_members"
+  """
+  chat_group_members(
+    """distinct select on columns"""
+    distinct_on: [chat_group_members_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_group_members_order_by!]
+
+    """filter the rows returned"""
+    where: chat_group_members_bool_exp
+  ): [chat_group_members!]!
+
+  """
+  fetch aggregated fields from the table: "chat_group_members"
+  """
+  chat_group_members_aggregate(
+    """distinct select on columns"""
+    distinct_on: [chat_group_members_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_group_members_order_by!]
+
+    """filter the rows returned"""
+    where: chat_group_members_bool_exp
+  ): chat_group_members_aggregate!
+
+  """
+  fetch data from the table: "chat_group_members" using primary key columns
+  """
+  chat_group_members_by_pk(id: uuid!): chat_group_members
+
+  """
+  fetch data from the table: "chat_groups"
+  """
+  chat_groups(
+    """distinct select on columns"""
+    distinct_on: [chat_groups_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_groups_order_by!]
+
+    """filter the rows returned"""
+    where: chat_groups_bool_exp
+  ): [chat_groups!]!
+
+  """
+  fetch aggregated fields from the table: "chat_groups"
+  """
+  chat_groups_aggregate(
+    """distinct select on columns"""
+    distinct_on: [chat_groups_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_groups_order_by!]
+
+    """filter the rows returned"""
+    where: chat_groups_bool_exp
+  ): chat_groups_aggregate!
+
+  """fetch data from the table: "chat_groups" using primary key columns"""
+  chat_groups_by_pk(id: uuid!): chat_groups
+
+  """
+  fetch data from the table: "chat_messages"
+  """
+  chat_messages(
+    """distinct select on columns"""
+    distinct_on: [chat_messages_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_messages_order_by!]
+
+    """filter the rows returned"""
+    where: chat_messages_bool_exp
+  ): [chat_messages!]!
+
+  """
+  fetch aggregated fields from the table: "chat_messages"
+  """
+  chat_messages_aggregate(
+    """distinct select on columns"""
+    distinct_on: [chat_messages_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_messages_order_by!]
+
+    """filter the rows returned"""
+    where: chat_messages_bool_exp
+  ): chat_messages_aggregate!
+
+  """fetch data from the table: "chat_messages" using primary key columns"""
+  chat_messages_by_pk(id: uuid!): chat_messages
+
+  """
   fetch data from the table: "entities"
   """
   entities(
@@ -5112,49 +5883,6 @@ type query_root {
 
   """fetch data from the table: "groups" using primary key columns"""
   groups_by_pk(id: uuid!): groups
-
-  """
-  fetch data from the table: "messages"
-  """
-  messages(
-    """distinct select on columns"""
-    distinct_on: [messages_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [messages_order_by!]
-
-    """filter the rows returned"""
-    where: messages_bool_exp
-  ): [messages!]!
-
-  """
-  fetch aggregated fields from the table: "messages"
-  """
-  messages_aggregate(
-    """distinct select on columns"""
-    distinct_on: [messages_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [messages_order_by!]
-
-    """filter the rows returned"""
-    where: messages_bool_exp
-  ): messages_aggregate!
-
-  """fetch data from the table: "messages" using primary key columns"""
-  messages_by_pk(id: uuid!): messages
 
   """
   fetch data from the table: "notifications"
@@ -5546,6 +6274,137 @@ type subscription_root {
   activity_verb_by_pk(value: String!): activity_verb
 
   """
+  fetch data from the table: "chat_group_members"
+  """
+  chat_group_members(
+    """distinct select on columns"""
+    distinct_on: [chat_group_members_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_group_members_order_by!]
+
+    """filter the rows returned"""
+    where: chat_group_members_bool_exp
+  ): [chat_group_members!]!
+
+  """
+  fetch aggregated fields from the table: "chat_group_members"
+  """
+  chat_group_members_aggregate(
+    """distinct select on columns"""
+    distinct_on: [chat_group_members_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_group_members_order_by!]
+
+    """filter the rows returned"""
+    where: chat_group_members_bool_exp
+  ): chat_group_members_aggregate!
+
+  """
+  fetch data from the table: "chat_group_members" using primary key columns
+  """
+  chat_group_members_by_pk(id: uuid!): chat_group_members
+
+  """
+  fetch data from the table: "chat_groups"
+  """
+  chat_groups(
+    """distinct select on columns"""
+    distinct_on: [chat_groups_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_groups_order_by!]
+
+    """filter the rows returned"""
+    where: chat_groups_bool_exp
+  ): [chat_groups!]!
+
+  """
+  fetch aggregated fields from the table: "chat_groups"
+  """
+  chat_groups_aggregate(
+    """distinct select on columns"""
+    distinct_on: [chat_groups_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_groups_order_by!]
+
+    """filter the rows returned"""
+    where: chat_groups_bool_exp
+  ): chat_groups_aggregate!
+
+  """fetch data from the table: "chat_groups" using primary key columns"""
+  chat_groups_by_pk(id: uuid!): chat_groups
+
+  """
+  fetch data from the table: "chat_messages"
+  """
+  chat_messages(
+    """distinct select on columns"""
+    distinct_on: [chat_messages_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_messages_order_by!]
+
+    """filter the rows returned"""
+    where: chat_messages_bool_exp
+  ): [chat_messages!]!
+
+  """
+  fetch aggregated fields from the table: "chat_messages"
+  """
+  chat_messages_aggregate(
+    """distinct select on columns"""
+    distinct_on: [chat_messages_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_messages_order_by!]
+
+    """filter the rows returned"""
+    where: chat_messages_bool_exp
+  ): chat_messages_aggregate!
+
+  """fetch data from the table: "chat_messages" using primary key columns"""
+  chat_messages_by_pk(id: uuid!): chat_messages
+
+  """
   fetch data from the table: "entities"
   """
   entities(
@@ -5937,49 +6796,6 @@ type subscription_root {
 
   """fetch data from the table: "groups" using primary key columns"""
   groups_by_pk(id: uuid!): groups
-
-  """
-  fetch data from the table: "messages"
-  """
-  messages(
-    """distinct select on columns"""
-    distinct_on: [messages_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [messages_order_by!]
-
-    """filter the rows returned"""
-    where: messages_bool_exp
-  ): [messages!]!
-
-  """
-  fetch aggregated fields from the table: "messages"
-  """
-  messages_aggregate(
-    """distinct select on columns"""
-    distinct_on: [messages_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [messages_order_by!]
-
-    """filter the rows returned"""
-    where: messages_bool_exp
-  ): messages_aggregate!
-
-  """fetch data from the table: "messages" using primary key columns"""
-  messages_by_pk(id: uuid!): messages
 
   """
   fetch data from the table: "notifications"

@@ -1,6 +1,6 @@
 ﻿import { Button, Dropdown, Menu, message, Modal, PageHeader, Popconfirm, Typography } from 'antd';
 import Link from 'next/link';
-import { ReactNode, useCallback } from 'react';
+import React, { ReactNode, useCallback } from 'react';
 import {
     GqlOps,
     GroupCardFragment,
@@ -14,6 +14,7 @@ import { useRouter } from 'next/router';
 import { urlFor } from '../../utils/urls';
 import { JoinButton } from './JoinButton';
 import { useDialogs, CreateThingDrawer } from '../../components/dialogs';
+import { PageLayout } from '../root/PageLayout';
 
 export type GroupPage = 'home' | 'members' | 'settings';
 
@@ -109,41 +110,43 @@ export const GroupLayout = (props: GroupLayoutProps) => {
     );
 
     return (
-        <PageHeader
-            className={classes.header}
-            title={props.group.name}
-            extra={[
-                <Button key="share" type="primary" onClick={handleShare}>
-                    Share a thing
-                </Button>,
+        <PageLayout>
+            <PageHeader
+                className={classes.header}
+                title={props.group.name}
+                extra={[
+                    <Button key="share" type="primary" onClick={handleShare}>
+                        Share a thing
+                    </Button>,
 
-                <Link key="home" href={urlFor.group.home(props.group)}>
-                    <Button type="default" className={btnClass('home')}>
-                        Home
-                    </Button>
-                </Link>,
-
-                <Link key="members" href={urlFor.group.members(props.group)}>
-                    <Button type="default" className={btnClass('members')}>
-                        Members
-                    </Button>
-                </Link>,
-
-                isAdmin && (
-                    <Link key="settings" href={urlFor.group.settings(props.group)}>
-                        <Button type="default" className={btnClass('settings')}>
-                            Settings
+                    <Link key="home" href={urlFor.group.home(props.group)}>
+                        <Button type="default" className={btnClass('home')}>
+                            Home
                         </Button>
-                    </Link>
-                ),
+                    </Link>,
 
-                !isMember && <JoinButton key="join" group={props.group} />,
+                    <Link key="members" href={urlFor.group.members(props.group)}>
+                        <Button type="default" className={btnClass('members')}>
+                            Members
+                        </Button>
+                    </Link>,
 
-                <Dropdown key="more" overlay={menu}>
-                    <Button icon={<EllipsisOutlined />} />
-                </Dropdown>,
-            ]}>
-            {props.children}
-        </PageHeader>
+                    isAdmin && (
+                        <Link key="settings" href={urlFor.group.settings(props.group)}>
+                            <Button type="default" className={btnClass('settings')}>
+                                Settings
+                            </Button>
+                        </Link>
+                    ),
+
+                    !isMember && <JoinButton key="join" group={props.group} />,
+
+                    <Dropdown key="more" overlay={menu}>
+                        <Button icon={<EllipsisOutlined />} />
+                    </Dropdown>,
+                ]}>
+                {props.children}
+            </PageHeader>
+        </PageLayout>
     );
 };

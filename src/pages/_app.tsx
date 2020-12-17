@@ -8,7 +8,6 @@ import { AuthProvider } from '../utils/auth';
 import '../styles/globals.scss';
 import { ThemeProvider } from 'react-jss';
 import { DialogsProvider } from '../components/dialogs';
-import { PageLayout } from '../containers/root/PageLayout';
 import { defaultApolloClient } from '../api/apolloClient';
 
 import { initSentry } from '../utils/sentry';
@@ -29,9 +28,7 @@ const App = ({ Component, pageProps }: AppProps) => {
                                 <link rel="icon" href="/favicon.ico" />
                             </Head>
 
-                            <PageLayout>
-                                <Component {...pageProps} />
-                            </PageLayout>
+                            <Component {...pageProps} />
                         </DialogsProvider>
                     </ThemeProvider>
                 </AuthProvider>

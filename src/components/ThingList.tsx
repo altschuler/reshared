@@ -1,4 +1,5 @@
-﻿import {
+﻿import * as React from 'react';
+import {
     Order_By,
     Thing_Type_Enum,
     ThingCardFragment,
@@ -9,14 +10,13 @@ import { useAuth } from '../utils/auth';
 import { EditThingDrawer, ImageGalleryModal, useDialogs } from './dialogs';
 import { usePagination } from '../utils/list';
 import { useCallback, useEffect, useState } from 'react';
-import { Typography, Button, List, Space, Tag, Input } from 'antd';
+import { Button, Input, List, Space, Tag } from 'antd';
 import { ownsThing } from '../utils/thing';
 import { EditOutlined } from '@ant-design/icons';
 import { UserAvatar } from './display';
 import Link from 'next/link';
 import Image from 'next/image';
 import { createUseStyles } from 'react-jss';
-import * as React from 'react';
 import { useDebounce } from '../utils/hooks';
 
 const useStyles = createUseStyles({

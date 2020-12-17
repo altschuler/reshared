@@ -83,8 +83,8 @@ fragment NotificationCard on notifications {
 
 # Queries
 
-query UserList {
-    users {
+query UserList($where: users_bool_exp, $limit: Int, $offset: Int) {
+    users(where: $where, limit: $limit, offset: $offset) {
         ...UserCard
     }
 }

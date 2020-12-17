@@ -8,7 +8,7 @@ import { useAuth } from '../../utils/auth';
 import { AuthDialog } from '../../components/dialogs';
 import clsx from 'clsx';
 
-import { CaretDownOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, MessageOutlined } from '@ant-design/icons';
 import { createUseStyles } from 'react-jss';
 import { UserAvatar } from '../../components/display';
 import { NotificationsButton } from './NotificationList';
@@ -45,16 +45,42 @@ const useStyles = createUseStyles({
     },
     content: {
         display: 'flex',
-        padding: '30px',
-        '& > div': {
-            flex: 1,
-        },
+        flexDirection: 'column',
+        overflowY: 'auto',
+        //padding: '30px',
+        // '& > div': {
+        //     flex: 1,
+        // },
+    },
+    pageContent: {
+        display: 'flex',
+        flex: 1,
+    },
+    pageContentNoScroll: {
+        minHeight: 0,
+    },
+    pageContentVertical: {
+        flexDirection: 'column',
+    },
+    pageContentHorizontal: {
+        flexDirection: 'row',
     },
     footer: {
-        textAlign: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 'none',
+        height: 50,
+        padding: '0 10px',
+        backgroundColor: '#EEE',
+        marginTop: '2em',
     },
     root: {
         backgroundColor: 'white',
+        flex: 1,
+    },
+    contentPadded: {
+        padding: '1em',
     },
 });
 
@@ -82,6 +108,10 @@ const UserButton = ({ user }: UserButtonProps) => {
 };
 
 export interface PageLayoutProps {
+    noScroll?: boolean;
+    noFooter?: boolean;
+    padded?: boolean;
+    horizontal?: boolean;
     children: ReactNode;
 }
 
@@ -129,6 +159,10 @@ export const PageLayout = (props: PageLayoutProps) => {
 
                     {auth.user && (
                         <Space size="large">
+                            <Link href="/chat">
+                                <Button type="link" icon={<MessageOutlined />} />
+                            </Link>
+
                             <NotificationsButton />
                             <UserButton user={auth.user} />
                         </Space>
@@ -141,9 +175,19 @@ export const PageLayout = (props: PageLayoutProps) => {
                 {/*    <Breadcrumb.Item>List</Breadcrumb.Item>*/}
                 {/*    <Breadcrumb.Item>App</Breadcrumb.Item>*/}
                 {/*</Breadcrumb>*/}
-                <div>{props.children}</div>
+                <div
+                    className={clsx(
+                        classes.pageContent,
+                        props.noScroll && classes.pageContentNoScroll,
+                        props.horizontal
+                            ? classes.pageContentHorizontal
+                            : classes.pageContentVertical,
+                        props.padded && classes.contentPadded,
+                    )}>
+                    {props.children}
+                </div>
+                {!props.noFooter && <div className={classes.footer}>Reshared</div>}
             </Content>
-            <Footer className={classes.footer}>Reshared</Footer>
         </Layout>
     );
 };

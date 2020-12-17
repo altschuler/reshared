@@ -1,0 +1,58 @@
+﻿fragment ChatMessageCard on chat_messages {
+    id
+    sender_id
+    message
+    created_at
+}
+
+fragment ChatGroupCard on chat_groups {
+    id
+
+    name
+
+    members {
+        user {
+            ...UserCard
+        }
+    }
+
+    # Get the latest message
+    messages(limit: 1, order_by: [{ created_at: desc }]) {
+        sender {
+            ...UserCard
+        }
+        message
+    }
+}
+
+query ChatMessages($where: chat_messages_bool_exp!, $limit: Int!) {
+    chat_messages(where: $where, order_by: [{ created_at: desc }], limit: $limit) {
+        ...ChatMessageCard
+    }
+}
+
+subscription ChatGroups {
+    chat_groups {
+        ...ChatGroupCard
+    }
+}
+
+subscription ChatMessagesFeed($where: chat_messages_bool_exp!) {
+    chat_messages(where: $where, order_by: [{ created_at: desc }]) {
+        ...ChatMessageCard
+    }
+}
+
+mutation CreateChatGroup($input: CreateChatGroupInput!) {
+    createChatGroup(input: $input) {
+        chat_group {
+            ...ChatGroupCard
+        }
+    }
+}
+
+mutation CreateChatMessage($input: chat_messages_insert_input!) {
+    insert_chat_messages_one(object: $input) {
+        ...ChatMessageCard
+    }
+}

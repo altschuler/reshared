@@ -1,0 +1,20 @@
+﻿fragment ServerChatGroup on chat_groups {
+    id
+    members {
+        user {
+            id
+        }
+    }
+}
+
+query ServerFindChatGroup($where: chat_groups_bool_exp!) {
+    chat_groups(where: $where) {
+        ...ServerChatGroup
+    }
+}
+
+mutation ServerCreateChatGroup($input: chat_groups_insert_input!) {
+    insert_chat_groups_one(object: $input) {
+        id
+    }
+}
