@@ -7045,6 +7045,14 @@ export type User_Private_Set_Input = {
 /** columns and relationships of "users" */
 export type Users = {
   __typename?: 'users';
+  /** An array relationship */
+  chat_group_memberships: Array<Chat_Group_Members>;
+  /** An aggregated array relationship */
+  chat_group_memberships_aggregate: Chat_Group_Members_Aggregate;
+  /** An array relationship */
+  chat_messages: Array<Chat_Messages>;
+  /** An aggregated array relationship */
+  chat_messages_aggregate: Chat_Messages_Aggregate;
   created_at: Scalars['timestamptz'];
   email?: Maybe<Scalars['String']>;
   email_verified?: Maybe<Scalars['timestamptz']>;
@@ -7054,6 +7062,7 @@ export type Users = {
   group_join_requests_aggregate: Group_Join_Requests_Aggregate;
   id: Scalars['uuid'];
   image?: Maybe<Scalars['String']>;
+  last_chat_notification?: Maybe<Scalars['timestamptz']>;
   last_seen?: Maybe<Scalars['timestamptz']>;
   /** An array relationship */
   memberships: Array<Group_Members>;
@@ -7068,6 +7077,46 @@ export type Users = {
   /** An aggregated array relationship */
   things_aggregate: Things_Aggregate;
   updated_at: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "users" */
+export type UsersChat_Group_MembershipsArgs = {
+  distinct_on?: Maybe<Array<Chat_Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Group_Members_Order_By>>;
+  where?: Maybe<Chat_Group_Members_Bool_Exp>;
+};
+
+
+/** columns and relationships of "users" */
+export type UsersChat_Group_Memberships_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Group_Members_Order_By>>;
+  where?: Maybe<Chat_Group_Members_Bool_Exp>;
+};
+
+
+/** columns and relationships of "users" */
+export type UsersChat_MessagesArgs = {
+  distinct_on?: Maybe<Array<Chat_Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Messages_Order_By>>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
+};
+
+
+/** columns and relationships of "users" */
+export type UsersChat_Messages_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Messages_Order_By>>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
 };
 
 
@@ -7170,12 +7219,15 @@ export type Users_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Users_Bool_Exp>>>;
   _not?: Maybe<Users_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Users_Bool_Exp>>>;
+  chat_group_memberships?: Maybe<Chat_Group_Members_Bool_Exp>;
+  chat_messages?: Maybe<Chat_Messages_Bool_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   email?: Maybe<String_Comparison_Exp>;
   email_verified?: Maybe<Timestamptz_Comparison_Exp>;
   group_join_requests?: Maybe<Group_Join_Requests_Bool_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   image?: Maybe<String_Comparison_Exp>;
+  last_chat_notification?: Maybe<Timestamptz_Comparison_Exp>;
   last_seen?: Maybe<Timestamptz_Comparison_Exp>;
   memberships?: Maybe<Group_Members_Bool_Exp>;
   name?: Maybe<String_Comparison_Exp>;
@@ -7197,12 +7249,15 @@ export enum Users_Constraint {
 
 /** input type for inserting data into table "users" */
 export type Users_Insert_Input = {
+  chat_group_memberships?: Maybe<Chat_Group_Members_Arr_Rel_Insert_Input>;
+  chat_messages?: Maybe<Chat_Messages_Arr_Rel_Insert_Input>;
   created_at?: Maybe<Scalars['timestamptz']>;
   email?: Maybe<Scalars['String']>;
   email_verified?: Maybe<Scalars['timestamptz']>;
   group_join_requests?: Maybe<Group_Join_Requests_Arr_Rel_Insert_Input>;
   id?: Maybe<Scalars['uuid']>;
   image?: Maybe<Scalars['String']>;
+  last_chat_notification?: Maybe<Scalars['timestamptz']>;
   last_seen?: Maybe<Scalars['timestamptz']>;
   memberships?: Maybe<Group_Members_Arr_Rel_Insert_Input>;
   name?: Maybe<Scalars['String']>;
@@ -7220,6 +7275,7 @@ export type Users_Max_Fields = {
   email_verified?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
   image?: Maybe<Scalars['String']>;
+  last_chat_notification?: Maybe<Scalars['timestamptz']>;
   last_seen?: Maybe<Scalars['timestamptz']>;
   name?: Maybe<Scalars['String']>;
   password_hash?: Maybe<Scalars['String']>;
@@ -7233,6 +7289,7 @@ export type Users_Max_Order_By = {
   email_verified?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   image?: Maybe<Order_By>;
+  last_chat_notification?: Maybe<Order_By>;
   last_seen?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   password_hash?: Maybe<Order_By>;
@@ -7247,6 +7304,7 @@ export type Users_Min_Fields = {
   email_verified?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
   image?: Maybe<Scalars['String']>;
+  last_chat_notification?: Maybe<Scalars['timestamptz']>;
   last_seen?: Maybe<Scalars['timestamptz']>;
   name?: Maybe<Scalars['String']>;
   password_hash?: Maybe<Scalars['String']>;
@@ -7260,6 +7318,7 @@ export type Users_Min_Order_By = {
   email_verified?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   image?: Maybe<Order_By>;
+  last_chat_notification?: Maybe<Order_By>;
   last_seen?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   password_hash?: Maybe<Order_By>;
@@ -7290,12 +7349,15 @@ export type Users_On_Conflict = {
 
 /** ordering options when selecting data from "users" */
 export type Users_Order_By = {
+  chat_group_memberships_aggregate?: Maybe<Chat_Group_Members_Aggregate_Order_By>;
+  chat_messages_aggregate?: Maybe<Chat_Messages_Aggregate_Order_By>;
   created_at?: Maybe<Order_By>;
   email?: Maybe<Order_By>;
   email_verified?: Maybe<Order_By>;
   group_join_requests_aggregate?: Maybe<Group_Join_Requests_Aggregate_Order_By>;
   id?: Maybe<Order_By>;
   image?: Maybe<Order_By>;
+  last_chat_notification?: Maybe<Order_By>;
   last_seen?: Maybe<Order_By>;
   memberships_aggregate?: Maybe<Group_Members_Aggregate_Order_By>;
   name?: Maybe<Order_By>;
@@ -7323,6 +7385,8 @@ export enum Users_Select_Column {
   /** column name */
   Image = 'image',
   /** column name */
+  LastChatNotification = 'last_chat_notification',
+  /** column name */
   LastSeen = 'last_seen',
   /** column name */
   Name = 'name',
@@ -7339,6 +7403,7 @@ export type Users_Set_Input = {
   email_verified?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
   image?: Maybe<Scalars['String']>;
+  last_chat_notification?: Maybe<Scalars['timestamptz']>;
   last_seen?: Maybe<Scalars['timestamptz']>;
   name?: Maybe<Scalars['String']>;
   password_hash?: Maybe<Scalars['String']>;
@@ -7357,6 +7422,8 @@ export enum Users_Update_Column {
   Id = 'id',
   /** column name */
   Image = 'image',
+  /** column name */
+  LastChatNotification = 'last_chat_notification',
   /** column name */
   LastSeen = 'last_seen',
   /** column name */
@@ -8659,7 +8726,7 @@ export function refetchChatMessagesQuery(variables?: ChatMessagesQueryVariables)
     }
 export const ChatGroupsDocument = gql`
     subscription ChatGroups {
-  chat_groups {
+  chat_groups(order_by: [{messages_aggregate: {max: {created_at: desc}}}]) {
     ...ChatGroupCard
   }
 }

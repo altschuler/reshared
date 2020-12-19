@@ -7046,6 +7046,14 @@ export type User_Private_Set_Input = {
 /** columns and relationships of "users" */
 export type Users = {
   __typename?: 'users';
+  /** An array relationship */
+  chat_group_memberships: Array<Chat_Group_Members>;
+  /** An aggregated array relationship */
+  chat_group_memberships_aggregate: Chat_Group_Members_Aggregate;
+  /** An array relationship */
+  chat_messages: Array<Chat_Messages>;
+  /** An aggregated array relationship */
+  chat_messages_aggregate: Chat_Messages_Aggregate;
   created_at: Scalars['timestamptz'];
   email?: Maybe<Scalars['String']>;
   email_verified?: Maybe<Scalars['timestamptz']>;
@@ -7055,6 +7063,7 @@ export type Users = {
   group_join_requests_aggregate: Group_Join_Requests_Aggregate;
   id: Scalars['uuid'];
   image?: Maybe<Scalars['String']>;
+  last_chat_notification?: Maybe<Scalars['timestamptz']>;
   last_seen?: Maybe<Scalars['timestamptz']>;
   /** An array relationship */
   memberships: Array<Group_Members>;
@@ -7069,6 +7078,46 @@ export type Users = {
   /** An aggregated array relationship */
   things_aggregate: Things_Aggregate;
   updated_at: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "users" */
+export type UsersChat_Group_MembershipsArgs = {
+  distinct_on?: Maybe<Array<Chat_Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Group_Members_Order_By>>;
+  where?: Maybe<Chat_Group_Members_Bool_Exp>;
+};
+
+
+/** columns and relationships of "users" */
+export type UsersChat_Group_Memberships_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Group_Members_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Group_Members_Order_By>>;
+  where?: Maybe<Chat_Group_Members_Bool_Exp>;
+};
+
+
+/** columns and relationships of "users" */
+export type UsersChat_MessagesArgs = {
+  distinct_on?: Maybe<Array<Chat_Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Messages_Order_By>>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
+};
+
+
+/** columns and relationships of "users" */
+export type UsersChat_Messages_AggregateArgs = {
+  distinct_on?: Maybe<Array<Chat_Messages_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Chat_Messages_Order_By>>;
+  where?: Maybe<Chat_Messages_Bool_Exp>;
 };
 
 
@@ -7171,12 +7220,15 @@ export type Users_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Users_Bool_Exp>>>;
   _not?: Maybe<Users_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Users_Bool_Exp>>>;
+  chat_group_memberships?: Maybe<Chat_Group_Members_Bool_Exp>;
+  chat_messages?: Maybe<Chat_Messages_Bool_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   email?: Maybe<String_Comparison_Exp>;
   email_verified?: Maybe<Timestamptz_Comparison_Exp>;
   group_join_requests?: Maybe<Group_Join_Requests_Bool_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   image?: Maybe<String_Comparison_Exp>;
+  last_chat_notification?: Maybe<Timestamptz_Comparison_Exp>;
   last_seen?: Maybe<Timestamptz_Comparison_Exp>;
   memberships?: Maybe<Group_Members_Bool_Exp>;
   name?: Maybe<String_Comparison_Exp>;
@@ -7198,12 +7250,15 @@ export enum Users_Constraint {
 
 /** input type for inserting data into table "users" */
 export type Users_Insert_Input = {
+  chat_group_memberships?: Maybe<Chat_Group_Members_Arr_Rel_Insert_Input>;
+  chat_messages?: Maybe<Chat_Messages_Arr_Rel_Insert_Input>;
   created_at?: Maybe<Scalars['timestamptz']>;
   email?: Maybe<Scalars['String']>;
   email_verified?: Maybe<Scalars['timestamptz']>;
   group_join_requests?: Maybe<Group_Join_Requests_Arr_Rel_Insert_Input>;
   id?: Maybe<Scalars['uuid']>;
   image?: Maybe<Scalars['String']>;
+  last_chat_notification?: Maybe<Scalars['timestamptz']>;
   last_seen?: Maybe<Scalars['timestamptz']>;
   memberships?: Maybe<Group_Members_Arr_Rel_Insert_Input>;
   name?: Maybe<Scalars['String']>;
@@ -7221,6 +7276,7 @@ export type Users_Max_Fields = {
   email_verified?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
   image?: Maybe<Scalars['String']>;
+  last_chat_notification?: Maybe<Scalars['timestamptz']>;
   last_seen?: Maybe<Scalars['timestamptz']>;
   name?: Maybe<Scalars['String']>;
   password_hash?: Maybe<Scalars['String']>;
@@ -7234,6 +7290,7 @@ export type Users_Max_Order_By = {
   email_verified?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   image?: Maybe<Order_By>;
+  last_chat_notification?: Maybe<Order_By>;
   last_seen?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   password_hash?: Maybe<Order_By>;
@@ -7248,6 +7305,7 @@ export type Users_Min_Fields = {
   email_verified?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
   image?: Maybe<Scalars['String']>;
+  last_chat_notification?: Maybe<Scalars['timestamptz']>;
   last_seen?: Maybe<Scalars['timestamptz']>;
   name?: Maybe<Scalars['String']>;
   password_hash?: Maybe<Scalars['String']>;
@@ -7261,6 +7319,7 @@ export type Users_Min_Order_By = {
   email_verified?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   image?: Maybe<Order_By>;
+  last_chat_notification?: Maybe<Order_By>;
   last_seen?: Maybe<Order_By>;
   name?: Maybe<Order_By>;
   password_hash?: Maybe<Order_By>;
@@ -7291,12 +7350,15 @@ export type Users_On_Conflict = {
 
 /** ordering options when selecting data from "users" */
 export type Users_Order_By = {
+  chat_group_memberships_aggregate?: Maybe<Chat_Group_Members_Aggregate_Order_By>;
+  chat_messages_aggregate?: Maybe<Chat_Messages_Aggregate_Order_By>;
   created_at?: Maybe<Order_By>;
   email?: Maybe<Order_By>;
   email_verified?: Maybe<Order_By>;
   group_join_requests_aggregate?: Maybe<Group_Join_Requests_Aggregate_Order_By>;
   id?: Maybe<Order_By>;
   image?: Maybe<Order_By>;
+  last_chat_notification?: Maybe<Order_By>;
   last_seen?: Maybe<Order_By>;
   memberships_aggregate?: Maybe<Group_Members_Aggregate_Order_By>;
   name?: Maybe<Order_By>;
@@ -7324,6 +7386,8 @@ export enum Users_Select_Column {
   /** column name */
   Image = 'image',
   /** column name */
+  LastChatNotification = 'last_chat_notification',
+  /** column name */
   LastSeen = 'last_seen',
   /** column name */
   Name = 'name',
@@ -7340,6 +7404,7 @@ export type Users_Set_Input = {
   email_verified?: Maybe<Scalars['timestamptz']>;
   id?: Maybe<Scalars['uuid']>;
   image?: Maybe<Scalars['String']>;
+  last_chat_notification?: Maybe<Scalars['timestamptz']>;
   last_seen?: Maybe<Scalars['timestamptz']>;
   name?: Maybe<Scalars['String']>;
   password_hash?: Maybe<Scalars['String']>;
@@ -7358,6 +7423,8 @@ export enum Users_Update_Column {
   Id = 'id',
   /** column name */
   Image = 'image',
+  /** column name */
+  LastChatNotification = 'last_chat_notification',
   /** column name */
   LastSeen = 'last_seen',
   /** column name */
@@ -7727,6 +7794,17 @@ export type ServerFindChatGroupQuery = (
   & { chat_groups: Array<(
     { __typename?: 'chat_groups' }
     & ServerChatGroupFragment
+  )> }
+);
+
+export type ServerMostRecentChatsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ServerMostRecentChatsQuery = (
+  { __typename?: 'query_root' }
+  & { chat_groups: Array<(
+    { __typename?: 'chat_groups' }
+    & Pick<Chat_Groups, 'id'>
   )> }
 );
 
@@ -10472,6 +10550,10 @@ export type User_Private_Mutation_ResponseResolvers<ContextType = any, ParentTyp
 };
 
 export type UsersResolvers<ContextType = any, ParentType extends ResolversParentTypes['users'] = ResolversParentTypes['users']> = {
+  chat_group_memberships?: Resolver<Array<ResolversTypes['chat_group_members']>, ParentType, ContextType, RequireFields<UsersChat_Group_MembershipsArgs, never>>;
+  chat_group_memberships_aggregate?: Resolver<ResolversTypes['chat_group_members_aggregate'], ParentType, ContextType, RequireFields<UsersChat_Group_Memberships_AggregateArgs, never>>;
+  chat_messages?: Resolver<Array<ResolversTypes['chat_messages']>, ParentType, ContextType, RequireFields<UsersChat_MessagesArgs, never>>;
+  chat_messages_aggregate?: Resolver<ResolversTypes['chat_messages_aggregate'], ParentType, ContextType, RequireFields<UsersChat_Messages_AggregateArgs, never>>;
   created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email_verified?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
@@ -10479,6 +10561,7 @@ export type UsersResolvers<ContextType = any, ParentType extends ResolversParent
   group_join_requests_aggregate?: Resolver<ResolversTypes['group_join_requests_aggregate'], ParentType, ContextType, RequireFields<UsersGroup_Join_Requests_AggregateArgs, never>>;
   id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  last_chat_notification?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
   last_seen?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
   memberships?: Resolver<Array<ResolversTypes['group_members']>, ParentType, ContextType, RequireFields<UsersMembershipsArgs, never>>;
   memberships_aggregate?: Resolver<ResolversTypes['group_members_aggregate'], ParentType, ContextType, RequireFields<UsersMemberships_AggregateArgs, never>>;
@@ -10510,6 +10593,7 @@ export type Users_Max_FieldsResolvers<ContextType = any, ParentType extends Reso
   email_verified?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  last_chat_notification?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
   last_seen?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   password_hash?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -10523,6 +10607,7 @@ export type Users_Min_FieldsResolvers<ContextType = any, ParentType extends Reso
   email_verified?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  last_chat_notification?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
   last_seen?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   password_hash?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -10826,6 +10911,7 @@ export type IResolvers<ContextType = any> = Resolvers<ContextType>;
 export const ServerChatGroupFragmentDoc: DocumentNode<ServerChatGroupFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ServerChatGroup"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"chat_groups"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"members"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]}}]};
 export const ServerInsertActivitiesDocument: DocumentNode<ServerInsertActivitiesMutation, ServerInsertActivitiesMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertActivities"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"activities_insert_input"}}}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_activities"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]}}]};
 export const ServerFindChatGroupDocument: DocumentNode<ServerFindChatGroupQuery, ServerFindChatGroupQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindChatGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_groups_bool_exp"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat_groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ServerChatGroup"},"directives":[]}]}}]}},...ServerChatGroupFragmentDoc.definitions]};
+export const ServerMostRecentChatsDocument: DocumentNode<ServerMostRecentChatsQuery, ServerMostRecentChatsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerMostRecentChats"},"variableDefinitions":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat_groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"messages_aggregate"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"max"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}]}}]}]}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerCreateChatGroupDocument: DocumentNode<ServerCreateChatGroupMutation, ServerCreateChatGroupMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerCreateChatGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_groups_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_chat_groups_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerCreateChatMessageDocument: DocumentNode<ServerCreateChatMessageMutation, ServerCreateChatMessageMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerCreateChatMessage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_messages_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_chat_messages_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerFindGroupDocument: DocumentNode<ServerFindGroupQuery, ServerFindGroupQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"groups_bool_exp"}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}}]};

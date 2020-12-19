@@ -13,6 +13,12 @@ query ServerFindChatGroup($where: chat_groups_bool_exp!) {
     }
 }
 
+query ServerMostRecentChats {
+    chat_groups(order_by: [{ messages_aggregate: { max: { created_at: desc } } }], limit: 1) {
+        id
+    }
+}
+
 mutation ServerCreateChatGroup($input: chat_groups_insert_input!) {
     insert_chat_groups_one(object: $input) {
         id

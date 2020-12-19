@@ -11,11 +11,15 @@ interface ThingWithId {
     short_id: string;
 }
 
+interface ChatGroupWithId {
+    id: string;
+}
+
 export const urlFor = {
     home: (absolute = false) => makeUrl(absolute, ''),
     chat: {
         new: (absolute = false) => makeUrl(absolute, '/chat/new'),
-        group: (chatGroup: ChatGroupCardFragment, absolute = false) =>
+        group: (chatGroup: ChatGroupWithId, absolute = false) =>
             makeUrl(absolute, `/chat/${chatGroup.id}`),
     },
     thing: (thing: ThingWithId, absolute = false) => makeUrl(absolute, `/thing/${thing.short_id}`),

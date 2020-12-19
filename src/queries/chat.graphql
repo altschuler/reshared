@@ -35,7 +35,7 @@ query ChatMessages($where: chat_messages_bool_exp!, $limit: Int!) {
 }
 
 subscription ChatGroups {
-    chat_groups {
+    chat_groups(order_by: [{ messages_aggregate: { max: { created_at: desc } } }]) {
         ...ChatGroupCard
     }
 }

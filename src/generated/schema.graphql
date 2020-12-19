@@ -8390,6 +8390,77 @@ input user_private_set_input {
 columns and relationships of "users"
 """
 type users {
+  """An array relationship"""
+  chat_group_memberships(
+    """distinct select on columns"""
+    distinct_on: [chat_group_members_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_group_members_order_by!]
+
+    """filter the rows returned"""
+    where: chat_group_members_bool_exp
+  ): [chat_group_members!]!
+
+  """An aggregated array relationship"""
+  chat_group_memberships_aggregate(
+    """distinct select on columns"""
+    distinct_on: [chat_group_members_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_group_members_order_by!]
+
+    """filter the rows returned"""
+    where: chat_group_members_bool_exp
+  ): chat_group_members_aggregate!
+
+  """An array relationship"""
+  chat_messages(
+    """distinct select on columns"""
+    distinct_on: [chat_messages_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_messages_order_by!]
+
+    """filter the rows returned"""
+    where: chat_messages_bool_exp
+  ): [chat_messages!]!
+
+  """An aggregated array relationship"""
+  chat_messages_aggregate(
+    """distinct select on columns"""
+    distinct_on: [chat_messages_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_messages_order_by!]
+
+    """filter the rows returned"""
+    where: chat_messages_bool_exp
+  ): chat_messages_aggregate!
   created_at: timestamptz!
   email: String
   email_verified: timestamptz
@@ -8431,6 +8502,7 @@ type users {
   ): group_join_requests_aggregate!
   id: uuid!
   image: String
+  last_chat_notification: timestamptz
   last_seen: timestamptz
 
   """An array relationship"""
@@ -8553,12 +8625,15 @@ input users_bool_exp {
   _and: [users_bool_exp]
   _not: users_bool_exp
   _or: [users_bool_exp]
+  chat_group_memberships: chat_group_members_bool_exp
+  chat_messages: chat_messages_bool_exp
   created_at: timestamptz_comparison_exp
   email: String_comparison_exp
   email_verified: timestamptz_comparison_exp
   group_join_requests: group_join_requests_bool_exp
   id: uuid_comparison_exp
   image: String_comparison_exp
+  last_chat_notification: timestamptz_comparison_exp
   last_seen: timestamptz_comparison_exp
   memberships: group_members_bool_exp
   name: String_comparison_exp
@@ -8586,12 +8661,15 @@ enum users_constraint {
 input type for inserting data into table "users"
 """
 input users_insert_input {
+  chat_group_memberships: chat_group_members_arr_rel_insert_input
+  chat_messages: chat_messages_arr_rel_insert_input
   created_at: timestamptz
   email: String
   email_verified: timestamptz
   group_join_requests: group_join_requests_arr_rel_insert_input
   id: uuid
   image: String
+  last_chat_notification: timestamptz
   last_seen: timestamptz
   memberships: group_members_arr_rel_insert_input
   name: String
@@ -8608,6 +8686,7 @@ type users_max_fields {
   email_verified: timestamptz
   id: uuid
   image: String
+  last_chat_notification: timestamptz
   last_seen: timestamptz
   name: String
   password_hash: String
@@ -8623,6 +8702,7 @@ input users_max_order_by {
   email_verified: order_by
   id: order_by
   image: order_by
+  last_chat_notification: order_by
   last_seen: order_by
   name: order_by
   password_hash: order_by
@@ -8636,6 +8716,7 @@ type users_min_fields {
   email_verified: timestamptz
   id: uuid
   image: String
+  last_chat_notification: timestamptz
   last_seen: timestamptz
   name: String
   password_hash: String
@@ -8651,6 +8732,7 @@ input users_min_order_by {
   email_verified: order_by
   id: order_by
   image: order_by
+  last_chat_notification: order_by
   last_seen: order_by
   name: order_by
   password_hash: order_by
@@ -8689,12 +8771,15 @@ input users_on_conflict {
 ordering options when selecting data from "users"
 """
 input users_order_by {
+  chat_group_memberships_aggregate: chat_group_members_aggregate_order_by
+  chat_messages_aggregate: chat_messages_aggregate_order_by
   created_at: order_by
   email: order_by
   email_verified: order_by
   group_join_requests_aggregate: group_join_requests_aggregate_order_by
   id: order_by
   image: order_by
+  last_chat_notification: order_by
   last_seen: order_by
   memberships_aggregate: group_members_aggregate_order_by
   name: order_by
@@ -8731,6 +8816,9 @@ enum users_select_column {
   image
 
   """column name"""
+  last_chat_notification
+
+  """column name"""
   last_seen
 
   """column name"""
@@ -8752,6 +8840,7 @@ input users_set_input {
   email_verified: timestamptz
   id: uuid
   image: String
+  last_chat_notification: timestamptz
   last_seen: timestamptz
   name: String
   password_hash: String
@@ -8776,6 +8865,9 @@ enum users_update_column {
 
   """column name"""
   image
+
+  """column name"""
+  last_chat_notification
 
   """column name"""
   last_seen
