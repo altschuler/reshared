@@ -1,4 +1,10 @@
-﻿query ServerFetchThingDetails($id: uuid!) {
+﻿query ServerFetchThingPageDetails($shortId: String!) {
+    things(where: { short_id: { _eq: $shortId } }, limit: 1) {
+        ...ThingDetails
+    }
+}
+
+query ServerFetchThingDetails($id: uuid!) {
     things_by_pk(id: $id) {
         id
         short_id

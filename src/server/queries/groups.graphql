@@ -32,6 +32,14 @@ query ServerFindGroupMembers($groupId: uuid!, $where: group_members_bool_exp) {
     }
 }
 
+query ServerCountGroupMembers($where: group_members_bool_exp) {
+    group_members_aggregate(limit: 1, where: $where) {
+        aggregate {
+            count
+        }
+    }
+}
+
 # Mutations
 
 mutation ServerInsertGroupJoinToken($input: group_join_tokens_insert_input!) {

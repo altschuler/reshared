@@ -16,6 +16,10 @@ interface ChatGroupWithId {
 }
 
 export const urlFor = {
+    auth: {
+        login: (absolute = false) => makeUrl(absolute, '/login'),
+        register: (absolute = false) => makeUrl(absolute, '/register'),
+    },
     home: (absolute = false) => makeUrl(absolute, ''),
     chat: {
         new: (absolute = false) => makeUrl(absolute, '/chat/new'),

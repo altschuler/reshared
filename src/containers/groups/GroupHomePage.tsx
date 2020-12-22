@@ -40,7 +40,7 @@ export const GroupHomePage = ({ group, error }: GroupHomePageProps) => {
 
             <hr />
 
-            <ThingList makeUrl={makeUrl} where={where} />
+            <ThingList where={where} />
         </GroupLayout>
     );
 };

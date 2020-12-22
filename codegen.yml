@@ -9,7 +9,7 @@ generates:
       - schema-ast
   ./src/generated/server-queries.ts:
     documents:
-      - ./src/server/queries/*.{graphql,ts,tsx}
+      - './src/**/*.graphql'
     plugins:
       - typescript
       - typescript-operations

@@ -3,9 +3,11 @@ import { values } from 'lodash';
 import { getProviders, SessionProvider, signIn } from 'next-auth/client';
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { createUseStyles } from 'react-jss';
+import { urlFor } from '../../../utils/urls';
 
-const useStyles = createUseStyles( ({
+const useStyles = createUseStyles({
     root: {
         display: 'flex',
         flexDirection: 'column',
@@ -15,7 +17,7 @@ const useStyles = createUseStyles( ({
     login: {
         marginRight: '1em',
     },
-}));
+});
 
 interface LoginFormValues {
     email: string;
@@ -24,7 +26,7 @@ interface LoginFormValues {
 
 interface LoginFormProps {
     providers?: { [key: string]: SessionProvider };
-    onRegister: () => any;
+    onRegister?: () => any;
     submitLabel?: string;
     callbackUrl?: string;
 }
@@ -84,7 +86,13 @@ export const LoginForm = (props: LoginFormProps) => {
                     </Button>
                     <Typography.Text className="signup-text">
                         Don't have an account?{' '}
-                        <Typography.Link onClick={props.onRegister}>Sign up</Typography.Link>{' '}
+                        {props.onRegister ? (
+                            <Typography.Link onClick={props.onRegister}>Sign up</Typography.Link>
+                        ) : (
+                            <Link href={urlFor.auth.register()} passHref>
+                                <Typography.Link>Sign up</Typography.Link>
+                            </Link>
+                        )}{' '}
                         instead.
                     </Typography.Text>
                 </Form.Item>

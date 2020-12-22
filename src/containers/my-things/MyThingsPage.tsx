@@ -1,8 +1,7 @@
 ﻿import React, { useCallback, useMemo } from 'react';
 import { ThingList } from '../../components/ThingList';
 import { useAuth } from '../../utils/auth';
-import { ThingCardFragment } from '../../generated/graphql';
-import { Button, PageHeader, Typography } from 'antd';
+import { Button, PageHeader } from 'antd';
 import { CreateThingDrawer, useDialogs } from '../../components/dialogs';
 import { PageLayout } from '../root/PageLayout';
 
@@ -12,8 +11,6 @@ import { PageLayout } from '../root/PageLayout';
 export const MyThingsPage = () => {
     const auth = useAuth();
     const { showDialog } = useDialogs();
-
-    const makeUrl = useCallback((thing: ThingCardFragment) => `/my-things/${thing.id}`, []);
 
     const handleShare = useCallback(() => {
         showDialog(CreateThingDrawer).then(console.log);
@@ -37,7 +34,7 @@ export const MyThingsPage = () => {
                         Share a thing
                     </Button>
                 }>
-                <ThingList skip={!auth.user} makeUrl={makeUrl} where={where} />
+                <ThingList skip={!auth.user} where={where} />
             </PageHeader>
         </PageLayout>
     );

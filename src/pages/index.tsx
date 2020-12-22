@@ -1,4 +1,5 @@
 import { PageLayout } from '../containers/root/PageLayout';
+import { makeGSSP } from '../utils/gssp';
 
 const Home = () => {
     return (
@@ -9,3 +10,5 @@ const Home = () => {
 };
 
 export default Home;
+
+export const getServerSideProps = makeGSSP({});

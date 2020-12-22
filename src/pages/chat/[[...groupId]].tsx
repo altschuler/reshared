@@ -4,27 +4,29 @@ import { GetServerSideProps } from 'next';
 import { hasuraClient } from '../../server';
 import { ServerMostRecentChatsDocument } from '../../generated/server-queries';
 import { urlFor } from '../../utils/urls';
+import { makeGSSP } from '../../utils/gssp';
 
 export default ChatPage;
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    const groupId = ctx.params?.groupId;
+export const getServerSideProps = makeGSSP({
+    requireAuth: true,
+    handler: async (data) => {
+        const groupId = data.nextCtx.params?.groupId;
 
-    if (!groupId) {
-        const query = await hasuraClient.query({
-            query: ServerMostRecentChatsDocument,
-        });
+        if (!groupId) {
+            const query = await data.userClient.query({
+                query: ServerMostRecentChatsDocument,
+            });
 
-        const mostRecent = head(query.data.chat_groups);
-        if (mostRecent) {
-            return {
-                redirect: {
-                    statusCode: 303,
-                    destination: urlFor.chat.group({ id: mostRecent.id }),
-                },
-            };
+            const mostRecent = head(query.data.chat_groups);
+            if (mostRecent) {
+                return {
+                    redirect: {
+                        statusCode: 303 as 303 | 301,
+                        destination: urlFor.chat.group({ id: mostRecent.id }),
+                    },
+                };
+            }
         }
-    }
-
-    return { props: {} };
-};
+    },
+});

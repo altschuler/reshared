@@ -13,7 +13,7 @@ import { createUseStyles } from 'react-jss';
 import { UserAvatar } from '../../components/display';
 import { NotificationsButton } from './NotificationList';
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 const useStyles = createUseStyles({
     header: {
         display: 'flex',
@@ -65,6 +65,9 @@ const useStyles = createUseStyles({
     pageContentHorizontal: {
         flexDirection: 'row',
     },
+    pageContentCentered: {
+        justifyContent: 'center',
+    },
     footer: {
         display: 'flex',
         alignItems: 'center',
@@ -112,6 +115,7 @@ export interface PageLayoutProps {
     noFooter?: boolean;
     padded?: boolean;
     horizontal?: boolean;
+    centered?: boolean;
     children: ReactNode;
 }
 
@@ -179,6 +183,7 @@ export const PageLayout = (props: PageLayoutProps) => {
                     className={clsx(
                         classes.pageContent,
                         props.noScroll && classes.pageContentNoScroll,
+                        props.centered && classes.pageContentCentered,
                         props.horizontal
                             ? classes.pageContentHorizontal
                             : classes.pageContentVertical,

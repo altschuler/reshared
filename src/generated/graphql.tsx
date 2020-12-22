@@ -8205,13 +8205,13 @@ export type ThingListQuery = (
 );
 
 export type ThingDetailsQueryVariables = Exact<{
-  id: Scalars['uuid'];
+  shortId: Scalars['String'];
 }>;
 
 
 export type ThingDetailsQuery = (
   { __typename?: 'query_root' }
-  & { things_by_pk?: Maybe<(
+  & { things: Array<(
     { __typename?: 'things' }
     & ThingDetailsFragment
   )> }
@@ -9456,8 +9456,8 @@ export function refetchThingListQuery(variables?: ThingListQueryVariables) {
       return { query: ThingListDocument, variables: variables }
     }
 export const ThingDetailsDocument = gql`
-    query ThingDetails($id: uuid!) {
-  things_by_pk(id: $id) {
+    query ThingDetails($shortId: String!) {
+  things(where: {short_id: {_eq: $shortId}}) {
     ...ThingDetails
   }
 }
@@ -9475,7 +9475,7 @@ export const ThingDetailsDocument = gql`
  * @example
  * const { data, loading, error } = useThingDetailsQuery({
  *   variables: {
- *      id: // value for 'id'
+ *      shortId: // value for 'shortId'
  *   },
  * });
  */

@@ -4,22 +4,21 @@ import {
     Thing_Type_Enum,
     ThingCardFragment,
     Things_Bool_Exp,
-    useCreateChatGroupMutation,
     useThingListQuery,
 } from '../generated/graphql';
 import { useAuth } from '../utils/auth';
 import { EditThingDrawer, ImageGalleryModal, useDialogs } from './dialogs';
 import { usePagination } from '../utils/list';
 import { useCallback, useEffect, useState } from 'react';
-import { Button, Input, List, Modal, Popconfirm, Popover, Space, Tag, Typography } from 'antd';
+import { Button, Input, List, Space, Tag } from 'antd';
 import { ownsThing } from '../utils/thing';
-import { BellOutlined, EditOutlined } from '@ant-design/icons';
+import { EditOutlined } from '@ant-design/icons';
 import { UserAvatar } from './display';
 import Link from 'next/link';
 import Image from 'next/image';
 import { createUseStyles } from 'react-jss';
 import { useDebounce } from '../utils/hooks';
-import { useRouter } from 'next/router';
+import { ThingInterestButton } from './ThingInterestButton';
 import { urlFor } from '../utils/urls';
 
 const useStyles = createUseStyles({
@@ -45,7 +44,6 @@ const useStyles = createUseStyles({
 export interface ThingListProps {
     initial?: ThingCardFragment[];
     where: Things_Bool_Exp;
-    makeUrl: (thing: ThingCardFragment) => string;
     skip?: boolean;
 }
 
@@ -57,7 +55,7 @@ export const ThingList = (props: ThingListProps) => {
     const pgn = usePagination();
     const classes = useStyles();
 
-    const { data, previousData, loading, error } = useThingListQuery({
+    const { data, previousData, loading } = useThingListQuery({
         skip: props.skip,
         variables: {
             limit: pgn.limit,
@@ -81,7 +79,7 @@ export const ThingList = (props: ThingListProps) => {
     useEffect(() => pgn.setTotal(total), [total, pgn]);
 
     const handleShowGallery = useCallback(
-        (thing: ThingCardFragment, startIndex: number) => {
+        (thing: ThingCardFragment, startIndex: number) =>
             showDialog(ImageGalleryModal, {
                 title: `Images for ${thing.name}`,
                 startIndex,
@@ -90,15 +88,12 @@ export const ThingList = (props: ThingListProps) => {
                     description: i.description,
                     url: i.file.url,
                 })),
-            }).catch(console.log);
-        },
+            }),
         [showDialog],
     );
 
     const handleEdit = useCallback(
-        (thing: ThingCardFragment) => {
-            showDialog(EditThingDrawer, { thing });
-        },
+        (thing: ThingCardFragment) => showDialog(EditThingDrawer, { thing }),
         [showDialog],
     );
 
@@ -129,14 +124,14 @@ export const ThingList = (props: ThingListProps) => {
                                 onClick={() => handleEdit(thing)}
                             />
                         ) : (
-                            <SendMessageButton thing={thing} />
+                            <ThingInterestButton thing={thing} />
                         ),
                     ]}>
                     <List.Item.Meta
                         avatar={<UserAvatar user={thing.owner} />}
                         title={
                             <Space>
-                                <Link href={props.makeUrl(thing)}>{thing.name}</Link>
+                                <Link href={urlFor.thing(thing)}>{thing.name}</Link>
                                 <ThingTypeTag type={thing.type} />
                             </Space>
                         }
@@ -165,90 +160,4 @@ export const ThingList = (props: ThingListProps) => {
 
 export const ThingTypeTag = ({ type }: { type: Thing_Type_Enum }) => {
     return <Tag>{type}</Tag>;
-};
-
-const useFormStyles = createUseStyles({
-    textarea: {
-        resize: 'none',
-        marginBottom: '1em',
-    },
-    contentRoot: {
-        maxWidth: 500,
-    },
-});
-
-export const SendMessageButton = ({ thing }: { thing: ThingCardFragment }) => {
-    const classes = useFormStyles();
-    const router = useRouter();
-    const [value, setValue] = useState('');
-    const [visible, setVisible] = useState(false);
-
-    const [send, mutation] = useCreateChatGroupMutation();
-    const handleConfirm = useCallback(() => {
-        send({
-            variables: {
-                input: { receiverIds: [thing.owner.id], message: value, thing_id: thing.id },
-            },
-        })
-            .then((result) => {
-                const created = result.data?.createChatGroup?.chat_group;
-                if (created) {
-                    return router.push(urlFor.chat.group(created));
-                }
-            })
-            .catch((err) => Modal.error({ title: 'Send message failed', content: err.message }))
-            .finally(() => setVisible(false));
-    }, [router, send, thing.id, thing.owner.id, value]);
-
-    const handleVisibleChange = useCallback(
-        (value: boolean) => {
-            if (!mutation.loading) {
-                setVisible(value);
-            }
-        },
-        [mutation.loading],
-    );
-
-    const content = (
-        <div className={classes.contentRoot}>
-            <Typography.Paragraph>
-                If you're interested in this thing, let {thing.owner.name} know by sending them a
-                message which will include a reference to this thing. Let them know relevant details
-                such as when/how much/for what/how many.
-            </Typography.Paragraph>
-            <Input.TextArea
-                autoSize
-                autoFocus
-                maxLength={1000}
-                className={classes.textarea}
-                placeholder="Message"
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
-            />
-            <Space>
-                <Button disabled={mutation.loading}>Cancel</Button>
-                <Button
-                    type="primary"
-                    onClick={handleConfirm}
-                    loading={mutation.loading}
-                    disabled={mutation.loading}>
-                    Send
-                </Button>
-            </Space>
-        </div>
-    );
-
-    return (
-        <Popover
-            visible={visible}
-            onVisibleChange={handleVisibleChange}
-            arrowPointAtCenter={false}
-            trigger="click"
-            content={content}>
-            <Button
-                title={`Let ${thing.owner.name} know you're interested in this`}
-                icon={<BellOutlined />}
-            />
-        </Popover>
-    );
 };

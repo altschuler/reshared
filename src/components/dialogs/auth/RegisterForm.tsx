@@ -4,6 +4,8 @@ import { getProviders, SessionProvider, signIn } from 'next-auth/client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useRegisterUserMutation } from '../../../generated/graphql';
+import Link from 'next/link';
+import { urlFor } from '../../../utils/urls';
 
 interface RegisterFormValues {
     email: string;
@@ -13,7 +15,7 @@ interface RegisterFormValues {
 
 interface RegisterFormProps {
     providers?: { [key: string]: SessionProvider };
-    onLogin: () => any;
+    onLogin?: () => any;
     submitLabel?: string;
 }
 
@@ -63,7 +65,10 @@ export const RegisterForm = (props: RegisterFormProps) => {
                     <Input placeholder="Name" />
                 </Form.Item>
 
-                <Form.Item name="email" rules={[{ required: true, type: 'email' }]}>
+                <Form.Item
+                    name="email"
+                    rules={[{ required: true, type: 'email' }]}
+                    extra="You will never ever receive spam from Reshared!">
                     <Input placeholder="Email" />
                 </Form.Item>
 
@@ -84,7 +89,14 @@ export const RegisterForm = (props: RegisterFormProps) => {
                     </Button>
                     <Typography.Text className="signup-text">
                         Already have an account?{' '}
-                        <Typography.Link onClick={props.onLogin}>Sign in</Typography.Link> instead.
+                        {props.onLogin ? (
+                            <Typography.Link onClick={props.onLogin}>Sign in</Typography.Link>
+                        ) : (
+                            <Link href={urlFor.auth.login()} passHref>
+                                <Typography.Link>Sign in</Typography.Link>
+                            </Link>
+                        )}{' '}
+                        instead.
                     </Typography.Text>
                 </Form.Item>
                 {error && <Alert message={error} type="error" />}

@@ -1,31 +1,45 @@
-﻿import NextAuth from 'next-auth';
+﻿import NextAuth, { InitOptions } from 'next-auth';
 import Providers from 'next-auth/providers';
 import bcrypt from 'bcryptjs';
 import { ServerUserCredentialsDocument } from '../../../generated/server-queries';
 import { hasuraClient, decodeToken, encodeToken } from '../../../server';
 import { getUnixTime, addHours } from 'date-fns';
 
+interface Token {
+    id: string;
+    name: string;
+    email: string;
+    picture: string;
+}
+
 const options = {
     database: process.env.POSTGRES_URL,
     debug: true,
     jwt: {
-        encode: async (options) =>
-            encodeToken({
-                id: options.token.id,
-                name: options.token.name,
-                email: options.token.email,
-                picture: options.token.picture,
+        encode: async (options) => {
+            if (!options.token) {
+                return null;
+            }
+
+            const t = options.token as Token;
+
+            return encodeToken({
+                id: t.id,
+                name: t.name,
+                email: t.email,
+                picture: t.picture,
                 'https://hasura.io/jwt/claims': {
                     'x-hasura-allowed-roles': ['user'],
                     'x-hasura-default-role': 'user',
                     'x-hasura-role': 'user',
-                    'x-hasura-user-id': options.token.id,
+                    'x-hasura-user-id': t.id,
                 },
                 iat: Date.now() / 1000,
                 exp: getUnixTime(addHours(Date.now(), 1)),
-                sub: options.token.id,
-            }),
-        decode: async (options) => (decodeToken(options.token) as unknown) as string,
+                sub: t.id,
+            });
+        },
+        decode: async (options) => (decodeToken(options.token!) as unknown) as string,
     },
     session: { jwt: true },
     pages: {
@@ -56,22 +70,23 @@ const options = {
                     return Promise.resolve(null);
                 }
 
-                const match = bcrypt.compareSync(credentials.password, user.password_hash);
-
-                return Promise.resolve(match ? user : null);
+                return bcrypt
+                    .compare(credentials.password, user.password_hash)
+                    .then((match) => (match ? user : null));
             },
         }),
     ],
 
     callbacks: {
-        session: async (session, user) => {
+        // TODO: type?
+        session: async (session: any, user: any) => {
             session.id = user.id;
             session.token = encodeToken(user);
 
             return Promise.resolve(session);
         },
 
-        jwt: async (token, user, account, profile, isNewUser) => {
+        jwt: async (token, user: any, account, profile, isNewUser) => {
             const isSignIn = !!user;
 
             if (isNewUser) {
@@ -86,6 +101,6 @@ const options = {
             return Promise.resolve(token);
         },
     },
-};
+} as InitOptions;
 
 export default (req, res) => NextAuth(req, res, options);

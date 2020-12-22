@@ -1,5 +1,6 @@
 ﻿import { noop } from 'lodash';
 import { Drawer, message, Spin } from 'antd';
+import { head } from 'lodash';
 import { useCallback } from 'react';
 import {
     GqlOps,
@@ -27,10 +28,10 @@ export const EditThingDrawer = (props: EditThingDrawerProps) => {
     });
 
     const detailsQuery = useThingDetailsQuery({
-        variables: { id: thing.id },
+        variables: { shortId: thing.short_id },
         onCompleted: (data) => {
-            if (data.things_by_pk) {
-                editorState.resetTo(makeEditorThing(data.things_by_pk));
+            if (head(data.things)) {
+                editorState.resetTo(makeEditorThing(head(data.things)));
             }
         },
     });

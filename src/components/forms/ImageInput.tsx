@@ -6,9 +6,10 @@ import { DeleteFilled } from '@ant-design/icons';
 import { createUseStyles } from 'react-jss';
 import Image from 'next/image';
 
-import { uploadFile } from '../../utils/files';
+import { uploadFile, useFileUpload } from '../../utils/files';
 import { EditorThingImage } from '../editors';
 import { removeAt } from '../../utils/array';
+import { useApolloClient } from '@apollo/client';
 
 export interface ImageInputProps {
     value: EditorThingImage[];
@@ -67,6 +68,7 @@ const useStyles = createUseStyles({
 export const ImageInput = ({ value, errors, onChange, onTouch }: ImageInputProps) => {
     const classes = useStyles();
     const [loading, setLoading] = useState(false);
+    const { upload } = useFileUpload();
 
     const handleUpload = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
@@ -85,7 +87,7 @@ export const ImageInput = ({ value, errors, onChange, onTouch }: ImageInputProps
             }
 
             setLoading(true);
-            Promise.all(files.map((file) => uploadFile(file)))
+            Promise.all(files.map((file) => upload(file)))
                 .then((fileUploads) =>
                     onChange([
                         ...value,
@@ -94,7 +96,7 @@ export const ImageInput = ({ value, errors, onChange, onTouch }: ImageInputProps
                 )
                 .finally(() => setLoading(false));
         },
-        [onChange, value],
+        [onChange, upload, value],
     );
 
     const handleDescriptionChange = useCallback(

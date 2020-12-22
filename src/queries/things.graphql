@@ -51,8 +51,8 @@ query ThingList($limit: Int, $offset: Int, $orderBy: [things_order_by!], $where:
     }
 }
 
-query ThingDetails($id: uuid!) {
-    things_by_pk(id: $id) {
+query ThingDetails($shortId: String!) {
+    things(where: { short_id: { _eq: $shortId } }) {
         ...ThingDetails
     }
 }

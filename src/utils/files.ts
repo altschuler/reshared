@@ -1,10 +1,16 @@
-﻿import { defaultApolloClient } from '../api/apolloClient';
-import { InsertFileUploadDocument } from '../generated/graphql';
+﻿import { InsertFileUploadDocument } from '../generated/graphql';
+import { ApolloClient, useApolloClient } from '@apollo/client';
+import { useMemo } from 'react';
 
 export interface UploadFileOptions {
     onProgress: (value: number) => unknown;
 }
-export const uploadFile = async (file: File, options?: UploadFileOptions) => {
+
+export const uploadFile = async (
+    apolloClient: ApolloClient<unknown>,
+    file: File,
+    options?: UploadFileOptions,
+) => {
     // TODO: use axios for progress
     const filename = encodeURIComponent(file.name);
 
@@ -25,7 +31,7 @@ export const uploadFile = async (file: File, options?: UploadFileOptions) => {
 
     // Create file in db
     const s3url = `https://${fields.bucket}.s3.amazonaws.com/${fields.key}`;
-    const inserted = await defaultApolloClient.mutate({
+    const inserted = await apolloClient.mutate({
         mutation: InsertFileUploadDocument,
         variables: {
             input: { name: filename, url: s3url, mime_type: file.type, size: file.size },
@@ -47,3 +53,13 @@ export const getBase64 = (file: File): Promise<string> =>
         reader.onload = () => resolve(reader.result as string);
         reader.onerror = (error) => reject(error);
     });
+
+export const useFileUpload = () => {
+    const apollo = useApolloClient();
+    return useMemo(
+        () => ({
+            upload: (file: File, options?: UploadFileOptions) => uploadFile(apollo, file, options),
+        }),
+        [apollo],
+    );
+};
