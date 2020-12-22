@@ -1,6 +1,4 @@
-﻿import { ChatGroupCardFragment } from '../generated/graphql';
-
-const makeUrl = (absolute: boolean, path: string) =>
+﻿const makeUrl = (absolute: boolean, path: string) =>
     `${absolute ? process.env.NEXT_PUBLIC_ROOT_URL : ''}${path}`;
 
 interface GroupWithId {
@@ -20,7 +18,7 @@ export const urlFor = {
         login: (absolute = false) => makeUrl(absolute, '/login'),
         register: (absolute = false) => makeUrl(absolute, '/register'),
     },
-    home: (absolute = false) => makeUrl(absolute, ''),
+    home: (absolute = false) => makeUrl(absolute, '/'),
     chat: {
         new: (absolute = false) => makeUrl(absolute, '/chat/new'),
         group: (chatGroup: ChatGroupWithId, absolute = false) =>

@@ -9,13 +9,18 @@ import { useCallback, useState } from 'react';
 import { Button, Input, message, Popconfirm } from 'antd';
 import { createUseStyles } from 'react-jss';
 
-const useStyles = createUseStyles( ({
+const useStyles = createUseStyles({
     requestForm: {
         display: 'flex',
         flexDirection: 'column',
         maxWidth: 300,
     },
-}));
+    popover: {
+        '& .ant-popover-message-title': {
+            paddingLeft: 0,
+        },
+    },
+});
 
 export const JoinButton = ({ group }: { group: GroupCardFragment }) => {
     const auth = useAuth();
@@ -91,11 +96,13 @@ export const JoinButton = ({ group }: { group: GroupCardFragment }) => {
     // Private, non-member, no request
     return (
         <Popconfirm
+            overlayClassName={classes.popover}
+            icon={null}
             title={
                 <div className={classes.requestForm}>
                     <p>
-                        You can <i>optionally</i> add a short message to the group's administrator,
-                        such as who you are or why you would like to join {group.name}.
+                        You can optionally add a short message to the group's administrator, such as
+                        who you are or why you would like to join {group.name}.
                     </p>
                     <Input
                         placeholder="Message"
