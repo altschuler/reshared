@@ -2,11 +2,10 @@
 import { useState } from 'react';
 import { LoginForm } from './LoginForm';
 import { RegisterForm } from './RegisterForm';
+import { DialogProps } from '../DialogProvider';
 
-interface AuthDialogProps {
+interface AuthDialogProps extends DialogProps<void> {
     startOnRegister?: boolean;
-    visible: boolean;
-    onClose: () => any;
 }
 
 export const AuthDialog = (props: AuthDialogProps) => {
@@ -18,7 +17,8 @@ export const AuthDialog = (props: AuthDialogProps) => {
             visible={visible}
             title={showRegister ? 'Register' : 'Login'}
             footer={null}
-            onCancel={props.onClose}>
+            destroyOnClose
+            onCancel={props.dispose}>
             {showRegister ? (
                 <RegisterForm onLogin={() => setShowRegister(false)} />
             ) : (

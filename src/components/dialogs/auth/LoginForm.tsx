@@ -42,7 +42,12 @@ export const LoginForm = (props: LoginFormProps) => {
         if (!fromQuery) {
             return null;
         }
-        return fromQuery;
+        switch (fromQuery) {
+            case 'CredentialsSignin':
+                return 'Invalid login, make sure you entered your email and password correctly';
+            default:
+                return fromQuery;
+        }
     }, [router.query.error]);
 
     useEffect(() => {

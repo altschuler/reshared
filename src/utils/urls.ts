@@ -25,7 +25,12 @@ export const urlFor = {
             makeUrl(absolute, `/chat/${chatGroup.id}`),
     },
     thing: (thing: ThingWithId, absolute = false) => makeUrl(absolute, `/thing/${thing.short_id}`),
+    user: {
+        settings: (absolute = false) => makeUrl(absolute, `/settings`),
+        things: (absolute = false) => makeUrl(absolute, `/my-things`),
+    },
     group: {
+        list: (absolute = false) => makeUrl(absolute, `/groups`),
         home: (group: GroupWithId, absolute = false) =>
             makeUrl(absolute, `/groups/${group.short_id}`),
         members: (group: GroupWithId, absolute = false) =>

@@ -2,6 +2,7 @@
 import { Avatar, Popover, Card, Skeleton } from 'antd';
 import { MessageOutlined, ProfileOutlined } from '@ant-design/icons';
 import { createUseStyles } from 'react-jss';
+import { CSSProperties, useMemo } from 'react';
 
 const useStyles = createUseStyles({
     overlay: {
@@ -14,11 +15,15 @@ const useStyles = createUseStyles({
 export const UserAvatar = ({
     user,
     group,
+    disablePopover,
     className,
+    style,
 }: {
     user: UserCardFragment;
     group?: GroupCardFragment;
+    disablePopover?: boolean;
     className?: string;
+    style?: CSSProperties;
 }) => {
     const classes = useStyles();
     const popover = (
@@ -41,20 +46,26 @@ export const UserAvatar = ({
         </Card>
     );
 
-    // const handleShow = useCallback(() => {}, []);
-    // onVisibleChange={handleShow}
+    const avatar = useMemo(
+        () => (
+            <Avatar size="small" src={user.image || undefined} className={className} style={style}>
+                <span style={{ userSelect: 'none' }}>
+                    {!user.image && (user.name.slice(0, 2).toUpperCase() || '?')}
+                </span>
+            </Avatar>
+        ),
+        [className, style, user.image, user.name],
+    );
 
-    return (
+    return disablePopover ? (
+        avatar
+    ) : (
         <Popover
             arrowPointAtCenter
             destroyTooltipOnHide
             overlayClassName={classes.overlay}
             content={popover}>
-            <Avatar size="small" src={user.image || undefined} className={className}>
-                <span style={{ userSelect: 'none' }}>
-                    {!user.image && (user.name.slice(0, 2).toUpperCase() || '?')}
-                </span>
-            </Avatar>
+            {avatar}
         </Popover>
     );
 };

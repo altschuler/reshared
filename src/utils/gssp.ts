@@ -72,10 +72,11 @@ export const makeGSSP = <TProps, TParams extends ParsedUrlQuery>(
         const userClient = token ? initializeApollo(null, session?.token) : null;
         if (userClient && token) {
             if (session?.token) {
-                await userClient.query({
-                    query: UserPrivateDetailsDocument,
-                    variables: { id: token.id },
-                });
+                // Disabled because we fetch it way too often
+                // await userClient.query({
+                //     query: UserPrivateDetailsDocument,
+                //     variables: { id: token.id },
+                // });
             }
         }
 
