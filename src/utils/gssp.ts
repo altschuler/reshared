@@ -26,6 +26,7 @@ type GSSPData<TParams extends ParsedUrlQuery> =
 
 interface BaseGSSPOptions<TProps> {
     emptyProps?: TProps;
+    preloadUser?: boolean;
 }
 
 interface PublicGSSPOptions<TProps, TParams extends ParsedUrlQuery>
@@ -71,12 +72,12 @@ export const makeGSSP = <TProps, TParams extends ParsedUrlQuery>(
         // Run handler
         const userClient = token ? initializeApollo(null, session?.token) : null;
         if (userClient && token) {
-            if (session?.token) {
+            if (session?.token && options.preloadUser) {
                 // Disabled because we fetch it way too often
-                // await userClient.query({
-                //     query: UserPrivateDetailsDocument,
-                //     variables: { id: token.id },
-                // });
+                await userClient.query({
+                    query: UserPrivateDetailsDocument,
+                    variables: { id: token.id },
+                });
             }
         }
 

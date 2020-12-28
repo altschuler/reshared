@@ -3,4 +3,4 @@ import { HomePage } from '../containers/home';
 
 export default HomePage;
 
-export const getServerSideProps = makeGSSP({ requireAuth: true });
+export const getServerSideProps = makeGSSP({ requireAuth: true, preloadUser: true });
