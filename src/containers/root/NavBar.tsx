@@ -41,6 +41,11 @@ const useStyles = createUseStyles({
 
         color: 'white',
     },
+    navLink: {
+        '& a': {
+            color: 'white',
+        },
+    },
     collapsedNav: {
         flex: 1,
         display: 'flex',
@@ -59,27 +64,22 @@ const ExpandedNav = (props: { onLogin: () => unknown; onRegister: () => unknown 
     return (
         <>
             <div className={classes.nav}>
-                <Space>
-                    <Link href="/">
-                        <Button style={{ color: 'white' }} type="link">
-                            Home
-                        </Button>
-                    </Link>
-                    <Link href={urlFor.group.list()}>
-                        <Button style={{ color: 'white' }} type="link">
-                            Groups
-                        </Button>
-                    </Link>
-                    <Link href={urlFor.search()}>
-                        <Button style={{ color: 'white' }} type="link">
-                            Find
-                        </Button>
-                    </Link>
-                    <Link href={urlFor.user.things()}>
-                        <Button style={{ color: 'white' }} type="link">
-                            My Things
-                        </Button>
-                    </Link>
+                <Space size="large">
+                    <Typography.Link className={classes.navLink}>
+                        <Link href={urlFor.home()}>Home</Link>
+                    </Typography.Link>
+
+                    <Typography.Link className={classes.navLink}>
+                        <Link href={urlFor.search()}>Find</Link>
+                    </Typography.Link>
+
+                    <Typography.Link className={classes.navLink}>
+                        <Link href={urlFor.user.things()}>My Things</Link>
+                    </Typography.Link>
+
+                    <Typography.Link className={classes.navLink}>
+                        <Link href={urlFor.group.list()}>My Groups</Link>
+                    </Typography.Link>
                 </Space>
             </div>
             <div className={classes.user}>
@@ -97,7 +97,7 @@ const ExpandedNav = (props: { onLogin: () => unknown; onRegister: () => unknown 
 
                 {auth.user && (
                     <Space size="large" align="center">
-                        <Link href="/chat" passHref>
+                        <Link href={urlFor.chat.root()} passHref>
                             <Tooltip title="Messages">
                                 <MessageOutlined />
                             </Tooltip>
@@ -118,20 +118,29 @@ const CollapsedNav = () => {
     const menu = (
         <Menu>
             <Menu.Item>
-                <Link href="/browse">Browse</Link>
+                <Link href={urlFor.home()}>Home</Link>
             </Menu.Item>
 
             <Menu.Item>
-                <Link href={urlFor.group.list()}>Groups</Link>
+                <Link href={urlFor.search()}>Find</Link>
             </Menu.Item>
 
             <Menu.Divider />
 
             {auth.user ? (
                 <>
-                    <Menu.ItemGroup title={`Signed in as ${auth.user.name}`} />
+                    <Menu.ItemGroup
+                        title={
+                            <span>
+                                Signed in as <strong>{auth.user.name}</strong>
+                            </span>
+                        }
+                    />
                     <Menu.Item>
-                        <Link href={urlFor.user.things()}>My things</Link>
+                        <Link href={urlFor.user.things()}>My Things</Link>
+                    </Menu.Item>
+                    <Menu.Item>
+                        <Link href={urlFor.group.list()}>My Groups</Link>
                     </Menu.Item>
                     <Menu.Item>
                         <Link href={urlFor.user.settings()}>Account settings</Link>
@@ -192,10 +201,8 @@ export const NavBar = () => {
     return (
         <header className={classes.header}>
             <div className={classes.title}>
-                <Link href="/">
-                    <div>
-                        <Typography.Title level={3}>Reshared</Typography.Title>
-                    </div>
+                <Link href={urlFor.root()}>
+                    <Typography.Title level={3}>Reshared</Typography.Title>
                 </Link>
             </div>
 

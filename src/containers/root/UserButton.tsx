@@ -13,7 +13,13 @@ export interface UserButtonProps {
 export const UserButton = ({ user }: UserButtonProps) => {
     const menu = (
         <Menu>
-            <Menu.ItemGroup title={`Signed in as ${user.name}`} />
+            <Menu.ItemGroup
+                title={
+                    <span>
+                        Signed in as <strong>{user.name}</strong>
+                    </span>
+                }
+            />
             <Menu.Item>
                 <Link href={urlFor.user.things()}>My things</Link>
             </Menu.Item>

@@ -16,13 +16,15 @@ interface ChatGroupWithId {
 }
 
 export const urlFor = {
-    home: (absolute = false) => makeUrl(absolute, '/'),
+    root: (absolute = false) => makeUrl(absolute, '/'),
+    home: (absolute = false) => makeUrl(absolute, '/home'),
     search: (absolute = false) => makeUrl(absolute, '/search'),
     auth: {
         login: (absolute = false) => makeUrl(absolute, '/login'),
         register: (absolute = false) => makeUrl(absolute, '/register'),
     },
     chat: {
+        root: (absolute = false) => makeUrl(absolute, '/chat'),
         new: (absolute = false) => makeUrl(absolute, '/chat/new'),
         group: (chatGroup: ChatGroupWithId, absolute = false) =>
             makeUrl(absolute, `/chat/${chatGroup.id}`),

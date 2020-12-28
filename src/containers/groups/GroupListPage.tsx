@@ -1,15 +1,12 @@
-﻿import { GroupCardFragment, Order_By, useListGroupsQuery } from '../../generated/graphql';
+﻿import { GroupCardFragment, Groups_Bool_Exp } from '../../generated/graphql';
 import { createUseStyles } from 'react-jss';
-import { Avatar, Button, List, PageHeader, Space, Typography } from 'antd';
-import Link from 'next/link';
-import { EyeInvisibleOutlined, EyeOutlined, GiftOutlined, TeamOutlined } from '@ant-design/icons';
-import { ReactNode, useCallback, useEffect } from 'react';
+import { Button, PageHeader } from 'antd';
+import { useCallback, useMemo } from 'react';
 import { useDialogs, CreateGroupDrawer } from '../../components/dialogs';
-import { JoinButton } from './JoinButton';
 import { useRouter } from 'next/router';
-import { usePagination } from '../../utils/list';
-import { urlFor } from '../../utils/urls';
 import { PageLayout } from '../root/PageLayout';
+import { GroupList } from '../../components/GroupList';
+import { useAuth } from '../../utils/auth';
 
 const useStyles = createUseStyles({
     thing: {
@@ -26,6 +23,7 @@ const useStyles = createUseStyles({
 export const GroupListPage = () => {
     const dialogs = useDialogs();
     const classes = useStyles();
+    const auth = useAuth();
     const router = useRouter();
 
     const handleCreateGroup = useCallback(
@@ -36,15 +34,26 @@ export const GroupListPage = () => {
         [dialogs, router],
     );
 
+    const where = useMemo(
+        (): Groups_Bool_Exp => ({
+            memberships: {
+                user_id: { _eq: auth.user?.id },
+            },
+        }),
+        [auth.user],
+    );
+
     return (
         <PageLayout>
             <PageHeader
-                title="Groups"
+                title="Your Groups"
                 extra={
                     <Button type="primary" onClick={handleCreateGroup}>
                         Create Group
                     </Button>
-                }></PageHeader>
+                }>
+                <GroupList where={where} />
+            </PageHeader>
         </PageLayout>
     );
 };

@@ -40,6 +40,11 @@ const App = ({ Component, pageProps }: AppProps) => {
                             <Head>
                                 <title>Reshared</title>
                                 <link rel="icon" href="/favicon.ico" />
+                                <script
+                                    async
+                                    defer
+                                    data-domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
+                                    src="https://plausible.io/js/plausible.js"></script>
                             </Head>
 
                             <Component {...pageProps} />

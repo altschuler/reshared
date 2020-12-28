@@ -1,10 +1,11 @@
-﻿import { useMemo } from 'react';
+﻿import { useCallback, useMemo } from 'react';
 import { isEmpty } from 'lodash';
 import { PageLayout } from '../root/PageLayout';
 import { Button, Input, Space, Typography } from 'antd';
 import { createUseStyles } from 'react-jss';
 import { useDebounce, useMedia, useStateObject } from '../../utils/hooks';
 import {
+    GroupCardFragment,
     Groups_Bool_Exp,
     Things_Bool_Exp,
     Users_Bool_Exp,
@@ -15,6 +16,8 @@ import { useRouter } from 'next/router';
 import { SearchOptions, Sidebar } from './Sidebar';
 import { GroupList } from '../../components/GroupList';
 import { UserList } from '../../components/UserList';
+import { CreateGroupDrawer, useDialogs } from '../../components/dialogs';
+import { urlFor } from '../../utils/urls';
 
 const useStyles = createUseStyles({
     searchBar: {
@@ -153,17 +156,7 @@ export const SearchPage = () => {
                         />
                     )}
                     {options.type === 'group' && (
-                        <GroupList
-                            where={groupWhere}
-                            emptyText={
-                                <Space direction="vertical">
-                                    <Typography.Title level={5}>
-                                        No group for your community?
-                                    </Typography.Title>
-                                    <Button>Create a new group</Button>
-                                </Space>
-                            }
-                        />
+                        <GroupList where={groupWhere} emptyText={<GroupEmptyResults />} />
                     )}
                     {options.type === 'user' && (
                         <UserList
@@ -181,5 +174,25 @@ export const SearchPage = () => {
                 </div>
             </div>
         </PageLayout>
+    );
+};
+
+const GroupEmptyResults = () => {
+    const dialogs = useDialogs();
+    const router = useRouter();
+
+    const handleCreate = useCallback(
+        () =>
+            dialogs
+                .showDialog(CreateGroupDrawer)
+                .then((group: GroupCardFragment) => router.push(urlFor.group.home(group))),
+        [dialogs, router],
+    );
+
+    return (
+        <Space direction="vertical">
+            <Typography.Title level={5}>No group for your community?</Typography.Title>
+            <Button onClick={handleCreate}>Create a new group</Button>
+        </Space>
     );
 };
