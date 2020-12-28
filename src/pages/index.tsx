@@ -7,8 +7,8 @@ export default FrontPage;
 export const getServerSideProps = makeGSSP({
     handler: async (data) => {
         // If authenticated redirect to home page
-        // if (data.token) {
-        //     return { redirect: { destination: urlFor.home(), permanent: false } };
-        // }
+        if (data.token) {
+            return { redirect: { destination: urlFor.home(), permanent: false } };
+        }
     },
 });
