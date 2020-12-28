@@ -43,10 +43,8 @@ export const RegisterForm = (props: RegisterFormProps) => {
                 input: { email: values.email, name: values.name, password: values.password },
             },
         })
-            .then((data) =>
-                signIn('credentials', { email: values.email, password: values.password }),
-            )
-            .then((res) => router.push('/browse'))
+            .then(() => signIn('credentials', { email: values.email, password: values.password }))
+            .then(() => router.push(urlFor.home()))
             .catch((err) => setError(err.message));
     };
     return (

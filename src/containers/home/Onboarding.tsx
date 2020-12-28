@@ -6,6 +6,8 @@ import { createUseStyles } from 'react-jss';
 import { useCallback } from 'react';
 import { CreateGroupDrawer, useDialogs } from '../../components/dialogs';
 import { urlFor } from '../../utils/urls';
+import { useRouter } from 'next/router';
+import { GroupCardFragment } from '../../generated/graphql';
 
 const useStyles = createUseStyles({
     quickActions: {
@@ -15,10 +17,17 @@ const useStyles = createUseStyles({
 
 export const Onboarding = () => {
     const auth = useAuth();
+    const router = useRouter();
     const dialogs = useDialogs();
     const classes = useStyles();
 
-    const handleCreateGroup = useCallback(() => dialogs.showDialog(CreateGroupDrawer), [dialogs]);
+    const handleCreateGroup = useCallback(
+        () =>
+            dialogs
+                .showDialog(CreateGroupDrawer)
+                .then((group: GroupCardFragment) => router.push(urlFor.group.home(group))),
+        [dialogs],
+    );
 
     return (
         <PageLayout padded>

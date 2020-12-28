@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { PageLayout } from '../root/PageLayout';
 import { GroupList } from '../../components/GroupList';
 import { useAuth } from '../../utils/auth';
+import { urlFor } from '../../utils/urls';
 
 const useStyles = createUseStyles({
     thing: {
@@ -30,7 +31,7 @@ export const GroupListPage = () => {
         () =>
             dialogs
                 .showDialog(CreateGroupDrawer)
-                .then((group: GroupCardFragment) => router.push(`/groups/${group.id}`)),
+                .then((group: GroupCardFragment) => router.push(urlFor.group.home(group))),
         [dialogs, router],
     );
 
