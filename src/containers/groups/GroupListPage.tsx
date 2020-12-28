@@ -23,29 +23,10 @@ const useStyles = createUseStyles({
     },
 });
 
-const IconText = ({ icon, text }: { icon: ReactNode; text: string | number }) => (
-    <Space>
-        {icon}
-        {text}
-    </Space>
-);
-
 export const GroupListPage = () => {
     const dialogs = useDialogs();
     const classes = useStyles();
     const router = useRouter();
-    const pgn = usePagination();
-
-    const { data, loading, error } = useListGroupsQuery({
-        variables: {
-            limit: pgn.limit,
-            offset: pgn.offset,
-            orderBy: { created_at: Order_By.Desc },
-        },
-    });
-
-    const total = data?.groups_aggregate.aggregate?.count || 0;
-    useEffect(() => pgn.setTotal(total), [pgn, total]);
 
     const handleCreateGroup = useCallback(
         () =>
@@ -55,8 +36,6 @@ export const GroupListPage = () => {
         [dialogs, router],
     );
 
-    const groups = data?.groups || [];
-
     return (
         <PageLayout>
             <PageHeader
@@ -65,44 +44,7 @@ export const GroupListPage = () => {
                     <Button type="primary" onClick={handleCreateGroup}>
                         Create Group
                     </Button>
-                }>
-                <List
-                    loading={loading}
-                    itemLayout="horizontal"
-                    size="large"
-                    pagination={pgn.config}
-                    dataSource={groups}
-                    renderItem={(group) => (
-                        <List.Item
-                            key={group.name}
-                            actions={[
-                                <IconText
-                                    icon={<TeamOutlined />}
-                                    text={group.memberships_aggregate.aggregate?.count || 0}
-                                    key="members"
-                                />,
-                                <IconText
-                                    icon={<GiftOutlined />}
-                                    text={group.thing_relations_aggregate.aggregate?.count || 0}
-                                    key="things"
-                                />,
-                                <IconText
-                                    icon={group.public ? <EyeOutlined /> : <EyeInvisibleOutlined />}
-                                    text={group.public ? 'Public' : 'Private'}
-                                    key="public"
-                                />,
-
-                                <JoinButton group={group} key="join" />,
-                            ]}>
-                            <List.Item.Meta
-                                avatar={<Avatar src={''} />}
-                                title={<Link href={urlFor.group.home(group)}>{group.name}</Link>}
-                                description={group.description}
-                            />
-                        </List.Item>
-                    )}
-                />
-            </PageHeader>
+                }></PageHeader>
         </PageLayout>
     );
 };

@@ -34,11 +34,15 @@ const useStyles = createUseStyles({
     },
 });
 
-export const ChatNewPage = () => {
+export interface ChatPageNewProps {
+    to?: UserCardFragment[];
+}
+
+export const ChatNewPage = (props) => {
     const classes = useStyles();
     const router = useRouter();
 
-    const [users, setUsers] = useState<UserCardFragment[]>([]);
+    const [users, setUsers] = useState<UserCardFragment[]>(props.to || []);
 
     const groupsSub = useChatGroupsSubscription();
     const chatGroups = useMemo(() => groupsSub.data?.chat_groups || [], [

@@ -1,16 +1,11 @@
 ﻿import { useCallback, useEffect, useState } from 'react';
 
 export const useStateObject = <T>(initial: T) => {
-    const [state, setState] = useState<T>(initial);
+    const [value, setValue] = useState<T>(initial);
 
-    const update = useCallback(
-        (o: Partial<T>) => {
-            setState({ ...state, o });
-        },
-        [state],
-    );
+    const update = useCallback((o: Partial<T>) => setValue({ ...value, ...o }), [value]);
 
-    return [state, update];
+    return { value, update };
 };
 
 // Source: https://usehooks.com/useDebounce/

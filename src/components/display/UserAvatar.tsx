@@ -1,8 +1,10 @@
 ﻿import { GroupCardFragment, UserCardFragment } from '../../generated/graphql';
+import Link from 'next/link';
 import { Avatar, Popover, Card, Skeleton } from 'antd';
 import { MessageOutlined, ProfileOutlined } from '@ant-design/icons';
 import { createUseStyles } from 'react-jss';
 import { CSSProperties, useMemo } from 'react';
+import { urlFor } from '../../utils/urls';
 
 const useStyles = createUseStyles({
     overlay: {
@@ -29,7 +31,12 @@ export const UserAvatar = ({
     const popover = (
         <Card
             style={{ width: 300, marginTop: 16 }}
-            actions={[<MessageOutlined key="message" />, <ProfileOutlined key="profile" />]}>
+            actions={[
+                <Link key="message" href={{ pathname: urlFor.chat.new(), query: { to: user.id } }}>
+                    <MessageOutlined title="Send a message" />
+                </Link>,
+                <ProfileOutlined key="profile" />,
+            ]}>
             <Skeleton loading={false} avatar active>
                 <Card.Meta
                     avatar={

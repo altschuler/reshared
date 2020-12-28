@@ -1,4 +1,4 @@
-﻿import type { ReactNode } from 'react';
+﻿import type { MutableRefObject, ReactNode } from 'react';
 import { Layout } from 'antd';
 import clsx from 'clsx';
 
@@ -54,6 +54,7 @@ export interface PageLayoutProps {
     horizontal?: boolean;
     centered?: boolean;
     children: ReactNode;
+    contentRef?: MutableRefObject<HTMLDivElement | null>;
 }
 
 export const PageLayout = (props: PageLayoutProps) => {
@@ -69,6 +70,7 @@ export const PageLayout = (props: PageLayoutProps) => {
                 {/*    <Breadcrumb.Item>App</Breadcrumb.Item>*/}
                 {/*</Breadcrumb>*/}
                 <div
+                    ref={props.contentRef}
                     className={clsx(
                         classes.pageContent,
                         props.noScroll && classes.pageContentNoScroll,

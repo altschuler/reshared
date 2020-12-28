@@ -1,7 +1,7 @@
 ﻿import React, { useCallback } from 'react';
 import { useMedia } from '../../utils/hooks';
 import Link from 'next/link';
-import { Button, Dropdown, Menu, Popover, Space, Tooltip } from 'antd';
+import { Button, Dropdown, Menu, Space, Tooltip, Typography } from 'antd';
 import { urlFor } from '../../utils/urls';
 import { MessageOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import { NotificationsButton } from './NotificationList';
@@ -17,11 +17,13 @@ const useStyles = createUseStyles({
         alignItems: 'center',
         color: 'white',
         height: '64px',
-        padding: '0 50px',
+        padding: '0 24px',
         lineHeight: '64px',
         background: '#001529',
     },
     title: {
+        cursor: 'pointer',
+        userSelect: 'none',
         fontWeight: 600,
         fontSize: '24px',
         flex: 'none',
@@ -58,14 +60,25 @@ const ExpandedNav = (props: { onLogin: () => unknown; onRegister: () => unknown 
         <>
             <div className={classes.nav}>
                 <Space>
-                    <Link href="/browse">
-                        <Button type="primary">Browse</Button>
+                    <Link href="/">
+                        <Button style={{ color: 'white' }} type="link">
+                            Home
+                        </Button>
                     </Link>
                     <Link href={urlFor.group.list()}>
-                        <Button type="primary">Groups</Button>
+                        <Button style={{ color: 'white' }} type="link">
+                            Groups
+                        </Button>
+                    </Link>
+                    <Link href={urlFor.search()}>
+                        <Button style={{ color: 'white' }} type="link">
+                            Find
+                        </Button>
                     </Link>
                     <Link href={urlFor.user.things()}>
-                        <Button type="primary">My Things</Button>
+                        <Button style={{ color: 'white' }} type="link">
+                            My Things
+                        </Button>
                     </Link>
                 </Space>
             </div>
@@ -112,9 +125,10 @@ const CollapsedNav = () => {
                 <Link href={urlFor.group.list()}>Groups</Link>
             </Menu.Item>
 
+            <Menu.Divider />
+
             {auth.user ? (
                 <>
-                    <Menu.Divider />
                     <Menu.ItemGroup title={`Signed in as ${auth.user.name}`} />
                     <Menu.Item>
                         <Link href={urlFor.user.things()}>My things</Link>
@@ -156,7 +170,9 @@ const CollapsedNav = () => {
                 )}
 
                 <Dropdown overlay={menu} trigger={['click']}>
-                    <MenuFoldOutlined />
+                    <span>
+                        <MenuFoldOutlined />
+                    </span>
                 </Dropdown>
             </Space>
         </div>
@@ -177,7 +193,9 @@ export const NavBar = () => {
         <header className={classes.header}>
             <div className={classes.title}>
                 <Link href="/">
-                    <h3>Reshared</h3>
+                    <div>
+                        <Typography.Title level={3}>Reshared</Typography.Title>
+                    </div>
                 </Link>
             </div>
 

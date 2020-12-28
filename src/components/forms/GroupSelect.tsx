@@ -1,14 +1,10 @@
-﻿import React, { useCallback, useMemo } from 'react';
+﻿import React, { CSSProperties, useCallback, useMemo } from 'react';
 import { Select } from 'antd';
 import { useAuth } from '../../utils/auth';
 import { GroupCardFragment } from '../../generated/graphql';
 import { createUseStyles } from 'react-jss';
 
-const useStyles = createUseStyles({
-    root: {
-        minWidth: 200,
-    },
-});
+const useStyles = createUseStyles({});
 
 interface GroupOption {
     label: string;
@@ -19,6 +15,7 @@ interface GroupOption {
 interface BaseGroupSelectProps {
     placeholder?: string;
     allowClear?: boolean;
+    style?: CSSProperties;
 }
 
 interface SingleGroupSelectProps extends BaseGroupSelectProps {
@@ -77,10 +74,10 @@ export const GroupSelect = (props: GroupSelectProps) => {
 
     return (
         <Select
+            style={props.style}
             filterOption={filterGroup}
             placeholder={props.placeholder}
             allowClear={props.allowClear}
-            className={classes.root}
             value={value}
             options={options}
             mode={props.multiple ? 'multiple' : undefined}

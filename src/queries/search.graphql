@@ -1,0 +1,23 @@
+﻿query SearchCounts(
+    $thingWhere: things_bool_exp!
+    $groupWhere: groups_bool_exp!
+    $userWhere: users_bool_exp!
+) {
+    users_aggregate(where: $userWhere, limit: 10) {
+        aggregate {
+            count
+        }
+    }
+
+    groups_aggregate(where: $groupWhere, limit: 10) {
+        aggregate {
+            count
+        }
+    }
+
+    things_aggregate(where: $thingWhere, limit: 10) {
+        aggregate {
+            count
+        }
+    }
+}

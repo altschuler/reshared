@@ -1,14 +1,6 @@
-import { PageLayout } from '../containers/root/PageLayout';
 import { makeGSSP } from '../utils/gssp';
+import { HomePage } from '../containers/home';
 
-const Home = () => {
-    return (
-        <PageLayout>
-            <div>This site is not ready for your eyes to behold.</div>;
-        </PageLayout>
-    );
-};
-
-export default Home;
+export default HomePage;
 
 export const getServerSideProps = makeGSSP({});

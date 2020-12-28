@@ -1,15 +1,15 @@
-﻿import * as React from 'react';
-import {
+﻿import {
     Order_By,
     Thing_Type_Enum,
     ThingCardFragment,
     Things_Bool_Exp,
+    Things_Order_By,
     useThingListQuery,
 } from '../generated/graphql';
 import { useAuth } from '../utils/auth';
 import { EditThingDrawer, ImageGalleryModal, useDialogs } from './dialogs';
 import { usePagination } from '../utils/list';
-import { useCallback, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { Button, Input, List, Space, Tag } from 'antd';
 import { ownsThing } from '../utils/thing';
 import { EditOutlined } from '@ant-design/icons';
@@ -45,6 +45,9 @@ export interface ThingListProps {
     initial?: ThingCardFragment[];
     where: Things_Bool_Exp;
     skip?: boolean;
+    orderBy?: Things_Order_By[];
+    hideSearch?: boolean;
+    emptyText?: ReactNode | (() => ReactNode);
 }
 
 export const ThingList = (props: ThingListProps) => {
@@ -70,11 +73,9 @@ export const ThingList = (props: ThingListProps) => {
         },
     });
 
-    const things = data?.things || previousData?.things || [];
-    const total =
-        data?.things_aggregate.aggregate?.count ||
-        previousData?.things_aggregate.aggregate?.count ||
-        0;
+    const results = data || previousData;
+    const things = results?.things || previousData?.things || [];
+    const total = results?.things_aggregate.aggregate?.count || 0;
 
     useEffect(() => pgn.setTotal(total), [total, pgn]);
 
@@ -100,18 +101,21 @@ export const ThingList = (props: ThingListProps) => {
     return (
         <List
             header={
-                <Input.Search
-                    placeholder="Search..."
-                    className={classes.search}
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                />
+                !props.hideSearch && (
+                    <Input.Search
+                        placeholder="Search..."
+                        className={classes.search}
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                    />
+                )
             }
             loading={loading}
             itemLayout="horizontal"
             size="large"
             pagination={pgn.config}
             dataSource={things}
+            locale={props.emptyText ? { emptyText: props.emptyText } : undefined}
             renderItem={(thing) => (
                 <List.Item
                     key={thing.id}

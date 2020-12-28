@@ -14,6 +14,8 @@ import { createUseStyles } from 'react-jss';
 import { useAuth } from '../../utils/auth';
 import { useRouter } from 'next/router';
 import { urlFor } from '../../utils/urls';
+import { activityMessage } from '../../utils/activity';
+import Link from 'next/link';
 
 // List
 export interface NotificationListProps {
@@ -37,87 +39,12 @@ export const NotificationList = ({ notifications, loading, onSelect }: Notificat
         [markRead],
     );
 
-    const renderNotificationMessage = useCallback((notification: NotificationCardFragment) => {
-        const aty = notification.activity;
-        const ent = aty.entity;
-        const sndEnt = aty.secondary_entity;
-        const actor = aty.actor?.name || '[Deleted user]';
-
-        if (ent.thing) {
-            if (aty.verb === Activity_Verb_Enum.Added) {
-                return `${actor} added ${ent.thing.name} to ${sndEnt?.group?.name}`;
-            }
-
-            return `${actor} ${aty.verb} thing`;
-        }
-
-        if (ent.group) {
-            if (aty.verb === Activity_Verb_Enum.Updated) {
-                return `${actor} updated the group ${ent.group.name}`;
-            }
-
-            if (aty.verb === Activity_Verb_Enum.Joined) {
-                return `${actor} joined the group ${ent.group.name}`;
-            }
-
-            return `${actor} ${aty.verb} group`;
-        }
-
-        if (ent.group_join_request) {
-            if (aty.verb === Activity_Verb_Enum.Accepted) {
-                return `${actor} accepted your request to join ${sndEnt?.group?.name}`;
-            }
-
-            if (aty.verb === Activity_Verb_Enum.Rejected) {
-                const res = ent.group_join_request.response;
-                return `${actor} rejected your request to join ${sndEnt?.group?.name}${
-                    res ? `. Reason: ${res}` : ''
-                }`;
-            }
-
-            if (aty.verb === Activity_Verb_Enum.Added) {
-                return `${actor} has requested to join ${sndEnt?.group?.name}`;
-            }
-
-            // Fallback
-            return `${actor} ${aty.verb} group join request`;
-        }
-
-        if (ent.user) {
-            return `${actor} ${aty.verb} user`;
-        }
-
-        // TODO: log sentry
-        return `Unknown activity, this is a bug in the application!`;
-    }, []);
-
     const handleClick = useCallback(
         (notification: NotificationCardFragment) => {
-            const ent = notification.activity.entity;
-            const sndEnt = notification.activity.secondary_entity;
-            const verb = notification.activity.verb;
-
             // Mark the notification as read
             handleMarkRead(notification);
 
-            // Navigate to the related entity
-            if (ent.thing && sndEnt?.group) {
-                // TODO: link to thing page
-                router.push(urlFor.group.home(sndEnt?.group));
-            } else if (ent.group) {
-                router.push(urlFor.group.home(ent.group));
-            } else if (ent.group_join_request && sndEnt?.group) {
-                // For admins
-                if (verb === Activity_Verb_Enum.Added) {
-                    router.push(urlFor.group.members(sndEnt.group));
-                }
-                // For requester
-                else {
-                    router.push(urlFor.group.home(sndEnt.group));
-                }
-            } else if (ent.user) {
-                // user
-            }
+            router.push(urlFor.activity(notification.activity));
 
             // Let the container know that something was selected (so it can close the popover)
             onSelect();
@@ -146,7 +73,7 @@ export const NotificationList = ({ notifications, loading, onSelect }: Notificat
                         avatar={activity.actor && <UserAvatar user={activity.actor} />}
                         title={
                             <Typography.Link onClick={() => handleClick(notification)}>
-                                {renderNotificationMessage(notification)}
+                                {activityMessage(notification.activity)}
                             </Typography.Link>
                         }
                         description={<DateDisplay mode="datetime" utc={activity.created_at} />}
@@ -154,7 +81,7 @@ export const NotificationList = ({ notifications, loading, onSelect }: Notificat
                 </List.Item>
             );
         },
-        [handleClick, handleMarkRead, renderNotificationMessage],
+        [handleClick, handleMarkRead],
     );
 
     return (
@@ -266,7 +193,9 @@ export const NotificationsButton = () => {
                 </div>
             }>
             <Badge dot={hasNew} overflowCount={9}>
-                <NotificationOutlined style={{ cursor: 'pointer', color: 'white' }} />
+                <Tooltip title="Notifications">
+                    <NotificationOutlined style={{ cursor: 'pointer', color: 'white' }} />
+                </Tooltip>
             </Badge>
         </Popover>
     );

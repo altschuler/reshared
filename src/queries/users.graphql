@@ -92,6 +92,12 @@ query UserList($where: users_bool_exp, $limit: Int, $offset: Int) {
     users(where: $where, limit: $limit, offset: $offset) {
         ...UserCard
     }
+
+    users_aggregate(where: $where, limit: 10) {
+        aggregate {
+            count
+        }
+    }
 }
 
 query UserPrivateDetails($id: uuid!) {

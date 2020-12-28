@@ -116,6 +116,7 @@ export const ThingEditor = (props: ThingEditorProps) => {
 
                 <Form.Item label="Type" {...state.ant('type')}>
                     <ThingTypeSelect
+                        multiple={false}
                         value={present.type}
                         onChange={(type) => state.update({ type })}
                     />
@@ -125,6 +126,7 @@ export const ThingEditor = (props: ThingEditorProps) => {
                     label="Shared in groups"
                     tooltip="The thing can be shared in multiple groups, changes to the thing are applied in all groups. You can change which groups the thing is shared in at any time.">
                     <GroupSelect
+                        style={{ minWidth: 200 }}
                         placeholder="Select one or more groups"
                         multiple={true}
                         value={present.groups}

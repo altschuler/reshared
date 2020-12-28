@@ -7961,6 +7961,19 @@ export type GroupJoinTokensQuery = (
   )> }
 );
 
+export type ActivityListQueryVariables = Exact<{
+  offset?: Maybe<Scalars['Int']>;
+}>;
+
+
+export type ActivityListQuery = (
+  { __typename?: 'query_root' }
+  & { activities: Array<(
+    { __typename?: 'activities' }
+    & ActivityCardFragment
+  )> }
+);
+
 export type CreateGroupMutationVariables = Exact<{
   input: CreateGroupInput;
 }>;
@@ -8146,6 +8159,36 @@ export type UpdateJoinTokenMutation = (
     { __typename?: 'group_join_tokens' }
     & GroupJoinTokenCardFragment
   )> }
+);
+
+export type SearchCountsQueryVariables = Exact<{
+  thingWhere: Things_Bool_Exp;
+  groupWhere: Groups_Bool_Exp;
+  userWhere: Users_Bool_Exp;
+}>;
+
+
+export type SearchCountsQuery = (
+  { __typename?: 'query_root' }
+  & { users_aggregate: (
+    { __typename?: 'users_aggregate' }
+    & { aggregate?: Maybe<(
+      { __typename?: 'users_aggregate_fields' }
+      & Pick<Users_Aggregate_Fields, 'count'>
+    )> }
+  ), groups_aggregate: (
+    { __typename?: 'groups_aggregate' }
+    & { aggregate?: Maybe<(
+      { __typename?: 'groups_aggregate_fields' }
+      & Pick<Groups_Aggregate_Fields, 'count'>
+    )> }
+  ), things_aggregate: (
+    { __typename?: 'things_aggregate' }
+    & { aggregate?: Maybe<(
+      { __typename?: 'things_aggregate_fields' }
+      & Pick<Things_Aggregate_Fields, 'count'>
+    )> }
+  ) }
 );
 
 export type ThingCardFragment = (
@@ -8375,7 +8418,13 @@ export type UserListQuery = (
   & { users: Array<(
     { __typename?: 'users' }
     & UserCardFragment
-  )> }
+  )>, users_aggregate: (
+    { __typename?: 'users_aggregate' }
+    & { aggregate?: Maybe<(
+      { __typename?: 'users_aggregate_fields' }
+      & Pick<Users_Aggregate_Fields, 'count'>
+    )> }
+  ) }
 );
 
 export type UserPrivateDetailsQueryVariables = Exact<{
@@ -8999,6 +9048,42 @@ export type GroupJoinTokensQueryResult = Apollo.QueryResult<GroupJoinTokensQuery
 export function refetchGroupJoinTokensQuery(variables?: GroupJoinTokensQueryVariables) {
       return { query: GroupJoinTokensDocument, variables: variables }
     }
+export const ActivityListDocument = gql`
+    query ActivityList($offset: Int = 10) {
+  activities(limit: 10, offset: $offset, order_by: [{created_at: desc}]) {
+    ...ActivityCard
+  }
+}
+    ${ActivityCardFragmentDoc}`;
+
+/**
+ * __useActivityListQuery__
+ *
+ * To run a query within a React component, call `useActivityListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useActivityListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useActivityListQuery({
+ *   variables: {
+ *      offset: // value for 'offset'
+ *   },
+ * });
+ */
+export function useActivityListQuery(baseOptions?: Apollo.QueryHookOptions<ActivityListQuery, ActivityListQueryVariables>) {
+        return Apollo.useQuery<ActivityListQuery, ActivityListQueryVariables>(ActivityListDocument, baseOptions);
+      }
+export function useActivityListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ActivityListQuery, ActivityListQueryVariables>) {
+          return Apollo.useLazyQuery<ActivityListQuery, ActivityListQueryVariables>(ActivityListDocument, baseOptions);
+        }
+export type ActivityListQueryHookResult = ReturnType<typeof useActivityListQuery>;
+export type ActivityListLazyQueryHookResult = ReturnType<typeof useActivityListLazyQuery>;
+export type ActivityListQueryResult = Apollo.QueryResult<ActivityListQuery, ActivityListQueryVariables>;
+export function refetchActivityListQuery(variables?: ActivityListQueryVariables) {
+      return { query: ActivityListDocument, variables: variables }
+    }
 export const CreateGroupDocument = gql`
     mutation CreateGroup($input: CreateGroupInput!) {
   createGroup(input: $input) {
@@ -9411,6 +9496,56 @@ export function useUpdateJoinTokenMutation(baseOptions?: Apollo.MutationHookOpti
 export type UpdateJoinTokenMutationHookResult = ReturnType<typeof useUpdateJoinTokenMutation>;
 export type UpdateJoinTokenMutationResult = Apollo.MutationResult<UpdateJoinTokenMutation>;
 export type UpdateJoinTokenMutationOptions = Apollo.BaseMutationOptions<UpdateJoinTokenMutation, UpdateJoinTokenMutationVariables>;
+export const SearchCountsDocument = gql`
+    query SearchCounts($thingWhere: things_bool_exp!, $groupWhere: groups_bool_exp!, $userWhere: users_bool_exp!) {
+  users_aggregate(where: $userWhere, limit: 10) {
+    aggregate {
+      count
+    }
+  }
+  groups_aggregate(where: $groupWhere, limit: 10) {
+    aggregate {
+      count
+    }
+  }
+  things_aggregate(where: $thingWhere, limit: 10) {
+    aggregate {
+      count
+    }
+  }
+}
+    `;
+
+/**
+ * __useSearchCountsQuery__
+ *
+ * To run a query within a React component, call `useSearchCountsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchCountsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchCountsQuery({
+ *   variables: {
+ *      thingWhere: // value for 'thingWhere'
+ *      groupWhere: // value for 'groupWhere'
+ *      userWhere: // value for 'userWhere'
+ *   },
+ * });
+ */
+export function useSearchCountsQuery(baseOptions?: Apollo.QueryHookOptions<SearchCountsQuery, SearchCountsQueryVariables>) {
+        return Apollo.useQuery<SearchCountsQuery, SearchCountsQueryVariables>(SearchCountsDocument, baseOptions);
+      }
+export function useSearchCountsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchCountsQuery, SearchCountsQueryVariables>) {
+          return Apollo.useLazyQuery<SearchCountsQuery, SearchCountsQueryVariables>(SearchCountsDocument, baseOptions);
+        }
+export type SearchCountsQueryHookResult = ReturnType<typeof useSearchCountsQuery>;
+export type SearchCountsLazyQueryHookResult = ReturnType<typeof useSearchCountsLazyQuery>;
+export type SearchCountsQueryResult = Apollo.QueryResult<SearchCountsQuery, SearchCountsQueryVariables>;
+export function refetchSearchCountsQuery(variables?: SearchCountsQueryVariables) {
+      return { query: SearchCountsDocument, variables: variables }
+    }
 export const ThingListDocument = gql`
     query ThingList($limit: Int, $offset: Int, $orderBy: [things_order_by!], $where: things_bool_exp!) {
   things(where: $where, limit: $limit, offset: $offset, order_by: $orderBy) {
@@ -9625,6 +9760,11 @@ export const UserListDocument = gql`
     query UserList($where: users_bool_exp, $limit: Int, $offset: Int) {
   users(where: $where, limit: $limit, offset: $offset) {
     ...UserCard
+  }
+  users_aggregate(where: $where, limit: 10) {
+    aggregate {
+      count
+    }
   }
 }
     ${UserCardFragmentDoc}`;
@@ -9852,6 +9992,8 @@ export const GqlOps = {
     GroupDetails: 'GroupDetails',
     GroupJoinRequests: 'GroupJoinRequests',
     GroupJoinTokens: 'GroupJoinTokens',
+    ActivityList: 'ActivityList',
+    SearchCounts: 'SearchCounts',
     ThingList: 'ThingList',
     ThingDetails: 'ThingDetails',
     UserList: 'UserList',
