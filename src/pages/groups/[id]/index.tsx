@@ -1,11 +1,11 @@
-﻿import { GroupHomePage, GroupHomePageProps } from '../../../containers/groups';
+﻿import { GroupHomePage } from '../../../containers/groups';
 import { head } from 'lodash';
 import { GroupDetailsDocument, GroupDetailsQuery } from '../../../generated/graphql';
 import { makeGSSP } from '../../../utils/gssp';
 
 export default GroupHomePage;
 
-export const getServerSideProps = makeGSSP<GroupHomePageProps, { id: string }>({
+export const getServerSideProps = makeGSSP<unknown, { id: string }>({
     requireAuth: true,
     handler: async (data) => {
         const query = await data.userClient.query<GroupDetailsQuery>({
@@ -21,6 +21,6 @@ export const getServerSideProps = makeGSSP<GroupHomePageProps, { id: string }>({
             // return { props: { error: 'Something unexpected happened on our side, sorry!' } };
         }
 
-        return group ? { props: { group } } : { notFound: true };
+        return group ? { props: {} } : { notFound: true };
     },
 });

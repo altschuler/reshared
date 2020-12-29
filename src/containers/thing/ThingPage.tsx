@@ -1,5 +1,6 @@
 ﻿import React, { useCallback } from 'react';
-import { Button, PageHeader, Space, Typography } from 'antd';
+import Link from 'next/link';
+import { Button, Descriptions, Divider, PageHeader, Space, Typography } from 'antd';
 import { head } from 'lodash';
 import Image from 'next/image';
 import { PageLayout } from '../root/PageLayout';
@@ -9,26 +10,38 @@ import {
     useThingDetailsQuery,
 } from '../../generated/graphql';
 import { EditThingDrawer, ImageGalleryModal, useDialogs } from '../../components/dialogs';
-import { ThingTypeTag } from '../../components/ThingList';
 import { ownsThing } from '../../utils/thing';
 import { useAuth } from '../../utils/auth';
-import { UserAvatar } from '../../components/display';
+import { DateDisplay, ThingTypeTag, UserAvatar } from '../../components/display';
 import { createUseStyles } from 'react-jss';
 import { ThingInterestButton } from '../../components/ThingInterestButton';
 import { useRouter } from 'next/router';
+import { urlFor } from '../../utils/urls';
 
 const useStyles = createUseStyles({
     header: {
         marginBottom: 0,
     },
+    imageList: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        gap: '1em',
+    },
+    thumbnail: {
+        cursor: 'pointer',
+        border: '1px solid #EEE',
+        borderRadius: 3,
+        transition: 'border-color 0.3s',
+        '& img': {
+            borderRadius: 3,
+        },
+        '&:hover': {
+            borderColor: '#1890ff',
+        },
+    },
 });
 
-export interface ThingPageProps {
-    dummy?: 1;
-    thing: ThingDetailsFragment;
-}
-
-export const ThingPage = (props: ThingPageProps) => {
+export const ThingPage = () => {
     const classes = useStyles();
     const auth = useAuth();
     const params = useRouter().query;
@@ -37,7 +50,8 @@ export const ThingPage = (props: ThingPageProps) => {
     const query = useThingDetailsQuery({
         variables: { shortId: params.shortId as string },
     });
-    const thing = head(query.data?.things);
+
+    const thing: ThingDetailsFragment | null = head(query.data?.things) || null;
 
     const handleShowGallery = useCallback(
         (thing: ThingCardFragment, startIndex: number) =>
@@ -58,6 +72,16 @@ export const ThingPage = (props: ThingPageProps) => {
         [showDialog],
     );
 
+    if (query.loading) {
+        return <PageLayout loading />;
+    }
+
+    if (query.error || !thing) {
+        return (
+            <PageLayout error={query.error?.message || "Something didn't go as planned, sorry!"} />
+        );
+    }
+
     return (
         <PageLayout>
             {!query.loading && (
@@ -75,33 +99,64 @@ export const ThingPage = (props: ThingPageProps) => {
                             <ThingInterestButton thing={thing} />
                         ),
                     ]}>
-                    <Space align="center">
-                        <Typography.Title level={5} style={{ marginBottom: 0 }}>
-                            Owner
-                        </Typography.Title>
-                        <Space align="center" size={5}>
-                            <UserAvatar user={thing.owner} /> {thing.owner.name}
-                        </Space>
-                    </Space>
+                    <Descriptions colon={false}>
+                        <Descriptions.Item
+                            label={<Typography.Title level={5}>Owner</Typography.Title>}>
+                            <Space align="center" size={5}>
+                                <UserAvatar user={thing.owner} /> {thing.owner.name}
+                            </Space>
+                        </Descriptions.Item>
 
-                    <Typography.Text>{thing.description}</Typography.Text>
-                    <ThingTypeTag type={thing.type} />
+                        {thing.description && (
+                            <Descriptions.Item
+                                label={<Typography.Title level={5}>Description</Typography.Title>}>
+                                {thing.description}
+                            </Descriptions.Item>
+                        )}
 
-                    {thing.images.map((img, index) => (
-                        <div key={img.id}>
-                            <Image
-                                title={img.description}
-                                width={40}
-                                height={40}
-                                objectFit="cover"
-                                alt={img.description || img.file.name}
-                                src={img.file.url}
-                                onClick={() => handleShowGallery(thing, index)}
-                            />
-                        </div>
-                    ))}
+                        <Descriptions.Item
+                            label={<Typography.Title level={5}>Type</Typography.Title>}>
+                            <ThingTypeTag type={thing.type} />
+                        </Descriptions.Item>
+
+                        <Descriptions.Item
+                            label={<Typography.Title level={5}>Shared in</Typography.Title>}>
+                            <Space size={[8, 17]} split={<Divider type="horizontal" />}>
+                                {thing.group_relations.map((r) => (
+                                    <Typography.Link key={r.group.id}>
+                                        <Link href={urlFor.group.home(r.group)}>
+                                            {r.group.name}
+                                        </Link>
+                                    </Typography.Link>
+                                ))}
+                            </Space>
+                        </Descriptions.Item>
+
+                        {thing.expiry && (
+                            <Descriptions.Item
+                                label={<Typography.Title level={5}>Expires</Typography.Title>}>
+                                <DateDisplay mode="datetime" showDistance utc={thing.expiry} />
+                            </Descriptions.Item>
+                        )}
+                    </Descriptions>
+
+                    <div className={classes.imageList}>
+                        {thing.images.map((img, index) => (
+                            <div key={img.id} className={classes.thumbnail}>
+                                <Image
+                                    title={img.description}
+                                    width={100}
+                                    height={100}
+                                    objectFit="cover"
+                                    alt={img.description || img.file.name}
+                                    src={img.file.url}
+                                    onClick={() => handleShowGallery(thing, index)}
+                                />
+                            </div>
+                        ))}
+                    </div>
                 </PageHeader>
-            )}{' '}
+            )}
         </PageLayout>
     );
 };

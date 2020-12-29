@@ -60,7 +60,10 @@ export const Onboarding = () => {
                         <Card
                             hoverable
                             actions={[
-                                <Link key="find" href={urlFor.search()} passHref>
+                                <Link
+                                    key="find"
+                                    href={{ pathname: urlFor.search(), query: { t: 'group' } }}
+                                    passHref>
                                     <Button type="primary">Find group</Button>
                                 </Link>,
                                 <Link key="invite" href={urlFor.search()} passHref>

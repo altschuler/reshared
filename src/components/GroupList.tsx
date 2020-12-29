@@ -1,5 +1,12 @@
-﻿import { Avatar, List, Space } from 'antd';
-import { EyeInvisibleOutlined, EyeOutlined, GiftOutlined, TeamOutlined } from '@ant-design/icons';
+﻿import { Avatar, List, Space, Tooltip } from 'antd';
+import {
+    CheckCircleTwoTone,
+    CheckOutlined,
+    EyeInvisibleOutlined,
+    EyeOutlined,
+    GiftOutlined,
+    TeamOutlined,
+} from '@ant-design/icons';
 import { JoinButton } from '../containers/groups/JoinButton';
 import Link from 'next/link';
 import { urlFor } from '../utils/urls';
@@ -11,6 +18,8 @@ import {
     useListGroupsQuery,
 } from '../generated/graphql';
 import { ReactNode, useEffect } from 'react';
+import { isMember } from '../utils/group';
+import { useAuth } from '../utils/auth';
 
 export interface GroupListProps {
     where: Groups_Bool_Exp;
@@ -26,6 +35,7 @@ const IconText = ({ icon, text }: { icon: ReactNode; text: string | number }) =>
 );
 
 export const GroupList = (props: GroupListProps) => {
+    const auth = useAuth();
     const pgn = usePagination();
 
     const { data, previousData, loading, error } = useListGroupsQuery({
@@ -54,6 +64,11 @@ export const GroupList = (props: GroupListProps) => {
                 <List.Item
                     key={group.name}
                     actions={[
+                        isMember(group, auth.user) && (
+                            <Tooltip title="You're a member">
+                                <CheckCircleTwoTone twoToneColor="#52c41a" />
+                            </Tooltip>
+                        ),
                         <IconText
                             icon={<TeamOutlined />}
                             text={group.memberships_aggregate.aggregate?.count || 0}
@@ -69,8 +84,6 @@ export const GroupList = (props: GroupListProps) => {
                             text={group.public ? 'Public' : 'Private'}
                             key="public"
                         />,
-
-                        <JoinButton group={group} key="join" />,
                     ]}>
                     <List.Item.Meta
                         avatar={<Avatar src={''} />}

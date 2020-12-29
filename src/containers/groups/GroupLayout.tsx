@@ -115,9 +115,11 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                 className={classes.header}
                 title={props.group.name}
                 extra={[
-                    <Button key="share" type="primary" onClick={handleShare}>
-                        Share a thing
-                    </Button>,
+                    isMember && (
+                        <Button key="share" type="primary" onClick={handleShare}>
+                            Share a thing
+                        </Button>
+                    ),
 
                     <Link key="home" href={urlFor.group.home(props.group)}>
                         <Button type="default" className={btnClass('home')}>
@@ -125,11 +127,13 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                         </Button>
                     </Link>,
 
-                    <Link key="members" href={urlFor.group.members(props.group)}>
-                        <Button type="default" className={btnClass('members')}>
-                            Members
-                        </Button>
-                    </Link>,
+                    isMember && (
+                        <Link key="members" href={urlFor.group.members(props.group)}>
+                            <Button type="default" className={btnClass('members')}>
+                                Members
+                            </Button>
+                        </Link>
+                    ),
 
                     isAdmin && (
                         <Link key="settings" href={urlFor.group.settings(props.group)}>
@@ -141,9 +145,11 @@ export const GroupLayout = (props: GroupLayoutProps) => {
 
                     !isMember && <JoinButton key="join" group={props.group} />,
 
-                    <Dropdown key="more" overlay={menu}>
-                        <Button icon={<EllipsisOutlined />} />
-                    </Dropdown>,
+                    isMember && (
+                        <Dropdown key="more" overlay={menu}>
+                            <Button icon={<EllipsisOutlined />} />
+                        </Dropdown>
+                    ),
                 ]}>
                 {props.children}
             </PageHeader>

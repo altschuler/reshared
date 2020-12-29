@@ -18,6 +18,7 @@ import { GroupList } from '../../components/GroupList';
 import { UserList } from '../../components/UserList';
 import { CreateGroupDrawer, useDialogs } from '../../components/dialogs';
 import { urlFor } from '../../utils/urls';
+import Joi from 'joi';
 
 const useStyles = createUseStyles({
     searchBar: {
@@ -53,12 +54,16 @@ const useStyles = createUseStyles({
     },
 });
 
+const typeSchema = Joi.string().valid('thing', 'group', 'user').default('thing');
 export const SearchPage = () => {
     const router = useRouter();
     const classes = useStyles();
 
+    const defaultType = useMemo(() => typeSchema.validate(router.query.t).value || 'thing', [
+        router.query.t,
+    ]);
     const { value: options, update: updateOptions } = useStateObject<SearchOptions>({
-        type: 'thing',
+        type: defaultType,
         query: '',
         thingFilter: {
             type: [],

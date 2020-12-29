@@ -13,7 +13,7 @@ export const MyThingsPage = () => {
         showDialog(CreateThingDrawer).then(console.log);
     }, [showDialog]);
 
-    const where = useMemo(() => ({ owner_id: { _eq: auth.user!.id } }), [auth.user]);
+    const where = useMemo(() => ({ owner_id: { _eq: auth.user?.id } }), [auth.user]);
 
     if (!auth) {
         return <div>Not logged in</div>;

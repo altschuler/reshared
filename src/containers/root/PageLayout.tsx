@@ -1,11 +1,12 @@
 ﻿import type { MutableRefObject, ReactNode } from 'react';
-import { Divider, Layout, Space, Typography } from 'antd';
+import { Divider, Layout, Space, Spin, Typography } from 'antd';
 import Link from 'next/link';
 import clsx from 'clsx';
 
 import { createUseStyles } from 'react-jss';
 import { NavBar } from './NavBar';
 import { urlFor } from '../../utils/urls';
+import { ErrorDisplay } from '../../components/display';
 
 const { Content } = Layout;
 const useStyles = createUseStyles({
@@ -58,8 +59,10 @@ export interface PageLayoutProps {
     padded?: boolean;
     horizontal?: boolean;
     centered?: boolean;
-    children: ReactNode;
+    children?: ReactNode;
     contentRef?: MutableRefObject<HTMLDivElement | null>;
+    loading?: boolean;
+    error?: string;
 }
 
 export const PageLayout = (props: PageLayoutProps) => {
@@ -85,7 +88,8 @@ export const PageLayout = (props: PageLayoutProps) => {
                             : classes.pageContentVertical,
                         props.padded && classes.contentPadded,
                     )}>
-                    {props.children}
+                    {props.error && <ErrorDisplay error={props.error} />}{' '}
+                    {props.loading ? <Spin>{props.children}</Spin> : props.children}
                 </div>
                 {!props.noFooter && (
                     <div className={classes.footer}>

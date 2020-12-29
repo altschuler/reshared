@@ -20,6 +20,7 @@ import { createUseStyles } from 'react-jss';
 import { useDebounce } from '../utils/hooks';
 import { ThingInterestButton } from './ThingInterestButton';
 import { urlFor } from '../utils/urls';
+import { ThingTypeTag } from './display/ThingTypeTag';
 
 const useStyles = createUseStyles({
     search: {
@@ -160,8 +161,4 @@ export const ThingList = (props: ThingListProps) => {
             )}
         />
     );
-};
-
-export const ThingTypeTag = ({ type }: { type: Thing_Type_Enum }) => {
-    return <Tag>{type}</Tag>;
 };

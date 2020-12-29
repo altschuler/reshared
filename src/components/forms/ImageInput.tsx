@@ -43,7 +43,7 @@ const useStyles = createUseStyles({
     },
 
     imageItem: {
-        width: 400,
+        // width: 400,
         height: 100,
         display: 'flex',
         '& > *': {
