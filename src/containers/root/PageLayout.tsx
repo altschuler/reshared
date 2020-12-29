@@ -1,9 +1,11 @@
 ﻿import type { MutableRefObject, ReactNode } from 'react';
-import { Layout } from 'antd';
+import { Divider, Layout, Space, Typography } from 'antd';
+import Link from 'next/link';
 import clsx from 'clsx';
 
 import { createUseStyles } from 'react-jss';
 import { NavBar } from './NavBar';
+import { urlFor } from '../../utils/urls';
 
 const { Content } = Layout;
 const useStyles = createUseStyles({
@@ -37,6 +39,9 @@ const useStyles = createUseStyles({
         padding: '0 10px',
         backgroundColor: '#EEE',
         marginTop: '2em',
+    },
+    footerLink: {
+        '& a': { color: 'black' },
     },
     root: {
         backgroundColor: 'white',
@@ -82,7 +87,29 @@ export const PageLayout = (props: PageLayoutProps) => {
                     )}>
                     {props.children}
                 </div>
-                {!props.noFooter && <div className={classes.footer}>Reshared</div>}
+                {!props.noFooter && (
+                    <div className={classes.footer}>
+                        <Space size="large" split={<Divider type="vertical" />}>
+                            <span>© Reshared</span>
+
+                            <Typography.Link className={classes.footerLink}>
+                                <Link href={urlFor.site.privacy()}>Privacy Policy</Link>
+                            </Typography.Link>
+
+                            <Typography.Link className={classes.footerLink}>
+                                <Link href={urlFor.site.terms()}>Terms of Service</Link>
+                            </Typography.Link>
+
+                            <Typography.Link className={classes.footerLink}>
+                                <Link href={urlFor.site.contact()}>Contact</Link>
+                            </Typography.Link>
+
+                            <Typography.Link className={classes.footerLink}>
+                                <Link href={urlFor.site.attributions()}>Attributions</Link>
+                            </Typography.Link>
+                        </Space>
+                    </div>
+                )}
             </Content>
         </Layout>
     );

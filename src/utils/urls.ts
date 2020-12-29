@@ -45,6 +45,12 @@ export const urlFor = {
         joinLink: (group: GroupWithId, token: string, absolute = false) =>
             makeUrl(absolute, `/groups/${group.short_id}/join/${token}`),
     },
+    site: {
+        privacy: (absolute = false) => makeUrl(absolute, `/site/privacy`),
+        terms: (absolute = false) => makeUrl(absolute, `/site/terms`),
+        contact: (absolute = false) => makeUrl(absolute, `/site/contact`),
+        attributions: (absolute = false) => makeUrl(absolute, `/site/attributions`),
+    },
 
     // Will redirect to another url
     activity: (activity: ActivityCardFragment) => {

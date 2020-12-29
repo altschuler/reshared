@@ -1,4 +1,4 @@
-﻿import { Typography, Alert, Button, Divider, Form, Input, Space } from 'antd';
+﻿import { Typography, Alert, Button, Divider, Form, Input, Space, Checkbox } from 'antd';
 import { values } from 'lodash';
 import { getProviders, SessionProvider, signIn } from 'next-auth/client';
 import { useEffect, useState } from 'react';
@@ -77,6 +77,20 @@ export const RegisterForm = (props: RegisterFormProps) => {
                     <Input.Password placeholder="Password" />
                 </Form.Item>
 
+                <Form.Item name="agree" rules={[{ required: true }]} extra="">
+                    <Checkbox>
+                        I agree to the{' '}
+                        <Typography.Link>
+                            <Link href={urlFor.site.privacy()}>privacy policy</Link>
+                        </Typography.Link>{' '}
+                        and
+                        <Typography.Link>
+                            <Link href={urlFor.site.terms()}>terms of service</Link>
+                        </Typography.Link>
+                        .
+                    </Checkbox>
+                </Form.Item>
+
                 <Form.Item>
                     <Button
                         className="login"
@@ -102,12 +116,12 @@ export const RegisterForm = (props: RegisterFormProps) => {
 
             <Divider>Other sign-up options</Divider>
 
-            <Space direction="vertical">
+            <Space>
                 {values(providers)
                     .filter((p) => p.name !== 'credentials')
                     .map((provider) => (
                         <Button key={provider.name} onClick={() => signIn(provider.id)}>
-                            Register with {provider.name}
+                            {provider.name}
                         </Button>
                     ))}
             </Space>

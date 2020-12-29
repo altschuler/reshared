@@ -43,10 +43,21 @@ export const LoginForm = (props: LoginFormProps) => {
             return null;
         }
         switch (fromQuery) {
+            case 'Signin':
+            case 'OAuthSignin':
+            case 'OAuthCallback':
+            case 'OAuthCreateAccount':
+            case 'EmailCreateAccount':
+            case 'Callback':
+                return 'Try signing with a different account.';
+            case 'OAuthAccountNotLinked':
+                return 'The email of your social login provider is already registered. Please sign in with the same account you used originally.';
+            case 'EmailSignin':
+                return 'Check your email address.';
             case 'CredentialsSignin':
-                return 'Invalid login, make sure you entered your email and password correctly';
+                return 'Sign in failed. Check the details you provided are correct.';
             default:
-                return fromQuery;
+                return 'Unable to sign in.';
         }
     }, [router.query.error]);
 
@@ -106,14 +117,14 @@ export const LoginForm = (props: LoginFormProps) => {
 
             <Divider>Other login options</Divider>
 
-            <Space direction="vertical">
+            <Space>
                 {values(providers)
                     .filter((p) => p.name !== 'credentials')
                     .map((provider) => (
                         <Button
                             key={provider.name}
                             onClick={() => signIn(provider.id, { callbackUrl: props.callbackUrl })}>
-                            Sign in with {provider.name}
+                            {provider.name}
                         </Button>
                     ))}
             </Space>
