@@ -31,6 +31,7 @@ fragment ThingDetails on things {
     ...ThingCard
     enabled
     group_relations {
+        id
         group {
             ...GroupCard
         }

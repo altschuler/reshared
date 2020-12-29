@@ -121,13 +121,14 @@ export const ThingPage = () => {
 
                         <Descriptions.Item
                             label={<Typography.Title level={5}>Shared in</Typography.Title>}>
-                            <Space size={[8, 17]} split={<Divider type="horizontal" />}>
+                            <Space split={<Divider type="vertical" />}>
                                 {thing.group_relations.map((r) => (
-                                    <Typography.Link key={r.group.id}>
-                                        <Link href={urlFor.group.home(r.group)}>
-                                            {r.group.name}
-                                        </Link>
-                                    </Typography.Link>
+                                    <Link
+                                        key={r.group.id}
+                                        href={urlFor.group.home(r.group)}
+                                        passHref>
+                                        <Typography.Link>{r.group.name}</Typography.Link>
+                                    </Link>
                                 ))}
                             </Space>
                         </Descriptions.Item>

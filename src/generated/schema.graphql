@@ -5,7 +5,7 @@ schema {
 }
 
 """
-expression to compare columns of type Boolean. All fields are combined with logical 'AND'.
+Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'.
 """
 input Boolean_comparison_exp {
   _eq: Boolean
@@ -26,7 +26,22 @@ input CreateChatGroupInput {
 }
 
 type CreateChatGroupResult {
-  chat_group: chat_groups
+  chat_group(
+    """distinct select on columns"""
+    distinct_on: [chat_groups_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_groups_order_by!]
+
+    """filter the rows returned"""
+    where: chat_groups_bool_exp
+  ): [chat_groups!]!
   chat_group_id: uuid!
 }
 
@@ -37,7 +52,22 @@ input CreateGroupInput {
 }
 
 type CreateGroupResult {
-  group: groups
+  group(
+    """distinct select on columns"""
+    distinct_on: [groups_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [groups_order_by!]
+
+    """filter the rows returned"""
+    where: groups_bool_exp
+  ): [groups!]!
   group_id: uuid!
 }
 
@@ -46,9 +76,39 @@ input CreateJoinTokenInput {
 }
 
 type CreateJoinTokenResult {
-  group: groups
+  group(
+    """distinct select on columns"""
+    distinct_on: [groups_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [groups_order_by!]
+
+    """filter the rows returned"""
+    where: groups_bool_exp
+  ): [groups!]!
   group_id: uuid!
-  join_token: group_join_tokens
+  join_token(
+    """distinct select on columns"""
+    distinct_on: [group_join_tokens_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_join_tokens_order_by!]
+
+    """filter the rows returned"""
+    where: group_join_tokens_bool_exp
+  ): [group_join_tokens!]!
   join_token_id: uuid!
 }
 
@@ -64,17 +124,28 @@ input HandleJoinRequestInput {
   response: String
 }
 
-type HandleJoinRequestOutput {
-  join_request_id: uuid!
-}
-
 type HandleJoinRequestResult {
-  join_request: group_join_requests
+  join_request(
+    """distinct select on columns"""
+    distinct_on: [group_join_requests_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_join_requests_order_by!]
+
+    """filter the rows returned"""
+    where: group_join_requests_bool_exp
+  ): [group_join_requests!]!
   join_request_id: uuid!
 }
 
 """
-expression to compare columns of type Int. All fields are combined with logical 'AND'.
+Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'.
 """
 input Int_comparison_exp {
   _eq: Int
@@ -94,14 +165,59 @@ input JoinGroupInput {
 }
 
 type JoinGroupResult {
-  group: groups
+  group(
+    """distinct select on columns"""
+    distinct_on: [groups_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [groups_order_by!]
+
+    """filter the rows returned"""
+    where: groups_bool_exp
+  ): [groups!]!
   group_id: uuid!
-  user: users
+  user(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): [users!]!
   user_id: uuid!
 }
 
 type RegistrationResult {
-  user: users
+  user(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): [users!]!
   user_id: uuid!
 }
 
@@ -111,30 +227,72 @@ input RequestJoinGroupInput {
 }
 
 type RequestJoinGroupResult {
-  group: groups
+  group(
+    """distinct select on columns"""
+    distinct_on: [groups_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [groups_order_by!]
+
+    """filter the rows returned"""
+    where: groups_bool_exp
+  ): [groups!]!
   group_id: uuid!
-  user: users
+  user(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): [users!]!
   user_id: uuid!
 }
 
 """
-expression to compare columns of type String. All fields are combined with logical 'AND'.
+Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'.
 """
 input String_comparison_exp {
   _eq: String
   _gt: String
   _gte: String
+
+  """does the column match the given case-insensitive pattern"""
   _ilike: String
   _in: [String!]
   _is_null: Boolean
+
+  """does the column match the given pattern"""
   _like: String
   _lt: String
   _lte: String
   _neq: String
+
+  """does the column NOT match the given case-insensitive pattern"""
   _nilike: String
   _nin: [String!]
+
+  """does the column NOT match the given pattern"""
   _nlike: String
+
+  """does the column NOT match the given SQL regular expression"""
   _nsimilar: String
+
+  """does the column match the given SQL regular expression"""
   _similar: String
 }
 
@@ -161,7 +319,22 @@ input UpdateThingInput {
 }
 
 type UpdateThingResult {
-  thing: things
+  thing(
+    """distinct select on columns"""
+    distinct_on: [things_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [things_order_by!]
+
+    """filter the rows returned"""
+    where: things_bool_exp
+  ): [things!]!
   thing_id: uuid!
 }
 
@@ -170,7 +343,7 @@ columns and relationships of "activities"
 """
 type activities {
   """An object relationship"""
-  actor: users
+  actor: users!
   actor_id: uuid
   created_at: timestamptz!
 
@@ -197,7 +370,7 @@ type activities {
     where: notifications_bool_exp
   ): [notifications!]!
 
-  """An aggregated array relationship"""
+  """An aggregate relationship"""
   notifications_aggregate(
     """distinct select on columns"""
     distinct_on: [notifications_select_column!]
@@ -216,7 +389,7 @@ type activities {
   ): notifications_aggregate!
 
   """An object relationship"""
-  secondary_entity: entities
+  secondary_entity: entities!
   secondary_entity_id: uuid
   verb: activity_verb_enum!
 }
@@ -233,35 +406,18 @@ type activities_aggregate {
 aggregate fields of "activities"
 """
 type activities_aggregate_fields {
-  count(columns: [activities_select_column!], distinct: Boolean): Int
+  count(columns: [activities_select_column!], distinct: Boolean): Int!
   max: activities_max_fields
   min: activities_min_fields
-}
-
-"""
-order by aggregate values of table "activities"
-"""
-input activities_aggregate_order_by {
-  count: order_by
-  max: activities_max_order_by
-  min: activities_min_order_by
-}
-
-"""
-input type for inserting array relation for remote table "activities"
-"""
-input activities_arr_rel_insert_input {
-  data: [activities_insert_input!]!
-  on_conflict: activities_on_conflict
 }
 
 """
 Boolean expression to filter rows from the table "activities". All fields are combined with a logical 'AND'.
 """
 input activities_bool_exp {
-  _and: [activities_bool_exp]
+  _and: [activities_bool_exp!]
   _not: activities_bool_exp
-  _or: [activities_bool_exp]
+  _or: [activities_bool_exp!]
   actor: users_bool_exp
   actor_id: uuid_comparison_exp
   created_at: timestamptz_comparison_exp
@@ -307,17 +463,6 @@ type activities_max_fields {
   secondary_entity_id: uuid
 }
 
-"""
-order by max() on columns of table "activities"
-"""
-input activities_max_order_by {
-  actor_id: order_by
-  created_at: order_by
-  entity_id: order_by
-  id: order_by
-  secondary_entity_id: order_by
-}
-
 """aggregate min on columns"""
 type activities_min_fields {
   actor_id: uuid
@@ -328,24 +473,13 @@ type activities_min_fields {
 }
 
 """
-order by min() on columns of table "activities"
-"""
-input activities_min_order_by {
-  actor_id: order_by
-  created_at: order_by
-  entity_id: order_by
-  id: order_by
-  secondary_entity_id: order_by
-}
-
-"""
 response of any mutation on the table "activities"
 """
 type activities_mutation_response {
-  """number of affected rows by the mutation"""
+  """number of rows affected by the mutation"""
   affected_rows: Int!
 
-  """data of the affected rows by the mutation"""
+  """data from the rows affected by the mutation"""
   returning: [activities!]!
 }
 
@@ -354,6 +488,8 @@ input type for inserting object relation for remote table "activities"
 """
 input activities_obj_rel_insert_input {
   data: activities_insert_input!
+
+  """on conflict condition"""
   on_conflict: activities_on_conflict
 }
 
@@ -366,9 +502,7 @@ input activities_on_conflict {
   where: activities_bool_exp
 }
 
-"""
-ordering options when selecting data from "activities"
-"""
+"""Ordering options when selecting data from "activities"."""
 input activities_order_by {
   actor: users_order_by
   actor_id: order_by
@@ -382,9 +516,7 @@ input activities_order_by {
   verb: order_by
 }
 
-"""
-primary key columns input for table: "activities"
-"""
+"""primary key columns input for table: activities"""
 input activities_pk_columns_input {
   id: uuid!
 }
@@ -467,35 +599,18 @@ type activity_verb_aggregate {
 aggregate fields of "activity_verb"
 """
 type activity_verb_aggregate_fields {
-  count(columns: [activity_verb_select_column!], distinct: Boolean): Int
+  count(columns: [activity_verb_select_column!], distinct: Boolean): Int!
   max: activity_verb_max_fields
   min: activity_verb_min_fields
-}
-
-"""
-order by aggregate values of table "activity_verb"
-"""
-input activity_verb_aggregate_order_by {
-  count: order_by
-  max: activity_verb_max_order_by
-  min: activity_verb_min_order_by
-}
-
-"""
-input type for inserting array relation for remote table "activity_verb"
-"""
-input activity_verb_arr_rel_insert_input {
-  data: [activity_verb_insert_input!]!
-  on_conflict: activity_verb_on_conflict
 }
 
 """
 Boolean expression to filter rows from the table "activity_verb". All fields are combined with a logical 'AND'.
 """
 input activity_verb_bool_exp {
-  _and: [activity_verb_bool_exp]
+  _and: [activity_verb_bool_exp!]
   _not: activity_verb_bool_exp
-  _or: [activity_verb_bool_exp]
+  _or: [activity_verb_bool_exp!]
   comment: String_comparison_exp
   value: String_comparison_exp
 }
@@ -541,7 +656,7 @@ enum activity_verb_enum {
 }
 
 """
-expression to compare columns of type activity_verb_enum. All fields are combined with logical 'AND'.
+Boolean expression to compare columns of type "activity_verb_enum". All fields are combined with logical 'AND'.
 """
 input activity_verb_enum_comparison_exp {
   _eq: activity_verb_enum
@@ -565,14 +680,6 @@ type activity_verb_max_fields {
   value: String
 }
 
-"""
-order by max() on columns of table "activity_verb"
-"""
-input activity_verb_max_order_by {
-  comment: order_by
-  value: order_by
-}
-
 """aggregate min on columns"""
 type activity_verb_min_fields {
   comment: String
@@ -580,30 +687,14 @@ type activity_verb_min_fields {
 }
 
 """
-order by min() on columns of table "activity_verb"
-"""
-input activity_verb_min_order_by {
-  comment: order_by
-  value: order_by
-}
-
-"""
 response of any mutation on the table "activity_verb"
 """
 type activity_verb_mutation_response {
-  """number of affected rows by the mutation"""
+  """number of rows affected by the mutation"""
   affected_rows: Int!
 
-  """data of the affected rows by the mutation"""
+  """data from the rows affected by the mutation"""
   returning: [activity_verb!]!
-}
-
-"""
-input type for inserting object relation for remote table "activity_verb"
-"""
-input activity_verb_obj_rel_insert_input {
-  data: activity_verb_insert_input!
-  on_conflict: activity_verb_on_conflict
 }
 
 """
@@ -615,17 +706,13 @@ input activity_verb_on_conflict {
   where: activity_verb_bool_exp
 }
 
-"""
-ordering options when selecting data from "activity_verb"
-"""
+"""Ordering options when selecting data from "activity_verb"."""
 input activity_verb_order_by {
   comment: order_by
   value: order_by
 }
 
-"""
-primary key columns input for table: "activity_verb"
-"""
+"""primary key columns input for table: activity_verb"""
 input activity_verb_pk_columns_input {
   value: String!
 }
@@ -687,7 +774,7 @@ type chat_group_members_aggregate {
 aggregate fields of "chat_group_members"
 """
 type chat_group_members_aggregate_fields {
-  count(columns: [chat_group_members_select_column!], distinct: Boolean): Int
+  count(columns: [chat_group_members_select_column!], distinct: Boolean): Int!
   max: chat_group_members_max_fields
   min: chat_group_members_min_fields
 }
@@ -706,6 +793,8 @@ input type for inserting array relation for remote table "chat_group_members"
 """
 input chat_group_members_arr_rel_insert_input {
   data: [chat_group_members_insert_input!]!
+
+  """on conflict condition"""
   on_conflict: chat_group_members_on_conflict
 }
 
@@ -713,9 +802,9 @@ input chat_group_members_arr_rel_insert_input {
 Boolean expression to filter rows from the table "chat_group_members". All fields are combined with a logical 'AND'.
 """
 input chat_group_members_bool_exp {
-  _and: [chat_group_members_bool_exp]
+  _and: [chat_group_members_bool_exp!]
   _not: chat_group_members_bool_exp
-  _or: [chat_group_members_bool_exp]
+  _or: [chat_group_members_bool_exp!]
   chat_group: chat_groups_bool_exp
   chat_group_id: uuid_comparison_exp
   id: uuid_comparison_exp
@@ -784,19 +873,11 @@ input chat_group_members_min_order_by {
 response of any mutation on the table "chat_group_members"
 """
 type chat_group_members_mutation_response {
-  """number of affected rows by the mutation"""
+  """number of rows affected by the mutation"""
   affected_rows: Int!
 
-  """data of the affected rows by the mutation"""
+  """data from the rows affected by the mutation"""
   returning: [chat_group_members!]!
-}
-
-"""
-input type for inserting object relation for remote table "chat_group_members"
-"""
-input chat_group_members_obj_rel_insert_input {
-  data: chat_group_members_insert_input!
-  on_conflict: chat_group_members_on_conflict
 }
 
 """
@@ -808,9 +889,7 @@ input chat_group_members_on_conflict {
   where: chat_group_members_bool_exp
 }
 
-"""
-ordering options when selecting data from "chat_group_members"
-"""
+"""Ordering options when selecting data from "chat_group_members"."""
 input chat_group_members_order_by {
   chat_group: chat_groups_order_by
   chat_group_id: order_by
@@ -820,9 +899,7 @@ input chat_group_members_order_by {
   user_id: order_by
 }
 
-"""
-primary key columns input for table: "chat_group_members"
-"""
+"""primary key columns input for table: chat_group_members"""
 input chat_group_members_pk_columns_input {
   id: uuid!
 }
@@ -896,7 +973,7 @@ type chat_groups {
     where: chat_group_members_bool_exp
   ): [chat_group_members!]!
 
-  """An aggregated array relationship"""
+  """An aggregate relationship"""
   members_aggregate(
     """distinct select on columns"""
     distinct_on: [chat_group_members_select_column!]
@@ -932,7 +1009,7 @@ type chat_groups {
     where: chat_messages_bool_exp
   ): [chat_messages!]!
 
-  """An aggregated array relationship"""
+  """An aggregate relationship"""
   messages_aggregate(
     """distinct select on columns"""
     distinct_on: [chat_messages_select_column!]
@@ -965,35 +1042,18 @@ type chat_groups_aggregate {
 aggregate fields of "chat_groups"
 """
 type chat_groups_aggregate_fields {
-  count(columns: [chat_groups_select_column!], distinct: Boolean): Int
+  count(columns: [chat_groups_select_column!], distinct: Boolean): Int!
   max: chat_groups_max_fields
   min: chat_groups_min_fields
-}
-
-"""
-order by aggregate values of table "chat_groups"
-"""
-input chat_groups_aggregate_order_by {
-  count: order_by
-  max: chat_groups_max_order_by
-  min: chat_groups_min_order_by
-}
-
-"""
-input type for inserting array relation for remote table "chat_groups"
-"""
-input chat_groups_arr_rel_insert_input {
-  data: [chat_groups_insert_input!]!
-  on_conflict: chat_groups_on_conflict
 }
 
 """
 Boolean expression to filter rows from the table "chat_groups". All fields are combined with a logical 'AND'.
 """
 input chat_groups_bool_exp {
-  _and: [chat_groups_bool_exp]
+  _and: [chat_groups_bool_exp!]
   _not: chat_groups_bool_exp
-  _or: [chat_groups_bool_exp]
+  _or: [chat_groups_bool_exp!]
   created_at: timestamptz_comparison_exp
   id: uuid_comparison_exp
   members: chat_group_members_bool_exp
@@ -1030,16 +1090,6 @@ type chat_groups_max_fields {
   updated_at: timestamptz
 }
 
-"""
-order by max() on columns of table "chat_groups"
-"""
-input chat_groups_max_order_by {
-  created_at: order_by
-  id: order_by
-  name: order_by
-  updated_at: order_by
-}
-
 """aggregate min on columns"""
 type chat_groups_min_fields {
   created_at: timestamptz
@@ -1049,23 +1099,13 @@ type chat_groups_min_fields {
 }
 
 """
-order by min() on columns of table "chat_groups"
-"""
-input chat_groups_min_order_by {
-  created_at: order_by
-  id: order_by
-  name: order_by
-  updated_at: order_by
-}
-
-"""
 response of any mutation on the table "chat_groups"
 """
 type chat_groups_mutation_response {
-  """number of affected rows by the mutation"""
+  """number of rows affected by the mutation"""
   affected_rows: Int!
 
-  """data of the affected rows by the mutation"""
+  """data from the rows affected by the mutation"""
   returning: [chat_groups!]!
 }
 
@@ -1074,6 +1114,8 @@ input type for inserting object relation for remote table "chat_groups"
 """
 input chat_groups_obj_rel_insert_input {
   data: chat_groups_insert_input!
+
+  """on conflict condition"""
   on_conflict: chat_groups_on_conflict
 }
 
@@ -1086,9 +1128,7 @@ input chat_groups_on_conflict {
   where: chat_groups_bool_exp
 }
 
-"""
-ordering options when selecting data from "chat_groups"
-"""
+"""Ordering options when selecting data from "chat_groups"."""
 input chat_groups_order_by {
   created_at: order_by
   id: order_by
@@ -1098,9 +1138,7 @@ input chat_groups_order_by {
   updated_at: order_by
 }
 
-"""
-primary key columns input for table: "chat_groups"
-"""
+"""primary key columns input for table: chat_groups"""
 input chat_groups_pk_columns_input {
   id: uuid!
 }
@@ -1159,7 +1197,7 @@ type chat_messages {
   created_at: timestamptz!
 
   """An object relationship"""
-  entity: entities
+  entity: entities!
   entity_id: uuid
   id: uuid!
   message: String!
@@ -1181,7 +1219,7 @@ type chat_messages_aggregate {
 aggregate fields of "chat_messages"
 """
 type chat_messages_aggregate_fields {
-  count(columns: [chat_messages_select_column!], distinct: Boolean): Int
+  count(columns: [chat_messages_select_column!], distinct: Boolean): Int!
   max: chat_messages_max_fields
   min: chat_messages_min_fields
 }
@@ -1200,6 +1238,8 @@ input type for inserting array relation for remote table "chat_messages"
 """
 input chat_messages_arr_rel_insert_input {
   data: [chat_messages_insert_input!]!
+
+  """on conflict condition"""
   on_conflict: chat_messages_on_conflict
 }
 
@@ -1207,9 +1247,9 @@ input chat_messages_arr_rel_insert_input {
 Boolean expression to filter rows from the table "chat_messages". All fields are combined with a logical 'AND'.
 """
 input chat_messages_bool_exp {
-  _and: [chat_messages_bool_exp]
+  _and: [chat_messages_bool_exp!]
   _not: chat_messages_bool_exp
-  _or: [chat_messages_bool_exp]
+  _or: [chat_messages_bool_exp!]
   chat_group: chat_groups_bool_exp
   chat_group_id: uuid_comparison_exp
   created_at: timestamptz_comparison_exp
@@ -1292,19 +1332,11 @@ input chat_messages_min_order_by {
 response of any mutation on the table "chat_messages"
 """
 type chat_messages_mutation_response {
-  """number of affected rows by the mutation"""
+  """number of rows affected by the mutation"""
   affected_rows: Int!
 
-  """data of the affected rows by the mutation"""
+  """data from the rows affected by the mutation"""
   returning: [chat_messages!]!
-}
-
-"""
-input type for inserting object relation for remote table "chat_messages"
-"""
-input chat_messages_obj_rel_insert_input {
-  data: chat_messages_insert_input!
-  on_conflict: chat_messages_on_conflict
 }
 
 """
@@ -1316,9 +1348,7 @@ input chat_messages_on_conflict {
   where: chat_messages_bool_exp
 }
 
-"""
-ordering options when selecting data from "chat_messages"
-"""
+"""Ordering options when selecting data from "chat_messages"."""
 input chat_messages_order_by {
   chat_group: chat_groups_order_by
   chat_group_id: order_by
@@ -1331,9 +1361,7 @@ input chat_messages_order_by {
   sender_id: order_by
 }
 
-"""
-primary key columns input for table: "chat_messages"
-"""
+"""primary key columns input for table: chat_messages"""
 input chat_messages_pk_columns_input {
   id: uuid!
 }
@@ -1396,20 +1424,10 @@ enum chat_messages_update_column {
   sender_id
 }
 
-input create_group_input {
-  description: String!
-  name: String!
-  public: Boolean
-}
-
-type create_group_result {
-  group_id: uuid!
-}
-
 scalar date
 
 """
-expression to compare columns of type date. All fields are combined with logical 'AND'.
+Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'.
 """
 input date_comparison_exp {
   _eq: date
@@ -1430,20 +1448,20 @@ type entities {
   dummy: smallint
 
   """An object relationship"""
-  group: groups
+  group: groups!
   group_id: uuid
 
   """An object relationship"""
-  group_join_request: group_join_requests
+  group_join_request: group_join_requests!
   id: uuid!
   join_request_id: uuid
 
   """An object relationship"""
-  thing: things
+  thing: things!
   thing_id: uuid
 
   """An object relationship"""
-  user: users
+  user: users!
   user_id: uuid
 }
 
@@ -1460,7 +1478,7 @@ aggregate fields of "entities"
 """
 type entities_aggregate_fields {
   avg: entities_avg_fields
-  count(columns: [entities_select_column!], distinct: Boolean): Int
+  count(columns: [entities_select_column!], distinct: Boolean): Int!
   max: entities_max_fields
   min: entities_min_fields
   stddev: entities_stddev_fields
@@ -1472,50 +1490,18 @@ type entities_aggregate_fields {
   variance: entities_variance_fields
 }
 
-"""
-order by aggregate values of table "entities"
-"""
-input entities_aggregate_order_by {
-  avg: entities_avg_order_by
-  count: order_by
-  max: entities_max_order_by
-  min: entities_min_order_by
-  stddev: entities_stddev_order_by
-  stddev_pop: entities_stddev_pop_order_by
-  stddev_samp: entities_stddev_samp_order_by
-  sum: entities_sum_order_by
-  var_pop: entities_var_pop_order_by
-  var_samp: entities_var_samp_order_by
-  variance: entities_variance_order_by
-}
-
-"""
-input type for inserting array relation for remote table "entities"
-"""
-input entities_arr_rel_insert_input {
-  data: [entities_insert_input!]!
-  on_conflict: entities_on_conflict
-}
-
 """aggregate avg on columns"""
 type entities_avg_fields {
   dummy: Float
 }
 
 """
-order by avg() on columns of table "entities"
-"""
-input entities_avg_order_by {
-  dummy: order_by
-}
-
-"""
 Boolean expression to filter rows from the table "entities". All fields are combined with a logical 'AND'.
 """
 input entities_bool_exp {
-  _and: [entities_bool_exp]
+  _and: [entities_bool_exp!]
   _not: entities_bool_exp
-  _or: [entities_bool_exp]
+  _or: [entities_bool_exp!]
   dummy: smallint_comparison_exp
   group: groups_bool_exp
   group_id: uuid_comparison_exp
@@ -1549,7 +1535,7 @@ enum entities_constraint {
 }
 
 """
-input type for incrementing integer column in table "entities"
+input type for incrementing numeric columns in table "entities"
 """
 input entities_inc_input {
   dummy: smallint
@@ -1581,18 +1567,6 @@ type entities_max_fields {
   user_id: uuid
 }
 
-"""
-order by max() on columns of table "entities"
-"""
-input entities_max_order_by {
-  dummy: order_by
-  group_id: order_by
-  id: order_by
-  join_request_id: order_by
-  thing_id: order_by
-  user_id: order_by
-}
-
 """aggregate min on columns"""
 type entities_min_fields {
   dummy: smallint
@@ -1604,25 +1578,13 @@ type entities_min_fields {
 }
 
 """
-order by min() on columns of table "entities"
-"""
-input entities_min_order_by {
-  dummy: order_by
-  group_id: order_by
-  id: order_by
-  join_request_id: order_by
-  thing_id: order_by
-  user_id: order_by
-}
-
-"""
 response of any mutation on the table "entities"
 """
 type entities_mutation_response {
-  """number of affected rows by the mutation"""
+  """number of rows affected by the mutation"""
   affected_rows: Int!
 
-  """data of the affected rows by the mutation"""
+  """data from the rows affected by the mutation"""
   returning: [entities!]!
 }
 
@@ -1631,6 +1593,8 @@ input type for inserting object relation for remote table "entities"
 """
 input entities_obj_rel_insert_input {
   data: entities_insert_input!
+
+  """on conflict condition"""
   on_conflict: entities_on_conflict
 }
 
@@ -1643,9 +1607,7 @@ input entities_on_conflict {
   where: entities_bool_exp
 }
 
-"""
-ordering options when selecting data from "entities"
-"""
+"""Ordering options when selecting data from "entities"."""
 input entities_order_by {
   dummy: order_by
   group: groups_order_by
@@ -1659,9 +1621,7 @@ input entities_order_by {
   user_id: order_by
 }
 
-"""
-primary key columns input for table: "entities"
-"""
+"""primary key columns input for table: entities"""
 input entities_pk_columns_input {
   id: uuid!
 }
@@ -1706,23 +1666,9 @@ type entities_stddev_fields {
   dummy: Float
 }
 
-"""
-order by stddev() on columns of table "entities"
-"""
-input entities_stddev_order_by {
-  dummy: order_by
-}
-
 """aggregate stddev_pop on columns"""
 type entities_stddev_pop_fields {
   dummy: Float
-}
-
-"""
-order by stddev_pop() on columns of table "entities"
-"""
-input entities_stddev_pop_order_by {
-  dummy: order_by
 }
 
 """aggregate stddev_samp on columns"""
@@ -1730,23 +1676,9 @@ type entities_stddev_samp_fields {
   dummy: Float
 }
 
-"""
-order by stddev_samp() on columns of table "entities"
-"""
-input entities_stddev_samp_order_by {
-  dummy: order_by
-}
-
 """aggregate sum on columns"""
 type entities_sum_fields {
   dummy: smallint
-}
-
-"""
-order by sum() on columns of table "entities"
-"""
-input entities_sum_order_by {
-  dummy: order_by
 }
 
 """
@@ -1777,35 +1709,14 @@ type entities_var_pop_fields {
   dummy: Float
 }
 
-"""
-order by var_pop() on columns of table "entities"
-"""
-input entities_var_pop_order_by {
-  dummy: order_by
-}
-
 """aggregate var_samp on columns"""
 type entities_var_samp_fields {
   dummy: Float
 }
 
-"""
-order by var_samp() on columns of table "entities"
-"""
-input entities_var_samp_order_by {
-  dummy: order_by
-}
-
 """aggregate variance on columns"""
 type entities_variance_fields {
   dummy: Float
-}
-
-"""
-order by variance() on columns of table "entities"
-"""
-input entities_variance_order_by {
-  dummy: order_by
 }
 
 """
@@ -1818,7 +1729,7 @@ type file_uploads {
   name: String!
 
   """An object relationship"""
-  owner: users
+  owner: users!
   owner_id: uuid
   size: Int!
   updated_at: timestamptz!
@@ -1838,7 +1749,7 @@ aggregate fields of "file_uploads"
 """
 type file_uploads_aggregate_fields {
   avg: file_uploads_avg_fields
-  count(columns: [file_uploads_select_column!], distinct: Boolean): Int
+  count(columns: [file_uploads_select_column!], distinct: Boolean): Int!
   max: file_uploads_max_fields
   min: file_uploads_min_fields
   stddev: file_uploads_stddev_fields
@@ -1850,50 +1761,18 @@ type file_uploads_aggregate_fields {
   variance: file_uploads_variance_fields
 }
 
-"""
-order by aggregate values of table "file_uploads"
-"""
-input file_uploads_aggregate_order_by {
-  avg: file_uploads_avg_order_by
-  count: order_by
-  max: file_uploads_max_order_by
-  min: file_uploads_min_order_by
-  stddev: file_uploads_stddev_order_by
-  stddev_pop: file_uploads_stddev_pop_order_by
-  stddev_samp: file_uploads_stddev_samp_order_by
-  sum: file_uploads_sum_order_by
-  var_pop: file_uploads_var_pop_order_by
-  var_samp: file_uploads_var_samp_order_by
-  variance: file_uploads_variance_order_by
-}
-
-"""
-input type for inserting array relation for remote table "file_uploads"
-"""
-input file_uploads_arr_rel_insert_input {
-  data: [file_uploads_insert_input!]!
-  on_conflict: file_uploads_on_conflict
-}
-
 """aggregate avg on columns"""
 type file_uploads_avg_fields {
   size: Float
 }
 
 """
-order by avg() on columns of table "file_uploads"
-"""
-input file_uploads_avg_order_by {
-  size: order_by
-}
-
-"""
 Boolean expression to filter rows from the table "file_uploads". All fields are combined with a logical 'AND'.
 """
 input file_uploads_bool_exp {
-  _and: [file_uploads_bool_exp]
+  _and: [file_uploads_bool_exp!]
   _not: file_uploads_bool_exp
-  _or: [file_uploads_bool_exp]
+  _or: [file_uploads_bool_exp!]
   created_at: timestamptz_comparison_exp
   id: uuid_comparison_exp
   mime_type: String_comparison_exp
@@ -1917,7 +1796,7 @@ enum file_uploads_constraint {
 }
 
 """
-input type for incrementing integer column in table "file_uploads"
+input type for incrementing numeric columns in table "file_uploads"
 """
 input file_uploads_inc_input {
   size: Int
@@ -1950,20 +1829,6 @@ type file_uploads_max_fields {
   url: String
 }
 
-"""
-order by max() on columns of table "file_uploads"
-"""
-input file_uploads_max_order_by {
-  created_at: order_by
-  id: order_by
-  mime_type: order_by
-  name: order_by
-  owner_id: order_by
-  size: order_by
-  updated_at: order_by
-  url: order_by
-}
-
 """aggregate min on columns"""
 type file_uploads_min_fields {
   created_at: timestamptz
@@ -1977,27 +1842,13 @@ type file_uploads_min_fields {
 }
 
 """
-order by min() on columns of table "file_uploads"
-"""
-input file_uploads_min_order_by {
-  created_at: order_by
-  id: order_by
-  mime_type: order_by
-  name: order_by
-  owner_id: order_by
-  size: order_by
-  updated_at: order_by
-  url: order_by
-}
-
-"""
 response of any mutation on the table "file_uploads"
 """
 type file_uploads_mutation_response {
-  """number of affected rows by the mutation"""
+  """number of rows affected by the mutation"""
   affected_rows: Int!
 
-  """data of the affected rows by the mutation"""
+  """data from the rows affected by the mutation"""
   returning: [file_uploads!]!
 }
 
@@ -2006,6 +1857,8 @@ input type for inserting object relation for remote table "file_uploads"
 """
 input file_uploads_obj_rel_insert_input {
   data: file_uploads_insert_input!
+
+  """on conflict condition"""
   on_conflict: file_uploads_on_conflict
 }
 
@@ -2018,9 +1871,7 @@ input file_uploads_on_conflict {
   where: file_uploads_bool_exp
 }
 
-"""
-ordering options when selecting data from "file_uploads"
-"""
+"""Ordering options when selecting data from "file_uploads"."""
 input file_uploads_order_by {
   created_at: order_by
   id: order_by
@@ -2033,9 +1884,7 @@ input file_uploads_order_by {
   url: order_by
 }
 
-"""
-primary key columns input for table: "file_uploads"
-"""
+"""primary key columns input for table: file_uploads"""
 input file_uploads_pk_columns_input {
   id: uuid!
 }
@@ -2088,23 +1937,9 @@ type file_uploads_stddev_fields {
   size: Float
 }
 
-"""
-order by stddev() on columns of table "file_uploads"
-"""
-input file_uploads_stddev_order_by {
-  size: order_by
-}
-
 """aggregate stddev_pop on columns"""
 type file_uploads_stddev_pop_fields {
   size: Float
-}
-
-"""
-order by stddev_pop() on columns of table "file_uploads"
-"""
-input file_uploads_stddev_pop_order_by {
-  size: order_by
 }
 
 """aggregate stddev_samp on columns"""
@@ -2112,23 +1947,9 @@ type file_uploads_stddev_samp_fields {
   size: Float
 }
 
-"""
-order by stddev_samp() on columns of table "file_uploads"
-"""
-input file_uploads_stddev_samp_order_by {
-  size: order_by
-}
-
 """aggregate sum on columns"""
 type file_uploads_sum_fields {
   size: Int
-}
-
-"""
-order by sum() on columns of table "file_uploads"
-"""
-input file_uploads_sum_order_by {
-  size: order_by
 }
 
 """
@@ -2165,35 +1986,14 @@ type file_uploads_var_pop_fields {
   size: Float
 }
 
-"""
-order by var_pop() on columns of table "file_uploads"
-"""
-input file_uploads_var_pop_order_by {
-  size: order_by
-}
-
 """aggregate var_samp on columns"""
 type file_uploads_var_samp_fields {
   size: Float
 }
 
-"""
-order by var_samp() on columns of table "file_uploads"
-"""
-input file_uploads_var_samp_order_by {
-  size: order_by
-}
-
 """aggregate variance on columns"""
 type file_uploads_variance_fields {
   size: Float
-}
-
-"""
-order by variance() on columns of table "file_uploads"
-"""
-input file_uploads_variance_order_by {
-  size: order_by
 }
 
 """
@@ -2216,35 +2016,18 @@ type group_join_request_status_aggregate {
 aggregate fields of "group_join_request_status"
 """
 type group_join_request_status_aggregate_fields {
-  count(columns: [group_join_request_status_select_column!], distinct: Boolean): Int
+  count(columns: [group_join_request_status_select_column!], distinct: Boolean): Int!
   max: group_join_request_status_max_fields
   min: group_join_request_status_min_fields
-}
-
-"""
-order by aggregate values of table "group_join_request_status"
-"""
-input group_join_request_status_aggregate_order_by {
-  count: order_by
-  max: group_join_request_status_max_order_by
-  min: group_join_request_status_min_order_by
-}
-
-"""
-input type for inserting array relation for remote table "group_join_request_status"
-"""
-input group_join_request_status_arr_rel_insert_input {
-  data: [group_join_request_status_insert_input!]!
-  on_conflict: group_join_request_status_on_conflict
 }
 
 """
 Boolean expression to filter rows from the table "group_join_request_status". All fields are combined with a logical 'AND'.
 """
 input group_join_request_status_bool_exp {
-  _and: [group_join_request_status_bool_exp]
+  _and: [group_join_request_status_bool_exp!]
   _not: group_join_request_status_bool_exp
-  _or: [group_join_request_status_bool_exp]
+  _or: [group_join_request_status_bool_exp!]
   comment: String_comparison_exp
   value: String_comparison_exp
 }
@@ -2272,7 +2055,7 @@ enum group_join_request_status_enum {
 }
 
 """
-expression to compare columns of type group_join_request_status_enum. All fields are combined with logical 'AND'.
+Boolean expression to compare columns of type "group_join_request_status_enum". All fields are combined with logical 'AND'.
 """
 input group_join_request_status_enum_comparison_exp {
   _eq: group_join_request_status_enum
@@ -2296,14 +2079,6 @@ type group_join_request_status_max_fields {
   value: String
 }
 
-"""
-order by max() on columns of table "group_join_request_status"
-"""
-input group_join_request_status_max_order_by {
-  comment: order_by
-  value: order_by
-}
-
 """aggregate min on columns"""
 type group_join_request_status_min_fields {
   comment: String
@@ -2311,30 +2086,14 @@ type group_join_request_status_min_fields {
 }
 
 """
-order by min() on columns of table "group_join_request_status"
-"""
-input group_join_request_status_min_order_by {
-  comment: order_by
-  value: order_by
-}
-
-"""
 response of any mutation on the table "group_join_request_status"
 """
 type group_join_request_status_mutation_response {
-  """number of affected rows by the mutation"""
+  """number of rows affected by the mutation"""
   affected_rows: Int!
 
-  """data of the affected rows by the mutation"""
+  """data from the rows affected by the mutation"""
   returning: [group_join_request_status!]!
-}
-
-"""
-input type for inserting object relation for remote table "group_join_request_status"
-"""
-input group_join_request_status_obj_rel_insert_input {
-  data: group_join_request_status_insert_input!
-  on_conflict: group_join_request_status_on_conflict
 }
 
 """
@@ -2346,17 +2105,13 @@ input group_join_request_status_on_conflict {
   where: group_join_request_status_bool_exp
 }
 
-"""
-ordering options when selecting data from "group_join_request_status"
-"""
+"""Ordering options when selecting data from "group_join_request_status"."""
 input group_join_request_status_order_by {
   comment: order_by
   value: order_by
 }
 
-"""
-primary key columns input for table: "group_join_request_status"
-"""
+"""primary key columns input for table: group_join_request_status"""
 input group_join_request_status_pk_columns_input {
   value: String!
 }
@@ -2424,7 +2179,7 @@ type group_join_requests_aggregate {
 aggregate fields of "group_join_requests"
 """
 type group_join_requests_aggregate_fields {
-  count(columns: [group_join_requests_select_column!], distinct: Boolean): Int
+  count(columns: [group_join_requests_select_column!], distinct: Boolean): Int!
   max: group_join_requests_max_fields
   min: group_join_requests_min_fields
 }
@@ -2443,6 +2198,8 @@ input type for inserting array relation for remote table "group_join_requests"
 """
 input group_join_requests_arr_rel_insert_input {
   data: [group_join_requests_insert_input!]!
+
+  """on conflict condition"""
   on_conflict: group_join_requests_on_conflict
 }
 
@@ -2450,9 +2207,9 @@ input group_join_requests_arr_rel_insert_input {
 Boolean expression to filter rows from the table "group_join_requests". All fields are combined with a logical 'AND'.
 """
 input group_join_requests_bool_exp {
-  _and: [group_join_requests_bool_exp]
+  _and: [group_join_requests_bool_exp!]
   _not: group_join_requests_bool_exp
-  _or: [group_join_requests_bool_exp]
+  _or: [group_join_requests_bool_exp!]
   created_at: timestamptz_comparison_exp
   group: groups_bool_exp
   group_id: uuid_comparison_exp
@@ -2547,10 +2304,10 @@ input group_join_requests_min_order_by {
 response of any mutation on the table "group_join_requests"
 """
 type group_join_requests_mutation_response {
-  """number of affected rows by the mutation"""
+  """number of rows affected by the mutation"""
   affected_rows: Int!
 
-  """data of the affected rows by the mutation"""
+  """data from the rows affected by the mutation"""
   returning: [group_join_requests!]!
 }
 
@@ -2559,6 +2316,8 @@ input type for inserting object relation for remote table "group_join_requests"
 """
 input group_join_requests_obj_rel_insert_input {
   data: group_join_requests_insert_input!
+
+  """on conflict condition"""
   on_conflict: group_join_requests_on_conflict
 }
 
@@ -2571,9 +2330,7 @@ input group_join_requests_on_conflict {
   where: group_join_requests_bool_exp
 }
 
-"""
-ordering options when selecting data from "group_join_requests"
-"""
+"""Ordering options when selecting data from "group_join_requests"."""
 input group_join_requests_order_by {
   created_at: order_by
   group: groups_order_by
@@ -2588,9 +2345,7 @@ input group_join_requests_order_by {
   user_id: order_by
 }
 
-"""
-primary key columns input for table: "group_join_requests"
-"""
+"""primary key columns input for table: group_join_requests"""
 input group_join_requests_pk_columns_input {
   id: uuid!
 }
@@ -2702,7 +2457,7 @@ type group_join_tokens_aggregate {
 aggregate fields of "group_join_tokens"
 """
 type group_join_tokens_aggregate_fields {
-  count(columns: [group_join_tokens_select_column!], distinct: Boolean): Int
+  count(columns: [group_join_tokens_select_column!], distinct: Boolean): Int!
   max: group_join_tokens_max_fields
   min: group_join_tokens_min_fields
 }
@@ -2721,6 +2476,8 @@ input type for inserting array relation for remote table "group_join_tokens"
 """
 input group_join_tokens_arr_rel_insert_input {
   data: [group_join_tokens_insert_input!]!
+
+  """on conflict condition"""
   on_conflict: group_join_tokens_on_conflict
 }
 
@@ -2728,9 +2485,9 @@ input group_join_tokens_arr_rel_insert_input {
 Boolean expression to filter rows from the table "group_join_tokens". All fields are combined with a logical 'AND'.
 """
 input group_join_tokens_bool_exp {
-  _and: [group_join_tokens_bool_exp]
+  _and: [group_join_tokens_bool_exp!]
   _not: group_join_tokens_bool_exp
-  _or: [group_join_tokens_bool_exp]
+  _or: [group_join_tokens_bool_exp!]
   created_at: timestamptz_comparison_exp
   disabled: Boolean_comparison_exp
   group: groups_bool_exp
@@ -2811,19 +2568,11 @@ input group_join_tokens_min_order_by {
 response of any mutation on the table "group_join_tokens"
 """
 type group_join_tokens_mutation_response {
-  """number of affected rows by the mutation"""
+  """number of rows affected by the mutation"""
   affected_rows: Int!
 
-  """data of the affected rows by the mutation"""
+  """data from the rows affected by the mutation"""
   returning: [group_join_tokens!]!
-}
-
-"""
-input type for inserting object relation for remote table "group_join_tokens"
-"""
-input group_join_tokens_obj_rel_insert_input {
-  data: group_join_tokens_insert_input!
-  on_conflict: group_join_tokens_on_conflict
 }
 
 """
@@ -2835,9 +2584,7 @@ input group_join_tokens_on_conflict {
   where: group_join_tokens_bool_exp
 }
 
-"""
-ordering options when selecting data from "group_join_tokens"
-"""
+"""Ordering options when selecting data from "group_join_tokens"."""
 input group_join_tokens_order_by {
   created_at: order_by
   disabled: order_by
@@ -2849,9 +2596,7 @@ input group_join_tokens_order_by {
   updated_at: order_by
 }
 
-"""
-primary key columns input for table: "group_join_tokens"
-"""
+"""primary key columns input for table: group_join_tokens"""
 input group_join_tokens_pk_columns_input {
   id: uuid!
 }
@@ -2951,7 +2696,7 @@ type group_members_aggregate {
 aggregate fields of "group_members"
 """
 type group_members_aggregate_fields {
-  count(columns: [group_members_select_column!], distinct: Boolean): Int
+  count(columns: [group_members_select_column!], distinct: Boolean): Int!
   max: group_members_max_fields
   min: group_members_min_fields
 }
@@ -2970,6 +2715,8 @@ input type for inserting array relation for remote table "group_members"
 """
 input group_members_arr_rel_insert_input {
   data: [group_members_insert_input!]!
+
+  """on conflict condition"""
   on_conflict: group_members_on_conflict
 }
 
@@ -2977,9 +2724,9 @@ input group_members_arr_rel_insert_input {
 Boolean expression to filter rows from the table "group_members". All fields are combined with a logical 'AND'.
 """
 input group_members_bool_exp {
-  _and: [group_members_bool_exp]
+  _and: [group_members_bool_exp!]
   _not: group_members_bool_exp
-  _or: [group_members_bool_exp]
+  _or: [group_members_bool_exp!]
   created_at: timestamptz_comparison_exp
   group: groups_bool_exp
   group_id: uuid_comparison_exp
@@ -3056,19 +2803,11 @@ input group_members_min_order_by {
 response of any mutation on the table "group_members"
 """
 type group_members_mutation_response {
-  """number of affected rows by the mutation"""
+  """number of rows affected by the mutation"""
   affected_rows: Int!
 
-  """data of the affected rows by the mutation"""
+  """data from the rows affected by the mutation"""
   returning: [group_members!]!
-}
-
-"""
-input type for inserting object relation for remote table "group_members"
-"""
-input group_members_obj_rel_insert_input {
-  data: group_members_insert_input!
-  on_conflict: group_members_on_conflict
 }
 
 """
@@ -3080,9 +2819,7 @@ input group_members_on_conflict {
   where: group_members_bool_exp
 }
 
-"""
-ordering options when selecting data from "group_members"
-"""
+"""Ordering options when selecting data from "group_members"."""
 input group_members_order_by {
   created_at: order_by
   group: groups_order_by
@@ -3094,9 +2831,7 @@ input group_members_order_by {
   user_id: order_by
 }
 
-"""
-primary key columns input for table: "group_members"
-"""
+"""primary key columns input for table: group_members"""
 input group_members_pk_columns_input {
   id: uuid!
 }
@@ -3179,35 +2914,18 @@ type group_role_aggregate {
 aggregate fields of "group_role"
 """
 type group_role_aggregate_fields {
-  count(columns: [group_role_select_column!], distinct: Boolean): Int
+  count(columns: [group_role_select_column!], distinct: Boolean): Int!
   max: group_role_max_fields
   min: group_role_min_fields
-}
-
-"""
-order by aggregate values of table "group_role"
-"""
-input group_role_aggregate_order_by {
-  count: order_by
-  max: group_role_max_order_by
-  min: group_role_min_order_by
-}
-
-"""
-input type for inserting array relation for remote table "group_role"
-"""
-input group_role_arr_rel_insert_input {
-  data: [group_role_insert_input!]!
-  on_conflict: group_role_on_conflict
 }
 
 """
 Boolean expression to filter rows from the table "group_role". All fields are combined with a logical 'AND'.
 """
 input group_role_bool_exp {
-  _and: [group_role_bool_exp]
+  _and: [group_role_bool_exp!]
   _not: group_role_bool_exp
-  _or: [group_role_bool_exp]
+  _or: [group_role_bool_exp!]
   comment: String_comparison_exp
   value: String_comparison_exp
 }
@@ -3232,7 +2950,7 @@ enum group_role_enum {
 }
 
 """
-expression to compare columns of type group_role_enum. All fields are combined with logical 'AND'.
+Boolean expression to compare columns of type "group_role_enum". All fields are combined with logical 'AND'.
 """
 input group_role_enum_comparison_exp {
   _eq: group_role_enum
@@ -3256,14 +2974,6 @@ type group_role_max_fields {
   value: String
 }
 
-"""
-order by max() on columns of table "group_role"
-"""
-input group_role_max_order_by {
-  comment: order_by
-  value: order_by
-}
-
 """aggregate min on columns"""
 type group_role_min_fields {
   comment: String
@@ -3271,30 +2981,14 @@ type group_role_min_fields {
 }
 
 """
-order by min() on columns of table "group_role"
-"""
-input group_role_min_order_by {
-  comment: order_by
-  value: order_by
-}
-
-"""
 response of any mutation on the table "group_role"
 """
 type group_role_mutation_response {
-  """number of affected rows by the mutation"""
+  """number of rows affected by the mutation"""
   affected_rows: Int!
 
-  """data of the affected rows by the mutation"""
+  """data from the rows affected by the mutation"""
   returning: [group_role!]!
-}
-
-"""
-input type for inserting object relation for remote table "group_role"
-"""
-input group_role_obj_rel_insert_input {
-  data: group_role_insert_input!
-  on_conflict: group_role_on_conflict
 }
 
 """
@@ -3306,17 +3000,13 @@ input group_role_on_conflict {
   where: group_role_bool_exp
 }
 
-"""
-ordering options when selecting data from "group_role"
-"""
+"""Ordering options when selecting data from "group_role"."""
 input group_role_order_by {
   comment: order_by
   value: order_by
 }
 
-"""
-primary key columns input for table: "group_role"
-"""
+"""primary key columns input for table: group_role"""
 input group_role_pk_columns_input {
   value: String!
 }
@@ -3380,7 +3070,7 @@ type group_thing_aggregate {
 aggregate fields of "group_thing"
 """
 type group_thing_aggregate_fields {
-  count(columns: [group_thing_select_column!], distinct: Boolean): Int
+  count(columns: [group_thing_select_column!], distinct: Boolean): Int!
   max: group_thing_max_fields
   min: group_thing_min_fields
 }
@@ -3399,6 +3089,8 @@ input type for inserting array relation for remote table "group_thing"
 """
 input group_thing_arr_rel_insert_input {
   data: [group_thing_insert_input!]!
+
+  """on conflict condition"""
   on_conflict: group_thing_on_conflict
 }
 
@@ -3406,9 +3098,9 @@ input group_thing_arr_rel_insert_input {
 Boolean expression to filter rows from the table "group_thing". All fields are combined with a logical 'AND'.
 """
 input group_thing_bool_exp {
-  _and: [group_thing_bool_exp]
+  _and: [group_thing_bool_exp!]
   _not: group_thing_bool_exp
-  _or: [group_thing_bool_exp]
+  _or: [group_thing_bool_exp!]
   created_at: timestamptz_comparison_exp
   group: groups_bool_exp
   group_id: uuid_comparison_exp
@@ -3486,19 +3178,11 @@ input group_thing_min_order_by {
 response of any mutation on the table "group_thing"
 """
 type group_thing_mutation_response {
-  """number of affected rows by the mutation"""
+  """number of rows affected by the mutation"""
   affected_rows: Int!
 
-  """data of the affected rows by the mutation"""
+  """data from the rows affected by the mutation"""
   returning: [group_thing!]!
-}
-
-"""
-input type for inserting object relation for remote table "group_thing"
-"""
-input group_thing_obj_rel_insert_input {
-  data: group_thing_insert_input!
-  on_conflict: group_thing_on_conflict
 }
 
 """
@@ -3510,9 +3194,7 @@ input group_thing_on_conflict {
   where: group_thing_bool_exp
 }
 
-"""
-ordering options when selecting data from "group_thing"
-"""
+"""Ordering options when selecting data from "group_thing"."""
 input group_thing_order_by {
   created_at: order_by
   group: groups_order_by
@@ -3523,9 +3205,7 @@ input group_thing_order_by {
   updated_at: order_by
 }
 
-"""
-primary key columns input for table: "group_thing"
-"""
+"""primary key columns input for table: group_thing"""
 input group_thing_pk_columns_input {
   id: uuid!
 }
@@ -3607,7 +3287,7 @@ type groups {
     where: group_join_requests_bool_exp
   ): [group_join_requests!]!
 
-  """An aggregated array relationship"""
+  """An aggregate relationship"""
   join_requests_aggregate(
     """distinct select on columns"""
     distinct_on: [group_join_requests_select_column!]
@@ -3643,7 +3323,7 @@ type groups {
     where: group_join_tokens_bool_exp
   ): [group_join_tokens!]!
 
-  """An aggregated array relationship"""
+  """An aggregate relationship"""
   join_tokens_aggregate(
     """distinct select on columns"""
     distinct_on: [group_join_tokens_select_column!]
@@ -3679,7 +3359,7 @@ type groups {
     where: group_members_bool_exp
   ): [group_members!]!
 
-  """An aggregated array relationship"""
+  """An aggregate relationship"""
   memberships_aggregate(
     """distinct select on columns"""
     distinct_on: [group_members_select_column!]
@@ -3718,7 +3398,7 @@ type groups {
     where: group_thing_bool_exp
   ): [group_thing!]!
 
-  """An aggregated array relationship"""
+  """An aggregate relationship"""
   thing_relations_aggregate(
     """distinct select on columns"""
     distinct_on: [group_thing_select_column!]
@@ -3750,35 +3430,18 @@ type groups_aggregate {
 aggregate fields of "groups"
 """
 type groups_aggregate_fields {
-  count(columns: [groups_select_column!], distinct: Boolean): Int
+  count(columns: [groups_select_column!], distinct: Boolean): Int!
   max: groups_max_fields
   min: groups_min_fields
-}
-
-"""
-order by aggregate values of table "groups"
-"""
-input groups_aggregate_order_by {
-  count: order_by
-  max: groups_max_order_by
-  min: groups_min_order_by
-}
-
-"""
-input type for inserting array relation for remote table "groups"
-"""
-input groups_arr_rel_insert_input {
-  data: [groups_insert_input!]!
-  on_conflict: groups_on_conflict
 }
 
 """
 Boolean expression to filter rows from the table "groups". All fields are combined with a logical 'AND'.
 """
 input groups_bool_exp {
-  _and: [groups_bool_exp]
+  _and: [groups_bool_exp!]
   _not: groups_bool_exp
-  _or: [groups_bool_exp]
+  _or: [groups_bool_exp!]
   created_at: timestamptz_comparison_exp
   description: String_comparison_exp
   id: uuid_comparison_exp
@@ -3833,18 +3496,6 @@ type groups_max_fields {
   updated_at: timestamptz
 }
 
-"""
-order by max() on columns of table "groups"
-"""
-input groups_max_order_by {
-  created_at: order_by
-  description: order_by
-  id: order_by
-  name: order_by
-  short_id: order_by
-  updated_at: order_by
-}
-
 """aggregate min on columns"""
 type groups_min_fields {
   created_at: timestamptz
@@ -3856,25 +3507,13 @@ type groups_min_fields {
 }
 
 """
-order by min() on columns of table "groups"
-"""
-input groups_min_order_by {
-  created_at: order_by
-  description: order_by
-  id: order_by
-  name: order_by
-  short_id: order_by
-  updated_at: order_by
-}
-
-"""
 response of any mutation on the table "groups"
 """
 type groups_mutation_response {
-  """number of affected rows by the mutation"""
+  """number of rows affected by the mutation"""
   affected_rows: Int!
 
-  """data of the affected rows by the mutation"""
+  """data from the rows affected by the mutation"""
   returning: [groups!]!
 }
 
@@ -3883,6 +3522,8 @@ input type for inserting object relation for remote table "groups"
 """
 input groups_obj_rel_insert_input {
   data: groups_insert_input!
+
+  """on conflict condition"""
   on_conflict: groups_on_conflict
 }
 
@@ -3895,9 +3536,7 @@ input groups_on_conflict {
   where: groups_bool_exp
 }
 
-"""
-ordering options when selecting data from "groups"
-"""
+"""Ordering options when selecting data from "groups"."""
 input groups_order_by {
   created_at: order_by
   description: order_by
@@ -3912,9 +3551,7 @@ input groups_order_by {
   updated_at: order_by
 }
 
-"""
-primary key columns input for table: "groups"
-"""
+"""primary key columns input for table: groups"""
 input groups_pk_columns_input {
   id: uuid!
 }
@@ -3984,23 +3621,10 @@ enum groups_update_column {
   updated_at
 }
 
-scalar json
-
 """mutation root"""
 type mutation_root {
-  """
-  perform the action: "createChatGroup"
-  """
   createChatGroup(input: CreateChatGroupInput!): CreateChatGroupResult
-
-  """
-  perform the action: "createGroup"
-  """
-  createGroup(input: CreateGroupInput!): CreateGroupResult!
-
-  """
-  perform the action: "createJoinToken"
-  """
+  createGroup(input: CreateGroupInput!): CreateGroupResult
   createJoinToken(input: CreateJoinTokenInput!): CreateJoinTokenResult
 
   """
@@ -4270,11 +3894,7 @@ type mutation_root {
   delete single row from the table: "verification_requests"
   """
   delete_verification_requests_by_pk(id: Int!): verification_requests
-
-  """
-  perform the action: "handleJoinRequest"
-  """
-  handleJoinRequest(input: HandleJoinRequestInput!): HandleJoinRequestResult!
+  handleJoinRequest(input: HandleJoinRequestInput!): HandleJoinRequestResult
 
   """
   insert data into the table: "activities"
@@ -4731,25 +4351,9 @@ type mutation_root {
     """on conflict condition"""
     on_conflict: verification_requests_on_conflict
   ): verification_requests
-
-  """
-  perform the action: "joinGroup"
-  """
   joinGroup(input: JoinGroupInput!): JoinGroupResult
-
-  """
-  perform the action: "registerCredentials"
-  """
   registerCredentials(input: CredentialsInput!): RegistrationResult
-
-  """
-  perform the action: "requestJoinGroup"
-  """
   requestJoinGroup(input: RequestJoinGroupInput!): RequestJoinGroupResult
-
-  """
-  perform the action: "updateThing"
-  """
   updateThing(input: UpdateThingInput!): UpdateThingResult
 
   """
@@ -4856,7 +4460,7 @@ type mutation_root {
   update data of the table: "entities"
   """
   update_entities(
-    """increments the integer columns with given value of the filtered values"""
+    """increments the numeric columns with given value of the filtered values"""
     _inc: entities_inc_input
 
     """sets the columns of the filtered rows to the given values"""
@@ -4870,7 +4474,7 @@ type mutation_root {
   update single row of the table: "entities"
   """
   update_entities_by_pk(
-    """increments the integer columns with given value of the filtered values"""
+    """increments the numeric columns with given value of the filtered values"""
     _inc: entities_inc_input
 
     """sets the columns of the filtered rows to the given values"""
@@ -4882,7 +4486,7 @@ type mutation_root {
   update data of the table: "file_uploads"
   """
   update_file_uploads(
-    """increments the integer columns with given value of the filtered values"""
+    """increments the numeric columns with given value of the filtered values"""
     _inc: file_uploads_inc_input
 
     """sets the columns of the filtered rows to the given values"""
@@ -4896,7 +4500,7 @@ type mutation_root {
   update single row of the table: "file_uploads"
   """
   update_file_uploads_by_pk(
-    """increments the integer columns with given value of the filtered values"""
+    """increments the numeric columns with given value of the filtered values"""
     _inc: file_uploads_inc_input
 
     """sets the columns of the filtered rows to the given values"""
@@ -5068,7 +4672,7 @@ type mutation_root {
   update data of the table: "thing_images"
   """
   update_thing_images(
-    """increments the integer columns with given value of the filtered values"""
+    """increments the numeric columns with given value of the filtered values"""
     _inc: thing_images_inc_input
 
     """sets the columns of the filtered rows to the given values"""
@@ -5082,7 +4686,7 @@ type mutation_root {
   update single row of the table: "thing_images"
   """
   update_thing_images_by_pk(
-    """increments the integer columns with given value of the filtered values"""
+    """increments the numeric columns with given value of the filtered values"""
     _inc: thing_images_inc_input
 
     """sets the columns of the filtered rows to the given values"""
@@ -5165,7 +4769,7 @@ type mutation_root {
   update data of the table: "verification_requests"
   """
   update_verification_requests(
-    """increments the integer columns with given value of the filtered values"""
+    """increments the numeric columns with given value of the filtered values"""
     _inc: verification_requests_inc_input
 
     """sets the columns of the filtered rows to the given values"""
@@ -5179,7 +4783,7 @@ type mutation_root {
   update single row of the table: "verification_requests"
   """
   update_verification_requests_by_pk(
-    """increments the integer columns with given value of the filtered values"""
+    """increments the numeric columns with given value of the filtered values"""
     _inc: verification_requests_inc_input
 
     """sets the columns of the filtered rows to the given values"""
@@ -5216,7 +4820,7 @@ type notifications_aggregate {
 aggregate fields of "notifications"
 """
 type notifications_aggregate_fields {
-  count(columns: [notifications_select_column!], distinct: Boolean): Int
+  count(columns: [notifications_select_column!], distinct: Boolean): Int!
   max: notifications_max_fields
   min: notifications_min_fields
 }
@@ -5235,6 +4839,8 @@ input type for inserting array relation for remote table "notifications"
 """
 input notifications_arr_rel_insert_input {
   data: [notifications_insert_input!]!
+
+  """on conflict condition"""
   on_conflict: notifications_on_conflict
 }
 
@@ -5242,9 +4848,9 @@ input notifications_arr_rel_insert_input {
 Boolean expression to filter rows from the table "notifications". All fields are combined with a logical 'AND'.
 """
 input notifications_bool_exp {
-  _and: [notifications_bool_exp]
+  _and: [notifications_bool_exp!]
   _not: notifications_bool_exp
-  _or: [notifications_bool_exp]
+  _or: [notifications_bool_exp!]
   activity: activities_bool_exp
   activity_id: uuid_comparison_exp
   created_at: timestamptz_comparison_exp
@@ -5319,19 +4925,11 @@ input notifications_min_order_by {
 response of any mutation on the table "notifications"
 """
 type notifications_mutation_response {
-  """number of affected rows by the mutation"""
+  """number of rows affected by the mutation"""
   affected_rows: Int!
 
-  """data of the affected rows by the mutation"""
+  """data from the rows affected by the mutation"""
   returning: [notifications!]!
-}
-
-"""
-input type for inserting object relation for remote table "notifications"
-"""
-input notifications_obj_rel_insert_input {
-  data: notifications_insert_input!
-  on_conflict: notifications_on_conflict
 }
 
 """
@@ -5343,9 +4941,7 @@ input notifications_on_conflict {
   where: notifications_bool_exp
 }
 
-"""
-ordering options when selecting data from "notifications"
-"""
+"""Ordering options when selecting data from "notifications"."""
 input notifications_order_by {
   activity: activities_order_by
   activity_id: order_by
@@ -5356,9 +4952,7 @@ input notifications_order_by {
   user_id: order_by
 }
 
-"""
-primary key columns input for table: "notifications"
-"""
+"""primary key columns input for table: notifications"""
 input notifications_pk_columns_input {
   id: uuid!
 }
@@ -5416,26 +5010,25 @@ enum notifications_update_column {
 
 """column ordering options"""
 enum order_by {
-  """in the ascending order, nulls last"""
+  """in ascending order, nulls last"""
   asc
 
-  """in the ascending order, nulls first"""
+  """in ascending order, nulls first"""
   asc_nulls_first
 
-  """in the ascending order, nulls last"""
+  """in ascending order, nulls last"""
   asc_nulls_last
 
-  """in the descending order, nulls first"""
+  """in descending order, nulls first"""
   desc
 
-  """in the descending order, nulls first"""
+  """in descending order, nulls first"""
   desc_nulls_first
 
-  """in the descending order, nulls last"""
+  """in descending order, nulls last"""
   desc_nulls_last
 }
 
-"""query root"""
 type query_root {
   """
   fetch data from the table: "activities"
@@ -6351,7 +5944,7 @@ type query_root {
 scalar smallint
 
 """
-expression to compare columns of type smallint. All fields are combined with logical 'AND'.
+Boolean expression to compare columns of type "smallint". All fields are combined with logical 'AND'.
 """
 input smallint_comparison_exp {
   _eq: smallint
@@ -6365,7 +5958,6 @@ input smallint_comparison_exp {
   _nin: [smallint!]
 }
 
-"""subscription root"""
 type subscription_root {
   """
   fetch data from the table: "activities"
@@ -7310,7 +6902,7 @@ aggregate fields of "thing_images"
 """
 type thing_images_aggregate_fields {
   avg: thing_images_avg_fields
-  count(columns: [thing_images_select_column!], distinct: Boolean): Int
+  count(columns: [thing_images_select_column!], distinct: Boolean): Int!
   max: thing_images_max_fields
   min: thing_images_min_fields
   stddev: thing_images_stddev_fields
@@ -7344,6 +6936,8 @@ input type for inserting array relation for remote table "thing_images"
 """
 input thing_images_arr_rel_insert_input {
   data: [thing_images_insert_input!]!
+
+  """on conflict condition"""
   on_conflict: thing_images_on_conflict
 }
 
@@ -7363,9 +6957,9 @@ input thing_images_avg_order_by {
 Boolean expression to filter rows from the table "thing_images". All fields are combined with a logical 'AND'.
 """
 input thing_images_bool_exp {
-  _and: [thing_images_bool_exp]
+  _and: [thing_images_bool_exp!]
   _not: thing_images_bool_exp
-  _or: [thing_images_bool_exp]
+  _or: [thing_images_bool_exp!]
   created_at: timestamptz_comparison_exp
   description: String_comparison_exp
   file: file_uploads_bool_exp
@@ -7389,7 +6983,7 @@ enum thing_images_constraint {
 }
 
 """
-input type for incrementing integer column in table "thing_images"
+input type for incrementing numeric columns in table "thing_images"
 """
 input thing_images_inc_input {
   order: Int
@@ -7462,19 +7056,11 @@ input thing_images_min_order_by {
 response of any mutation on the table "thing_images"
 """
 type thing_images_mutation_response {
-  """number of affected rows by the mutation"""
+  """number of rows affected by the mutation"""
   affected_rows: Int!
 
-  """data of the affected rows by the mutation"""
+  """data from the rows affected by the mutation"""
   returning: [thing_images!]!
-}
-
-"""
-input type for inserting object relation for remote table "thing_images"
-"""
-input thing_images_obj_rel_insert_input {
-  data: thing_images_insert_input!
-  on_conflict: thing_images_on_conflict
 }
 
 """
@@ -7486,9 +7072,7 @@ input thing_images_on_conflict {
   where: thing_images_bool_exp
 }
 
-"""
-ordering options when selecting data from "thing_images"
-"""
+"""Ordering options when selecting data from "thing_images"."""
 input thing_images_order_by {
   created_at: order_by
   description: order_by
@@ -7501,9 +7085,7 @@ input thing_images_order_by {
   updated_at: order_by
 }
 
-"""
-primary key columns input for table: "thing_images"
-"""
+"""primary key columns input for table: thing_images"""
 input thing_images_pk_columns_input {
   id: uuid!
 }
@@ -7677,35 +7259,18 @@ type thing_type_aggregate {
 aggregate fields of "thing_type"
 """
 type thing_type_aggregate_fields {
-  count(columns: [thing_type_select_column!], distinct: Boolean): Int
+  count(columns: [thing_type_select_column!], distinct: Boolean): Int!
   max: thing_type_max_fields
   min: thing_type_min_fields
-}
-
-"""
-order by aggregate values of table "thing_type"
-"""
-input thing_type_aggregate_order_by {
-  count: order_by
-  max: thing_type_max_order_by
-  min: thing_type_min_order_by
-}
-
-"""
-input type for inserting array relation for remote table "thing_type"
-"""
-input thing_type_arr_rel_insert_input {
-  data: [thing_type_insert_input!]!
-  on_conflict: thing_type_on_conflict
 }
 
 """
 Boolean expression to filter rows from the table "thing_type". All fields are combined with a logical 'AND'.
 """
 input thing_type_bool_exp {
-  _and: [thing_type_bool_exp]
+  _and: [thing_type_bool_exp!]
   _not: thing_type_bool_exp
-  _or: [thing_type_bool_exp]
+  _or: [thing_type_bool_exp!]
   comment: String_comparison_exp
   value: String_comparison_exp
 }
@@ -7733,7 +7298,7 @@ enum thing_type_enum {
 }
 
 """
-expression to compare columns of type thing_type_enum. All fields are combined with logical 'AND'.
+Boolean expression to compare columns of type "thing_type_enum". All fields are combined with logical 'AND'.
 """
 input thing_type_enum_comparison_exp {
   _eq: thing_type_enum
@@ -7757,14 +7322,6 @@ type thing_type_max_fields {
   value: String
 }
 
-"""
-order by max() on columns of table "thing_type"
-"""
-input thing_type_max_order_by {
-  comment: order_by
-  value: order_by
-}
-
 """aggregate min on columns"""
 type thing_type_min_fields {
   comment: String
@@ -7772,30 +7329,14 @@ type thing_type_min_fields {
 }
 
 """
-order by min() on columns of table "thing_type"
-"""
-input thing_type_min_order_by {
-  comment: order_by
-  value: order_by
-}
-
-"""
 response of any mutation on the table "thing_type"
 """
 type thing_type_mutation_response {
-  """number of affected rows by the mutation"""
+  """number of rows affected by the mutation"""
   affected_rows: Int!
 
-  """data of the affected rows by the mutation"""
+  """data from the rows affected by the mutation"""
   returning: [thing_type!]!
-}
-
-"""
-input type for inserting object relation for remote table "thing_type"
-"""
-input thing_type_obj_rel_insert_input {
-  data: thing_type_insert_input!
-  on_conflict: thing_type_on_conflict
 }
 
 """
@@ -7807,17 +7348,13 @@ input thing_type_on_conflict {
   where: thing_type_bool_exp
 }
 
-"""
-ordering options when selecting data from "thing_type"
-"""
+"""Ordering options when selecting data from "thing_type"."""
 input thing_type_order_by {
   comment: order_by
   value: order_by
 }
 
-"""
-primary key columns input for table: "thing_type"
-"""
+"""primary key columns input for table: thing_type"""
 input thing_type_pk_columns_input {
   value: String!
 }
@@ -7880,7 +7417,7 @@ type things {
     where: group_thing_bool_exp
   ): [group_thing!]!
 
-  """An aggregated array relationship"""
+  """An aggregate relationship"""
   group_relations_aggregate(
     """distinct select on columns"""
     distinct_on: [group_thing_select_column!]
@@ -7917,7 +7454,7 @@ type things {
     where: thing_images_bool_exp
   ): [thing_images!]!
 
-  """An aggregated array relationship"""
+  """An aggregate relationship"""
   images_aggregate(
     """distinct select on columns"""
     distinct_on: [thing_images_select_column!]
@@ -7956,7 +7493,7 @@ type things_aggregate {
 aggregate fields of "things"
 """
 type things_aggregate_fields {
-  count(columns: [things_select_column!], distinct: Boolean): Int
+  count(columns: [things_select_column!], distinct: Boolean): Int!
   max: things_max_fields
   min: things_min_fields
 }
@@ -7975,6 +7512,8 @@ input type for inserting array relation for remote table "things"
 """
 input things_arr_rel_insert_input {
   data: [things_insert_input!]!
+
+  """on conflict condition"""
   on_conflict: things_on_conflict
 }
 
@@ -7982,9 +7521,9 @@ input things_arr_rel_insert_input {
 Boolean expression to filter rows from the table "things". All fields are combined with a logical 'AND'.
 """
 input things_bool_exp {
-  _and: [things_bool_exp]
+  _and: [things_bool_exp!]
   _not: things_bool_exp
-  _or: [things_bool_exp]
+  _or: [things_bool_exp!]
   category: String_comparison_exp
   created_at: timestamptz_comparison_exp
   description: String_comparison_exp
@@ -8092,10 +7631,10 @@ input things_min_order_by {
 response of any mutation on the table "things"
 """
 type things_mutation_response {
-  """number of affected rows by the mutation"""
+  """number of rows affected by the mutation"""
   affected_rows: Int!
 
-  """data of the affected rows by the mutation"""
+  """data from the rows affected by the mutation"""
   returning: [things!]!
 }
 
@@ -8104,6 +7643,8 @@ input type for inserting object relation for remote table "things"
 """
 input things_obj_rel_insert_input {
   data: things_insert_input!
+
+  """on conflict condition"""
   on_conflict: things_on_conflict
 }
 
@@ -8116,9 +7657,7 @@ input things_on_conflict {
   where: things_bool_exp
 }
 
-"""
-ordering options when selecting data from "things"
-"""
+"""Ordering options when selecting data from "things"."""
 input things_order_by {
   category: order_by
   created_at: order_by
@@ -8136,9 +7675,7 @@ input things_order_by {
   updated_at: order_by
 }
 
-"""
-primary key columns input for table: "things"
-"""
+"""primary key columns input for table: things"""
 input things_pk_columns_input {
   id: uuid!
 }
@@ -8239,7 +7776,7 @@ enum things_update_column {
 scalar timestamptz
 
 """
-expression to compare columns of type timestamptz. All fields are combined with logical 'AND'.
+Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'.
 """
 input timestamptz_comparison_exp {
   _eq: timestamptz
@@ -8273,34 +7810,18 @@ type user_private_aggregate {
 aggregate fields of "user_private"
 """
 type user_private_aggregate_fields {
-  count(columns: [user_private_select_column!], distinct: Boolean): Int
+  count(columns: [user_private_select_column!], distinct: Boolean): Int!
   max: user_private_max_fields
   min: user_private_min_fields
-}
-
-"""
-order by aggregate values of table "user_private"
-"""
-input user_private_aggregate_order_by {
-  count: order_by
-  max: user_private_max_order_by
-  min: user_private_min_order_by
-}
-
-"""
-input type for inserting array relation for remote table "user_private"
-"""
-input user_private_arr_rel_insert_input {
-  data: [user_private_insert_input!]!
 }
 
 """
 Boolean expression to filter rows from the table "user_private". All fields are combined with a logical 'AND'.
 """
 input user_private_bool_exp {
-  _and: [user_private_bool_exp]
+  _and: [user_private_bool_exp!]
   _not: user_private_bool_exp
-  _or: [user_private_bool_exp]
+  _or: [user_private_bool_exp!]
   email: String_comparison_exp
   user_id: uuid_comparison_exp
 }
@@ -8319,14 +7840,6 @@ type user_private_max_fields {
   user_id: uuid
 }
 
-"""
-order by max() on columns of table "user_private"
-"""
-input user_private_max_order_by {
-  email: order_by
-  user_id: order_by
-}
-
 """aggregate min on columns"""
 type user_private_min_fields {
   email: String
@@ -8334,21 +7847,13 @@ type user_private_min_fields {
 }
 
 """
-order by min() on columns of table "user_private"
-"""
-input user_private_min_order_by {
-  email: order_by
-  user_id: order_by
-}
-
-"""
 response of any mutation on the table "user_private"
 """
 type user_private_mutation_response {
-  """number of affected rows by the mutation"""
+  """number of rows affected by the mutation"""
   affected_rows: Int!
 
-  """data of the affected rows by the mutation"""
+  """data from the rows affected by the mutation"""
   returning: [user_private!]!
 }
 
@@ -8359,9 +7864,7 @@ input user_private_obj_rel_insert_input {
   data: user_private_insert_input!
 }
 
-"""
-ordering options when selecting data from "user_private"
-"""
+"""Ordering options when selecting data from "user_private"."""
 input user_private_order_by {
   email: order_by
   user_id: order_by
@@ -8408,7 +7911,7 @@ type users {
     where: chat_group_members_bool_exp
   ): [chat_group_members!]!
 
-  """An aggregated array relationship"""
+  """An aggregate relationship"""
   chat_group_memberships_aggregate(
     """distinct select on columns"""
     distinct_on: [chat_group_members_select_column!]
@@ -8444,7 +7947,7 @@ type users {
     where: chat_messages_bool_exp
   ): [chat_messages!]!
 
-  """An aggregated array relationship"""
+  """An aggregate relationship"""
   chat_messages_aggregate(
     """distinct select on columns"""
     distinct_on: [chat_messages_select_column!]
@@ -8483,7 +7986,7 @@ type users {
     where: group_join_requests_bool_exp
   ): [group_join_requests!]!
 
-  """An aggregated array relationship"""
+  """An aggregate relationship"""
   group_join_requests_aggregate(
     """distinct select on columns"""
     distinct_on: [group_join_requests_select_column!]
@@ -8523,7 +8026,7 @@ type users {
     where: group_members_bool_exp
   ): [group_members!]!
 
-  """An aggregated array relationship"""
+  """An aggregate relationship"""
   memberships_aggregate(
     """distinct select on columns"""
     distinct_on: [group_members_select_column!]
@@ -8564,7 +8067,7 @@ type users {
     where: things_bool_exp
   ): [things!]!
 
-  """An aggregated array relationship"""
+  """An aggregate relationship"""
   things_aggregate(
     """distinct select on columns"""
     distinct_on: [things_select_column!]
@@ -8596,35 +8099,18 @@ type users_aggregate {
 aggregate fields of "users"
 """
 type users_aggregate_fields {
-  count(columns: [users_select_column!], distinct: Boolean): Int
+  count(columns: [users_select_column!], distinct: Boolean): Int!
   max: users_max_fields
   min: users_min_fields
-}
-
-"""
-order by aggregate values of table "users"
-"""
-input users_aggregate_order_by {
-  count: order_by
-  max: users_max_order_by
-  min: users_min_order_by
-}
-
-"""
-input type for inserting array relation for remote table "users"
-"""
-input users_arr_rel_insert_input {
-  data: [users_insert_input!]!
-  on_conflict: users_on_conflict
 }
 
 """
 Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'.
 """
 input users_bool_exp {
-  _and: [users_bool_exp]
+  _and: [users_bool_exp!]
   _not: users_bool_exp
-  _or: [users_bool_exp]
+  _or: [users_bool_exp!]
   chat_group_memberships: chat_group_members_bool_exp
   chat_messages: chat_messages_bool_exp
   created_at: timestamptz_comparison_exp
@@ -8693,22 +8179,6 @@ type users_max_fields {
   updated_at: timestamptz
 }
 
-"""
-order by max() on columns of table "users"
-"""
-input users_max_order_by {
-  created_at: order_by
-  email: order_by
-  email_verified: order_by
-  id: order_by
-  image: order_by
-  last_chat_notification: order_by
-  last_seen: order_by
-  name: order_by
-  password_hash: order_by
-  updated_at: order_by
-}
-
 """aggregate min on columns"""
 type users_min_fields {
   created_at: timestamptz
@@ -8724,29 +8194,13 @@ type users_min_fields {
 }
 
 """
-order by min() on columns of table "users"
-"""
-input users_min_order_by {
-  created_at: order_by
-  email: order_by
-  email_verified: order_by
-  id: order_by
-  image: order_by
-  last_chat_notification: order_by
-  last_seen: order_by
-  name: order_by
-  password_hash: order_by
-  updated_at: order_by
-}
-
-"""
 response of any mutation on the table "users"
 """
 type users_mutation_response {
-  """number of affected rows by the mutation"""
+  """number of rows affected by the mutation"""
   affected_rows: Int!
 
-  """data of the affected rows by the mutation"""
+  """data from the rows affected by the mutation"""
   returning: [users!]!
 }
 
@@ -8755,6 +8209,8 @@ input type for inserting object relation for remote table "users"
 """
 input users_obj_rel_insert_input {
   data: users_insert_input!
+
+  """on conflict condition"""
   on_conflict: users_on_conflict
 }
 
@@ -8767,9 +8223,7 @@ input users_on_conflict {
   where: users_bool_exp
 }
 
-"""
-ordering options when selecting data from "users"
-"""
+"""Ordering options when selecting data from "users"."""
 input users_order_by {
   chat_group_memberships_aggregate: chat_group_members_aggregate_order_by
   chat_messages_aggregate: chat_messages_aggregate_order_by
@@ -8789,9 +8243,7 @@ input users_order_by {
   updated_at: order_by
 }
 
-"""
-primary key columns input for table: "users"
-"""
+"""primary key columns input for table: users"""
 input users_pk_columns_input {
   id: uuid!
 }
@@ -8885,7 +8337,7 @@ enum users_update_column {
 scalar uuid
 
 """
-expression to compare columns of type uuid. All fields are combined with logical 'AND'.
+Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'.
 """
 input uuid_comparison_exp {
   _eq: uuid
@@ -8924,7 +8376,7 @@ aggregate fields of "verification_requests"
 """
 type verification_requests_aggregate_fields {
   avg: verification_requests_avg_fields
-  count(columns: [verification_requests_select_column!], distinct: Boolean): Int
+  count(columns: [verification_requests_select_column!], distinct: Boolean): Int!
   max: verification_requests_max_fields
   min: verification_requests_min_fields
   stddev: verification_requests_stddev_fields
@@ -8936,50 +8388,18 @@ type verification_requests_aggregate_fields {
   variance: verification_requests_variance_fields
 }
 
-"""
-order by aggregate values of table "verification_requests"
-"""
-input verification_requests_aggregate_order_by {
-  avg: verification_requests_avg_order_by
-  count: order_by
-  max: verification_requests_max_order_by
-  min: verification_requests_min_order_by
-  stddev: verification_requests_stddev_order_by
-  stddev_pop: verification_requests_stddev_pop_order_by
-  stddev_samp: verification_requests_stddev_samp_order_by
-  sum: verification_requests_sum_order_by
-  var_pop: verification_requests_var_pop_order_by
-  var_samp: verification_requests_var_samp_order_by
-  variance: verification_requests_variance_order_by
-}
-
-"""
-input type for inserting array relation for remote table "verification_requests"
-"""
-input verification_requests_arr_rel_insert_input {
-  data: [verification_requests_insert_input!]!
-  on_conflict: verification_requests_on_conflict
-}
-
 """aggregate avg on columns"""
 type verification_requests_avg_fields {
   id: Float
 }
 
 """
-order by avg() on columns of table "verification_requests"
-"""
-input verification_requests_avg_order_by {
-  id: order_by
-}
-
-"""
 Boolean expression to filter rows from the table "verification_requests". All fields are combined with a logical 'AND'.
 """
 input verification_requests_bool_exp {
-  _and: [verification_requests_bool_exp]
+  _and: [verification_requests_bool_exp!]
   _not: verification_requests_bool_exp
-  _or: [verification_requests_bool_exp]
+  _or: [verification_requests_bool_exp!]
   created_at: timestamptz_comparison_exp
   expires: timestamptz_comparison_exp
   id: Int_comparison_exp
@@ -9000,7 +8420,7 @@ enum verification_requests_constraint {
 }
 
 """
-input type for incrementing integer column in table "verification_requests"
+input type for incrementing numeric columns in table "verification_requests"
 """
 input verification_requests_inc_input {
   id: Int
@@ -9028,18 +8448,6 @@ type verification_requests_max_fields {
   updated_at: timestamptz
 }
 
-"""
-order by max() on columns of table "verification_requests"
-"""
-input verification_requests_max_order_by {
-  created_at: order_by
-  expires: order_by
-  id: order_by
-  identifier: order_by
-  token: order_by
-  updated_at: order_by
-}
-
 """aggregate min on columns"""
 type verification_requests_min_fields {
   created_at: timestamptz
@@ -9051,34 +8459,14 @@ type verification_requests_min_fields {
 }
 
 """
-order by min() on columns of table "verification_requests"
-"""
-input verification_requests_min_order_by {
-  created_at: order_by
-  expires: order_by
-  id: order_by
-  identifier: order_by
-  token: order_by
-  updated_at: order_by
-}
-
-"""
 response of any mutation on the table "verification_requests"
 """
 type verification_requests_mutation_response {
-  """number of affected rows by the mutation"""
+  """number of rows affected by the mutation"""
   affected_rows: Int!
 
-  """data of the affected rows by the mutation"""
+  """data from the rows affected by the mutation"""
   returning: [verification_requests!]!
-}
-
-"""
-input type for inserting object relation for remote table "verification_requests"
-"""
-input verification_requests_obj_rel_insert_input {
-  data: verification_requests_insert_input!
-  on_conflict: verification_requests_on_conflict
 }
 
 """
@@ -9090,9 +8478,7 @@ input verification_requests_on_conflict {
   where: verification_requests_bool_exp
 }
 
-"""
-ordering options when selecting data from "verification_requests"
-"""
+"""Ordering options when selecting data from "verification_requests"."""
 input verification_requests_order_by {
   created_at: order_by
   expires: order_by
@@ -9102,9 +8488,7 @@ input verification_requests_order_by {
   updated_at: order_by
 }
 
-"""
-primary key columns input for table: "verification_requests"
-"""
+"""primary key columns input for table: verification_requests"""
 input verification_requests_pk_columns_input {
   id: Int!
 }
@@ -9149,23 +8533,9 @@ type verification_requests_stddev_fields {
   id: Float
 }
 
-"""
-order by stddev() on columns of table "verification_requests"
-"""
-input verification_requests_stddev_order_by {
-  id: order_by
-}
-
 """aggregate stddev_pop on columns"""
 type verification_requests_stddev_pop_fields {
   id: Float
-}
-
-"""
-order by stddev_pop() on columns of table "verification_requests"
-"""
-input verification_requests_stddev_pop_order_by {
-  id: order_by
 }
 
 """aggregate stddev_samp on columns"""
@@ -9173,23 +8543,9 @@ type verification_requests_stddev_samp_fields {
   id: Float
 }
 
-"""
-order by stddev_samp() on columns of table "verification_requests"
-"""
-input verification_requests_stddev_samp_order_by {
-  id: order_by
-}
-
 """aggregate sum on columns"""
 type verification_requests_sum_fields {
   id: Int
-}
-
-"""
-order by sum() on columns of table "verification_requests"
-"""
-input verification_requests_sum_order_by {
-  id: order_by
 }
 
 """
@@ -9220,33 +8576,12 @@ type verification_requests_var_pop_fields {
   id: Float
 }
 
-"""
-order by var_pop() on columns of table "verification_requests"
-"""
-input verification_requests_var_pop_order_by {
-  id: order_by
-}
-
 """aggregate var_samp on columns"""
 type verification_requests_var_samp_fields {
   id: Float
 }
 
-"""
-order by var_samp() on columns of table "verification_requests"
-"""
-input verification_requests_var_samp_order_by {
-  id: order_by
-}
-
 """aggregate variance on columns"""
 type verification_requests_variance_fields {
   id: Float
-}
-
-"""
-order by variance() on columns of table "verification_requests"
-"""
-input verification_requests_variance_order_by {
-  id: order_by
 }
