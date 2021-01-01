@@ -38,6 +38,8 @@ export const urlFor = {
         list: (absolute = false) => makeUrl(absolute, `/groups`),
         home: (group: GroupWithId, absolute = false) =>
             makeUrl(absolute, `/groups/${group.short_id}`),
+        things: (group: GroupWithId, absolute = false) =>
+            makeUrl(absolute, `/groups/${group.short_id}/things`),
         members: (group: GroupWithId, absolute = false) =>
             makeUrl(absolute, `/groups/${group.short_id}/members`),
         settings: (group: GroupWithId, absolute = false) =>
@@ -61,6 +63,11 @@ export const urlFor = {
         // Navigate to the related entity
         if (ent.thing && sndEnt?.group) {
             // TODO: link to thing page
+            return urlFor.group.home(sndEnt.group);
+        } else if (ent.group_post && sndEnt?.group) {
+            return urlFor.group.home(sndEnt?.group);
+        } else if (ent.group_post_comment && sndEnt?.group) {
+            // TODO: link to post somehow
             return urlFor.group.home(sndEnt?.group);
         } else if (ent.group) {
             return urlFor.group.home(ent.group);

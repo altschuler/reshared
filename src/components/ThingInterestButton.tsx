@@ -1,4 +1,5 @@
 ﻿import { createUseStyles } from 'react-jss';
+import { head } from 'lodash';
 import { ThingCardFragment, useCreateChatGroupMutation } from '../generated/graphql';
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
@@ -31,7 +32,7 @@ export const ThingInterestButton = ({ thing }: { thing: ThingCardFragment }) => 
             },
         })
             .then((result) => {
-                const created = result.data?.createChatGroup?.chat_group;
+                const created = head(result.data?.createChatGroup?.chat_group);
                 if (created) {
                     return router.push(urlFor.chat.group(created));
                 }

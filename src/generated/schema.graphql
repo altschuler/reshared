@@ -1424,6 +1424,265 @@ enum chat_messages_update_column {
   sender_id
 }
 
+"""
+columns and relationships of "comments"
+"""
+type comments {
+  """An object relationship"""
+  author: users!
+  author_id: uuid!
+  content: String!
+  created_at: timestamptz!
+
+  """An array relationship"""
+  group_post_relations(
+    """distinct select on columns"""
+    distinct_on: [group_post_comment_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_post_comment_order_by!]
+
+    """filter the rows returned"""
+    where: group_post_comment_bool_exp
+  ): [group_post_comment!]!
+
+  """An aggregate relationship"""
+  group_post_relations_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_post_comment_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_post_comment_order_by!]
+
+    """filter the rows returned"""
+    where: group_post_comment_bool_exp
+  ): group_post_comment_aggregate!
+  id: uuid!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "comments"
+"""
+type comments_aggregate {
+  aggregate: comments_aggregate_fields
+  nodes: [comments!]!
+}
+
+"""
+aggregate fields of "comments"
+"""
+type comments_aggregate_fields {
+  count(columns: [comments_select_column!], distinct: Boolean): Int!
+  max: comments_max_fields
+  min: comments_min_fields
+}
+
+"""
+order by aggregate values of table "comments"
+"""
+input comments_aggregate_order_by {
+  count: order_by
+  max: comments_max_order_by
+  min: comments_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "comments"
+"""
+input comments_arr_rel_insert_input {
+  data: [comments_insert_input!]!
+
+  """on conflict condition"""
+  on_conflict: comments_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "comments". All fields are combined with a logical 'AND'.
+"""
+input comments_bool_exp {
+  _and: [comments_bool_exp!]
+  _not: comments_bool_exp
+  _or: [comments_bool_exp!]
+  author: users_bool_exp
+  author_id: uuid_comparison_exp
+  content: String_comparison_exp
+  created_at: timestamptz_comparison_exp
+  group_post_relations: group_post_comment_bool_exp
+  id: uuid_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "comments"
+"""
+enum comments_constraint {
+  """unique or primary key constraint"""
+  comment_pkey
+}
+
+"""
+input type for inserting data into table "comments"
+"""
+input comments_insert_input {
+  author: users_obj_rel_insert_input
+  author_id: uuid
+  content: String
+  created_at: timestamptz
+  group_post_relations: group_post_comment_arr_rel_insert_input
+  id: uuid
+  updated_at: timestamptz
+}
+
+"""aggregate max on columns"""
+type comments_max_fields {
+  author_id: uuid
+  content: String
+  created_at: timestamptz
+  id: uuid
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "comments"
+"""
+input comments_max_order_by {
+  author_id: order_by
+  content: order_by
+  created_at: order_by
+  id: order_by
+  updated_at: order_by
+}
+
+"""aggregate min on columns"""
+type comments_min_fields {
+  author_id: uuid
+  content: String
+  created_at: timestamptz
+  id: uuid
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "comments"
+"""
+input comments_min_order_by {
+  author_id: order_by
+  content: order_by
+  created_at: order_by
+  id: order_by
+  updated_at: order_by
+}
+
+"""
+response of any mutation on the table "comments"
+"""
+type comments_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [comments!]!
+}
+
+"""
+input type for inserting object relation for remote table "comments"
+"""
+input comments_obj_rel_insert_input {
+  data: comments_insert_input!
+
+  """on conflict condition"""
+  on_conflict: comments_on_conflict
+}
+
+"""
+on conflict condition type for table "comments"
+"""
+input comments_on_conflict {
+  constraint: comments_constraint!
+  update_columns: [comments_update_column!]!
+  where: comments_bool_exp
+}
+
+"""Ordering options when selecting data from "comments"."""
+input comments_order_by {
+  author: users_order_by
+  author_id: order_by
+  content: order_by
+  created_at: order_by
+  group_post_relations_aggregate: group_post_comment_aggregate_order_by
+  id: order_by
+  updated_at: order_by
+}
+
+"""primary key columns input for table: comments"""
+input comments_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "comments"
+"""
+enum comments_select_column {
+  """column name"""
+  author_id
+
+  """column name"""
+  content
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "comments"
+"""
+input comments_set_input {
+  author_id: uuid
+  content: String
+  created_at: timestamptz
+  id: uuid
+  updated_at: timestamptz
+}
+
+"""
+update columns of table "comments"
+"""
+enum comments_update_column {
+  """column name"""
+  author_id
+
+  """column name"""
+  content
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  updated_at
+}
+
 scalar date
 
 """
@@ -1453,6 +1712,14 @@ type entities {
 
   """An object relationship"""
   group_join_request: group_join_requests!
+
+  """An object relationship"""
+  group_post: group_posts!
+
+  """An object relationship"""
+  group_post_comment: group_post_comment!
+  group_post_comment_id: uuid
+  group_post_id: uuid
   id: uuid!
   join_request_id: uuid
 
@@ -1506,6 +1773,10 @@ input entities_bool_exp {
   group: groups_bool_exp
   group_id: uuid_comparison_exp
   group_join_request: group_join_requests_bool_exp
+  group_post: group_posts_bool_exp
+  group_post_comment: group_post_comment_bool_exp
+  group_post_comment_id: uuid_comparison_exp
+  group_post_id: uuid_comparison_exp
   id: uuid_comparison_exp
   join_request_id: uuid_comparison_exp
   thing: things_bool_exp
@@ -1520,6 +1791,12 @@ unique or primary key constraints on table "entities"
 enum entities_constraint {
   """unique or primary key constraint"""
   entities_group_id_key
+
+  """unique or primary key constraint"""
+  entities_group_post_comment_id_key
+
+  """unique or primary key constraint"""
+  entities_group_post_id_key
 
   """unique or primary key constraint"""
   entities_join_request_id_key
@@ -1549,6 +1826,10 @@ input entities_insert_input {
   group: groups_obj_rel_insert_input
   group_id: uuid
   group_join_request: group_join_requests_obj_rel_insert_input
+  group_post: group_posts_obj_rel_insert_input
+  group_post_comment: group_post_comment_obj_rel_insert_input
+  group_post_comment_id: uuid
+  group_post_id: uuid
   id: uuid
   join_request_id: uuid
   thing: things_obj_rel_insert_input
@@ -1561,6 +1842,8 @@ input entities_insert_input {
 type entities_max_fields {
   dummy: smallint
   group_id: uuid
+  group_post_comment_id: uuid
+  group_post_id: uuid
   id: uuid
   join_request_id: uuid
   thing_id: uuid
@@ -1571,6 +1854,8 @@ type entities_max_fields {
 type entities_min_fields {
   dummy: smallint
   group_id: uuid
+  group_post_comment_id: uuid
+  group_post_id: uuid
   id: uuid
   join_request_id: uuid
   thing_id: uuid
@@ -1613,6 +1898,10 @@ input entities_order_by {
   group: groups_order_by
   group_id: order_by
   group_join_request: group_join_requests_order_by
+  group_post: group_posts_order_by
+  group_post_comment: group_post_comment_order_by
+  group_post_comment_id: order_by
+  group_post_id: order_by
   id: order_by
   join_request_id: order_by
   thing: things_order_by
@@ -1637,6 +1926,12 @@ enum entities_select_column {
   group_id
 
   """column name"""
+  group_post_comment_id
+
+  """column name"""
+  group_post_id
+
+  """column name"""
   id
 
   """column name"""
@@ -1655,6 +1950,8 @@ input type for updating data in table "entities"
 input entities_set_input {
   dummy: smallint
   group_id: uuid
+  group_post_comment_id: uuid
+  group_post_id: uuid
   id: uuid
   join_request_id: uuid
   thing_id: uuid
@@ -1690,6 +1987,12 @@ enum entities_update_column {
 
   """column name"""
   group_id
+
+  """column name"""
+  group_post_comment_id
+
+  """column name"""
+  group_post_id
 
   """column name"""
   id
@@ -2895,6 +3198,678 @@ enum group_members_update_column {
 }
 
 """
+columns and relationships of "group_post_comment"
+"""
+type group_post_comment {
+  """An object relationship"""
+  comment: comments!
+  comment_id: uuid!
+  created_at: timestamptz!
+  group_post_id: uuid!
+  id: uuid!
+
+  """An object relationship"""
+  post: group_posts!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "group_post_comment"
+"""
+type group_post_comment_aggregate {
+  aggregate: group_post_comment_aggregate_fields
+  nodes: [group_post_comment!]!
+}
+
+"""
+aggregate fields of "group_post_comment"
+"""
+type group_post_comment_aggregate_fields {
+  count(columns: [group_post_comment_select_column!], distinct: Boolean): Int!
+  max: group_post_comment_max_fields
+  min: group_post_comment_min_fields
+}
+
+"""
+order by aggregate values of table "group_post_comment"
+"""
+input group_post_comment_aggregate_order_by {
+  count: order_by
+  max: group_post_comment_max_order_by
+  min: group_post_comment_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "group_post_comment"
+"""
+input group_post_comment_arr_rel_insert_input {
+  data: [group_post_comment_insert_input!]!
+
+  """on conflict condition"""
+  on_conflict: group_post_comment_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "group_post_comment". All fields are combined with a logical 'AND'.
+"""
+input group_post_comment_bool_exp {
+  _and: [group_post_comment_bool_exp!]
+  _not: group_post_comment_bool_exp
+  _or: [group_post_comment_bool_exp!]
+  comment: comments_bool_exp
+  comment_id: uuid_comparison_exp
+  created_at: timestamptz_comparison_exp
+  group_post_id: uuid_comparison_exp
+  id: uuid_comparison_exp
+  post: group_posts_bool_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "group_post_comment"
+"""
+enum group_post_comment_constraint {
+  """unique or primary key constraint"""
+  group_post_comment_pkey
+}
+
+"""
+input type for inserting data into table "group_post_comment"
+"""
+input group_post_comment_insert_input {
+  comment: comments_obj_rel_insert_input
+  comment_id: uuid
+  created_at: timestamptz
+  group_post_id: uuid
+  id: uuid
+  post: group_posts_obj_rel_insert_input
+  updated_at: timestamptz
+}
+
+"""aggregate max on columns"""
+type group_post_comment_max_fields {
+  comment_id: uuid
+  created_at: timestamptz
+  group_post_id: uuid
+  id: uuid
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "group_post_comment"
+"""
+input group_post_comment_max_order_by {
+  comment_id: order_by
+  created_at: order_by
+  group_post_id: order_by
+  id: order_by
+  updated_at: order_by
+}
+
+"""aggregate min on columns"""
+type group_post_comment_min_fields {
+  comment_id: uuid
+  created_at: timestamptz
+  group_post_id: uuid
+  id: uuid
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "group_post_comment"
+"""
+input group_post_comment_min_order_by {
+  comment_id: order_by
+  created_at: order_by
+  group_post_id: order_by
+  id: order_by
+  updated_at: order_by
+}
+
+"""
+response of any mutation on the table "group_post_comment"
+"""
+type group_post_comment_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [group_post_comment!]!
+}
+
+"""
+input type for inserting object relation for remote table "group_post_comment"
+"""
+input group_post_comment_obj_rel_insert_input {
+  data: group_post_comment_insert_input!
+
+  """on conflict condition"""
+  on_conflict: group_post_comment_on_conflict
+}
+
+"""
+on conflict condition type for table "group_post_comment"
+"""
+input group_post_comment_on_conflict {
+  constraint: group_post_comment_constraint!
+  update_columns: [group_post_comment_update_column!]!
+  where: group_post_comment_bool_exp
+}
+
+"""Ordering options when selecting data from "group_post_comment"."""
+input group_post_comment_order_by {
+  comment: comments_order_by
+  comment_id: order_by
+  created_at: order_by
+  group_post_id: order_by
+  id: order_by
+  post: group_posts_order_by
+  updated_at: order_by
+}
+
+"""primary key columns input for table: group_post_comment"""
+input group_post_comment_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "group_post_comment"
+"""
+enum group_post_comment_select_column {
+  """column name"""
+  comment_id
+
+  """column name"""
+  created_at
+
+  """column name"""
+  group_post_id
+
+  """column name"""
+  id
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "group_post_comment"
+"""
+input group_post_comment_set_input {
+  comment_id: uuid
+  created_at: timestamptz
+  group_post_id: uuid
+  id: uuid
+  updated_at: timestamptz
+}
+
+"""
+update columns of table "group_post_comment"
+"""
+enum group_post_comment_update_column {
+  """column name"""
+  comment_id
+
+  """column name"""
+  created_at
+
+  """column name"""
+  group_post_id
+
+  """column name"""
+  id
+
+  """column name"""
+  updated_at
+}
+
+"""
+columns and relationships of "group_post_type"
+"""
+type group_post_type {
+  comment: String!
+  value: String!
+}
+
+"""
+aggregated selection of "group_post_type"
+"""
+type group_post_type_aggregate {
+  aggregate: group_post_type_aggregate_fields
+  nodes: [group_post_type!]!
+}
+
+"""
+aggregate fields of "group_post_type"
+"""
+type group_post_type_aggregate_fields {
+  count(columns: [group_post_type_select_column!], distinct: Boolean): Int!
+  max: group_post_type_max_fields
+  min: group_post_type_min_fields
+}
+
+"""
+Boolean expression to filter rows from the table "group_post_type". All fields are combined with a logical 'AND'.
+"""
+input group_post_type_bool_exp {
+  _and: [group_post_type_bool_exp!]
+  _not: group_post_type_bool_exp
+  _or: [group_post_type_bool_exp!]
+  comment: String_comparison_exp
+  value: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "group_post_type"
+"""
+enum group_post_type_constraint {
+  """unique or primary key constraint"""
+  group_post_type_pkey
+}
+
+enum group_post_type_enum {
+  """a generic message post"""
+  message
+
+  """a request for something"""
+  request
+}
+
+"""
+Boolean expression to compare columns of type "group_post_type_enum". All fields are combined with logical 'AND'.
+"""
+input group_post_type_enum_comparison_exp {
+  _eq: group_post_type_enum
+  _in: [group_post_type_enum!]
+  _is_null: Boolean
+  _neq: group_post_type_enum
+  _nin: [group_post_type_enum!]
+}
+
+"""
+input type for inserting data into table "group_post_type"
+"""
+input group_post_type_insert_input {
+  comment: String
+  value: String
+}
+
+"""aggregate max on columns"""
+type group_post_type_max_fields {
+  comment: String
+  value: String
+}
+
+"""aggregate min on columns"""
+type group_post_type_min_fields {
+  comment: String
+  value: String
+}
+
+"""
+response of any mutation on the table "group_post_type"
+"""
+type group_post_type_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [group_post_type!]!
+}
+
+"""
+on conflict condition type for table "group_post_type"
+"""
+input group_post_type_on_conflict {
+  constraint: group_post_type_constraint!
+  update_columns: [group_post_type_update_column!]!
+  where: group_post_type_bool_exp
+}
+
+"""Ordering options when selecting data from "group_post_type"."""
+input group_post_type_order_by {
+  comment: order_by
+  value: order_by
+}
+
+"""primary key columns input for table: group_post_type"""
+input group_post_type_pk_columns_input {
+  value: String!
+}
+
+"""
+select columns of table "group_post_type"
+"""
+enum group_post_type_select_column {
+  """column name"""
+  comment
+
+  """column name"""
+  value
+}
+
+"""
+input type for updating data in table "group_post_type"
+"""
+input group_post_type_set_input {
+  comment: String
+  value: String
+}
+
+"""
+update columns of table "group_post_type"
+"""
+enum group_post_type_update_column {
+  """column name"""
+  comment
+
+  """column name"""
+  value
+}
+
+"""
+columns and relationships of "group_posts"
+"""
+type group_posts {
+  """An object relationship"""
+  author: users!
+  author_id: uuid!
+
+  """An array relationship"""
+  comments(
+    """distinct select on columns"""
+    distinct_on: [group_post_comment_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_post_comment_order_by!]
+
+    """filter the rows returned"""
+    where: group_post_comment_bool_exp
+  ): [group_post_comment!]!
+
+  """An aggregate relationship"""
+  comments_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_post_comment_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_post_comment_order_by!]
+
+    """filter the rows returned"""
+    where: group_post_comment_bool_exp
+  ): group_post_comment_aggregate!
+  content: String!
+  created_at: timestamptz!
+
+  """An object relationship"""
+  group: groups!
+  group_id: uuid!
+  id: uuid!
+  resolved: Boolean!
+  type: group_post_type_enum!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "group_posts"
+"""
+type group_posts_aggregate {
+  aggregate: group_posts_aggregate_fields
+  nodes: [group_posts!]!
+}
+
+"""
+aggregate fields of "group_posts"
+"""
+type group_posts_aggregate_fields {
+  count(columns: [group_posts_select_column!], distinct: Boolean): Int!
+  max: group_posts_max_fields
+  min: group_posts_min_fields
+}
+
+"""
+order by aggregate values of table "group_posts"
+"""
+input group_posts_aggregate_order_by {
+  count: order_by
+  max: group_posts_max_order_by
+  min: group_posts_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "group_posts"
+"""
+input group_posts_arr_rel_insert_input {
+  data: [group_posts_insert_input!]!
+
+  """on conflict condition"""
+  on_conflict: group_posts_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "group_posts". All fields are combined with a logical 'AND'.
+"""
+input group_posts_bool_exp {
+  _and: [group_posts_bool_exp!]
+  _not: group_posts_bool_exp
+  _or: [group_posts_bool_exp!]
+  author: users_bool_exp
+  author_id: uuid_comparison_exp
+  comments: group_post_comment_bool_exp
+  content: String_comparison_exp
+  created_at: timestamptz_comparison_exp
+  group: groups_bool_exp
+  group_id: uuid_comparison_exp
+  id: uuid_comparison_exp
+  resolved: Boolean_comparison_exp
+  type: group_post_type_enum_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "group_posts"
+"""
+enum group_posts_constraint {
+  """unique or primary key constraint"""
+  group_post_pkey
+}
+
+"""
+input type for inserting data into table "group_posts"
+"""
+input group_posts_insert_input {
+  author: users_obj_rel_insert_input
+  author_id: uuid
+  comments: group_post_comment_arr_rel_insert_input
+  content: String
+  created_at: timestamptz
+  group: groups_obj_rel_insert_input
+  group_id: uuid
+  id: uuid
+  resolved: Boolean
+  type: group_post_type_enum
+  updated_at: timestamptz
+}
+
+"""aggregate max on columns"""
+type group_posts_max_fields {
+  author_id: uuid
+  content: String
+  created_at: timestamptz
+  group_id: uuid
+  id: uuid
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "group_posts"
+"""
+input group_posts_max_order_by {
+  author_id: order_by
+  content: order_by
+  created_at: order_by
+  group_id: order_by
+  id: order_by
+  updated_at: order_by
+}
+
+"""aggregate min on columns"""
+type group_posts_min_fields {
+  author_id: uuid
+  content: String
+  created_at: timestamptz
+  group_id: uuid
+  id: uuid
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "group_posts"
+"""
+input group_posts_min_order_by {
+  author_id: order_by
+  content: order_by
+  created_at: order_by
+  group_id: order_by
+  id: order_by
+  updated_at: order_by
+}
+
+"""
+response of any mutation on the table "group_posts"
+"""
+type group_posts_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [group_posts!]!
+}
+
+"""
+input type for inserting object relation for remote table "group_posts"
+"""
+input group_posts_obj_rel_insert_input {
+  data: group_posts_insert_input!
+
+  """on conflict condition"""
+  on_conflict: group_posts_on_conflict
+}
+
+"""
+on conflict condition type for table "group_posts"
+"""
+input group_posts_on_conflict {
+  constraint: group_posts_constraint!
+  update_columns: [group_posts_update_column!]!
+  where: group_posts_bool_exp
+}
+
+"""Ordering options when selecting data from "group_posts"."""
+input group_posts_order_by {
+  author: users_order_by
+  author_id: order_by
+  comments_aggregate: group_post_comment_aggregate_order_by
+  content: order_by
+  created_at: order_by
+  group: groups_order_by
+  group_id: order_by
+  id: order_by
+  resolved: order_by
+  type: order_by
+  updated_at: order_by
+}
+
+"""primary key columns input for table: group_posts"""
+input group_posts_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "group_posts"
+"""
+enum group_posts_select_column {
+  """column name"""
+  author_id
+
+  """column name"""
+  content
+
+  """column name"""
+  created_at
+
+  """column name"""
+  group_id
+
+  """column name"""
+  id
+
+  """column name"""
+  resolved
+
+  """column name"""
+  type
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "group_posts"
+"""
+input group_posts_set_input {
+  author_id: uuid
+  content: String
+  created_at: timestamptz
+  group_id: uuid
+  id: uuid
+  resolved: Boolean
+  type: group_post_type_enum
+  updated_at: timestamptz
+}
+
+"""
+update columns of table "group_posts"
+"""
+enum group_posts_update_column {
+  """column name"""
+  author_id
+
+  """column name"""
+  content
+
+  """column name"""
+  created_at
+
+  """column name"""
+  group_id
+
+  """column name"""
+  id
+
+  """column name"""
+  resolved
+
+  """column name"""
+  type
+
+  """column name"""
+  updated_at
+}
+
+"""
 columns and relationships of "group_role"
 """
 type group_role {
@@ -3693,6 +4668,19 @@ type mutation_root {
   delete_chat_messages_by_pk(id: uuid!): chat_messages
 
   """
+  delete data from the table: "comments"
+  """
+  delete_comments(
+    """filter the rows which have to be deleted"""
+    where: comments_bool_exp!
+  ): comments_mutation_response
+
+  """
+  delete single row from the table: "comments"
+  """
+  delete_comments_by_pk(id: uuid!): comments
+
+  """
   delete data from the table: "entities"
   """
   delete_entities(
@@ -3769,6 +4757,45 @@ type mutation_root {
   delete single row from the table: "group_members"
   """
   delete_group_members_by_pk(id: uuid!): group_members
+
+  """
+  delete data from the table: "group_post_comment"
+  """
+  delete_group_post_comment(
+    """filter the rows which have to be deleted"""
+    where: group_post_comment_bool_exp!
+  ): group_post_comment_mutation_response
+
+  """
+  delete single row from the table: "group_post_comment"
+  """
+  delete_group_post_comment_by_pk(id: uuid!): group_post_comment
+
+  """
+  delete data from the table: "group_post_type"
+  """
+  delete_group_post_type(
+    """filter the rows which have to be deleted"""
+    where: group_post_type_bool_exp!
+  ): group_post_type_mutation_response
+
+  """
+  delete single row from the table: "group_post_type"
+  """
+  delete_group_post_type_by_pk(value: String!): group_post_type
+
+  """
+  delete data from the table: "group_posts"
+  """
+  delete_group_posts(
+    """filter the rows which have to be deleted"""
+    where: group_posts_bool_exp!
+  ): group_posts_mutation_response
+
+  """
+  delete single row from the table: "group_posts"
+  """
+  delete_group_posts_by_pk(id: uuid!): group_posts
 
   """
   delete data from the table: "group_role"
@@ -4007,6 +5034,28 @@ type mutation_root {
   ): chat_messages
 
   """
+  insert data into the table: "comments"
+  """
+  insert_comments(
+    """the rows to be inserted"""
+    objects: [comments_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: comments_on_conflict
+  ): comments_mutation_response
+
+  """
+  insert a single row into the table: "comments"
+  """
+  insert_comments_one(
+    """the row to be inserted"""
+    object: comments_insert_input!
+
+    """on conflict condition"""
+    on_conflict: comments_on_conflict
+  ): comments
+
+  """
   insert data into the table: "entities"
   """
   insert_entities(
@@ -4137,6 +5186,72 @@ type mutation_root {
     """on conflict condition"""
     on_conflict: group_members_on_conflict
   ): group_members
+
+  """
+  insert data into the table: "group_post_comment"
+  """
+  insert_group_post_comment(
+    """the rows to be inserted"""
+    objects: [group_post_comment_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: group_post_comment_on_conflict
+  ): group_post_comment_mutation_response
+
+  """
+  insert a single row into the table: "group_post_comment"
+  """
+  insert_group_post_comment_one(
+    """the row to be inserted"""
+    object: group_post_comment_insert_input!
+
+    """on conflict condition"""
+    on_conflict: group_post_comment_on_conflict
+  ): group_post_comment
+
+  """
+  insert data into the table: "group_post_type"
+  """
+  insert_group_post_type(
+    """the rows to be inserted"""
+    objects: [group_post_type_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: group_post_type_on_conflict
+  ): group_post_type_mutation_response
+
+  """
+  insert a single row into the table: "group_post_type"
+  """
+  insert_group_post_type_one(
+    """the row to be inserted"""
+    object: group_post_type_insert_input!
+
+    """on conflict condition"""
+    on_conflict: group_post_type_on_conflict
+  ): group_post_type
+
+  """
+  insert data into the table: "group_posts"
+  """
+  insert_group_posts(
+    """the rows to be inserted"""
+    objects: [group_posts_insert_input!]!
+
+    """on conflict condition"""
+    on_conflict: group_posts_on_conflict
+  ): group_posts_mutation_response
+
+  """
+  insert a single row into the table: "group_posts"
+  """
+  insert_group_posts_one(
+    """the row to be inserted"""
+    object: group_posts_insert_input!
+
+    """on conflict condition"""
+    on_conflict: group_posts_on_conflict
+  ): group_posts
 
   """
   insert data into the table: "group_role"
@@ -4457,6 +5572,26 @@ type mutation_root {
   ): chat_messages
 
   """
+  update data of the table: "comments"
+  """
+  update_comments(
+    """sets the columns of the filtered rows to the given values"""
+    _set: comments_set_input
+
+    """filter the rows which have to be updated"""
+    where: comments_bool_exp!
+  ): comments_mutation_response
+
+  """
+  update single row of the table: "comments"
+  """
+  update_comments_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: comments_set_input
+    pk_columns: comments_pk_columns_input!
+  ): comments
+
+  """
   update data of the table: "entities"
   """
   update_entities(
@@ -4587,6 +5722,66 @@ type mutation_root {
     _set: group_members_set_input
     pk_columns: group_members_pk_columns_input!
   ): group_members
+
+  """
+  update data of the table: "group_post_comment"
+  """
+  update_group_post_comment(
+    """sets the columns of the filtered rows to the given values"""
+    _set: group_post_comment_set_input
+
+    """filter the rows which have to be updated"""
+    where: group_post_comment_bool_exp!
+  ): group_post_comment_mutation_response
+
+  """
+  update single row of the table: "group_post_comment"
+  """
+  update_group_post_comment_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: group_post_comment_set_input
+    pk_columns: group_post_comment_pk_columns_input!
+  ): group_post_comment
+
+  """
+  update data of the table: "group_post_type"
+  """
+  update_group_post_type(
+    """sets the columns of the filtered rows to the given values"""
+    _set: group_post_type_set_input
+
+    """filter the rows which have to be updated"""
+    where: group_post_type_bool_exp!
+  ): group_post_type_mutation_response
+
+  """
+  update single row of the table: "group_post_type"
+  """
+  update_group_post_type_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: group_post_type_set_input
+    pk_columns: group_post_type_pk_columns_input!
+  ): group_post_type
+
+  """
+  update data of the table: "group_posts"
+  """
+  update_group_posts(
+    """sets the columns of the filtered rows to the given values"""
+    _set: group_posts_set_input
+
+    """filter the rows which have to be updated"""
+    where: group_posts_bool_exp!
+  ): group_posts_mutation_response
+
+  """
+  update single row of the table: "group_posts"
+  """
+  update_group_posts_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: group_posts_set_input
+    pk_columns: group_posts_pk_columns_input!
+  ): group_posts
 
   """
   update data of the table: "group_role"
@@ -5248,6 +6443,49 @@ type query_root {
   chat_messages_by_pk(id: uuid!): chat_messages
 
   """
+  fetch data from the table: "comments"
+  """
+  comments(
+    """distinct select on columns"""
+    distinct_on: [comments_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [comments_order_by!]
+
+    """filter the rows returned"""
+    where: comments_bool_exp
+  ): [comments!]!
+
+  """
+  fetch aggregated fields from the table: "comments"
+  """
+  comments_aggregate(
+    """distinct select on columns"""
+    distinct_on: [comments_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [comments_order_by!]
+
+    """filter the rows returned"""
+    where: comments_bool_exp
+  ): comments_aggregate!
+
+  """fetch data from the table: "comments" using primary key columns"""
+  comments_by_pk(id: uuid!): comments
+
+  """
   fetch data from the table: "entities"
   """
   entities(
@@ -5510,6 +6748,137 @@ type query_root {
 
   """fetch data from the table: "group_members" using primary key columns"""
   group_members_by_pk(id: uuid!): group_members
+
+  """
+  fetch data from the table: "group_post_comment"
+  """
+  group_post_comment(
+    """distinct select on columns"""
+    distinct_on: [group_post_comment_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_post_comment_order_by!]
+
+    """filter the rows returned"""
+    where: group_post_comment_bool_exp
+  ): [group_post_comment!]!
+
+  """
+  fetch aggregated fields from the table: "group_post_comment"
+  """
+  group_post_comment_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_post_comment_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_post_comment_order_by!]
+
+    """filter the rows returned"""
+    where: group_post_comment_bool_exp
+  ): group_post_comment_aggregate!
+
+  """
+  fetch data from the table: "group_post_comment" using primary key columns
+  """
+  group_post_comment_by_pk(id: uuid!): group_post_comment
+
+  """
+  fetch data from the table: "group_post_type"
+  """
+  group_post_type(
+    """distinct select on columns"""
+    distinct_on: [group_post_type_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_post_type_order_by!]
+
+    """filter the rows returned"""
+    where: group_post_type_bool_exp
+  ): [group_post_type!]!
+
+  """
+  fetch aggregated fields from the table: "group_post_type"
+  """
+  group_post_type_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_post_type_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_post_type_order_by!]
+
+    """filter the rows returned"""
+    where: group_post_type_bool_exp
+  ): group_post_type_aggregate!
+
+  """fetch data from the table: "group_post_type" using primary key columns"""
+  group_post_type_by_pk(value: String!): group_post_type
+
+  """
+  fetch data from the table: "group_posts"
+  """
+  group_posts(
+    """distinct select on columns"""
+    distinct_on: [group_posts_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_posts_order_by!]
+
+    """filter the rows returned"""
+    where: group_posts_bool_exp
+  ): [group_posts!]!
+
+  """
+  fetch aggregated fields from the table: "group_posts"
+  """
+  group_posts_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_posts_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_posts_order_by!]
+
+    """filter the rows returned"""
+    where: group_posts_bool_exp
+  ): group_posts_aggregate!
+
+  """fetch data from the table: "group_posts" using primary key columns"""
+  group_posts_by_pk(id: uuid!): group_posts
 
   """
   fetch data from the table: "group_role"
@@ -6177,6 +7546,49 @@ type subscription_root {
   chat_messages_by_pk(id: uuid!): chat_messages
 
   """
+  fetch data from the table: "comments"
+  """
+  comments(
+    """distinct select on columns"""
+    distinct_on: [comments_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [comments_order_by!]
+
+    """filter the rows returned"""
+    where: comments_bool_exp
+  ): [comments!]!
+
+  """
+  fetch aggregated fields from the table: "comments"
+  """
+  comments_aggregate(
+    """distinct select on columns"""
+    distinct_on: [comments_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [comments_order_by!]
+
+    """filter the rows returned"""
+    where: comments_bool_exp
+  ): comments_aggregate!
+
+  """fetch data from the table: "comments" using primary key columns"""
+  comments_by_pk(id: uuid!): comments
+
+  """
   fetch data from the table: "entities"
   """
   entities(
@@ -6439,6 +7851,137 @@ type subscription_root {
 
   """fetch data from the table: "group_members" using primary key columns"""
   group_members_by_pk(id: uuid!): group_members
+
+  """
+  fetch data from the table: "group_post_comment"
+  """
+  group_post_comment(
+    """distinct select on columns"""
+    distinct_on: [group_post_comment_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_post_comment_order_by!]
+
+    """filter the rows returned"""
+    where: group_post_comment_bool_exp
+  ): [group_post_comment!]!
+
+  """
+  fetch aggregated fields from the table: "group_post_comment"
+  """
+  group_post_comment_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_post_comment_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_post_comment_order_by!]
+
+    """filter the rows returned"""
+    where: group_post_comment_bool_exp
+  ): group_post_comment_aggregate!
+
+  """
+  fetch data from the table: "group_post_comment" using primary key columns
+  """
+  group_post_comment_by_pk(id: uuid!): group_post_comment
+
+  """
+  fetch data from the table: "group_post_type"
+  """
+  group_post_type(
+    """distinct select on columns"""
+    distinct_on: [group_post_type_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_post_type_order_by!]
+
+    """filter the rows returned"""
+    where: group_post_type_bool_exp
+  ): [group_post_type!]!
+
+  """
+  fetch aggregated fields from the table: "group_post_type"
+  """
+  group_post_type_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_post_type_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_post_type_order_by!]
+
+    """filter the rows returned"""
+    where: group_post_type_bool_exp
+  ): group_post_type_aggregate!
+
+  """fetch data from the table: "group_post_type" using primary key columns"""
+  group_post_type_by_pk(value: String!): group_post_type
+
+  """
+  fetch data from the table: "group_posts"
+  """
+  group_posts(
+    """distinct select on columns"""
+    distinct_on: [group_posts_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_posts_order_by!]
+
+    """filter the rows returned"""
+    where: group_posts_bool_exp
+  ): [group_posts!]!
+
+  """
+  fetch aggregated fields from the table: "group_posts"
+  """
+  group_posts_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_posts_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_posts_order_by!]
+
+    """filter the rows returned"""
+    where: group_posts_bool_exp
+  ): group_posts_aggregate!
+
+  """fetch data from the table: "group_posts" using primary key columns"""
+  group_posts_by_pk(id: uuid!): group_posts
 
   """
   fetch data from the table: "group_role"
@@ -7964,6 +9507,42 @@ type users {
     """filter the rows returned"""
     where: chat_messages_bool_exp
   ): chat_messages_aggregate!
+
+  """An array relationship"""
+  comments(
+    """distinct select on columns"""
+    distinct_on: [comments_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [comments_order_by!]
+
+    """filter the rows returned"""
+    where: comments_bool_exp
+  ): [comments!]!
+
+  """An aggregate relationship"""
+  comments_aggregate(
+    """distinct select on columns"""
+    distinct_on: [comments_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [comments_order_by!]
+
+    """filter the rows returned"""
+    where: comments_bool_exp
+  ): comments_aggregate!
   created_at: timestamptz!
   email: String
   email_verified: timestamptz
@@ -8003,6 +9582,42 @@ type users {
     """filter the rows returned"""
     where: group_join_requests_bool_exp
   ): group_join_requests_aggregate!
+
+  """An array relationship"""
+  group_posts(
+    """distinct select on columns"""
+    distinct_on: [group_posts_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_posts_order_by!]
+
+    """filter the rows returned"""
+    where: group_posts_bool_exp
+  ): [group_posts!]!
+
+  """An aggregate relationship"""
+  group_posts_aggregate(
+    """distinct select on columns"""
+    distinct_on: [group_posts_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [group_posts_order_by!]
+
+    """filter the rows returned"""
+    where: group_posts_bool_exp
+  ): group_posts_aggregate!
   id: uuid!
   image: String
   last_chat_notification: timestamptz
@@ -8113,10 +9728,12 @@ input users_bool_exp {
   _or: [users_bool_exp!]
   chat_group_memberships: chat_group_members_bool_exp
   chat_messages: chat_messages_bool_exp
+  comments: comments_bool_exp
   created_at: timestamptz_comparison_exp
   email: String_comparison_exp
   email_verified: timestamptz_comparison_exp
   group_join_requests: group_join_requests_bool_exp
+  group_posts: group_posts_bool_exp
   id: uuid_comparison_exp
   image: String_comparison_exp
   last_chat_notification: timestamptz_comparison_exp
@@ -8149,10 +9766,12 @@ input type for inserting data into table "users"
 input users_insert_input {
   chat_group_memberships: chat_group_members_arr_rel_insert_input
   chat_messages: chat_messages_arr_rel_insert_input
+  comments: comments_arr_rel_insert_input
   created_at: timestamptz
   email: String
   email_verified: timestamptz
   group_join_requests: group_join_requests_arr_rel_insert_input
+  group_posts: group_posts_arr_rel_insert_input
   id: uuid
   image: String
   last_chat_notification: timestamptz
@@ -8227,10 +9846,12 @@ input users_on_conflict {
 input users_order_by {
   chat_group_memberships_aggregate: chat_group_members_aggregate_order_by
   chat_messages_aggregate: chat_messages_aggregate_order_by
+  comments_aggregate: comments_aggregate_order_by
   created_at: order_by
   email: order_by
   email_verified: order_by
   group_join_requests_aggregate: group_join_requests_aggregate_order_by
+  group_posts_aggregate: group_posts_aggregate_order_by
   id: order_by
   image: order_by
   last_chat_notification: order_by

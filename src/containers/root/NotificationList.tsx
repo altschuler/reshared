@@ -1,6 +1,5 @@
 ﻿import React, { useCallback, useMemo, useState } from 'react';
 import {
-    Activity_Verb_Enum,
     NotificationCardFragment,
     useMarkAllNotificationsReadMutation,
     useMarkNotificationReadMutation,
@@ -15,7 +14,6 @@ import { useAuth } from '../../utils/auth';
 import { useRouter } from 'next/router';
 import { urlFor } from '../../utils/urls';
 import { activityMessage } from '../../utils/activity';
-import Link from 'next/link';
 
 // List
 export interface NotificationListProps {
@@ -27,6 +25,7 @@ export interface NotificationListProps {
 export const NotificationList = ({ notifications, loading, onSelect }: NotificationListProps) => {
     const router = useRouter();
     const [markRead] = useMarkNotificationReadMutation();
+    const auth = useAuth();
 
     const handleMarkRead = useCallback(
         (notification: NotificationCardFragment) => {
@@ -73,7 +72,7 @@ export const NotificationList = ({ notifications, loading, onSelect }: Notificat
                         avatar={activity.actor && <UserAvatar user={activity.actor} />}
                         title={
                             <Typography.Link onClick={() => handleClick(notification)}>
-                                {activityMessage(notification.activity)}
+                                {activityMessage(notification.activity, auth.user)}
                             </Typography.Link>
                         }
                         description={<DateDisplay mode="datetime" utc={activity.created_at} />}

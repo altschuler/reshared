@@ -1205,6 +1205,223 @@ export enum Chat_Messages_Update_Column {
   SenderId = 'sender_id'
 }
 
+/** columns and relationships of "comments" */
+export type Comments = {
+  __typename?: 'comments';
+  /** An object relationship */
+  author: Users;
+  author_id: Scalars['uuid'];
+  content: Scalars['String'];
+  created_at: Scalars['timestamptz'];
+  /** An array relationship */
+  group_post_relations: Array<Group_Post_Comment>;
+  /** An aggregate relationship */
+  group_post_relations_aggregate: Group_Post_Comment_Aggregate;
+  id: Scalars['uuid'];
+  updated_at: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "comments" */
+export type CommentsGroup_Post_RelationsArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Comment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Comment_Order_By>>;
+  where?: Maybe<Group_Post_Comment_Bool_Exp>;
+};
+
+
+/** columns and relationships of "comments" */
+export type CommentsGroup_Post_Relations_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Comment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Comment_Order_By>>;
+  where?: Maybe<Group_Post_Comment_Bool_Exp>;
+};
+
+/** aggregated selection of "comments" */
+export type Comments_Aggregate = {
+  __typename?: 'comments_aggregate';
+  aggregate?: Maybe<Comments_Aggregate_Fields>;
+  nodes: Array<Comments>;
+};
+
+/** aggregate fields of "comments" */
+export type Comments_Aggregate_Fields = {
+  __typename?: 'comments_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Comments_Max_Fields>;
+  min?: Maybe<Comments_Min_Fields>;
+};
+
+
+/** aggregate fields of "comments" */
+export type Comments_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Comments_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "comments" */
+export type Comments_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Comments_Max_Order_By>;
+  min?: Maybe<Comments_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "comments" */
+export type Comments_Arr_Rel_Insert_Input = {
+  data: Array<Comments_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<Comments_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "comments". All fields are combined with a logical 'AND'. */
+export type Comments_Bool_Exp = {
+  _and?: Maybe<Array<Comments_Bool_Exp>>;
+  _not?: Maybe<Comments_Bool_Exp>;
+  _or?: Maybe<Array<Comments_Bool_Exp>>;
+  author?: Maybe<Users_Bool_Exp>;
+  author_id?: Maybe<Uuid_Comparison_Exp>;
+  content?: Maybe<String_Comparison_Exp>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  group_post_relations?: Maybe<Group_Post_Comment_Bool_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "comments" */
+export enum Comments_Constraint {
+  /** unique or primary key constraint */
+  CommentPkey = 'comment_pkey'
+}
+
+/** input type for inserting data into table "comments" */
+export type Comments_Insert_Input = {
+  author?: Maybe<Users_Obj_Rel_Insert_Input>;
+  author_id?: Maybe<Scalars['uuid']>;
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_post_relations?: Maybe<Group_Post_Comment_Arr_Rel_Insert_Input>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Comments_Max_Fields = {
+  __typename?: 'comments_max_fields';
+  author_id?: Maybe<Scalars['uuid']>;
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "comments" */
+export type Comments_Max_Order_By = {
+  author_id?: Maybe<Order_By>;
+  content?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Comments_Min_Fields = {
+  __typename?: 'comments_min_fields';
+  author_id?: Maybe<Scalars['uuid']>;
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "comments" */
+export type Comments_Min_Order_By = {
+  author_id?: Maybe<Order_By>;
+  content?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "comments" */
+export type Comments_Mutation_Response = {
+  __typename?: 'comments_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Comments>;
+};
+
+/** input type for inserting object relation for remote table "comments" */
+export type Comments_Obj_Rel_Insert_Input = {
+  data: Comments_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<Comments_On_Conflict>;
+};
+
+/** on conflict condition type for table "comments" */
+export type Comments_On_Conflict = {
+  constraint: Comments_Constraint;
+  update_columns: Array<Comments_Update_Column>;
+  where?: Maybe<Comments_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "comments". */
+export type Comments_Order_By = {
+  author?: Maybe<Users_Order_By>;
+  author_id?: Maybe<Order_By>;
+  content?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  group_post_relations_aggregate?: Maybe<Group_Post_Comment_Aggregate_Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: comments */
+export type Comments_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "comments" */
+export enum Comments_Select_Column {
+  /** column name */
+  AuthorId = 'author_id',
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "comments" */
+export type Comments_Set_Input = {
+  author_id?: Maybe<Scalars['uuid']>;
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "comments" */
+export enum Comments_Update_Column {
+  /** column name */
+  AuthorId = 'author_id',
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
 
 /** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
 export type Date_Comparison_Exp = {
@@ -1228,6 +1445,12 @@ export type Entities = {
   group_id?: Maybe<Scalars['uuid']>;
   /** An object relationship */
   group_join_request: Group_Join_Requests;
+  /** An object relationship */
+  group_post: Group_Posts;
+  /** An object relationship */
+  group_post_comment: Group_Post_Comment;
+  group_post_comment_id?: Maybe<Scalars['uuid']>;
+  group_post_id?: Maybe<Scalars['uuid']>;
   id: Scalars['uuid'];
   join_request_id?: Maybe<Scalars['uuid']>;
   /** An object relationship */
@@ -1283,6 +1506,10 @@ export type Entities_Bool_Exp = {
   group?: Maybe<Groups_Bool_Exp>;
   group_id?: Maybe<Uuid_Comparison_Exp>;
   group_join_request?: Maybe<Group_Join_Requests_Bool_Exp>;
+  group_post?: Maybe<Group_Posts_Bool_Exp>;
+  group_post_comment?: Maybe<Group_Post_Comment_Bool_Exp>;
+  group_post_comment_id?: Maybe<Uuid_Comparison_Exp>;
+  group_post_id?: Maybe<Uuid_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   join_request_id?: Maybe<Uuid_Comparison_Exp>;
   thing?: Maybe<Things_Bool_Exp>;
@@ -1295,6 +1522,10 @@ export type Entities_Bool_Exp = {
 export enum Entities_Constraint {
   /** unique or primary key constraint */
   EntitiesGroupIdKey = 'entities_group_id_key',
+  /** unique or primary key constraint */
+  EntitiesGroupPostCommentIdKey = 'entities_group_post_comment_id_key',
+  /** unique or primary key constraint */
+  EntitiesGroupPostIdKey = 'entities_group_post_id_key',
   /** unique or primary key constraint */
   EntitiesJoinRequestIdKey = 'entities_join_request_id_key',
   /** unique or primary key constraint */
@@ -1316,6 +1547,10 @@ export type Entities_Insert_Input = {
   group?: Maybe<Groups_Obj_Rel_Insert_Input>;
   group_id?: Maybe<Scalars['uuid']>;
   group_join_request?: Maybe<Group_Join_Requests_Obj_Rel_Insert_Input>;
+  group_post?: Maybe<Group_Posts_Obj_Rel_Insert_Input>;
+  group_post_comment?: Maybe<Group_Post_Comment_Obj_Rel_Insert_Input>;
+  group_post_comment_id?: Maybe<Scalars['uuid']>;
+  group_post_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   join_request_id?: Maybe<Scalars['uuid']>;
   thing?: Maybe<Things_Obj_Rel_Insert_Input>;
@@ -1329,6 +1564,8 @@ export type Entities_Max_Fields = {
   __typename?: 'entities_max_fields';
   dummy?: Maybe<Scalars['smallint']>;
   group_id?: Maybe<Scalars['uuid']>;
+  group_post_comment_id?: Maybe<Scalars['uuid']>;
+  group_post_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   join_request_id?: Maybe<Scalars['uuid']>;
   thing_id?: Maybe<Scalars['uuid']>;
@@ -1340,6 +1577,8 @@ export type Entities_Min_Fields = {
   __typename?: 'entities_min_fields';
   dummy?: Maybe<Scalars['smallint']>;
   group_id?: Maybe<Scalars['uuid']>;
+  group_post_comment_id?: Maybe<Scalars['uuid']>;
+  group_post_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   join_request_id?: Maybe<Scalars['uuid']>;
   thing_id?: Maybe<Scalars['uuid']>;
@@ -1375,6 +1614,10 @@ export type Entities_Order_By = {
   group?: Maybe<Groups_Order_By>;
   group_id?: Maybe<Order_By>;
   group_join_request?: Maybe<Group_Join_Requests_Order_By>;
+  group_post?: Maybe<Group_Posts_Order_By>;
+  group_post_comment?: Maybe<Group_Post_Comment_Order_By>;
+  group_post_comment_id?: Maybe<Order_By>;
+  group_post_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   join_request_id?: Maybe<Order_By>;
   thing?: Maybe<Things_Order_By>;
@@ -1395,6 +1638,10 @@ export enum Entities_Select_Column {
   /** column name */
   GroupId = 'group_id',
   /** column name */
+  GroupPostCommentId = 'group_post_comment_id',
+  /** column name */
+  GroupPostId = 'group_post_id',
+  /** column name */
   Id = 'id',
   /** column name */
   JoinRequestId = 'join_request_id',
@@ -1408,6 +1655,8 @@ export enum Entities_Select_Column {
 export type Entities_Set_Input = {
   dummy?: Maybe<Scalars['smallint']>;
   group_id?: Maybe<Scalars['uuid']>;
+  group_post_comment_id?: Maybe<Scalars['uuid']>;
+  group_post_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   join_request_id?: Maybe<Scalars['uuid']>;
   thing_id?: Maybe<Scalars['uuid']>;
@@ -1444,6 +1693,10 @@ export enum Entities_Update_Column {
   Dummy = 'dummy',
   /** column name */
   GroupId = 'group_id',
+  /** column name */
+  GroupPostCommentId = 'group_post_comment_id',
+  /** column name */
+  GroupPostId = 'group_post_id',
   /** column name */
   Id = 'id',
   /** column name */
@@ -2504,6 +2757,583 @@ export enum Group_Members_Update_Column {
   UserId = 'user_id'
 }
 
+/** columns and relationships of "group_post_comment" */
+export type Group_Post_Comment = {
+  __typename?: 'group_post_comment';
+  /** An object relationship */
+  comment: Comments;
+  comment_id: Scalars['uuid'];
+  created_at: Scalars['timestamptz'];
+  group_post_id: Scalars['uuid'];
+  id: Scalars['uuid'];
+  /** An object relationship */
+  post: Group_Posts;
+  updated_at: Scalars['timestamptz'];
+};
+
+/** aggregated selection of "group_post_comment" */
+export type Group_Post_Comment_Aggregate = {
+  __typename?: 'group_post_comment_aggregate';
+  aggregate?: Maybe<Group_Post_Comment_Aggregate_Fields>;
+  nodes: Array<Group_Post_Comment>;
+};
+
+/** aggregate fields of "group_post_comment" */
+export type Group_Post_Comment_Aggregate_Fields = {
+  __typename?: 'group_post_comment_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Group_Post_Comment_Max_Fields>;
+  min?: Maybe<Group_Post_Comment_Min_Fields>;
+};
+
+
+/** aggregate fields of "group_post_comment" */
+export type Group_Post_Comment_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Group_Post_Comment_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "group_post_comment" */
+export type Group_Post_Comment_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Group_Post_Comment_Max_Order_By>;
+  min?: Maybe<Group_Post_Comment_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "group_post_comment" */
+export type Group_Post_Comment_Arr_Rel_Insert_Input = {
+  data: Array<Group_Post_Comment_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<Group_Post_Comment_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "group_post_comment". All fields are combined with a logical 'AND'. */
+export type Group_Post_Comment_Bool_Exp = {
+  _and?: Maybe<Array<Group_Post_Comment_Bool_Exp>>;
+  _not?: Maybe<Group_Post_Comment_Bool_Exp>;
+  _or?: Maybe<Array<Group_Post_Comment_Bool_Exp>>;
+  comment?: Maybe<Comments_Bool_Exp>;
+  comment_id?: Maybe<Uuid_Comparison_Exp>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  group_post_id?: Maybe<Uuid_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  post?: Maybe<Group_Posts_Bool_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "group_post_comment" */
+export enum Group_Post_Comment_Constraint {
+  /** unique or primary key constraint */
+  GroupPostCommentPkey = 'group_post_comment_pkey'
+}
+
+/** input type for inserting data into table "group_post_comment" */
+export type Group_Post_Comment_Insert_Input = {
+  comment?: Maybe<Comments_Obj_Rel_Insert_Input>;
+  comment_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_post_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  post?: Maybe<Group_Posts_Obj_Rel_Insert_Input>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Group_Post_Comment_Max_Fields = {
+  __typename?: 'group_post_comment_max_fields';
+  comment_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_post_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "group_post_comment" */
+export type Group_Post_Comment_Max_Order_By = {
+  comment_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  group_post_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Group_Post_Comment_Min_Fields = {
+  __typename?: 'group_post_comment_min_fields';
+  comment_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_post_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "group_post_comment" */
+export type Group_Post_Comment_Min_Order_By = {
+  comment_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  group_post_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "group_post_comment" */
+export type Group_Post_Comment_Mutation_Response = {
+  __typename?: 'group_post_comment_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Group_Post_Comment>;
+};
+
+/** input type for inserting object relation for remote table "group_post_comment" */
+export type Group_Post_Comment_Obj_Rel_Insert_Input = {
+  data: Group_Post_Comment_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<Group_Post_Comment_On_Conflict>;
+};
+
+/** on conflict condition type for table "group_post_comment" */
+export type Group_Post_Comment_On_Conflict = {
+  constraint: Group_Post_Comment_Constraint;
+  update_columns: Array<Group_Post_Comment_Update_Column>;
+  where?: Maybe<Group_Post_Comment_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "group_post_comment". */
+export type Group_Post_Comment_Order_By = {
+  comment?: Maybe<Comments_Order_By>;
+  comment_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  group_post_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  post?: Maybe<Group_Posts_Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: group_post_comment */
+export type Group_Post_Comment_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "group_post_comment" */
+export enum Group_Post_Comment_Select_Column {
+  /** column name */
+  CommentId = 'comment_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  GroupPostId = 'group_post_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "group_post_comment" */
+export type Group_Post_Comment_Set_Input = {
+  comment_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_post_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "group_post_comment" */
+export enum Group_Post_Comment_Update_Column {
+  /** column name */
+  CommentId = 'comment_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  GroupPostId = 'group_post_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** columns and relationships of "group_post_type" */
+export type Group_Post_Type = {
+  __typename?: 'group_post_type';
+  comment: Scalars['String'];
+  value: Scalars['String'];
+};
+
+/** aggregated selection of "group_post_type" */
+export type Group_Post_Type_Aggregate = {
+  __typename?: 'group_post_type_aggregate';
+  aggregate?: Maybe<Group_Post_Type_Aggregate_Fields>;
+  nodes: Array<Group_Post_Type>;
+};
+
+/** aggregate fields of "group_post_type" */
+export type Group_Post_Type_Aggregate_Fields = {
+  __typename?: 'group_post_type_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Group_Post_Type_Max_Fields>;
+  min?: Maybe<Group_Post_Type_Min_Fields>;
+};
+
+
+/** aggregate fields of "group_post_type" */
+export type Group_Post_Type_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Group_Post_Type_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "group_post_type". All fields are combined with a logical 'AND'. */
+export type Group_Post_Type_Bool_Exp = {
+  _and?: Maybe<Array<Group_Post_Type_Bool_Exp>>;
+  _not?: Maybe<Group_Post_Type_Bool_Exp>;
+  _or?: Maybe<Array<Group_Post_Type_Bool_Exp>>;
+  comment?: Maybe<String_Comparison_Exp>;
+  value?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "group_post_type" */
+export enum Group_Post_Type_Constraint {
+  /** unique or primary key constraint */
+  GroupPostTypePkey = 'group_post_type_pkey'
+}
+
+export enum Group_Post_Type_Enum {
+  /** a generic message post */
+  Message = 'message',
+  /** a request for something */
+  Request = 'request'
+}
+
+/** Boolean expression to compare columns of type "group_post_type_enum". All fields are combined with logical 'AND'. */
+export type Group_Post_Type_Enum_Comparison_Exp = {
+  _eq?: Maybe<Group_Post_Type_Enum>;
+  _in?: Maybe<Array<Group_Post_Type_Enum>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _neq?: Maybe<Group_Post_Type_Enum>;
+  _nin?: Maybe<Array<Group_Post_Type_Enum>>;
+};
+
+/** input type for inserting data into table "group_post_type" */
+export type Group_Post_Type_Insert_Input = {
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Group_Post_Type_Max_Fields = {
+  __typename?: 'group_post_type_max_fields';
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Group_Post_Type_Min_Fields = {
+  __typename?: 'group_post_type_min_fields';
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "group_post_type" */
+export type Group_Post_Type_Mutation_Response = {
+  __typename?: 'group_post_type_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Group_Post_Type>;
+};
+
+/** on conflict condition type for table "group_post_type" */
+export type Group_Post_Type_On_Conflict = {
+  constraint: Group_Post_Type_Constraint;
+  update_columns: Array<Group_Post_Type_Update_Column>;
+  where?: Maybe<Group_Post_Type_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "group_post_type". */
+export type Group_Post_Type_Order_By = {
+  comment?: Maybe<Order_By>;
+  value?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: group_post_type */
+export type Group_Post_Type_Pk_Columns_Input = {
+  value: Scalars['String'];
+};
+
+/** select columns of table "group_post_type" */
+export enum Group_Post_Type_Select_Column {
+  /** column name */
+  Comment = 'comment',
+  /** column name */
+  Value = 'value'
+}
+
+/** input type for updating data in table "group_post_type" */
+export type Group_Post_Type_Set_Input = {
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "group_post_type" */
+export enum Group_Post_Type_Update_Column {
+  /** column name */
+  Comment = 'comment',
+  /** column name */
+  Value = 'value'
+}
+
+/** columns and relationships of "group_posts" */
+export type Group_Posts = {
+  __typename?: 'group_posts';
+  /** An object relationship */
+  author: Users;
+  author_id: Scalars['uuid'];
+  /** An array relationship */
+  comments: Array<Group_Post_Comment>;
+  /** An aggregate relationship */
+  comments_aggregate: Group_Post_Comment_Aggregate;
+  content: Scalars['String'];
+  created_at: Scalars['timestamptz'];
+  /** An object relationship */
+  group: Groups;
+  group_id: Scalars['uuid'];
+  id: Scalars['uuid'];
+  resolved: Scalars['Boolean'];
+  type: Group_Post_Type_Enum;
+  updated_at: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "group_posts" */
+export type Group_PostsCommentsArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Comment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Comment_Order_By>>;
+  where?: Maybe<Group_Post_Comment_Bool_Exp>;
+};
+
+
+/** columns and relationships of "group_posts" */
+export type Group_PostsComments_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Comment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Comment_Order_By>>;
+  where?: Maybe<Group_Post_Comment_Bool_Exp>;
+};
+
+/** aggregated selection of "group_posts" */
+export type Group_Posts_Aggregate = {
+  __typename?: 'group_posts_aggregate';
+  aggregate?: Maybe<Group_Posts_Aggregate_Fields>;
+  nodes: Array<Group_Posts>;
+};
+
+/** aggregate fields of "group_posts" */
+export type Group_Posts_Aggregate_Fields = {
+  __typename?: 'group_posts_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Group_Posts_Max_Fields>;
+  min?: Maybe<Group_Posts_Min_Fields>;
+};
+
+
+/** aggregate fields of "group_posts" */
+export type Group_Posts_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Group_Posts_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "group_posts" */
+export type Group_Posts_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Group_Posts_Max_Order_By>;
+  min?: Maybe<Group_Posts_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "group_posts" */
+export type Group_Posts_Arr_Rel_Insert_Input = {
+  data: Array<Group_Posts_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<Group_Posts_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "group_posts". All fields are combined with a logical 'AND'. */
+export type Group_Posts_Bool_Exp = {
+  _and?: Maybe<Array<Group_Posts_Bool_Exp>>;
+  _not?: Maybe<Group_Posts_Bool_Exp>;
+  _or?: Maybe<Array<Group_Posts_Bool_Exp>>;
+  author?: Maybe<Users_Bool_Exp>;
+  author_id?: Maybe<Uuid_Comparison_Exp>;
+  comments?: Maybe<Group_Post_Comment_Bool_Exp>;
+  content?: Maybe<String_Comparison_Exp>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  group?: Maybe<Groups_Bool_Exp>;
+  group_id?: Maybe<Uuid_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  resolved?: Maybe<Boolean_Comparison_Exp>;
+  type?: Maybe<Group_Post_Type_Enum_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "group_posts" */
+export enum Group_Posts_Constraint {
+  /** unique or primary key constraint */
+  GroupPostPkey = 'group_post_pkey'
+}
+
+/** input type for inserting data into table "group_posts" */
+export type Group_Posts_Insert_Input = {
+  author?: Maybe<Users_Obj_Rel_Insert_Input>;
+  author_id?: Maybe<Scalars['uuid']>;
+  comments?: Maybe<Group_Post_Comment_Arr_Rel_Insert_Input>;
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group?: Maybe<Groups_Obj_Rel_Insert_Input>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  resolved?: Maybe<Scalars['Boolean']>;
+  type?: Maybe<Group_Post_Type_Enum>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Group_Posts_Max_Fields = {
+  __typename?: 'group_posts_max_fields';
+  author_id?: Maybe<Scalars['uuid']>;
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "group_posts" */
+export type Group_Posts_Max_Order_By = {
+  author_id?: Maybe<Order_By>;
+  content?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Group_Posts_Min_Fields = {
+  __typename?: 'group_posts_min_fields';
+  author_id?: Maybe<Scalars['uuid']>;
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "group_posts" */
+export type Group_Posts_Min_Order_By = {
+  author_id?: Maybe<Order_By>;
+  content?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "group_posts" */
+export type Group_Posts_Mutation_Response = {
+  __typename?: 'group_posts_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Group_Posts>;
+};
+
+/** input type for inserting object relation for remote table "group_posts" */
+export type Group_Posts_Obj_Rel_Insert_Input = {
+  data: Group_Posts_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<Group_Posts_On_Conflict>;
+};
+
+/** on conflict condition type for table "group_posts" */
+export type Group_Posts_On_Conflict = {
+  constraint: Group_Posts_Constraint;
+  update_columns: Array<Group_Posts_Update_Column>;
+  where?: Maybe<Group_Posts_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "group_posts". */
+export type Group_Posts_Order_By = {
+  author?: Maybe<Users_Order_By>;
+  author_id?: Maybe<Order_By>;
+  comments_aggregate?: Maybe<Group_Post_Comment_Aggregate_Order_By>;
+  content?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  group?: Maybe<Groups_Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  resolved?: Maybe<Order_By>;
+  type?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: group_posts */
+export type Group_Posts_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "group_posts" */
+export enum Group_Posts_Select_Column {
+  /** column name */
+  AuthorId = 'author_id',
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  GroupId = 'group_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Resolved = 'resolved',
+  /** column name */
+  Type = 'type',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "group_posts" */
+export type Group_Posts_Set_Input = {
+  author_id?: Maybe<Scalars['uuid']>;
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  resolved?: Maybe<Scalars['Boolean']>;
+  type?: Maybe<Group_Post_Type_Enum>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "group_posts" */
+export enum Group_Posts_Update_Column {
+  /** column name */
+  AuthorId = 'author_id',
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  GroupId = 'group_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Resolved = 'resolved',
+  /** column name */
+  Type = 'type',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
 /** columns and relationships of "group_role" */
 export type Group_Role = {
   __typename?: 'group_role';
@@ -3136,6 +3966,10 @@ export type Mutation_Root = {
   delete_chat_messages?: Maybe<Chat_Messages_Mutation_Response>;
   /** delete single row from the table: "chat_messages" */
   delete_chat_messages_by_pk?: Maybe<Chat_Messages>;
+  /** delete data from the table: "comments" */
+  delete_comments?: Maybe<Comments_Mutation_Response>;
+  /** delete single row from the table: "comments" */
+  delete_comments_by_pk?: Maybe<Comments>;
   /** delete data from the table: "entities" */
   delete_entities?: Maybe<Entities_Mutation_Response>;
   /** delete single row from the table: "entities" */
@@ -3160,6 +3994,18 @@ export type Mutation_Root = {
   delete_group_members?: Maybe<Group_Members_Mutation_Response>;
   /** delete single row from the table: "group_members" */
   delete_group_members_by_pk?: Maybe<Group_Members>;
+  /** delete data from the table: "group_post_comment" */
+  delete_group_post_comment?: Maybe<Group_Post_Comment_Mutation_Response>;
+  /** delete single row from the table: "group_post_comment" */
+  delete_group_post_comment_by_pk?: Maybe<Group_Post_Comment>;
+  /** delete data from the table: "group_post_type" */
+  delete_group_post_type?: Maybe<Group_Post_Type_Mutation_Response>;
+  /** delete single row from the table: "group_post_type" */
+  delete_group_post_type_by_pk?: Maybe<Group_Post_Type>;
+  /** delete data from the table: "group_posts" */
+  delete_group_posts?: Maybe<Group_Posts_Mutation_Response>;
+  /** delete single row from the table: "group_posts" */
+  delete_group_posts_by_pk?: Maybe<Group_Posts>;
   /** delete data from the table: "group_role" */
   delete_group_role?: Maybe<Group_Role_Mutation_Response>;
   /** delete single row from the table: "group_role" */
@@ -3219,6 +4065,10 @@ export type Mutation_Root = {
   insert_chat_messages?: Maybe<Chat_Messages_Mutation_Response>;
   /** insert a single row into the table: "chat_messages" */
   insert_chat_messages_one?: Maybe<Chat_Messages>;
+  /** insert data into the table: "comments" */
+  insert_comments?: Maybe<Comments_Mutation_Response>;
+  /** insert a single row into the table: "comments" */
+  insert_comments_one?: Maybe<Comments>;
   /** insert data into the table: "entities" */
   insert_entities?: Maybe<Entities_Mutation_Response>;
   /** insert a single row into the table: "entities" */
@@ -3243,6 +4093,18 @@ export type Mutation_Root = {
   insert_group_members?: Maybe<Group_Members_Mutation_Response>;
   /** insert a single row into the table: "group_members" */
   insert_group_members_one?: Maybe<Group_Members>;
+  /** insert data into the table: "group_post_comment" */
+  insert_group_post_comment?: Maybe<Group_Post_Comment_Mutation_Response>;
+  /** insert a single row into the table: "group_post_comment" */
+  insert_group_post_comment_one?: Maybe<Group_Post_Comment>;
+  /** insert data into the table: "group_post_type" */
+  insert_group_post_type?: Maybe<Group_Post_Type_Mutation_Response>;
+  /** insert a single row into the table: "group_post_type" */
+  insert_group_post_type_one?: Maybe<Group_Post_Type>;
+  /** insert data into the table: "group_posts" */
+  insert_group_posts?: Maybe<Group_Posts_Mutation_Response>;
+  /** insert a single row into the table: "group_posts" */
+  insert_group_posts_one?: Maybe<Group_Posts>;
   /** insert data into the table: "group_role" */
   insert_group_role?: Maybe<Group_Role_Mutation_Response>;
   /** insert a single row into the table: "group_role" */
@@ -3307,6 +4169,10 @@ export type Mutation_Root = {
   update_chat_messages?: Maybe<Chat_Messages_Mutation_Response>;
   /** update single row of the table: "chat_messages" */
   update_chat_messages_by_pk?: Maybe<Chat_Messages>;
+  /** update data of the table: "comments" */
+  update_comments?: Maybe<Comments_Mutation_Response>;
+  /** update single row of the table: "comments" */
+  update_comments_by_pk?: Maybe<Comments>;
   /** update data of the table: "entities" */
   update_entities?: Maybe<Entities_Mutation_Response>;
   /** update single row of the table: "entities" */
@@ -3331,6 +4197,18 @@ export type Mutation_Root = {
   update_group_members?: Maybe<Group_Members_Mutation_Response>;
   /** update single row of the table: "group_members" */
   update_group_members_by_pk?: Maybe<Group_Members>;
+  /** update data of the table: "group_post_comment" */
+  update_group_post_comment?: Maybe<Group_Post_Comment_Mutation_Response>;
+  /** update single row of the table: "group_post_comment" */
+  update_group_post_comment_by_pk?: Maybe<Group_Post_Comment>;
+  /** update data of the table: "group_post_type" */
+  update_group_post_type?: Maybe<Group_Post_Type_Mutation_Response>;
+  /** update single row of the table: "group_post_type" */
+  update_group_post_type_by_pk?: Maybe<Group_Post_Type>;
+  /** update data of the table: "group_posts" */
+  update_group_posts?: Maybe<Group_Posts_Mutation_Response>;
+  /** update single row of the table: "group_posts" */
+  update_group_posts_by_pk?: Maybe<Group_Posts>;
   /** update data of the table: "group_role" */
   update_group_role?: Maybe<Group_Role_Mutation_Response>;
   /** update single row of the table: "group_role" */
@@ -3451,6 +4329,18 @@ export type Mutation_RootDelete_Chat_Messages_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_CommentsArgs = {
+  where: Comments_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Comments_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_EntitiesArgs = {
   where: Entities_Bool_Exp;
 };
@@ -3518,6 +4408,42 @@ export type Mutation_RootDelete_Group_MembersArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Group_Members_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_Post_CommentArgs = {
+  where: Group_Post_Comment_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_Post_Comment_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_Post_TypeArgs = {
+  where: Group_Post_Type_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_Post_Type_By_PkArgs = {
+  value: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_PostsArgs = {
+  where: Group_Posts_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_Posts_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -3713,6 +4639,20 @@ export type Mutation_RootInsert_Chat_Messages_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_CommentsArgs = {
+  objects: Array<Comments_Insert_Input>;
+  on_conflict?: Maybe<Comments_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Comments_OneArgs = {
+  object: Comments_Insert_Input;
+  on_conflict?: Maybe<Comments_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_EntitiesArgs = {
   objects: Array<Entities_Insert_Input>;
   on_conflict?: Maybe<Entities_On_Conflict>;
@@ -3793,6 +4733,48 @@ export type Mutation_RootInsert_Group_MembersArgs = {
 export type Mutation_RootInsert_Group_Members_OneArgs = {
   object: Group_Members_Insert_Input;
   on_conflict?: Maybe<Group_Members_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Group_Post_CommentArgs = {
+  objects: Array<Group_Post_Comment_Insert_Input>;
+  on_conflict?: Maybe<Group_Post_Comment_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Group_Post_Comment_OneArgs = {
+  object: Group_Post_Comment_Insert_Input;
+  on_conflict?: Maybe<Group_Post_Comment_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Group_Post_TypeArgs = {
+  objects: Array<Group_Post_Type_Insert_Input>;
+  on_conflict?: Maybe<Group_Post_Type_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Group_Post_Type_OneArgs = {
+  object: Group_Post_Type_Insert_Input;
+  on_conflict?: Maybe<Group_Post_Type_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Group_PostsArgs = {
+  objects: Array<Group_Posts_Insert_Input>;
+  on_conflict?: Maybe<Group_Posts_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Group_Posts_OneArgs = {
+  object: Group_Posts_Insert_Input;
+  on_conflict?: Maybe<Group_Posts_On_Conflict>;
 };
 
 
@@ -4029,6 +5011,20 @@ export type Mutation_RootUpdate_Chat_Messages_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_CommentsArgs = {
+  _set?: Maybe<Comments_Set_Input>;
+  where: Comments_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Comments_By_PkArgs = {
+  _set?: Maybe<Comments_Set_Input>;
+  pk_columns: Comments_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_EntitiesArgs = {
   _inc?: Maybe<Entities_Inc_Input>;
   _set?: Maybe<Entities_Set_Input>;
@@ -4113,6 +5109,48 @@ export type Mutation_RootUpdate_Group_MembersArgs = {
 export type Mutation_RootUpdate_Group_Members_By_PkArgs = {
   _set?: Maybe<Group_Members_Set_Input>;
   pk_columns: Group_Members_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_Post_CommentArgs = {
+  _set?: Maybe<Group_Post_Comment_Set_Input>;
+  where: Group_Post_Comment_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_Post_Comment_By_PkArgs = {
+  _set?: Maybe<Group_Post_Comment_Set_Input>;
+  pk_columns: Group_Post_Comment_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_Post_TypeArgs = {
+  _set?: Maybe<Group_Post_Type_Set_Input>;
+  where: Group_Post_Type_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_Post_Type_By_PkArgs = {
+  _set?: Maybe<Group_Post_Type_Set_Input>;
+  pk_columns: Group_Post_Type_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_PostsArgs = {
+  _set?: Maybe<Group_Posts_Set_Input>;
+  where: Group_Posts_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_Posts_By_PkArgs = {
+  _set?: Maybe<Group_Posts_Set_Input>;
+  pk_columns: Group_Posts_Pk_Columns_Input;
 };
 
 
@@ -4488,6 +5526,12 @@ export type Query_Root = {
   chat_messages_aggregate: Chat_Messages_Aggregate;
   /** fetch data from the table: "chat_messages" using primary key columns */
   chat_messages_by_pk?: Maybe<Chat_Messages>;
+  /** fetch data from the table: "comments" */
+  comments: Array<Comments>;
+  /** fetch aggregated fields from the table: "comments" */
+  comments_aggregate: Comments_Aggregate;
+  /** fetch data from the table: "comments" using primary key columns */
+  comments_by_pk?: Maybe<Comments>;
   /** fetch data from the table: "entities" */
   entities: Array<Entities>;
   /** fetch aggregated fields from the table: "entities" */
@@ -4524,6 +5568,24 @@ export type Query_Root = {
   group_members_aggregate: Group_Members_Aggregate;
   /** fetch data from the table: "group_members" using primary key columns */
   group_members_by_pk?: Maybe<Group_Members>;
+  /** fetch data from the table: "group_post_comment" */
+  group_post_comment: Array<Group_Post_Comment>;
+  /** fetch aggregated fields from the table: "group_post_comment" */
+  group_post_comment_aggregate: Group_Post_Comment_Aggregate;
+  /** fetch data from the table: "group_post_comment" using primary key columns */
+  group_post_comment_by_pk?: Maybe<Group_Post_Comment>;
+  /** fetch data from the table: "group_post_type" */
+  group_post_type: Array<Group_Post_Type>;
+  /** fetch aggregated fields from the table: "group_post_type" */
+  group_post_type_aggregate: Group_Post_Type_Aggregate;
+  /** fetch data from the table: "group_post_type" using primary key columns */
+  group_post_type_by_pk?: Maybe<Group_Post_Type>;
+  /** fetch data from the table: "group_posts" */
+  group_posts: Array<Group_Posts>;
+  /** fetch aggregated fields from the table: "group_posts" */
+  group_posts_aggregate: Group_Posts_Aggregate;
+  /** fetch data from the table: "group_posts" using primary key columns */
+  group_posts_by_pk?: Maybe<Group_Posts>;
   /** fetch data from the table: "group_role" */
   group_role: Array<Group_Role>;
   /** fetch aggregated fields from the table: "group_role" */
@@ -4700,6 +5762,29 @@ export type Query_RootChat_Messages_By_PkArgs = {
 };
 
 
+export type Query_RootCommentsArgs = {
+  distinct_on?: Maybe<Array<Comments_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Comments_Order_By>>;
+  where?: Maybe<Comments_Bool_Exp>;
+};
+
+
+export type Query_RootComments_AggregateArgs = {
+  distinct_on?: Maybe<Array<Comments_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Comments_Order_By>>;
+  where?: Maybe<Comments_Bool_Exp>;
+};
+
+
+export type Query_RootComments_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
 export type Query_RootEntitiesArgs = {
   distinct_on?: Maybe<Array<Entities_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4834,6 +5919,75 @@ export type Query_RootGroup_Members_AggregateArgs = {
 
 
 export type Query_RootGroup_Members_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_RootGroup_Post_CommentArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Comment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Comment_Order_By>>;
+  where?: Maybe<Group_Post_Comment_Bool_Exp>;
+};
+
+
+export type Query_RootGroup_Post_Comment_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Comment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Comment_Order_By>>;
+  where?: Maybe<Group_Post_Comment_Bool_Exp>;
+};
+
+
+export type Query_RootGroup_Post_Comment_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_RootGroup_Post_TypeArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Type_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Type_Order_By>>;
+  where?: Maybe<Group_Post_Type_Bool_Exp>;
+};
+
+
+export type Query_RootGroup_Post_Type_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Type_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Type_Order_By>>;
+  where?: Maybe<Group_Post_Type_Bool_Exp>;
+};
+
+
+export type Query_RootGroup_Post_Type_By_PkArgs = {
+  value: Scalars['String'];
+};
+
+
+export type Query_RootGroup_PostsArgs = {
+  distinct_on?: Maybe<Array<Group_Posts_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Posts_Order_By>>;
+  where?: Maybe<Group_Posts_Bool_Exp>;
+};
+
+
+export type Query_RootGroup_Posts_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Posts_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Posts_Order_By>>;
+  where?: Maybe<Group_Posts_Bool_Exp>;
+};
+
+
+export type Query_RootGroup_Posts_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -5108,6 +6262,12 @@ export type Subscription_Root = {
   chat_messages_aggregate: Chat_Messages_Aggregate;
   /** fetch data from the table: "chat_messages" using primary key columns */
   chat_messages_by_pk?: Maybe<Chat_Messages>;
+  /** fetch data from the table: "comments" */
+  comments: Array<Comments>;
+  /** fetch aggregated fields from the table: "comments" */
+  comments_aggregate: Comments_Aggregate;
+  /** fetch data from the table: "comments" using primary key columns */
+  comments_by_pk?: Maybe<Comments>;
   /** fetch data from the table: "entities" */
   entities: Array<Entities>;
   /** fetch aggregated fields from the table: "entities" */
@@ -5144,6 +6304,24 @@ export type Subscription_Root = {
   group_members_aggregate: Group_Members_Aggregate;
   /** fetch data from the table: "group_members" using primary key columns */
   group_members_by_pk?: Maybe<Group_Members>;
+  /** fetch data from the table: "group_post_comment" */
+  group_post_comment: Array<Group_Post_Comment>;
+  /** fetch aggregated fields from the table: "group_post_comment" */
+  group_post_comment_aggregate: Group_Post_Comment_Aggregate;
+  /** fetch data from the table: "group_post_comment" using primary key columns */
+  group_post_comment_by_pk?: Maybe<Group_Post_Comment>;
+  /** fetch data from the table: "group_post_type" */
+  group_post_type: Array<Group_Post_Type>;
+  /** fetch aggregated fields from the table: "group_post_type" */
+  group_post_type_aggregate: Group_Post_Type_Aggregate;
+  /** fetch data from the table: "group_post_type" using primary key columns */
+  group_post_type_by_pk?: Maybe<Group_Post_Type>;
+  /** fetch data from the table: "group_posts" */
+  group_posts: Array<Group_Posts>;
+  /** fetch aggregated fields from the table: "group_posts" */
+  group_posts_aggregate: Group_Posts_Aggregate;
+  /** fetch data from the table: "group_posts" using primary key columns */
+  group_posts_by_pk?: Maybe<Group_Posts>;
   /** fetch data from the table: "group_role" */
   group_role: Array<Group_Role>;
   /** fetch aggregated fields from the table: "group_role" */
@@ -5320,6 +6498,29 @@ export type Subscription_RootChat_Messages_By_PkArgs = {
 };
 
 
+export type Subscription_RootCommentsArgs = {
+  distinct_on?: Maybe<Array<Comments_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Comments_Order_By>>;
+  where?: Maybe<Comments_Bool_Exp>;
+};
+
+
+export type Subscription_RootComments_AggregateArgs = {
+  distinct_on?: Maybe<Array<Comments_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Comments_Order_By>>;
+  where?: Maybe<Comments_Bool_Exp>;
+};
+
+
+export type Subscription_RootComments_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
 export type Subscription_RootEntitiesArgs = {
   distinct_on?: Maybe<Array<Entities_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5454,6 +6655,75 @@ export type Subscription_RootGroup_Members_AggregateArgs = {
 
 
 export type Subscription_RootGroup_Members_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootGroup_Post_CommentArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Comment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Comment_Order_By>>;
+  where?: Maybe<Group_Post_Comment_Bool_Exp>;
+};
+
+
+export type Subscription_RootGroup_Post_Comment_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Comment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Comment_Order_By>>;
+  where?: Maybe<Group_Post_Comment_Bool_Exp>;
+};
+
+
+export type Subscription_RootGroup_Post_Comment_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootGroup_Post_TypeArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Type_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Type_Order_By>>;
+  where?: Maybe<Group_Post_Type_Bool_Exp>;
+};
+
+
+export type Subscription_RootGroup_Post_Type_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Type_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Type_Order_By>>;
+  where?: Maybe<Group_Post_Type_Bool_Exp>;
+};
+
+
+export type Subscription_RootGroup_Post_Type_By_PkArgs = {
+  value: Scalars['String'];
+};
+
+
+export type Subscription_RootGroup_PostsArgs = {
+  distinct_on?: Maybe<Array<Group_Posts_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Posts_Order_By>>;
+  where?: Maybe<Group_Posts_Bool_Exp>;
+};
+
+
+export type Subscription_RootGroup_Posts_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Posts_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Posts_Order_By>>;
+  where?: Maybe<Group_Posts_Bool_Exp>;
+};
+
+
+export type Subscription_RootGroup_Posts_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -6573,6 +7843,10 @@ export type Users = {
   chat_messages: Array<Chat_Messages>;
   /** An aggregate relationship */
   chat_messages_aggregate: Chat_Messages_Aggregate;
+  /** An array relationship */
+  comments: Array<Comments>;
+  /** An aggregate relationship */
+  comments_aggregate: Comments_Aggregate;
   created_at: Scalars['timestamptz'];
   email?: Maybe<Scalars['String']>;
   email_verified?: Maybe<Scalars['timestamptz']>;
@@ -6580,6 +7854,10 @@ export type Users = {
   group_join_requests: Array<Group_Join_Requests>;
   /** An aggregate relationship */
   group_join_requests_aggregate: Group_Join_Requests_Aggregate;
+  /** An array relationship */
+  group_posts: Array<Group_Posts>;
+  /** An aggregate relationship */
+  group_posts_aggregate: Group_Posts_Aggregate;
   id: Scalars['uuid'];
   image?: Maybe<Scalars['String']>;
   last_chat_notification?: Maybe<Scalars['timestamptz']>;
@@ -6641,6 +7919,26 @@ export type UsersChat_Messages_AggregateArgs = {
 
 
 /** columns and relationships of "users" */
+export type UsersCommentsArgs = {
+  distinct_on?: Maybe<Array<Comments_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Comments_Order_By>>;
+  where?: Maybe<Comments_Bool_Exp>;
+};
+
+
+/** columns and relationships of "users" */
+export type UsersComments_AggregateArgs = {
+  distinct_on?: Maybe<Array<Comments_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Comments_Order_By>>;
+  where?: Maybe<Comments_Bool_Exp>;
+};
+
+
+/** columns and relationships of "users" */
 export type UsersGroup_Join_RequestsArgs = {
   distinct_on?: Maybe<Array<Group_Join_Requests_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -6657,6 +7955,26 @@ export type UsersGroup_Join_Requests_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Group_Join_Requests_Order_By>>;
   where?: Maybe<Group_Join_Requests_Bool_Exp>;
+};
+
+
+/** columns and relationships of "users" */
+export type UsersGroup_PostsArgs = {
+  distinct_on?: Maybe<Array<Group_Posts_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Posts_Order_By>>;
+  where?: Maybe<Group_Posts_Bool_Exp>;
+};
+
+
+/** columns and relationships of "users" */
+export type UsersGroup_Posts_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Posts_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Posts_Order_By>>;
+  where?: Maybe<Group_Posts_Bool_Exp>;
 };
 
 
@@ -6728,10 +8046,12 @@ export type Users_Bool_Exp = {
   _or?: Maybe<Array<Users_Bool_Exp>>;
   chat_group_memberships?: Maybe<Chat_Group_Members_Bool_Exp>;
   chat_messages?: Maybe<Chat_Messages_Bool_Exp>;
+  comments?: Maybe<Comments_Bool_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   email?: Maybe<String_Comparison_Exp>;
   email_verified?: Maybe<Timestamptz_Comparison_Exp>;
   group_join_requests?: Maybe<Group_Join_Requests_Bool_Exp>;
+  group_posts?: Maybe<Group_Posts_Bool_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   image?: Maybe<String_Comparison_Exp>;
   last_chat_notification?: Maybe<Timestamptz_Comparison_Exp>;
@@ -6758,10 +8078,12 @@ export enum Users_Constraint {
 export type Users_Insert_Input = {
   chat_group_memberships?: Maybe<Chat_Group_Members_Arr_Rel_Insert_Input>;
   chat_messages?: Maybe<Chat_Messages_Arr_Rel_Insert_Input>;
+  comments?: Maybe<Comments_Arr_Rel_Insert_Input>;
   created_at?: Maybe<Scalars['timestamptz']>;
   email?: Maybe<Scalars['String']>;
   email_verified?: Maybe<Scalars['timestamptz']>;
   group_join_requests?: Maybe<Group_Join_Requests_Arr_Rel_Insert_Input>;
+  group_posts?: Maybe<Group_Posts_Arr_Rel_Insert_Input>;
   id?: Maybe<Scalars['uuid']>;
   image?: Maybe<Scalars['String']>;
   last_chat_notification?: Maybe<Scalars['timestamptz']>;
@@ -6831,10 +8153,12 @@ export type Users_On_Conflict = {
 export type Users_Order_By = {
   chat_group_memberships_aggregate?: Maybe<Chat_Group_Members_Aggregate_Order_By>;
   chat_messages_aggregate?: Maybe<Chat_Messages_Aggregate_Order_By>;
+  comments_aggregate?: Maybe<Comments_Aggregate_Order_By>;
   created_at?: Maybe<Order_By>;
   email?: Maybe<Order_By>;
   email_verified?: Maybe<Order_By>;
   group_join_requests_aggregate?: Maybe<Group_Join_Requests_Aggregate_Order_By>;
+  group_posts_aggregate?: Maybe<Group_Posts_Aggregate_Order_By>;
   id?: Maybe<Order_By>;
   image?: Maybe<Order_By>;
   last_chat_notification?: Maybe<Order_By>;
@@ -7243,6 +8567,15 @@ export type CreateChatMessageMutation = (
   )> }
 );
 
+export type CommentCardFragment = (
+  { __typename?: 'comments' }
+  & Pick<Comments, 'id' | 'content' | 'created_at'>
+  & { author: (
+    { __typename?: 'users' }
+    & UserCardFragment
+  ) }
+);
+
 export type GroupMemberCardFragment = (
   { __typename?: 'group_members' }
   & Pick<Group_Members, 'id' | 'role' | 'created_at'>
@@ -7291,6 +8624,25 @@ export type GroupJoinRequestCardFragment = (
 export type GroupJoinTokenCardFragment = (
   { __typename?: 'group_join_tokens' }
   & Pick<Group_Join_Tokens, 'id' | 'created_at' | 'updated_at' | 'token' | 'disabled' | 'note'>
+);
+
+export type GroupPostFragment = (
+  { __typename?: 'group_posts' }
+  & Pick<Group_Posts, 'id' | 'created_at' | 'updated_at' | 'type' | 'resolved' | 'content'>
+  & { comments: Array<(
+    { __typename?: 'group_post_comment' }
+    & Pick<Group_Post_Comment, 'id'>
+    & { comment: (
+      { __typename?: 'comments' }
+      & CommentCardFragment
+    ) }
+  )>, group: (
+    { __typename?: 'groups' }
+    & GroupCardFragment
+  ), author: (
+    { __typename?: 'users' }
+    & UserCardFragment
+  ) }
 );
 
 export type ListGroupsQueryVariables = Exact<{
@@ -7354,6 +8706,28 @@ export type GroupJoinTokensQuery = (
   )> }
 );
 
+export type GroupPostListQueryVariables = Exact<{
+  where: Group_Posts_Bool_Exp;
+  limit: Scalars['Int'];
+  offset: Scalars['Int'];
+  orderBy?: Maybe<Array<Group_Posts_Order_By>>;
+}>;
+
+
+export type GroupPostListQuery = (
+  { __typename?: 'query_root' }
+  & { group_posts: Array<(
+    { __typename?: 'group_posts' }
+    & GroupPostFragment
+  )>, group_posts_aggregate: (
+    { __typename?: 'group_posts_aggregate' }
+    & { aggregate?: Maybe<(
+      { __typename?: 'group_posts_aggregate_fields' }
+      & Pick<Group_Posts_Aggregate_Fields, 'count'>
+    )> }
+  ) }
+);
+
 export type ActivityListQueryVariables = Exact<{
   offset?: Maybe<Scalars['Int']>;
 }>;
@@ -7407,6 +8781,53 @@ export type DeleteGroupMutation = (
   & { delete_groups_by_pk?: Maybe<(
     { __typename?: 'groups' }
     & GroupCardFragment
+  )> }
+);
+
+export type CreateGroupPostMutationVariables = Exact<{
+  input: Group_Posts_Insert_Input;
+}>;
+
+
+export type CreateGroupPostMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_group_posts_one?: Maybe<(
+    { __typename?: 'group_posts' }
+    & GroupPostFragment
+  )> }
+);
+
+export type UpdateGroupPostMutationVariables = Exact<{
+  id: Scalars['uuid'];
+  input: Group_Posts_Set_Input;
+}>;
+
+
+export type UpdateGroupPostMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_group_posts_by_pk?: Maybe<(
+    { __typename?: 'group_posts' }
+    & GroupPostFragment
+  )> }
+);
+
+export type CreateGroupPostCommentMutationVariables = Exact<{
+  groupPostId: Scalars['uuid'];
+  input: Comments_Insert_Input;
+}>;
+
+
+export type CreateGroupPostCommentMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_group_post_comment_one?: Maybe<(
+    { __typename?: 'group_post_comment' }
+    & { comment: (
+      { __typename?: 'comments' }
+      & CommentCardFragment
+    ), post: (
+      { __typename?: 'group_posts' }
+      & GroupPostFragment
+    ) }
   )> }
 );
 
@@ -7773,6 +9194,19 @@ export type EntityCardFragment = (
   ), group_join_request: (
     { __typename?: 'group_join_requests' }
     & Pick<Group_Join_Requests, 'id' | 'response'>
+  ), group_post_comment: (
+    { __typename?: 'group_post_comment' }
+    & Pick<Group_Post_Comment, 'id'>
+    & { post: (
+      { __typename?: 'group_posts' }
+      & Pick<Group_Posts, 'id' | 'author_id' | 'group_id'>
+    ), comment: (
+      { __typename?: 'comments' }
+      & CommentCardFragment
+    ) }
+  ), group_post: (
+    { __typename?: 'group_posts' }
+    & Pick<Group_Posts, 'id' | 'group_id'>
   ) }
 );
 
@@ -7895,6 +9329,23 @@ export type RegisterUserMutation = (
   )> }
 );
 
+export const UserCardFragmentDoc = gql`
+    fragment UserCard on users {
+  id
+  name
+  image
+}
+    `;
+export const CommentCardFragmentDoc = gql`
+    fragment CommentCard on comments {
+  id
+  content
+  created_at
+  author {
+    ...UserCard
+  }
+}
+    ${UserCardFragmentDoc}`;
 export const EntityCardFragmentDoc = gql`
     fragment EntityCard on entities {
   id
@@ -7921,8 +9372,23 @@ export const EntityCardFragmentDoc = gql`
     id
     response
   }
+  group_post_comment {
+    id
+    post {
+      id
+      author_id
+      group_id
+    }
+    comment {
+      ...CommentCard
+    }
+  }
+  group_post {
+    id
+    group_id
+  }
 }
-    `;
+    ${CommentCardFragmentDoc}`;
 export const ChatMessageCardFragmentDoc = gql`
     fragment ChatMessageCard on chat_messages {
   id
@@ -7934,13 +9400,6 @@ export const ChatMessageCardFragmentDoc = gql`
   }
 }
     ${EntityCardFragmentDoc}`;
-export const UserCardFragmentDoc = gql`
-    fragment UserCard on users {
-  id
-  name
-  image
-}
-    `;
 export const ChatGroupCardFragmentDoc = gql`
     fragment ChatGroupCard on chat_groups {
   id
@@ -8009,6 +9468,30 @@ export const GroupJoinTokenCardFragmentDoc = gql`
   note
 }
     `;
+export const GroupPostFragmentDoc = gql`
+    fragment GroupPost on group_posts {
+  id
+  created_at
+  updated_at
+  type
+  resolved
+  content
+  comments(order_by: [{created_at: desc}]) {
+    id
+    comment {
+      ...CommentCard
+    }
+  }
+  group {
+    ...GroupCard
+  }
+  author {
+    ...UserCard
+  }
+}
+    ${CommentCardFragmentDoc}
+${GroupCardFragmentDoc}
+${UserCardFragmentDoc}`;
 export const FileUploadCardFragmentDoc = gql`
     fragment FileUploadCard on file_uploads {
   id
@@ -8443,6 +9926,50 @@ export type GroupJoinTokensQueryResult = Apollo.QueryResult<GroupJoinTokensQuery
 export function refetchGroupJoinTokensQuery(variables?: GroupJoinTokensQueryVariables) {
       return { query: GroupJoinTokensDocument, variables: variables }
     }
+export const GroupPostListDocument = gql`
+    query GroupPostList($where: group_posts_bool_exp!, $limit: Int!, $offset: Int!, $orderBy: [group_posts_order_by!]) {
+  group_posts(limit: $limit, offset: $offset, where: $where, order_by: $orderBy) {
+    ...GroupPost
+  }
+  group_posts_aggregate(where: $where) {
+    aggregate {
+      count
+    }
+  }
+}
+    ${GroupPostFragmentDoc}`;
+
+/**
+ * __useGroupPostListQuery__
+ *
+ * To run a query within a React component, call `useGroupPostListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGroupPostListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGroupPostListQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
+ *      orderBy: // value for 'orderBy'
+ *   },
+ * });
+ */
+export function useGroupPostListQuery(baseOptions?: Apollo.QueryHookOptions<GroupPostListQuery, GroupPostListQueryVariables>) {
+        return Apollo.useQuery<GroupPostListQuery, GroupPostListQueryVariables>(GroupPostListDocument, baseOptions);
+      }
+export function useGroupPostListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GroupPostListQuery, GroupPostListQueryVariables>) {
+          return Apollo.useLazyQuery<GroupPostListQuery, GroupPostListQueryVariables>(GroupPostListDocument, baseOptions);
+        }
+export type GroupPostListQueryHookResult = ReturnType<typeof useGroupPostListQuery>;
+export type GroupPostListLazyQueryHookResult = ReturnType<typeof useGroupPostListLazyQuery>;
+export type GroupPostListQueryResult = Apollo.QueryResult<GroupPostListQuery, GroupPostListQueryVariables>;
+export function refetchGroupPostListQuery(variables?: GroupPostListQueryVariables) {
+      return { query: GroupPostListDocument, variables: variables }
+    }
 export const ActivityListDocument = gql`
     query ActivityList($offset: Int = 10) {
   activities(limit: 10, offset: $offset, order_by: [{created_at: desc}]) {
@@ -8578,6 +10105,112 @@ export function useDeleteGroupMutation(baseOptions?: Apollo.MutationHookOptions<
 export type DeleteGroupMutationHookResult = ReturnType<typeof useDeleteGroupMutation>;
 export type DeleteGroupMutationResult = Apollo.MutationResult<DeleteGroupMutation>;
 export type DeleteGroupMutationOptions = Apollo.BaseMutationOptions<DeleteGroupMutation, DeleteGroupMutationVariables>;
+export const CreateGroupPostDocument = gql`
+    mutation CreateGroupPost($input: group_posts_insert_input!) {
+  insert_group_posts_one(object: $input) {
+    ...GroupPost
+  }
+}
+    ${GroupPostFragmentDoc}`;
+export type CreateGroupPostMutationFn = Apollo.MutationFunction<CreateGroupPostMutation, CreateGroupPostMutationVariables>;
+
+/**
+ * __useCreateGroupPostMutation__
+ *
+ * To run a mutation, you first call `useCreateGroupPostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateGroupPostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createGroupPostMutation, { data, loading, error }] = useCreateGroupPostMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateGroupPostMutation(baseOptions?: Apollo.MutationHookOptions<CreateGroupPostMutation, CreateGroupPostMutationVariables>) {
+        return Apollo.useMutation<CreateGroupPostMutation, CreateGroupPostMutationVariables>(CreateGroupPostDocument, baseOptions);
+      }
+export type CreateGroupPostMutationHookResult = ReturnType<typeof useCreateGroupPostMutation>;
+export type CreateGroupPostMutationResult = Apollo.MutationResult<CreateGroupPostMutation>;
+export type CreateGroupPostMutationOptions = Apollo.BaseMutationOptions<CreateGroupPostMutation, CreateGroupPostMutationVariables>;
+export const UpdateGroupPostDocument = gql`
+    mutation UpdateGroupPost($id: uuid!, $input: group_posts_set_input!) {
+  update_group_posts_by_pk(pk_columns: {id: $id}, _set: $input) {
+    ...GroupPost
+  }
+}
+    ${GroupPostFragmentDoc}`;
+export type UpdateGroupPostMutationFn = Apollo.MutationFunction<UpdateGroupPostMutation, UpdateGroupPostMutationVariables>;
+
+/**
+ * __useUpdateGroupPostMutation__
+ *
+ * To run a mutation, you first call `useUpdateGroupPostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateGroupPostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateGroupPostMutation, { data, loading, error }] = useUpdateGroupPostMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateGroupPostMutation(baseOptions?: Apollo.MutationHookOptions<UpdateGroupPostMutation, UpdateGroupPostMutationVariables>) {
+        return Apollo.useMutation<UpdateGroupPostMutation, UpdateGroupPostMutationVariables>(UpdateGroupPostDocument, baseOptions);
+      }
+export type UpdateGroupPostMutationHookResult = ReturnType<typeof useUpdateGroupPostMutation>;
+export type UpdateGroupPostMutationResult = Apollo.MutationResult<UpdateGroupPostMutation>;
+export type UpdateGroupPostMutationOptions = Apollo.BaseMutationOptions<UpdateGroupPostMutation, UpdateGroupPostMutationVariables>;
+export const CreateGroupPostCommentDocument = gql`
+    mutation CreateGroupPostComment($groupPostId: uuid!, $input: comments_insert_input!) {
+  insert_group_post_comment_one(
+    object: {group_post_id: $groupPostId, comment: {data: $input}}
+  ) {
+    comment {
+      ...CommentCard
+    }
+    post {
+      ...GroupPost
+    }
+  }
+}
+    ${CommentCardFragmentDoc}
+${GroupPostFragmentDoc}`;
+export type CreateGroupPostCommentMutationFn = Apollo.MutationFunction<CreateGroupPostCommentMutation, CreateGroupPostCommentMutationVariables>;
+
+/**
+ * __useCreateGroupPostCommentMutation__
+ *
+ * To run a mutation, you first call `useCreateGroupPostCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateGroupPostCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createGroupPostCommentMutation, { data, loading, error }] = useCreateGroupPostCommentMutation({
+ *   variables: {
+ *      groupPostId: // value for 'groupPostId'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateGroupPostCommentMutation(baseOptions?: Apollo.MutationHookOptions<CreateGroupPostCommentMutation, CreateGroupPostCommentMutationVariables>) {
+        return Apollo.useMutation<CreateGroupPostCommentMutation, CreateGroupPostCommentMutationVariables>(CreateGroupPostCommentDocument, baseOptions);
+      }
+export type CreateGroupPostCommentMutationHookResult = ReturnType<typeof useCreateGroupPostCommentMutation>;
+export type CreateGroupPostCommentMutationResult = Apollo.MutationResult<CreateGroupPostCommentMutation>;
+export type CreateGroupPostCommentMutationOptions = Apollo.BaseMutationOptions<CreateGroupPostCommentMutation, CreateGroupPostCommentMutationVariables>;
 export const LeaveGroupDocument = gql`
     mutation LeaveGroup($groupId: uuid!, $userId: uuid!) {
   delete_group_members(
@@ -9387,6 +11020,7 @@ export const GqlOps = {
     GroupDetails: 'GroupDetails',
     GroupJoinRequests: 'GroupJoinRequests',
     GroupJoinTokens: 'GroupJoinTokens',
+    GroupPostList: 'GroupPostList',
     ActivityList: 'ActivityList',
     SearchCounts: 'SearchCounts',
     ThingList: 'ThingList',
@@ -9400,6 +11034,9 @@ export const GqlOps = {
     CreateGroup: 'CreateGroup',
     UpdateGroup: 'UpdateGroup',
     DeleteGroup: 'DeleteGroup',
+    CreateGroupPost: 'CreateGroupPost',
+    UpdateGroupPost: 'UpdateGroupPost',
+    CreateGroupPostComment: 'CreateGroupPostComment',
     LeaveGroup: 'LeaveGroup',
     JoinGroup: 'JoinGroup',
     JoinGroupWithToken: 'JoinGroupWithToken',
@@ -9425,11 +11062,13 @@ export const GqlOps = {
   Fragment: {
     ChatMessageCard: 'ChatMessageCard',
     ChatGroupCard: 'ChatGroupCard',
+    CommentCard: 'CommentCard',
     GroupMemberCard: 'GroupMemberCard',
     GroupCard: 'GroupCard',
     GroupDetails: 'GroupDetails',
     GroupJoinRequestCard: 'GroupJoinRequestCard',
     GroupJoinTokenCard: 'GroupJoinTokenCard',
+    GroupPost: 'GroupPost',
     ThingCard: 'ThingCard',
     ThingImageCard: 'ThingImageCard',
     ThingDetails: 'ThingDetails',

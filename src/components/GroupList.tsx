@@ -70,6 +70,11 @@ export const GroupList = (props: GroupListProps) => {
                             </Tooltip>
                         ),
                         <IconText
+                            icon={group.public ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+                            text={group.public ? 'Public' : 'Private'}
+                            key="public"
+                        />,
+                        <IconText
                             icon={<TeamOutlined />}
                             text={group.memberships_aggregate.aggregate?.count || 0}
                             key="members"
@@ -78,11 +83,6 @@ export const GroupList = (props: GroupListProps) => {
                             icon={<GiftOutlined />}
                             text={group.thing_relations_aggregate.aggregate?.count || 0}
                             key="things"
-                        />,
-                        <IconText
-                            icon={group.public ? <EyeOutlined /> : <EyeInvisibleOutlined />}
-                            text={group.public ? 'Public' : 'Private'}
-                            key="public"
                         />,
                     ]}>
                     <List.Item.Meta

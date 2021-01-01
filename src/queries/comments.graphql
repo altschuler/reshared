@@ -1,0 +1,8 @@
+﻿fragment CommentCard on comments {
+    id
+    content
+    created_at
+    author {
+        ...UserCard
+    }
+}

@@ -80,12 +80,18 @@ export const RegisterForm = (props: RegisterFormProps) => {
                 <Form.Item name="agree" rules={[{ required: true }]} extra="">
                     <Checkbox>
                         I agree to the{' '}
-                        <Typography.Link>
-                            <Link href={urlFor.site.privacy()}>privacy policy</Link>
+                        <Typography.Link
+                            target="_blank"
+                            rel="noreferrer"
+                            href={urlFor.site.privacy(true)}>
+                            privacy policy
                         </Typography.Link>{' '}
-                        and
-                        <Typography.Link>
-                            <Link href={urlFor.site.terms()}>terms of service</Link>
+                        and{' '}
+                        <Typography.Link
+                            target="_blank"
+                            rel="noreferrer"
+                            href={urlFor.site.terms(true)}>
+                            terms of service
                         </Typography.Link>
                         .
                     </Checkbox>

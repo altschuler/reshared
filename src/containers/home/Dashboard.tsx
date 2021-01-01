@@ -1,14 +1,15 @@
 ﻿import { PageLayout } from '../root/PageLayout';
 import { useAuth } from '../../utils/auth';
-import { Button, Col, List, Row, Typography } from 'antd';
+import { Avatar, Button, Col, List, Row, Typography } from 'antd';
 import { createUseStyles } from 'react-jss';
 import { ButtonProps } from 'antd/lib/button';
 import { useActivityListQuery } from '../../generated/graphql';
-import { ActivityList } from '../../components/display/ActivityList';
+import { ActivityList } from '../../components/display';
 import { AudioOutlined, GiftOutlined, SearchOutlined, UserAddOutlined } from '@ant-design/icons';
 import { useCallback } from 'react';
 import { CreateThingDrawer, useDialogs } from '../../components/dialogs';
 import { urlFor } from '../../utils/urls';
+import Link from 'next/link';
 
 const useStyles = createUseStyles({
     quickActions: {
@@ -57,12 +58,17 @@ export const Dashboard = () => {
 
                 <Col md={12} sm={12} xs={6}>
                     <Typography.Title level={4}>Your Groups</Typography.Title>
+
                     <List
                         dataSource={auth.user?.memberships}
-                        renderItem={(membership) => (
-                            <List.Item>
-                                <List.Item.Meta title={membership.group.name} />
-                            </List.Item>
+                        renderItem={(m) => (
+                            <List.Item.Meta
+                                avatar={<Avatar src={''} />}
+                                title={
+                                    <Link href={urlFor.group.home(m.group)}>{m.group.name}</Link>
+                                }
+                                description={m.group.description}
+                            />
                         )}
                     />
                 </Col>

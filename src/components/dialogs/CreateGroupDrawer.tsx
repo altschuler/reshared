@@ -11,16 +11,18 @@ export const CreateGroupDrawer = (props: DialogProps<GroupCardFragment | null>) 
 
     const [createGroup, createMutation] = useCreateGroupMutation({
         refetchQueries: [GqlOps.Query.ListGroups, GqlOps.Query.UserPrivateDetails],
+        awaitRefetchQueries: true,
     });
 
     const handleCreateGroup = useCallback(() => {
         const input = asGroupCreateInput(editorState);
         createGroup({ variables: { input } })
             .then(({ data }) => {
-                if (data?.createGroup.group) {
+                const created = data?.createGroup.group;
+                if (created) {
                     message.success('Group created');
                     editorState.reset();
-                    resolve(data?.createGroup.group);
+                    resolve(created);
                 }
             })
             .catch(noop);

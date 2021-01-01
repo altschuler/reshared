@@ -40,6 +40,33 @@ query ServerCountGroupMembers($where: group_members_bool_exp) {
     }
 }
 
+query ServerFindPostParticipants($groupPostId: uuid!, $groupPostCommentId: uuid!) {
+    postComment: group_post_comment_by_pk(id: $groupPostCommentId) {
+        id
+        comment {
+            id
+            author {
+                ...UserCard
+            }
+        }
+
+        post {
+            id
+            group_id
+
+            author {
+                ...UserCard
+            }
+        }
+    }
+
+    participants: users(
+        where: { comments: { group_post_relations: { group_post_id: { _eq: $groupPostId } } } }
+    ) {
+        ...UserCard
+    }
+}
+
 # Mutations
 
 mutation ServerInsertGroupJoinToken($input: group_join_tokens_insert_input!) {

@@ -17,9 +17,9 @@ export interface EditorState<T> {
 }
 
 export const createUseEditor = <T>(defaultState: T, schema?: Joi.ObjectSchema<T>) => (
-    initial?: T,
+    initial?: Partial<T>,
 ): EditorState<T> => {
-    const [state, setState] = useState<T>(initial || defaultState);
+    const [state, setState] = useState<T>(initial ? {...defaultState,...initial} : defaultState);
     const [touched, setTouched] = useState<string[]>([]);
     const [submitted, setSubmitted] = useState(false);
     // Used for validation trigger, to avoid wasting too many precious cycles

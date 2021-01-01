@@ -1206,6 +1206,223 @@ export enum Chat_Messages_Update_Column {
   SenderId = 'sender_id'
 }
 
+/** columns and relationships of "comments" */
+export type Comments = {
+  __typename?: 'comments';
+  /** An object relationship */
+  author: Users;
+  author_id: Scalars['uuid'];
+  content: Scalars['String'];
+  created_at: Scalars['timestamptz'];
+  /** An array relationship */
+  group_post_relations: Array<Group_Post_Comment>;
+  /** An aggregate relationship */
+  group_post_relations_aggregate: Group_Post_Comment_Aggregate;
+  id: Scalars['uuid'];
+  updated_at: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "comments" */
+export type CommentsGroup_Post_RelationsArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Comment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Comment_Order_By>>;
+  where?: Maybe<Group_Post_Comment_Bool_Exp>;
+};
+
+
+/** columns and relationships of "comments" */
+export type CommentsGroup_Post_Relations_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Comment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Comment_Order_By>>;
+  where?: Maybe<Group_Post_Comment_Bool_Exp>;
+};
+
+/** aggregated selection of "comments" */
+export type Comments_Aggregate = {
+  __typename?: 'comments_aggregate';
+  aggregate?: Maybe<Comments_Aggregate_Fields>;
+  nodes: Array<Comments>;
+};
+
+/** aggregate fields of "comments" */
+export type Comments_Aggregate_Fields = {
+  __typename?: 'comments_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Comments_Max_Fields>;
+  min?: Maybe<Comments_Min_Fields>;
+};
+
+
+/** aggregate fields of "comments" */
+export type Comments_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Comments_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "comments" */
+export type Comments_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Comments_Max_Order_By>;
+  min?: Maybe<Comments_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "comments" */
+export type Comments_Arr_Rel_Insert_Input = {
+  data: Array<Comments_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<Comments_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "comments". All fields are combined with a logical 'AND'. */
+export type Comments_Bool_Exp = {
+  _and?: Maybe<Array<Comments_Bool_Exp>>;
+  _not?: Maybe<Comments_Bool_Exp>;
+  _or?: Maybe<Array<Comments_Bool_Exp>>;
+  author?: Maybe<Users_Bool_Exp>;
+  author_id?: Maybe<Uuid_Comparison_Exp>;
+  content?: Maybe<String_Comparison_Exp>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  group_post_relations?: Maybe<Group_Post_Comment_Bool_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "comments" */
+export enum Comments_Constraint {
+  /** unique or primary key constraint */
+  CommentPkey = 'comment_pkey'
+}
+
+/** input type for inserting data into table "comments" */
+export type Comments_Insert_Input = {
+  author?: Maybe<Users_Obj_Rel_Insert_Input>;
+  author_id?: Maybe<Scalars['uuid']>;
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_post_relations?: Maybe<Group_Post_Comment_Arr_Rel_Insert_Input>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Comments_Max_Fields = {
+  __typename?: 'comments_max_fields';
+  author_id?: Maybe<Scalars['uuid']>;
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "comments" */
+export type Comments_Max_Order_By = {
+  author_id?: Maybe<Order_By>;
+  content?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Comments_Min_Fields = {
+  __typename?: 'comments_min_fields';
+  author_id?: Maybe<Scalars['uuid']>;
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "comments" */
+export type Comments_Min_Order_By = {
+  author_id?: Maybe<Order_By>;
+  content?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "comments" */
+export type Comments_Mutation_Response = {
+  __typename?: 'comments_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Comments>;
+};
+
+/** input type for inserting object relation for remote table "comments" */
+export type Comments_Obj_Rel_Insert_Input = {
+  data: Comments_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<Comments_On_Conflict>;
+};
+
+/** on conflict condition type for table "comments" */
+export type Comments_On_Conflict = {
+  constraint: Comments_Constraint;
+  update_columns: Array<Comments_Update_Column>;
+  where?: Maybe<Comments_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "comments". */
+export type Comments_Order_By = {
+  author?: Maybe<Users_Order_By>;
+  author_id?: Maybe<Order_By>;
+  content?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  group_post_relations_aggregate?: Maybe<Group_Post_Comment_Aggregate_Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: comments */
+export type Comments_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "comments" */
+export enum Comments_Select_Column {
+  /** column name */
+  AuthorId = 'author_id',
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "comments" */
+export type Comments_Set_Input = {
+  author_id?: Maybe<Scalars['uuid']>;
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "comments" */
+export enum Comments_Update_Column {
+  /** column name */
+  AuthorId = 'author_id',
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
 
 /** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
 export type Date_Comparison_Exp = {
@@ -1229,6 +1446,12 @@ export type Entities = {
   group_id?: Maybe<Scalars['uuid']>;
   /** An object relationship */
   group_join_request: Group_Join_Requests;
+  /** An object relationship */
+  group_post: Group_Posts;
+  /** An object relationship */
+  group_post_comment: Group_Post_Comment;
+  group_post_comment_id?: Maybe<Scalars['uuid']>;
+  group_post_id?: Maybe<Scalars['uuid']>;
   id: Scalars['uuid'];
   join_request_id?: Maybe<Scalars['uuid']>;
   /** An object relationship */
@@ -1284,6 +1507,10 @@ export type Entities_Bool_Exp = {
   group?: Maybe<Groups_Bool_Exp>;
   group_id?: Maybe<Uuid_Comparison_Exp>;
   group_join_request?: Maybe<Group_Join_Requests_Bool_Exp>;
+  group_post?: Maybe<Group_Posts_Bool_Exp>;
+  group_post_comment?: Maybe<Group_Post_Comment_Bool_Exp>;
+  group_post_comment_id?: Maybe<Uuid_Comparison_Exp>;
+  group_post_id?: Maybe<Uuid_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   join_request_id?: Maybe<Uuid_Comparison_Exp>;
   thing?: Maybe<Things_Bool_Exp>;
@@ -1296,6 +1523,10 @@ export type Entities_Bool_Exp = {
 export enum Entities_Constraint {
   /** unique or primary key constraint */
   EntitiesGroupIdKey = 'entities_group_id_key',
+  /** unique or primary key constraint */
+  EntitiesGroupPostCommentIdKey = 'entities_group_post_comment_id_key',
+  /** unique or primary key constraint */
+  EntitiesGroupPostIdKey = 'entities_group_post_id_key',
   /** unique or primary key constraint */
   EntitiesJoinRequestIdKey = 'entities_join_request_id_key',
   /** unique or primary key constraint */
@@ -1317,6 +1548,10 @@ export type Entities_Insert_Input = {
   group?: Maybe<Groups_Obj_Rel_Insert_Input>;
   group_id?: Maybe<Scalars['uuid']>;
   group_join_request?: Maybe<Group_Join_Requests_Obj_Rel_Insert_Input>;
+  group_post?: Maybe<Group_Posts_Obj_Rel_Insert_Input>;
+  group_post_comment?: Maybe<Group_Post_Comment_Obj_Rel_Insert_Input>;
+  group_post_comment_id?: Maybe<Scalars['uuid']>;
+  group_post_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   join_request_id?: Maybe<Scalars['uuid']>;
   thing?: Maybe<Things_Obj_Rel_Insert_Input>;
@@ -1330,6 +1565,8 @@ export type Entities_Max_Fields = {
   __typename?: 'entities_max_fields';
   dummy?: Maybe<Scalars['smallint']>;
   group_id?: Maybe<Scalars['uuid']>;
+  group_post_comment_id?: Maybe<Scalars['uuid']>;
+  group_post_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   join_request_id?: Maybe<Scalars['uuid']>;
   thing_id?: Maybe<Scalars['uuid']>;
@@ -1341,6 +1578,8 @@ export type Entities_Min_Fields = {
   __typename?: 'entities_min_fields';
   dummy?: Maybe<Scalars['smallint']>;
   group_id?: Maybe<Scalars['uuid']>;
+  group_post_comment_id?: Maybe<Scalars['uuid']>;
+  group_post_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   join_request_id?: Maybe<Scalars['uuid']>;
   thing_id?: Maybe<Scalars['uuid']>;
@@ -1376,6 +1615,10 @@ export type Entities_Order_By = {
   group?: Maybe<Groups_Order_By>;
   group_id?: Maybe<Order_By>;
   group_join_request?: Maybe<Group_Join_Requests_Order_By>;
+  group_post?: Maybe<Group_Posts_Order_By>;
+  group_post_comment?: Maybe<Group_Post_Comment_Order_By>;
+  group_post_comment_id?: Maybe<Order_By>;
+  group_post_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   join_request_id?: Maybe<Order_By>;
   thing?: Maybe<Things_Order_By>;
@@ -1396,6 +1639,10 @@ export enum Entities_Select_Column {
   /** column name */
   GroupId = 'group_id',
   /** column name */
+  GroupPostCommentId = 'group_post_comment_id',
+  /** column name */
+  GroupPostId = 'group_post_id',
+  /** column name */
   Id = 'id',
   /** column name */
   JoinRequestId = 'join_request_id',
@@ -1409,6 +1656,8 @@ export enum Entities_Select_Column {
 export type Entities_Set_Input = {
   dummy?: Maybe<Scalars['smallint']>;
   group_id?: Maybe<Scalars['uuid']>;
+  group_post_comment_id?: Maybe<Scalars['uuid']>;
+  group_post_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   join_request_id?: Maybe<Scalars['uuid']>;
   thing_id?: Maybe<Scalars['uuid']>;
@@ -1445,6 +1694,10 @@ export enum Entities_Update_Column {
   Dummy = 'dummy',
   /** column name */
   GroupId = 'group_id',
+  /** column name */
+  GroupPostCommentId = 'group_post_comment_id',
+  /** column name */
+  GroupPostId = 'group_post_id',
   /** column name */
   Id = 'id',
   /** column name */
@@ -2505,6 +2758,583 @@ export enum Group_Members_Update_Column {
   UserId = 'user_id'
 }
 
+/** columns and relationships of "group_post_comment" */
+export type Group_Post_Comment = {
+  __typename?: 'group_post_comment';
+  /** An object relationship */
+  comment: Comments;
+  comment_id: Scalars['uuid'];
+  created_at: Scalars['timestamptz'];
+  group_post_id: Scalars['uuid'];
+  id: Scalars['uuid'];
+  /** An object relationship */
+  post: Group_Posts;
+  updated_at: Scalars['timestamptz'];
+};
+
+/** aggregated selection of "group_post_comment" */
+export type Group_Post_Comment_Aggregate = {
+  __typename?: 'group_post_comment_aggregate';
+  aggregate?: Maybe<Group_Post_Comment_Aggregate_Fields>;
+  nodes: Array<Group_Post_Comment>;
+};
+
+/** aggregate fields of "group_post_comment" */
+export type Group_Post_Comment_Aggregate_Fields = {
+  __typename?: 'group_post_comment_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Group_Post_Comment_Max_Fields>;
+  min?: Maybe<Group_Post_Comment_Min_Fields>;
+};
+
+
+/** aggregate fields of "group_post_comment" */
+export type Group_Post_Comment_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Group_Post_Comment_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "group_post_comment" */
+export type Group_Post_Comment_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Group_Post_Comment_Max_Order_By>;
+  min?: Maybe<Group_Post_Comment_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "group_post_comment" */
+export type Group_Post_Comment_Arr_Rel_Insert_Input = {
+  data: Array<Group_Post_Comment_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<Group_Post_Comment_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "group_post_comment". All fields are combined with a logical 'AND'. */
+export type Group_Post_Comment_Bool_Exp = {
+  _and?: Maybe<Array<Group_Post_Comment_Bool_Exp>>;
+  _not?: Maybe<Group_Post_Comment_Bool_Exp>;
+  _or?: Maybe<Array<Group_Post_Comment_Bool_Exp>>;
+  comment?: Maybe<Comments_Bool_Exp>;
+  comment_id?: Maybe<Uuid_Comparison_Exp>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  group_post_id?: Maybe<Uuid_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  post?: Maybe<Group_Posts_Bool_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "group_post_comment" */
+export enum Group_Post_Comment_Constraint {
+  /** unique or primary key constraint */
+  GroupPostCommentPkey = 'group_post_comment_pkey'
+}
+
+/** input type for inserting data into table "group_post_comment" */
+export type Group_Post_Comment_Insert_Input = {
+  comment?: Maybe<Comments_Obj_Rel_Insert_Input>;
+  comment_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_post_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  post?: Maybe<Group_Posts_Obj_Rel_Insert_Input>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Group_Post_Comment_Max_Fields = {
+  __typename?: 'group_post_comment_max_fields';
+  comment_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_post_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "group_post_comment" */
+export type Group_Post_Comment_Max_Order_By = {
+  comment_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  group_post_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Group_Post_Comment_Min_Fields = {
+  __typename?: 'group_post_comment_min_fields';
+  comment_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_post_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "group_post_comment" */
+export type Group_Post_Comment_Min_Order_By = {
+  comment_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  group_post_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "group_post_comment" */
+export type Group_Post_Comment_Mutation_Response = {
+  __typename?: 'group_post_comment_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Group_Post_Comment>;
+};
+
+/** input type for inserting object relation for remote table "group_post_comment" */
+export type Group_Post_Comment_Obj_Rel_Insert_Input = {
+  data: Group_Post_Comment_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<Group_Post_Comment_On_Conflict>;
+};
+
+/** on conflict condition type for table "group_post_comment" */
+export type Group_Post_Comment_On_Conflict = {
+  constraint: Group_Post_Comment_Constraint;
+  update_columns: Array<Group_Post_Comment_Update_Column>;
+  where?: Maybe<Group_Post_Comment_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "group_post_comment". */
+export type Group_Post_Comment_Order_By = {
+  comment?: Maybe<Comments_Order_By>;
+  comment_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  group_post_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  post?: Maybe<Group_Posts_Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: group_post_comment */
+export type Group_Post_Comment_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "group_post_comment" */
+export enum Group_Post_Comment_Select_Column {
+  /** column name */
+  CommentId = 'comment_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  GroupPostId = 'group_post_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "group_post_comment" */
+export type Group_Post_Comment_Set_Input = {
+  comment_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_post_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "group_post_comment" */
+export enum Group_Post_Comment_Update_Column {
+  /** column name */
+  CommentId = 'comment_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  GroupPostId = 'group_post_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** columns and relationships of "group_post_type" */
+export type Group_Post_Type = {
+  __typename?: 'group_post_type';
+  comment: Scalars['String'];
+  value: Scalars['String'];
+};
+
+/** aggregated selection of "group_post_type" */
+export type Group_Post_Type_Aggregate = {
+  __typename?: 'group_post_type_aggregate';
+  aggregate?: Maybe<Group_Post_Type_Aggregate_Fields>;
+  nodes: Array<Group_Post_Type>;
+};
+
+/** aggregate fields of "group_post_type" */
+export type Group_Post_Type_Aggregate_Fields = {
+  __typename?: 'group_post_type_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Group_Post_Type_Max_Fields>;
+  min?: Maybe<Group_Post_Type_Min_Fields>;
+};
+
+
+/** aggregate fields of "group_post_type" */
+export type Group_Post_Type_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Group_Post_Type_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "group_post_type". All fields are combined with a logical 'AND'. */
+export type Group_Post_Type_Bool_Exp = {
+  _and?: Maybe<Array<Group_Post_Type_Bool_Exp>>;
+  _not?: Maybe<Group_Post_Type_Bool_Exp>;
+  _or?: Maybe<Array<Group_Post_Type_Bool_Exp>>;
+  comment?: Maybe<String_Comparison_Exp>;
+  value?: Maybe<String_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "group_post_type" */
+export enum Group_Post_Type_Constraint {
+  /** unique or primary key constraint */
+  GroupPostTypePkey = 'group_post_type_pkey'
+}
+
+export enum Group_Post_Type_Enum {
+  /** a generic message post */
+  Message = 'message',
+  /** a request for something */
+  Request = 'request'
+}
+
+/** Boolean expression to compare columns of type "group_post_type_enum". All fields are combined with logical 'AND'. */
+export type Group_Post_Type_Enum_Comparison_Exp = {
+  _eq?: Maybe<Group_Post_Type_Enum>;
+  _in?: Maybe<Array<Group_Post_Type_Enum>>;
+  _is_null?: Maybe<Scalars['Boolean']>;
+  _neq?: Maybe<Group_Post_Type_Enum>;
+  _nin?: Maybe<Array<Group_Post_Type_Enum>>;
+};
+
+/** input type for inserting data into table "group_post_type" */
+export type Group_Post_Type_Insert_Input = {
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** aggregate max on columns */
+export type Group_Post_Type_Max_Fields = {
+  __typename?: 'group_post_type_max_fields';
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** aggregate min on columns */
+export type Group_Post_Type_Min_Fields = {
+  __typename?: 'group_post_type_min_fields';
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** response of any mutation on the table "group_post_type" */
+export type Group_Post_Type_Mutation_Response = {
+  __typename?: 'group_post_type_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Group_Post_Type>;
+};
+
+/** on conflict condition type for table "group_post_type" */
+export type Group_Post_Type_On_Conflict = {
+  constraint: Group_Post_Type_Constraint;
+  update_columns: Array<Group_Post_Type_Update_Column>;
+  where?: Maybe<Group_Post_Type_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "group_post_type". */
+export type Group_Post_Type_Order_By = {
+  comment?: Maybe<Order_By>;
+  value?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: group_post_type */
+export type Group_Post_Type_Pk_Columns_Input = {
+  value: Scalars['String'];
+};
+
+/** select columns of table "group_post_type" */
+export enum Group_Post_Type_Select_Column {
+  /** column name */
+  Comment = 'comment',
+  /** column name */
+  Value = 'value'
+}
+
+/** input type for updating data in table "group_post_type" */
+export type Group_Post_Type_Set_Input = {
+  comment?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['String']>;
+};
+
+/** update columns of table "group_post_type" */
+export enum Group_Post_Type_Update_Column {
+  /** column name */
+  Comment = 'comment',
+  /** column name */
+  Value = 'value'
+}
+
+/** columns and relationships of "group_posts" */
+export type Group_Posts = {
+  __typename?: 'group_posts';
+  /** An object relationship */
+  author: Users;
+  author_id: Scalars['uuid'];
+  /** An array relationship */
+  comments: Array<Group_Post_Comment>;
+  /** An aggregate relationship */
+  comments_aggregate: Group_Post_Comment_Aggregate;
+  content: Scalars['String'];
+  created_at: Scalars['timestamptz'];
+  /** An object relationship */
+  group: Groups;
+  group_id: Scalars['uuid'];
+  id: Scalars['uuid'];
+  resolved: Scalars['Boolean'];
+  type: Group_Post_Type_Enum;
+  updated_at: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "group_posts" */
+export type Group_PostsCommentsArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Comment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Comment_Order_By>>;
+  where?: Maybe<Group_Post_Comment_Bool_Exp>;
+};
+
+
+/** columns and relationships of "group_posts" */
+export type Group_PostsComments_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Comment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Comment_Order_By>>;
+  where?: Maybe<Group_Post_Comment_Bool_Exp>;
+};
+
+/** aggregated selection of "group_posts" */
+export type Group_Posts_Aggregate = {
+  __typename?: 'group_posts_aggregate';
+  aggregate?: Maybe<Group_Posts_Aggregate_Fields>;
+  nodes: Array<Group_Posts>;
+};
+
+/** aggregate fields of "group_posts" */
+export type Group_Posts_Aggregate_Fields = {
+  __typename?: 'group_posts_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Group_Posts_Max_Fields>;
+  min?: Maybe<Group_Posts_Min_Fields>;
+};
+
+
+/** aggregate fields of "group_posts" */
+export type Group_Posts_Aggregate_FieldsCountArgs = {
+  columns?: Maybe<Array<Group_Posts_Select_Column>>;
+  distinct?: Maybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "group_posts" */
+export type Group_Posts_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Group_Posts_Max_Order_By>;
+  min?: Maybe<Group_Posts_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "group_posts" */
+export type Group_Posts_Arr_Rel_Insert_Input = {
+  data: Array<Group_Posts_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<Group_Posts_On_Conflict>;
+};
+
+/** Boolean expression to filter rows from the table "group_posts". All fields are combined with a logical 'AND'. */
+export type Group_Posts_Bool_Exp = {
+  _and?: Maybe<Array<Group_Posts_Bool_Exp>>;
+  _not?: Maybe<Group_Posts_Bool_Exp>;
+  _or?: Maybe<Array<Group_Posts_Bool_Exp>>;
+  author?: Maybe<Users_Bool_Exp>;
+  author_id?: Maybe<Uuid_Comparison_Exp>;
+  comments?: Maybe<Group_Post_Comment_Bool_Exp>;
+  content?: Maybe<String_Comparison_Exp>;
+  created_at?: Maybe<Timestamptz_Comparison_Exp>;
+  group?: Maybe<Groups_Bool_Exp>;
+  group_id?: Maybe<Uuid_Comparison_Exp>;
+  id?: Maybe<Uuid_Comparison_Exp>;
+  resolved?: Maybe<Boolean_Comparison_Exp>;
+  type?: Maybe<Group_Post_Type_Enum_Comparison_Exp>;
+  updated_at?: Maybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "group_posts" */
+export enum Group_Posts_Constraint {
+  /** unique or primary key constraint */
+  GroupPostPkey = 'group_post_pkey'
+}
+
+/** input type for inserting data into table "group_posts" */
+export type Group_Posts_Insert_Input = {
+  author?: Maybe<Users_Obj_Rel_Insert_Input>;
+  author_id?: Maybe<Scalars['uuid']>;
+  comments?: Maybe<Group_Post_Comment_Arr_Rel_Insert_Input>;
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group?: Maybe<Groups_Obj_Rel_Insert_Input>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  resolved?: Maybe<Scalars['Boolean']>;
+  type?: Maybe<Group_Post_Type_Enum>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Group_Posts_Max_Fields = {
+  __typename?: 'group_posts_max_fields';
+  author_id?: Maybe<Scalars['uuid']>;
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "group_posts" */
+export type Group_Posts_Max_Order_By = {
+  author_id?: Maybe<Order_By>;
+  content?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type Group_Posts_Min_Fields = {
+  __typename?: 'group_posts_min_fields';
+  author_id?: Maybe<Scalars['uuid']>;
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "group_posts" */
+export type Group_Posts_Min_Order_By = {
+  author_id?: Maybe<Order_By>;
+  content?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** response of any mutation on the table "group_posts" */
+export type Group_Posts_Mutation_Response = {
+  __typename?: 'group_posts_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Group_Posts>;
+};
+
+/** input type for inserting object relation for remote table "group_posts" */
+export type Group_Posts_Obj_Rel_Insert_Input = {
+  data: Group_Posts_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<Group_Posts_On_Conflict>;
+};
+
+/** on conflict condition type for table "group_posts" */
+export type Group_Posts_On_Conflict = {
+  constraint: Group_Posts_Constraint;
+  update_columns: Array<Group_Posts_Update_Column>;
+  where?: Maybe<Group_Posts_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "group_posts". */
+export type Group_Posts_Order_By = {
+  author?: Maybe<Users_Order_By>;
+  author_id?: Maybe<Order_By>;
+  comments_aggregate?: Maybe<Group_Post_Comment_Aggregate_Order_By>;
+  content?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  group?: Maybe<Groups_Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  resolved?: Maybe<Order_By>;
+  type?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
+};
+
+/** primary key columns input for table: group_posts */
+export type Group_Posts_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "group_posts" */
+export enum Group_Posts_Select_Column {
+  /** column name */
+  AuthorId = 'author_id',
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  GroupId = 'group_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Resolved = 'resolved',
+  /** column name */
+  Type = 'type',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "group_posts" */
+export type Group_Posts_Set_Input = {
+  author_id?: Maybe<Scalars['uuid']>;
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  resolved?: Maybe<Scalars['Boolean']>;
+  type?: Maybe<Group_Post_Type_Enum>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "group_posts" */
+export enum Group_Posts_Update_Column {
+  /** column name */
+  AuthorId = 'author_id',
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  GroupId = 'group_id',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Resolved = 'resolved',
+  /** column name */
+  Type = 'type',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
 /** columns and relationships of "group_role" */
 export type Group_Role = {
   __typename?: 'group_role';
@@ -3137,6 +3967,10 @@ export type Mutation_Root = {
   delete_chat_messages?: Maybe<Chat_Messages_Mutation_Response>;
   /** delete single row from the table: "chat_messages" */
   delete_chat_messages_by_pk?: Maybe<Chat_Messages>;
+  /** delete data from the table: "comments" */
+  delete_comments?: Maybe<Comments_Mutation_Response>;
+  /** delete single row from the table: "comments" */
+  delete_comments_by_pk?: Maybe<Comments>;
   /** delete data from the table: "entities" */
   delete_entities?: Maybe<Entities_Mutation_Response>;
   /** delete single row from the table: "entities" */
@@ -3161,6 +3995,18 @@ export type Mutation_Root = {
   delete_group_members?: Maybe<Group_Members_Mutation_Response>;
   /** delete single row from the table: "group_members" */
   delete_group_members_by_pk?: Maybe<Group_Members>;
+  /** delete data from the table: "group_post_comment" */
+  delete_group_post_comment?: Maybe<Group_Post_Comment_Mutation_Response>;
+  /** delete single row from the table: "group_post_comment" */
+  delete_group_post_comment_by_pk?: Maybe<Group_Post_Comment>;
+  /** delete data from the table: "group_post_type" */
+  delete_group_post_type?: Maybe<Group_Post_Type_Mutation_Response>;
+  /** delete single row from the table: "group_post_type" */
+  delete_group_post_type_by_pk?: Maybe<Group_Post_Type>;
+  /** delete data from the table: "group_posts" */
+  delete_group_posts?: Maybe<Group_Posts_Mutation_Response>;
+  /** delete single row from the table: "group_posts" */
+  delete_group_posts_by_pk?: Maybe<Group_Posts>;
   /** delete data from the table: "group_role" */
   delete_group_role?: Maybe<Group_Role_Mutation_Response>;
   /** delete single row from the table: "group_role" */
@@ -3220,6 +4066,10 @@ export type Mutation_Root = {
   insert_chat_messages?: Maybe<Chat_Messages_Mutation_Response>;
   /** insert a single row into the table: "chat_messages" */
   insert_chat_messages_one?: Maybe<Chat_Messages>;
+  /** insert data into the table: "comments" */
+  insert_comments?: Maybe<Comments_Mutation_Response>;
+  /** insert a single row into the table: "comments" */
+  insert_comments_one?: Maybe<Comments>;
   /** insert data into the table: "entities" */
   insert_entities?: Maybe<Entities_Mutation_Response>;
   /** insert a single row into the table: "entities" */
@@ -3244,6 +4094,18 @@ export type Mutation_Root = {
   insert_group_members?: Maybe<Group_Members_Mutation_Response>;
   /** insert a single row into the table: "group_members" */
   insert_group_members_one?: Maybe<Group_Members>;
+  /** insert data into the table: "group_post_comment" */
+  insert_group_post_comment?: Maybe<Group_Post_Comment_Mutation_Response>;
+  /** insert a single row into the table: "group_post_comment" */
+  insert_group_post_comment_one?: Maybe<Group_Post_Comment>;
+  /** insert data into the table: "group_post_type" */
+  insert_group_post_type?: Maybe<Group_Post_Type_Mutation_Response>;
+  /** insert a single row into the table: "group_post_type" */
+  insert_group_post_type_one?: Maybe<Group_Post_Type>;
+  /** insert data into the table: "group_posts" */
+  insert_group_posts?: Maybe<Group_Posts_Mutation_Response>;
+  /** insert a single row into the table: "group_posts" */
+  insert_group_posts_one?: Maybe<Group_Posts>;
   /** insert data into the table: "group_role" */
   insert_group_role?: Maybe<Group_Role_Mutation_Response>;
   /** insert a single row into the table: "group_role" */
@@ -3308,6 +4170,10 @@ export type Mutation_Root = {
   update_chat_messages?: Maybe<Chat_Messages_Mutation_Response>;
   /** update single row of the table: "chat_messages" */
   update_chat_messages_by_pk?: Maybe<Chat_Messages>;
+  /** update data of the table: "comments" */
+  update_comments?: Maybe<Comments_Mutation_Response>;
+  /** update single row of the table: "comments" */
+  update_comments_by_pk?: Maybe<Comments>;
   /** update data of the table: "entities" */
   update_entities?: Maybe<Entities_Mutation_Response>;
   /** update single row of the table: "entities" */
@@ -3332,6 +4198,18 @@ export type Mutation_Root = {
   update_group_members?: Maybe<Group_Members_Mutation_Response>;
   /** update single row of the table: "group_members" */
   update_group_members_by_pk?: Maybe<Group_Members>;
+  /** update data of the table: "group_post_comment" */
+  update_group_post_comment?: Maybe<Group_Post_Comment_Mutation_Response>;
+  /** update single row of the table: "group_post_comment" */
+  update_group_post_comment_by_pk?: Maybe<Group_Post_Comment>;
+  /** update data of the table: "group_post_type" */
+  update_group_post_type?: Maybe<Group_Post_Type_Mutation_Response>;
+  /** update single row of the table: "group_post_type" */
+  update_group_post_type_by_pk?: Maybe<Group_Post_Type>;
+  /** update data of the table: "group_posts" */
+  update_group_posts?: Maybe<Group_Posts_Mutation_Response>;
+  /** update single row of the table: "group_posts" */
+  update_group_posts_by_pk?: Maybe<Group_Posts>;
   /** update data of the table: "group_role" */
   update_group_role?: Maybe<Group_Role_Mutation_Response>;
   /** update single row of the table: "group_role" */
@@ -3452,6 +4330,18 @@ export type Mutation_RootDelete_Chat_Messages_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_CommentsArgs = {
+  where: Comments_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Comments_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
 export type Mutation_RootDelete_EntitiesArgs = {
   where: Entities_Bool_Exp;
 };
@@ -3519,6 +4409,42 @@ export type Mutation_RootDelete_Group_MembersArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Group_Members_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_Post_CommentArgs = {
+  where: Group_Post_Comment_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_Post_Comment_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_Post_TypeArgs = {
+  where: Group_Post_Type_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_Post_Type_By_PkArgs = {
+  value: Scalars['String'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_PostsArgs = {
+  where: Group_Posts_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Group_Posts_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -3714,6 +4640,20 @@ export type Mutation_RootInsert_Chat_Messages_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_CommentsArgs = {
+  objects: Array<Comments_Insert_Input>;
+  on_conflict?: Maybe<Comments_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Comments_OneArgs = {
+  object: Comments_Insert_Input;
+  on_conflict?: Maybe<Comments_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootInsert_EntitiesArgs = {
   objects: Array<Entities_Insert_Input>;
   on_conflict?: Maybe<Entities_On_Conflict>;
@@ -3794,6 +4734,48 @@ export type Mutation_RootInsert_Group_MembersArgs = {
 export type Mutation_RootInsert_Group_Members_OneArgs = {
   object: Group_Members_Insert_Input;
   on_conflict?: Maybe<Group_Members_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Group_Post_CommentArgs = {
+  objects: Array<Group_Post_Comment_Insert_Input>;
+  on_conflict?: Maybe<Group_Post_Comment_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Group_Post_Comment_OneArgs = {
+  object: Group_Post_Comment_Insert_Input;
+  on_conflict?: Maybe<Group_Post_Comment_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Group_Post_TypeArgs = {
+  objects: Array<Group_Post_Type_Insert_Input>;
+  on_conflict?: Maybe<Group_Post_Type_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Group_Post_Type_OneArgs = {
+  object: Group_Post_Type_Insert_Input;
+  on_conflict?: Maybe<Group_Post_Type_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Group_PostsArgs = {
+  objects: Array<Group_Posts_Insert_Input>;
+  on_conflict?: Maybe<Group_Posts_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Group_Posts_OneArgs = {
+  object: Group_Posts_Insert_Input;
+  on_conflict?: Maybe<Group_Posts_On_Conflict>;
 };
 
 
@@ -4030,6 +5012,20 @@ export type Mutation_RootUpdate_Chat_Messages_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_CommentsArgs = {
+  _set?: Maybe<Comments_Set_Input>;
+  where: Comments_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Comments_By_PkArgs = {
+  _set?: Maybe<Comments_Set_Input>;
+  pk_columns: Comments_Pk_Columns_Input;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_EntitiesArgs = {
   _inc?: Maybe<Entities_Inc_Input>;
   _set?: Maybe<Entities_Set_Input>;
@@ -4114,6 +5110,48 @@ export type Mutation_RootUpdate_Group_MembersArgs = {
 export type Mutation_RootUpdate_Group_Members_By_PkArgs = {
   _set?: Maybe<Group_Members_Set_Input>;
   pk_columns: Group_Members_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_Post_CommentArgs = {
+  _set?: Maybe<Group_Post_Comment_Set_Input>;
+  where: Group_Post_Comment_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_Post_Comment_By_PkArgs = {
+  _set?: Maybe<Group_Post_Comment_Set_Input>;
+  pk_columns: Group_Post_Comment_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_Post_TypeArgs = {
+  _set?: Maybe<Group_Post_Type_Set_Input>;
+  where: Group_Post_Type_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_Post_Type_By_PkArgs = {
+  _set?: Maybe<Group_Post_Type_Set_Input>;
+  pk_columns: Group_Post_Type_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_PostsArgs = {
+  _set?: Maybe<Group_Posts_Set_Input>;
+  where: Group_Posts_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_Posts_By_PkArgs = {
+  _set?: Maybe<Group_Posts_Set_Input>;
+  pk_columns: Group_Posts_Pk_Columns_Input;
 };
 
 
@@ -4489,6 +5527,12 @@ export type Query_Root = {
   chat_messages_aggregate: Chat_Messages_Aggregate;
   /** fetch data from the table: "chat_messages" using primary key columns */
   chat_messages_by_pk?: Maybe<Chat_Messages>;
+  /** fetch data from the table: "comments" */
+  comments: Array<Comments>;
+  /** fetch aggregated fields from the table: "comments" */
+  comments_aggregate: Comments_Aggregate;
+  /** fetch data from the table: "comments" using primary key columns */
+  comments_by_pk?: Maybe<Comments>;
   /** fetch data from the table: "entities" */
   entities: Array<Entities>;
   /** fetch aggregated fields from the table: "entities" */
@@ -4525,6 +5569,24 @@ export type Query_Root = {
   group_members_aggregate: Group_Members_Aggregate;
   /** fetch data from the table: "group_members" using primary key columns */
   group_members_by_pk?: Maybe<Group_Members>;
+  /** fetch data from the table: "group_post_comment" */
+  group_post_comment: Array<Group_Post_Comment>;
+  /** fetch aggregated fields from the table: "group_post_comment" */
+  group_post_comment_aggregate: Group_Post_Comment_Aggregate;
+  /** fetch data from the table: "group_post_comment" using primary key columns */
+  group_post_comment_by_pk?: Maybe<Group_Post_Comment>;
+  /** fetch data from the table: "group_post_type" */
+  group_post_type: Array<Group_Post_Type>;
+  /** fetch aggregated fields from the table: "group_post_type" */
+  group_post_type_aggregate: Group_Post_Type_Aggregate;
+  /** fetch data from the table: "group_post_type" using primary key columns */
+  group_post_type_by_pk?: Maybe<Group_Post_Type>;
+  /** fetch data from the table: "group_posts" */
+  group_posts: Array<Group_Posts>;
+  /** fetch aggregated fields from the table: "group_posts" */
+  group_posts_aggregate: Group_Posts_Aggregate;
+  /** fetch data from the table: "group_posts" using primary key columns */
+  group_posts_by_pk?: Maybe<Group_Posts>;
   /** fetch data from the table: "group_role" */
   group_role: Array<Group_Role>;
   /** fetch aggregated fields from the table: "group_role" */
@@ -4701,6 +5763,29 @@ export type Query_RootChat_Messages_By_PkArgs = {
 };
 
 
+export type Query_RootCommentsArgs = {
+  distinct_on?: Maybe<Array<Comments_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Comments_Order_By>>;
+  where?: Maybe<Comments_Bool_Exp>;
+};
+
+
+export type Query_RootComments_AggregateArgs = {
+  distinct_on?: Maybe<Array<Comments_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Comments_Order_By>>;
+  where?: Maybe<Comments_Bool_Exp>;
+};
+
+
+export type Query_RootComments_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
 export type Query_RootEntitiesArgs = {
   distinct_on?: Maybe<Array<Entities_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -4835,6 +5920,75 @@ export type Query_RootGroup_Members_AggregateArgs = {
 
 
 export type Query_RootGroup_Members_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_RootGroup_Post_CommentArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Comment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Comment_Order_By>>;
+  where?: Maybe<Group_Post_Comment_Bool_Exp>;
+};
+
+
+export type Query_RootGroup_Post_Comment_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Comment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Comment_Order_By>>;
+  where?: Maybe<Group_Post_Comment_Bool_Exp>;
+};
+
+
+export type Query_RootGroup_Post_Comment_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_RootGroup_Post_TypeArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Type_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Type_Order_By>>;
+  where?: Maybe<Group_Post_Type_Bool_Exp>;
+};
+
+
+export type Query_RootGroup_Post_Type_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Type_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Type_Order_By>>;
+  where?: Maybe<Group_Post_Type_Bool_Exp>;
+};
+
+
+export type Query_RootGroup_Post_Type_By_PkArgs = {
+  value: Scalars['String'];
+};
+
+
+export type Query_RootGroup_PostsArgs = {
+  distinct_on?: Maybe<Array<Group_Posts_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Posts_Order_By>>;
+  where?: Maybe<Group_Posts_Bool_Exp>;
+};
+
+
+export type Query_RootGroup_Posts_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Posts_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Posts_Order_By>>;
+  where?: Maybe<Group_Posts_Bool_Exp>;
+};
+
+
+export type Query_RootGroup_Posts_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -5109,6 +6263,12 @@ export type Subscription_Root = {
   chat_messages_aggregate: Chat_Messages_Aggregate;
   /** fetch data from the table: "chat_messages" using primary key columns */
   chat_messages_by_pk?: Maybe<Chat_Messages>;
+  /** fetch data from the table: "comments" */
+  comments: Array<Comments>;
+  /** fetch aggregated fields from the table: "comments" */
+  comments_aggregate: Comments_Aggregate;
+  /** fetch data from the table: "comments" using primary key columns */
+  comments_by_pk?: Maybe<Comments>;
   /** fetch data from the table: "entities" */
   entities: Array<Entities>;
   /** fetch aggregated fields from the table: "entities" */
@@ -5145,6 +6305,24 @@ export type Subscription_Root = {
   group_members_aggregate: Group_Members_Aggregate;
   /** fetch data from the table: "group_members" using primary key columns */
   group_members_by_pk?: Maybe<Group_Members>;
+  /** fetch data from the table: "group_post_comment" */
+  group_post_comment: Array<Group_Post_Comment>;
+  /** fetch aggregated fields from the table: "group_post_comment" */
+  group_post_comment_aggregate: Group_Post_Comment_Aggregate;
+  /** fetch data from the table: "group_post_comment" using primary key columns */
+  group_post_comment_by_pk?: Maybe<Group_Post_Comment>;
+  /** fetch data from the table: "group_post_type" */
+  group_post_type: Array<Group_Post_Type>;
+  /** fetch aggregated fields from the table: "group_post_type" */
+  group_post_type_aggregate: Group_Post_Type_Aggregate;
+  /** fetch data from the table: "group_post_type" using primary key columns */
+  group_post_type_by_pk?: Maybe<Group_Post_Type>;
+  /** fetch data from the table: "group_posts" */
+  group_posts: Array<Group_Posts>;
+  /** fetch aggregated fields from the table: "group_posts" */
+  group_posts_aggregate: Group_Posts_Aggregate;
+  /** fetch data from the table: "group_posts" using primary key columns */
+  group_posts_by_pk?: Maybe<Group_Posts>;
   /** fetch data from the table: "group_role" */
   group_role: Array<Group_Role>;
   /** fetch aggregated fields from the table: "group_role" */
@@ -5321,6 +6499,29 @@ export type Subscription_RootChat_Messages_By_PkArgs = {
 };
 
 
+export type Subscription_RootCommentsArgs = {
+  distinct_on?: Maybe<Array<Comments_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Comments_Order_By>>;
+  where?: Maybe<Comments_Bool_Exp>;
+};
+
+
+export type Subscription_RootComments_AggregateArgs = {
+  distinct_on?: Maybe<Array<Comments_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Comments_Order_By>>;
+  where?: Maybe<Comments_Bool_Exp>;
+};
+
+
+export type Subscription_RootComments_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
 export type Subscription_RootEntitiesArgs = {
   distinct_on?: Maybe<Array<Entities_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -5455,6 +6656,75 @@ export type Subscription_RootGroup_Members_AggregateArgs = {
 
 
 export type Subscription_RootGroup_Members_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootGroup_Post_CommentArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Comment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Comment_Order_By>>;
+  where?: Maybe<Group_Post_Comment_Bool_Exp>;
+};
+
+
+export type Subscription_RootGroup_Post_Comment_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Comment_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Comment_Order_By>>;
+  where?: Maybe<Group_Post_Comment_Bool_Exp>;
+};
+
+
+export type Subscription_RootGroup_Post_Comment_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootGroup_Post_TypeArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Type_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Type_Order_By>>;
+  where?: Maybe<Group_Post_Type_Bool_Exp>;
+};
+
+
+export type Subscription_RootGroup_Post_Type_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Post_Type_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Post_Type_Order_By>>;
+  where?: Maybe<Group_Post_Type_Bool_Exp>;
+};
+
+
+export type Subscription_RootGroup_Post_Type_By_PkArgs = {
+  value: Scalars['String'];
+};
+
+
+export type Subscription_RootGroup_PostsArgs = {
+  distinct_on?: Maybe<Array<Group_Posts_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Posts_Order_By>>;
+  where?: Maybe<Group_Posts_Bool_Exp>;
+};
+
+
+export type Subscription_RootGroup_Posts_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Posts_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Posts_Order_By>>;
+  where?: Maybe<Group_Posts_Bool_Exp>;
+};
+
+
+export type Subscription_RootGroup_Posts_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -6574,6 +7844,10 @@ export type Users = {
   chat_messages: Array<Chat_Messages>;
   /** An aggregate relationship */
   chat_messages_aggregate: Chat_Messages_Aggregate;
+  /** An array relationship */
+  comments: Array<Comments>;
+  /** An aggregate relationship */
+  comments_aggregate: Comments_Aggregate;
   created_at: Scalars['timestamptz'];
   email?: Maybe<Scalars['String']>;
   email_verified?: Maybe<Scalars['timestamptz']>;
@@ -6581,6 +7855,10 @@ export type Users = {
   group_join_requests: Array<Group_Join_Requests>;
   /** An aggregate relationship */
   group_join_requests_aggregate: Group_Join_Requests_Aggregate;
+  /** An array relationship */
+  group_posts: Array<Group_Posts>;
+  /** An aggregate relationship */
+  group_posts_aggregate: Group_Posts_Aggregate;
   id: Scalars['uuid'];
   image?: Maybe<Scalars['String']>;
   last_chat_notification?: Maybe<Scalars['timestamptz']>;
@@ -6642,6 +7920,26 @@ export type UsersChat_Messages_AggregateArgs = {
 
 
 /** columns and relationships of "users" */
+export type UsersCommentsArgs = {
+  distinct_on?: Maybe<Array<Comments_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Comments_Order_By>>;
+  where?: Maybe<Comments_Bool_Exp>;
+};
+
+
+/** columns and relationships of "users" */
+export type UsersComments_AggregateArgs = {
+  distinct_on?: Maybe<Array<Comments_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Comments_Order_By>>;
+  where?: Maybe<Comments_Bool_Exp>;
+};
+
+
+/** columns and relationships of "users" */
 export type UsersGroup_Join_RequestsArgs = {
   distinct_on?: Maybe<Array<Group_Join_Requests_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
@@ -6658,6 +7956,26 @@ export type UsersGroup_Join_Requests_AggregateArgs = {
   offset?: Maybe<Scalars['Int']>;
   order_by?: Maybe<Array<Group_Join_Requests_Order_By>>;
   where?: Maybe<Group_Join_Requests_Bool_Exp>;
+};
+
+
+/** columns and relationships of "users" */
+export type UsersGroup_PostsArgs = {
+  distinct_on?: Maybe<Array<Group_Posts_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Posts_Order_By>>;
+  where?: Maybe<Group_Posts_Bool_Exp>;
+};
+
+
+/** columns and relationships of "users" */
+export type UsersGroup_Posts_AggregateArgs = {
+  distinct_on?: Maybe<Array<Group_Posts_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Group_Posts_Order_By>>;
+  where?: Maybe<Group_Posts_Bool_Exp>;
 };
 
 
@@ -6729,10 +8047,12 @@ export type Users_Bool_Exp = {
   _or?: Maybe<Array<Users_Bool_Exp>>;
   chat_group_memberships?: Maybe<Chat_Group_Members_Bool_Exp>;
   chat_messages?: Maybe<Chat_Messages_Bool_Exp>;
+  comments?: Maybe<Comments_Bool_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   email?: Maybe<String_Comparison_Exp>;
   email_verified?: Maybe<Timestamptz_Comparison_Exp>;
   group_join_requests?: Maybe<Group_Join_Requests_Bool_Exp>;
+  group_posts?: Maybe<Group_Posts_Bool_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   image?: Maybe<String_Comparison_Exp>;
   last_chat_notification?: Maybe<Timestamptz_Comparison_Exp>;
@@ -6759,10 +8079,12 @@ export enum Users_Constraint {
 export type Users_Insert_Input = {
   chat_group_memberships?: Maybe<Chat_Group_Members_Arr_Rel_Insert_Input>;
   chat_messages?: Maybe<Chat_Messages_Arr_Rel_Insert_Input>;
+  comments?: Maybe<Comments_Arr_Rel_Insert_Input>;
   created_at?: Maybe<Scalars['timestamptz']>;
   email?: Maybe<Scalars['String']>;
   email_verified?: Maybe<Scalars['timestamptz']>;
   group_join_requests?: Maybe<Group_Join_Requests_Arr_Rel_Insert_Input>;
+  group_posts?: Maybe<Group_Posts_Arr_Rel_Insert_Input>;
   id?: Maybe<Scalars['uuid']>;
   image?: Maybe<Scalars['String']>;
   last_chat_notification?: Maybe<Scalars['timestamptz']>;
@@ -6832,10 +8154,12 @@ export type Users_On_Conflict = {
 export type Users_Order_By = {
   chat_group_memberships_aggregate?: Maybe<Chat_Group_Members_Aggregate_Order_By>;
   chat_messages_aggregate?: Maybe<Chat_Messages_Aggregate_Order_By>;
+  comments_aggregate?: Maybe<Comments_Aggregate_Order_By>;
   created_at?: Maybe<Order_By>;
   email?: Maybe<Order_By>;
   email_verified?: Maybe<Order_By>;
   group_join_requests_aggregate?: Maybe<Group_Join_Requests_Aggregate_Order_By>;
+  group_posts_aggregate?: Maybe<Group_Posts_Aggregate_Order_By>;
   id?: Maybe<Order_By>;
   image?: Maybe<Order_By>;
   last_chat_notification?: Maybe<Order_By>;
@@ -7244,6 +8568,15 @@ export type CreateChatMessageMutation = (
   )> }
 );
 
+export type CommentCardFragment = (
+  { __typename?: 'comments' }
+  & Pick<Comments, 'id' | 'content' | 'created_at'>
+  & { author: (
+    { __typename?: 'users' }
+    & UserCardFragment
+  ) }
+);
+
 export type GroupMemberCardFragment = (
   { __typename?: 'group_members' }
   & Pick<Group_Members, 'id' | 'role' | 'created_at'>
@@ -7292,6 +8625,25 @@ export type GroupJoinRequestCardFragment = (
 export type GroupJoinTokenCardFragment = (
   { __typename?: 'group_join_tokens' }
   & Pick<Group_Join_Tokens, 'id' | 'created_at' | 'updated_at' | 'token' | 'disabled' | 'note'>
+);
+
+export type GroupPostFragment = (
+  { __typename?: 'group_posts' }
+  & Pick<Group_Posts, 'id' | 'created_at' | 'updated_at' | 'type' | 'resolved' | 'content'>
+  & { comments: Array<(
+    { __typename?: 'group_post_comment' }
+    & Pick<Group_Post_Comment, 'id'>
+    & { comment: (
+      { __typename?: 'comments' }
+      & CommentCardFragment
+    ) }
+  )>, group: (
+    { __typename?: 'groups' }
+    & GroupCardFragment
+  ), author: (
+    { __typename?: 'users' }
+    & UserCardFragment
+  ) }
 );
 
 export type ListGroupsQueryVariables = Exact<{
@@ -7355,6 +8707,28 @@ export type GroupJoinTokensQuery = (
   )> }
 );
 
+export type GroupPostListQueryVariables = Exact<{
+  where: Group_Posts_Bool_Exp;
+  limit: Scalars['Int'];
+  offset: Scalars['Int'];
+  orderBy?: Maybe<Array<Group_Posts_Order_By>>;
+}>;
+
+
+export type GroupPostListQuery = (
+  { __typename?: 'query_root' }
+  & { group_posts: Array<(
+    { __typename?: 'group_posts' }
+    & GroupPostFragment
+  )>, group_posts_aggregate: (
+    { __typename?: 'group_posts_aggregate' }
+    & { aggregate?: Maybe<(
+      { __typename?: 'group_posts_aggregate_fields' }
+      & Pick<Group_Posts_Aggregate_Fields, 'count'>
+    )> }
+  ) }
+);
+
 export type ActivityListQueryVariables = Exact<{
   offset?: Maybe<Scalars['Int']>;
 }>;
@@ -7408,6 +8782,53 @@ export type DeleteGroupMutation = (
   & { delete_groups_by_pk?: Maybe<(
     { __typename?: 'groups' }
     & GroupCardFragment
+  )> }
+);
+
+export type CreateGroupPostMutationVariables = Exact<{
+  input: Group_Posts_Insert_Input;
+}>;
+
+
+export type CreateGroupPostMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_group_posts_one?: Maybe<(
+    { __typename?: 'group_posts' }
+    & GroupPostFragment
+  )> }
+);
+
+export type UpdateGroupPostMutationVariables = Exact<{
+  id: Scalars['uuid'];
+  input: Group_Posts_Set_Input;
+}>;
+
+
+export type UpdateGroupPostMutation = (
+  { __typename?: 'mutation_root' }
+  & { update_group_posts_by_pk?: Maybe<(
+    { __typename?: 'group_posts' }
+    & GroupPostFragment
+  )> }
+);
+
+export type CreateGroupPostCommentMutationVariables = Exact<{
+  groupPostId: Scalars['uuid'];
+  input: Comments_Insert_Input;
+}>;
+
+
+export type CreateGroupPostCommentMutation = (
+  { __typename?: 'mutation_root' }
+  & { insert_group_post_comment_one?: Maybe<(
+    { __typename?: 'group_post_comment' }
+    & { comment: (
+      { __typename?: 'comments' }
+      & CommentCardFragment
+    ), post: (
+      { __typename?: 'group_posts' }
+      & GroupPostFragment
+    ) }
   )> }
 );
 
@@ -7774,6 +9195,19 @@ export type EntityCardFragment = (
   ), group_join_request: (
     { __typename?: 'group_join_requests' }
     & Pick<Group_Join_Requests, 'id' | 'response'>
+  ), group_post_comment: (
+    { __typename?: 'group_post_comment' }
+    & Pick<Group_Post_Comment, 'id'>
+    & { post: (
+      { __typename?: 'group_posts' }
+      & Pick<Group_Posts, 'id' | 'author_id' | 'group_id'>
+    ), comment: (
+      { __typename?: 'comments' }
+      & CommentCardFragment
+    ) }
+  ), group_post: (
+    { __typename?: 'group_posts' }
+    & Pick<Group_Posts, 'id' | 'group_id'>
   ) }
 );
 
@@ -8047,6 +9481,38 @@ export type ServerCountGroupMembersQuery = (
       & Pick<Group_Members_Aggregate_Fields, 'count'>
     )> }
   ) }
+);
+
+export type ServerFindPostParticipantsQueryVariables = Exact<{
+  groupPostId: Scalars['uuid'];
+  groupPostCommentId: Scalars['uuid'];
+}>;
+
+
+export type ServerFindPostParticipantsQuery = (
+  { __typename?: 'query_root' }
+  & { postComment?: Maybe<(
+    { __typename?: 'group_post_comment' }
+    & Pick<Group_Post_Comment, 'id'>
+    & { comment: (
+      { __typename?: 'comments' }
+      & Pick<Comments, 'id'>
+      & { author: (
+        { __typename?: 'users' }
+        & UserCardFragment
+      ) }
+    ), post: (
+      { __typename?: 'group_posts' }
+      & Pick<Group_Posts, 'id' | 'group_id'>
+      & { author: (
+        { __typename?: 'users' }
+        & UserCardFragment
+      ) }
+    ) }
+  )>, participants: Array<(
+    { __typename?: 'users' }
+    & UserCardFragment
+  )> }
 );
 
 export type ServerInsertGroupJoinTokenMutationVariables = Exact<{
@@ -8413,6 +9879,26 @@ export type ResolversTypes = {
   chat_messages_select_column: Chat_Messages_Select_Column;
   chat_messages_set_input: Chat_Messages_Set_Input;
   chat_messages_update_column: Chat_Messages_Update_Column;
+  comments: ResolverTypeWrapper<Comments>;
+  comments_aggregate: ResolverTypeWrapper<Comments_Aggregate>;
+  comments_aggregate_fields: ResolverTypeWrapper<Comments_Aggregate_Fields>;
+  comments_aggregate_order_by: Comments_Aggregate_Order_By;
+  comments_arr_rel_insert_input: Comments_Arr_Rel_Insert_Input;
+  comments_bool_exp: Comments_Bool_Exp;
+  comments_constraint: Comments_Constraint;
+  comments_insert_input: Comments_Insert_Input;
+  comments_max_fields: ResolverTypeWrapper<Comments_Max_Fields>;
+  comments_max_order_by: Comments_Max_Order_By;
+  comments_min_fields: ResolverTypeWrapper<Comments_Min_Fields>;
+  comments_min_order_by: Comments_Min_Order_By;
+  comments_mutation_response: ResolverTypeWrapper<Comments_Mutation_Response>;
+  comments_obj_rel_insert_input: Comments_Obj_Rel_Insert_Input;
+  comments_on_conflict: Comments_On_Conflict;
+  comments_order_by: Comments_Order_By;
+  comments_pk_columns_input: Comments_Pk_Columns_Input;
+  comments_select_column: Comments_Select_Column;
+  comments_set_input: Comments_Set_Input;
+  comments_update_column: Comments_Update_Column;
   date: ResolverTypeWrapper<Scalars['date']>;
   date_comparison_exp: Date_Comparison_Exp;
   entities: ResolverTypeWrapper<Entities>;
@@ -8541,6 +10027,63 @@ export type ResolversTypes = {
   group_members_select_column: Group_Members_Select_Column;
   group_members_set_input: Group_Members_Set_Input;
   group_members_update_column: Group_Members_Update_Column;
+  group_post_comment: ResolverTypeWrapper<Group_Post_Comment>;
+  group_post_comment_aggregate: ResolverTypeWrapper<Group_Post_Comment_Aggregate>;
+  group_post_comment_aggregate_fields: ResolverTypeWrapper<Group_Post_Comment_Aggregate_Fields>;
+  group_post_comment_aggregate_order_by: Group_Post_Comment_Aggregate_Order_By;
+  group_post_comment_arr_rel_insert_input: Group_Post_Comment_Arr_Rel_Insert_Input;
+  group_post_comment_bool_exp: Group_Post_Comment_Bool_Exp;
+  group_post_comment_constraint: Group_Post_Comment_Constraint;
+  group_post_comment_insert_input: Group_Post_Comment_Insert_Input;
+  group_post_comment_max_fields: ResolverTypeWrapper<Group_Post_Comment_Max_Fields>;
+  group_post_comment_max_order_by: Group_Post_Comment_Max_Order_By;
+  group_post_comment_min_fields: ResolverTypeWrapper<Group_Post_Comment_Min_Fields>;
+  group_post_comment_min_order_by: Group_Post_Comment_Min_Order_By;
+  group_post_comment_mutation_response: ResolverTypeWrapper<Group_Post_Comment_Mutation_Response>;
+  group_post_comment_obj_rel_insert_input: Group_Post_Comment_Obj_Rel_Insert_Input;
+  group_post_comment_on_conflict: Group_Post_Comment_On_Conflict;
+  group_post_comment_order_by: Group_Post_Comment_Order_By;
+  group_post_comment_pk_columns_input: Group_Post_Comment_Pk_Columns_Input;
+  group_post_comment_select_column: Group_Post_Comment_Select_Column;
+  group_post_comment_set_input: Group_Post_Comment_Set_Input;
+  group_post_comment_update_column: Group_Post_Comment_Update_Column;
+  group_post_type: ResolverTypeWrapper<Group_Post_Type>;
+  group_post_type_aggregate: ResolverTypeWrapper<Group_Post_Type_Aggregate>;
+  group_post_type_aggregate_fields: ResolverTypeWrapper<Group_Post_Type_Aggregate_Fields>;
+  group_post_type_bool_exp: Group_Post_Type_Bool_Exp;
+  group_post_type_constraint: Group_Post_Type_Constraint;
+  group_post_type_enum: Group_Post_Type_Enum;
+  group_post_type_enum_comparison_exp: Group_Post_Type_Enum_Comparison_Exp;
+  group_post_type_insert_input: Group_Post_Type_Insert_Input;
+  group_post_type_max_fields: ResolverTypeWrapper<Group_Post_Type_Max_Fields>;
+  group_post_type_min_fields: ResolverTypeWrapper<Group_Post_Type_Min_Fields>;
+  group_post_type_mutation_response: ResolverTypeWrapper<Group_Post_Type_Mutation_Response>;
+  group_post_type_on_conflict: Group_Post_Type_On_Conflict;
+  group_post_type_order_by: Group_Post_Type_Order_By;
+  group_post_type_pk_columns_input: Group_Post_Type_Pk_Columns_Input;
+  group_post_type_select_column: Group_Post_Type_Select_Column;
+  group_post_type_set_input: Group_Post_Type_Set_Input;
+  group_post_type_update_column: Group_Post_Type_Update_Column;
+  group_posts: ResolverTypeWrapper<Group_Posts>;
+  group_posts_aggregate: ResolverTypeWrapper<Group_Posts_Aggregate>;
+  group_posts_aggregate_fields: ResolverTypeWrapper<Group_Posts_Aggregate_Fields>;
+  group_posts_aggregate_order_by: Group_Posts_Aggregate_Order_By;
+  group_posts_arr_rel_insert_input: Group_Posts_Arr_Rel_Insert_Input;
+  group_posts_bool_exp: Group_Posts_Bool_Exp;
+  group_posts_constraint: Group_Posts_Constraint;
+  group_posts_insert_input: Group_Posts_Insert_Input;
+  group_posts_max_fields: ResolverTypeWrapper<Group_Posts_Max_Fields>;
+  group_posts_max_order_by: Group_Posts_Max_Order_By;
+  group_posts_min_fields: ResolverTypeWrapper<Group_Posts_Min_Fields>;
+  group_posts_min_order_by: Group_Posts_Min_Order_By;
+  group_posts_mutation_response: ResolverTypeWrapper<Group_Posts_Mutation_Response>;
+  group_posts_obj_rel_insert_input: Group_Posts_Obj_Rel_Insert_Input;
+  group_posts_on_conflict: Group_Posts_On_Conflict;
+  group_posts_order_by: Group_Posts_Order_By;
+  group_posts_pk_columns_input: Group_Posts_Pk_Columns_Input;
+  group_posts_select_column: Group_Posts_Select_Column;
+  group_posts_set_input: Group_Posts_Set_Input;
+  group_posts_update_column: Group_Posts_Update_Column;
   group_role: ResolverTypeWrapper<Group_Role>;
   group_role_aggregate: ResolverTypeWrapper<Group_Role_Aggregate>;
   group_role_aggregate_fields: ResolverTypeWrapper<Group_Role_Aggregate_Fields>;
@@ -8846,6 +10389,23 @@ export type ResolversParentTypes = {
   chat_messages_order_by: Chat_Messages_Order_By;
   chat_messages_pk_columns_input: Chat_Messages_Pk_Columns_Input;
   chat_messages_set_input: Chat_Messages_Set_Input;
+  comments: Comments;
+  comments_aggregate: Comments_Aggregate;
+  comments_aggregate_fields: Comments_Aggregate_Fields;
+  comments_aggregate_order_by: Comments_Aggregate_Order_By;
+  comments_arr_rel_insert_input: Comments_Arr_Rel_Insert_Input;
+  comments_bool_exp: Comments_Bool_Exp;
+  comments_insert_input: Comments_Insert_Input;
+  comments_max_fields: Comments_Max_Fields;
+  comments_max_order_by: Comments_Max_Order_By;
+  comments_min_fields: Comments_Min_Fields;
+  comments_min_order_by: Comments_Min_Order_By;
+  comments_mutation_response: Comments_Mutation_Response;
+  comments_obj_rel_insert_input: Comments_Obj_Rel_Insert_Input;
+  comments_on_conflict: Comments_On_Conflict;
+  comments_order_by: Comments_Order_By;
+  comments_pk_columns_input: Comments_Pk_Columns_Input;
+  comments_set_input: Comments_Set_Input;
   date: Scalars['date'];
   date_comparison_exp: Date_Comparison_Exp;
   entities: Entities;
@@ -8955,6 +10515,53 @@ export type ResolversParentTypes = {
   group_members_order_by: Group_Members_Order_By;
   group_members_pk_columns_input: Group_Members_Pk_Columns_Input;
   group_members_set_input: Group_Members_Set_Input;
+  group_post_comment: Group_Post_Comment;
+  group_post_comment_aggregate: Group_Post_Comment_Aggregate;
+  group_post_comment_aggregate_fields: Group_Post_Comment_Aggregate_Fields;
+  group_post_comment_aggregate_order_by: Group_Post_Comment_Aggregate_Order_By;
+  group_post_comment_arr_rel_insert_input: Group_Post_Comment_Arr_Rel_Insert_Input;
+  group_post_comment_bool_exp: Group_Post_Comment_Bool_Exp;
+  group_post_comment_insert_input: Group_Post_Comment_Insert_Input;
+  group_post_comment_max_fields: Group_Post_Comment_Max_Fields;
+  group_post_comment_max_order_by: Group_Post_Comment_Max_Order_By;
+  group_post_comment_min_fields: Group_Post_Comment_Min_Fields;
+  group_post_comment_min_order_by: Group_Post_Comment_Min_Order_By;
+  group_post_comment_mutation_response: Group_Post_Comment_Mutation_Response;
+  group_post_comment_obj_rel_insert_input: Group_Post_Comment_Obj_Rel_Insert_Input;
+  group_post_comment_on_conflict: Group_Post_Comment_On_Conflict;
+  group_post_comment_order_by: Group_Post_Comment_Order_By;
+  group_post_comment_pk_columns_input: Group_Post_Comment_Pk_Columns_Input;
+  group_post_comment_set_input: Group_Post_Comment_Set_Input;
+  group_post_type: Group_Post_Type;
+  group_post_type_aggregate: Group_Post_Type_Aggregate;
+  group_post_type_aggregate_fields: Group_Post_Type_Aggregate_Fields;
+  group_post_type_bool_exp: Group_Post_Type_Bool_Exp;
+  group_post_type_enum_comparison_exp: Group_Post_Type_Enum_Comparison_Exp;
+  group_post_type_insert_input: Group_Post_Type_Insert_Input;
+  group_post_type_max_fields: Group_Post_Type_Max_Fields;
+  group_post_type_min_fields: Group_Post_Type_Min_Fields;
+  group_post_type_mutation_response: Group_Post_Type_Mutation_Response;
+  group_post_type_on_conflict: Group_Post_Type_On_Conflict;
+  group_post_type_order_by: Group_Post_Type_Order_By;
+  group_post_type_pk_columns_input: Group_Post_Type_Pk_Columns_Input;
+  group_post_type_set_input: Group_Post_Type_Set_Input;
+  group_posts: Group_Posts;
+  group_posts_aggregate: Group_Posts_Aggregate;
+  group_posts_aggregate_fields: Group_Posts_Aggregate_Fields;
+  group_posts_aggregate_order_by: Group_Posts_Aggregate_Order_By;
+  group_posts_arr_rel_insert_input: Group_Posts_Arr_Rel_Insert_Input;
+  group_posts_bool_exp: Group_Posts_Bool_Exp;
+  group_posts_insert_input: Group_Posts_Insert_Input;
+  group_posts_max_fields: Group_Posts_Max_Fields;
+  group_posts_max_order_by: Group_Posts_Max_Order_By;
+  group_posts_min_fields: Group_Posts_Min_Fields;
+  group_posts_min_order_by: Group_Posts_Min_Order_By;
+  group_posts_mutation_response: Group_Posts_Mutation_Response;
+  group_posts_obj_rel_insert_input: Group_Posts_Obj_Rel_Insert_Input;
+  group_posts_on_conflict: Group_Posts_On_Conflict;
+  group_posts_order_by: Group_Posts_Order_By;
+  group_posts_pk_columns_input: Group_Posts_Pk_Columns_Input;
+  group_posts_set_input: Group_Posts_Set_Input;
   group_role: Group_Role;
   group_role_aggregate: Group_Role_Aggregate;
   group_role_aggregate_fields: Group_Role_Aggregate_Fields;
@@ -9419,6 +11026,55 @@ export type Chat_Messages_Mutation_ResponseResolvers<ContextType = any, ParentTy
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type CommentsResolvers<ContextType = any, ParentType extends ResolversParentTypes['comments'] = ResolversParentTypes['comments']> = {
+  author?: Resolver<ResolversTypes['users'], ParentType, ContextType>;
+  author_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  content?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  group_post_relations?: Resolver<Array<ResolversTypes['group_post_comment']>, ParentType, ContextType, RequireFields<CommentsGroup_Post_RelationsArgs, never>>;
+  group_post_relations_aggregate?: Resolver<ResolversTypes['group_post_comment_aggregate'], ParentType, ContextType, RequireFields<CommentsGroup_Post_Relations_AggregateArgs, never>>;
+  id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  updated_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Comments_AggregateResolvers<ContextType = any, ParentType extends ResolversParentTypes['comments_aggregate'] = ResolversParentTypes['comments_aggregate']> = {
+  aggregate?: Resolver<Maybe<ResolversTypes['comments_aggregate_fields']>, ParentType, ContextType>;
+  nodes?: Resolver<Array<ResolversTypes['comments']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Comments_Aggregate_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['comments_aggregate_fields'] = ResolversParentTypes['comments_aggregate_fields']> = {
+  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<Comments_Aggregate_FieldsCountArgs, never>>;
+  max?: Resolver<Maybe<ResolversTypes['comments_max_fields']>, ParentType, ContextType>;
+  min?: Resolver<Maybe<ResolversTypes['comments_min_fields']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Comments_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['comments_max_fields'] = ResolversParentTypes['comments_max_fields']> = {
+  author_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  content?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Comments_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['comments_min_fields'] = ResolversParentTypes['comments_min_fields']> = {
+  author_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  content?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Comments_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['comments_mutation_response'] = ResolversParentTypes['comments_mutation_response']> = {
+  affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  returning?: Resolver<Array<ResolversTypes['comments']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['date'], any> {
   name: 'date';
 }
@@ -9428,6 +11084,10 @@ export type EntitiesResolvers<ContextType = any, ParentType extends ResolversPar
   group?: Resolver<ResolversTypes['groups'], ParentType, ContextType>;
   group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   group_join_request?: Resolver<ResolversTypes['group_join_requests'], ParentType, ContextType>;
+  group_post?: Resolver<ResolversTypes['group_posts'], ParentType, ContextType>;
+  group_post_comment?: Resolver<ResolversTypes['group_post_comment'], ParentType, ContextType>;
+  group_post_comment_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  group_post_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   join_request_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   thing?: Resolver<ResolversTypes['things'], ParentType, ContextType>;
@@ -9466,6 +11126,8 @@ export type Entities_Avg_FieldsResolvers<ContextType = any, ParentType extends R
 export type Entities_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['entities_max_fields'] = ResolversParentTypes['entities_max_fields']> = {
   dummy?: Resolver<Maybe<ResolversTypes['smallint']>, ParentType, ContextType>;
   group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  group_post_comment_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  group_post_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   join_request_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   thing_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
@@ -9476,6 +11138,8 @@ export type Entities_Max_FieldsResolvers<ContextType = any, ParentType extends R
 export type Entities_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['entities_min_fields'] = ResolversParentTypes['entities_min_fields']> = {
   dummy?: Resolver<Maybe<ResolversTypes['smallint']>, ParentType, ContextType>;
   group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  group_post_comment_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  group_post_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   join_request_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   thing_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
@@ -9823,6 +11487,146 @@ export type Group_Members_Mutation_ResponseResolvers<ContextType = any, ParentTy
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type Group_Post_CommentResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_post_comment'] = ResolversParentTypes['group_post_comment']> = {
+  comment?: Resolver<ResolversTypes['comments'], ParentType, ContextType>;
+  comment_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  group_post_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  post?: Resolver<ResolversTypes['group_posts'], ParentType, ContextType>;
+  updated_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Post_Comment_AggregateResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_post_comment_aggregate'] = ResolversParentTypes['group_post_comment_aggregate']> = {
+  aggregate?: Resolver<Maybe<ResolversTypes['group_post_comment_aggregate_fields']>, ParentType, ContextType>;
+  nodes?: Resolver<Array<ResolversTypes['group_post_comment']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Post_Comment_Aggregate_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_post_comment_aggregate_fields'] = ResolversParentTypes['group_post_comment_aggregate_fields']> = {
+  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<Group_Post_Comment_Aggregate_FieldsCountArgs, never>>;
+  max?: Resolver<Maybe<ResolversTypes['group_post_comment_max_fields']>, ParentType, ContextType>;
+  min?: Resolver<Maybe<ResolversTypes['group_post_comment_min_fields']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Post_Comment_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_post_comment_max_fields'] = ResolversParentTypes['group_post_comment_max_fields']> = {
+  comment_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  group_post_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Post_Comment_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_post_comment_min_fields'] = ResolversParentTypes['group_post_comment_min_fields']> = {
+  comment_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  group_post_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Post_Comment_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_post_comment_mutation_response'] = ResolversParentTypes['group_post_comment_mutation_response']> = {
+  affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  returning?: Resolver<Array<ResolversTypes['group_post_comment']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Post_TypeResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_post_type'] = ResolversParentTypes['group_post_type']> = {
+  comment?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  value?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Post_Type_AggregateResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_post_type_aggregate'] = ResolversParentTypes['group_post_type_aggregate']> = {
+  aggregate?: Resolver<Maybe<ResolversTypes['group_post_type_aggregate_fields']>, ParentType, ContextType>;
+  nodes?: Resolver<Array<ResolversTypes['group_post_type']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Post_Type_Aggregate_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_post_type_aggregate_fields'] = ResolversParentTypes['group_post_type_aggregate_fields']> = {
+  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<Group_Post_Type_Aggregate_FieldsCountArgs, never>>;
+  max?: Resolver<Maybe<ResolversTypes['group_post_type_max_fields']>, ParentType, ContextType>;
+  min?: Resolver<Maybe<ResolversTypes['group_post_type_min_fields']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Post_Type_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_post_type_max_fields'] = ResolversParentTypes['group_post_type_max_fields']> = {
+  comment?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  value?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Post_Type_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_post_type_min_fields'] = ResolversParentTypes['group_post_type_min_fields']> = {
+  comment?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  value?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Post_Type_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_post_type_mutation_response'] = ResolversParentTypes['group_post_type_mutation_response']> = {
+  affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  returning?: Resolver<Array<ResolversTypes['group_post_type']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_PostsResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_posts'] = ResolversParentTypes['group_posts']> = {
+  author?: Resolver<ResolversTypes['users'], ParentType, ContextType>;
+  author_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  comments?: Resolver<Array<ResolversTypes['group_post_comment']>, ParentType, ContextType, RequireFields<Group_PostsCommentsArgs, never>>;
+  comments_aggregate?: Resolver<ResolversTypes['group_post_comment_aggregate'], ParentType, ContextType, RequireFields<Group_PostsComments_AggregateArgs, never>>;
+  content?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  group?: Resolver<ResolversTypes['groups'], ParentType, ContextType>;
+  group_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  resolved?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['group_post_type_enum'], ParentType, ContextType>;
+  updated_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Posts_AggregateResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_posts_aggregate'] = ResolversParentTypes['group_posts_aggregate']> = {
+  aggregate?: Resolver<Maybe<ResolversTypes['group_posts_aggregate_fields']>, ParentType, ContextType>;
+  nodes?: Resolver<Array<ResolversTypes['group_posts']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Posts_Aggregate_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_posts_aggregate_fields'] = ResolversParentTypes['group_posts_aggregate_fields']> = {
+  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<Group_Posts_Aggregate_FieldsCountArgs, never>>;
+  max?: Resolver<Maybe<ResolversTypes['group_posts_max_fields']>, ParentType, ContextType>;
+  min?: Resolver<Maybe<ResolversTypes['group_posts_min_fields']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Posts_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_posts_max_fields'] = ResolversParentTypes['group_posts_max_fields']> = {
+  author_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  content?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Posts_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_posts_min_fields'] = ResolversParentTypes['group_posts_min_fields']> = {
+  author_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  content?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Group_Posts_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_posts_mutation_response'] = ResolversParentTypes['group_posts_mutation_response']> = {
+  affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  returning?: Resolver<Array<ResolversTypes['group_posts']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Group_RoleResolvers<ContextType = any, ParentType extends ResolversParentTypes['group_role'] = ResolversParentTypes['group_role']> = {
   comment?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   value?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -9980,6 +11784,8 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   delete_chat_groups_by_pk?: Resolver<Maybe<ResolversTypes['chat_groups']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Chat_Groups_By_PkArgs, 'id'>>;
   delete_chat_messages?: Resolver<Maybe<ResolversTypes['chat_messages_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Chat_MessagesArgs, 'where'>>;
   delete_chat_messages_by_pk?: Resolver<Maybe<ResolversTypes['chat_messages']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Chat_Messages_By_PkArgs, 'id'>>;
+  delete_comments?: Resolver<Maybe<ResolversTypes['comments_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_CommentsArgs, 'where'>>;
+  delete_comments_by_pk?: Resolver<Maybe<ResolversTypes['comments']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Comments_By_PkArgs, 'id'>>;
   delete_entities?: Resolver<Maybe<ResolversTypes['entities_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_EntitiesArgs, 'where'>>;
   delete_entities_by_pk?: Resolver<Maybe<ResolversTypes['entities']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Entities_By_PkArgs, 'id'>>;
   delete_file_uploads?: Resolver<Maybe<ResolversTypes['file_uploads_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_File_UploadsArgs, 'where'>>;
@@ -9992,6 +11798,12 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   delete_group_join_tokens_by_pk?: Resolver<Maybe<ResolversTypes['group_join_tokens']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_Join_Tokens_By_PkArgs, 'id'>>;
   delete_group_members?: Resolver<Maybe<ResolversTypes['group_members_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_MembersArgs, 'where'>>;
   delete_group_members_by_pk?: Resolver<Maybe<ResolversTypes['group_members']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_Members_By_PkArgs, 'id'>>;
+  delete_group_post_comment?: Resolver<Maybe<ResolversTypes['group_post_comment_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_Post_CommentArgs, 'where'>>;
+  delete_group_post_comment_by_pk?: Resolver<Maybe<ResolversTypes['group_post_comment']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_Post_Comment_By_PkArgs, 'id'>>;
+  delete_group_post_type?: Resolver<Maybe<ResolversTypes['group_post_type_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_Post_TypeArgs, 'where'>>;
+  delete_group_post_type_by_pk?: Resolver<Maybe<ResolversTypes['group_post_type']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_Post_Type_By_PkArgs, 'value'>>;
+  delete_group_posts?: Resolver<Maybe<ResolversTypes['group_posts_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_PostsArgs, 'where'>>;
+  delete_group_posts_by_pk?: Resolver<Maybe<ResolversTypes['group_posts']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_Posts_By_PkArgs, 'id'>>;
   delete_group_role?: Resolver<Maybe<ResolversTypes['group_role_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_RoleArgs, 'where'>>;
   delete_group_role_by_pk?: Resolver<Maybe<ResolversTypes['group_role']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_Role_By_PkArgs, 'value'>>;
   delete_group_thing?: Resolver<Maybe<ResolversTypes['group_thing_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Group_ThingArgs, 'where'>>;
@@ -10022,6 +11834,8 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   insert_chat_groups_one?: Resolver<Maybe<ResolversTypes['chat_groups']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Chat_Groups_OneArgs, 'object'>>;
   insert_chat_messages?: Resolver<Maybe<ResolversTypes['chat_messages_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Chat_MessagesArgs, 'objects'>>;
   insert_chat_messages_one?: Resolver<Maybe<ResolversTypes['chat_messages']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Chat_Messages_OneArgs, 'object'>>;
+  insert_comments?: Resolver<Maybe<ResolversTypes['comments_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_CommentsArgs, 'objects'>>;
+  insert_comments_one?: Resolver<Maybe<ResolversTypes['comments']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Comments_OneArgs, 'object'>>;
   insert_entities?: Resolver<Maybe<ResolversTypes['entities_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_EntitiesArgs, 'objects'>>;
   insert_entities_one?: Resolver<Maybe<ResolversTypes['entities']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Entities_OneArgs, 'object'>>;
   insert_file_uploads?: Resolver<Maybe<ResolversTypes['file_uploads_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_File_UploadsArgs, 'objects'>>;
@@ -10034,6 +11848,12 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   insert_group_join_tokens_one?: Resolver<Maybe<ResolversTypes['group_join_tokens']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_Join_Tokens_OneArgs, 'object'>>;
   insert_group_members?: Resolver<Maybe<ResolversTypes['group_members_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_MembersArgs, 'objects'>>;
   insert_group_members_one?: Resolver<Maybe<ResolversTypes['group_members']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_Members_OneArgs, 'object'>>;
+  insert_group_post_comment?: Resolver<Maybe<ResolversTypes['group_post_comment_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_Post_CommentArgs, 'objects'>>;
+  insert_group_post_comment_one?: Resolver<Maybe<ResolversTypes['group_post_comment']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_Post_Comment_OneArgs, 'object'>>;
+  insert_group_post_type?: Resolver<Maybe<ResolversTypes['group_post_type_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_Post_TypeArgs, 'objects'>>;
+  insert_group_post_type_one?: Resolver<Maybe<ResolversTypes['group_post_type']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_Post_Type_OneArgs, 'object'>>;
+  insert_group_posts?: Resolver<Maybe<ResolversTypes['group_posts_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_PostsArgs, 'objects'>>;
+  insert_group_posts_one?: Resolver<Maybe<ResolversTypes['group_posts']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_Posts_OneArgs, 'object'>>;
   insert_group_role?: Resolver<Maybe<ResolversTypes['group_role_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_RoleArgs, 'objects'>>;
   insert_group_role_one?: Resolver<Maybe<ResolversTypes['group_role']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_Role_OneArgs, 'object'>>;
   insert_group_thing?: Resolver<Maybe<ResolversTypes['group_thing_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Group_ThingArgs, 'objects'>>;
@@ -10068,6 +11888,8 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   update_chat_groups_by_pk?: Resolver<Maybe<ResolversTypes['chat_groups']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Chat_Groups_By_PkArgs, 'pk_columns'>>;
   update_chat_messages?: Resolver<Maybe<ResolversTypes['chat_messages_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Chat_MessagesArgs, 'where'>>;
   update_chat_messages_by_pk?: Resolver<Maybe<ResolversTypes['chat_messages']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Chat_Messages_By_PkArgs, 'pk_columns'>>;
+  update_comments?: Resolver<Maybe<ResolversTypes['comments_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_CommentsArgs, 'where'>>;
+  update_comments_by_pk?: Resolver<Maybe<ResolversTypes['comments']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Comments_By_PkArgs, 'pk_columns'>>;
   update_entities?: Resolver<Maybe<ResolversTypes['entities_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_EntitiesArgs, 'where'>>;
   update_entities_by_pk?: Resolver<Maybe<ResolversTypes['entities']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Entities_By_PkArgs, 'pk_columns'>>;
   update_file_uploads?: Resolver<Maybe<ResolversTypes['file_uploads_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_File_UploadsArgs, 'where'>>;
@@ -10080,6 +11902,12 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   update_group_join_tokens_by_pk?: Resolver<Maybe<ResolversTypes['group_join_tokens']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_Join_Tokens_By_PkArgs, 'pk_columns'>>;
   update_group_members?: Resolver<Maybe<ResolversTypes['group_members_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_MembersArgs, 'where'>>;
   update_group_members_by_pk?: Resolver<Maybe<ResolversTypes['group_members']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_Members_By_PkArgs, 'pk_columns'>>;
+  update_group_post_comment?: Resolver<Maybe<ResolversTypes['group_post_comment_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_Post_CommentArgs, 'where'>>;
+  update_group_post_comment_by_pk?: Resolver<Maybe<ResolversTypes['group_post_comment']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_Post_Comment_By_PkArgs, 'pk_columns'>>;
+  update_group_post_type?: Resolver<Maybe<ResolversTypes['group_post_type_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_Post_TypeArgs, 'where'>>;
+  update_group_post_type_by_pk?: Resolver<Maybe<ResolversTypes['group_post_type']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_Post_Type_By_PkArgs, 'pk_columns'>>;
+  update_group_posts?: Resolver<Maybe<ResolversTypes['group_posts_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_PostsArgs, 'where'>>;
+  update_group_posts_by_pk?: Resolver<Maybe<ResolversTypes['group_posts']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_Posts_By_PkArgs, 'pk_columns'>>;
   update_group_role?: Resolver<Maybe<ResolversTypes['group_role_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_RoleArgs, 'where'>>;
   update_group_role_by_pk?: Resolver<Maybe<ResolversTypes['group_role']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_Role_By_PkArgs, 'pk_columns'>>;
   update_group_thing?: Resolver<Maybe<ResolversTypes['group_thing_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Group_ThingArgs, 'where'>>;
@@ -10165,6 +11993,9 @@ export type Query_RootResolvers<ContextType = any, ParentType extends ResolversP
   chat_messages?: Resolver<Array<ResolversTypes['chat_messages']>, ParentType, ContextType, RequireFields<Query_RootChat_MessagesArgs, never>>;
   chat_messages_aggregate?: Resolver<ResolversTypes['chat_messages_aggregate'], ParentType, ContextType, RequireFields<Query_RootChat_Messages_AggregateArgs, never>>;
   chat_messages_by_pk?: Resolver<Maybe<ResolversTypes['chat_messages']>, ParentType, ContextType, RequireFields<Query_RootChat_Messages_By_PkArgs, 'id'>>;
+  comments?: Resolver<Array<ResolversTypes['comments']>, ParentType, ContextType, RequireFields<Query_RootCommentsArgs, never>>;
+  comments_aggregate?: Resolver<ResolversTypes['comments_aggregate'], ParentType, ContextType, RequireFields<Query_RootComments_AggregateArgs, never>>;
+  comments_by_pk?: Resolver<Maybe<ResolversTypes['comments']>, ParentType, ContextType, RequireFields<Query_RootComments_By_PkArgs, 'id'>>;
   entities?: Resolver<Array<ResolversTypes['entities']>, ParentType, ContextType, RequireFields<Query_RootEntitiesArgs, never>>;
   entities_aggregate?: Resolver<ResolversTypes['entities_aggregate'], ParentType, ContextType, RequireFields<Query_RootEntities_AggregateArgs, never>>;
   entities_by_pk?: Resolver<Maybe<ResolversTypes['entities']>, ParentType, ContextType, RequireFields<Query_RootEntities_By_PkArgs, 'id'>>;
@@ -10183,6 +12014,15 @@ export type Query_RootResolvers<ContextType = any, ParentType extends ResolversP
   group_members?: Resolver<Array<ResolversTypes['group_members']>, ParentType, ContextType, RequireFields<Query_RootGroup_MembersArgs, never>>;
   group_members_aggregate?: Resolver<ResolversTypes['group_members_aggregate'], ParentType, ContextType, RequireFields<Query_RootGroup_Members_AggregateArgs, never>>;
   group_members_by_pk?: Resolver<Maybe<ResolversTypes['group_members']>, ParentType, ContextType, RequireFields<Query_RootGroup_Members_By_PkArgs, 'id'>>;
+  group_post_comment?: Resolver<Array<ResolversTypes['group_post_comment']>, ParentType, ContextType, RequireFields<Query_RootGroup_Post_CommentArgs, never>>;
+  group_post_comment_aggregate?: Resolver<ResolversTypes['group_post_comment_aggregate'], ParentType, ContextType, RequireFields<Query_RootGroup_Post_Comment_AggregateArgs, never>>;
+  group_post_comment_by_pk?: Resolver<Maybe<ResolversTypes['group_post_comment']>, ParentType, ContextType, RequireFields<Query_RootGroup_Post_Comment_By_PkArgs, 'id'>>;
+  group_post_type?: Resolver<Array<ResolversTypes['group_post_type']>, ParentType, ContextType, RequireFields<Query_RootGroup_Post_TypeArgs, never>>;
+  group_post_type_aggregate?: Resolver<ResolversTypes['group_post_type_aggregate'], ParentType, ContextType, RequireFields<Query_RootGroup_Post_Type_AggregateArgs, never>>;
+  group_post_type_by_pk?: Resolver<Maybe<ResolversTypes['group_post_type']>, ParentType, ContextType, RequireFields<Query_RootGroup_Post_Type_By_PkArgs, 'value'>>;
+  group_posts?: Resolver<Array<ResolversTypes['group_posts']>, ParentType, ContextType, RequireFields<Query_RootGroup_PostsArgs, never>>;
+  group_posts_aggregate?: Resolver<ResolversTypes['group_posts_aggregate'], ParentType, ContextType, RequireFields<Query_RootGroup_Posts_AggregateArgs, never>>;
+  group_posts_by_pk?: Resolver<Maybe<ResolversTypes['group_posts']>, ParentType, ContextType, RequireFields<Query_RootGroup_Posts_By_PkArgs, 'id'>>;
   group_role?: Resolver<Array<ResolversTypes['group_role']>, ParentType, ContextType, RequireFields<Query_RootGroup_RoleArgs, never>>;
   group_role_aggregate?: Resolver<ResolversTypes['group_role_aggregate'], ParentType, ContextType, RequireFields<Query_RootGroup_Role_AggregateArgs, never>>;
   group_role_by_pk?: Resolver<Maybe<ResolversTypes['group_role']>, ParentType, ContextType, RequireFields<Query_RootGroup_Role_By_PkArgs, 'value'>>;
@@ -10234,6 +12074,9 @@ export type Subscription_RootResolvers<ContextType = any, ParentType extends Res
   chat_messages?: SubscriptionResolver<Array<ResolversTypes['chat_messages']>, "chat_messages", ParentType, ContextType, RequireFields<Subscription_RootChat_MessagesArgs, never>>;
   chat_messages_aggregate?: SubscriptionResolver<ResolversTypes['chat_messages_aggregate'], "chat_messages_aggregate", ParentType, ContextType, RequireFields<Subscription_RootChat_Messages_AggregateArgs, never>>;
   chat_messages_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['chat_messages']>, "chat_messages_by_pk", ParentType, ContextType, RequireFields<Subscription_RootChat_Messages_By_PkArgs, 'id'>>;
+  comments?: SubscriptionResolver<Array<ResolversTypes['comments']>, "comments", ParentType, ContextType, RequireFields<Subscription_RootCommentsArgs, never>>;
+  comments_aggregate?: SubscriptionResolver<ResolversTypes['comments_aggregate'], "comments_aggregate", ParentType, ContextType, RequireFields<Subscription_RootComments_AggregateArgs, never>>;
+  comments_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['comments']>, "comments_by_pk", ParentType, ContextType, RequireFields<Subscription_RootComments_By_PkArgs, 'id'>>;
   entities?: SubscriptionResolver<Array<ResolversTypes['entities']>, "entities", ParentType, ContextType, RequireFields<Subscription_RootEntitiesArgs, never>>;
   entities_aggregate?: SubscriptionResolver<ResolversTypes['entities_aggregate'], "entities_aggregate", ParentType, ContextType, RequireFields<Subscription_RootEntities_AggregateArgs, never>>;
   entities_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['entities']>, "entities_by_pk", ParentType, ContextType, RequireFields<Subscription_RootEntities_By_PkArgs, 'id'>>;
@@ -10252,6 +12095,15 @@ export type Subscription_RootResolvers<ContextType = any, ParentType extends Res
   group_members?: SubscriptionResolver<Array<ResolversTypes['group_members']>, "group_members", ParentType, ContextType, RequireFields<Subscription_RootGroup_MembersArgs, never>>;
   group_members_aggregate?: SubscriptionResolver<ResolversTypes['group_members_aggregate'], "group_members_aggregate", ParentType, ContextType, RequireFields<Subscription_RootGroup_Members_AggregateArgs, never>>;
   group_members_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['group_members']>, "group_members_by_pk", ParentType, ContextType, RequireFields<Subscription_RootGroup_Members_By_PkArgs, 'id'>>;
+  group_post_comment?: SubscriptionResolver<Array<ResolversTypes['group_post_comment']>, "group_post_comment", ParentType, ContextType, RequireFields<Subscription_RootGroup_Post_CommentArgs, never>>;
+  group_post_comment_aggregate?: SubscriptionResolver<ResolversTypes['group_post_comment_aggregate'], "group_post_comment_aggregate", ParentType, ContextType, RequireFields<Subscription_RootGroup_Post_Comment_AggregateArgs, never>>;
+  group_post_comment_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['group_post_comment']>, "group_post_comment_by_pk", ParentType, ContextType, RequireFields<Subscription_RootGroup_Post_Comment_By_PkArgs, 'id'>>;
+  group_post_type?: SubscriptionResolver<Array<ResolversTypes['group_post_type']>, "group_post_type", ParentType, ContextType, RequireFields<Subscription_RootGroup_Post_TypeArgs, never>>;
+  group_post_type_aggregate?: SubscriptionResolver<ResolversTypes['group_post_type_aggregate'], "group_post_type_aggregate", ParentType, ContextType, RequireFields<Subscription_RootGroup_Post_Type_AggregateArgs, never>>;
+  group_post_type_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['group_post_type']>, "group_post_type_by_pk", ParentType, ContextType, RequireFields<Subscription_RootGroup_Post_Type_By_PkArgs, 'value'>>;
+  group_posts?: SubscriptionResolver<Array<ResolversTypes['group_posts']>, "group_posts", ParentType, ContextType, RequireFields<Subscription_RootGroup_PostsArgs, never>>;
+  group_posts_aggregate?: SubscriptionResolver<ResolversTypes['group_posts_aggregate'], "group_posts_aggregate", ParentType, ContextType, RequireFields<Subscription_RootGroup_Posts_AggregateArgs, never>>;
+  group_posts_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['group_posts']>, "group_posts_by_pk", ParentType, ContextType, RequireFields<Subscription_RootGroup_Posts_By_PkArgs, 'id'>>;
   group_role?: SubscriptionResolver<Array<ResolversTypes['group_role']>, "group_role", ParentType, ContextType, RequireFields<Subscription_RootGroup_RoleArgs, never>>;
   group_role_aggregate?: SubscriptionResolver<ResolversTypes['group_role_aggregate'], "group_role_aggregate", ParentType, ContextType, RequireFields<Subscription_RootGroup_Role_AggregateArgs, never>>;
   group_role_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['group_role']>, "group_role_by_pk", ParentType, ContextType, RequireFields<Subscription_RootGroup_Role_By_PkArgs, 'value'>>;
@@ -10533,11 +12385,15 @@ export type UsersResolvers<ContextType = any, ParentType extends ResolversParent
   chat_group_memberships_aggregate?: Resolver<ResolversTypes['chat_group_members_aggregate'], ParentType, ContextType, RequireFields<UsersChat_Group_Memberships_AggregateArgs, never>>;
   chat_messages?: Resolver<Array<ResolversTypes['chat_messages']>, ParentType, ContextType, RequireFields<UsersChat_MessagesArgs, never>>;
   chat_messages_aggregate?: Resolver<ResolversTypes['chat_messages_aggregate'], ParentType, ContextType, RequireFields<UsersChat_Messages_AggregateArgs, never>>;
+  comments?: Resolver<Array<ResolversTypes['comments']>, ParentType, ContextType, RequireFields<UsersCommentsArgs, never>>;
+  comments_aggregate?: Resolver<ResolversTypes['comments_aggregate'], ParentType, ContextType, RequireFields<UsersComments_AggregateArgs, never>>;
   created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email_verified?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
   group_join_requests?: Resolver<Array<ResolversTypes['group_join_requests']>, ParentType, ContextType, RequireFields<UsersGroup_Join_RequestsArgs, never>>;
   group_join_requests_aggregate?: Resolver<ResolversTypes['group_join_requests_aggregate'], ParentType, ContextType, RequireFields<UsersGroup_Join_Requests_AggregateArgs, never>>;
+  group_posts?: Resolver<Array<ResolversTypes['group_posts']>, ParentType, ContextType, RequireFields<UsersGroup_PostsArgs, never>>;
+  group_posts_aggregate?: Resolver<ResolversTypes['group_posts_aggregate'], ParentType, ContextType, RequireFields<UsersGroup_Posts_AggregateArgs, never>>;
   id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   last_chat_notification?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
@@ -10740,6 +12596,12 @@ export type Resolvers<ContextType = any> = {
   chat_messages_max_fields?: Chat_Messages_Max_FieldsResolvers<ContextType>;
   chat_messages_min_fields?: Chat_Messages_Min_FieldsResolvers<ContextType>;
   chat_messages_mutation_response?: Chat_Messages_Mutation_ResponseResolvers<ContextType>;
+  comments?: CommentsResolvers<ContextType>;
+  comments_aggregate?: Comments_AggregateResolvers<ContextType>;
+  comments_aggregate_fields?: Comments_Aggregate_FieldsResolvers<ContextType>;
+  comments_max_fields?: Comments_Max_FieldsResolvers<ContextType>;
+  comments_min_fields?: Comments_Min_FieldsResolvers<ContextType>;
+  comments_mutation_response?: Comments_Mutation_ResponseResolvers<ContextType>;
   date?: GraphQLScalarType;
   entities?: EntitiesResolvers<ContextType>;
   entities_aggregate?: Entities_AggregateResolvers<ContextType>;
@@ -10793,6 +12655,24 @@ export type Resolvers<ContextType = any> = {
   group_members_max_fields?: Group_Members_Max_FieldsResolvers<ContextType>;
   group_members_min_fields?: Group_Members_Min_FieldsResolvers<ContextType>;
   group_members_mutation_response?: Group_Members_Mutation_ResponseResolvers<ContextType>;
+  group_post_comment?: Group_Post_CommentResolvers<ContextType>;
+  group_post_comment_aggregate?: Group_Post_Comment_AggregateResolvers<ContextType>;
+  group_post_comment_aggregate_fields?: Group_Post_Comment_Aggregate_FieldsResolvers<ContextType>;
+  group_post_comment_max_fields?: Group_Post_Comment_Max_FieldsResolvers<ContextType>;
+  group_post_comment_min_fields?: Group_Post_Comment_Min_FieldsResolvers<ContextType>;
+  group_post_comment_mutation_response?: Group_Post_Comment_Mutation_ResponseResolvers<ContextType>;
+  group_post_type?: Group_Post_TypeResolvers<ContextType>;
+  group_post_type_aggregate?: Group_Post_Type_AggregateResolvers<ContextType>;
+  group_post_type_aggregate_fields?: Group_Post_Type_Aggregate_FieldsResolvers<ContextType>;
+  group_post_type_max_fields?: Group_Post_Type_Max_FieldsResolvers<ContextType>;
+  group_post_type_min_fields?: Group_Post_Type_Min_FieldsResolvers<ContextType>;
+  group_post_type_mutation_response?: Group_Post_Type_Mutation_ResponseResolvers<ContextType>;
+  group_posts?: Group_PostsResolvers<ContextType>;
+  group_posts_aggregate?: Group_Posts_AggregateResolvers<ContextType>;
+  group_posts_aggregate_fields?: Group_Posts_Aggregate_FieldsResolvers<ContextType>;
+  group_posts_max_fields?: Group_Posts_Max_FieldsResolvers<ContextType>;
+  group_posts_min_fields?: Group_Posts_Min_FieldsResolvers<ContextType>;
+  group_posts_mutation_response?: Group_Posts_Mutation_ResponseResolvers<ContextType>;
   group_role?: Group_RoleResolvers<ContextType>;
   group_role_aggregate?: Group_Role_AggregateResolvers<ContextType>;
   group_role_aggregate_fields?: Group_Role_Aggregate_FieldsResolvers<ContextType>;
@@ -10884,14 +12764,16 @@ export type Resolvers<ContextType = any> = {
  */
 export type IResolvers<ContextType = any> = Resolvers<ContextType>;
 
-export const EntityCardFragmentDoc: DocumentNode<EntityCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"EntityCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"entities"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"short_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"thing"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"short_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"images"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"file"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"group_join_request"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"response"},"arguments":[],"directives":[]}]}}]}}]};
-export const ChatMessageCardFragmentDoc: DocumentNode<ChatMessageCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ChatMessageCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"chat_messages"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"sender_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"message"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"entity"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"EntityCard"},"directives":[]}]}}]}},...EntityCardFragmentDoc.definitions]};
 export const UserCardFragmentDoc: DocumentNode<UserCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"users"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"image"},"arguments":[],"directives":[]}]}}]};
+export const CommentCardFragmentDoc: DocumentNode<CommentCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CommentCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"comments"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"content"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"author"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},...UserCardFragmentDoc.definitions]};
+export const EntityCardFragmentDoc: DocumentNode<EntityCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"EntityCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"entities"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"short_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"thing"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"short_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"images"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"file"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"group_join_request"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"response"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"group_post_comment"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"post"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"author_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"comment"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentCard"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"group_post"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]}]}}]}},...CommentCardFragmentDoc.definitions]};
+export const ChatMessageCardFragmentDoc: DocumentNode<ChatMessageCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ChatMessageCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"chat_messages"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"sender_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"message"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"entity"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"EntityCard"},"directives":[]}]}}]}},...EntityCardFragmentDoc.definitions]};
 export const ChatGroupCardFragmentDoc: DocumentNode<ChatGroupCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ChatGroupCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"chat_groups"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"members"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"messages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sender"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"message"},"arguments":[],"directives":[]}]}}]}},...UserCardFragmentDoc.definitions]};
 export const GroupCardFragmentDoc: DocumentNode<GroupCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"groups"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"short_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"description"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"memberships_aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[],"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"thing_relations_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"thing"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"enabled"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"BooleanValue","value":true}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"_or"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"expiry"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gt"},"value":{"kind":"StringValue","value":"now()","block":false}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"expiry"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":true}}]}}]}]}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[],"directives":[]}]}}]}}]}}]};
 export const GroupMemberCardFragmentDoc: DocumentNode<GroupMemberCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupMemberCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"group_members"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"role"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},...UserCardFragmentDoc.definitions]};
 export const GroupDetailsFragmentDoc: DocumentNode<GroupDetailsFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupDetails"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"groups"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"},"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"memberships"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupMemberCard"},"directives":[]}]}}]}},...GroupCardFragmentDoc.definitions,...GroupMemberCardFragmentDoc.definitions]};
 export const GroupJoinTokenCardFragmentDoc: DocumentNode<GroupJoinTokenCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupJoinTokenCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"updated_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"token"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"disabled"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"note"},"arguments":[],"directives":[]}]}}]};
+export const GroupPostFragmentDoc: DocumentNode<GroupPostFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupPost"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"group_posts"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"updated_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"resolved"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"content"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"comments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"comment"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentCard"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"author"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},...CommentCardFragmentDoc.definitions,...GroupCardFragmentDoc.definitions,...UserCardFragmentDoc.definitions]};
 export const FileUploadCardFragmentDoc: DocumentNode<FileUploadCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"FileUploadCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"file_uploads"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"mime_type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"size"},"arguments":[],"directives":[]}]}}]};
 export const ThingImageCardFragmentDoc: DocumentNode<ThingImageCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ThingImageCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"thing_images"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"description"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"order"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"file"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"FileUploadCard"},"directives":[]}]}}]}},...FileUploadCardFragmentDoc.definitions]};
 export const ThingCardFragmentDoc: DocumentNode<ThingCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ThingCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"things"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"description"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"category"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"expiry"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"short_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"images"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingImageCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},...ThingImageCardFragmentDoc.definitions,...UserCardFragmentDoc.definitions]};
@@ -10912,10 +12794,14 @@ export const ListGroupsDocument: DocumentNode<ListGroupsQuery, ListGroupsQueryVa
 export const GroupDetailsDocument: DocumentNode<GroupDetailsQuery, GroupDetailsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GroupDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"shortId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"short_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"shortId"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupDetails"},"directives":[]}]}}]}},...GroupDetailsFragmentDoc.definitions]};
 export const GroupJoinRequestsDocument: DocumentNode<GroupJoinRequestsQuery, GroupJoinRequestsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GroupJoinRequests"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_requests_bool_exp"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_join_requests"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupJoinRequestCard"},"directives":[]}]}}]}},...GroupJoinRequestCardFragmentDoc.definitions]};
 export const GroupJoinTokensDocument: DocumentNode<GroupJoinTokensQuery, GroupJoinTokensQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GroupJoinTokens"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens_bool_exp"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_join_tokens"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupJoinTokenCard"},"directives":[]}]}}]}},...GroupJoinTokenCardFragmentDoc.definitions]};
+export const GroupPostListDocument: DocumentNode<GroupPostListQuery, GroupPostListQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GroupPostList"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_posts_bool_exp"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_posts_order_by"}}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupPost"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"group_posts_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[],"directives":[]}]}}]}}]}},...GroupPostFragmentDoc.definitions]};
 export const ActivityListDocument: DocumentNode<ActivityListQuery, ActivityListQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ActivityList"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"defaultValue":{"kind":"IntValue","value":"10"},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activities"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ActivityCard"},"directives":[]}]}}]}},...ActivityCardFragmentDoc.definitions]};
 export const CreateGroupDocument: DocumentNode<CreateGroupMutation, CreateGroupMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateGroupInput"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createGroup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"},"directives":[]}]}}]}}]}},...GroupCardFragmentDoc.definitions]};
 export const UpdateGroupDocument: DocumentNode<UpdateGroupMutation, UpdateGroupMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"groups_set_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_groups_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupDetails"},"directives":[]}]}}]}},...GroupDetailsFragmentDoc.definitions]};
 export const DeleteGroupDocument: DocumentNode<DeleteGroupMutation, DeleteGroupMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_groups_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"},"directives":[]}]}}]}},...GroupCardFragmentDoc.definitions]};
+export const CreateGroupPostDocument: DocumentNode<CreateGroupPostMutation, CreateGroupPostMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateGroupPost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_posts_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_posts_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupPost"},"directives":[]}]}}]}},...GroupPostFragmentDoc.definitions]};
+export const UpdateGroupPostDocument: DocumentNode<UpdateGroupPostMutation, UpdateGroupPostMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateGroupPost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_posts_set_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_group_posts_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupPost"},"directives":[]}]}}]}},...GroupPostFragmentDoc.definitions]};
+export const CreateGroupPostCommentDocument: DocumentNode<CreateGroupPostCommentMutation, CreateGroupPostCommentMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateGroupPostComment"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupPostId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"comments_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_post_comment_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_post_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupPostId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"comment"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"comment"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"post"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupPost"},"directives":[]}]}}]}}]}},...CommentCardFragmentDoc.definitions,...GroupPostFragmentDoc.definitions]};
 export const LeaveGroupDocument: DocumentNode<LeaveGroupMutation, LeaveGroupMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LeaveGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_group_members"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"},"arguments":[],"directives":[]}]}}]}}]};
 export const JoinGroupDocument: DocumentNode<JoinGroupMutation, JoinGroupMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"JoinGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_members_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupMemberCard"},"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserPrivateDetail"},"directives":[]}]}}]}}]}},...GroupMemberCardFragmentDoc.definitions,...UserPrivateDetailFragmentDoc.definitions]};
 export const JoinGroupWithTokenDocument: DocumentNode<JoinGroupWithTokenMutation, JoinGroupWithTokenMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"JoinGroupWithToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"JoinGroupInput"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"joinGroup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserPrivateDetail"},"directives":[]}]}}]}}]}},...UserPrivateDetailFragmentDoc.definitions]};
@@ -10948,6 +12834,7 @@ export const ServerFindGroupJoinRequestDocument: DocumentNode<ServerFindGroupJoi
 export const ServerFindJoinTokenDocument: DocumentNode<ServerFindJoinTokenQuery, ServerFindJoinTokenQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindJoinToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens_bool_exp"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_join_tokens"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"token"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerFindGroupMembersDocument: DocumentNode<ServerFindGroupMembersQuery, ServerFindGroupMembersQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindGroupMembers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"group_members_bool_exp"}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"memberships"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]}}]}}]};
 export const ServerCountGroupMembersDocument: DocumentNode<ServerCountGroupMembersQuery, ServerCountGroupMembersQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerCountGroupMembers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"group_members_bool_exp"}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_members_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[],"directives":[]}]}}]}}]}}]};
+export const ServerFindPostParticipantsDocument: DocumentNode<ServerFindPostParticipantsQuery, ServerFindPostParticipantsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindPostParticipants"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupPostId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupPostCommentId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"postComment"},"name":{"kind":"Name","value":"group_post_comment_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupPostCommentId"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"comment"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"author"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"post"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"author"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"participants"},"name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"comments"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_post_relations"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_post_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupPostId"}}}]}}]}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},...UserCardFragmentDoc.definitions]};
 export const ServerInsertGroupJoinTokenDocument: DocumentNode<ServerInsertGroupJoinTokenMutation, ServerInsertGroupJoinTokenMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertGroupJoinToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_join_tokens_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerInsertGroupDocument: DocumentNode<ServerInsertGroupMutation, ServerInsertGroupMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"groups_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_groups_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerInsertGroupJoinRequestDocument: DocumentNode<ServerInsertGroupJoinRequestMutation, ServerInsertGroupJoinRequestMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertGroupJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_requests_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_join_requests_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"status"},"arguments":[],"directives":[]}]}}]}}]};

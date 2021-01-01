@@ -1,6 +1,9 @@
-﻿import { Activity_Verb_Enum, ActivityCardFragment } from '../generated/graphql';
+﻿import { Activity_Verb_Enum, ActivityCardFragment, UserCardFragment } from '../generated/graphql';
 
-export const activityMessage = (activity: ActivityCardFragment) => {
+export const activityMessage = (
+    activity: ActivityCardFragment,
+    currentUser: UserCardFragment | null,
+) => {
     const ent = activity.entity;
     const sndEnt = activity.secondary_entity;
     const actor = activity.actor?.name || '[Deleted user]';
@@ -23,6 +26,26 @@ export const activityMessage = (activity: ActivityCardFragment) => {
         }
 
         return `${actor} ${activity.verb} group`;
+    }
+
+    if (ent.group_post) {
+        if (activity.verb === Activity_Verb_Enum.Added) {
+            return `${actor} posted in ${sndEnt?.group?.name}`;
+        }
+
+        return `${actor} ${activity.verb} post`;
+    }
+
+    if (ent.group_post_comment) {
+        if (activity.verb === Activity_Verb_Enum.Added) {
+            const yourPost =
+                currentUser && ent.group_post_comment.post.author_id === currentUser.id;
+            return `${actor} commented on ${
+                yourPost ? 'your post' : "a post you're participating in,"
+            } in ${sndEnt?.group?.name}`;
+        }
+
+        return `${actor} ${activity.verb} comment`;
     }
 
     if (ent.group_join_request) {

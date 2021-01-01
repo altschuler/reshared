@@ -43,6 +43,14 @@ const entityConstraint = (input: Entities_Insert_Input): Entities_Constraint => 
         return Entities_Constraint.EntitiesUserIdKey;
     }
 
+    if (input.group_post_id) {
+        return Entities_Constraint.EntitiesGroupPostIdKey;
+    }
+
+    if (input.group_post_comment_id) {
+        return Entities_Constraint.EntitiesGroupPostCommentIdKey;
+    }
+
     throw new Error('Invalid entity: no id specified');
 };
 

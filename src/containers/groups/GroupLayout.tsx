@@ -1,4 +1,14 @@
-﻿import { Button, Dropdown, Menu, message, Modal, PageHeader, Popconfirm, Typography } from 'antd';
+﻿import {
+    Button,
+    Divider,
+    Dropdown,
+    Menu,
+    message,
+    Modal,
+    PageHeader,
+    Popconfirm,
+    Typography,
+} from 'antd';
 import Link from 'next/link';
 import React, { ReactNode, useCallback } from 'react';
 import {
@@ -13,10 +23,10 @@ import { useMembership } from '../../utils/group';
 import { useRouter } from 'next/router';
 import { urlFor } from '../../utils/urls';
 import { JoinButton } from './JoinButton';
-import { useDialogs, CreateThingDrawer } from '../../components/dialogs';
+import { useDialogs, CreateThingDrawer, CreatePostDrawer } from '../../components/dialogs';
 import { PageLayout } from '../root/PageLayout';
 
-export type GroupPage = 'home' | 'members' | 'settings';
+export type GroupPage = 'home' | 'members' | 'settings' | 'things';
 
 export interface GroupLayoutProps {
     activePage?: GroupPage;
@@ -28,6 +38,9 @@ const useStyles = createUseStyles({
     active: {
         color: '#40a9ff',
         borderColor: '#40a9ff',
+        border: 'none',
+        borderBottomStyle: 'solid',
+        borderBottomWidth: 3,
     },
 
     header: {
@@ -77,9 +90,21 @@ export const GroupLayout = (props: GroupLayoutProps) => {
         });
     }, [leave, props.group, router, user]);
 
-    const handleShare = useCallback(() => {
-        dialogs.showDialog(CreateThingDrawer, { group: props.group }).then(console.log);
-    }, [dialogs, props.group]);
+    const handleShare = useCallback(
+        () =>
+            dialogs
+                .showDialog(CreateThingDrawer, { group: props.group })
+                .then(() => router.push(urlFor.group.home(props.group))),
+        [dialogs, props.group, router],
+    );
+
+    const handlePost = useCallback(
+        () =>
+            dialogs
+                .showDialog(CreatePostDrawer, { group: props.group })
+                .then(() => router.push(urlFor.group.home(props.group))),
+        [dialogs, props.group, router],
+    );
 
     const menu = (
         <Menu>
@@ -116,20 +141,24 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                 title={props.group.name}
                 extra={[
                     isMember && (
-                        <Button key="share" type="primary" onClick={handleShare}>
-                            Share a thing
-                        </Button>
+                        <Link key="home" href={urlFor.group.home(props.group)}>
+                            <Button type="link" className={btnClass('home')}>
+                                Home
+                            </Button>
+                        </Link>
                     ),
 
-                    <Link key="home" href={urlFor.group.home(props.group)}>
-                        <Button type="default" className={btnClass('home')}>
-                            Home
-                        </Button>
-                    </Link>,
+                    isMember && (
+                        <Link key="things" href={urlFor.group.things(props.group)}>
+                            <Button type="link" className={btnClass('things')}>
+                                Things
+                            </Button>
+                        </Link>
+                    ),
 
                     isMember && (
                         <Link key="members" href={urlFor.group.members(props.group)}>
-                            <Button type="default" className={btnClass('members')}>
+                            <Button type="link" className={btnClass('members')}>
                                 Members
                             </Button>
                         </Link>
@@ -137,19 +166,33 @@ export const GroupLayout = (props: GroupLayoutProps) => {
 
                     isAdmin && (
                         <Link key="settings" href={urlFor.group.settings(props.group)}>
-                            <Button type="default" className={btnClass('settings')}>
+                            <Button type="link" className={btnClass('settings')}>
                                 Settings
                             </Button>
                         </Link>
                     ),
 
-                    !isMember && <JoinButton key="join" group={props.group} />,
+                    isMember && <Divider type="vertical" style={{ color: 'black' }} />,
+
+                    isMember && (
+                        <Button key="share" type="primary" onClick={handleShare}>
+                            Share a thing
+                        </Button>
+                    ),
+
+                    isMember && (
+                        <Button key="post" type="primary" onClick={handlePost}>
+                            Ask for a thing
+                        </Button>
+                    ),
 
                     isMember && (
                         <Dropdown key="more" overlay={menu}>
                             <Button icon={<EllipsisOutlined />} />
                         </Dropdown>
                     ),
+
+                    !isMember && <JoinButton key="join" group={props.group} />,
                 ]}>
                 {props.children}
             </PageHeader>

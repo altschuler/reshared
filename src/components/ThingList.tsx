@@ -49,6 +49,8 @@ export interface ThingListProps {
     orderBy?: Things_Order_By[];
     hideSearch?: boolean;
     emptyText?: ReactNode | (() => ReactNode);
+    header?: ReactNode;
+    extra?: ReactNode;
 }
 
 export const ThingList = (props: ThingListProps) => {
@@ -102,15 +104,17 @@ export const ThingList = (props: ThingListProps) => {
     return (
         <List
             header={
-                !props.hideSearch && (
+                props.header ||
+                (!props.hideSearch && (
                     <Input.Search
                         placeholder="Search..."
                         className={classes.search}
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                     />
-                )
+                ))
             }
+            extra={props.extra}
             loading={loading}
             itemLayout="horizontal"
             size="large"

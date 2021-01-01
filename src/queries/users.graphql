@@ -60,6 +60,21 @@ fragment EntityCard on entities {
         id
         response
     }
+    group_post_comment {
+        id
+        post {
+            id
+            author_id
+            group_id
+        }
+        comment {
+            ...CommentCard
+        }
+    }
+    group_post {
+        id
+        group_id
+    }
 }
 
 fragment ActivityCard on activities {

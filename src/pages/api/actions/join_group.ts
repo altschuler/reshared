@@ -12,7 +12,10 @@ import {
     Group_Role_Enum,
 } from '../../../generated/graphql';
 
-export default makeAuthorizedHandler<JoinGroupWithTokenMutationVariables, JoinGroupResult>(
+export default makeAuthorizedHandler<
+    JoinGroupWithTokenMutationVariables,
+    Omit<JoinGroupResult, 'group' | 'user'>
+>(
     Joi.object<JoinGroupWithTokenMutationVariables>({
         input: Joi.object<JoinGroupInput>({
             group_id: Joi.string().uuid({ version: 'uuidv4' }),

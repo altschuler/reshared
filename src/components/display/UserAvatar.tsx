@@ -1,10 +1,11 @@
 ﻿import { GroupCardFragment, UserCardFragment } from '../../generated/graphql';
 import Link from 'next/link';
-import { Avatar, Popover, Card, Skeleton } from 'antd';
+import { Avatar, Popover, Card, Skeleton, Space, Tag } from 'antd';
 import { MessageOutlined, ProfileOutlined } from '@ant-design/icons';
 import { createUseStyles } from 'react-jss';
 import { CSSProperties, useMemo } from 'react';
 import { urlFor } from '../../utils/urls';
+import { useAuth } from '../../utils/auth';
 
 const useStyles = createUseStyles({
     overlay: {
@@ -20,37 +21,52 @@ export const UserAvatar = ({
     disablePopover,
     className,
     style,
+    showName,
 }: {
     user: UserCardFragment;
     group?: GroupCardFragment;
     disablePopover?: boolean;
     className?: string;
     style?: CSSProperties;
+    showName?: boolean;
 }) => {
     const classes = useStyles();
-    const popover = (
-        <Card
-            style={{ width: 300, marginTop: 16 }}
-            actions={[
-                <Link key="message" href={{ pathname: urlFor.chat.new(), query: { to: user.id } }}>
-                    <MessageOutlined title="Send a message" />
-                </Link>,
-                <ProfileOutlined key="profile" />,
-            ]}>
-            <Skeleton loading={false} avatar active>
-                <Card.Meta
-                    avatar={
-                        <Avatar size="large" src={user?.image || undefined}>
-                            <span style={{ userSelect: 'none' }}>
-                                {!user.image && (user.name.slice(0, 2).toUpperCase() || '?')}
-                            </span>
-                        </Avatar>
-                    }
-                    title={user.name}
-                    description={'Something'}
-                />
-            </Skeleton>
-        </Card>
+    const auth = useAuth();
+    const isSelf = useMemo(() => auth.user && auth.user.id === user.id, [auth.user, user.id]);
+    const popover = useMemo(
+        () => (
+            <Card
+                style={{ width: 300, marginTop: 16 }}
+                actions={[
+                    !isSelf && (
+                        <Link
+                            key="message"
+                            href={{ pathname: urlFor.chat.new(), query: { to: user.id } }}>
+                            <MessageOutlined title="Send a message" />
+                        </Link>
+                    ),
+                    <ProfileOutlined key="profile" />,
+                ]}>
+                <Skeleton loading={false} avatar active>
+                    <Card.Meta
+                        avatar={
+                            <Avatar size="large" src={user?.image || undefined}>
+                                <span style={{ userSelect: 'none' }}>
+                                    {!user.image && (user.name.slice(0, 2).toUpperCase() || '?')}
+                                </span>
+                            </Avatar>
+                        }
+                        title={
+                            <Space>
+                                <span>{user.name}</span>
+                                {isSelf && <Tag>You</Tag>}
+                            </Space>
+                        }
+                    />
+                </Skeleton>
+            </Card>
+        ),
+        [isSelf, user.id, user.image, user.name],
     );
 
     const avatar = useMemo(
@@ -72,7 +88,13 @@ export const UserAvatar = ({
             destroyTooltipOnHide
             overlayClassName={classes.overlay}
             content={popover}>
-            {avatar}
+            {showName ? (
+                <Space size={5}>
+                    {avatar} {user.name}
+                </Space>
+            ) : (
+                avatar
+            )}
         </Popover>
     );
 };
