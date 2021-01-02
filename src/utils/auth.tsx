@@ -4,10 +4,15 @@ import { createContext, ReactNode, useContext, useMemo } from 'react';
 
 export interface AuthContextState {
     user: UserPrivateDetailFragment | null;
+    token: string | null;
     loading: boolean;
 }
 
-export const AuthContext = createContext<AuthContextState>({ user: null, loading: false });
+export const AuthContext = createContext<AuthContextState>({
+    user: null,
+    loading: false,
+    token: null,
+});
 
 export const useAuth = () => {
     return useContext(AuthContext);
@@ -26,7 +31,11 @@ export const AuthProvider = (props: AuthProviderProps) => {
     const loading = sessionLoading || meQuery.loading;
     const user = meQuery.data?.users_by_pk || null;
 
-    const ctxValue = useMemo(() => ({ user, loading }), [user, loading]);
+    const ctxValue = useMemo(() => ({ user, loading, token: session?.token || null }), [
+        user,
+        loading,
+        session,
+    ]);
 
     return <AuthContext.Provider value={ctxValue}>{props.children}</AuthContext.Provider>;
 };

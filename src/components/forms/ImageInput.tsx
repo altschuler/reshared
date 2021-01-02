@@ -6,10 +6,10 @@ import { DeleteFilled } from '@ant-design/icons';
 import { createUseStyles } from 'react-jss';
 import Image from 'next/image';
 
-import { uploadFile, useFileUpload } from '../../utils/files';
+import { useFileUpload } from '../../utils/files';
 import { EditorThingImage } from '../editors';
 import { removeAt } from '../../utils/array';
-import { useApolloClient } from '@apollo/client';
+import { useAuth } from '../../utils/auth';
 
 export interface ImageInputProps {
     value: EditorThingImage[];
@@ -69,12 +69,13 @@ export const ImageInput = ({ value, errors, onChange, onTouch }: ImageInputProps
     const classes = useStyles();
     const [loading, setLoading] = useState(false);
     const { upload } = useFileUpload();
+    const auth = useAuth();
 
     const handleUpload = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
             const files = Array.from(e.target.files || []);
 
-            if (isEmpty(files)) {
+            if (!auth.token || isEmpty(files)) {
                 return;
             }
 
@@ -87,7 +88,7 @@ export const ImageInput = ({ value, errors, onChange, onTouch }: ImageInputProps
             }
 
             setLoading(true);
-            Promise.all(files.map((file) => upload(file)))
+            Promise.all(files.map((file) => upload(file, auth.token as string)))
                 .then((fileUploads) =>
                     onChange([
                         ...value,
@@ -96,7 +97,7 @@ export const ImageInput = ({ value, errors, onChange, onTouch }: ImageInputProps
                 )
                 .finally(() => setLoading(false));
         },
-        [onChange, upload, value],
+        [auth.token, onChange, upload, value],
     );
 
     const handleDescriptionChange = useCallback(

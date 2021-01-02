@@ -13,19 +13,23 @@ export const GroupThingsPage = () => {
     const router = useRouter();
 
     const classes = useStyles();
-    const { id } = router.query;
+    const { id: shortId } = router.query as { id: string };
 
-    const { data, loading, error } = useGroupDetailsQuery({ variables: { shortId: id as string } });
+    const { data, loading, error } = useGroupDetailsQuery({
+        variables: { shortId: shortId as string },
+    });
 
     const group = head(data?.groups);
 
     const where = useMemo(
         (): Things_Bool_Exp => ({
             group_relations: {
-                group_id: { _eq: group?.id },
+                group: { short_id: { _eq: shortId } },
             },
+            enabled: { _eq: true },
+            _or: [{ expiry: { _gt: 'now()' } }, { expiry: { _is_null: true } }],
         }),
-        [group?.id],
+        [shortId],
     );
 
     if (loading) {

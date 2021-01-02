@@ -22,21 +22,24 @@ const useStyles = createUseStyles({});
 export const GroupHomePage = () => {
     const classes = useStyles();
     const router = useRouter();
-    const { id } = router.query;
+    const { id: shortId } = router.query as { id: string };
 
     const collapsed = useMedia(['(max-width: 800px)'], [true], false);
-    const { data, loading, error } = useGroupDetailsQuery({ variables: { shortId: id as string } });
+    const { data, loading, error } = useGroupDetailsQuery({
+        variables: { shortId: shortId as string },
+    });
 
     const group = useMemo(() => data?.groups?.[0], [data?.groups]);
 
     const where = useMemo(
-        () =>
+        (): Things_Bool_Exp =>
             ({
-                group_relations: { group_id: { _eq: group?.id } },
+                group_relations: { group: { short_id: { _eq: shortId } } },
+                // Set these filters so owners dont see them where others wont
                 enabled: { _eq: true },
                 _or: [{ expiry: { _gt: 'now()' } }, { expiry: { _is_null: true } }],
             } as Things_Bool_Exp),
-        [group?.id],
+        [shortId],
     );
 
     const postWhere = useMemo(

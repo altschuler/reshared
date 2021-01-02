@@ -9,13 +9,21 @@ export interface UploadFileOptions {
 export const uploadFile = async (
     apolloClient: ApolloClient<unknown>,
     file: File,
+    jwt: string | null,
     options?: UploadFileOptions,
 ) => {
+    if (!jwt) {
+        throw new Error('Authorization required');
+    }
+
     // TODO: use axios for progress
     const filename = encodeURIComponent(file.name);
 
     // Get signed post (secure temporary link to upload directly to S3)
-    const res = await fetch(`/api/upload?file=${filename}`);
+    const res = await fetch(`/api/upload?file=${filename}`, {
+        headers: { Authorization: `Bearer ${jwt}` },
+    });
+
     const { url, fields } = await res.json();
 
     // Use signed post to upload
@@ -58,7 +66,8 @@ export const useFileUpload = () => {
     const apollo = useApolloClient();
     return useMemo(
         () => ({
-            upload: (file: File, options?: UploadFileOptions) => uploadFile(apollo, file, options),
+            upload: (file: File, jwt: string, options?: UploadFileOptions) =>
+                uploadFile(apollo, file, jwt, options),
         }),
         [apollo],
     );
