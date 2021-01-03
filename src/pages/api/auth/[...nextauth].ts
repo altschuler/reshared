@@ -16,11 +16,8 @@ const options = {
     database: {
         type: 'postgres',
         url: process.env.POSTGRES_URL,
-        ssl: process.env.NODE_ENV === 'production',
-        extra: process.env.NODE_ENV === 'production' && {
-            ssl: {
-                rejectUnauthorized: false,
-            },
+        ssl: process.env.NODE_ENV === 'production' && {
+            rejectUnauthorized: false,
         },
     },
     debug: true,
