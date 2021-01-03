@@ -11,18 +11,18 @@ export default makeEventHandler<Group_Posts>(async (args, ctx) => {
         variables: { groupId: groupPost.group_id, where: { user_id: { _neq: ctx.userId } } },
     });
 
-    if (!query.data.groups_by_pk) {
+    const group = query.data.groups_by_pk;
+    if (!group) {
         return ctx.error('Group not found');
     }
 
-    const memberIds = query.data.groups_by_pk.memberships.map((m) => m.user.id);
+    const memberIds = group.memberships.map((m) => m.user.id);
 
-    console.log(groupPost);
     await insertActivities(ctx, [
         {
+            groupId: groupPost.group_id,
             actorId: ctx.userId,
             entity: { group_post_id: groupPost.id },
-            secondaryEntity: { group_id: groupPost.group_id },
             verb: opToVerb(args.event.op),
             // Notify all users in group except actor owner, and only on insert
             receivers: args.event.op === 'INSERT' ? memberIds : [],

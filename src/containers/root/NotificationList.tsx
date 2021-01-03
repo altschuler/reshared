@@ -75,12 +75,16 @@ export const NotificationList = ({ notifications, loading, onSelect }: Notificat
                                 {activityMessage(notification.activity, auth.user)}
                             </Typography.Link>
                         }
-                        description={<DateDisplay mode="datetime" utc={activity.created_at} />}
+                        description={
+                            <span style={{ fontSize: '0.8em' }}>
+                                <DateDisplay mode="datetime" utc={activity.created_at} />
+                            </span>
+                        }
                     />
                 </List.Item>
             );
         },
-        [handleClick, handleMarkRead],
+        [auth.user, handleClick, handleMarkRead],
     );
 
     return (

@@ -57,28 +57,27 @@ export const urlFor = {
     // Will redirect to another url
     activity: (activity: ActivityCardFragment) => {
         const ent = activity.entity;
-        const sndEnt = activity.secondary_entity;
         const verb = activity.verb;
 
         // Navigate to the related entity
-        if (ent.thing && sndEnt?.group) {
+        if (ent.group_thing) {
             // TODO: link to thing page
-            return urlFor.group.home(sndEnt.group);
-        } else if (ent.group_post && sndEnt?.group) {
-            return urlFor.group.home(sndEnt?.group);
-        } else if (ent.group_post_comment && sndEnt?.group) {
+            return urlFor.thing(ent.group_thing.thing);
+        } else if (ent.group_post) {
+            return urlFor.group.home(ent.group_post.group);
+        } else if (ent.group_post_comment) {
             // TODO: link to post somehow
-            return urlFor.group.home(sndEnt?.group);
+            return urlFor.group.home(ent.group_post_comment.post.group);
         } else if (ent.group) {
             return urlFor.group.home(ent.group);
-        } else if (ent.group_join_request && sndEnt?.group) {
+        } else if (ent.group_join_request) {
             // For admins
             if (verb === Activity_Verb_Enum.Added) {
-                return urlFor.group.members(sndEnt.group);
+                return urlFor.group.members(ent.group_join_request.group);
             }
             // For requester
             else {
-                return urlFor.group.home(sndEnt.group);
+                return urlFor.group.home(ent.group_join_request.group);
             }
         } else if (ent.user) {
             // user

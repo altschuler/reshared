@@ -30,7 +30,7 @@ export const CreateThingDrawer = (props: CreateThingDrawerProps) => {
     });
 
     const [createThing, createMutation] = useCreateThingMutation({
-        refetchQueries: [GqlOps.Query.ThingList],
+        refetchQueries: [GqlOps.Query.ThingList, GqlOps.Query.GroupActivity],
     });
 
     const handleCreateGroup = useCallback(() => {

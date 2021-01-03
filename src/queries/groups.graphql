@@ -9,6 +9,15 @@ fragment GroupMemberCard on group_members {
     }
 }
 
+fragment GroupMemberWithGroupCard on group_members {
+    ...GroupMemberCard
+    group {
+        id
+        short_id
+        name
+    }
+}
+
 fragment GroupCard on groups {
     id
     short_id

@@ -19,6 +19,7 @@ export default makeEventHandler<Groups>(async (args, ctx) => {
 
     await insertActivities(ctx, [
         {
+            groupId,
             actorId: ctx.userId,
             entity: { group_id: groupId },
             verb: opToVerb(args.event.op),

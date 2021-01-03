@@ -1,0 +1,161 @@
+﻿fragment DetailedActivity on activities {
+    id
+    created_at
+    verb
+    actor {
+        ...UserCard
+    }
+    entity {
+        ...DetailedEntity
+    }
+}
+
+fragment ActivityCard on activities {
+    id
+    created_at
+    verb
+    entity {
+        ...EntityCard
+    }
+    secondary_entity {
+        ...EntityCard
+    }
+    actor {
+        ...UserCard
+    }
+}
+
+fragment NotificationCard on notifications {
+    id
+    read_at
+    created_at
+    activity {
+        ...ActivityCard
+    }
+}
+
+fragment GroupRef on groups {
+    id
+    short_id
+    name
+}
+
+fragment ThingRef on things {
+    id
+    short_id
+    name
+    images(limit: 1) {
+        file {
+            url
+        }
+    }
+}
+
+fragment EntityCard on entities {
+    id
+
+    group {
+        ...GroupRef
+    }
+
+    thing {
+        ...ThingRef
+    }
+
+    user {
+        ...UserCard
+    }
+
+    group_join_request {
+        id
+        response
+        group {
+            ...GroupRef
+        }
+    }
+
+    group_post_comment {
+        id
+        post {
+            id
+            author_id
+            group {
+                ...GroupRef
+            }
+        }
+        comment {
+            ...CommentCard
+        }
+    }
+
+    group_post {
+        id
+        group {
+            ...GroupRef
+        }
+    }
+
+    group_thing {
+        id
+        thing {
+            ...ThingRef
+        }
+        group {
+            ...GroupRef
+        }
+    }
+
+    group_member {
+        user {
+            ...UserCard
+        }
+
+        group {
+            ...GroupRef
+        }
+    }
+}
+
+fragment DetailedEntity on entities {
+    id
+    group {
+        ...GroupCard
+    }
+    user {
+        ...UserCard
+    }
+    group_post {
+        ...GroupPost
+    }
+    group_thing {
+        id
+        thing {
+            ...ThingCard
+        }
+    }
+    group_member {
+        ...GroupMemberWithGroupCard
+    }
+}
+query GroupActivity($shortId: String!, $limit: Int!, $offset: Int!) {
+    groups(limit: 1, where: { short_id: { _eq: $shortId } }) {
+        activities(
+            order_by: [{ created_at: desc }]
+            limit: $limit
+            offset: $offset
+            where: {
+                verb: { _nin: [rejected, requested_to_join, accepted, deleted, showed_interest] }
+                entity: {
+                    _or: [
+                        { group_thing_id: { _is_null: false } }
+                        { group_id: { _is_null: false } }
+                        { group_post_id: { _is_null: false } }
+                        { group_member_id: { _is_null: false } }
+                    ]
+                }
+            }
+        ) {
+            ...DetailedActivity
+        }
+    }
+}

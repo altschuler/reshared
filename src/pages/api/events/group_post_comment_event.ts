@@ -31,9 +31,9 @@ export default makeEventHandler<Group_Post_Comment>(async (args, ctx) => {
 
     await insertActivities(ctx, [
         {
+            groupId: postComment.post.group_id,
             actorId: ctx.userId,
             entity: { group_post_comment_id: groupPostComment.id },
-            secondaryEntity: { group_id: postComment.post.group_id },
             verb: opToVerb(args.event.op),
             // Only notify on new comments
             receivers: args.event.op === 'INSERT' ? receivers : [],

@@ -1,21 +1,19 @@
 ﻿import {
     Order_By,
-    Thing_Type_Enum,
     ThingCardFragment,
     Things_Bool_Exp,
     Things_Order_By,
     useThingListQuery,
 } from '../generated/graphql';
 import { useAuth } from '../utils/auth';
-import { EditThingDrawer, ImageGalleryModal, useDialogs } from './dialogs';
+import { EditThingDrawer, useDialogs } from './dialogs';
 import { usePagination } from '../utils/list';
 import { ReactNode, useCallback, useEffect, useState } from 'react';
-import { Button, Input, List, Space, Tag } from 'antd';
+import { Button, Input, List, Space } from 'antd';
 import { ownsThing } from '../utils/thing';
 import { EditOutlined } from '@ant-design/icons';
-import { UserAvatar } from './display';
+import { ImageThumbList, UserAvatar } from './display';
 import Link from 'next/link';
-import Image from 'next/image';
 import { createUseStyles } from 'react-jss';
 import { useDebounce } from '../utils/hooks';
 import { ThingInterestButton } from './ThingInterestButton';
@@ -82,20 +80,6 @@ export const ThingList = (props: ThingListProps) => {
 
     useEffect(() => pgn.setTotal(total), [total, pgn]);
 
-    const handleShowGallery = useCallback(
-        (thing: ThingCardFragment, startIndex: number) =>
-            showDialog(ImageGalleryModal, {
-                title: `Images for ${thing.name}`,
-                startIndex,
-                images: thing.images.map((i) => ({
-                    id: i.id,
-                    description: i.description,
-                    url: i.file.url,
-                })),
-            }),
-        [showDialog],
-    );
-
     const handleEdit = useCallback(
         (thing: ThingCardFragment) => showDialog(EditThingDrawer, { thing }),
         [showDialog],
@@ -146,21 +130,8 @@ export const ThingList = (props: ThingListProps) => {
                         }
                         description={thing.description}
                     />
-                    <Space>
-                        {thing.images.map((img, index) => (
-                            <div key={img.id} className={classes.thumbnail}>
-                                <Image
-                                    title={img.description}
-                                    width={40}
-                                    height={40}
-                                    objectFit="cover"
-                                    alt={img.description || img.file.name}
-                                    src={img.file.url}
-                                    onClick={() => handleShowGallery(thing, index)}
-                                />
-                            </div>
-                        ))}
-                    </Space>
+
+                    <ImageThumbList thing={thing} />
                 </List.Item>
             )}
         />

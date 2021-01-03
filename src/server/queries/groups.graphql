@@ -24,6 +24,7 @@ query ServerFindJoinToken($where: group_join_tokens_bool_exp!) {
 
 query ServerFindGroupMembers($groupId: uuid!, $where: group_members_bool_exp) {
     groups_by_pk(id: $groupId) {
+        id
         memberships(where: $where) {
             user {
                 id

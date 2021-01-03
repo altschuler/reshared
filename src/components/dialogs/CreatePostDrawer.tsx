@@ -19,7 +19,7 @@ export const CreatePostDrawer = (props: CreatePostDrawerProps) => {
     const editorState = usePostEditor({ group });
 
     const [createPost, mutation] = useCreateGroupPostMutation({
-        refetchQueries: [GqlOps.Query.GroupPostList],
+        refetchQueries: [GqlOps.Query.GroupPostList, GqlOps.Query.GroupActivity],
     });
 
     const handlePost = useCallback(

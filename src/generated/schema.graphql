@@ -350,6 +350,10 @@ type activities {
   """An object relationship"""
   entity: entities!
   entity_id: uuid!
+
+  """An object relationship"""
+  group: groups!
+  group_id: uuid
   id: uuid!
 
   """An array relationship"""
@@ -412,6 +416,25 @@ type activities_aggregate_fields {
 }
 
 """
+order by aggregate values of table "activities"
+"""
+input activities_aggregate_order_by {
+  count: order_by
+  max: activities_max_order_by
+  min: activities_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "activities"
+"""
+input activities_arr_rel_insert_input {
+  data: [activities_insert_input!]!
+
+  """on conflict condition"""
+  on_conflict: activities_on_conflict
+}
+
+"""
 Boolean expression to filter rows from the table "activities". All fields are combined with a logical 'AND'.
 """
 input activities_bool_exp {
@@ -423,6 +446,8 @@ input activities_bool_exp {
   created_at: timestamptz_comparison_exp
   entity: entities_bool_exp
   entity_id: uuid_comparison_exp
+  group: groups_bool_exp
+  group_id: uuid_comparison_exp
   id: uuid_comparison_exp
   notifications: notifications_bool_exp
   secondary_entity: entities_bool_exp
@@ -447,6 +472,8 @@ input activities_insert_input {
   created_at: timestamptz
   entity: entities_obj_rel_insert_input
   entity_id: uuid
+  group: groups_obj_rel_insert_input
+  group_id: uuid
   id: uuid
   notifications: notifications_arr_rel_insert_input
   secondary_entity: entities_obj_rel_insert_input
@@ -459,8 +486,21 @@ type activities_max_fields {
   actor_id: uuid
   created_at: timestamptz
   entity_id: uuid
+  group_id: uuid
   id: uuid
   secondary_entity_id: uuid
+}
+
+"""
+order by max() on columns of table "activities"
+"""
+input activities_max_order_by {
+  actor_id: order_by
+  created_at: order_by
+  entity_id: order_by
+  group_id: order_by
+  id: order_by
+  secondary_entity_id: order_by
 }
 
 """aggregate min on columns"""
@@ -468,8 +508,21 @@ type activities_min_fields {
   actor_id: uuid
   created_at: timestamptz
   entity_id: uuid
+  group_id: uuid
   id: uuid
   secondary_entity_id: uuid
+}
+
+"""
+order by min() on columns of table "activities"
+"""
+input activities_min_order_by {
+  actor_id: order_by
+  created_at: order_by
+  entity_id: order_by
+  group_id: order_by
+  id: order_by
+  secondary_entity_id: order_by
 }
 
 """
@@ -509,6 +562,8 @@ input activities_order_by {
   created_at: order_by
   entity: entities_order_by
   entity_id: order_by
+  group: groups_order_by
+  group_id: order_by
   id: order_by
   notifications_aggregate: notifications_aggregate_order_by
   secondary_entity: entities_order_by
@@ -535,6 +590,9 @@ enum activities_select_column {
   entity_id
 
   """column name"""
+  group_id
+
+  """column name"""
   id
 
   """column name"""
@@ -551,6 +609,7 @@ input activities_set_input {
   actor_id: uuid
   created_at: timestamptz
   entity_id: uuid
+  group_id: uuid
   id: uuid
   secondary_entity_id: uuid
   verb: activity_verb_enum
@@ -568,6 +627,9 @@ enum activities_update_column {
 
   """column name"""
   entity_id
+
+  """column name"""
+  group_id
 
   """column name"""
   id
@@ -1714,13 +1776,26 @@ type entities {
   group_join_request: group_join_requests!
 
   """An object relationship"""
+  group_member: group_members!
+  group_member_id: uuid
+
+  """An object relationship"""
   group_post: group_posts!
 
   """An object relationship"""
   group_post_comment: group_post_comment!
   group_post_comment_id: uuid
   group_post_id: uuid
+
+  """An object relationship"""
+  group_thing: group_thing!
+  group_thing_id: uuid
   id: uuid!
+
+  """
+  A computed field, executes function "entity_valid"
+  """
+  is_valid: Boolean
   join_request_id: uuid
 
   """An object relationship"""
@@ -1773,10 +1848,14 @@ input entities_bool_exp {
   group: groups_bool_exp
   group_id: uuid_comparison_exp
   group_join_request: group_join_requests_bool_exp
+  group_member: group_members_bool_exp
+  group_member_id: uuid_comparison_exp
   group_post: group_posts_bool_exp
   group_post_comment: group_post_comment_bool_exp
   group_post_comment_id: uuid_comparison_exp
   group_post_id: uuid_comparison_exp
+  group_thing: group_thing_bool_exp
+  group_thing_id: uuid_comparison_exp
   id: uuid_comparison_exp
   join_request_id: uuid_comparison_exp
   thing: things_bool_exp
@@ -1793,10 +1872,16 @@ enum entities_constraint {
   entities_group_id_key
 
   """unique or primary key constraint"""
+  entities_group_member_id_key
+
+  """unique or primary key constraint"""
   entities_group_post_comment_id_key
 
   """unique or primary key constraint"""
   entities_group_post_id_key
+
+  """unique or primary key constraint"""
+  entities_group_thing_id_key
 
   """unique or primary key constraint"""
   entities_join_request_id_key
@@ -1826,10 +1911,14 @@ input entities_insert_input {
   group: groups_obj_rel_insert_input
   group_id: uuid
   group_join_request: group_join_requests_obj_rel_insert_input
+  group_member: group_members_obj_rel_insert_input
+  group_member_id: uuid
   group_post: group_posts_obj_rel_insert_input
   group_post_comment: group_post_comment_obj_rel_insert_input
   group_post_comment_id: uuid
   group_post_id: uuid
+  group_thing: group_thing_obj_rel_insert_input
+  group_thing_id: uuid
   id: uuid
   join_request_id: uuid
   thing: things_obj_rel_insert_input
@@ -1842,8 +1931,10 @@ input entities_insert_input {
 type entities_max_fields {
   dummy: smallint
   group_id: uuid
+  group_member_id: uuid
   group_post_comment_id: uuid
   group_post_id: uuid
+  group_thing_id: uuid
   id: uuid
   join_request_id: uuid
   thing_id: uuid
@@ -1854,8 +1945,10 @@ type entities_max_fields {
 type entities_min_fields {
   dummy: smallint
   group_id: uuid
+  group_member_id: uuid
   group_post_comment_id: uuid
   group_post_id: uuid
+  group_thing_id: uuid
   id: uuid
   join_request_id: uuid
   thing_id: uuid
@@ -1898,10 +1991,14 @@ input entities_order_by {
   group: groups_order_by
   group_id: order_by
   group_join_request: group_join_requests_order_by
+  group_member: group_members_order_by
+  group_member_id: order_by
   group_post: group_posts_order_by
   group_post_comment: group_post_comment_order_by
   group_post_comment_id: order_by
   group_post_id: order_by
+  group_thing: group_thing_order_by
+  group_thing_id: order_by
   id: order_by
   join_request_id: order_by
   thing: things_order_by
@@ -1926,10 +2023,16 @@ enum entities_select_column {
   group_id
 
   """column name"""
+  group_member_id
+
+  """column name"""
   group_post_comment_id
 
   """column name"""
   group_post_id
+
+  """column name"""
+  group_thing_id
 
   """column name"""
   id
@@ -1950,8 +2053,10 @@ input type for updating data in table "entities"
 input entities_set_input {
   dummy: smallint
   group_id: uuid
+  group_member_id: uuid
   group_post_comment_id: uuid
   group_post_id: uuid
+  group_thing_id: uuid
   id: uuid
   join_request_id: uuid
   thing_id: uuid
@@ -1989,10 +2094,16 @@ enum entities_update_column {
   group_id
 
   """column name"""
+  group_member_id
+
+  """column name"""
   group_post_comment_id
 
   """column name"""
   group_post_id
+
+  """column name"""
+  group_thing_id
 
   """column name"""
   id
@@ -3114,6 +3225,16 @@ type group_members_mutation_response {
 }
 
 """
+input type for inserting object relation for remote table "group_members"
+"""
+input group_members_obj_rel_insert_input {
+  data: group_members_insert_input!
+
+  """on conflict condition"""
+  on_conflict: group_members_on_conflict
+}
+
+"""
 on conflict condition type for table "group_members"
 """
 input group_members_on_conflict {
@@ -4161,6 +4282,16 @@ type group_thing_mutation_response {
 }
 
 """
+input type for inserting object relation for remote table "group_thing"
+"""
+input group_thing_obj_rel_insert_input {
+  data: group_thing_insert_input!
+
+  """on conflict condition"""
+  on_conflict: group_thing_on_conflict
+}
+
+"""
 on conflict condition type for table "group_thing"
 """
 input group_thing_on_conflict {
@@ -4240,6 +4371,41 @@ enum group_thing_update_column {
 columns and relationships of "groups"
 """
 type groups {
+  """An array relationship"""
+  activities(
+    """distinct select on columns"""
+    distinct_on: [activities_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [activities_order_by!]
+
+    """filter the rows returned"""
+    where: activities_bool_exp
+  ): [activities!]!
+
+  """An aggregate relationship"""
+  activities_aggregate(
+    """distinct select on columns"""
+    distinct_on: [activities_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [activities_order_by!]
+
+    """filter the rows returned"""
+    where: activities_bool_exp
+  ): activities_aggregate!
   created_at: timestamptz!
   description: String
   id: uuid!
@@ -4417,6 +4583,7 @@ input groups_bool_exp {
   _and: [groups_bool_exp!]
   _not: groups_bool_exp
   _or: [groups_bool_exp!]
+  activities: activities_bool_exp
   created_at: timestamptz_comparison_exp
   description: String_comparison_exp
   id: uuid_comparison_exp
@@ -4448,6 +4615,7 @@ enum groups_constraint {
 input type for inserting data into table "groups"
 """
 input groups_insert_input {
+  activities: activities_arr_rel_insert_input
   created_at: timestamptz
   description: String
   id: uuid
@@ -4513,6 +4681,7 @@ input groups_on_conflict {
 
 """Ordering options when selecting data from "groups"."""
 input groups_order_by {
+  activities_aggregate: activities_aggregate_order_by
   created_at: order_by
   description: order_by
   id: order_by

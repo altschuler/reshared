@@ -15,21 +15,18 @@ const useStyles = createUseStyles({
     },
 });
 
-export const UserAvatar = ({
-    user,
-    group,
-    disablePopover,
-    className,
-    style,
-    showName,
-}: {
+export interface UserAvatarProps {
     user: UserCardFragment;
     group?: GroupCardFragment;
     disablePopover?: boolean;
     className?: string;
     style?: CSSProperties;
     showName?: boolean;
-}) => {
+    size?: 'small' | 'default' | 'large';
+}
+
+export const UserAvatar = (props: UserAvatarProps) => {
+    const { user, disablePopover, className, style, showName, size } = props;
     const classes = useStyles();
     const auth = useAuth();
     const isSelf = useMemo(() => auth.user && auth.user.id === user.id, [auth.user, user.id]);
@@ -71,7 +68,11 @@ export const UserAvatar = ({
 
     const avatar = useMemo(
         () => (
-            <Avatar size="small" src={user.image || undefined} className={className} style={style}>
+            <Avatar
+                size={size || 'small'}
+                src={user.image || undefined}
+                className={className}
+                style={style}>
                 <span style={{ userSelect: 'none' }}>
                     {!user.image && (user.name.slice(0, 2).toUpperCase() || '?')}
                 </span>

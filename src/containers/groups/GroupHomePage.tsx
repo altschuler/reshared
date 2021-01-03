@@ -1,21 +1,18 @@
 ﻿import { useMemo } from 'react';
-import { isEmpty } from 'lodash';
-import Link from 'next/link';
-import { Alert, Button, Col, Row, Space, Spin, Typography } from 'antd';
+import { isEmpty, head } from 'lodash';
+import { Alert, Col, Row, Spin } from 'antd';
 import { GroupLayout } from './GroupLayout';
 import {
-    Group_Posts_Bool_Exp,
     Things_Bool_Exp,
+    useGroupActivityQuery,
     useGroupDetailsQuery,
 } from '../../generated/graphql';
 import { useMembership } from '../../utils/group';
-import { ThingList } from '../../components/ThingList';
 import { createUseStyles } from 'react-jss';
 import { useRouter } from 'next/router';
 import { GroupEmptyContent } from './GroupEmptyContent';
-import { GroupPostList } from '../../components/GroupPostList';
-import { urlFor } from '../../utils/urls';
 import { useMedia } from '../../utils/hooks';
+import { ActivityFeed } from '../../components/display';
 
 const useStyles = createUseStyles({});
 
@@ -31,25 +28,10 @@ export const GroupHomePage = () => {
 
     const group = useMemo(() => data?.groups?.[0], [data?.groups]);
 
-    const where = useMemo(
-        (): Things_Bool_Exp =>
-            ({
-                group_relations: { group: { short_id: { _eq: shortId } } },
-                // Set these filters so owners dont see them where others wont
-                enabled: { _eq: true },
-                _or: [{ expiry: { _gt: 'now()' } }, { expiry: { _is_null: true } }],
-            } as Things_Bool_Exp),
-        [shortId],
-    );
-
-    const postWhere = useMemo(
-        (): Group_Posts_Bool_Exp => ({
-            group_id: { _eq: group?.id },
-        }),
-        [group?.id],
-    );
-
     const { isMember } = useMembership(group);
+
+    const query = useGroupActivityQuery({ variables: { shortId, limit: 100, offset: 0 } });
+    const activities = query.data?.groups?.[0].activities || [];
 
     if (loading) {
         return <Spin />;
@@ -73,23 +55,7 @@ export const GroupHomePage = () => {
         <GroupLayout activePage="home" group={group}>
             <Row gutter={[16, 16]}>
                 <Col sm={24} md={12}>
-                    <GroupPostList where={postWhere} />
-                </Col>
-
-                <Col sm={24} md={12}>
-                    <ThingList
-                        header={
-                            <Space>
-                                <Typography.Title level={5}>Latest things</Typography.Title>
-
-                                <Link href={urlFor.group.things(group)}>
-                                    <Button type="link">View all</Button>
-                                </Link>
-                            </Space>
-                        }
-                        hideSearch
-                        where={where}
-                    />
+                    <ActivityFeed loading={query.loading} activities={activities} />
                 </Col>
             </Row>
         </GroupLayout>

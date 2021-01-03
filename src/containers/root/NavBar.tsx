@@ -65,9 +65,9 @@ const ExpandedNav = (props: { onLogin: () => unknown; onRegister: () => unknown 
         <>
             <div className={classes.nav}>
                 <Space size="large">
-                    <Typography.Link className={classes.navLink}>
-                        <Link href={urlFor.home()}>Home</Link>
-                    </Typography.Link>
+                    <Link href={urlFor.home()} passHref>
+                        <Typography.Link className={classes.navLink}>Home</Typography.Link>
+                    </Link>
 
                     <Typography.Link className={classes.navLink}>
                         <Link href={urlFor.search()}>Find</Link>

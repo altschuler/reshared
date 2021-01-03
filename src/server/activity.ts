@@ -17,6 +17,7 @@ export interface ActivityInput {
     entity: Entities_Insert_Input;
     secondaryEntity?: Entities_Insert_Input;
     receivers?: string[];
+    groupId?: string;
 }
 
 export const insertActivities = (ctx: EventHandlerContext, inputs: ActivityInput[]) => {
@@ -51,6 +52,14 @@ const entityConstraint = (input: Entities_Insert_Input): Entities_Constraint => 
         return Entities_Constraint.EntitiesGroupPostCommentIdKey;
     }
 
+    if (input.group_thing_id) {
+        return Entities_Constraint.EntitiesGroupThingIdKey;
+    }
+
+    if (input.group_member_id) {
+        return Entities_Constraint.EntitiesGroupMemberIdKey;
+    }
+
     throw new Error('Invalid entity: no id specified');
 };
 
@@ -69,6 +78,7 @@ const makeEntityInsert = (
 const toInsert = (input: ActivityInput): Activities_Insert_Input => {
     return {
         actor_id: input.actorId,
+        group_id: input.groupId,
         verb: input.verb,
         entity: makeEntityInsert(input.entity),
         secondary_entity: makeEntityInsert(input.secondaryEntity),
@@ -87,7 +97,7 @@ export const opToVerb = (type: 'INSERT' | 'UPDATE' | 'DELETE' | 'MANUAL'): Activ
             return Activity_Verb_Enum.Updated;
         case 'DELETE':
             return Activity_Verb_Enum.Deleted;
-        // Should never happen
+        // Will only happen when run manually from hasura console
         default:
             return Activity_Verb_Enum.Updated;
     }

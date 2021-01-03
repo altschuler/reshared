@@ -290,6 +290,9 @@ export type Activities = {
   /** An object relationship */
   entity: Entities;
   entity_id: Scalars['uuid'];
+  /** An object relationship */
+  group: Groups;
+  group_id?: Maybe<Scalars['uuid']>;
   id: Scalars['uuid'];
   /** An array relationship */
   notifications: Array<Notifications>;
@@ -343,6 +346,20 @@ export type Activities_Aggregate_FieldsCountArgs = {
   distinct?: Maybe<Scalars['Boolean']>;
 };
 
+/** order by aggregate values of table "activities" */
+export type Activities_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Activities_Max_Order_By>;
+  min?: Maybe<Activities_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "activities" */
+export type Activities_Arr_Rel_Insert_Input = {
+  data: Array<Activities_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<Activities_On_Conflict>;
+};
+
 /** Boolean expression to filter rows from the table "activities". All fields are combined with a logical 'AND'. */
 export type Activities_Bool_Exp = {
   _and?: Maybe<Array<Activities_Bool_Exp>>;
@@ -353,6 +370,8 @@ export type Activities_Bool_Exp = {
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   entity?: Maybe<Entities_Bool_Exp>;
   entity_id?: Maybe<Uuid_Comparison_Exp>;
+  group?: Maybe<Groups_Bool_Exp>;
+  group_id?: Maybe<Uuid_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   notifications?: Maybe<Notifications_Bool_Exp>;
   secondary_entity?: Maybe<Entities_Bool_Exp>;
@@ -373,6 +392,8 @@ export type Activities_Insert_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
   entity?: Maybe<Entities_Obj_Rel_Insert_Input>;
   entity_id?: Maybe<Scalars['uuid']>;
+  group?: Maybe<Groups_Obj_Rel_Insert_Input>;
+  group_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   notifications?: Maybe<Notifications_Arr_Rel_Insert_Input>;
   secondary_entity?: Maybe<Entities_Obj_Rel_Insert_Input>;
@@ -386,8 +407,19 @@ export type Activities_Max_Fields = {
   actor_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   entity_id?: Maybe<Scalars['uuid']>;
+  group_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   secondary_entity_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "activities" */
+export type Activities_Max_Order_By = {
+  actor_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  entity_id?: Maybe<Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  secondary_entity_id?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -396,8 +428,19 @@ export type Activities_Min_Fields = {
   actor_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   entity_id?: Maybe<Scalars['uuid']>;
+  group_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   secondary_entity_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "activities" */
+export type Activities_Min_Order_By = {
+  actor_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  entity_id?: Maybe<Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  secondary_entity_id?: Maybe<Order_By>;
 };
 
 /** response of any mutation on the table "activities" */
@@ -430,6 +473,8 @@ export type Activities_Order_By = {
   created_at?: Maybe<Order_By>;
   entity?: Maybe<Entities_Order_By>;
   entity_id?: Maybe<Order_By>;
+  group?: Maybe<Groups_Order_By>;
+  group_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   notifications_aggregate?: Maybe<Notifications_Aggregate_Order_By>;
   secondary_entity?: Maybe<Entities_Order_By>;
@@ -451,6 +496,8 @@ export enum Activities_Select_Column {
   /** column name */
   EntityId = 'entity_id',
   /** column name */
+  GroupId = 'group_id',
+  /** column name */
   Id = 'id',
   /** column name */
   SecondaryEntityId = 'secondary_entity_id',
@@ -463,6 +510,7 @@ export type Activities_Set_Input = {
   actor_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   entity_id?: Maybe<Scalars['uuid']>;
+  group_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   secondary_entity_id?: Maybe<Scalars['uuid']>;
   verb?: Maybe<Activity_Verb_Enum>;
@@ -476,6 +524,8 @@ export enum Activities_Update_Column {
   CreatedAt = 'created_at',
   /** column name */
   EntityId = 'entity_id',
+  /** column name */
+  GroupId = 'group_id',
   /** column name */
   Id = 'id',
   /** column name */
@@ -1447,12 +1497,20 @@ export type Entities = {
   /** An object relationship */
   group_join_request: Group_Join_Requests;
   /** An object relationship */
+  group_member: Group_Members;
+  group_member_id?: Maybe<Scalars['uuid']>;
+  /** An object relationship */
   group_post: Group_Posts;
   /** An object relationship */
   group_post_comment: Group_Post_Comment;
   group_post_comment_id?: Maybe<Scalars['uuid']>;
   group_post_id?: Maybe<Scalars['uuid']>;
+  /** An object relationship */
+  group_thing: Group_Thing;
+  group_thing_id?: Maybe<Scalars['uuid']>;
   id: Scalars['uuid'];
+  /** A computed field, executes function "entity_valid" */
+  is_valid?: Maybe<Scalars['Boolean']>;
   join_request_id?: Maybe<Scalars['uuid']>;
   /** An object relationship */
   thing: Things;
@@ -1507,10 +1565,14 @@ export type Entities_Bool_Exp = {
   group?: Maybe<Groups_Bool_Exp>;
   group_id?: Maybe<Uuid_Comparison_Exp>;
   group_join_request?: Maybe<Group_Join_Requests_Bool_Exp>;
+  group_member?: Maybe<Group_Members_Bool_Exp>;
+  group_member_id?: Maybe<Uuid_Comparison_Exp>;
   group_post?: Maybe<Group_Posts_Bool_Exp>;
   group_post_comment?: Maybe<Group_Post_Comment_Bool_Exp>;
   group_post_comment_id?: Maybe<Uuid_Comparison_Exp>;
   group_post_id?: Maybe<Uuid_Comparison_Exp>;
+  group_thing?: Maybe<Group_Thing_Bool_Exp>;
+  group_thing_id?: Maybe<Uuid_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   join_request_id?: Maybe<Uuid_Comparison_Exp>;
   thing?: Maybe<Things_Bool_Exp>;
@@ -1524,9 +1586,13 @@ export enum Entities_Constraint {
   /** unique or primary key constraint */
   EntitiesGroupIdKey = 'entities_group_id_key',
   /** unique or primary key constraint */
+  EntitiesGroupMemberIdKey = 'entities_group_member_id_key',
+  /** unique or primary key constraint */
   EntitiesGroupPostCommentIdKey = 'entities_group_post_comment_id_key',
   /** unique or primary key constraint */
   EntitiesGroupPostIdKey = 'entities_group_post_id_key',
+  /** unique or primary key constraint */
+  EntitiesGroupThingIdKey = 'entities_group_thing_id_key',
   /** unique or primary key constraint */
   EntitiesJoinRequestIdKey = 'entities_join_request_id_key',
   /** unique or primary key constraint */
@@ -1548,10 +1614,14 @@ export type Entities_Insert_Input = {
   group?: Maybe<Groups_Obj_Rel_Insert_Input>;
   group_id?: Maybe<Scalars['uuid']>;
   group_join_request?: Maybe<Group_Join_Requests_Obj_Rel_Insert_Input>;
+  group_member?: Maybe<Group_Members_Obj_Rel_Insert_Input>;
+  group_member_id?: Maybe<Scalars['uuid']>;
   group_post?: Maybe<Group_Posts_Obj_Rel_Insert_Input>;
   group_post_comment?: Maybe<Group_Post_Comment_Obj_Rel_Insert_Input>;
   group_post_comment_id?: Maybe<Scalars['uuid']>;
   group_post_id?: Maybe<Scalars['uuid']>;
+  group_thing?: Maybe<Group_Thing_Obj_Rel_Insert_Input>;
+  group_thing_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   join_request_id?: Maybe<Scalars['uuid']>;
   thing?: Maybe<Things_Obj_Rel_Insert_Input>;
@@ -1565,8 +1635,10 @@ export type Entities_Max_Fields = {
   __typename?: 'entities_max_fields';
   dummy?: Maybe<Scalars['smallint']>;
   group_id?: Maybe<Scalars['uuid']>;
+  group_member_id?: Maybe<Scalars['uuid']>;
   group_post_comment_id?: Maybe<Scalars['uuid']>;
   group_post_id?: Maybe<Scalars['uuid']>;
+  group_thing_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   join_request_id?: Maybe<Scalars['uuid']>;
   thing_id?: Maybe<Scalars['uuid']>;
@@ -1578,8 +1650,10 @@ export type Entities_Min_Fields = {
   __typename?: 'entities_min_fields';
   dummy?: Maybe<Scalars['smallint']>;
   group_id?: Maybe<Scalars['uuid']>;
+  group_member_id?: Maybe<Scalars['uuid']>;
   group_post_comment_id?: Maybe<Scalars['uuid']>;
   group_post_id?: Maybe<Scalars['uuid']>;
+  group_thing_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   join_request_id?: Maybe<Scalars['uuid']>;
   thing_id?: Maybe<Scalars['uuid']>;
@@ -1615,10 +1689,14 @@ export type Entities_Order_By = {
   group?: Maybe<Groups_Order_By>;
   group_id?: Maybe<Order_By>;
   group_join_request?: Maybe<Group_Join_Requests_Order_By>;
+  group_member?: Maybe<Group_Members_Order_By>;
+  group_member_id?: Maybe<Order_By>;
   group_post?: Maybe<Group_Posts_Order_By>;
   group_post_comment?: Maybe<Group_Post_Comment_Order_By>;
   group_post_comment_id?: Maybe<Order_By>;
   group_post_id?: Maybe<Order_By>;
+  group_thing?: Maybe<Group_Thing_Order_By>;
+  group_thing_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   join_request_id?: Maybe<Order_By>;
   thing?: Maybe<Things_Order_By>;
@@ -1639,9 +1717,13 @@ export enum Entities_Select_Column {
   /** column name */
   GroupId = 'group_id',
   /** column name */
+  GroupMemberId = 'group_member_id',
+  /** column name */
   GroupPostCommentId = 'group_post_comment_id',
   /** column name */
   GroupPostId = 'group_post_id',
+  /** column name */
+  GroupThingId = 'group_thing_id',
   /** column name */
   Id = 'id',
   /** column name */
@@ -1656,8 +1738,10 @@ export enum Entities_Select_Column {
 export type Entities_Set_Input = {
   dummy?: Maybe<Scalars['smallint']>;
   group_id?: Maybe<Scalars['uuid']>;
+  group_member_id?: Maybe<Scalars['uuid']>;
   group_post_comment_id?: Maybe<Scalars['uuid']>;
   group_post_id?: Maybe<Scalars['uuid']>;
+  group_thing_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   join_request_id?: Maybe<Scalars['uuid']>;
   thing_id?: Maybe<Scalars['uuid']>;
@@ -1695,9 +1779,13 @@ export enum Entities_Update_Column {
   /** column name */
   GroupId = 'group_id',
   /** column name */
+  GroupMemberId = 'group_member_id',
+  /** column name */
   GroupPostCommentId = 'group_post_comment_id',
   /** column name */
   GroupPostId = 'group_post_id',
+  /** column name */
+  GroupThingId = 'group_thing_id',
   /** column name */
   Id = 'id',
   /** column name */
@@ -2692,6 +2780,13 @@ export type Group_Members_Mutation_Response = {
   returning: Array<Group_Members>;
 };
 
+/** input type for inserting object relation for remote table "group_members" */
+export type Group_Members_Obj_Rel_Insert_Input = {
+  data: Group_Members_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<Group_Members_On_Conflict>;
+};
+
 /** on conflict condition type for table "group_members" */
 export type Group_Members_On_Conflict = {
   constraint: Group_Members_Constraint;
@@ -3596,6 +3691,13 @@ export type Group_Thing_Mutation_Response = {
   returning: Array<Group_Thing>;
 };
 
+/** input type for inserting object relation for remote table "group_thing" */
+export type Group_Thing_Obj_Rel_Insert_Input = {
+  data: Group_Thing_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<Group_Thing_On_Conflict>;
+};
+
 /** on conflict condition type for table "group_thing" */
 export type Group_Thing_On_Conflict = {
   constraint: Group_Thing_Constraint;
@@ -3659,6 +3761,10 @@ export enum Group_Thing_Update_Column {
 /** columns and relationships of "groups" */
 export type Groups = {
   __typename?: 'groups';
+  /** An array relationship */
+  activities: Array<Activities>;
+  /** An aggregate relationship */
+  activities_aggregate: Activities_Aggregate;
   created_at: Scalars['timestamptz'];
   description?: Maybe<Scalars['String']>;
   id: Scalars['uuid'];
@@ -3682,6 +3788,26 @@ export type Groups = {
   /** An aggregate relationship */
   thing_relations_aggregate: Group_Thing_Aggregate;
   updated_at: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "groups" */
+export type GroupsActivitiesArgs = {
+  distinct_on?: Maybe<Array<Activities_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Activities_Order_By>>;
+  where?: Maybe<Activities_Bool_Exp>;
+};
+
+
+/** columns and relationships of "groups" */
+export type GroupsActivities_AggregateArgs = {
+  distinct_on?: Maybe<Array<Activities_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Activities_Order_By>>;
+  where?: Maybe<Activities_Bool_Exp>;
 };
 
 
@@ -3791,6 +3917,7 @@ export type Groups_Bool_Exp = {
   _and?: Maybe<Array<Groups_Bool_Exp>>;
   _not?: Maybe<Groups_Bool_Exp>;
   _or?: Maybe<Array<Groups_Bool_Exp>>;
+  activities?: Maybe<Activities_Bool_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   description?: Maybe<String_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
@@ -3816,6 +3943,7 @@ export enum Groups_Constraint {
 
 /** input type for inserting data into table "groups" */
 export type Groups_Insert_Input = {
+  activities?: Maybe<Activities_Arr_Rel_Insert_Input>;
   created_at?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
@@ -3876,6 +4004,7 @@ export type Groups_On_Conflict = {
 
 /** Ordering options when selecting data from "groups". */
 export type Groups_Order_By = {
+  activities_aggregate?: Maybe<Activities_Aggregate_Order_By>;
   created_at?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
@@ -8473,6 +8602,164 @@ export type Verification_Requests_Variance_Fields = {
   id?: Maybe<Scalars['Float']>;
 };
 
+export type DetailedActivityFragment = (
+  { __typename?: 'activities' }
+  & Pick<Activities, 'id' | 'created_at' | 'verb'>
+  & { actor: (
+    { __typename?: 'users' }
+    & UserCardFragment
+  ), entity: (
+    { __typename?: 'entities' }
+    & DetailedEntityFragment
+  ) }
+);
+
+export type ActivityCardFragment = (
+  { __typename?: 'activities' }
+  & Pick<Activities, 'id' | 'created_at' | 'verb'>
+  & { entity: (
+    { __typename?: 'entities' }
+    & EntityCardFragment
+  ), secondary_entity: (
+    { __typename?: 'entities' }
+    & EntityCardFragment
+  ), actor: (
+    { __typename?: 'users' }
+    & UserCardFragment
+  ) }
+);
+
+export type NotificationCardFragment = (
+  { __typename?: 'notifications' }
+  & Pick<Notifications, 'id' | 'read_at' | 'created_at'>
+  & { activity: (
+    { __typename?: 'activities' }
+    & ActivityCardFragment
+  ) }
+);
+
+export type GroupRefFragment = (
+  { __typename?: 'groups' }
+  & Pick<Groups, 'id' | 'short_id' | 'name'>
+);
+
+export type ThingRefFragment = (
+  { __typename?: 'things' }
+  & Pick<Things, 'id' | 'short_id' | 'name'>
+  & { images: Array<(
+    { __typename?: 'thing_images' }
+    & { file: (
+      { __typename?: 'file_uploads' }
+      & Pick<File_Uploads, 'url'>
+    ) }
+  )> }
+);
+
+export type EntityCardFragment = (
+  { __typename?: 'entities' }
+  & Pick<Entities, 'id'>
+  & { group: (
+    { __typename?: 'groups' }
+    & GroupRefFragment
+  ), thing: (
+    { __typename?: 'things' }
+    & ThingRefFragment
+  ), user: (
+    { __typename?: 'users' }
+    & UserCardFragment
+  ), group_join_request: (
+    { __typename?: 'group_join_requests' }
+    & Pick<Group_Join_Requests, 'id' | 'response'>
+    & { group: (
+      { __typename?: 'groups' }
+      & GroupRefFragment
+    ) }
+  ), group_post_comment: (
+    { __typename?: 'group_post_comment' }
+    & Pick<Group_Post_Comment, 'id'>
+    & { post: (
+      { __typename?: 'group_posts' }
+      & Pick<Group_Posts, 'id' | 'author_id'>
+      & { group: (
+        { __typename?: 'groups' }
+        & GroupRefFragment
+      ) }
+    ), comment: (
+      { __typename?: 'comments' }
+      & CommentCardFragment
+    ) }
+  ), group_post: (
+    { __typename?: 'group_posts' }
+    & Pick<Group_Posts, 'id'>
+    & { group: (
+      { __typename?: 'groups' }
+      & GroupRefFragment
+    ) }
+  ), group_thing: (
+    { __typename?: 'group_thing' }
+    & Pick<Group_Thing, 'id'>
+    & { thing: (
+      { __typename?: 'things' }
+      & ThingRefFragment
+    ), group: (
+      { __typename?: 'groups' }
+      & GroupRefFragment
+    ) }
+  ), group_member: (
+    { __typename?: 'group_members' }
+    & { user: (
+      { __typename?: 'users' }
+      & UserCardFragment
+    ), group: (
+      { __typename?: 'groups' }
+      & GroupRefFragment
+    ) }
+  ) }
+);
+
+export type DetailedEntityFragment = (
+  { __typename?: 'entities' }
+  & Pick<Entities, 'id'>
+  & { group: (
+    { __typename?: 'groups' }
+    & GroupCardFragment
+  ), user: (
+    { __typename?: 'users' }
+    & UserCardFragment
+  ), group_post: (
+    { __typename?: 'group_posts' }
+    & GroupPostFragment
+  ), group_thing: (
+    { __typename?: 'group_thing' }
+    & Pick<Group_Thing, 'id'>
+    & { thing: (
+      { __typename?: 'things' }
+      & ThingCardFragment
+    ) }
+  ), group_member: (
+    { __typename?: 'group_members' }
+    & GroupMemberWithGroupCardFragment
+  ) }
+);
+
+export type GroupActivityQueryVariables = Exact<{
+  shortId: Scalars['String'];
+  limit: Scalars['Int'];
+  offset: Scalars['Int'];
+}>;
+
+
+export type GroupActivityQuery = (
+  { __typename?: 'query_root' }
+  & { groups: Array<(
+    { __typename?: 'groups' }
+    & { activities: Array<(
+      { __typename?: 'activities' }
+      & DetailedActivityFragment
+    )> }
+  )> }
+);
+
 export type ChatMessageCardFragment = (
   { __typename?: 'chat_messages' }
   & Pick<Chat_Messages, 'id' | 'sender_id' | 'message' | 'created_at'>
@@ -8584,6 +8871,15 @@ export type GroupMemberCardFragment = (
     { __typename?: 'users' }
     & UserCardFragment
   ) }
+);
+
+export type GroupMemberWithGroupCardFragment = (
+  { __typename?: 'group_members' }
+  & { group: (
+    { __typename?: 'groups' }
+    & Pick<Groups, 'id' | 'short_id' | 'name'>
+  ) }
+  & GroupMemberCardFragment
 );
 
 export type GroupCardFragment = (
@@ -9173,68 +9469,6 @@ export type UserPrivateDetailFragment = (
   & UserJoinRequestsFragment
 );
 
-export type EntityCardFragment = (
-  { __typename?: 'entities' }
-  & Pick<Entities, 'id'>
-  & { group: (
-    { __typename?: 'groups' }
-    & Pick<Groups, 'id' | 'short_id' | 'name'>
-  ), thing: (
-    { __typename?: 'things' }
-    & Pick<Things, 'id' | 'short_id' | 'name'>
-    & { images: Array<(
-      { __typename?: 'thing_images' }
-      & { file: (
-        { __typename?: 'file_uploads' }
-        & Pick<File_Uploads, 'url'>
-      ) }
-    )> }
-  ), user: (
-    { __typename?: 'users' }
-    & Pick<Users, 'id' | 'name'>
-  ), group_join_request: (
-    { __typename?: 'group_join_requests' }
-    & Pick<Group_Join_Requests, 'id' | 'response'>
-  ), group_post_comment: (
-    { __typename?: 'group_post_comment' }
-    & Pick<Group_Post_Comment, 'id'>
-    & { post: (
-      { __typename?: 'group_posts' }
-      & Pick<Group_Posts, 'id' | 'author_id' | 'group_id'>
-    ), comment: (
-      { __typename?: 'comments' }
-      & CommentCardFragment
-    ) }
-  ), group_post: (
-    { __typename?: 'group_posts' }
-    & Pick<Group_Posts, 'id' | 'group_id'>
-  ) }
-);
-
-export type ActivityCardFragment = (
-  { __typename?: 'activities' }
-  & Pick<Activities, 'id' | 'created_at' | 'verb'>
-  & { entity: (
-    { __typename?: 'entities' }
-    & EntityCardFragment
-  ), secondary_entity: (
-    { __typename?: 'entities' }
-    & EntityCardFragment
-  ), actor: (
-    { __typename?: 'users' }
-    & UserCardFragment
-  ) }
-);
-
-export type NotificationCardFragment = (
-  { __typename?: 'notifications' }
-  & Pick<Notifications, 'id' | 'read_at' | 'created_at'>
-  & { activity: (
-    { __typename?: 'activities' }
-    & ActivityCardFragment
-  ) }
-);
-
 export type UserListQueryVariables = Exact<{
   where?: Maybe<Users_Bool_Exp>;
   limit?: Maybe<Scalars['Int']>;
@@ -9457,6 +9691,7 @@ export type ServerFindGroupMembersQuery = (
   { __typename?: 'query_root' }
   & { groups_by_pk?: Maybe<(
     { __typename?: 'groups' }
+    & Pick<Groups, 'id'>
     & { memberships: Array<(
       { __typename?: 'group_members' }
       & { user: (
@@ -9795,11 +10030,15 @@ export type ResolversTypes = {
   activities: ResolverTypeWrapper<Activities>;
   activities_aggregate: ResolverTypeWrapper<Activities_Aggregate>;
   activities_aggregate_fields: ResolverTypeWrapper<Activities_Aggregate_Fields>;
+  activities_aggregate_order_by: Activities_Aggregate_Order_By;
+  activities_arr_rel_insert_input: Activities_Arr_Rel_Insert_Input;
   activities_bool_exp: Activities_Bool_Exp;
   activities_constraint: Activities_Constraint;
   activities_insert_input: Activities_Insert_Input;
   activities_max_fields: ResolverTypeWrapper<Activities_Max_Fields>;
+  activities_max_order_by: Activities_Max_Order_By;
   activities_min_fields: ResolverTypeWrapper<Activities_Min_Fields>;
+  activities_min_order_by: Activities_Min_Order_By;
   activities_mutation_response: ResolverTypeWrapper<Activities_Mutation_Response>;
   activities_obj_rel_insert_input: Activities_Obj_Rel_Insert_Input;
   activities_on_conflict: Activities_On_Conflict;
@@ -10021,6 +10260,7 @@ export type ResolversTypes = {
   group_members_min_fields: ResolverTypeWrapper<Group_Members_Min_Fields>;
   group_members_min_order_by: Group_Members_Min_Order_By;
   group_members_mutation_response: ResolverTypeWrapper<Group_Members_Mutation_Response>;
+  group_members_obj_rel_insert_input: Group_Members_Obj_Rel_Insert_Input;
   group_members_on_conflict: Group_Members_On_Conflict;
   group_members_order_by: Group_Members_Order_By;
   group_members_pk_columns_input: Group_Members_Pk_Columns_Input;
@@ -10114,6 +10354,7 @@ export type ResolversTypes = {
   group_thing_min_fields: ResolverTypeWrapper<Group_Thing_Min_Fields>;
   group_thing_min_order_by: Group_Thing_Min_Order_By;
   group_thing_mutation_response: ResolverTypeWrapper<Group_Thing_Mutation_Response>;
+  group_thing_obj_rel_insert_input: Group_Thing_Obj_Rel_Insert_Input;
   group_thing_on_conflict: Group_Thing_On_Conflict;
   group_thing_order_by: Group_Thing_Order_By;
   group_thing_pk_columns_input: Group_Thing_Pk_Columns_Input;
@@ -10321,10 +10562,14 @@ export type ResolversParentTypes = {
   activities: Activities;
   activities_aggregate: Activities_Aggregate;
   activities_aggregate_fields: Activities_Aggregate_Fields;
+  activities_aggregate_order_by: Activities_Aggregate_Order_By;
+  activities_arr_rel_insert_input: Activities_Arr_Rel_Insert_Input;
   activities_bool_exp: Activities_Bool_Exp;
   activities_insert_input: Activities_Insert_Input;
   activities_max_fields: Activities_Max_Fields;
+  activities_max_order_by: Activities_Max_Order_By;
   activities_min_fields: Activities_Min_Fields;
+  activities_min_order_by: Activities_Min_Order_By;
   activities_mutation_response: Activities_Mutation_Response;
   activities_obj_rel_insert_input: Activities_Obj_Rel_Insert_Input;
   activities_on_conflict: Activities_On_Conflict;
@@ -10511,6 +10756,7 @@ export type ResolversParentTypes = {
   group_members_min_fields: Group_Members_Min_Fields;
   group_members_min_order_by: Group_Members_Min_Order_By;
   group_members_mutation_response: Group_Members_Mutation_Response;
+  group_members_obj_rel_insert_input: Group_Members_Obj_Rel_Insert_Input;
   group_members_on_conflict: Group_Members_On_Conflict;
   group_members_order_by: Group_Members_Order_By;
   group_members_pk_columns_input: Group_Members_Pk_Columns_Input;
@@ -10587,6 +10833,7 @@ export type ResolversParentTypes = {
   group_thing_min_fields: Group_Thing_Min_Fields;
   group_thing_min_order_by: Group_Thing_Min_Order_By;
   group_thing_mutation_response: Group_Thing_Mutation_Response;
+  group_thing_obj_rel_insert_input: Group_Thing_Obj_Rel_Insert_Input;
   group_thing_on_conflict: Group_Thing_On_Conflict;
   group_thing_order_by: Group_Thing_Order_By;
   group_thing_pk_columns_input: Group_Thing_Pk_Columns_Input;
@@ -10799,6 +11046,8 @@ export type ActivitiesResolvers<ContextType = any, ParentType extends ResolversP
   created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
   entity?: Resolver<ResolversTypes['entities'], ParentType, ContextType>;
   entity_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  group?: Resolver<ResolversTypes['groups'], ParentType, ContextType>;
+  group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   notifications?: Resolver<Array<ResolversTypes['notifications']>, ParentType, ContextType, RequireFields<ActivitiesNotificationsArgs, never>>;
   notifications_aggregate?: Resolver<ResolversTypes['notifications_aggregate'], ParentType, ContextType, RequireFields<ActivitiesNotifications_AggregateArgs, never>>;
@@ -10825,6 +11074,7 @@ export type Activities_Max_FieldsResolvers<ContextType = any, ParentType extends
   actor_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
   entity_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   secondary_entity_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -10834,6 +11084,7 @@ export type Activities_Min_FieldsResolvers<ContextType = any, ParentType extends
   actor_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
   entity_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   secondary_entity_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -11084,11 +11335,16 @@ export type EntitiesResolvers<ContextType = any, ParentType extends ResolversPar
   group?: Resolver<ResolversTypes['groups'], ParentType, ContextType>;
   group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   group_join_request?: Resolver<ResolversTypes['group_join_requests'], ParentType, ContextType>;
+  group_member?: Resolver<ResolversTypes['group_members'], ParentType, ContextType>;
+  group_member_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   group_post?: Resolver<ResolversTypes['group_posts'], ParentType, ContextType>;
   group_post_comment?: Resolver<ResolversTypes['group_post_comment'], ParentType, ContextType>;
   group_post_comment_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   group_post_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  group_thing?: Resolver<ResolversTypes['group_thing'], ParentType, ContextType>;
+  group_thing_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  is_valid?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   join_request_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   thing?: Resolver<ResolversTypes['things'], ParentType, ContextType>;
   thing_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
@@ -11126,8 +11382,10 @@ export type Entities_Avg_FieldsResolvers<ContextType = any, ParentType extends R
 export type Entities_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['entities_max_fields'] = ResolversParentTypes['entities_max_fields']> = {
   dummy?: Resolver<Maybe<ResolversTypes['smallint']>, ParentType, ContextType>;
   group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  group_member_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   group_post_comment_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   group_post_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  group_thing_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   join_request_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   thing_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
@@ -11138,8 +11396,10 @@ export type Entities_Max_FieldsResolvers<ContextType = any, ParentType extends R
 export type Entities_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['entities_min_fields'] = ResolversParentTypes['entities_min_fields']> = {
   dummy?: Resolver<Maybe<ResolversTypes['smallint']>, ParentType, ContextType>;
   group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  group_member_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   group_post_comment_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   group_post_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  group_thing_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   join_request_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   thing_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
@@ -11713,6 +11973,8 @@ export type Group_Thing_Mutation_ResponseResolvers<ContextType = any, ParentType
 };
 
 export type GroupsResolvers<ContextType = any, ParentType extends ResolversParentTypes['groups'] = ResolversParentTypes['groups']> = {
+  activities?: Resolver<Array<ResolversTypes['activities']>, ParentType, ContextType, RequireFields<GroupsActivitiesArgs, never>>;
+  activities_aggregate?: Resolver<ResolversTypes['activities_aggregate'], ParentType, ContextType, RequireFields<GroupsActivities_AggregateArgs, never>>;
   created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
@@ -12765,26 +13027,32 @@ export type Resolvers<ContextType = any> = {
 export type IResolvers<ContextType = any> = Resolvers<ContextType>;
 
 export const UserCardFragmentDoc: DocumentNode<UserCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"users"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"image"},"arguments":[],"directives":[]}]}}]};
-export const CommentCardFragmentDoc: DocumentNode<CommentCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CommentCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"comments"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"content"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"author"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},...UserCardFragmentDoc.definitions]};
-export const EntityCardFragmentDoc: DocumentNode<EntityCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"EntityCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"entities"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"short_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"thing"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"short_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"images"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"file"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"group_join_request"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"response"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"group_post_comment"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"post"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"author_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"comment"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentCard"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"group_post"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]}]}}]}},...CommentCardFragmentDoc.definitions]};
-export const ChatMessageCardFragmentDoc: DocumentNode<ChatMessageCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ChatMessageCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"chat_messages"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"sender_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"message"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"entity"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"EntityCard"},"directives":[]}]}}]}},...EntityCardFragmentDoc.definitions]};
-export const ChatGroupCardFragmentDoc: DocumentNode<ChatGroupCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ChatGroupCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"chat_groups"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"members"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"messages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sender"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"message"},"arguments":[],"directives":[]}]}}]}},...UserCardFragmentDoc.definitions]};
 export const GroupCardFragmentDoc: DocumentNode<GroupCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"groups"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"short_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"description"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"memberships_aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[],"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"thing_relations_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"thing"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"enabled"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"BooleanValue","value":true}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"_or"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"expiry"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gt"},"value":{"kind":"StringValue","value":"now()","block":false}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"expiry"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":true}}]}}]}]}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[],"directives":[]}]}}]}}]}}]};
-export const GroupMemberCardFragmentDoc: DocumentNode<GroupMemberCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupMemberCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"group_members"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"role"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},...UserCardFragmentDoc.definitions]};
-export const GroupDetailsFragmentDoc: DocumentNode<GroupDetailsFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupDetails"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"groups"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"},"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"memberships"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupMemberCard"},"directives":[]}]}}]}},...GroupCardFragmentDoc.definitions,...GroupMemberCardFragmentDoc.definitions]};
-export const GroupJoinTokenCardFragmentDoc: DocumentNode<GroupJoinTokenCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupJoinTokenCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"updated_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"token"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"disabled"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"note"},"arguments":[],"directives":[]}]}}]};
+export const CommentCardFragmentDoc: DocumentNode<CommentCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CommentCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"comments"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"content"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"author"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},...UserCardFragmentDoc.definitions]};
 export const GroupPostFragmentDoc: DocumentNode<GroupPostFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupPost"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"group_posts"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"updated_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"resolved"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"content"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"comments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"comment"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentCard"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"author"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},...CommentCardFragmentDoc.definitions,...GroupCardFragmentDoc.definitions,...UserCardFragmentDoc.definitions]};
 export const FileUploadCardFragmentDoc: DocumentNode<FileUploadCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"FileUploadCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"file_uploads"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"mime_type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"size"},"arguments":[],"directives":[]}]}}]};
 export const ThingImageCardFragmentDoc: DocumentNode<ThingImageCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ThingImageCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"thing_images"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"description"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"order"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"file"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"FileUploadCard"},"directives":[]}]}}]}},...FileUploadCardFragmentDoc.definitions]};
 export const ThingCardFragmentDoc: DocumentNode<ThingCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ThingCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"things"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"description"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"category"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"expiry"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"short_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"images"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingImageCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},...ThingImageCardFragmentDoc.definitions,...UserCardFragmentDoc.definitions]};
+export const GroupMemberCardFragmentDoc: DocumentNode<GroupMemberCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupMemberCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"group_members"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"role"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},...UserCardFragmentDoc.definitions]};
+export const GroupMemberWithGroupCardFragmentDoc: DocumentNode<GroupMemberWithGroupCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupMemberWithGroupCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"group_members"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupMemberCard"},"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"short_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}},...GroupMemberCardFragmentDoc.definitions]};
+export const DetailedEntityFragmentDoc: DocumentNode<DetailedEntityFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"DetailedEntity"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"entities"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"group_post"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupPost"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"group_thing"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"thing"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingCard"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"group_member"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupMemberWithGroupCard"},"directives":[]}]}}]}},...GroupCardFragmentDoc.definitions,...UserCardFragmentDoc.definitions,...GroupPostFragmentDoc.definitions,...ThingCardFragmentDoc.definitions,...GroupMemberWithGroupCardFragmentDoc.definitions]};
+export const DetailedActivityFragmentDoc: DocumentNode<DetailedActivityFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"DetailedActivity"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"activities"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"verb"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"actor"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"entity"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"DetailedEntity"},"directives":[]}]}}]}},...UserCardFragmentDoc.definitions,...DetailedEntityFragmentDoc.definitions]};
+export const GroupRefFragmentDoc: DocumentNode<GroupRefFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupRef"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"groups"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"short_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]};
+export const ThingRefFragmentDoc: DocumentNode<ThingRefFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ThingRef"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"things"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"short_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"images"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"file"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]}]}}]}}]}}]};
+export const EntityCardFragmentDoc: DocumentNode<EntityCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"EntityCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"entities"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupRef"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"thing"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingRef"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"group_join_request"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"response"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupRef"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"group_post_comment"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"post"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"author_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupRef"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"comment"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentCard"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"group_post"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupRef"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"group_thing"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"thing"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingRef"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupRef"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"group_member"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupRef"},"directives":[]}]}}]}}]}},...GroupRefFragmentDoc.definitions,...ThingRefFragmentDoc.definitions,...UserCardFragmentDoc.definitions,...CommentCardFragmentDoc.definitions]};
+export const ActivityCardFragmentDoc: DocumentNode<ActivityCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ActivityCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"activities"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"verb"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"entity"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"EntityCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"secondary_entity"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"EntityCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"actor"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},...EntityCardFragmentDoc.definitions,...UserCardFragmentDoc.definitions]};
+export const NotificationCardFragmentDoc: DocumentNode<NotificationCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NotificationCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"notifications"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"read_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"activity"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ActivityCard"},"directives":[]}]}}]}},...ActivityCardFragmentDoc.definitions]};
+export const ChatMessageCardFragmentDoc: DocumentNode<ChatMessageCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ChatMessageCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"chat_messages"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"sender_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"message"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"entity"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"EntityCard"},"directives":[]}]}}]}},...EntityCardFragmentDoc.definitions]};
+export const ChatGroupCardFragmentDoc: DocumentNode<ChatGroupCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ChatGroupCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"chat_groups"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"members"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"messages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sender"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"message"},"arguments":[],"directives":[]}]}}]}},...UserCardFragmentDoc.definitions]};
+export const GroupDetailsFragmentDoc: DocumentNode<GroupDetailsFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupDetails"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"groups"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"},"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"memberships"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupMemberCard"},"directives":[]}]}}]}},...GroupCardFragmentDoc.definitions,...GroupMemberCardFragmentDoc.definitions]};
+export const GroupJoinTokenCardFragmentDoc: DocumentNode<GroupJoinTokenCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupJoinTokenCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"updated_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"token"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"disabled"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"note"},"arguments":[],"directives":[]}]}}]};
 export const ThingDetailsFragmentDoc: DocumentNode<ThingDetailsFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ThingDetails"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"things"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingCard"},"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"enabled"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_relations"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"},"directives":[]}]}}]}}]}},...ThingCardFragmentDoc.definitions,...GroupCardFragmentDoc.definitions]};
 export const UserDetailFragmentDoc: DocumentNode<UserDetailFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserDetail"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"users"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]}]}},...UserCardFragmentDoc.definitions]};
 export const GroupJoinRequestCardFragmentDoc: DocumentNode<GroupJoinRequestCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupJoinRequestCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_requests"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"updated_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"status"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"message"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},...UserCardFragmentDoc.definitions]};
 export const UserJoinRequestsFragmentDoc: DocumentNode<UserJoinRequestsFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserJoinRequests"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"users"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_join_requests"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"status"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"EnumValue","value":"pending"}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupJoinRequestCard"},"directives":[]}]}}]}},...GroupJoinRequestCardFragmentDoc.definitions]};
 export const UserPrivateDetailFragmentDoc: DocumentNode<UserPrivateDetailFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserPrivateDetail"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"users"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserDetail"},"directives":[]},{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserJoinRequests"},"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"memberships"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"role"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"private_info"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"},"arguments":[],"directives":[]}]}}]}},...UserDetailFragmentDoc.definitions,...UserJoinRequestsFragmentDoc.definitions,...GroupCardFragmentDoc.definitions]};
-export const ActivityCardFragmentDoc: DocumentNode<ActivityCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ActivityCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"activities"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"verb"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"entity"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"EntityCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"secondary_entity"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"EntityCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"actor"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},...EntityCardFragmentDoc.definitions,...UserCardFragmentDoc.definitions]};
-export const NotificationCardFragmentDoc: DocumentNode<NotificationCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NotificationCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"notifications"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"read_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"activity"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ActivityCard"},"directives":[]}]}}]}},...ActivityCardFragmentDoc.definitions]};
 export const ServerChatGroupFragmentDoc: DocumentNode<ServerChatGroupFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ServerChatGroup"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"chat_groups"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"members"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]}}]};
+export const GroupActivityDocument: DocumentNode<GroupActivityQuery, GroupActivityQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GroupActivity"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"shortId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"short_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"shortId"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activities"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}]}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"verb"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_nin"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"rejected"},{"kind":"EnumValue","value":"requested_to_join"},{"kind":"EnumValue","value":"accepted"},{"kind":"EnumValue","value":"deleted"},{"kind":"EnumValue","value":"showed_interest"}]}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"entity"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_or"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_thing_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":false}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":false}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_post_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":false}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_member_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":false}}]}}]}]}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"DetailedActivity"},"directives":[]}]}}]}}]}},...DetailedActivityFragmentDoc.definitions]};
 export const ChatMessagesDocument: DocumentNode<ChatMessagesQuery, ChatMessagesQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ChatMessages"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_messages_bool_exp"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat_messages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}]}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ChatMessageCard"},"directives":[]}]}}]}},...ChatMessageCardFragmentDoc.definitions]};
 export const ChatGroupsDocument: DocumentNode<ChatGroupsSubscription, ChatGroupsSubscriptionVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"ChatGroups"},"variableDefinitions":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat_groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"messages_aggregate"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"max"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}]}}]}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ChatGroupCard"},"directives":[]}]}}]}},...ChatGroupCardFragmentDoc.definitions]};
 export const ChatMessagesFeedDocument: DocumentNode<ChatMessagesFeedSubscription, ChatMessagesFeedSubscriptionVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"ChatMessagesFeed"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_messages_bool_exp"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat_messages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ChatMessageCard"},"directives":[]}]}}]}},...ChatMessageCardFragmentDoc.definitions]};
@@ -12832,7 +13100,7 @@ export const ServerCreateChatMessageDocument: DocumentNode<ServerCreateChatMessa
 export const ServerFindGroupDocument: DocumentNode<ServerFindGroupQuery, ServerFindGroupQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"groups_bool_exp"}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerFindGroupJoinRequestDocument: DocumentNode<ServerFindGroupJoinRequestQuery, ServerFindGroupJoinRequestQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindGroupJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_join_requests_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"user_id"},"arguments":[],"directives":[]}]}}]}}]};
 export const ServerFindJoinTokenDocument: DocumentNode<ServerFindJoinTokenQuery, ServerFindJoinTokenQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindJoinToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens_bool_exp"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_join_tokens"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"token"},"arguments":[],"directives":[]}]}}]}}]};
-export const ServerFindGroupMembersDocument: DocumentNode<ServerFindGroupMembersQuery, ServerFindGroupMembersQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindGroupMembers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"group_members_bool_exp"}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"memberships"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]}}]}}]};
+export const ServerFindGroupMembersDocument: DocumentNode<ServerFindGroupMembersQuery, ServerFindGroupMembersQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindGroupMembers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"group_members_bool_exp"}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"memberships"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]}}]}}]};
 export const ServerCountGroupMembersDocument: DocumentNode<ServerCountGroupMembersQuery, ServerCountGroupMembersQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerCountGroupMembers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"group_members_bool_exp"}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_members_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[],"directives":[]}]}}]}}]}}]};
 export const ServerFindPostParticipantsDocument: DocumentNode<ServerFindPostParticipantsQuery, ServerFindPostParticipantsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindPostParticipants"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupPostId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupPostCommentId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"postComment"},"name":{"kind":"Name","value":"group_post_comment_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupPostCommentId"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"comment"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"author"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"post"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"author"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"participants"},"name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"comments"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_post_relations"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_post_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupPostId"}}}]}}]}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},...UserCardFragmentDoc.definitions]};
 export const ServerInsertGroupJoinTokenDocument: DocumentNode<ServerInsertGroupJoinTokenMutation, ServerInsertGroupJoinTokenMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertGroupJoinToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_join_tokens_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]}]}}]}}]};

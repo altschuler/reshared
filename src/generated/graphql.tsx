@@ -289,6 +289,9 @@ export type Activities = {
   /** An object relationship */
   entity: Entities;
   entity_id: Scalars['uuid'];
+  /** An object relationship */
+  group: Groups;
+  group_id?: Maybe<Scalars['uuid']>;
   id: Scalars['uuid'];
   /** An array relationship */
   notifications: Array<Notifications>;
@@ -342,6 +345,20 @@ export type Activities_Aggregate_FieldsCountArgs = {
   distinct?: Maybe<Scalars['Boolean']>;
 };
 
+/** order by aggregate values of table "activities" */
+export type Activities_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Activities_Max_Order_By>;
+  min?: Maybe<Activities_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "activities" */
+export type Activities_Arr_Rel_Insert_Input = {
+  data: Array<Activities_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<Activities_On_Conflict>;
+};
+
 /** Boolean expression to filter rows from the table "activities". All fields are combined with a logical 'AND'. */
 export type Activities_Bool_Exp = {
   _and?: Maybe<Array<Activities_Bool_Exp>>;
@@ -352,6 +369,8 @@ export type Activities_Bool_Exp = {
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   entity?: Maybe<Entities_Bool_Exp>;
   entity_id?: Maybe<Uuid_Comparison_Exp>;
+  group?: Maybe<Groups_Bool_Exp>;
+  group_id?: Maybe<Uuid_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   notifications?: Maybe<Notifications_Bool_Exp>;
   secondary_entity?: Maybe<Entities_Bool_Exp>;
@@ -372,6 +391,8 @@ export type Activities_Insert_Input = {
   created_at?: Maybe<Scalars['timestamptz']>;
   entity?: Maybe<Entities_Obj_Rel_Insert_Input>;
   entity_id?: Maybe<Scalars['uuid']>;
+  group?: Maybe<Groups_Obj_Rel_Insert_Input>;
+  group_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   notifications?: Maybe<Notifications_Arr_Rel_Insert_Input>;
   secondary_entity?: Maybe<Entities_Obj_Rel_Insert_Input>;
@@ -385,8 +406,19 @@ export type Activities_Max_Fields = {
   actor_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   entity_id?: Maybe<Scalars['uuid']>;
+  group_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   secondary_entity_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "activities" */
+export type Activities_Max_Order_By = {
+  actor_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  entity_id?: Maybe<Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  secondary_entity_id?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
@@ -395,8 +427,19 @@ export type Activities_Min_Fields = {
   actor_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   entity_id?: Maybe<Scalars['uuid']>;
+  group_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   secondary_entity_id?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "activities" */
+export type Activities_Min_Order_By = {
+  actor_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  entity_id?: Maybe<Order_By>;
+  group_id?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  secondary_entity_id?: Maybe<Order_By>;
 };
 
 /** response of any mutation on the table "activities" */
@@ -429,6 +472,8 @@ export type Activities_Order_By = {
   created_at?: Maybe<Order_By>;
   entity?: Maybe<Entities_Order_By>;
   entity_id?: Maybe<Order_By>;
+  group?: Maybe<Groups_Order_By>;
+  group_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   notifications_aggregate?: Maybe<Notifications_Aggregate_Order_By>;
   secondary_entity?: Maybe<Entities_Order_By>;
@@ -450,6 +495,8 @@ export enum Activities_Select_Column {
   /** column name */
   EntityId = 'entity_id',
   /** column name */
+  GroupId = 'group_id',
+  /** column name */
   Id = 'id',
   /** column name */
   SecondaryEntityId = 'secondary_entity_id',
@@ -462,6 +509,7 @@ export type Activities_Set_Input = {
   actor_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   entity_id?: Maybe<Scalars['uuid']>;
+  group_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   secondary_entity_id?: Maybe<Scalars['uuid']>;
   verb?: Maybe<Activity_Verb_Enum>;
@@ -475,6 +523,8 @@ export enum Activities_Update_Column {
   CreatedAt = 'created_at',
   /** column name */
   EntityId = 'entity_id',
+  /** column name */
+  GroupId = 'group_id',
   /** column name */
   Id = 'id',
   /** column name */
@@ -1446,12 +1496,20 @@ export type Entities = {
   /** An object relationship */
   group_join_request: Group_Join_Requests;
   /** An object relationship */
+  group_member: Group_Members;
+  group_member_id?: Maybe<Scalars['uuid']>;
+  /** An object relationship */
   group_post: Group_Posts;
   /** An object relationship */
   group_post_comment: Group_Post_Comment;
   group_post_comment_id?: Maybe<Scalars['uuid']>;
   group_post_id?: Maybe<Scalars['uuid']>;
+  /** An object relationship */
+  group_thing: Group_Thing;
+  group_thing_id?: Maybe<Scalars['uuid']>;
   id: Scalars['uuid'];
+  /** A computed field, executes function "entity_valid" */
+  is_valid?: Maybe<Scalars['Boolean']>;
   join_request_id?: Maybe<Scalars['uuid']>;
   /** An object relationship */
   thing: Things;
@@ -1506,10 +1564,14 @@ export type Entities_Bool_Exp = {
   group?: Maybe<Groups_Bool_Exp>;
   group_id?: Maybe<Uuid_Comparison_Exp>;
   group_join_request?: Maybe<Group_Join_Requests_Bool_Exp>;
+  group_member?: Maybe<Group_Members_Bool_Exp>;
+  group_member_id?: Maybe<Uuid_Comparison_Exp>;
   group_post?: Maybe<Group_Posts_Bool_Exp>;
   group_post_comment?: Maybe<Group_Post_Comment_Bool_Exp>;
   group_post_comment_id?: Maybe<Uuid_Comparison_Exp>;
   group_post_id?: Maybe<Uuid_Comparison_Exp>;
+  group_thing?: Maybe<Group_Thing_Bool_Exp>;
+  group_thing_id?: Maybe<Uuid_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
   join_request_id?: Maybe<Uuid_Comparison_Exp>;
   thing?: Maybe<Things_Bool_Exp>;
@@ -1523,9 +1585,13 @@ export enum Entities_Constraint {
   /** unique or primary key constraint */
   EntitiesGroupIdKey = 'entities_group_id_key',
   /** unique or primary key constraint */
+  EntitiesGroupMemberIdKey = 'entities_group_member_id_key',
+  /** unique or primary key constraint */
   EntitiesGroupPostCommentIdKey = 'entities_group_post_comment_id_key',
   /** unique or primary key constraint */
   EntitiesGroupPostIdKey = 'entities_group_post_id_key',
+  /** unique or primary key constraint */
+  EntitiesGroupThingIdKey = 'entities_group_thing_id_key',
   /** unique or primary key constraint */
   EntitiesJoinRequestIdKey = 'entities_join_request_id_key',
   /** unique or primary key constraint */
@@ -1547,10 +1613,14 @@ export type Entities_Insert_Input = {
   group?: Maybe<Groups_Obj_Rel_Insert_Input>;
   group_id?: Maybe<Scalars['uuid']>;
   group_join_request?: Maybe<Group_Join_Requests_Obj_Rel_Insert_Input>;
+  group_member?: Maybe<Group_Members_Obj_Rel_Insert_Input>;
+  group_member_id?: Maybe<Scalars['uuid']>;
   group_post?: Maybe<Group_Posts_Obj_Rel_Insert_Input>;
   group_post_comment?: Maybe<Group_Post_Comment_Obj_Rel_Insert_Input>;
   group_post_comment_id?: Maybe<Scalars['uuid']>;
   group_post_id?: Maybe<Scalars['uuid']>;
+  group_thing?: Maybe<Group_Thing_Obj_Rel_Insert_Input>;
+  group_thing_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   join_request_id?: Maybe<Scalars['uuid']>;
   thing?: Maybe<Things_Obj_Rel_Insert_Input>;
@@ -1564,8 +1634,10 @@ export type Entities_Max_Fields = {
   __typename?: 'entities_max_fields';
   dummy?: Maybe<Scalars['smallint']>;
   group_id?: Maybe<Scalars['uuid']>;
+  group_member_id?: Maybe<Scalars['uuid']>;
   group_post_comment_id?: Maybe<Scalars['uuid']>;
   group_post_id?: Maybe<Scalars['uuid']>;
+  group_thing_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   join_request_id?: Maybe<Scalars['uuid']>;
   thing_id?: Maybe<Scalars['uuid']>;
@@ -1577,8 +1649,10 @@ export type Entities_Min_Fields = {
   __typename?: 'entities_min_fields';
   dummy?: Maybe<Scalars['smallint']>;
   group_id?: Maybe<Scalars['uuid']>;
+  group_member_id?: Maybe<Scalars['uuid']>;
   group_post_comment_id?: Maybe<Scalars['uuid']>;
   group_post_id?: Maybe<Scalars['uuid']>;
+  group_thing_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   join_request_id?: Maybe<Scalars['uuid']>;
   thing_id?: Maybe<Scalars['uuid']>;
@@ -1614,10 +1688,14 @@ export type Entities_Order_By = {
   group?: Maybe<Groups_Order_By>;
   group_id?: Maybe<Order_By>;
   group_join_request?: Maybe<Group_Join_Requests_Order_By>;
+  group_member?: Maybe<Group_Members_Order_By>;
+  group_member_id?: Maybe<Order_By>;
   group_post?: Maybe<Group_Posts_Order_By>;
   group_post_comment?: Maybe<Group_Post_Comment_Order_By>;
   group_post_comment_id?: Maybe<Order_By>;
   group_post_id?: Maybe<Order_By>;
+  group_thing?: Maybe<Group_Thing_Order_By>;
+  group_thing_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
   join_request_id?: Maybe<Order_By>;
   thing?: Maybe<Things_Order_By>;
@@ -1638,9 +1716,13 @@ export enum Entities_Select_Column {
   /** column name */
   GroupId = 'group_id',
   /** column name */
+  GroupMemberId = 'group_member_id',
+  /** column name */
   GroupPostCommentId = 'group_post_comment_id',
   /** column name */
   GroupPostId = 'group_post_id',
+  /** column name */
+  GroupThingId = 'group_thing_id',
   /** column name */
   Id = 'id',
   /** column name */
@@ -1655,8 +1737,10 @@ export enum Entities_Select_Column {
 export type Entities_Set_Input = {
   dummy?: Maybe<Scalars['smallint']>;
   group_id?: Maybe<Scalars['uuid']>;
+  group_member_id?: Maybe<Scalars['uuid']>;
   group_post_comment_id?: Maybe<Scalars['uuid']>;
   group_post_id?: Maybe<Scalars['uuid']>;
+  group_thing_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   join_request_id?: Maybe<Scalars['uuid']>;
   thing_id?: Maybe<Scalars['uuid']>;
@@ -1694,9 +1778,13 @@ export enum Entities_Update_Column {
   /** column name */
   GroupId = 'group_id',
   /** column name */
+  GroupMemberId = 'group_member_id',
+  /** column name */
   GroupPostCommentId = 'group_post_comment_id',
   /** column name */
   GroupPostId = 'group_post_id',
+  /** column name */
+  GroupThingId = 'group_thing_id',
   /** column name */
   Id = 'id',
   /** column name */
@@ -2691,6 +2779,13 @@ export type Group_Members_Mutation_Response = {
   returning: Array<Group_Members>;
 };
 
+/** input type for inserting object relation for remote table "group_members" */
+export type Group_Members_Obj_Rel_Insert_Input = {
+  data: Group_Members_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<Group_Members_On_Conflict>;
+};
+
 /** on conflict condition type for table "group_members" */
 export type Group_Members_On_Conflict = {
   constraint: Group_Members_Constraint;
@@ -3595,6 +3690,13 @@ export type Group_Thing_Mutation_Response = {
   returning: Array<Group_Thing>;
 };
 
+/** input type for inserting object relation for remote table "group_thing" */
+export type Group_Thing_Obj_Rel_Insert_Input = {
+  data: Group_Thing_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<Group_Thing_On_Conflict>;
+};
+
 /** on conflict condition type for table "group_thing" */
 export type Group_Thing_On_Conflict = {
   constraint: Group_Thing_Constraint;
@@ -3658,6 +3760,10 @@ export enum Group_Thing_Update_Column {
 /** columns and relationships of "groups" */
 export type Groups = {
   __typename?: 'groups';
+  /** An array relationship */
+  activities: Array<Activities>;
+  /** An aggregate relationship */
+  activities_aggregate: Activities_Aggregate;
   created_at: Scalars['timestamptz'];
   description?: Maybe<Scalars['String']>;
   id: Scalars['uuid'];
@@ -3681,6 +3787,26 @@ export type Groups = {
   /** An aggregate relationship */
   thing_relations_aggregate: Group_Thing_Aggregate;
   updated_at: Scalars['timestamptz'];
+};
+
+
+/** columns and relationships of "groups" */
+export type GroupsActivitiesArgs = {
+  distinct_on?: Maybe<Array<Activities_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Activities_Order_By>>;
+  where?: Maybe<Activities_Bool_Exp>;
+};
+
+
+/** columns and relationships of "groups" */
+export type GroupsActivities_AggregateArgs = {
+  distinct_on?: Maybe<Array<Activities_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Activities_Order_By>>;
+  where?: Maybe<Activities_Bool_Exp>;
 };
 
 
@@ -3790,6 +3916,7 @@ export type Groups_Bool_Exp = {
   _and?: Maybe<Array<Groups_Bool_Exp>>;
   _not?: Maybe<Groups_Bool_Exp>;
   _or?: Maybe<Array<Groups_Bool_Exp>>;
+  activities?: Maybe<Activities_Bool_Exp>;
   created_at?: Maybe<Timestamptz_Comparison_Exp>;
   description?: Maybe<String_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
@@ -3815,6 +3942,7 @@ export enum Groups_Constraint {
 
 /** input type for inserting data into table "groups" */
 export type Groups_Insert_Input = {
+  activities?: Maybe<Activities_Arr_Rel_Insert_Input>;
   created_at?: Maybe<Scalars['timestamptz']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
@@ -3875,6 +4003,7 @@ export type Groups_On_Conflict = {
 
 /** Ordering options when selecting data from "groups". */
 export type Groups_Order_By = {
+  activities_aggregate?: Maybe<Activities_Aggregate_Order_By>;
   created_at?: Maybe<Order_By>;
   description?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
@@ -8472,6 +8601,164 @@ export type Verification_Requests_Variance_Fields = {
   id?: Maybe<Scalars['Float']>;
 };
 
+export type DetailedActivityFragment = (
+  { __typename?: 'activities' }
+  & Pick<Activities, 'id' | 'created_at' | 'verb'>
+  & { actor: (
+    { __typename?: 'users' }
+    & UserCardFragment
+  ), entity: (
+    { __typename?: 'entities' }
+    & DetailedEntityFragment
+  ) }
+);
+
+export type ActivityCardFragment = (
+  { __typename?: 'activities' }
+  & Pick<Activities, 'id' | 'created_at' | 'verb'>
+  & { entity: (
+    { __typename?: 'entities' }
+    & EntityCardFragment
+  ), secondary_entity: (
+    { __typename?: 'entities' }
+    & EntityCardFragment
+  ), actor: (
+    { __typename?: 'users' }
+    & UserCardFragment
+  ) }
+);
+
+export type NotificationCardFragment = (
+  { __typename?: 'notifications' }
+  & Pick<Notifications, 'id' | 'read_at' | 'created_at'>
+  & { activity: (
+    { __typename?: 'activities' }
+    & ActivityCardFragment
+  ) }
+);
+
+export type GroupRefFragment = (
+  { __typename?: 'groups' }
+  & Pick<Groups, 'id' | 'short_id' | 'name'>
+);
+
+export type ThingRefFragment = (
+  { __typename?: 'things' }
+  & Pick<Things, 'id' | 'short_id' | 'name'>
+  & { images: Array<(
+    { __typename?: 'thing_images' }
+    & { file: (
+      { __typename?: 'file_uploads' }
+      & Pick<File_Uploads, 'url'>
+    ) }
+  )> }
+);
+
+export type EntityCardFragment = (
+  { __typename?: 'entities' }
+  & Pick<Entities, 'id'>
+  & { group: (
+    { __typename?: 'groups' }
+    & GroupRefFragment
+  ), thing: (
+    { __typename?: 'things' }
+    & ThingRefFragment
+  ), user: (
+    { __typename?: 'users' }
+    & UserCardFragment
+  ), group_join_request: (
+    { __typename?: 'group_join_requests' }
+    & Pick<Group_Join_Requests, 'id' | 'response'>
+    & { group: (
+      { __typename?: 'groups' }
+      & GroupRefFragment
+    ) }
+  ), group_post_comment: (
+    { __typename?: 'group_post_comment' }
+    & Pick<Group_Post_Comment, 'id'>
+    & { post: (
+      { __typename?: 'group_posts' }
+      & Pick<Group_Posts, 'id' | 'author_id'>
+      & { group: (
+        { __typename?: 'groups' }
+        & GroupRefFragment
+      ) }
+    ), comment: (
+      { __typename?: 'comments' }
+      & CommentCardFragment
+    ) }
+  ), group_post: (
+    { __typename?: 'group_posts' }
+    & Pick<Group_Posts, 'id'>
+    & { group: (
+      { __typename?: 'groups' }
+      & GroupRefFragment
+    ) }
+  ), group_thing: (
+    { __typename?: 'group_thing' }
+    & Pick<Group_Thing, 'id'>
+    & { thing: (
+      { __typename?: 'things' }
+      & ThingRefFragment
+    ), group: (
+      { __typename?: 'groups' }
+      & GroupRefFragment
+    ) }
+  ), group_member: (
+    { __typename?: 'group_members' }
+    & { user: (
+      { __typename?: 'users' }
+      & UserCardFragment
+    ), group: (
+      { __typename?: 'groups' }
+      & GroupRefFragment
+    ) }
+  ) }
+);
+
+export type DetailedEntityFragment = (
+  { __typename?: 'entities' }
+  & Pick<Entities, 'id'>
+  & { group: (
+    { __typename?: 'groups' }
+    & GroupCardFragment
+  ), user: (
+    { __typename?: 'users' }
+    & UserCardFragment
+  ), group_post: (
+    { __typename?: 'group_posts' }
+    & GroupPostFragment
+  ), group_thing: (
+    { __typename?: 'group_thing' }
+    & Pick<Group_Thing, 'id'>
+    & { thing: (
+      { __typename?: 'things' }
+      & ThingCardFragment
+    ) }
+  ), group_member: (
+    { __typename?: 'group_members' }
+    & GroupMemberWithGroupCardFragment
+  ) }
+);
+
+export type GroupActivityQueryVariables = Exact<{
+  shortId: Scalars['String'];
+  limit: Scalars['Int'];
+  offset: Scalars['Int'];
+}>;
+
+
+export type GroupActivityQuery = (
+  { __typename?: 'query_root' }
+  & { groups: Array<(
+    { __typename?: 'groups' }
+    & { activities: Array<(
+      { __typename?: 'activities' }
+      & DetailedActivityFragment
+    )> }
+  )> }
+);
+
 export type ChatMessageCardFragment = (
   { __typename?: 'chat_messages' }
   & Pick<Chat_Messages, 'id' | 'sender_id' | 'message' | 'created_at'>
@@ -8583,6 +8870,15 @@ export type GroupMemberCardFragment = (
     { __typename?: 'users' }
     & UserCardFragment
   ) }
+);
+
+export type GroupMemberWithGroupCardFragment = (
+  { __typename?: 'group_members' }
+  & { group: (
+    { __typename?: 'groups' }
+    & Pick<Groups, 'id' | 'short_id' | 'name'>
+  ) }
+  & GroupMemberCardFragment
 );
 
 export type GroupCardFragment = (
@@ -9172,68 +9468,6 @@ export type UserPrivateDetailFragment = (
   & UserJoinRequestsFragment
 );
 
-export type EntityCardFragment = (
-  { __typename?: 'entities' }
-  & Pick<Entities, 'id'>
-  & { group: (
-    { __typename?: 'groups' }
-    & Pick<Groups, 'id' | 'short_id' | 'name'>
-  ), thing: (
-    { __typename?: 'things' }
-    & Pick<Things, 'id' | 'short_id' | 'name'>
-    & { images: Array<(
-      { __typename?: 'thing_images' }
-      & { file: (
-        { __typename?: 'file_uploads' }
-        & Pick<File_Uploads, 'url'>
-      ) }
-    )> }
-  ), user: (
-    { __typename?: 'users' }
-    & Pick<Users, 'id' | 'name'>
-  ), group_join_request: (
-    { __typename?: 'group_join_requests' }
-    & Pick<Group_Join_Requests, 'id' | 'response'>
-  ), group_post_comment: (
-    { __typename?: 'group_post_comment' }
-    & Pick<Group_Post_Comment, 'id'>
-    & { post: (
-      { __typename?: 'group_posts' }
-      & Pick<Group_Posts, 'id' | 'author_id' | 'group_id'>
-    ), comment: (
-      { __typename?: 'comments' }
-      & CommentCardFragment
-    ) }
-  ), group_post: (
-    { __typename?: 'group_posts' }
-    & Pick<Group_Posts, 'id' | 'group_id'>
-  ) }
-);
-
-export type ActivityCardFragment = (
-  { __typename?: 'activities' }
-  & Pick<Activities, 'id' | 'created_at' | 'verb'>
-  & { entity: (
-    { __typename?: 'entities' }
-    & EntityCardFragment
-  ), secondary_entity: (
-    { __typename?: 'entities' }
-    & EntityCardFragment
-  ), actor: (
-    { __typename?: 'users' }
-    & UserCardFragment
-  ) }
-);
-
-export type NotificationCardFragment = (
-  { __typename?: 'notifications' }
-  & Pick<Notifications, 'id' | 'read_at' | 'created_at'>
-  & { activity: (
-    { __typename?: 'activities' }
-    & ActivityCardFragment
-  ) }
-);
-
 export type UserListQueryVariables = Exact<{
   where?: Maybe<Users_Bool_Exp>;
   limit?: Maybe<Scalars['Int']>;
@@ -9336,87 +9570,6 @@ export const UserCardFragmentDoc = gql`
   image
 }
     `;
-export const CommentCardFragmentDoc = gql`
-    fragment CommentCard on comments {
-  id
-  content
-  created_at
-  author {
-    ...UserCard
-  }
-}
-    ${UserCardFragmentDoc}`;
-export const EntityCardFragmentDoc = gql`
-    fragment EntityCard on entities {
-  id
-  group {
-    id
-    short_id
-    name
-  }
-  thing {
-    id
-    short_id
-    name
-    images(limit: 1) {
-      file {
-        url
-      }
-    }
-  }
-  user {
-    id
-    name
-  }
-  group_join_request {
-    id
-    response
-  }
-  group_post_comment {
-    id
-    post {
-      id
-      author_id
-      group_id
-    }
-    comment {
-      ...CommentCard
-    }
-  }
-  group_post {
-    id
-    group_id
-  }
-}
-    ${CommentCardFragmentDoc}`;
-export const ChatMessageCardFragmentDoc = gql`
-    fragment ChatMessageCard on chat_messages {
-  id
-  sender_id
-  message
-  created_at
-  entity {
-    ...EntityCard
-  }
-}
-    ${EntityCardFragmentDoc}`;
-export const ChatGroupCardFragmentDoc = gql`
-    fragment ChatGroupCard on chat_groups {
-  id
-  name
-  members {
-    user {
-      ...UserCard
-    }
-  }
-  messages(limit: 1, order_by: [{created_at: desc}]) {
-    sender {
-      ...UserCard
-    }
-    message
-  }
-}
-    ${UserCardFragmentDoc}`;
 export const GroupCardFragmentDoc = gql`
     fragment GroupCard on groups {
   id
@@ -9439,35 +9592,16 @@ export const GroupCardFragmentDoc = gql`
   }
 }
     `;
-export const GroupMemberCardFragmentDoc = gql`
-    fragment GroupMemberCard on group_members {
+export const CommentCardFragmentDoc = gql`
+    fragment CommentCard on comments {
   id
-  role
+  content
   created_at
-  user {
+  author {
     ...UserCard
   }
 }
     ${UserCardFragmentDoc}`;
-export const GroupDetailsFragmentDoc = gql`
-    fragment GroupDetails on groups {
-  ...GroupCard
-  memberships {
-    ...GroupMemberCard
-  }
-}
-    ${GroupCardFragmentDoc}
-${GroupMemberCardFragmentDoc}`;
-export const GroupJoinTokenCardFragmentDoc = gql`
-    fragment GroupJoinTokenCard on group_join_tokens {
-  id
-  created_at
-  updated_at
-  token
-  disabled
-  note
-}
-    `;
 export const GroupPostFragmentDoc = gql`
     fragment GroupPost on group_posts {
   id
@@ -9529,6 +9663,220 @@ export const ThingCardFragmentDoc = gql`
 }
     ${ThingImageCardFragmentDoc}
 ${UserCardFragmentDoc}`;
+export const GroupMemberCardFragmentDoc = gql`
+    fragment GroupMemberCard on group_members {
+  id
+  role
+  created_at
+  user {
+    ...UserCard
+  }
+}
+    ${UserCardFragmentDoc}`;
+export const GroupMemberWithGroupCardFragmentDoc = gql`
+    fragment GroupMemberWithGroupCard on group_members {
+  ...GroupMemberCard
+  group {
+    id
+    short_id
+    name
+  }
+}
+    ${GroupMemberCardFragmentDoc}`;
+export const DetailedEntityFragmentDoc = gql`
+    fragment DetailedEntity on entities {
+  id
+  group {
+    ...GroupCard
+  }
+  user {
+    ...UserCard
+  }
+  group_post {
+    ...GroupPost
+  }
+  group_thing {
+    id
+    thing {
+      ...ThingCard
+    }
+  }
+  group_member {
+    ...GroupMemberWithGroupCard
+  }
+}
+    ${GroupCardFragmentDoc}
+${UserCardFragmentDoc}
+${GroupPostFragmentDoc}
+${ThingCardFragmentDoc}
+${GroupMemberWithGroupCardFragmentDoc}`;
+export const DetailedActivityFragmentDoc = gql`
+    fragment DetailedActivity on activities {
+  id
+  created_at
+  verb
+  actor {
+    ...UserCard
+  }
+  entity {
+    ...DetailedEntity
+  }
+}
+    ${UserCardFragmentDoc}
+${DetailedEntityFragmentDoc}`;
+export const GroupRefFragmentDoc = gql`
+    fragment GroupRef on groups {
+  id
+  short_id
+  name
+}
+    `;
+export const ThingRefFragmentDoc = gql`
+    fragment ThingRef on things {
+  id
+  short_id
+  name
+  images(limit: 1) {
+    file {
+      url
+    }
+  }
+}
+    `;
+export const EntityCardFragmentDoc = gql`
+    fragment EntityCard on entities {
+  id
+  group {
+    ...GroupRef
+  }
+  thing {
+    ...ThingRef
+  }
+  user {
+    ...UserCard
+  }
+  group_join_request {
+    id
+    response
+    group {
+      ...GroupRef
+    }
+  }
+  group_post_comment {
+    id
+    post {
+      id
+      author_id
+      group {
+        ...GroupRef
+      }
+    }
+    comment {
+      ...CommentCard
+    }
+  }
+  group_post {
+    id
+    group {
+      ...GroupRef
+    }
+  }
+  group_thing {
+    id
+    thing {
+      ...ThingRef
+    }
+    group {
+      ...GroupRef
+    }
+  }
+  group_member {
+    user {
+      ...UserCard
+    }
+    group {
+      ...GroupRef
+    }
+  }
+}
+    ${GroupRefFragmentDoc}
+${ThingRefFragmentDoc}
+${UserCardFragmentDoc}
+${CommentCardFragmentDoc}`;
+export const ActivityCardFragmentDoc = gql`
+    fragment ActivityCard on activities {
+  id
+  created_at
+  verb
+  entity {
+    ...EntityCard
+  }
+  secondary_entity {
+    ...EntityCard
+  }
+  actor {
+    ...UserCard
+  }
+}
+    ${EntityCardFragmentDoc}
+${UserCardFragmentDoc}`;
+export const NotificationCardFragmentDoc = gql`
+    fragment NotificationCard on notifications {
+  id
+  read_at
+  created_at
+  activity {
+    ...ActivityCard
+  }
+}
+    ${ActivityCardFragmentDoc}`;
+export const ChatMessageCardFragmentDoc = gql`
+    fragment ChatMessageCard on chat_messages {
+  id
+  sender_id
+  message
+  created_at
+  entity {
+    ...EntityCard
+  }
+}
+    ${EntityCardFragmentDoc}`;
+export const ChatGroupCardFragmentDoc = gql`
+    fragment ChatGroupCard on chat_groups {
+  id
+  name
+  members {
+    user {
+      ...UserCard
+    }
+  }
+  messages(limit: 1, order_by: [{created_at: desc}]) {
+    sender {
+      ...UserCard
+    }
+    message
+  }
+}
+    ${UserCardFragmentDoc}`;
+export const GroupDetailsFragmentDoc = gql`
+    fragment GroupDetails on groups {
+  ...GroupCard
+  memberships {
+    ...GroupMemberCard
+  }
+}
+    ${GroupCardFragmentDoc}
+${GroupMemberCardFragmentDoc}`;
+export const GroupJoinTokenCardFragmentDoc = gql`
+    fragment GroupJoinTokenCard on group_join_tokens {
+  id
+  created_at
+  updated_at
+  token
+  disabled
+  note
+}
+    `;
 export const ThingDetailsFragmentDoc = gql`
     fragment ThingDetails on things {
   ...ThingCard
@@ -9587,33 +9935,51 @@ export const UserPrivateDetailFragmentDoc = gql`
     ${UserDetailFragmentDoc}
 ${UserJoinRequestsFragmentDoc}
 ${GroupCardFragmentDoc}`;
-export const ActivityCardFragmentDoc = gql`
-    fragment ActivityCard on activities {
-  id
-  created_at
-  verb
-  entity {
-    ...EntityCard
-  }
-  secondary_entity {
-    ...EntityCard
-  }
-  actor {
-    ...UserCard
+export const GroupActivityDocument = gql`
+    query GroupActivity($shortId: String!, $limit: Int!, $offset: Int!) {
+  groups(limit: 1, where: {short_id: {_eq: $shortId}}) {
+    activities(
+      order_by: [{created_at: desc}]
+      limit: $limit
+      offset: $offset
+      where: {verb: {_nin: [rejected, requested_to_join, accepted, deleted, showed_interest]}, entity: {_or: [{group_thing_id: {_is_null: false}}, {group_id: {_is_null: false}}, {group_post_id: {_is_null: false}}, {group_member_id: {_is_null: false}}]}}
+    ) {
+      ...DetailedActivity
+    }
   }
 }
-    ${EntityCardFragmentDoc}
-${UserCardFragmentDoc}`;
-export const NotificationCardFragmentDoc = gql`
-    fragment NotificationCard on notifications {
-  id
-  read_at
-  created_at
-  activity {
-    ...ActivityCard
-  }
-}
-    ${ActivityCardFragmentDoc}`;
+    ${DetailedActivityFragmentDoc}`;
+
+/**
+ * __useGroupActivityQuery__
+ *
+ * To run a query within a React component, call `useGroupActivityQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGroupActivityQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGroupActivityQuery({
+ *   variables: {
+ *      shortId: // value for 'shortId'
+ *      limit: // value for 'limit'
+ *      offset: // value for 'offset'
+ *   },
+ * });
+ */
+export function useGroupActivityQuery(baseOptions?: Apollo.QueryHookOptions<GroupActivityQuery, GroupActivityQueryVariables>) {
+        return Apollo.useQuery<GroupActivityQuery, GroupActivityQueryVariables>(GroupActivityDocument, baseOptions);
+      }
+export function useGroupActivityLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GroupActivityQuery, GroupActivityQueryVariables>) {
+          return Apollo.useLazyQuery<GroupActivityQuery, GroupActivityQueryVariables>(GroupActivityDocument, baseOptions);
+        }
+export type GroupActivityQueryHookResult = ReturnType<typeof useGroupActivityQuery>;
+export type GroupActivityLazyQueryHookResult = ReturnType<typeof useGroupActivityLazyQuery>;
+export type GroupActivityQueryResult = Apollo.QueryResult<GroupActivityQuery, GroupActivityQueryVariables>;
+export function refetchGroupActivityQuery(variables?: GroupActivityQueryVariables) {
+      return { query: GroupActivityDocument, variables: variables }
+    }
 export const ChatMessagesDocument = gql`
     query ChatMessages($where: chat_messages_bool_exp!, $limit: Int!) {
   chat_messages(where: $where, order_by: [{created_at: desc}], limit: $limit) {
@@ -11015,6 +11381,7 @@ export type RegisterUserMutationOptions = Apollo.BaseMutationOptions<RegisterUse
     
 export const GqlOps = {
   Query: {
+    GroupActivity: 'GroupActivity',
     ChatMessages: 'ChatMessages',
     ListGroups: 'ListGroups',
     GroupDetails: 'GroupDetails',
@@ -11060,10 +11427,18 @@ export const GqlOps = {
     Notifications: 'Notifications'
   },
   Fragment: {
+    DetailedActivity: 'DetailedActivity',
+    ActivityCard: 'ActivityCard',
+    NotificationCard: 'NotificationCard',
+    GroupRef: 'GroupRef',
+    ThingRef: 'ThingRef',
+    EntityCard: 'EntityCard',
+    DetailedEntity: 'DetailedEntity',
     ChatMessageCard: 'ChatMessageCard',
     ChatGroupCard: 'ChatGroupCard',
     CommentCard: 'CommentCard',
     GroupMemberCard: 'GroupMemberCard',
+    GroupMemberWithGroupCard: 'GroupMemberWithGroupCard',
     GroupCard: 'GroupCard',
     GroupDetails: 'GroupDetails',
     GroupJoinRequestCard: 'GroupJoinRequestCard',
@@ -11076,9 +11451,6 @@ export const GqlOps = {
     UserCard: 'UserCard',
     UserDetail: 'UserDetail',
     UserJoinRequests: 'UserJoinRequests',
-    UserPrivateDetail: 'UserPrivateDetail',
-    EntityCard: 'EntityCard',
-    ActivityCard: 'ActivityCard',
-    NotificationCard: 'NotificationCard'
+    UserPrivateDetail: 'UserPrivateDetail'
   }
 }

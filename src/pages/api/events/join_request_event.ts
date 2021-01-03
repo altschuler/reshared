@@ -25,6 +25,7 @@ export default makeEventHandler<Group_Join_Requests>(async (args, ctx) => {
 
         await insertActivities(ctx, [
             {
+                groupId: joinRequest.group_id,
                 actorId: ctx.userId,
                 entity: { join_request_id: joinRequest.id },
                 verb: Activity_Verb_Enum.Added,
@@ -45,10 +46,10 @@ export default makeEventHandler<Group_Join_Requests>(async (args, ctx) => {
 
         await insertActivities(ctx, [
             {
+                groupId: joinRequest.group_id,
                 actorId: ctx.userId,
                 entity: { join_request_id: joinRequest.id },
                 verb,
-                secondaryEntity: { group_id: joinRequest.group_id },
                 // Notify the requester
                 receivers: [joinRequest.user_id],
             },

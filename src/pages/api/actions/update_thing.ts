@@ -17,7 +17,6 @@ import {
     UpdateThingResult,
 } from '../../../generated/graphql';
 import { makeAuthorizedHandler, hasuraClient } from '../../../server';
-import { format, parseISO } from 'date-fns';
 
 export default makeAuthorizedHandler<UpdateThingMutationVariables, UpdateThingResult>(
     Joi.object<UpdateThingMutationVariables>({
@@ -69,20 +68,14 @@ export default makeAuthorizedHandler<UpdateThingMutationVariables, UpdateThingRe
               )
             : [];
 
-        console.log(args.input.expiry);
-        console.log(args.input.expiry && format(args.input.expiry, 'yyyy-MM-dd'));
-
         // Update fields
-        const mutation = await hasuraClient.mutate({
+        const mutation = await ctx.userClient.mutate({
             mutation: ServerUpdateThingDocument,
             variables: {
                 id: existing.id,
                 deletedGroupIds,
                 deletedFileIds,
                 input: {
-                    id: existing.id,
-                    short_id: existing.short_id,
-                    owner_id: existing.owner.id,
                     category: args.input.category,
                     name: args.input.name,
                     type: args.input.type as Thing_Type_Enum | undefined,
