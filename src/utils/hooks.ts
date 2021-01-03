@@ -1,4 +1,4 @@
-﻿import { useCallback, useEffect, useState } from 'react';
+﻿import { useCallback, useEffect, useRef, useState } from 'react';
 
 export const useStateObject = <T>(initial: T) => {
     const [value, setValue] = useState<T>(initial);
@@ -46,3 +46,29 @@ const useMediaBrowser = <T>(queries: string[], values: T[], defaultValue: T) => 
 };
 
 export const useMedia = process.browser ? useMediaBrowser : useMediaSsr;
+
+// Source: https://usehooks-typescript.com/react-hook/use-interval
+export const useInterval = (callback: () => void, delay: number | null) => {
+    const savedCallback = useRef<() => void | null>();
+
+    // Remember the latest callback.
+    useEffect(() => {
+        savedCallback.current = callback;
+    });
+
+    // Set up the interval.
+    useEffect(() => {
+        function tick() {
+            if (typeof savedCallback?.current !== 'undefined') {
+                savedCallback?.current();
+            }
+        }
+
+        if (delay !== null) {
+            const id = setInterval(tick, delay);
+            return () => clearInterval(id);
+        }
+    }, [delay]);
+};
+
+export default useInterval;
