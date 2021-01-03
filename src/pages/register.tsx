@@ -1,9 +1,8 @@
-﻿import React from 'react';
-import { Typography } from 'antd';
+﻿import { Typography } from 'antd';
 import { PageLayout } from '../containers/root/PageLayout';
 import { makeGSSP } from '../utils/gssp';
 import { createUseStyles } from 'react-jss';
-import { RegisterForm } from '../components/dialogs/auth/RegisterForm';
+import { RegistrationForm } from '../components/editors';
 
 const useStyles = createUseStyles({
     form: {
@@ -18,7 +17,7 @@ export const RegisterPage = () => {
         <PageLayout centered horizontal padded>
             <div className={classes.form}>
                 <Typography.Title level={4}>Sign up</Typography.Title>
-                <RegisterForm />
+                <RegistrationForm />
             </div>
         </PageLayout>
     );

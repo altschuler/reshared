@@ -14,7 +14,7 @@ import Link from 'next/link';
 import { useCallback } from 'react';
 import { AuthForm } from '../../components/AuthForm';
 import { urlFor } from '../../utils/urls';
-import { ErrorDisplay } from '../../components/display/ErrorDisplay';
+import { ErrorDisplay } from '../../components/display';
 
 const useStyles = createUseStyles({});
 

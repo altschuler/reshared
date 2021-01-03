@@ -1,6 +1,6 @@
 ﻿import React, { useState } from 'react';
-import { RegisterForm } from './dialogs/auth/RegisterForm';
 import { LoginForm } from './dialogs/auth/LoginForm';
+import { RegistrationForm } from './editors';
 
 export interface AuthFormProps {
     startOnRegister?: boolean;
@@ -15,10 +15,7 @@ export const AuthForm = (props: AuthFormProps) => {
     return (
         <div>
             {showRegister ? (
-                <RegisterForm
-                    submitLabel={props.registerSubmitLabel}
-                    onLogin={() => setShowRegister(false)}
-                />
+                <RegistrationForm onLogin={() => setShowRegister(false)} />
             ) : (
                 <LoginForm
                     submitLabel={props.loginSubmitLabel}

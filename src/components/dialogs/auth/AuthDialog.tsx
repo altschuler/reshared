@@ -1,8 +1,6 @@
 ﻿import { Modal } from 'antd';
-import { useState } from 'react';
-import { LoginForm } from './LoginForm';
-import { RegisterForm } from './RegisterForm';
 import { DialogProps } from '../DialogProvider';
+import { AuthForm } from '../../AuthForm';
 
 interface AuthDialogProps extends DialogProps<void> {
     startOnRegister?: boolean;
@@ -10,20 +8,15 @@ interface AuthDialogProps extends DialogProps<void> {
 
 export const AuthDialog = (props: AuthDialogProps) => {
     const { visible } = props;
-    const [showRegister, setShowRegister] = useState(props.startOnRegister);
 
     return (
         <Modal
             visible={visible}
-            title={showRegister ? 'Register' : 'Login'}
+            title="Login or register"
             footer={null}
             destroyOnClose
             onCancel={props.dispose}>
-            {showRegister ? (
-                <RegisterForm onLogin={() => setShowRegister(false)} />
-            ) : (
-                <LoginForm onRegister={() => setShowRegister(true)} />
-            )}
+            <AuthForm />
         </Modal>
     );
 };
