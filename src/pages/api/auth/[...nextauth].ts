@@ -13,13 +13,7 @@ interface Token {
 }
 
 const options = {
-    database: {
-        type: 'postgres',
-        url: process.env.POSTGRES_URL,
-        ssl: process.env.NODE_ENV === 'production' && {
-            rejectUnauthorized: false,
-        },
-    },
+    database: process.env.POSTGRES_URL,
     debug: true,
     jwt: {
         encode: async (options) => {
