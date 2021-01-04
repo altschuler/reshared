@@ -9556,10 +9556,7 @@ export type RegisterUserMutation = (
   { __typename?: 'mutation_root' }
   & { registerCredentials?: Maybe<(
     { __typename?: 'RegistrationResult' }
-    & { user: Array<(
-      { __typename?: 'users' }
-      & UserCardFragment
-    )> }
+    & Pick<RegistrationResult, 'user_id'>
   )> }
 );
 
@@ -11337,12 +11334,10 @@ export type MarkAllNotificationsReadMutationOptions = Apollo.BaseMutationOptions
 export const RegisterUserDocument = gql`
     mutation RegisterUser($input: CredentialsInput!) {
   registerCredentials(input: $input) {
-    user {
-      ...UserCard
-    }
+    user_id
   }
 }
-    ${UserCardFragmentDoc}`;
+    `;
 export type RegisterUserMutationFn = Apollo.MutationFunction<RegisterUserMutation, RegisterUserMutationVariables>;
 
 /**

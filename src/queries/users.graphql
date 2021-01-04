@@ -88,8 +88,6 @@ mutation MarkAllNotificationsRead($userId: uuid!, $readAt: timestamptz!) {
 
 mutation RegisterUser($input: CredentialsInput!) {
     registerCredentials(input: $input) {
-        user {
-            ...UserCard
-        }
+        user_id
     }
 }
