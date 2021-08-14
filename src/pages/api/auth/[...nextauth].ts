@@ -43,7 +43,7 @@ const options = {
     },
     session: { jwt: true },
     pages: {
-        signIn: '/auth/signin',
+        signIn: '/login',
         error: '/login',
     },
 

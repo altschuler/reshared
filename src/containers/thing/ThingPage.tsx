@@ -90,13 +90,13 @@ export const ThingPage = () => {
                     extra={[
                         ownsThing(thing, auth.user) ? (
                             <Button
-                                title="This is your thing, click to edit"
                                 key="edit"
+                                title="This is your thing, click to edit"
                                 onClick={() => handleEdit(thing)}>
                                 Edit
                             </Button>
                         ) : (
-                            <ThingInterestButton thing={thing} />
+                            <ThingInterestButton key="interest" thing={thing} />
                         ),
                     ]}>
                     <Descriptions colon={false}>

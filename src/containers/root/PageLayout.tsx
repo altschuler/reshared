@@ -96,21 +96,21 @@ export const PageLayout = (props: PageLayoutProps) => {
                         <Space size="large" split={<Divider type="vertical" />}>
                             <span>© Reshared</span>
 
-                            <Typography.Link className={classes.footerLink}>
-                                <Link href={urlFor.site.privacy()}>Privacy Policy</Link>
-                            </Typography.Link>
+                            <Link href={urlFor.site.privacy()}>
+                                <a className={classes.footerLink}>Privacy Policy</a>
+                            </Link>
 
-                            <Typography.Link className={classes.footerLink}>
-                                <Link href={urlFor.site.terms()}>Terms of Service</Link>
-                            </Typography.Link>
+                            <Link href={urlFor.site.terms()}>
+                                <a className={classes.footerLink}>Terms of Service</a>
+                            </Link>
 
-                            <Typography.Link className={classes.footerLink}>
-                                <Link href={urlFor.site.contact()}>Contact</Link>
-                            </Typography.Link>
+                            <Link href={urlFor.site.contact()}>
+                                <a className={classes.footerLink}>Contact</a>
+                            </Link>
 
-                            <Typography.Link className={classes.footerLink}>
-                                <Link href={urlFor.site.attributions()}>Attributions</Link>
-                            </Typography.Link>
+                            <Link href={urlFor.site.attributions()}>
+                                <a className={classes.footerLink}>Attributions</a>
+                            </Link>
                         </Space>
                     </div>
                 )}

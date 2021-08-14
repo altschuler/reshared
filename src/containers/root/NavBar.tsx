@@ -65,21 +65,21 @@ const ExpandedNav = (props: { onLogin: () => unknown; onRegister: () => unknown 
         <>
             <div className={classes.nav}>
                 <Space size="large">
-                    <Link href={urlFor.home()} passHref>
-                        <Typography.Link className={classes.navLink}>Home</Typography.Link>
+                    <Link href={urlFor.home()}>
+                        <a className={classes.navLink}>Home</a>
                     </Link>
 
-                    <Typography.Link className={classes.navLink}>
-                        <Link href={urlFor.search()}>Find</Link>
-                    </Typography.Link>
+                    <Link href={urlFor.search()}>
+                        <a className={classes.navLink}>Find</a>
+                    </Link>
 
-                    <Typography.Link className={classes.navLink}>
-                        <Link href={urlFor.user.things()}>My Things</Link>
-                    </Typography.Link>
+                    <Link href={urlFor.user.things()}>
+                        <a className={classes.navLink}>My Things</a>
+                    </Link>
 
-                    <Typography.Link className={classes.navLink}>
-                        <Link href={urlFor.group.list()}>My Groups</Link>
-                    </Typography.Link>
+                    <Link href={urlFor.group.list()}>
+                        <a className={classes.navLink}>My Groups</a>
+                    </Link>
                 </Space>
             </div>
             <div className={classes.user}>
@@ -201,9 +201,11 @@ export const NavBar = () => {
     return (
         <header className={classes.header}>
             <div className={classes.title}>
-                <Link href={urlFor.root()}>
-                    <Typography.Title level={3}>Reshared</Typography.Title>
-                </Link>
+                <Typography.Title level={3}>
+                    <Link href={urlFor.root()}>
+                        <a>Reshared</a>
+                    </Link>
+                </Typography.Title>
             </div>
 
             {collapsed ? (

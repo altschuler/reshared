@@ -172,7 +172,9 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                         </Link>
                     ),
 
-                    isMember && <Divider type="vertical" style={{ color: 'black' }} />,
+                    isMember && (
+                        <Divider key="divider" type="vertical" style={{ color: 'black' }} />
+                    ),
 
                     isMember && (
                         <Button key="share" type="primary" onClick={handleShare}>
