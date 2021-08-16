@@ -8,7 +8,8 @@
         "build": "next build",
         "start": "next start",
         "schema": "dotenv -c local -- graphql-codegen",
-        "schema-watch": "dotenv -c local -- graphql-codegen --watch"
+        "schema-watch": "dotenv -c local -- graphql-codegen --watch",
+        "lint": "next lint"
     },
     "prettier": {
         "printWidth": 100,

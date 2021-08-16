@@ -15,7 +15,7 @@ export default makeAuthorizedHandler<RequestJoinGroupMutationVariables, RequestJ
         }),
     }),
     async (args, ctx) => {
-        const mutation = await ctx.userClient.mutate({
+        await ctx.userClient.mutate({
             mutation: ServerInsertGroupJoinTokenDocument,
             variables: {
                 input: {

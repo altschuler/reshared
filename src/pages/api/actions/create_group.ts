@@ -10,7 +10,7 @@ import {
     CreateGroupResult,
     Group_Role_Enum,
 } from '../../../generated/graphql';
-import { MailTemplate, sendMail } from '../../../server/mail';
+// import { MailTemplate, sendMail } from '../../../server/mail';
 import { isEmpty } from 'lodash';
 
 export default makeAuthorizedHandler<CreateGroupMutationVariables, CreateGroupResult>(

@@ -1,4 +1,4 @@
-﻿import React, { ReactNode } from 'react';
+﻿import React from 'react';
 import { createUseStyles } from 'react-jss';
 import { head } from 'lodash';
 import { ChatGroupCardFragment } from '../../generated/graphql';

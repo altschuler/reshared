@@ -2,7 +2,6 @@
 import Joi from 'joi';
 import {
     ServerCreateChatGroupDocument,
-    ServerCreateChatGroupMutationVariables,
     ServerCreateChatMessageDocument,
     ServerFindChatGroupDocument,
 } from '../../../generated/server-queries';
@@ -61,6 +60,8 @@ export default makeAuthorizedHandler<CreateChatGroupMutationVariables, CreateCha
                     },
                 },
             });
+
+            // because the chat_group field is a lookup
             return ctx.success({ chat_group_id: existing.id });
         }
 
@@ -80,6 +81,9 @@ export default makeAuthorizedHandler<CreateChatGroupMutationVariables, CreateCha
             },
         });
 
+        // because the chat_group field is a lookup
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         ctx.success({ chat_group_id: mutation.data?.insert_chat_groups_one?.id });
     },
 );

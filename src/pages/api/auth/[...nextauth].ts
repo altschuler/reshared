@@ -1,4 +1,4 @@
-﻿import NextAuth, { InitOptions } from 'next-auth';
+﻿import NextAuth, { NextAuthOptions } from 'next-auth';
 import Providers from 'next-auth/providers';
 import bcrypt from 'bcryptjs';
 import { ServerUserCredentialsDocument } from '../../../generated/server-queries';
@@ -17,11 +17,11 @@ const options = {
     debug: true,
     jwt: {
         encode: async (options) => {
-            if (!options.token) {
+            if (!options?.token) {
                 return null;
             }
 
-            const t = options.token as Token;
+            const t = (options.token as unknown) as Token;
 
             return encodeToken({
                 id: t.id,
@@ -39,7 +39,8 @@ const options = {
                 sub: t.id,
             });
         },
-        decode: async (options) => (decodeToken(options.token!) as unknown) as string,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        decode: async (options) => decodeToken(options!.token!) as unknown,
     },
     session: { jwt: true },
     pages: {
@@ -109,6 +110,6 @@ const options = {
             return Promise.resolve(token);
         },
     },
-} as InitOptions;
+} as NextAuthOptions;
 
 export default (req, res) => NextAuth(req, res, options);
