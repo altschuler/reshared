@@ -1,5 +1,10 @@
-﻿import Document, { Html, Head, Main, NextScript } from 'next/document';
+﻿// eslint-disable-next-line @next/next/no-document-import-in-page
+import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { SheetsRegistry, JssProvider, createGenerateId } from 'react-jss';
+import fetch from 'node-fetch';
+import { abortableFetch } from 'abortcontroller-polyfill/dist/cjs-ponyfill';
+
+global.fetch = abortableFetch(fetch).fetch;
 
 class MyDocument extends Document {
     static async getInitialProps(ctx) {
@@ -9,11 +14,12 @@ class MyDocument extends Document {
         ctx.renderPage = () =>
             originalRenderPage({
                 // eslint-disable-next-line react/display-name
-                enhanceApp: (App) => (props) => (
-                    <JssProvider registry={registry} generateId={generateId}>
-                        <App {...props} />
-                    </JssProvider>
-                ),
+                enhanceApp: (App) => (props) =>
+                    (
+                        <JssProvider registry={registry} generateId={generateId}>
+                            <App {...props} />
+                        </JssProvider>
+                    ),
             });
 
         const initialProps = await Document.getInitialProps(ctx);

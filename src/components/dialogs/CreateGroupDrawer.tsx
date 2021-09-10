@@ -18,6 +18,7 @@ export const CreateGroupDrawer = (props: DialogProps<GroupCardFragment | null>) 
         const input = asGroupCreateInput(editorState);
         createGroup({ variables: { input } })
             .then(({ data }) => {
+                // @ts-ignore
                 const created = data?.createGroup.group;
                 if (created) {
                     message.success('Group created');

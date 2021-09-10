@@ -31,7 +31,7 @@ export const GroupPostTypeSelect = (props: GroupPostTypeSelectProps) => {
                 <div className={classes.option}>
                     <Typography.Text>Ask for something</Typography.Text>
                     <Typography.Text type="secondary">
-                        If you're looking for something that others might share
+                        If you&apos;re looking for something that others might share
                     </Typography.Text>
                 </div>
             </Select.Option>

@@ -33,7 +33,7 @@ export const CreatePostDrawer = (props: CreatePostDrawerProps) => {
                 }
             });
         },
-        [createPost],
+        [createPost, resolve],
     );
 
     return (

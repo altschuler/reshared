@@ -5,7 +5,7 @@ import * as Joi from 'joi';
 import { useCallback, useEffect, useState } from 'react';
 import { urlFor } from '../../utils/urls';
 import Link from 'next/link';
-import { getProviders, SessionProvider, signIn } from 'next-auth/client';
+// import { getProviders, SessionProvider, signIn } from 'next-auth/client';
 import { CredentialsInput, useRegisterUserMutation } from '../../generated/graphql';
 import { useRouter } from 'next/router';
 
@@ -59,13 +59,13 @@ export interface RegistrationEditorProps {
 export const RegistrationEditor = (props: RegistrationEditorProps) => {
     const { state, loading, error, submitLabel, onSubmit } = props;
     const { present } = state;
-    const [providers, setProviders] = useState<{ [key: string]: SessionProvider }>({});
+    // const [providers, setProviders] = useState<{ [key: string]: SessionProvider }>({});
 
-    useEffect(() => {
-        if (!providers) {
-            getProviders().then((r) => setProviders(r!));
-        }
-    }, [providers]);
+    // useEffect(() => {
+    //     if (!providers) {
+    //         getProviders().then((r) => setProviders(r!));
+    //     }
+    // }, [providers]);
 
     const handleSubmit = useCallback(() => state.submit() && onSubmit(state), [onSubmit, state]);
 
@@ -144,15 +144,15 @@ export const RegistrationEditor = (props: RegistrationEditorProps) => {
 
             <Divider>Other sign-up options</Divider>
 
-            <Space>
-                {values(providers)
-                    .filter((p) => p.name !== 'credentials')
-                    .map((provider) => (
-                        <Button key={provider.name} onClick={() => signIn(provider.id)}>
-                            {provider.name}
-                        </Button>
-                    ))}
-            </Space>
+            {/*<Space>*/}
+            {/*    {values(providers)*/}
+            {/*        .filter((p) => p.name !== 'credentials')*/}
+            {/*        .map((provider) => (*/}
+            {/*            <Button key={provider.name} onClick={() => signIn(provider.id)}>*/}
+            {/*                {provider.name}*/}
+            {/*            </Button>*/}
+            {/*        ))}*/}
+            {/*</Space>*/}
         </div>
     );
 };
@@ -177,11 +177,12 @@ export const RegistrationForm = (props: RegistrationFormProps) => {
     const handleRegister = useCallback(
         (state: RegistrationEditorState) => {
             register({ variables: { input: toCredentialsInput(state) } })
-                .then(() =>
-                    signIn('credentials', {
-                        email: state.present.email,
-                        password: state.present.password,
-                    }),
+                .then(
+                    () => 2,
+                    // signIn('credentials', {
+                    //     email: state.present.email,
+                    //     password: state.present.password,
+                    // }),
                 )
                 .then(() => {
                     state.reset();

@@ -37,6 +37,7 @@ export const UserAvatar = (props: UserAvatarProps) => {
                 actions={[
                     !isSelf && (
                         <Link
+                            passHref
                             key="message"
                             href={{ pathname: urlFor.chat.new(), query: { to: user.id } }}>
                             <MessageOutlined title="Send a message" />
@@ -78,7 +79,7 @@ export const UserAvatar = (props: UserAvatarProps) => {
                 </span>
             </Avatar>
         ),
-        [className, style, user.image, user.name],
+        [className, size, style, user.image, user.name],
     );
 
     return disablePopover ? (

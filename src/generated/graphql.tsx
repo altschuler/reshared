@@ -2,6 +2,9 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+const defaultOptions =  {}
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -14,6 +17,7 @@ export type Scalars = {
   timestamptz: Date;
   uuid: string;
 };
+
 
 /** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
 export type Boolean_Comparison_Exp = {
@@ -36,17 +40,9 @@ export type CreateChatGroupInput = {
 
 export type CreateChatGroupResult = {
   __typename?: 'CreateChatGroupResult';
-  chat_group: Array<Chat_Groups>;
+  /** An object relationship */
+  chat_group: Chat_Groups;
   chat_group_id: Scalars['uuid'];
-};
-
-
-export type CreateChatGroupResultChat_GroupArgs = {
-  distinct_on?: Maybe<Array<Chat_Groups_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Chat_Groups_Order_By>>;
-  where?: Maybe<Chat_Groups_Bool_Exp>;
 };
 
 export type CreateGroupInput = {
@@ -57,17 +53,9 @@ export type CreateGroupInput = {
 
 export type CreateGroupResult = {
   __typename?: 'CreateGroupResult';
-  group: Array<Groups>;
+  /** An object relationship */
+  group: Groups;
   group_id: Scalars['uuid'];
-};
-
-
-export type CreateGroupResultGroupArgs = {
-  distinct_on?: Maybe<Array<Groups_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Groups_Order_By>>;
-  where?: Maybe<Groups_Bool_Exp>;
 };
 
 export type CreateJoinTokenInput = {
@@ -76,28 +64,12 @@ export type CreateJoinTokenInput = {
 
 export type CreateJoinTokenResult = {
   __typename?: 'CreateJoinTokenResult';
-  group: Array<Groups>;
+  /** An object relationship */
+  group: Groups;
   group_id: Scalars['uuid'];
-  join_token: Array<Group_Join_Tokens>;
+  /** An object relationship */
+  join_token: Group_Join_Tokens;
   join_token_id: Scalars['uuid'];
-};
-
-
-export type CreateJoinTokenResultGroupArgs = {
-  distinct_on?: Maybe<Array<Groups_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Groups_Order_By>>;
-  where?: Maybe<Groups_Bool_Exp>;
-};
-
-
-export type CreateJoinTokenResultJoin_TokenArgs = {
-  distinct_on?: Maybe<Array<Group_Join_Tokens_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Group_Join_Tokens_Order_By>>;
-  where?: Maybe<Group_Join_Tokens_Bool_Exp>;
 };
 
 export type CredentialsInput = {
@@ -114,17 +86,9 @@ export type HandleJoinRequestInput = {
 
 export type HandleJoinRequestResult = {
   __typename?: 'HandleJoinRequestResult';
-  join_request: Array<Group_Join_Requests>;
+  /** An object relationship */
+  join_request: Group_Join_Requests;
   join_request_id: Scalars['uuid'];
-};
-
-
-export type HandleJoinRequestResultJoin_RequestArgs = {
-  distinct_on?: Maybe<Array<Group_Join_Requests_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Group_Join_Requests_Order_By>>;
-  where?: Maybe<Group_Join_Requests_Bool_Exp>;
 };
 
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
@@ -147,43 +111,19 @@ export type JoinGroupInput = {
 
 export type JoinGroupResult = {
   __typename?: 'JoinGroupResult';
-  group: Array<Groups>;
+  /** An object relationship */
+  group: Groups;
   group_id: Scalars['uuid'];
-  user: Array<Users>;
+  /** An object relationship */
+  user: Users;
   user_id: Scalars['uuid'];
-};
-
-
-export type JoinGroupResultGroupArgs = {
-  distinct_on?: Maybe<Array<Groups_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Groups_Order_By>>;
-  where?: Maybe<Groups_Bool_Exp>;
-};
-
-
-export type JoinGroupResultUserArgs = {
-  distinct_on?: Maybe<Array<Users_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Users_Order_By>>;
-  where?: Maybe<Users_Bool_Exp>;
 };
 
 export type RegistrationResult = {
   __typename?: 'RegistrationResult';
-  user: Array<Users>;
+  /** An object relationship */
+  user: Users;
   user_id: Scalars['uuid'];
-};
-
-
-export type RegistrationResultUserArgs = {
-  distinct_on?: Maybe<Array<Users_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Users_Order_By>>;
-  where?: Maybe<Users_Bool_Exp>;
 };
 
 export type RequestJoinGroupInput = {
@@ -193,28 +133,12 @@ export type RequestJoinGroupInput = {
 
 export type RequestJoinGroupResult = {
   __typename?: 'RequestJoinGroupResult';
-  group: Array<Groups>;
+  /** An object relationship */
+  group: Groups;
   group_id: Scalars['uuid'];
-  user: Array<Users>;
+  /** An object relationship */
+  user: Users;
   user_id: Scalars['uuid'];
-};
-
-
-export type RequestJoinGroupResultGroupArgs = {
-  distinct_on?: Maybe<Array<Groups_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Groups_Order_By>>;
-  where?: Maybe<Groups_Bool_Exp>;
-};
-
-
-export type RequestJoinGroupResultUserArgs = {
-  distinct_on?: Maybe<Array<Users_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Users_Order_By>>;
-  where?: Maybe<Users_Bool_Exp>;
 };
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
@@ -225,6 +149,8 @@ export type String_Comparison_Exp = {
   /** does the column match the given case-insensitive pattern */
   _ilike?: Maybe<Scalars['String']>;
   _in?: Maybe<Array<Scalars['String']>>;
+  /** does the column match the given POSIX regular expression, case insensitive */
+  _iregex?: Maybe<Scalars['String']>;
   _is_null?: Maybe<Scalars['Boolean']>;
   /** does the column match the given pattern */
   _like?: Maybe<Scalars['String']>;
@@ -234,10 +160,16 @@ export type String_Comparison_Exp = {
   /** does the column NOT match the given case-insensitive pattern */
   _nilike?: Maybe<Scalars['String']>;
   _nin?: Maybe<Array<Scalars['String']>>;
+  /** does the column NOT match the given POSIX regular expression, case insensitive */
+  _niregex?: Maybe<Scalars['String']>;
   /** does the column NOT match the given pattern */
   _nlike?: Maybe<Scalars['String']>;
+  /** does the column NOT match the given POSIX regular expression, case sensitive */
+  _nregex?: Maybe<Scalars['String']>;
   /** does the column NOT match the given SQL regular expression */
   _nsimilar?: Maybe<Scalars['String']>;
+  /** does the column match the given POSIX regular expression, case sensitive */
+  _regex?: Maybe<Scalars['String']>;
   /** does the column match the given SQL regular expression */
   _similar?: Maybe<Scalars['String']>;
 };
@@ -266,31 +198,23 @@ export type UpdateThingInput = {
 
 export type UpdateThingResult = {
   __typename?: 'UpdateThingResult';
-  thing: Array<Things>;
+  /** An object relationship */
+  thing: Things;
   thing_id: Scalars['uuid'];
-};
-
-
-export type UpdateThingResultThingArgs = {
-  distinct_on?: Maybe<Array<Things_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Things_Order_By>>;
-  where?: Maybe<Things_Bool_Exp>;
 };
 
 /** columns and relationships of "activities" */
 export type Activities = {
   __typename?: 'activities';
   /** An object relationship */
-  actor: Users;
+  actor?: Maybe<Users>;
   actor_id?: Maybe<Scalars['uuid']>;
   created_at: Scalars['timestamptz'];
   /** An object relationship */
   entity: Entities;
   entity_id: Scalars['uuid'];
   /** An object relationship */
-  group: Groups;
+  group?: Maybe<Groups>;
   group_id?: Maybe<Scalars['uuid']>;
   id: Scalars['uuid'];
   /** An array relationship */
@@ -298,7 +222,7 @@ export type Activities = {
   /** An aggregate relationship */
   notifications_aggregate: Notifications_Aggregate;
   /** An object relationship */
-  secondary_entity: Entities;
+  secondary_entity?: Maybe<Entities>;
   secondary_entity_id?: Maybe<Scalars['uuid']>;
   verb: Activity_Verb_Enum;
 };
@@ -461,7 +385,7 @@ export type Activities_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "activities" */
 export type Activities_On_Conflict = {
   constraint: Activities_Constraint;
-  update_columns: Array<Activities_Update_Column>;
+  update_columns?: Array<Activities_Update_Column>;
   where?: Maybe<Activities_Bool_Exp>;
 };
 
@@ -641,7 +565,7 @@ export type Activity_Verb_Mutation_Response = {
 /** on conflict condition type for table "activity_verb" */
 export type Activity_Verb_On_Conflict = {
   constraint: Activity_Verb_Constraint;
-  update_columns: Array<Activity_Verb_Update_Column>;
+  update_columns?: Array<Activity_Verb_Update_Column>;
   where?: Maybe<Activity_Verb_Bool_Exp>;
 };
 
@@ -802,7 +726,7 @@ export type Chat_Group_Members_Mutation_Response = {
 /** on conflict condition type for table "chat_group_members" */
 export type Chat_Group_Members_On_Conflict = {
   constraint: Chat_Group_Members_Constraint;
-  update_columns: Array<Chat_Group_Members_Update_Column>;
+  update_columns?: Array<Chat_Group_Members_Update_Column>;
   where?: Maybe<Chat_Group_Members_Bool_Exp>;
 };
 
@@ -998,7 +922,7 @@ export type Chat_Groups_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "chat_groups" */
 export type Chat_Groups_On_Conflict = {
   constraint: Chat_Groups_Constraint;
-  update_columns: Array<Chat_Groups_Update_Column>;
+  update_columns?: Array<Chat_Groups_Update_Column>;
   where?: Maybe<Chat_Groups_Bool_Exp>;
 };
 
@@ -1057,7 +981,7 @@ export type Chat_Messages = {
   chat_group_id: Scalars['uuid'];
   created_at: Scalars['timestamptz'];
   /** An object relationship */
-  entity: Entities;
+  entity?: Maybe<Entities>;
   entity_id?: Maybe<Scalars['uuid']>;
   id: Scalars['uuid'];
   message: Scalars['String'];
@@ -1191,7 +1115,7 @@ export type Chat_Messages_Mutation_Response = {
 /** on conflict condition type for table "chat_messages" */
 export type Chat_Messages_On_Conflict = {
   constraint: Chat_Messages_Constraint;
-  update_columns: Array<Chat_Messages_Update_Column>;
+  update_columns?: Array<Chat_Messages_Update_Column>;
   where?: Maybe<Chat_Messages_Bool_Exp>;
 };
 
@@ -1415,7 +1339,7 @@ export type Comments_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "comments" */
 export type Comments_On_Conflict = {
   constraint: Comments_Constraint;
-  update_columns: Array<Comments_Update_Column>;
+  update_columns?: Array<Comments_Update_Column>;
   where?: Maybe<Comments_Bool_Exp>;
 };
 
@@ -1491,31 +1415,31 @@ export type Entities = {
   __typename?: 'entities';
   dummy?: Maybe<Scalars['smallint']>;
   /** An object relationship */
-  group: Groups;
+  group?: Maybe<Groups>;
   group_id?: Maybe<Scalars['uuid']>;
   /** An object relationship */
-  group_join_request: Group_Join_Requests;
+  group_join_request?: Maybe<Group_Join_Requests>;
   /** An object relationship */
-  group_member: Group_Members;
+  group_member?: Maybe<Group_Members>;
   group_member_id?: Maybe<Scalars['uuid']>;
   /** An object relationship */
-  group_post: Group_Posts;
+  group_post?: Maybe<Group_Posts>;
   /** An object relationship */
-  group_post_comment: Group_Post_Comment;
+  group_post_comment?: Maybe<Group_Post_Comment>;
   group_post_comment_id?: Maybe<Scalars['uuid']>;
   group_post_id?: Maybe<Scalars['uuid']>;
   /** An object relationship */
-  group_thing: Group_Thing;
+  group_thing?: Maybe<Group_Thing>;
   group_thing_id?: Maybe<Scalars['uuid']>;
   id: Scalars['uuid'];
   /** A computed field, executes function "entity_valid" */
   is_valid?: Maybe<Scalars['Boolean']>;
   join_request_id?: Maybe<Scalars['uuid']>;
   /** An object relationship */
-  thing: Things;
+  thing?: Maybe<Things>;
   thing_id?: Maybe<Scalars['uuid']>;
   /** An object relationship */
-  user: Users;
+  user?: Maybe<Users>;
   user_id?: Maybe<Scalars['uuid']>;
 };
 
@@ -1573,6 +1497,7 @@ export type Entities_Bool_Exp = {
   group_thing?: Maybe<Group_Thing_Bool_Exp>;
   group_thing_id?: Maybe<Uuid_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
+  is_valid?: Maybe<Boolean_Comparison_Exp>;
   join_request_id?: Maybe<Uuid_Comparison_Exp>;
   thing?: Maybe<Things_Bool_Exp>;
   thing_id?: Maybe<Uuid_Comparison_Exp>;
@@ -1678,7 +1603,7 @@ export type Entities_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "entities" */
 export type Entities_On_Conflict = {
   constraint: Entities_Constraint;
-  update_columns: Array<Entities_Update_Column>;
+  update_columns?: Array<Entities_Update_Column>;
   where?: Maybe<Entities_Bool_Exp>;
 };
 
@@ -1697,6 +1622,7 @@ export type Entities_Order_By = {
   group_thing?: Maybe<Group_Thing_Order_By>;
   group_thing_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  is_valid?: Maybe<Order_By>;
   join_request_id?: Maybe<Order_By>;
   thing?: Maybe<Things_Order_By>;
   thing_id?: Maybe<Order_By>;
@@ -1821,11 +1747,37 @@ export type File_Uploads = {
   mime_type?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   /** An object relationship */
-  owner: Users;
+  owner?: Maybe<Users>;
   owner_id?: Maybe<Scalars['uuid']>;
   size: Scalars['Int'];
+  /** An object relationship */
+  thing_image?: Maybe<Thing_Images>;
   updated_at: Scalars['timestamptz'];
   url: Scalars['String'];
+  /** An array relationship */
+  user_profile_pictures: Array<Users>;
+  /** An aggregate relationship */
+  user_profile_pictures_aggregate: Users_Aggregate;
+};
+
+
+/** columns and relationships of "file_uploads" */
+export type File_UploadsUser_Profile_PicturesArgs = {
+  distinct_on?: Maybe<Array<Users_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Order_By>>;
+  where?: Maybe<Users_Bool_Exp>;
+};
+
+
+/** columns and relationships of "file_uploads" */
+export type File_UploadsUser_Profile_Pictures_AggregateArgs = {
+  distinct_on?: Maybe<Array<Users_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Order_By>>;
+  where?: Maybe<Users_Bool_Exp>;
 };
 
 /** aggregated selection of "file_uploads" */
@@ -1876,8 +1828,10 @@ export type File_Uploads_Bool_Exp = {
   owner?: Maybe<Users_Bool_Exp>;
   owner_id?: Maybe<Uuid_Comparison_Exp>;
   size?: Maybe<Int_Comparison_Exp>;
+  thing_image?: Maybe<Thing_Images_Bool_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
   url?: Maybe<String_Comparison_Exp>;
+  user_profile_pictures?: Maybe<Users_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "file_uploads" */
@@ -1902,8 +1856,10 @@ export type File_Uploads_Insert_Input = {
   owner?: Maybe<Users_Obj_Rel_Insert_Input>;
   owner_id?: Maybe<Scalars['uuid']>;
   size?: Maybe<Scalars['Int']>;
+  thing_image?: Maybe<Thing_Images_Obj_Rel_Insert_Input>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   url?: Maybe<Scalars['String']>;
+  user_profile_pictures?: Maybe<Users_Arr_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
@@ -1951,7 +1907,7 @@ export type File_Uploads_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "file_uploads" */
 export type File_Uploads_On_Conflict = {
   constraint: File_Uploads_Constraint;
-  update_columns: Array<File_Uploads_Update_Column>;
+  update_columns?: Array<File_Uploads_Update_Column>;
   where?: Maybe<File_Uploads_Bool_Exp>;
 };
 
@@ -1964,8 +1920,10 @@ export type File_Uploads_Order_By = {
   owner?: Maybe<Users_Order_By>;
   owner_id?: Maybe<Order_By>;
   size?: Maybe<Order_By>;
+  thing_image?: Maybe<Thing_Images_Order_By>;
   updated_at?: Maybe<Order_By>;
   url?: Maybe<Order_By>;
+  user_profile_pictures_aggregate?: Maybe<Users_Aggregate_Order_By>;
 };
 
 /** primary key columns input for table: file_uploads */
@@ -2163,7 +2121,7 @@ export type Group_Join_Request_Status_Mutation_Response = {
 /** on conflict condition type for table "group_join_request_status" */
 export type Group_Join_Request_Status_On_Conflict = {
   constraint: Group_Join_Request_Status_Constraint;
-  update_columns: Array<Group_Join_Request_Status_Update_Column>;
+  update_columns?: Array<Group_Join_Request_Status_Update_Column>;
   where?: Maybe<Group_Join_Request_Status_Bool_Exp>;
 };
 
@@ -2362,7 +2320,7 @@ export type Group_Join_Requests_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "group_join_requests" */
 export type Group_Join_Requests_On_Conflict = {
   constraint: Group_Join_Requests_Constraint;
-  update_columns: Array<Group_Join_Requests_Update_Column>;
+  update_columns?: Array<Group_Join_Requests_Update_Column>;
   where?: Maybe<Group_Join_Requests_Bool_Exp>;
 };
 
@@ -2580,7 +2538,7 @@ export type Group_Join_Tokens_Mutation_Response = {
 /** on conflict condition type for table "group_join_tokens" */
 export type Group_Join_Tokens_On_Conflict = {
   constraint: Group_Join_Tokens_Constraint;
-  update_columns: Array<Group_Join_Tokens_Update_Column>;
+  update_columns?: Array<Group_Join_Tokens_Update_Column>;
   where?: Maybe<Group_Join_Tokens_Bool_Exp>;
 };
 
@@ -2789,7 +2747,7 @@ export type Group_Members_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "group_members" */
 export type Group_Members_On_Conflict = {
   constraint: Group_Members_Constraint;
-  update_columns: Array<Group_Members_Update_Column>;
+  update_columns?: Array<Group_Members_Update_Column>;
   where?: Maybe<Group_Members_Bool_Exp>;
 };
 
@@ -2990,7 +2948,7 @@ export type Group_Post_Comment_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "group_post_comment" */
 export type Group_Post_Comment_On_Conflict = {
   constraint: Group_Post_Comment_Constraint;
-  update_columns: Array<Group_Post_Comment_Update_Column>;
+  update_columns?: Array<Group_Post_Comment_Update_Column>;
   where?: Maybe<Group_Post_Comment_Bool_Exp>;
 };
 
@@ -3139,7 +3097,7 @@ export type Group_Post_Type_Mutation_Response = {
 /** on conflict condition type for table "group_post_type" */
 export type Group_Post_Type_On_Conflict = {
   constraint: Group_Post_Type_Constraint;
-  update_columns: Array<Group_Post_Type_Update_Column>;
+  update_columns?: Array<Group_Post_Type_Update_Column>;
   where?: Maybe<Group_Post_Type_Bool_Exp>;
 };
 
@@ -3353,7 +3311,7 @@ export type Group_Posts_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "group_posts" */
 export type Group_Posts_On_Conflict = {
   constraint: Group_Posts_Constraint;
-  update_columns: Array<Group_Posts_Update_Column>;
+  update_columns?: Array<Group_Posts_Update_Column>;
   where?: Maybe<Group_Posts_Bool_Exp>;
 };
 
@@ -3523,7 +3481,7 @@ export type Group_Role_Mutation_Response = {
 /** on conflict condition type for table "group_role" */
 export type Group_Role_On_Conflict = {
   constraint: Group_Role_Constraint;
-  update_columns: Array<Group_Role_Update_Column>;
+  update_columns?: Array<Group_Role_Update_Column>;
   where?: Maybe<Group_Role_Bool_Exp>;
 };
 
@@ -3700,7 +3658,7 @@ export type Group_Thing_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "group_thing" */
 export type Group_Thing_On_Conflict = {
   constraint: Group_Thing_Constraint;
-  update_columns: Array<Group_Thing_Update_Column>;
+  update_columns?: Array<Group_Thing_Update_Column>;
   where?: Maybe<Group_Thing_Bool_Exp>;
 };
 
@@ -3997,7 +3955,7 @@ export type Groups_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "groups" */
 export type Groups_On_Conflict = {
   constraint: Groups_Constraint;
-  update_columns: Array<Groups_Update_Column>;
+  update_columns?: Array<Groups_Update_Column>;
   where?: Maybe<Groups_Bool_Exp>;
 };
 
@@ -4073,7 +4031,7 @@ export enum Groups_Update_Column {
 export type Mutation_Root = {
   __typename?: 'mutation_root';
   createChatGroup?: Maybe<CreateChatGroupResult>;
-  createGroup?: Maybe<CreateGroupResult>;
+  createGroup: CreateGroupResult;
   createJoinToken?: Maybe<CreateJoinTokenResult>;
   /** delete data from the table: "activities" */
   delete_activities?: Maybe<Activities_Mutation_Response>;
@@ -4173,7 +4131,7 @@ export type Mutation_Root = {
   delete_verification_requests?: Maybe<Verification_Requests_Mutation_Response>;
   /** delete single row from the table: "verification_requests" */
   delete_verification_requests_by_pk?: Maybe<Verification_Requests>;
-  handleJoinRequest?: Maybe<HandleJoinRequestResult>;
+  handleJoinRequest: HandleJoinRequestResult;
   /** insert data into the table: "activities" */
   insert_activities?: Maybe<Activities_Mutation_Response>;
   /** insert a single row into the table: "activities" */
@@ -5550,7 +5508,7 @@ export type Notifications_Mutation_Response = {
 /** on conflict condition type for table "notifications" */
 export type Notifications_On_Conflict = {
   constraint: Notifications_Constraint;
-  update_columns: Array<Notifications_Update_Column>;
+  update_columns?: Array<Notifications_Update_Column>;
   where?: Maybe<Notifications_Bool_Exp>;
 };
 
@@ -5625,9 +5583,9 @@ export enum Order_By {
 
 export type Query_Root = {
   __typename?: 'query_root';
-  /** fetch data from the table: "activities" */
+  /** An array relationship */
   activities: Array<Activities>;
-  /** fetch aggregated fields from the table: "activities" */
+  /** An aggregate relationship */
   activities_aggregate: Activities_Aggregate;
   /** fetch data from the table: "activities" using primary key columns */
   activities_by_pk?: Maybe<Activities>;
@@ -5649,15 +5607,15 @@ export type Query_Root = {
   chat_groups_aggregate: Chat_Groups_Aggregate;
   /** fetch data from the table: "chat_groups" using primary key columns */
   chat_groups_by_pk?: Maybe<Chat_Groups>;
-  /** fetch data from the table: "chat_messages" */
+  /** An array relationship */
   chat_messages: Array<Chat_Messages>;
-  /** fetch aggregated fields from the table: "chat_messages" */
+  /** An aggregate relationship */
   chat_messages_aggregate: Chat_Messages_Aggregate;
   /** fetch data from the table: "chat_messages" using primary key columns */
   chat_messages_by_pk?: Maybe<Chat_Messages>;
-  /** fetch data from the table: "comments" */
+  /** An array relationship */
   comments: Array<Comments>;
-  /** fetch aggregated fields from the table: "comments" */
+  /** An aggregate relationship */
   comments_aggregate: Comments_Aggregate;
   /** fetch data from the table: "comments" using primary key columns */
   comments_by_pk?: Maybe<Comments>;
@@ -5679,9 +5637,9 @@ export type Query_Root = {
   group_join_request_status_aggregate: Group_Join_Request_Status_Aggregate;
   /** fetch data from the table: "group_join_request_status" using primary key columns */
   group_join_request_status_by_pk?: Maybe<Group_Join_Request_Status>;
-  /** fetch data from the table: "group_join_requests" */
+  /** An array relationship */
   group_join_requests: Array<Group_Join_Requests>;
-  /** fetch aggregated fields from the table: "group_join_requests" */
+  /** An aggregate relationship */
   group_join_requests_aggregate: Group_Join_Requests_Aggregate;
   /** fetch data from the table: "group_join_requests" using primary key columns */
   group_join_requests_by_pk?: Maybe<Group_Join_Requests>;
@@ -5709,9 +5667,9 @@ export type Query_Root = {
   group_post_type_aggregate: Group_Post_Type_Aggregate;
   /** fetch data from the table: "group_post_type" using primary key columns */
   group_post_type_by_pk?: Maybe<Group_Post_Type>;
-  /** fetch data from the table: "group_posts" */
+  /** An array relationship */
   group_posts: Array<Group_Posts>;
-  /** fetch aggregated fields from the table: "group_posts" */
+  /** An aggregate relationship */
   group_posts_aggregate: Group_Posts_Aggregate;
   /** fetch data from the table: "group_posts" using primary key columns */
   group_posts_by_pk?: Maybe<Group_Posts>;
@@ -5733,9 +5691,9 @@ export type Query_Root = {
   groups_aggregate: Groups_Aggregate;
   /** fetch data from the table: "groups" using primary key columns */
   groups_by_pk?: Maybe<Groups>;
-  /** fetch data from the table: "notifications" */
+  /** An array relationship */
   notifications: Array<Notifications>;
-  /** fetch aggregated fields from the table: "notifications" */
+  /** An aggregate relationship */
   notifications_aggregate: Notifications_Aggregate;
   /** fetch data from the table: "notifications" using primary key columns */
   notifications_by_pk?: Maybe<Notifications>;
@@ -5751,9 +5709,9 @@ export type Query_Root = {
   thing_type_aggregate: Thing_Type_Aggregate;
   /** fetch data from the table: "thing_type" using primary key columns */
   thing_type_by_pk?: Maybe<Thing_Type>;
-  /** fetch data from the table: "things" */
+  /** An array relationship */
   things: Array<Things>;
-  /** fetch aggregated fields from the table: "things" */
+  /** An aggregate relationship */
   things_aggregate: Things_Aggregate;
   /** fetch data from the table: "things" using primary key columns */
   things_by_pk?: Maybe<Things>;
@@ -6361,9 +6319,9 @@ export type Smallint_Comparison_Exp = {
 
 export type Subscription_Root = {
   __typename?: 'subscription_root';
-  /** fetch data from the table: "activities" */
+  /** An array relationship */
   activities: Array<Activities>;
-  /** fetch aggregated fields from the table: "activities" */
+  /** An aggregate relationship */
   activities_aggregate: Activities_Aggregate;
   /** fetch data from the table: "activities" using primary key columns */
   activities_by_pk?: Maybe<Activities>;
@@ -6385,15 +6343,15 @@ export type Subscription_Root = {
   chat_groups_aggregate: Chat_Groups_Aggregate;
   /** fetch data from the table: "chat_groups" using primary key columns */
   chat_groups_by_pk?: Maybe<Chat_Groups>;
-  /** fetch data from the table: "chat_messages" */
+  /** An array relationship */
   chat_messages: Array<Chat_Messages>;
-  /** fetch aggregated fields from the table: "chat_messages" */
+  /** An aggregate relationship */
   chat_messages_aggregate: Chat_Messages_Aggregate;
   /** fetch data from the table: "chat_messages" using primary key columns */
   chat_messages_by_pk?: Maybe<Chat_Messages>;
-  /** fetch data from the table: "comments" */
+  /** An array relationship */
   comments: Array<Comments>;
-  /** fetch aggregated fields from the table: "comments" */
+  /** An aggregate relationship */
   comments_aggregate: Comments_Aggregate;
   /** fetch data from the table: "comments" using primary key columns */
   comments_by_pk?: Maybe<Comments>;
@@ -6415,9 +6373,9 @@ export type Subscription_Root = {
   group_join_request_status_aggregate: Group_Join_Request_Status_Aggregate;
   /** fetch data from the table: "group_join_request_status" using primary key columns */
   group_join_request_status_by_pk?: Maybe<Group_Join_Request_Status>;
-  /** fetch data from the table: "group_join_requests" */
+  /** An array relationship */
   group_join_requests: Array<Group_Join_Requests>;
-  /** fetch aggregated fields from the table: "group_join_requests" */
+  /** An aggregate relationship */
   group_join_requests_aggregate: Group_Join_Requests_Aggregate;
   /** fetch data from the table: "group_join_requests" using primary key columns */
   group_join_requests_by_pk?: Maybe<Group_Join_Requests>;
@@ -6445,9 +6403,9 @@ export type Subscription_Root = {
   group_post_type_aggregate: Group_Post_Type_Aggregate;
   /** fetch data from the table: "group_post_type" using primary key columns */
   group_post_type_by_pk?: Maybe<Group_Post_Type>;
-  /** fetch data from the table: "group_posts" */
+  /** An array relationship */
   group_posts: Array<Group_Posts>;
-  /** fetch aggregated fields from the table: "group_posts" */
+  /** An aggregate relationship */
   group_posts_aggregate: Group_Posts_Aggregate;
   /** fetch data from the table: "group_posts" using primary key columns */
   group_posts_by_pk?: Maybe<Group_Posts>;
@@ -6469,9 +6427,9 @@ export type Subscription_Root = {
   groups_aggregate: Groups_Aggregate;
   /** fetch data from the table: "groups" using primary key columns */
   groups_by_pk?: Maybe<Groups>;
-  /** fetch data from the table: "notifications" */
+  /** An array relationship */
   notifications: Array<Notifications>;
-  /** fetch aggregated fields from the table: "notifications" */
+  /** An aggregate relationship */
   notifications_aggregate: Notifications_Aggregate;
   /** fetch data from the table: "notifications" using primary key columns */
   notifications_by_pk?: Maybe<Notifications>;
@@ -6487,9 +6445,9 @@ export type Subscription_Root = {
   thing_type_aggregate: Thing_Type_Aggregate;
   /** fetch data from the table: "thing_type" using primary key columns */
   thing_type_by_pk?: Maybe<Thing_Type>;
-  /** fetch data from the table: "things" */
+  /** An array relationship */
   things: Array<Things>;
-  /** fetch aggregated fields from the table: "things" */
+  /** An aggregate relationship */
   things_aggregate: Things_Aggregate;
   /** fetch data from the table: "things" using primary key columns */
   things_by_pk?: Maybe<Things>;
@@ -7257,10 +7215,17 @@ export type Thing_Images_Mutation_Response = {
   returning: Array<Thing_Images>;
 };
 
+/** input type for inserting object relation for remote table "thing_images" */
+export type Thing_Images_Obj_Rel_Insert_Input = {
+  data: Thing_Images_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<Thing_Images_On_Conflict>;
+};
+
 /** on conflict condition type for table "thing_images" */
 export type Thing_Images_On_Conflict = {
   constraint: Thing_Images_Constraint;
-  update_columns: Array<Thing_Images_Update_Column>;
+  update_columns?: Array<Thing_Images_Update_Column>;
   where?: Maybe<Thing_Images_Bool_Exp>;
 };
 
@@ -7502,7 +7467,7 @@ export type Thing_Type_Mutation_Response = {
 /** on conflict condition type for table "thing_type" */
 export type Thing_Type_On_Conflict = {
   constraint: Thing_Type_Constraint;
-  update_columns: Array<Thing_Type_Update_Column>;
+  update_columns?: Array<Thing_Type_Update_Column>;
   where?: Maybe<Thing_Type_Bool_Exp>;
 };
 
@@ -7761,7 +7726,7 @@ export type Things_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "things" */
 export type Things_On_Conflict = {
   constraint: Things_Constraint;
-  update_columns: Array<Things_Update_Column>;
+  update_columns?: Array<Things_Update_Column>;
   where?: Maybe<Things_Bool_Exp>;
 };
 
@@ -7964,6 +7929,7 @@ export type User_Private_Set_Input = {
 /** columns and relationships of "users" */
 export type Users = {
   __typename?: 'users';
+  auth0_id?: Maybe<Scalars['String']>;
   /** An array relationship */
   chat_group_memberships: Array<Chat_Group_Members>;
   /** An aggregate relationship */
@@ -7999,6 +7965,9 @@ export type Users = {
   password_hash?: Maybe<Scalars['String']>;
   /** An object relationship */
   private_info?: Maybe<User_Private>;
+  /** An object relationship */
+  profile_picture?: Maybe<File_Uploads>;
+  profile_picture_id?: Maybe<Scalars['uuid']>;
   /** An array relationship */
   things: Array<Things>;
   /** An aggregate relationship */
@@ -8168,11 +8137,26 @@ export type Users_Aggregate_FieldsCountArgs = {
   distinct?: Maybe<Scalars['Boolean']>;
 };
 
+/** order by aggregate values of table "users" */
+export type Users_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Users_Max_Order_By>;
+  min?: Maybe<Users_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "users" */
+export type Users_Arr_Rel_Insert_Input = {
+  data: Array<Users_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<Users_On_Conflict>;
+};
+
 /** Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'. */
 export type Users_Bool_Exp = {
   _and?: Maybe<Array<Users_Bool_Exp>>;
   _not?: Maybe<Users_Bool_Exp>;
   _or?: Maybe<Array<Users_Bool_Exp>>;
+  auth0_id?: Maybe<String_Comparison_Exp>;
   chat_group_memberships?: Maybe<Chat_Group_Members_Bool_Exp>;
   chat_messages?: Maybe<Chat_Messages_Bool_Exp>;
   comments?: Maybe<Comments_Bool_Exp>;
@@ -8189,6 +8173,8 @@ export type Users_Bool_Exp = {
   name?: Maybe<String_Comparison_Exp>;
   password_hash?: Maybe<String_Comparison_Exp>;
   private_info?: Maybe<User_Private_Bool_Exp>;
+  profile_picture?: Maybe<File_Uploads_Bool_Exp>;
+  profile_picture_id?: Maybe<Uuid_Comparison_Exp>;
   things?: Maybe<Things_Bool_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
 };
@@ -8198,6 +8184,8 @@ export enum Users_Constraint {
   /** unique or primary key constraint */
   Email = 'email',
   /** unique or primary key constraint */
+  UsersAuth0IdKey = 'users_auth0_id_key',
+  /** unique or primary key constraint */
   UsersEmailKey = 'users_email_key',
   /** unique or primary key constraint */
   UsersPkey = 'users_pkey'
@@ -8205,6 +8193,7 @@ export enum Users_Constraint {
 
 /** input type for inserting data into table "users" */
 export type Users_Insert_Input = {
+  auth0_id?: Maybe<Scalars['String']>;
   chat_group_memberships?: Maybe<Chat_Group_Members_Arr_Rel_Insert_Input>;
   chat_messages?: Maybe<Chat_Messages_Arr_Rel_Insert_Input>;
   comments?: Maybe<Comments_Arr_Rel_Insert_Input>;
@@ -8221,6 +8210,8 @@ export type Users_Insert_Input = {
   name?: Maybe<Scalars['String']>;
   password_hash?: Maybe<Scalars['String']>;
   private_info?: Maybe<User_Private_Obj_Rel_Insert_Input>;
+  profile_picture?: Maybe<File_Uploads_Obj_Rel_Insert_Input>;
+  profile_picture_id?: Maybe<Scalars['uuid']>;
   things?: Maybe<Things_Arr_Rel_Insert_Input>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
@@ -8228,6 +8219,7 @@ export type Users_Insert_Input = {
 /** aggregate max on columns */
 export type Users_Max_Fields = {
   __typename?: 'users_max_fields';
+  auth0_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   email?: Maybe<Scalars['String']>;
   email_verified?: Maybe<Scalars['timestamptz']>;
@@ -8237,12 +8229,30 @@ export type Users_Max_Fields = {
   last_seen?: Maybe<Scalars['timestamptz']>;
   name?: Maybe<Scalars['String']>;
   password_hash?: Maybe<Scalars['String']>;
+  profile_picture_id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "users" */
+export type Users_Max_Order_By = {
+  auth0_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  email?: Maybe<Order_By>;
+  email_verified?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  image?: Maybe<Order_By>;
+  last_chat_notification?: Maybe<Order_By>;
+  last_seen?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  password_hash?: Maybe<Order_By>;
+  profile_picture_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Users_Min_Fields = {
   __typename?: 'users_min_fields';
+  auth0_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   email?: Maybe<Scalars['String']>;
   email_verified?: Maybe<Scalars['timestamptz']>;
@@ -8252,7 +8262,24 @@ export type Users_Min_Fields = {
   last_seen?: Maybe<Scalars['timestamptz']>;
   name?: Maybe<Scalars['String']>;
   password_hash?: Maybe<Scalars['String']>;
+  profile_picture_id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "users" */
+export type Users_Min_Order_By = {
+  auth0_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  email?: Maybe<Order_By>;
+  email_verified?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  image?: Maybe<Order_By>;
+  last_chat_notification?: Maybe<Order_By>;
+  last_seen?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  password_hash?: Maybe<Order_By>;
+  profile_picture_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
 };
 
 /** response of any mutation on the table "users" */
@@ -8274,12 +8301,13 @@ export type Users_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "users" */
 export type Users_On_Conflict = {
   constraint: Users_Constraint;
-  update_columns: Array<Users_Update_Column>;
+  update_columns?: Array<Users_Update_Column>;
   where?: Maybe<Users_Bool_Exp>;
 };
 
 /** Ordering options when selecting data from "users". */
 export type Users_Order_By = {
+  auth0_id?: Maybe<Order_By>;
   chat_group_memberships_aggregate?: Maybe<Chat_Group_Members_Aggregate_Order_By>;
   chat_messages_aggregate?: Maybe<Chat_Messages_Aggregate_Order_By>;
   comments_aggregate?: Maybe<Comments_Aggregate_Order_By>;
@@ -8296,6 +8324,8 @@ export type Users_Order_By = {
   name?: Maybe<Order_By>;
   password_hash?: Maybe<Order_By>;
   private_info?: Maybe<User_Private_Order_By>;
+  profile_picture?: Maybe<File_Uploads_Order_By>;
+  profile_picture_id?: Maybe<Order_By>;
   things_aggregate?: Maybe<Things_Aggregate_Order_By>;
   updated_at?: Maybe<Order_By>;
 };
@@ -8308,6 +8338,8 @@ export type Users_Pk_Columns_Input = {
 /** select columns of table "users" */
 export enum Users_Select_Column {
   /** column name */
+  Auth0Id = 'auth0_id',
+  /** column name */
   CreatedAt = 'created_at',
   /** column name */
   Email = 'email',
@@ -8326,11 +8358,14 @@ export enum Users_Select_Column {
   /** column name */
   PasswordHash = 'password_hash',
   /** column name */
+  ProfilePictureId = 'profile_picture_id',
+  /** column name */
   UpdatedAt = 'updated_at'
 }
 
 /** input type for updating data in table "users" */
 export type Users_Set_Input = {
+  auth0_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   email?: Maybe<Scalars['String']>;
   email_verified?: Maybe<Scalars['timestamptz']>;
@@ -8340,11 +8375,14 @@ export type Users_Set_Input = {
   last_seen?: Maybe<Scalars['timestamptz']>;
   name?: Maybe<Scalars['String']>;
   password_hash?: Maybe<Scalars['String']>;
+  profile_picture_id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
 /** update columns of table "users" */
 export enum Users_Update_Column {
+  /** column name */
+  Auth0Id = 'auth0_id',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
@@ -8363,6 +8401,8 @@ export enum Users_Update_Column {
   Name = 'name',
   /** column name */
   PasswordHash = 'password_hash',
+  /** column name */
+  ProfilePictureId = 'profile_picture_id',
   /** column name */
   UpdatedAt = 'updated_at'
 }
@@ -8498,7 +8538,7 @@ export type Verification_Requests_Mutation_Response = {
 /** on conflict condition type for table "verification_requests" */
 export type Verification_Requests_On_Conflict = {
   constraint: Verification_Requests_Constraint;
-  update_columns: Array<Verification_Requests_Update_Column>;
+  update_columns?: Array<Verification_Requests_Update_Column>;
   where?: Maybe<Verification_Requests_Bool_Exp>;
 };
 
@@ -8601,145 +8641,19 @@ export type Verification_Requests_Variance_Fields = {
   id?: Maybe<Scalars['Float']>;
 };
 
-export type DetailedActivityFragment = (
-  { __typename?: 'activities' }
-  & Pick<Activities, 'id' | 'created_at' | 'verb'>
-  & { actor: (
-    { __typename?: 'users' }
-    & UserCardFragment
-  ), entity: (
-    { __typename?: 'entities' }
-    & DetailedEntityFragment
-  ) }
-);
+export type DetailedActivityFragment = { __typename?: 'activities', id: string, created_at: Date, verb: Activity_Verb_Enum, actor?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }>, entity: { __typename?: 'entities', id: string, group?: Maybe<{ __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }>, user?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }>, group_post?: Maybe<{ __typename?: 'group_posts', id: string, created_at: Date, updated_at: Date, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, name: string, description: string, category?: Maybe<string>, type: Thing_Type_Enum, expiry?: Maybe<any>, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'file_uploads', id: string, name: string, url: string, mime_type?: Maybe<string>, size: number } }>, owner: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group_member?: Maybe<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: Date, group: { __typename?: 'groups', id: string, short_id: string, name: string }, user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }> } };
 
-export type ActivityCardFragment = (
-  { __typename?: 'activities' }
-  & Pick<Activities, 'id' | 'created_at' | 'verb'>
-  & { entity: (
-    { __typename?: 'entities' }
-    & EntityCardFragment
-  ), secondary_entity: (
-    { __typename?: 'entities' }
-    & EntityCardFragment
-  ), actor: (
-    { __typename?: 'users' }
-    & UserCardFragment
-  ) }
-);
+export type ActivityCardFragment = { __typename?: 'activities', id: string, created_at: Date, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: Maybe<{ __typename?: 'groups', id: string, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: string, response?: Maybe<string>, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }> }, secondary_entity?: Maybe<{ __typename?: 'entities', id: string, group?: Maybe<{ __typename?: 'groups', id: string, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: string, response?: Maybe<string>, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }> }>, actor?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }> };
 
-export type NotificationCardFragment = (
-  { __typename?: 'notifications' }
-  & Pick<Notifications, 'id' | 'read_at' | 'created_at'>
-  & { activity: (
-    { __typename?: 'activities' }
-    & ActivityCardFragment
-  ) }
-);
+export type NotificationCardFragment = { __typename?: 'notifications', id: string, read_at?: Maybe<Date>, created_at: Date, activity: { __typename?: 'activities', id: string, created_at: Date, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: Maybe<{ __typename?: 'groups', id: string, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: string, response?: Maybe<string>, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }> }, secondary_entity?: Maybe<{ __typename?: 'entities', id: string, group?: Maybe<{ __typename?: 'groups', id: string, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: string, response?: Maybe<string>, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }> }>, actor?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }> } };
 
-export type GroupRefFragment = (
-  { __typename?: 'groups' }
-  & Pick<Groups, 'id' | 'short_id' | 'name'>
-);
+export type GroupRefFragment = { __typename?: 'groups', id: string, short_id: string, name: string };
 
-export type ThingRefFragment = (
-  { __typename?: 'things' }
-  & Pick<Things, 'id' | 'short_id' | 'name'>
-  & { images: Array<(
-    { __typename?: 'thing_images' }
-    & { file: (
-      { __typename?: 'file_uploads' }
-      & Pick<File_Uploads, 'url'>
-    ) }
-  )> }
-);
+export type ThingRefFragment = { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> };
 
-export type EntityCardFragment = (
-  { __typename?: 'entities' }
-  & Pick<Entities, 'id'>
-  & { group: (
-    { __typename?: 'groups' }
-    & GroupRefFragment
-  ), thing: (
-    { __typename?: 'things' }
-    & ThingRefFragment
-  ), user: (
-    { __typename?: 'users' }
-    & UserCardFragment
-  ), group_join_request: (
-    { __typename?: 'group_join_requests' }
-    & Pick<Group_Join_Requests, 'id' | 'response'>
-    & { group: (
-      { __typename?: 'groups' }
-      & GroupRefFragment
-    ) }
-  ), group_post_comment: (
-    { __typename?: 'group_post_comment' }
-    & Pick<Group_Post_Comment, 'id'>
-    & { post: (
-      { __typename?: 'group_posts' }
-      & Pick<Group_Posts, 'id' | 'author_id'>
-      & { group: (
-        { __typename?: 'groups' }
-        & GroupRefFragment
-      ) }
-    ), comment: (
-      { __typename?: 'comments' }
-      & CommentCardFragment
-    ) }
-  ), group_post: (
-    { __typename?: 'group_posts' }
-    & Pick<Group_Posts, 'id'>
-    & { group: (
-      { __typename?: 'groups' }
-      & GroupRefFragment
-    ) }
-  ), group_thing: (
-    { __typename?: 'group_thing' }
-    & Pick<Group_Thing, 'id'>
-    & { thing: (
-      { __typename?: 'things' }
-      & ThingRefFragment
-    ), group: (
-      { __typename?: 'groups' }
-      & GroupRefFragment
-    ) }
-  ), group_member: (
-    { __typename?: 'group_members' }
-    & { user: (
-      { __typename?: 'users' }
-      & UserCardFragment
-    ), group: (
-      { __typename?: 'groups' }
-      & GroupRefFragment
-    ) }
-  ) }
-);
+export type EntityCardFragment = { __typename?: 'entities', id: string, group?: Maybe<{ __typename?: 'groups', id: string, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: string, response?: Maybe<string>, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }> };
 
-export type DetailedEntityFragment = (
-  { __typename?: 'entities' }
-  & Pick<Entities, 'id'>
-  & { group: (
-    { __typename?: 'groups' }
-    & GroupCardFragment
-  ), user: (
-    { __typename?: 'users' }
-    & UserCardFragment
-  ), group_post: (
-    { __typename?: 'group_posts' }
-    & GroupPostFragment
-  ), group_thing: (
-    { __typename?: 'group_thing' }
-    & Pick<Group_Thing, 'id'>
-    & { thing: (
-      { __typename?: 'things' }
-      & ThingCardFragment
-    ) }
-  ), group_member: (
-    { __typename?: 'group_members' }
-    & GroupMemberWithGroupCardFragment
-  ) }
-);
+export type DetailedEntityFragment = { __typename?: 'entities', id: string, group?: Maybe<{ __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }>, user?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }>, group_post?: Maybe<{ __typename?: 'group_posts', id: string, created_at: Date, updated_at: Date, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, name: string, description: string, category?: Maybe<string>, type: Thing_Type_Enum, expiry?: Maybe<any>, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'file_uploads', id: string, name: string, url: string, mime_type?: Maybe<string>, size: number } }>, owner: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group_member?: Maybe<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: Date, group: { __typename?: 'groups', id: string, short_id: string, name: string }, user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }> };
 
 export type GroupActivityQueryVariables = Exact<{
   shortId: Scalars['String'];
@@ -8748,44 +8662,11 @@ export type GroupActivityQueryVariables = Exact<{
 }>;
 
 
-export type GroupActivityQuery = (
-  { __typename?: 'query_root' }
-  & { groups: Array<(
-    { __typename?: 'groups' }
-    & { activities: Array<(
-      { __typename?: 'activities' }
-      & DetailedActivityFragment
-    )> }
-  )> }
-);
+export type GroupActivityQuery = { __typename?: 'query_root', groups: Array<{ __typename?: 'groups', activities: Array<{ __typename?: 'activities', id: string, created_at: Date, verb: Activity_Verb_Enum, actor?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }>, entity: { __typename?: 'entities', id: string, group?: Maybe<{ __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }>, user?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }>, group_post?: Maybe<{ __typename?: 'group_posts', id: string, created_at: Date, updated_at: Date, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, name: string, description: string, category?: Maybe<string>, type: Thing_Type_Enum, expiry?: Maybe<any>, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'file_uploads', id: string, name: string, url: string, mime_type?: Maybe<string>, size: number } }>, owner: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group_member?: Maybe<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: Date, group: { __typename?: 'groups', id: string, short_id: string, name: string }, user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }> } }> }> };
 
-export type ChatMessageCardFragment = (
-  { __typename?: 'chat_messages' }
-  & Pick<Chat_Messages, 'id' | 'sender_id' | 'message' | 'created_at'>
-  & { entity: (
-    { __typename?: 'entities' }
-    & EntityCardFragment
-  ) }
-);
+export type ChatMessageCardFragment = { __typename?: 'chat_messages', id: string, sender_id: string, message: string, created_at: Date, entity?: Maybe<{ __typename?: 'entities', id: string, group?: Maybe<{ __typename?: 'groups', id: string, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: string, response?: Maybe<string>, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }> }> };
 
-export type ChatGroupCardFragment = (
-  { __typename?: 'chat_groups' }
-  & Pick<Chat_Groups, 'id' | 'name'>
-  & { members: Array<(
-    { __typename?: 'chat_group_members' }
-    & { user: (
-      { __typename?: 'users' }
-      & UserCardFragment
-    ) }
-  )>, messages: Array<(
-    { __typename?: 'chat_messages' }
-    & Pick<Chat_Messages, 'message'>
-    & { sender: (
-      { __typename?: 'users' }
-      & UserCardFragment
-    ) }
-  )> }
-);
+export type ChatGroupCardFragment = { __typename?: 'chat_groups', id: string, name: string, members: Array<{ __typename?: 'chat_group_members', user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }>, messages: Array<{ __typename?: 'chat_messages', message: string, sender: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }> };
 
 export type ChatMessagesQueryVariables = Exact<{
   where: Chat_Messages_Bool_Exp;
@@ -8793,153 +8674,49 @@ export type ChatMessagesQueryVariables = Exact<{
 }>;
 
 
-export type ChatMessagesQuery = (
-  { __typename?: 'query_root' }
-  & { chat_messages: Array<(
-    { __typename?: 'chat_messages' }
-    & ChatMessageCardFragment
-  )> }
-);
+export type ChatMessagesQuery = { __typename?: 'query_root', chat_messages: Array<{ __typename?: 'chat_messages', id: string, sender_id: string, message: string, created_at: Date, entity?: Maybe<{ __typename?: 'entities', id: string, group?: Maybe<{ __typename?: 'groups', id: string, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: string, response?: Maybe<string>, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }> }> }> };
 
 export type ChatGroupsSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ChatGroupsSubscription = (
-  { __typename?: 'subscription_root' }
-  & { chat_groups: Array<(
-    { __typename?: 'chat_groups' }
-    & ChatGroupCardFragment
-  )> }
-);
+export type ChatGroupsSubscription = { __typename?: 'subscription_root', chat_groups: Array<{ __typename?: 'chat_groups', id: string, name: string, members: Array<{ __typename?: 'chat_group_members', user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }>, messages: Array<{ __typename?: 'chat_messages', message: string, sender: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }> }> };
 
 export type ChatMessagesFeedSubscriptionVariables = Exact<{
   where: Chat_Messages_Bool_Exp;
 }>;
 
 
-export type ChatMessagesFeedSubscription = (
-  { __typename?: 'subscription_root' }
-  & { chat_messages: Array<(
-    { __typename?: 'chat_messages' }
-    & ChatMessageCardFragment
-  )> }
-);
+export type ChatMessagesFeedSubscription = { __typename?: 'subscription_root', chat_messages: Array<{ __typename?: 'chat_messages', id: string, sender_id: string, message: string, created_at: Date, entity?: Maybe<{ __typename?: 'entities', id: string, group?: Maybe<{ __typename?: 'groups', id: string, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: string, response?: Maybe<string>, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }> }> }> };
 
 export type CreateChatGroupMutationVariables = Exact<{
   input: CreateChatGroupInput;
 }>;
 
 
-export type CreateChatGroupMutation = (
-  { __typename?: 'mutation_root' }
-  & { createChatGroup?: Maybe<(
-    { __typename?: 'CreateChatGroupResult' }
-    & { chat_group: Array<(
-      { __typename?: 'chat_groups' }
-      & ChatGroupCardFragment
-    )> }
-  )> }
-);
+export type CreateChatGroupMutation = { __typename?: 'mutation_root', createChatGroup?: Maybe<{ __typename?: 'CreateChatGroupResult', chat_group: { __typename?: 'chat_groups', id: string, name: string, members: Array<{ __typename?: 'chat_group_members', user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }>, messages: Array<{ __typename?: 'chat_messages', message: string, sender: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }> } }> };
 
 export type CreateChatMessageMutationVariables = Exact<{
   input: Chat_Messages_Insert_Input;
 }>;
 
 
-export type CreateChatMessageMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_chat_messages_one?: Maybe<(
-    { __typename?: 'chat_messages' }
-    & ChatMessageCardFragment
-  )> }
-);
+export type CreateChatMessageMutation = { __typename?: 'mutation_root', insert_chat_messages_one?: Maybe<{ __typename?: 'chat_messages', id: string, sender_id: string, message: string, created_at: Date, entity?: Maybe<{ __typename?: 'entities', id: string, group?: Maybe<{ __typename?: 'groups', id: string, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: string, response?: Maybe<string>, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }> }> }> };
 
-export type CommentCardFragment = (
-  { __typename?: 'comments' }
-  & Pick<Comments, 'id' | 'content' | 'created_at'>
-  & { author: (
-    { __typename?: 'users' }
-    & UserCardFragment
-  ) }
-);
+export type CommentCardFragment = { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } };
 
-export type GroupMemberCardFragment = (
-  { __typename?: 'group_members' }
-  & Pick<Group_Members, 'id' | 'role' | 'created_at'>
-  & { user: (
-    { __typename?: 'users' }
-    & UserCardFragment
-  ) }
-);
+export type GroupMemberCardFragment = { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: Date, user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } };
 
-export type GroupMemberWithGroupCardFragment = (
-  { __typename?: 'group_members' }
-  & { group: (
-    { __typename?: 'groups' }
-    & Pick<Groups, 'id' | 'short_id' | 'name'>
-  ) }
-  & GroupMemberCardFragment
-);
+export type GroupMemberWithGroupCardFragment = { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: Date, group: { __typename?: 'groups', id: string, short_id: string, name: string }, user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } };
 
-export type GroupCardFragment = (
-  { __typename?: 'groups' }
-  & Pick<Groups, 'id' | 'short_id' | 'name' | 'created_at' | 'description' | 'public'>
-  & { memberships_aggregate: (
-    { __typename?: 'group_members_aggregate' }
-    & { aggregate?: Maybe<(
-      { __typename?: 'group_members_aggregate_fields' }
-      & Pick<Group_Members_Aggregate_Fields, 'count'>
-    )> }
-  ), thing_relations_aggregate: (
-    { __typename?: 'group_thing_aggregate' }
-    & { aggregate?: Maybe<(
-      { __typename?: 'group_thing_aggregate_fields' }
-      & Pick<Group_Thing_Aggregate_Fields, 'count'>
-    )> }
-  ) }
-);
+export type GroupCardFragment = { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } };
 
-export type GroupDetailsFragment = (
-  { __typename?: 'groups' }
-  & { memberships: Array<(
-    { __typename?: 'group_members' }
-    & GroupMemberCardFragment
-  )> }
-  & GroupCardFragment
-);
+export type GroupDetailsFragment = { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: Date, user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }>, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } };
 
-export type GroupJoinRequestCardFragment = (
-  { __typename?: 'group_join_requests' }
-  & Pick<Group_Join_Requests, 'id' | 'created_at' | 'updated_at' | 'status' | 'group_id' | 'message'>
-  & { user: (
-    { __typename?: 'users' }
-    & UserCardFragment
-  ) }
-);
+export type GroupJoinRequestCardFragment = { __typename?: 'group_join_requests', id: string, created_at: Date, updated_at: Date, status?: Maybe<Group_Join_Request_Status_Enum>, group_id: string, message: string, user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } };
 
-export type GroupJoinTokenCardFragment = (
-  { __typename?: 'group_join_tokens' }
-  & Pick<Group_Join_Tokens, 'id' | 'created_at' | 'updated_at' | 'token' | 'disabled' | 'note'>
-);
+export type GroupJoinTokenCardFragment = { __typename?: 'group_join_tokens', id: string, created_at: Date, updated_at: Date, token: string, disabled: boolean, note?: Maybe<string> };
 
-export type GroupPostFragment = (
-  { __typename?: 'group_posts' }
-  & Pick<Group_Posts, 'id' | 'created_at' | 'updated_at' | 'type' | 'resolved' | 'content'>
-  & { comments: Array<(
-    { __typename?: 'group_post_comment' }
-    & Pick<Group_Post_Comment, 'id'>
-    & { comment: (
-      { __typename?: 'comments' }
-      & CommentCardFragment
-    ) }
-  )>, group: (
-    { __typename?: 'groups' }
-    & GroupCardFragment
-  ), author: (
-    { __typename?: 'users' }
-    & UserCardFragment
-  ) }
-);
+export type GroupPostFragment = { __typename?: 'group_posts', id: string, created_at: Date, updated_at: Date, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } };
 
 export type ListGroupsQueryVariables = Exact<{
   limit: Scalars['Int'];
@@ -8949,109 +8726,52 @@ export type ListGroupsQueryVariables = Exact<{
 }>;
 
 
-export type ListGroupsQuery = (
-  { __typename?: 'query_root' }
-  & { groups_aggregate: (
-    { __typename?: 'groups_aggregate' }
-    & { aggregate?: Maybe<(
-      { __typename?: 'groups_aggregate_fields' }
-      & Pick<Groups_Aggregate_Fields, 'count'>
-    )> }
-  ), groups: Array<(
-    { __typename?: 'groups' }
-    & GroupCardFragment
-  )> }
-);
+export type ListGroupsQuery = { __typename?: 'query_root', groups_aggregate: { __typename?: 'groups_aggregate', aggregate?: Maybe<{ __typename?: 'groups_aggregate_fields', count: number }> }, groups: Array<{ __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }> };
 
 export type GroupDetailsQueryVariables = Exact<{
   shortId: Scalars['String'];
 }>;
 
 
-export type GroupDetailsQuery = (
-  { __typename?: 'query_root' }
-  & { groups: Array<(
-    { __typename?: 'groups' }
-    & GroupDetailsFragment
-  )> }
-);
+export type GroupDetailsQuery = { __typename?: 'query_root', groups: Array<{ __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: Date, user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }>, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }> };
 
 export type GroupJoinRequestsQueryVariables = Exact<{
   where: Group_Join_Requests_Bool_Exp;
 }>;
 
 
-export type GroupJoinRequestsQuery = (
-  { __typename?: 'query_root' }
-  & { group_join_requests: Array<(
-    { __typename?: 'group_join_requests' }
-    & GroupJoinRequestCardFragment
-  )> }
-);
+export type GroupJoinRequestsQuery = { __typename?: 'query_root', group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: Date, updated_at: Date, status?: Maybe<Group_Join_Request_Status_Enum>, group_id: string, message: string, user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }> };
 
 export type GroupJoinTokensQueryVariables = Exact<{
   where: Group_Join_Tokens_Bool_Exp;
 }>;
 
 
-export type GroupJoinTokensQuery = (
-  { __typename?: 'query_root' }
-  & { group_join_tokens: Array<(
-    { __typename?: 'group_join_tokens' }
-    & GroupJoinTokenCardFragment
-  )> }
-);
+export type GroupJoinTokensQuery = { __typename?: 'query_root', group_join_tokens: Array<{ __typename?: 'group_join_tokens', id: string, created_at: Date, updated_at: Date, token: string, disabled: boolean, note?: Maybe<string> }> };
 
 export type GroupPostListQueryVariables = Exact<{
   where: Group_Posts_Bool_Exp;
   limit: Scalars['Int'];
   offset: Scalars['Int'];
-  orderBy?: Maybe<Array<Group_Posts_Order_By>>;
+  orderBy?: Maybe<Array<Group_Posts_Order_By> | Group_Posts_Order_By>;
 }>;
 
 
-export type GroupPostListQuery = (
-  { __typename?: 'query_root' }
-  & { group_posts: Array<(
-    { __typename?: 'group_posts' }
-    & GroupPostFragment
-  )>, group_posts_aggregate: (
-    { __typename?: 'group_posts_aggregate' }
-    & { aggregate?: Maybe<(
-      { __typename?: 'group_posts_aggregate_fields' }
-      & Pick<Group_Posts_Aggregate_Fields, 'count'>
-    )> }
-  ) }
-);
+export type GroupPostListQuery = { __typename?: 'query_root', group_posts: Array<{ __typename?: 'group_posts', id: string, created_at: Date, updated_at: Date, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }>, group_posts_aggregate: { __typename?: 'group_posts_aggregate', aggregate?: Maybe<{ __typename?: 'group_posts_aggregate_fields', count: number }> } };
 
 export type ActivityListQueryVariables = Exact<{
   offset?: Maybe<Scalars['Int']>;
 }>;
 
 
-export type ActivityListQuery = (
-  { __typename?: 'query_root' }
-  & { activities: Array<(
-    { __typename?: 'activities' }
-    & ActivityCardFragment
-  )> }
-);
+export type ActivityListQuery = { __typename?: 'query_root', activities: Array<{ __typename?: 'activities', id: string, created_at: Date, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: Maybe<{ __typename?: 'groups', id: string, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: string, response?: Maybe<string>, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }> }, secondary_entity?: Maybe<{ __typename?: 'entities', id: string, group?: Maybe<{ __typename?: 'groups', id: string, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: string, response?: Maybe<string>, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }> }>, actor?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }> }> };
 
 export type CreateGroupMutationVariables = Exact<{
   input: CreateGroupInput;
 }>;
 
 
-export type CreateGroupMutation = (
-  { __typename?: 'mutation_root' }
-  & { createGroup?: Maybe<(
-    { __typename?: 'CreateGroupResult' }
-    & { group: Array<(
-      { __typename?: 'groups' }
-      & GroupCardFragment
-    )> }
-  )> }
-);
+export type CreateGroupMutation = { __typename?: 'mutation_root', createGroup: { __typename?: 'CreateGroupResult', group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } } } };
 
 export type UpdateGroupMutationVariables = Exact<{
   id: Scalars['uuid'];
@@ -9059,39 +8779,21 @@ export type UpdateGroupMutationVariables = Exact<{
 }>;
 
 
-export type UpdateGroupMutation = (
-  { __typename?: 'mutation_root' }
-  & { update_groups_by_pk?: Maybe<(
-    { __typename?: 'groups' }
-    & GroupDetailsFragment
-  )> }
-);
+export type UpdateGroupMutation = { __typename?: 'mutation_root', update_groups_by_pk?: Maybe<{ __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: Date, user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }>, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }> };
 
 export type DeleteGroupMutationVariables = Exact<{
   id: Scalars['uuid'];
 }>;
 
 
-export type DeleteGroupMutation = (
-  { __typename?: 'mutation_root' }
-  & { delete_groups_by_pk?: Maybe<(
-    { __typename?: 'groups' }
-    & GroupCardFragment
-  )> }
-);
+export type DeleteGroupMutation = { __typename?: 'mutation_root', delete_groups_by_pk?: Maybe<{ __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }> };
 
 export type CreateGroupPostMutationVariables = Exact<{
   input: Group_Posts_Insert_Input;
 }>;
 
 
-export type CreateGroupPostMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_group_posts_one?: Maybe<(
-    { __typename?: 'group_posts' }
-    & GroupPostFragment
-  )> }
-);
+export type CreateGroupPostMutation = { __typename?: 'mutation_root', insert_group_posts_one?: Maybe<{ __typename?: 'group_posts', id: string, created_at: Date, updated_at: Date, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }> };
 
 export type UpdateGroupPostMutationVariables = Exact<{
   id: Scalars['uuid'];
@@ -9099,13 +8801,7 @@ export type UpdateGroupPostMutationVariables = Exact<{
 }>;
 
 
-export type UpdateGroupPostMutation = (
-  { __typename?: 'mutation_root' }
-  & { update_group_posts_by_pk?: Maybe<(
-    { __typename?: 'group_posts' }
-    & GroupPostFragment
-  )> }
-);
+export type UpdateGroupPostMutation = { __typename?: 'mutation_root', update_group_posts_by_pk?: Maybe<{ __typename?: 'group_posts', id: string, created_at: Date, updated_at: Date, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }> };
 
 export type CreateGroupPostCommentMutationVariables = Exact<{
   groupPostId: Scalars['uuid'];
@@ -9113,19 +8809,7 @@ export type CreateGroupPostCommentMutationVariables = Exact<{
 }>;
 
 
-export type CreateGroupPostCommentMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_group_post_comment_one?: Maybe<(
-    { __typename?: 'group_post_comment' }
-    & { comment: (
-      { __typename?: 'comments' }
-      & CommentCardFragment
-    ), post: (
-      { __typename?: 'group_posts' }
-      & GroupPostFragment
-    ) }
-  )> }
-);
+export type CreateGroupPostCommentMutation = { __typename?: 'mutation_root', insert_group_post_comment_one?: Maybe<{ __typename?: 'group_post_comment', comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }, post: { __typename?: 'group_posts', id: string, created_at: Date, updated_at: Date, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }> };
 
 export type LeaveGroupMutationVariables = Exact<{
   groupId: Scalars['uuid'];
@@ -9133,129 +8817,56 @@ export type LeaveGroupMutationVariables = Exact<{
 }>;
 
 
-export type LeaveGroupMutation = (
-  { __typename?: 'mutation_root' }
-  & { delete_group_members?: Maybe<(
-    { __typename?: 'group_members_mutation_response' }
-    & Pick<Group_Members_Mutation_Response, 'affected_rows'>
-  )> }
-);
+export type LeaveGroupMutation = { __typename?: 'mutation_root', delete_group_members?: Maybe<{ __typename?: 'group_members_mutation_response', affected_rows: number }> };
 
 export type JoinGroupMutationVariables = Exact<{
   groupId: Scalars['uuid'];
 }>;
 
 
-export type JoinGroupMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_group_members_one?: Maybe<(
-    { __typename?: 'group_members' }
-    & { user: (
-      { __typename?: 'users' }
-      & UserPrivateDetailFragment
-    ) }
-    & GroupMemberCardFragment
-  )> }
-);
+export type JoinGroupMutation = { __typename?: 'mutation_root', insert_group_members_one?: Maybe<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: Date, user: { __typename?: 'users', id: string, name: string, image?: Maybe<string>, created_at: Date, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } } }>, private_info?: Maybe<{ __typename?: 'user_private', email?: Maybe<string> }>, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: Date, updated_at: Date, status?: Maybe<Group_Join_Request_Status_Enum>, group_id: string, message: string, user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }> } }> };
 
 export type JoinGroupWithTokenMutationVariables = Exact<{
   input: JoinGroupInput;
 }>;
 
 
-export type JoinGroupWithTokenMutation = (
-  { __typename?: 'mutation_root' }
-  & { joinGroup?: Maybe<(
-    { __typename?: 'JoinGroupResult' }
-    & { group: Array<(
-      { __typename?: 'groups' }
-      & Pick<Groups, 'id'>
-    )>, user: Array<(
-      { __typename?: 'users' }
-      & UserPrivateDetailFragment
-    )> }
-  )> }
-);
+export type JoinGroupWithTokenMutation = { __typename?: 'mutation_root', joinGroup?: Maybe<{ __typename?: 'JoinGroupResult', group: { __typename?: 'groups', id: string }, user: { __typename?: 'users', created_at: Date, id: string, name: string, image?: Maybe<string>, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } } }>, private_info?: Maybe<{ __typename?: 'user_private', email?: Maybe<string> }>, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: Date, updated_at: Date, status?: Maybe<Group_Join_Request_Status_Enum>, group_id: string, message: string, user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }> } }> };
 
 export type RequestJoinGroupMutationVariables = Exact<{
   input: RequestJoinGroupInput;
 }>;
 
 
-export type RequestJoinGroupMutation = (
-  { __typename?: 'mutation_root' }
-  & { requestJoinGroup?: Maybe<(
-    { __typename?: 'RequestJoinGroupResult' }
-    & { group: Array<(
-      { __typename?: 'groups' }
-      & GroupCardFragment
-    )>, user: Array<(
-      { __typename?: 'users' }
-      & UserJoinRequestsFragment
-    )> }
-  )> }
-);
+export type RequestJoinGroupMutation = { __typename?: 'mutation_root', requestJoinGroup?: Maybe<{ __typename?: 'RequestJoinGroupResult', group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }, user: { __typename?: 'users', id: string, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: Date, updated_at: Date, status?: Maybe<Group_Join_Request_Status_Enum>, group_id: string, message: string, user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }> } }> };
 
 export type CancelJoinRequestMutationVariables = Exact<{
   requestId: Scalars['uuid'];
 }>;
 
 
-export type CancelJoinRequestMutation = (
-  { __typename?: 'mutation_root' }
-  & { delete_group_join_requests?: Maybe<(
-    { __typename?: 'group_join_requests_mutation_response' }
-    & { returning: Array<(
-      { __typename?: 'group_join_requests' }
-      & { user: (
-        { __typename?: 'users' }
-        & UserJoinRequestsFragment
-      ) }
-    )> }
-  )> }
-);
+export type CancelJoinRequestMutation = { __typename?: 'mutation_root', delete_group_join_requests?: Maybe<{ __typename?: 'group_join_requests_mutation_response', returning: Array<{ __typename?: 'group_join_requests', user: { __typename?: 'users', id: string, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: Date, updated_at: Date, status?: Maybe<Group_Join_Request_Status_Enum>, group_id: string, message: string, user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }> } }> }> };
 
 export type HandleJoinRequestMutationVariables = Exact<{
   input: HandleJoinRequestInput;
 }>;
 
 
-export type HandleJoinRequestMutation = (
-  { __typename?: 'mutation_root' }
-  & { handleJoinRequest?: Maybe<(
-    { __typename?: 'HandleJoinRequestResult' }
-    & { join_request: Array<(
-      { __typename?: 'group_join_requests' }
-      & GroupJoinRequestCardFragment
-    )> }
-  )> }
-);
+export type HandleJoinRequestMutation = { __typename?: 'mutation_root', handleJoinRequest: { __typename?: 'HandleJoinRequestResult', join_request: { __typename?: 'group_join_requests', id: string, created_at: Date, updated_at: Date, status?: Maybe<Group_Join_Request_Status_Enum>, group_id: string, message: string, user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } } };
 
 export type CreateJoinTokenMutationVariables = Exact<{
   input: Group_Join_Tokens_Insert_Input;
 }>;
 
 
-export type CreateJoinTokenMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_group_join_tokens_one?: Maybe<(
-    { __typename?: 'group_join_tokens' }
-    & GroupJoinTokenCardFragment
-  )> }
-);
+export type CreateJoinTokenMutation = { __typename?: 'mutation_root', insert_group_join_tokens_one?: Maybe<{ __typename?: 'group_join_tokens', id: string, created_at: Date, updated_at: Date, token: string, disabled: boolean, note?: Maybe<string> }> };
 
 export type DeleteJoinTokenMutationVariables = Exact<{
   id: Scalars['uuid'];
 }>;
 
 
-export type DeleteJoinTokenMutation = (
-  { __typename?: 'mutation_root' }
-  & { delete_group_join_tokens_by_pk?: Maybe<(
-    { __typename?: 'group_join_tokens' }
-    & GroupJoinTokenCardFragment
-  )> }
-);
+export type DeleteJoinTokenMutation = { __typename?: 'mutation_root', delete_group_join_tokens_by_pk?: Maybe<{ __typename?: 'group_join_tokens', id: string, created_at: Date, updated_at: Date, token: string, disabled: boolean, note?: Maybe<string> }> };
 
 export type UpdateJoinTokenMutationVariables = Exact<{
   id: Scalars['uuid'];
@@ -9263,13 +8874,7 @@ export type UpdateJoinTokenMutationVariables = Exact<{
 }>;
 
 
-export type UpdateJoinTokenMutation = (
-  { __typename?: 'mutation_root' }
-  & { update_group_join_tokens_by_pk?: Maybe<(
-    { __typename?: 'group_join_tokens' }
-    & GroupJoinTokenCardFragment
-  )> }
-);
+export type UpdateJoinTokenMutation = { __typename?: 'mutation_root', update_group_join_tokens_by_pk?: Maybe<{ __typename?: 'group_join_tokens', id: string, created_at: Date, updated_at: Date, token: string, disabled: boolean, note?: Maybe<string> }> };
 
 export type SearchCountsQueryVariables = Exact<{
   thingWhere: Things_Bool_Exp;
@@ -9278,195 +8883,68 @@ export type SearchCountsQueryVariables = Exact<{
 }>;
 
 
-export type SearchCountsQuery = (
-  { __typename?: 'query_root' }
-  & { users_aggregate: (
-    { __typename?: 'users_aggregate' }
-    & { aggregate?: Maybe<(
-      { __typename?: 'users_aggregate_fields' }
-      & Pick<Users_Aggregate_Fields, 'count'>
-    )> }
-  ), groups_aggregate: (
-    { __typename?: 'groups_aggregate' }
-    & { aggregate?: Maybe<(
-      { __typename?: 'groups_aggregate_fields' }
-      & Pick<Groups_Aggregate_Fields, 'count'>
-    )> }
-  ), things_aggregate: (
-    { __typename?: 'things_aggregate' }
-    & { aggregate?: Maybe<(
-      { __typename?: 'things_aggregate_fields' }
-      & Pick<Things_Aggregate_Fields, 'count'>
-    )> }
-  ) }
-);
+export type SearchCountsQuery = { __typename?: 'query_root', users_aggregate: { __typename?: 'users_aggregate', aggregate?: Maybe<{ __typename?: 'users_aggregate_fields', count: number }> }, groups_aggregate: { __typename?: 'groups_aggregate', aggregate?: Maybe<{ __typename?: 'groups_aggregate_fields', count: number }> }, things_aggregate: { __typename?: 'things_aggregate', aggregate?: Maybe<{ __typename?: 'things_aggregate_fields', count: number }> } };
 
-export type ThingCardFragment = (
-  { __typename?: 'things' }
-  & Pick<Things, 'id' | 'name' | 'description' | 'category' | 'type' | 'expiry' | 'short_id'>
-  & { images: Array<(
-    { __typename?: 'thing_images' }
-    & ThingImageCardFragment
-  )>, owner: (
-    { __typename?: 'users' }
-    & UserCardFragment
-  ) }
-);
+export type ThingCardFragment = { __typename?: 'things', id: string, name: string, description: string, category?: Maybe<string>, type: Thing_Type_Enum, expiry?: Maybe<any>, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'file_uploads', id: string, name: string, url: string, mime_type?: Maybe<string>, size: number } }>, owner: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } };
 
-export type ThingImageCardFragment = (
-  { __typename?: 'thing_images' }
-  & Pick<Thing_Images, 'id' | 'description' | 'order'>
-  & { file: (
-    { __typename?: 'file_uploads' }
-    & FileUploadCardFragment
-  ) }
-);
+export type ThingImageCardFragment = { __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'file_uploads', id: string, name: string, url: string, mime_type?: Maybe<string>, size: number } };
 
-export type ThingDetailsFragment = (
-  { __typename?: 'things' }
-  & Pick<Things, 'enabled'>
-  & { group_relations: Array<(
-    { __typename?: 'group_thing' }
-    & Pick<Group_Thing, 'id'>
-    & { group: (
-      { __typename?: 'groups' }
-      & GroupCardFragment
-    ) }
-  )> }
-  & ThingCardFragment
-);
+export type ThingDetailsFragment = { __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: Maybe<string>, type: Thing_Type_Enum, expiry?: Maybe<any>, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'file_uploads', id: string, name: string, url: string, mime_type?: Maybe<string>, size: number } }>, owner: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } };
 
 export type ThingListQueryVariables = Exact<{
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  orderBy?: Maybe<Array<Things_Order_By>>;
+  orderBy?: Maybe<Array<Things_Order_By> | Things_Order_By>;
   where: Things_Bool_Exp;
 }>;
 
 
-export type ThingListQuery = (
-  { __typename?: 'query_root' }
-  & { things: Array<(
-    { __typename?: 'things' }
-    & ThingCardFragment
-  )>, things_aggregate: (
-    { __typename?: 'things_aggregate' }
-    & { aggregate?: Maybe<(
-      { __typename?: 'things_aggregate_fields' }
-      & Pick<Things_Aggregate_Fields, 'count'>
-    )> }
-  ) }
-);
+export type ThingListQuery = { __typename?: 'query_root', things: Array<{ __typename?: 'things', id: string, name: string, description: string, category?: Maybe<string>, type: Thing_Type_Enum, expiry?: Maybe<any>, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'file_uploads', id: string, name: string, url: string, mime_type?: Maybe<string>, size: number } }>, owner: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }>, things_aggregate: { __typename?: 'things_aggregate', aggregate?: Maybe<{ __typename?: 'things_aggregate_fields', count: number }> } };
 
 export type ThingDetailsQueryVariables = Exact<{
   shortId: Scalars['String'];
 }>;
 
 
-export type ThingDetailsQuery = (
-  { __typename?: 'query_root' }
-  & { things: Array<(
-    { __typename?: 'things' }
-    & ThingDetailsFragment
-  )> }
-);
+export type ThingDetailsQuery = { __typename?: 'query_root', things: Array<{ __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: Maybe<string>, type: Thing_Type_Enum, expiry?: Maybe<any>, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'file_uploads', id: string, name: string, url: string, mime_type?: Maybe<string>, size: number } }>, owner: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }> };
 
 export type CreateThingMutationVariables = Exact<{
   input: Things_Insert_Input;
 }>;
 
 
-export type CreateThingMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_things_one?: Maybe<(
-    { __typename?: 'things' }
-    & ThingDetailsFragment
-  )> }
-);
+export type CreateThingMutation = { __typename?: 'mutation_root', insert_things_one?: Maybe<{ __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: Maybe<string>, type: Thing_Type_Enum, expiry?: Maybe<any>, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'file_uploads', id: string, name: string, url: string, mime_type?: Maybe<string>, size: number } }>, owner: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }> };
 
 export type UpdateThingMutationVariables = Exact<{
   input: UpdateThingInput;
 }>;
 
 
-export type UpdateThingMutation = (
-  { __typename?: 'mutation_root' }
-  & { updateThing?: Maybe<(
-    { __typename?: 'UpdateThingResult' }
-    & { thing: Array<(
-      { __typename?: 'things' }
-      & ThingDetailsFragment
-    )> }
-  )> }
-);
+export type UpdateThingMutation = { __typename?: 'mutation_root', updateThing?: Maybe<{ __typename?: 'UpdateThingResult', thing: { __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: Maybe<string>, type: Thing_Type_Enum, expiry?: Maybe<any>, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'file_uploads', id: string, name: string, url: string, mime_type?: Maybe<string>, size: number } }>, owner: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }> };
 
 export type DeleteThingMutationVariables = Exact<{
   id: Scalars['uuid'];
 }>;
 
 
-export type DeleteThingMutation = (
-  { __typename?: 'mutation_root' }
-  & { delete_things_by_pk?: Maybe<(
-    { __typename?: 'things' }
-    & ThingDetailsFragment
-  )> }
-);
+export type DeleteThingMutation = { __typename?: 'mutation_root', delete_things_by_pk?: Maybe<{ __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: Maybe<string>, type: Thing_Type_Enum, expiry?: Maybe<any>, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'file_uploads', id: string, name: string, url: string, mime_type?: Maybe<string>, size: number } }>, owner: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }> };
 
-export type FileUploadCardFragment = (
-  { __typename?: 'file_uploads' }
-  & Pick<File_Uploads, 'id' | 'name' | 'url' | 'mime_type' | 'size'>
-);
+export type FileUploadCardFragment = { __typename?: 'file_uploads', id: string, name: string, url: string, mime_type?: Maybe<string>, size: number };
 
 export type InsertFileUploadMutationVariables = Exact<{
   input: File_Uploads_Insert_Input;
 }>;
 
 
-export type InsertFileUploadMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_file_uploads_one?: Maybe<(
-    { __typename?: 'file_uploads' }
-    & FileUploadCardFragment
-  )> }
-);
+export type InsertFileUploadMutation = { __typename?: 'mutation_root', insert_file_uploads_one?: Maybe<{ __typename?: 'file_uploads', id: string, name: string, url: string, mime_type?: Maybe<string>, size: number }> };
 
-export type UserCardFragment = (
-  { __typename?: 'users' }
-  & Pick<Users, 'id' | 'name' | 'image'>
-);
+export type UserCardFragment = { __typename?: 'users', id: string, name: string, image?: Maybe<string> };
 
-export type UserDetailFragment = (
-  { __typename?: 'users' }
-  & Pick<Users, 'created_at'>
-  & UserCardFragment
-);
+export type UserDetailFragment = { __typename?: 'users', created_at: Date, id: string, name: string, image?: Maybe<string> };
 
-export type UserJoinRequestsFragment = (
-  { __typename?: 'users' }
-  & Pick<Users, 'id'>
-  & { group_join_requests: Array<(
-    { __typename?: 'group_join_requests' }
-    & GroupJoinRequestCardFragment
-  )> }
-);
+export type UserJoinRequestsFragment = { __typename?: 'users', id: string, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: Date, updated_at: Date, status?: Maybe<Group_Join_Request_Status_Enum>, group_id: string, message: string, user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }> };
 
-export type UserPrivateDetailFragment = (
-  { __typename?: 'users' }
-  & { memberships: Array<(
-    { __typename?: 'group_members' }
-    & Pick<Group_Members, 'id' | 'role'>
-    & { group: (
-      { __typename?: 'groups' }
-      & GroupCardFragment
-    ) }
-  )>, private_info?: Maybe<(
-    { __typename?: 'user_private' }
-    & Pick<User_Private, 'email'>
-  )> }
-  & UserDetailFragment
-  & UserJoinRequestsFragment
-);
+export type UserPrivateDetailFragment = { __typename?: 'users', created_at: Date, id: string, name: string, image?: Maybe<string>, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } } }>, private_info?: Maybe<{ __typename?: 'user_private', email?: Maybe<string> }>, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: Date, updated_at: Date, status?: Maybe<Group_Join_Request_Status_Enum>, group_id: string, message: string, user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }> };
 
 export type UserListQueryVariables = Exact<{
   where?: Maybe<Users_Bool_Exp>;
@@ -9475,45 +8953,21 @@ export type UserListQueryVariables = Exact<{
 }>;
 
 
-export type UserListQuery = (
-  { __typename?: 'query_root' }
-  & { users: Array<(
-    { __typename?: 'users' }
-    & UserCardFragment
-  )>, users_aggregate: (
-    { __typename?: 'users_aggregate' }
-    & { aggregate?: Maybe<(
-      { __typename?: 'users_aggregate_fields' }
-      & Pick<Users_Aggregate_Fields, 'count'>
-    )> }
-  ) }
-);
+export type UserListQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }>, users_aggregate: { __typename?: 'users_aggregate', aggregate?: Maybe<{ __typename?: 'users_aggregate_fields', count: number }> } };
 
 export type UserPrivateDetailsQueryVariables = Exact<{
   id: Scalars['uuid'];
 }>;
 
 
-export type UserPrivateDetailsQuery = (
-  { __typename?: 'query_root' }
-  & { users_by_pk?: Maybe<(
-    { __typename?: 'users' }
-    & UserPrivateDetailFragment
-  )> }
-);
+export type UserPrivateDetailsQuery = { __typename?: 'query_root', users_by_pk?: Maybe<{ __typename?: 'users', created_at: Date, id: string, name: string, image?: Maybe<string>, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } } }>, private_info?: Maybe<{ __typename?: 'user_private', email?: Maybe<string> }>, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: Date, updated_at: Date, status?: Maybe<Group_Join_Request_Status_Enum>, group_id: string, message: string, user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } }> }> };
 
 export type NotificationsSubscriptionVariables = Exact<{
   userId: Scalars['uuid'];
 }>;
 
 
-export type NotificationsSubscription = (
-  { __typename?: 'subscription_root' }
-  & { notifications: Array<(
-    { __typename?: 'notifications' }
-    & NotificationCardFragment
-  )> }
-);
+export type NotificationsSubscription = { __typename?: 'subscription_root', notifications: Array<{ __typename?: 'notifications', id: string, read_at?: Maybe<Date>, created_at: Date, activity: { __typename?: 'activities', id: string, created_at: Date, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: Maybe<{ __typename?: 'groups', id: string, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: string, response?: Maybe<string>, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }> }, secondary_entity?: Maybe<{ __typename?: 'entities', id: string, group?: Maybe<{ __typename?: 'groups', id: string, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: string, response?: Maybe<string>, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }> }>, actor?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }> } }> };
 
 export type MarkNotificationReadMutationVariables = Exact<{
   id: Scalars['uuid'];
@@ -9521,13 +8975,7 @@ export type MarkNotificationReadMutationVariables = Exact<{
 }>;
 
 
-export type MarkNotificationReadMutation = (
-  { __typename?: 'mutation_root' }
-  & { update_notifications_by_pk?: Maybe<(
-    { __typename?: 'notifications' }
-    & NotificationCardFragment
-  )> }
-);
+export type MarkNotificationReadMutation = { __typename?: 'mutation_root', update_notifications_by_pk?: Maybe<{ __typename?: 'notifications', id: string, read_at?: Maybe<Date>, created_at: Date, activity: { __typename?: 'activities', id: string, created_at: Date, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: Maybe<{ __typename?: 'groups', id: string, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: string, response?: Maybe<string>, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }> }, secondary_entity?: Maybe<{ __typename?: 'entities', id: string, group?: Maybe<{ __typename?: 'groups', id: string, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: string, response?: Maybe<string>, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }> }>, actor?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }> } }> };
 
 export type MarkAllNotificationsReadMutationVariables = Exact<{
   userId: Scalars['uuid'];
@@ -9535,30 +8983,14 @@ export type MarkAllNotificationsReadMutationVariables = Exact<{
 }>;
 
 
-export type MarkAllNotificationsReadMutation = (
-  { __typename?: 'mutation_root' }
-  & { update_notifications?: Maybe<(
-    { __typename?: 'notifications_mutation_response' }
-    & Pick<Notifications_Mutation_Response, 'affected_rows'>
-    & { returning: Array<(
-      { __typename?: 'notifications' }
-      & NotificationCardFragment
-    )> }
-  )> }
-);
+export type MarkAllNotificationsReadMutation = { __typename?: 'mutation_root', update_notifications?: Maybe<{ __typename?: 'notifications_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'notifications', id: string, read_at?: Maybe<Date>, created_at: Date, activity: { __typename?: 'activities', id: string, created_at: Date, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: Maybe<{ __typename?: 'groups', id: string, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: string, response?: Maybe<string>, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }> }, secondary_entity?: Maybe<{ __typename?: 'entities', id: string, group?: Maybe<{ __typename?: 'groups', id: string, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: string, response?: Maybe<string>, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: string, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } }> }>, actor?: Maybe<{ __typename?: 'users', id: string, name: string, image?: Maybe<string> }> } }> }> };
 
 export type RegisterUserMutationVariables = Exact<{
   input: CredentialsInput;
 }>;
 
 
-export type RegisterUserMutation = (
-  { __typename?: 'mutation_root' }
-  & { registerCredentials?: Maybe<(
-    { __typename?: 'RegistrationResult' }
-    & Pick<RegistrationResult, 'user_id'>
-  )> }
-);
+export type RegisterUserMutation = { __typename?: 'mutation_root', registerCredentials?: Maybe<{ __typename?: 'RegistrationResult', user_id: string }> };
 
 export const UserCardFragmentDoc = gql`
     fragment UserCard on users {
@@ -9965,11 +9397,13 @@ export const GroupActivityDocument = gql`
  *   },
  * });
  */
-export function useGroupActivityQuery(baseOptions?: Apollo.QueryHookOptions<GroupActivityQuery, GroupActivityQueryVariables>) {
-        return Apollo.useQuery<GroupActivityQuery, GroupActivityQueryVariables>(GroupActivityDocument, baseOptions);
+export function useGroupActivityQuery(baseOptions: Apollo.QueryHookOptions<GroupActivityQuery, GroupActivityQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GroupActivityQuery, GroupActivityQueryVariables>(GroupActivityDocument, options);
       }
 export function useGroupActivityLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GroupActivityQuery, GroupActivityQueryVariables>) {
-          return Apollo.useLazyQuery<GroupActivityQuery, GroupActivityQueryVariables>(GroupActivityDocument, baseOptions);
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GroupActivityQuery, GroupActivityQueryVariables>(GroupActivityDocument, options);
         }
 export type GroupActivityQueryHookResult = ReturnType<typeof useGroupActivityQuery>;
 export type GroupActivityLazyQueryHookResult = ReturnType<typeof useGroupActivityLazyQuery>;
@@ -10002,11 +9436,13 @@ export const ChatMessagesDocument = gql`
  *   },
  * });
  */
-export function useChatMessagesQuery(baseOptions?: Apollo.QueryHookOptions<ChatMessagesQuery, ChatMessagesQueryVariables>) {
-        return Apollo.useQuery<ChatMessagesQuery, ChatMessagesQueryVariables>(ChatMessagesDocument, baseOptions);
+export function useChatMessagesQuery(baseOptions: Apollo.QueryHookOptions<ChatMessagesQuery, ChatMessagesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ChatMessagesQuery, ChatMessagesQueryVariables>(ChatMessagesDocument, options);
       }
 export function useChatMessagesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ChatMessagesQuery, ChatMessagesQueryVariables>) {
-          return Apollo.useLazyQuery<ChatMessagesQuery, ChatMessagesQueryVariables>(ChatMessagesDocument, baseOptions);
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ChatMessagesQuery, ChatMessagesQueryVariables>(ChatMessagesDocument, options);
         }
 export type ChatMessagesQueryHookResult = ReturnType<typeof useChatMessagesQuery>;
 export type ChatMessagesLazyQueryHookResult = ReturnType<typeof useChatMessagesLazyQuery>;
@@ -10038,7 +9474,8 @@ export const ChatGroupsDocument = gql`
  * });
  */
 export function useChatGroupsSubscription(baseOptions?: Apollo.SubscriptionHookOptions<ChatGroupsSubscription, ChatGroupsSubscriptionVariables>) {
-        return Apollo.useSubscription<ChatGroupsSubscription, ChatGroupsSubscriptionVariables>(ChatGroupsDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<ChatGroupsSubscription, ChatGroupsSubscriptionVariables>(ChatGroupsDocument, options);
       }
 export type ChatGroupsSubscriptionHookResult = ReturnType<typeof useChatGroupsSubscription>;
 export type ChatGroupsSubscriptionResult = Apollo.SubscriptionResult<ChatGroupsSubscription>;
@@ -10066,8 +9503,9 @@ export const ChatMessagesFeedDocument = gql`
  *   },
  * });
  */
-export function useChatMessagesFeedSubscription(baseOptions?: Apollo.SubscriptionHookOptions<ChatMessagesFeedSubscription, ChatMessagesFeedSubscriptionVariables>) {
-        return Apollo.useSubscription<ChatMessagesFeedSubscription, ChatMessagesFeedSubscriptionVariables>(ChatMessagesFeedDocument, baseOptions);
+export function useChatMessagesFeedSubscription(baseOptions: Apollo.SubscriptionHookOptions<ChatMessagesFeedSubscription, ChatMessagesFeedSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<ChatMessagesFeedSubscription, ChatMessagesFeedSubscriptionVariables>(ChatMessagesFeedDocument, options);
       }
 export type ChatMessagesFeedSubscriptionHookResult = ReturnType<typeof useChatMessagesFeedSubscription>;
 export type ChatMessagesFeedSubscriptionResult = Apollo.SubscriptionResult<ChatMessagesFeedSubscription>;
@@ -10100,7 +9538,8 @@ export type CreateChatGroupMutationFn = Apollo.MutationFunction<CreateChatGroupM
  * });
  */
 export function useCreateChatGroupMutation(baseOptions?: Apollo.MutationHookOptions<CreateChatGroupMutation, CreateChatGroupMutationVariables>) {
-        return Apollo.useMutation<CreateChatGroupMutation, CreateChatGroupMutationVariables>(CreateChatGroupDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateChatGroupMutation, CreateChatGroupMutationVariables>(CreateChatGroupDocument, options);
       }
 export type CreateChatGroupMutationHookResult = ReturnType<typeof useCreateChatGroupMutation>;
 export type CreateChatGroupMutationResult = Apollo.MutationResult<CreateChatGroupMutation>;
@@ -10132,7 +9571,8 @@ export type CreateChatMessageMutationFn = Apollo.MutationFunction<CreateChatMess
  * });
  */
 export function useCreateChatMessageMutation(baseOptions?: Apollo.MutationHookOptions<CreateChatMessageMutation, CreateChatMessageMutationVariables>) {
-        return Apollo.useMutation<CreateChatMessageMutation, CreateChatMessageMutationVariables>(CreateChatMessageDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateChatMessageMutation, CreateChatMessageMutationVariables>(CreateChatMessageDocument, options);
       }
 export type CreateChatMessageMutationHookResult = ReturnType<typeof useCreateChatMessageMutation>;
 export type CreateChatMessageMutationResult = Apollo.MutationResult<CreateChatMessageMutation>;
@@ -10169,11 +9609,13 @@ export const ListGroupsDocument = gql`
  *   },
  * });
  */
-export function useListGroupsQuery(baseOptions?: Apollo.QueryHookOptions<ListGroupsQuery, ListGroupsQueryVariables>) {
-        return Apollo.useQuery<ListGroupsQuery, ListGroupsQueryVariables>(ListGroupsDocument, baseOptions);
+export function useListGroupsQuery(baseOptions: Apollo.QueryHookOptions<ListGroupsQuery, ListGroupsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ListGroupsQuery, ListGroupsQueryVariables>(ListGroupsDocument, options);
       }
 export function useListGroupsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ListGroupsQuery, ListGroupsQueryVariables>) {
-          return Apollo.useLazyQuery<ListGroupsQuery, ListGroupsQueryVariables>(ListGroupsDocument, baseOptions);
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ListGroupsQuery, ListGroupsQueryVariables>(ListGroupsDocument, options);
         }
 export type ListGroupsQueryHookResult = ReturnType<typeof useListGroupsQuery>;
 export type ListGroupsLazyQueryHookResult = ReturnType<typeof useListGroupsLazyQuery>;
@@ -10205,11 +9647,13 @@ export const GroupDetailsDocument = gql`
  *   },
  * });
  */
-export function useGroupDetailsQuery(baseOptions?: Apollo.QueryHookOptions<GroupDetailsQuery, GroupDetailsQueryVariables>) {
-        return Apollo.useQuery<GroupDetailsQuery, GroupDetailsQueryVariables>(GroupDetailsDocument, baseOptions);
+export function useGroupDetailsQuery(baseOptions: Apollo.QueryHookOptions<GroupDetailsQuery, GroupDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GroupDetailsQuery, GroupDetailsQueryVariables>(GroupDetailsDocument, options);
       }
 export function useGroupDetailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GroupDetailsQuery, GroupDetailsQueryVariables>) {
-          return Apollo.useLazyQuery<GroupDetailsQuery, GroupDetailsQueryVariables>(GroupDetailsDocument, baseOptions);
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GroupDetailsQuery, GroupDetailsQueryVariables>(GroupDetailsDocument, options);
         }
 export type GroupDetailsQueryHookResult = ReturnType<typeof useGroupDetailsQuery>;
 export type GroupDetailsLazyQueryHookResult = ReturnType<typeof useGroupDetailsLazyQuery>;
@@ -10241,11 +9685,13 @@ export const GroupJoinRequestsDocument = gql`
  *   },
  * });
  */
-export function useGroupJoinRequestsQuery(baseOptions?: Apollo.QueryHookOptions<GroupJoinRequestsQuery, GroupJoinRequestsQueryVariables>) {
-        return Apollo.useQuery<GroupJoinRequestsQuery, GroupJoinRequestsQueryVariables>(GroupJoinRequestsDocument, baseOptions);
+export function useGroupJoinRequestsQuery(baseOptions: Apollo.QueryHookOptions<GroupJoinRequestsQuery, GroupJoinRequestsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GroupJoinRequestsQuery, GroupJoinRequestsQueryVariables>(GroupJoinRequestsDocument, options);
       }
 export function useGroupJoinRequestsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GroupJoinRequestsQuery, GroupJoinRequestsQueryVariables>) {
-          return Apollo.useLazyQuery<GroupJoinRequestsQuery, GroupJoinRequestsQueryVariables>(GroupJoinRequestsDocument, baseOptions);
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GroupJoinRequestsQuery, GroupJoinRequestsQueryVariables>(GroupJoinRequestsDocument, options);
         }
 export type GroupJoinRequestsQueryHookResult = ReturnType<typeof useGroupJoinRequestsQuery>;
 export type GroupJoinRequestsLazyQueryHookResult = ReturnType<typeof useGroupJoinRequestsLazyQuery>;
@@ -10277,11 +9723,13 @@ export const GroupJoinTokensDocument = gql`
  *   },
  * });
  */
-export function useGroupJoinTokensQuery(baseOptions?: Apollo.QueryHookOptions<GroupJoinTokensQuery, GroupJoinTokensQueryVariables>) {
-        return Apollo.useQuery<GroupJoinTokensQuery, GroupJoinTokensQueryVariables>(GroupJoinTokensDocument, baseOptions);
+export function useGroupJoinTokensQuery(baseOptions: Apollo.QueryHookOptions<GroupJoinTokensQuery, GroupJoinTokensQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GroupJoinTokensQuery, GroupJoinTokensQueryVariables>(GroupJoinTokensDocument, options);
       }
 export function useGroupJoinTokensLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GroupJoinTokensQuery, GroupJoinTokensQueryVariables>) {
-          return Apollo.useLazyQuery<GroupJoinTokensQuery, GroupJoinTokensQueryVariables>(GroupJoinTokensDocument, baseOptions);
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GroupJoinTokensQuery, GroupJoinTokensQueryVariables>(GroupJoinTokensDocument, options);
         }
 export type GroupJoinTokensQueryHookResult = ReturnType<typeof useGroupJoinTokensQuery>;
 export type GroupJoinTokensLazyQueryHookResult = ReturnType<typeof useGroupJoinTokensLazyQuery>;
@@ -10321,11 +9769,13 @@ export const GroupPostListDocument = gql`
  *   },
  * });
  */
-export function useGroupPostListQuery(baseOptions?: Apollo.QueryHookOptions<GroupPostListQuery, GroupPostListQueryVariables>) {
-        return Apollo.useQuery<GroupPostListQuery, GroupPostListQueryVariables>(GroupPostListDocument, baseOptions);
+export function useGroupPostListQuery(baseOptions: Apollo.QueryHookOptions<GroupPostListQuery, GroupPostListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GroupPostListQuery, GroupPostListQueryVariables>(GroupPostListDocument, options);
       }
 export function useGroupPostListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GroupPostListQuery, GroupPostListQueryVariables>) {
-          return Apollo.useLazyQuery<GroupPostListQuery, GroupPostListQueryVariables>(GroupPostListDocument, baseOptions);
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GroupPostListQuery, GroupPostListQueryVariables>(GroupPostListDocument, options);
         }
 export type GroupPostListQueryHookResult = ReturnType<typeof useGroupPostListQuery>;
 export type GroupPostListLazyQueryHookResult = ReturnType<typeof useGroupPostListLazyQuery>;
@@ -10358,10 +9808,12 @@ export const ActivityListDocument = gql`
  * });
  */
 export function useActivityListQuery(baseOptions?: Apollo.QueryHookOptions<ActivityListQuery, ActivityListQueryVariables>) {
-        return Apollo.useQuery<ActivityListQuery, ActivityListQueryVariables>(ActivityListDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ActivityListQuery, ActivityListQueryVariables>(ActivityListDocument, options);
       }
 export function useActivityListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ActivityListQuery, ActivityListQueryVariables>) {
-          return Apollo.useLazyQuery<ActivityListQuery, ActivityListQueryVariables>(ActivityListDocument, baseOptions);
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ActivityListQuery, ActivityListQueryVariables>(ActivityListDocument, options);
         }
 export type ActivityListQueryHookResult = ReturnType<typeof useActivityListQuery>;
 export type ActivityListLazyQueryHookResult = ReturnType<typeof useActivityListLazyQuery>;
@@ -10398,7 +9850,8 @@ export type CreateGroupMutationFn = Apollo.MutationFunction<CreateGroupMutation,
  * });
  */
 export function useCreateGroupMutation(baseOptions?: Apollo.MutationHookOptions<CreateGroupMutation, CreateGroupMutationVariables>) {
-        return Apollo.useMutation<CreateGroupMutation, CreateGroupMutationVariables>(CreateGroupDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateGroupMutation, CreateGroupMutationVariables>(CreateGroupDocument, options);
       }
 export type CreateGroupMutationHookResult = ReturnType<typeof useCreateGroupMutation>;
 export type CreateGroupMutationResult = Apollo.MutationResult<CreateGroupMutation>;
@@ -10431,7 +9884,8 @@ export type UpdateGroupMutationFn = Apollo.MutationFunction<UpdateGroupMutation,
  * });
  */
 export function useUpdateGroupMutation(baseOptions?: Apollo.MutationHookOptions<UpdateGroupMutation, UpdateGroupMutationVariables>) {
-        return Apollo.useMutation<UpdateGroupMutation, UpdateGroupMutationVariables>(UpdateGroupDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateGroupMutation, UpdateGroupMutationVariables>(UpdateGroupDocument, options);
       }
 export type UpdateGroupMutationHookResult = ReturnType<typeof useUpdateGroupMutation>;
 export type UpdateGroupMutationResult = Apollo.MutationResult<UpdateGroupMutation>;
@@ -10463,7 +9917,8 @@ export type DeleteGroupMutationFn = Apollo.MutationFunction<DeleteGroupMutation,
  * });
  */
 export function useDeleteGroupMutation(baseOptions?: Apollo.MutationHookOptions<DeleteGroupMutation, DeleteGroupMutationVariables>) {
-        return Apollo.useMutation<DeleteGroupMutation, DeleteGroupMutationVariables>(DeleteGroupDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteGroupMutation, DeleteGroupMutationVariables>(DeleteGroupDocument, options);
       }
 export type DeleteGroupMutationHookResult = ReturnType<typeof useDeleteGroupMutation>;
 export type DeleteGroupMutationResult = Apollo.MutationResult<DeleteGroupMutation>;
@@ -10495,7 +9950,8 @@ export type CreateGroupPostMutationFn = Apollo.MutationFunction<CreateGroupPostM
  * });
  */
 export function useCreateGroupPostMutation(baseOptions?: Apollo.MutationHookOptions<CreateGroupPostMutation, CreateGroupPostMutationVariables>) {
-        return Apollo.useMutation<CreateGroupPostMutation, CreateGroupPostMutationVariables>(CreateGroupPostDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateGroupPostMutation, CreateGroupPostMutationVariables>(CreateGroupPostDocument, options);
       }
 export type CreateGroupPostMutationHookResult = ReturnType<typeof useCreateGroupPostMutation>;
 export type CreateGroupPostMutationResult = Apollo.MutationResult<CreateGroupPostMutation>;
@@ -10528,7 +9984,8 @@ export type UpdateGroupPostMutationFn = Apollo.MutationFunction<UpdateGroupPostM
  * });
  */
 export function useUpdateGroupPostMutation(baseOptions?: Apollo.MutationHookOptions<UpdateGroupPostMutation, UpdateGroupPostMutationVariables>) {
-        return Apollo.useMutation<UpdateGroupPostMutation, UpdateGroupPostMutationVariables>(UpdateGroupPostDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateGroupPostMutation, UpdateGroupPostMutationVariables>(UpdateGroupPostDocument, options);
       }
 export type UpdateGroupPostMutationHookResult = ReturnType<typeof useUpdateGroupPostMutation>;
 export type UpdateGroupPostMutationResult = Apollo.MutationResult<UpdateGroupPostMutation>;
@@ -10569,7 +10026,8 @@ export type CreateGroupPostCommentMutationFn = Apollo.MutationFunction<CreateGro
  * });
  */
 export function useCreateGroupPostCommentMutation(baseOptions?: Apollo.MutationHookOptions<CreateGroupPostCommentMutation, CreateGroupPostCommentMutationVariables>) {
-        return Apollo.useMutation<CreateGroupPostCommentMutation, CreateGroupPostCommentMutationVariables>(CreateGroupPostCommentDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateGroupPostCommentMutation, CreateGroupPostCommentMutationVariables>(CreateGroupPostCommentDocument, options);
       }
 export type CreateGroupPostCommentMutationHookResult = ReturnType<typeof useCreateGroupPostCommentMutation>;
 export type CreateGroupPostCommentMutationResult = Apollo.MutationResult<CreateGroupPostCommentMutation>;
@@ -10604,7 +10062,8 @@ export type LeaveGroupMutationFn = Apollo.MutationFunction<LeaveGroupMutation, L
  * });
  */
 export function useLeaveGroupMutation(baseOptions?: Apollo.MutationHookOptions<LeaveGroupMutation, LeaveGroupMutationVariables>) {
-        return Apollo.useMutation<LeaveGroupMutation, LeaveGroupMutationVariables>(LeaveGroupDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<LeaveGroupMutation, LeaveGroupMutationVariables>(LeaveGroupDocument, options);
       }
 export type LeaveGroupMutationHookResult = ReturnType<typeof useLeaveGroupMutation>;
 export type LeaveGroupMutationResult = Apollo.MutationResult<LeaveGroupMutation>;
@@ -10640,7 +10099,8 @@ export type JoinGroupMutationFn = Apollo.MutationFunction<JoinGroupMutation, Joi
  * });
  */
 export function useJoinGroupMutation(baseOptions?: Apollo.MutationHookOptions<JoinGroupMutation, JoinGroupMutationVariables>) {
-        return Apollo.useMutation<JoinGroupMutation, JoinGroupMutationVariables>(JoinGroupDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<JoinGroupMutation, JoinGroupMutationVariables>(JoinGroupDocument, options);
       }
 export type JoinGroupMutationHookResult = ReturnType<typeof useJoinGroupMutation>;
 export type JoinGroupMutationResult = Apollo.MutationResult<JoinGroupMutation>;
@@ -10677,7 +10137,8 @@ export type JoinGroupWithTokenMutationFn = Apollo.MutationFunction<JoinGroupWith
  * });
  */
 export function useJoinGroupWithTokenMutation(baseOptions?: Apollo.MutationHookOptions<JoinGroupWithTokenMutation, JoinGroupWithTokenMutationVariables>) {
-        return Apollo.useMutation<JoinGroupWithTokenMutation, JoinGroupWithTokenMutationVariables>(JoinGroupWithTokenDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<JoinGroupWithTokenMutation, JoinGroupWithTokenMutationVariables>(JoinGroupWithTokenDocument, options);
       }
 export type JoinGroupWithTokenMutationHookResult = ReturnType<typeof useJoinGroupWithTokenMutation>;
 export type JoinGroupWithTokenMutationResult = Apollo.MutationResult<JoinGroupWithTokenMutation>;
@@ -10715,7 +10176,8 @@ export type RequestJoinGroupMutationFn = Apollo.MutationFunction<RequestJoinGrou
  * });
  */
 export function useRequestJoinGroupMutation(baseOptions?: Apollo.MutationHookOptions<RequestJoinGroupMutation, RequestJoinGroupMutationVariables>) {
-        return Apollo.useMutation<RequestJoinGroupMutation, RequestJoinGroupMutationVariables>(RequestJoinGroupDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RequestJoinGroupMutation, RequestJoinGroupMutationVariables>(RequestJoinGroupDocument, options);
       }
 export type RequestJoinGroupMutationHookResult = ReturnType<typeof useRequestJoinGroupMutation>;
 export type RequestJoinGroupMutationResult = Apollo.MutationResult<RequestJoinGroupMutation>;
@@ -10751,7 +10213,8 @@ export type CancelJoinRequestMutationFn = Apollo.MutationFunction<CancelJoinRequ
  * });
  */
 export function useCancelJoinRequestMutation(baseOptions?: Apollo.MutationHookOptions<CancelJoinRequestMutation, CancelJoinRequestMutationVariables>) {
-        return Apollo.useMutation<CancelJoinRequestMutation, CancelJoinRequestMutationVariables>(CancelJoinRequestDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CancelJoinRequestMutation, CancelJoinRequestMutationVariables>(CancelJoinRequestDocument, options);
       }
 export type CancelJoinRequestMutationHookResult = ReturnType<typeof useCancelJoinRequestMutation>;
 export type CancelJoinRequestMutationResult = Apollo.MutationResult<CancelJoinRequestMutation>;
@@ -10785,7 +10248,8 @@ export type HandleJoinRequestMutationFn = Apollo.MutationFunction<HandleJoinRequ
  * });
  */
 export function useHandleJoinRequestMutation(baseOptions?: Apollo.MutationHookOptions<HandleJoinRequestMutation, HandleJoinRequestMutationVariables>) {
-        return Apollo.useMutation<HandleJoinRequestMutation, HandleJoinRequestMutationVariables>(HandleJoinRequestDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<HandleJoinRequestMutation, HandleJoinRequestMutationVariables>(HandleJoinRequestDocument, options);
       }
 export type HandleJoinRequestMutationHookResult = ReturnType<typeof useHandleJoinRequestMutation>;
 export type HandleJoinRequestMutationResult = Apollo.MutationResult<HandleJoinRequestMutation>;
@@ -10817,7 +10281,8 @@ export type CreateJoinTokenMutationFn = Apollo.MutationFunction<CreateJoinTokenM
  * });
  */
 export function useCreateJoinTokenMutation(baseOptions?: Apollo.MutationHookOptions<CreateJoinTokenMutation, CreateJoinTokenMutationVariables>) {
-        return Apollo.useMutation<CreateJoinTokenMutation, CreateJoinTokenMutationVariables>(CreateJoinTokenDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateJoinTokenMutation, CreateJoinTokenMutationVariables>(CreateJoinTokenDocument, options);
       }
 export type CreateJoinTokenMutationHookResult = ReturnType<typeof useCreateJoinTokenMutation>;
 export type CreateJoinTokenMutationResult = Apollo.MutationResult<CreateJoinTokenMutation>;
@@ -10849,7 +10314,8 @@ export type DeleteJoinTokenMutationFn = Apollo.MutationFunction<DeleteJoinTokenM
  * });
  */
 export function useDeleteJoinTokenMutation(baseOptions?: Apollo.MutationHookOptions<DeleteJoinTokenMutation, DeleteJoinTokenMutationVariables>) {
-        return Apollo.useMutation<DeleteJoinTokenMutation, DeleteJoinTokenMutationVariables>(DeleteJoinTokenDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteJoinTokenMutation, DeleteJoinTokenMutationVariables>(DeleteJoinTokenDocument, options);
       }
 export type DeleteJoinTokenMutationHookResult = ReturnType<typeof useDeleteJoinTokenMutation>;
 export type DeleteJoinTokenMutationResult = Apollo.MutationResult<DeleteJoinTokenMutation>;
@@ -10882,7 +10348,8 @@ export type UpdateJoinTokenMutationFn = Apollo.MutationFunction<UpdateJoinTokenM
  * });
  */
 export function useUpdateJoinTokenMutation(baseOptions?: Apollo.MutationHookOptions<UpdateJoinTokenMutation, UpdateJoinTokenMutationVariables>) {
-        return Apollo.useMutation<UpdateJoinTokenMutation, UpdateJoinTokenMutationVariables>(UpdateJoinTokenDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateJoinTokenMutation, UpdateJoinTokenMutationVariables>(UpdateJoinTokenDocument, options);
       }
 export type UpdateJoinTokenMutationHookResult = ReturnType<typeof useUpdateJoinTokenMutation>;
 export type UpdateJoinTokenMutationResult = Apollo.MutationResult<UpdateJoinTokenMutation>;
@@ -10925,11 +10392,13 @@ export const SearchCountsDocument = gql`
  *   },
  * });
  */
-export function useSearchCountsQuery(baseOptions?: Apollo.QueryHookOptions<SearchCountsQuery, SearchCountsQueryVariables>) {
-        return Apollo.useQuery<SearchCountsQuery, SearchCountsQueryVariables>(SearchCountsDocument, baseOptions);
+export function useSearchCountsQuery(baseOptions: Apollo.QueryHookOptions<SearchCountsQuery, SearchCountsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchCountsQuery, SearchCountsQueryVariables>(SearchCountsDocument, options);
       }
 export function useSearchCountsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchCountsQuery, SearchCountsQueryVariables>) {
-          return Apollo.useLazyQuery<SearchCountsQuery, SearchCountsQueryVariables>(SearchCountsDocument, baseOptions);
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchCountsQuery, SearchCountsQueryVariables>(SearchCountsDocument, options);
         }
 export type SearchCountsQueryHookResult = ReturnType<typeof useSearchCountsQuery>;
 export type SearchCountsLazyQueryHookResult = ReturnType<typeof useSearchCountsLazyQuery>;
@@ -10969,11 +10438,13 @@ export const ThingListDocument = gql`
  *   },
  * });
  */
-export function useThingListQuery(baseOptions?: Apollo.QueryHookOptions<ThingListQuery, ThingListQueryVariables>) {
-        return Apollo.useQuery<ThingListQuery, ThingListQueryVariables>(ThingListDocument, baseOptions);
+export function useThingListQuery(baseOptions: Apollo.QueryHookOptions<ThingListQuery, ThingListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ThingListQuery, ThingListQueryVariables>(ThingListDocument, options);
       }
 export function useThingListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ThingListQuery, ThingListQueryVariables>) {
-          return Apollo.useLazyQuery<ThingListQuery, ThingListQueryVariables>(ThingListDocument, baseOptions);
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ThingListQuery, ThingListQueryVariables>(ThingListDocument, options);
         }
 export type ThingListQueryHookResult = ReturnType<typeof useThingListQuery>;
 export type ThingListLazyQueryHookResult = ReturnType<typeof useThingListLazyQuery>;
@@ -11005,11 +10476,13 @@ export const ThingDetailsDocument = gql`
  *   },
  * });
  */
-export function useThingDetailsQuery(baseOptions?: Apollo.QueryHookOptions<ThingDetailsQuery, ThingDetailsQueryVariables>) {
-        return Apollo.useQuery<ThingDetailsQuery, ThingDetailsQueryVariables>(ThingDetailsDocument, baseOptions);
+export function useThingDetailsQuery(baseOptions: Apollo.QueryHookOptions<ThingDetailsQuery, ThingDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ThingDetailsQuery, ThingDetailsQueryVariables>(ThingDetailsDocument, options);
       }
 export function useThingDetailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ThingDetailsQuery, ThingDetailsQueryVariables>) {
-          return Apollo.useLazyQuery<ThingDetailsQuery, ThingDetailsQueryVariables>(ThingDetailsDocument, baseOptions);
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ThingDetailsQuery, ThingDetailsQueryVariables>(ThingDetailsDocument, options);
         }
 export type ThingDetailsQueryHookResult = ReturnType<typeof useThingDetailsQuery>;
 export type ThingDetailsLazyQueryHookResult = ReturnType<typeof useThingDetailsLazyQuery>;
@@ -11044,7 +10517,8 @@ export type CreateThingMutationFn = Apollo.MutationFunction<CreateThingMutation,
  * });
  */
 export function useCreateThingMutation(baseOptions?: Apollo.MutationHookOptions<CreateThingMutation, CreateThingMutationVariables>) {
-        return Apollo.useMutation<CreateThingMutation, CreateThingMutationVariables>(CreateThingDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateThingMutation, CreateThingMutationVariables>(CreateThingDocument, options);
       }
 export type CreateThingMutationHookResult = ReturnType<typeof useCreateThingMutation>;
 export type CreateThingMutationResult = Apollo.MutationResult<CreateThingMutation>;
@@ -11078,7 +10552,8 @@ export type UpdateThingMutationFn = Apollo.MutationFunction<UpdateThingMutation,
  * });
  */
 export function useUpdateThingMutation(baseOptions?: Apollo.MutationHookOptions<UpdateThingMutation, UpdateThingMutationVariables>) {
-        return Apollo.useMutation<UpdateThingMutation, UpdateThingMutationVariables>(UpdateThingDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateThingMutation, UpdateThingMutationVariables>(UpdateThingDocument, options);
       }
 export type UpdateThingMutationHookResult = ReturnType<typeof useUpdateThingMutation>;
 export type UpdateThingMutationResult = Apollo.MutationResult<UpdateThingMutation>;
@@ -11110,7 +10585,8 @@ export type DeleteThingMutationFn = Apollo.MutationFunction<DeleteThingMutation,
  * });
  */
 export function useDeleteThingMutation(baseOptions?: Apollo.MutationHookOptions<DeleteThingMutation, DeleteThingMutationVariables>) {
-        return Apollo.useMutation<DeleteThingMutation, DeleteThingMutationVariables>(DeleteThingDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteThingMutation, DeleteThingMutationVariables>(DeleteThingDocument, options);
       }
 export type DeleteThingMutationHookResult = ReturnType<typeof useDeleteThingMutation>;
 export type DeleteThingMutationResult = Apollo.MutationResult<DeleteThingMutation>;
@@ -11142,7 +10618,8 @@ export type InsertFileUploadMutationFn = Apollo.MutationFunction<InsertFileUploa
  * });
  */
 export function useInsertFileUploadMutation(baseOptions?: Apollo.MutationHookOptions<InsertFileUploadMutation, InsertFileUploadMutationVariables>) {
-        return Apollo.useMutation<InsertFileUploadMutation, InsertFileUploadMutationVariables>(InsertFileUploadDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertFileUploadMutation, InsertFileUploadMutationVariables>(InsertFileUploadDocument, options);
       }
 export type InsertFileUploadMutationHookResult = ReturnType<typeof useInsertFileUploadMutation>;
 export type InsertFileUploadMutationResult = Apollo.MutationResult<InsertFileUploadMutation>;
@@ -11179,10 +10656,12 @@ export const UserListDocument = gql`
  * });
  */
 export function useUserListQuery(baseOptions?: Apollo.QueryHookOptions<UserListQuery, UserListQueryVariables>) {
-        return Apollo.useQuery<UserListQuery, UserListQueryVariables>(UserListDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserListQuery, UserListQueryVariables>(UserListDocument, options);
       }
 export function useUserListLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserListQuery, UserListQueryVariables>) {
-          return Apollo.useLazyQuery<UserListQuery, UserListQueryVariables>(UserListDocument, baseOptions);
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserListQuery, UserListQueryVariables>(UserListDocument, options);
         }
 export type UserListQueryHookResult = ReturnType<typeof useUserListQuery>;
 export type UserListLazyQueryHookResult = ReturnType<typeof useUserListLazyQuery>;
@@ -11214,11 +10693,13 @@ export const UserPrivateDetailsDocument = gql`
  *   },
  * });
  */
-export function useUserPrivateDetailsQuery(baseOptions?: Apollo.QueryHookOptions<UserPrivateDetailsQuery, UserPrivateDetailsQueryVariables>) {
-        return Apollo.useQuery<UserPrivateDetailsQuery, UserPrivateDetailsQueryVariables>(UserPrivateDetailsDocument, baseOptions);
+export function useUserPrivateDetailsQuery(baseOptions: Apollo.QueryHookOptions<UserPrivateDetailsQuery, UserPrivateDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserPrivateDetailsQuery, UserPrivateDetailsQueryVariables>(UserPrivateDetailsDocument, options);
       }
 export function useUserPrivateDetailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserPrivateDetailsQuery, UserPrivateDetailsQueryVariables>) {
-          return Apollo.useLazyQuery<UserPrivateDetailsQuery, UserPrivateDetailsQueryVariables>(UserPrivateDetailsDocument, baseOptions);
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserPrivateDetailsQuery, UserPrivateDetailsQueryVariables>(UserPrivateDetailsDocument, options);
         }
 export type UserPrivateDetailsQueryHookResult = ReturnType<typeof useUserPrivateDetailsQuery>;
 export type UserPrivateDetailsLazyQueryHookResult = ReturnType<typeof useUserPrivateDetailsLazyQuery>;
@@ -11254,8 +10735,9 @@ export const NotificationsDocument = gql`
  *   },
  * });
  */
-export function useNotificationsSubscription(baseOptions?: Apollo.SubscriptionHookOptions<NotificationsSubscription, NotificationsSubscriptionVariables>) {
-        return Apollo.useSubscription<NotificationsSubscription, NotificationsSubscriptionVariables>(NotificationsDocument, baseOptions);
+export function useNotificationsSubscription(baseOptions: Apollo.SubscriptionHookOptions<NotificationsSubscription, NotificationsSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<NotificationsSubscription, NotificationsSubscriptionVariables>(NotificationsDocument, options);
       }
 export type NotificationsSubscriptionHookResult = ReturnType<typeof useNotificationsSubscription>;
 export type NotificationsSubscriptionResult = Apollo.SubscriptionResult<NotificationsSubscription>;
@@ -11287,7 +10769,8 @@ export type MarkNotificationReadMutationFn = Apollo.MutationFunction<MarkNotific
  * });
  */
 export function useMarkNotificationReadMutation(baseOptions?: Apollo.MutationHookOptions<MarkNotificationReadMutation, MarkNotificationReadMutationVariables>) {
-        return Apollo.useMutation<MarkNotificationReadMutation, MarkNotificationReadMutationVariables>(MarkNotificationReadDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<MarkNotificationReadMutation, MarkNotificationReadMutationVariables>(MarkNotificationReadDocument, options);
       }
 export type MarkNotificationReadMutationHookResult = ReturnType<typeof useMarkNotificationReadMutation>;
 export type MarkNotificationReadMutationResult = Apollo.MutationResult<MarkNotificationReadMutation>;
@@ -11326,7 +10809,8 @@ export type MarkAllNotificationsReadMutationFn = Apollo.MutationFunction<MarkAll
  * });
  */
 export function useMarkAllNotificationsReadMutation(baseOptions?: Apollo.MutationHookOptions<MarkAllNotificationsReadMutation, MarkAllNotificationsReadMutationVariables>) {
-        return Apollo.useMutation<MarkAllNotificationsReadMutation, MarkAllNotificationsReadMutationVariables>(MarkAllNotificationsReadDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<MarkAllNotificationsReadMutation, MarkAllNotificationsReadMutationVariables>(MarkAllNotificationsReadDocument, options);
       }
 export type MarkAllNotificationsReadMutationHookResult = ReturnType<typeof useMarkAllNotificationsReadMutation>;
 export type MarkAllNotificationsReadMutationResult = Apollo.MutationResult<MarkAllNotificationsReadMutation>;
@@ -11358,7 +10842,8 @@ export type RegisterUserMutationFn = Apollo.MutationFunction<RegisterUserMutatio
  * });
  */
 export function useRegisterUserMutation(baseOptions?: Apollo.MutationHookOptions<RegisterUserMutation, RegisterUserMutationVariables>) {
-        return Apollo.useMutation<RegisterUserMutation, RegisterUserMutationVariables>(RegisterUserDocument, baseOptions);
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RegisterUserMutation, RegisterUserMutationVariables>(RegisterUserDocument, options);
       }
 export type RegisterUserMutationHookResult = ReturnType<typeof useRegisterUserMutation>;
 export type RegisterUserMutationResult = Apollo.MutationResult<RegisterUserMutation>;

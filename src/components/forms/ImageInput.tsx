@@ -138,6 +138,7 @@ export const ImageInput = ({ value, errors, onChange, onTouch }: ImageInputProps
                         return (
                             <Space key={img.file?.id} className={classes.imageItem}>
                                 <Image
+                                    alt={img.description || 'Image preview'}
                                     className={classes.thumbnail}
                                     src={img.file.url}
                                     width={80}

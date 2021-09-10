@@ -20,8 +20,21 @@ export interface JwtToken {
     sub: string;
 }
 
-export const decodeToken = (token: string) =>
-    jwt.verify(token, jwtSecret.key, { algorithms: jwtSecret.type }) as JwtToken;
+export const decodeToken = (token: string) => {
+    try {
+        const decoded = jwt.verify(token, jwtSecret.key, {
+            algorithms: [jwtSecret.type],
+        }) as JwtToken;
+
+        // Add the user id on the top-level for ease of use
+        return {
+            ...decoded,
+            id: decoded['https://hasura.io/jwt/claims']['x-hasura-user-id'],
+        } as JwtToken;
+    } catch (e) {
+        return null;
+    }
+};
 
 export const encodeToken = (contents: JwtToken) => {
     return jwt.sign(contents, jwtSecret.key, { algorithm: jwtSecret.type });

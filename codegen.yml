@@ -1,8 +1,9 @@
 ﻿overwrite: true
 schema:
-  - ${NEXT_PUBLIC_GRAPHQL_ENDPOINT}:
+  #  - ${NEXT_PUBLIC_GRAPHQL_ENDPOINT}:
+  - http://localhost:8080/v1/graphql:
       headers:
-        X-Hasura-Admin-Secret: ${HASURA_ADMIN_SECRET}
+        X-Hasura-Admin-Secret: NOTSAFE
 generates:
   ./src/generated/schema.graphql:
     plugins:

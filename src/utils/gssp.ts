@@ -2,9 +2,9 @@
 import { decodeToken, hasuraClient, JwtToken } from '../server';
 import { GetServerSideProps, GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import { getSession } from 'next-auth/client';
 import { addApolloState, initializeApollo } from '../api/withApollo';
 import { UserPrivateDetailsDocument } from '../generated/graphql';
+import { RESHARED_AUTH_COOKIE_NAME } from './auth';
 
 interface BaseGSSPData<TParams extends ParsedUrlQuery> {
     serverClient: ApolloClient<NormalizedCacheObject>;
@@ -53,26 +53,17 @@ export const makeGSSP = <TProps, TParams extends ParsedUrlQuery>(
     options: GSSPOptions<TProps, TParams>,
 ): GetServerSideProps<TProps, TParams> => {
     return async (ctx: GetServerSidePropsContext<TParams>) => {
-        const session = await getSession(ctx);
-
-        let token: JwtToken | null = null;
-
-        if (session?.token) {
-            try {
-                token = decodeToken(session?.token);
-            } catch (err) {
-                // noop
-            }
-        }
+        const idToken = ctx.req.cookies[RESHARED_AUTH_COOKIE_NAME]; // ctx.req.headers.authorization; //getSession(ctx.req, ctx.res);
+        const token = idToken ? decodeToken(idToken) : null;
 
         if (options.requireAuth && !token) {
             return { redirect: { statusCode: 302, destination: '/login' } };
         }
 
         // Run handler
-        const userClient = token ? initializeApollo(null, session?.token) : null;
+        const userClient = token ? initializeApollo(null, idToken) : null;
         if (userClient && token) {
-            if (session?.token && options.preloadUser) {
+            if (token && options.preloadUser) {
                 // Disabled because we fetch it way too often
                 await userClient.query({
                     query: UserPrivateDetailsDocument,
@@ -84,7 +75,7 @@ export const makeGSSP = <TProps, TParams extends ParsedUrlQuery>(
         const result =
             options.handler &&
             (await options.handler({
-                token: token,
+                token,
                 userClient: userClient as any,
                 serverClient: hasuraClient,
                 nextCtx: ctx,
@@ -96,7 +87,7 @@ export const makeGSSP = <TProps, TParams extends ParsedUrlQuery>(
 
         // Add session to props
         if ((res as any).props) {
-            res = { props: { session, ...(res as any).props } };
+            res = { props: { ...(res as any).props } };
         }
 
         // Add apollo cache to pageProps so they'll be available on the client

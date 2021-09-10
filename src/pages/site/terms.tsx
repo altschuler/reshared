@@ -1,4 +1,6 @@
-﻿import { PageLayout } from '../../containers/root/PageLayout';
+﻿/* eslint-disable react/no-unescaped-entities */
+
+import { PageLayout } from '../../containers/root/PageLayout';
 import { PageHeader, Typography } from 'antd';
 
 const TermsPage = () => {

@@ -53,9 +53,9 @@ export const ThingInterestButton = ({ thing }: { thing: ThingCardFragment }) => 
     const content = (
         <div className={classes.contentRoot}>
             <Typography.Paragraph>
-                If you're interested in this thing, let {thing.owner.name} know by sending them a
-                message which will include a reference to this thing. Let them know relevant details
-                such as when/how much/for what/how many.
+                If you&apos;re interested in this thing, let {thing.owner.name} know by sending them
+                a message which will include a reference to this thing. Let them know relevant
+                details such as when/how much/for what/how many.
             </Typography.Paragraph>
             <Input.TextArea
                 autoSize

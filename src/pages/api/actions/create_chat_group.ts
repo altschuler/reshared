@@ -23,6 +23,8 @@ export default makeAuthorizedHandler<CreateChatGroupMutationVariables, CreateCha
         }),
     }),
     async (args, ctx) => {
+        console.log('THE USER ID ID ID ID');
+        console.log(ctx.token);
         const memberIds = [ctx.token.id, ...args.input.receiverIds];
         const existingQuery = await ctx.userClient.query({
             query: ServerFindChatGroupDocument,
@@ -62,10 +64,11 @@ export default makeAuthorizedHandler<CreateChatGroupMutationVariables, CreateCha
             });
 
             // because the chat_group field is a lookup
+            // @ts-ignore
             return ctx.success({ chat_group_id: existing.id });
         }
 
-        const mutation = await ctx.userClient.mutate({
+        const mutation = await ctx.adminClient.mutate({
             mutation: ServerCreateChatGroupDocument,
             variables: {
                 input: {
@@ -82,7 +85,6 @@ export default makeAuthorizedHandler<CreateChatGroupMutationVariables, CreateCha
         });
 
         // because the chat_group field is a lookup
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         ctx.success({ chat_group_id: mutation.data?.insert_chat_groups_one?.id });
     },

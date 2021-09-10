@@ -1,4 +1,5 @@
 ﻿import React, { useCallback, useMemo, useState } from 'react';
+import { head } from 'lodash';
 import {
     useChatGroupsSubscription,
     useCreateChatGroupMutation,
@@ -45,9 +46,10 @@ export const ChatNewPage = (props) => {
     const [users, setUsers] = useState<UserCardFragment[]>(props.to || []);
 
     const groupsSub = useChatGroupsSubscription();
-    const chatGroups = useMemo(() => groupsSub.data?.chat_groups || [], [
-        groupsSub.data?.chat_groups,
-    ]);
+    const chatGroups = useMemo(
+        () => groupsSub.data?.chat_groups || [],
+        [groupsSub.data?.chat_groups],
+    );
 
     const [createChatGroup, { loading }] = useCreateChatGroupMutation();
 

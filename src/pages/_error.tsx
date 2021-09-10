@@ -22,7 +22,7 @@ const ErrorPage: NextPage<ErrorPageProps> = ({ statusCode }: ErrorPageProps) => 
                 title={statusCode}
                 subTitle={msg}
                 extra={
-                    <Link href={urlFor.home()}>
+                    <Link passHref href={urlFor.home()}>
                         <Button type="primary">Back Home</Button>
                     </Link>
                 }

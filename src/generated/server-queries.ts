@@ -2,6 +2,8 @@ import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from '
 import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -15,6 +17,7 @@ export type Scalars = {
   timestamptz: any;
   uuid: any;
 };
+
 
 /** Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'. */
 export type Boolean_Comparison_Exp = {
@@ -37,17 +40,9 @@ export type CreateChatGroupInput = {
 
 export type CreateChatGroupResult = {
   __typename?: 'CreateChatGroupResult';
-  chat_group: Array<Chat_Groups>;
+  /** An object relationship */
+  chat_group: Chat_Groups;
   chat_group_id: Scalars['uuid'];
-};
-
-
-export type CreateChatGroupResultChat_GroupArgs = {
-  distinct_on?: Maybe<Array<Chat_Groups_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Chat_Groups_Order_By>>;
-  where?: Maybe<Chat_Groups_Bool_Exp>;
 };
 
 export type CreateGroupInput = {
@@ -58,17 +53,9 @@ export type CreateGroupInput = {
 
 export type CreateGroupResult = {
   __typename?: 'CreateGroupResult';
-  group: Array<Groups>;
+  /** An object relationship */
+  group: Groups;
   group_id: Scalars['uuid'];
-};
-
-
-export type CreateGroupResultGroupArgs = {
-  distinct_on?: Maybe<Array<Groups_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Groups_Order_By>>;
-  where?: Maybe<Groups_Bool_Exp>;
 };
 
 export type CreateJoinTokenInput = {
@@ -77,28 +64,12 @@ export type CreateJoinTokenInput = {
 
 export type CreateJoinTokenResult = {
   __typename?: 'CreateJoinTokenResult';
-  group: Array<Groups>;
+  /** An object relationship */
+  group: Groups;
   group_id: Scalars['uuid'];
-  join_token: Array<Group_Join_Tokens>;
+  /** An object relationship */
+  join_token: Group_Join_Tokens;
   join_token_id: Scalars['uuid'];
-};
-
-
-export type CreateJoinTokenResultGroupArgs = {
-  distinct_on?: Maybe<Array<Groups_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Groups_Order_By>>;
-  where?: Maybe<Groups_Bool_Exp>;
-};
-
-
-export type CreateJoinTokenResultJoin_TokenArgs = {
-  distinct_on?: Maybe<Array<Group_Join_Tokens_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Group_Join_Tokens_Order_By>>;
-  where?: Maybe<Group_Join_Tokens_Bool_Exp>;
 };
 
 export type CredentialsInput = {
@@ -115,17 +86,9 @@ export type HandleJoinRequestInput = {
 
 export type HandleJoinRequestResult = {
   __typename?: 'HandleJoinRequestResult';
-  join_request: Array<Group_Join_Requests>;
+  /** An object relationship */
+  join_request: Group_Join_Requests;
   join_request_id: Scalars['uuid'];
-};
-
-
-export type HandleJoinRequestResultJoin_RequestArgs = {
-  distinct_on?: Maybe<Array<Group_Join_Requests_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Group_Join_Requests_Order_By>>;
-  where?: Maybe<Group_Join_Requests_Bool_Exp>;
 };
 
 /** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
@@ -148,43 +111,19 @@ export type JoinGroupInput = {
 
 export type JoinGroupResult = {
   __typename?: 'JoinGroupResult';
-  group: Array<Groups>;
+  /** An object relationship */
+  group: Groups;
   group_id: Scalars['uuid'];
-  user: Array<Users>;
+  /** An object relationship */
+  user: Users;
   user_id: Scalars['uuid'];
-};
-
-
-export type JoinGroupResultGroupArgs = {
-  distinct_on?: Maybe<Array<Groups_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Groups_Order_By>>;
-  where?: Maybe<Groups_Bool_Exp>;
-};
-
-
-export type JoinGroupResultUserArgs = {
-  distinct_on?: Maybe<Array<Users_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Users_Order_By>>;
-  where?: Maybe<Users_Bool_Exp>;
 };
 
 export type RegistrationResult = {
   __typename?: 'RegistrationResult';
-  user: Array<Users>;
+  /** An object relationship */
+  user: Users;
   user_id: Scalars['uuid'];
-};
-
-
-export type RegistrationResultUserArgs = {
-  distinct_on?: Maybe<Array<Users_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Users_Order_By>>;
-  where?: Maybe<Users_Bool_Exp>;
 };
 
 export type RequestJoinGroupInput = {
@@ -194,28 +133,12 @@ export type RequestJoinGroupInput = {
 
 export type RequestJoinGroupResult = {
   __typename?: 'RequestJoinGroupResult';
-  group: Array<Groups>;
+  /** An object relationship */
+  group: Groups;
   group_id: Scalars['uuid'];
-  user: Array<Users>;
+  /** An object relationship */
+  user: Users;
   user_id: Scalars['uuid'];
-};
-
-
-export type RequestJoinGroupResultGroupArgs = {
-  distinct_on?: Maybe<Array<Groups_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Groups_Order_By>>;
-  where?: Maybe<Groups_Bool_Exp>;
-};
-
-
-export type RequestJoinGroupResultUserArgs = {
-  distinct_on?: Maybe<Array<Users_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Users_Order_By>>;
-  where?: Maybe<Users_Bool_Exp>;
 };
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
@@ -226,6 +149,8 @@ export type String_Comparison_Exp = {
   /** does the column match the given case-insensitive pattern */
   _ilike?: Maybe<Scalars['String']>;
   _in?: Maybe<Array<Scalars['String']>>;
+  /** does the column match the given POSIX regular expression, case insensitive */
+  _iregex?: Maybe<Scalars['String']>;
   _is_null?: Maybe<Scalars['Boolean']>;
   /** does the column match the given pattern */
   _like?: Maybe<Scalars['String']>;
@@ -235,10 +160,16 @@ export type String_Comparison_Exp = {
   /** does the column NOT match the given case-insensitive pattern */
   _nilike?: Maybe<Scalars['String']>;
   _nin?: Maybe<Array<Scalars['String']>>;
+  /** does the column NOT match the given POSIX regular expression, case insensitive */
+  _niregex?: Maybe<Scalars['String']>;
   /** does the column NOT match the given pattern */
   _nlike?: Maybe<Scalars['String']>;
+  /** does the column NOT match the given POSIX regular expression, case sensitive */
+  _nregex?: Maybe<Scalars['String']>;
   /** does the column NOT match the given SQL regular expression */
   _nsimilar?: Maybe<Scalars['String']>;
+  /** does the column match the given POSIX regular expression, case sensitive */
+  _regex?: Maybe<Scalars['String']>;
   /** does the column match the given SQL regular expression */
   _similar?: Maybe<Scalars['String']>;
 };
@@ -267,31 +198,23 @@ export type UpdateThingInput = {
 
 export type UpdateThingResult = {
   __typename?: 'UpdateThingResult';
-  thing: Array<Things>;
+  /** An object relationship */
+  thing: Things;
   thing_id: Scalars['uuid'];
-};
-
-
-export type UpdateThingResultThingArgs = {
-  distinct_on?: Maybe<Array<Things_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Things_Order_By>>;
-  where?: Maybe<Things_Bool_Exp>;
 };
 
 /** columns and relationships of "activities" */
 export type Activities = {
   __typename?: 'activities';
   /** An object relationship */
-  actor: Users;
+  actor?: Maybe<Users>;
   actor_id?: Maybe<Scalars['uuid']>;
   created_at: Scalars['timestamptz'];
   /** An object relationship */
   entity: Entities;
   entity_id: Scalars['uuid'];
   /** An object relationship */
-  group: Groups;
+  group?: Maybe<Groups>;
   group_id?: Maybe<Scalars['uuid']>;
   id: Scalars['uuid'];
   /** An array relationship */
@@ -299,7 +222,7 @@ export type Activities = {
   /** An aggregate relationship */
   notifications_aggregate: Notifications_Aggregate;
   /** An object relationship */
-  secondary_entity: Entities;
+  secondary_entity?: Maybe<Entities>;
   secondary_entity_id?: Maybe<Scalars['uuid']>;
   verb: Activity_Verb_Enum;
 };
@@ -462,7 +385,7 @@ export type Activities_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "activities" */
 export type Activities_On_Conflict = {
   constraint: Activities_Constraint;
-  update_columns: Array<Activities_Update_Column>;
+  update_columns?: Array<Activities_Update_Column>;
   where?: Maybe<Activities_Bool_Exp>;
 };
 
@@ -642,7 +565,7 @@ export type Activity_Verb_Mutation_Response = {
 /** on conflict condition type for table "activity_verb" */
 export type Activity_Verb_On_Conflict = {
   constraint: Activity_Verb_Constraint;
-  update_columns: Array<Activity_Verb_Update_Column>;
+  update_columns?: Array<Activity_Verb_Update_Column>;
   where?: Maybe<Activity_Verb_Bool_Exp>;
 };
 
@@ -803,7 +726,7 @@ export type Chat_Group_Members_Mutation_Response = {
 /** on conflict condition type for table "chat_group_members" */
 export type Chat_Group_Members_On_Conflict = {
   constraint: Chat_Group_Members_Constraint;
-  update_columns: Array<Chat_Group_Members_Update_Column>;
+  update_columns?: Array<Chat_Group_Members_Update_Column>;
   where?: Maybe<Chat_Group_Members_Bool_Exp>;
 };
 
@@ -999,7 +922,7 @@ export type Chat_Groups_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "chat_groups" */
 export type Chat_Groups_On_Conflict = {
   constraint: Chat_Groups_Constraint;
-  update_columns: Array<Chat_Groups_Update_Column>;
+  update_columns?: Array<Chat_Groups_Update_Column>;
   where?: Maybe<Chat_Groups_Bool_Exp>;
 };
 
@@ -1058,7 +981,7 @@ export type Chat_Messages = {
   chat_group_id: Scalars['uuid'];
   created_at: Scalars['timestamptz'];
   /** An object relationship */
-  entity: Entities;
+  entity?: Maybe<Entities>;
   entity_id?: Maybe<Scalars['uuid']>;
   id: Scalars['uuid'];
   message: Scalars['String'];
@@ -1192,7 +1115,7 @@ export type Chat_Messages_Mutation_Response = {
 /** on conflict condition type for table "chat_messages" */
 export type Chat_Messages_On_Conflict = {
   constraint: Chat_Messages_Constraint;
-  update_columns: Array<Chat_Messages_Update_Column>;
+  update_columns?: Array<Chat_Messages_Update_Column>;
   where?: Maybe<Chat_Messages_Bool_Exp>;
 };
 
@@ -1416,7 +1339,7 @@ export type Comments_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "comments" */
 export type Comments_On_Conflict = {
   constraint: Comments_Constraint;
-  update_columns: Array<Comments_Update_Column>;
+  update_columns?: Array<Comments_Update_Column>;
   where?: Maybe<Comments_Bool_Exp>;
 };
 
@@ -1492,31 +1415,31 @@ export type Entities = {
   __typename?: 'entities';
   dummy?: Maybe<Scalars['smallint']>;
   /** An object relationship */
-  group: Groups;
+  group?: Maybe<Groups>;
   group_id?: Maybe<Scalars['uuid']>;
   /** An object relationship */
-  group_join_request: Group_Join_Requests;
+  group_join_request?: Maybe<Group_Join_Requests>;
   /** An object relationship */
-  group_member: Group_Members;
+  group_member?: Maybe<Group_Members>;
   group_member_id?: Maybe<Scalars['uuid']>;
   /** An object relationship */
-  group_post: Group_Posts;
+  group_post?: Maybe<Group_Posts>;
   /** An object relationship */
-  group_post_comment: Group_Post_Comment;
+  group_post_comment?: Maybe<Group_Post_Comment>;
   group_post_comment_id?: Maybe<Scalars['uuid']>;
   group_post_id?: Maybe<Scalars['uuid']>;
   /** An object relationship */
-  group_thing: Group_Thing;
+  group_thing?: Maybe<Group_Thing>;
   group_thing_id?: Maybe<Scalars['uuid']>;
   id: Scalars['uuid'];
   /** A computed field, executes function "entity_valid" */
   is_valid?: Maybe<Scalars['Boolean']>;
   join_request_id?: Maybe<Scalars['uuid']>;
   /** An object relationship */
-  thing: Things;
+  thing?: Maybe<Things>;
   thing_id?: Maybe<Scalars['uuid']>;
   /** An object relationship */
-  user: Users;
+  user?: Maybe<Users>;
   user_id?: Maybe<Scalars['uuid']>;
 };
 
@@ -1574,6 +1497,7 @@ export type Entities_Bool_Exp = {
   group_thing?: Maybe<Group_Thing_Bool_Exp>;
   group_thing_id?: Maybe<Uuid_Comparison_Exp>;
   id?: Maybe<Uuid_Comparison_Exp>;
+  is_valid?: Maybe<Boolean_Comparison_Exp>;
   join_request_id?: Maybe<Uuid_Comparison_Exp>;
   thing?: Maybe<Things_Bool_Exp>;
   thing_id?: Maybe<Uuid_Comparison_Exp>;
@@ -1679,7 +1603,7 @@ export type Entities_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "entities" */
 export type Entities_On_Conflict = {
   constraint: Entities_Constraint;
-  update_columns: Array<Entities_Update_Column>;
+  update_columns?: Array<Entities_Update_Column>;
   where?: Maybe<Entities_Bool_Exp>;
 };
 
@@ -1698,6 +1622,7 @@ export type Entities_Order_By = {
   group_thing?: Maybe<Group_Thing_Order_By>;
   group_thing_id?: Maybe<Order_By>;
   id?: Maybe<Order_By>;
+  is_valid?: Maybe<Order_By>;
   join_request_id?: Maybe<Order_By>;
   thing?: Maybe<Things_Order_By>;
   thing_id?: Maybe<Order_By>;
@@ -1822,11 +1747,37 @@ export type File_Uploads = {
   mime_type?: Maybe<Scalars['String']>;
   name: Scalars['String'];
   /** An object relationship */
-  owner: Users;
+  owner?: Maybe<Users>;
   owner_id?: Maybe<Scalars['uuid']>;
   size: Scalars['Int'];
+  /** An object relationship */
+  thing_image?: Maybe<Thing_Images>;
   updated_at: Scalars['timestamptz'];
   url: Scalars['String'];
+  /** An array relationship */
+  user_profile_pictures: Array<Users>;
+  /** An aggregate relationship */
+  user_profile_pictures_aggregate: Users_Aggregate;
+};
+
+
+/** columns and relationships of "file_uploads" */
+export type File_UploadsUser_Profile_PicturesArgs = {
+  distinct_on?: Maybe<Array<Users_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Order_By>>;
+  where?: Maybe<Users_Bool_Exp>;
+};
+
+
+/** columns and relationships of "file_uploads" */
+export type File_UploadsUser_Profile_Pictures_AggregateArgs = {
+  distinct_on?: Maybe<Array<Users_Select_Column>>;
+  limit?: Maybe<Scalars['Int']>;
+  offset?: Maybe<Scalars['Int']>;
+  order_by?: Maybe<Array<Users_Order_By>>;
+  where?: Maybe<Users_Bool_Exp>;
 };
 
 /** aggregated selection of "file_uploads" */
@@ -1877,8 +1828,10 @@ export type File_Uploads_Bool_Exp = {
   owner?: Maybe<Users_Bool_Exp>;
   owner_id?: Maybe<Uuid_Comparison_Exp>;
   size?: Maybe<Int_Comparison_Exp>;
+  thing_image?: Maybe<Thing_Images_Bool_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
   url?: Maybe<String_Comparison_Exp>;
+  user_profile_pictures?: Maybe<Users_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "file_uploads" */
@@ -1903,8 +1856,10 @@ export type File_Uploads_Insert_Input = {
   owner?: Maybe<Users_Obj_Rel_Insert_Input>;
   owner_id?: Maybe<Scalars['uuid']>;
   size?: Maybe<Scalars['Int']>;
+  thing_image?: Maybe<Thing_Images_Obj_Rel_Insert_Input>;
   updated_at?: Maybe<Scalars['timestamptz']>;
   url?: Maybe<Scalars['String']>;
+  user_profile_pictures?: Maybe<Users_Arr_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
@@ -1952,7 +1907,7 @@ export type File_Uploads_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "file_uploads" */
 export type File_Uploads_On_Conflict = {
   constraint: File_Uploads_Constraint;
-  update_columns: Array<File_Uploads_Update_Column>;
+  update_columns?: Array<File_Uploads_Update_Column>;
   where?: Maybe<File_Uploads_Bool_Exp>;
 };
 
@@ -1965,8 +1920,10 @@ export type File_Uploads_Order_By = {
   owner?: Maybe<Users_Order_By>;
   owner_id?: Maybe<Order_By>;
   size?: Maybe<Order_By>;
+  thing_image?: Maybe<Thing_Images_Order_By>;
   updated_at?: Maybe<Order_By>;
   url?: Maybe<Order_By>;
+  user_profile_pictures_aggregate?: Maybe<Users_Aggregate_Order_By>;
 };
 
 /** primary key columns input for table: file_uploads */
@@ -2164,7 +2121,7 @@ export type Group_Join_Request_Status_Mutation_Response = {
 /** on conflict condition type for table "group_join_request_status" */
 export type Group_Join_Request_Status_On_Conflict = {
   constraint: Group_Join_Request_Status_Constraint;
-  update_columns: Array<Group_Join_Request_Status_Update_Column>;
+  update_columns?: Array<Group_Join_Request_Status_Update_Column>;
   where?: Maybe<Group_Join_Request_Status_Bool_Exp>;
 };
 
@@ -2363,7 +2320,7 @@ export type Group_Join_Requests_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "group_join_requests" */
 export type Group_Join_Requests_On_Conflict = {
   constraint: Group_Join_Requests_Constraint;
-  update_columns: Array<Group_Join_Requests_Update_Column>;
+  update_columns?: Array<Group_Join_Requests_Update_Column>;
   where?: Maybe<Group_Join_Requests_Bool_Exp>;
 };
 
@@ -2581,7 +2538,7 @@ export type Group_Join_Tokens_Mutation_Response = {
 /** on conflict condition type for table "group_join_tokens" */
 export type Group_Join_Tokens_On_Conflict = {
   constraint: Group_Join_Tokens_Constraint;
-  update_columns: Array<Group_Join_Tokens_Update_Column>;
+  update_columns?: Array<Group_Join_Tokens_Update_Column>;
   where?: Maybe<Group_Join_Tokens_Bool_Exp>;
 };
 
@@ -2790,7 +2747,7 @@ export type Group_Members_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "group_members" */
 export type Group_Members_On_Conflict = {
   constraint: Group_Members_Constraint;
-  update_columns: Array<Group_Members_Update_Column>;
+  update_columns?: Array<Group_Members_Update_Column>;
   where?: Maybe<Group_Members_Bool_Exp>;
 };
 
@@ -2991,7 +2948,7 @@ export type Group_Post_Comment_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "group_post_comment" */
 export type Group_Post_Comment_On_Conflict = {
   constraint: Group_Post_Comment_Constraint;
-  update_columns: Array<Group_Post_Comment_Update_Column>;
+  update_columns?: Array<Group_Post_Comment_Update_Column>;
   where?: Maybe<Group_Post_Comment_Bool_Exp>;
 };
 
@@ -3140,7 +3097,7 @@ export type Group_Post_Type_Mutation_Response = {
 /** on conflict condition type for table "group_post_type" */
 export type Group_Post_Type_On_Conflict = {
   constraint: Group_Post_Type_Constraint;
-  update_columns: Array<Group_Post_Type_Update_Column>;
+  update_columns?: Array<Group_Post_Type_Update_Column>;
   where?: Maybe<Group_Post_Type_Bool_Exp>;
 };
 
@@ -3354,7 +3311,7 @@ export type Group_Posts_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "group_posts" */
 export type Group_Posts_On_Conflict = {
   constraint: Group_Posts_Constraint;
-  update_columns: Array<Group_Posts_Update_Column>;
+  update_columns?: Array<Group_Posts_Update_Column>;
   where?: Maybe<Group_Posts_Bool_Exp>;
 };
 
@@ -3524,7 +3481,7 @@ export type Group_Role_Mutation_Response = {
 /** on conflict condition type for table "group_role" */
 export type Group_Role_On_Conflict = {
   constraint: Group_Role_Constraint;
-  update_columns: Array<Group_Role_Update_Column>;
+  update_columns?: Array<Group_Role_Update_Column>;
   where?: Maybe<Group_Role_Bool_Exp>;
 };
 
@@ -3701,7 +3658,7 @@ export type Group_Thing_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "group_thing" */
 export type Group_Thing_On_Conflict = {
   constraint: Group_Thing_Constraint;
-  update_columns: Array<Group_Thing_Update_Column>;
+  update_columns?: Array<Group_Thing_Update_Column>;
   where?: Maybe<Group_Thing_Bool_Exp>;
 };
 
@@ -3998,7 +3955,7 @@ export type Groups_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "groups" */
 export type Groups_On_Conflict = {
   constraint: Groups_Constraint;
-  update_columns: Array<Groups_Update_Column>;
+  update_columns?: Array<Groups_Update_Column>;
   where?: Maybe<Groups_Bool_Exp>;
 };
 
@@ -4074,7 +4031,7 @@ export enum Groups_Update_Column {
 export type Mutation_Root = {
   __typename?: 'mutation_root';
   createChatGroup?: Maybe<CreateChatGroupResult>;
-  createGroup?: Maybe<CreateGroupResult>;
+  createGroup: CreateGroupResult;
   createJoinToken?: Maybe<CreateJoinTokenResult>;
   /** delete data from the table: "activities" */
   delete_activities?: Maybe<Activities_Mutation_Response>;
@@ -4174,7 +4131,7 @@ export type Mutation_Root = {
   delete_verification_requests?: Maybe<Verification_Requests_Mutation_Response>;
   /** delete single row from the table: "verification_requests" */
   delete_verification_requests_by_pk?: Maybe<Verification_Requests>;
-  handleJoinRequest?: Maybe<HandleJoinRequestResult>;
+  handleJoinRequest: HandleJoinRequestResult;
   /** insert data into the table: "activities" */
   insert_activities?: Maybe<Activities_Mutation_Response>;
   /** insert a single row into the table: "activities" */
@@ -5551,7 +5508,7 @@ export type Notifications_Mutation_Response = {
 /** on conflict condition type for table "notifications" */
 export type Notifications_On_Conflict = {
   constraint: Notifications_Constraint;
-  update_columns: Array<Notifications_Update_Column>;
+  update_columns?: Array<Notifications_Update_Column>;
   where?: Maybe<Notifications_Bool_Exp>;
 };
 
@@ -5626,9 +5583,9 @@ export enum Order_By {
 
 export type Query_Root = {
   __typename?: 'query_root';
-  /** fetch data from the table: "activities" */
+  /** An array relationship */
   activities: Array<Activities>;
-  /** fetch aggregated fields from the table: "activities" */
+  /** An aggregate relationship */
   activities_aggregate: Activities_Aggregate;
   /** fetch data from the table: "activities" using primary key columns */
   activities_by_pk?: Maybe<Activities>;
@@ -5650,15 +5607,15 @@ export type Query_Root = {
   chat_groups_aggregate: Chat_Groups_Aggregate;
   /** fetch data from the table: "chat_groups" using primary key columns */
   chat_groups_by_pk?: Maybe<Chat_Groups>;
-  /** fetch data from the table: "chat_messages" */
+  /** An array relationship */
   chat_messages: Array<Chat_Messages>;
-  /** fetch aggregated fields from the table: "chat_messages" */
+  /** An aggregate relationship */
   chat_messages_aggregate: Chat_Messages_Aggregate;
   /** fetch data from the table: "chat_messages" using primary key columns */
   chat_messages_by_pk?: Maybe<Chat_Messages>;
-  /** fetch data from the table: "comments" */
+  /** An array relationship */
   comments: Array<Comments>;
-  /** fetch aggregated fields from the table: "comments" */
+  /** An aggregate relationship */
   comments_aggregate: Comments_Aggregate;
   /** fetch data from the table: "comments" using primary key columns */
   comments_by_pk?: Maybe<Comments>;
@@ -5680,9 +5637,9 @@ export type Query_Root = {
   group_join_request_status_aggregate: Group_Join_Request_Status_Aggregate;
   /** fetch data from the table: "group_join_request_status" using primary key columns */
   group_join_request_status_by_pk?: Maybe<Group_Join_Request_Status>;
-  /** fetch data from the table: "group_join_requests" */
+  /** An array relationship */
   group_join_requests: Array<Group_Join_Requests>;
-  /** fetch aggregated fields from the table: "group_join_requests" */
+  /** An aggregate relationship */
   group_join_requests_aggregate: Group_Join_Requests_Aggregate;
   /** fetch data from the table: "group_join_requests" using primary key columns */
   group_join_requests_by_pk?: Maybe<Group_Join_Requests>;
@@ -5710,9 +5667,9 @@ export type Query_Root = {
   group_post_type_aggregate: Group_Post_Type_Aggregate;
   /** fetch data from the table: "group_post_type" using primary key columns */
   group_post_type_by_pk?: Maybe<Group_Post_Type>;
-  /** fetch data from the table: "group_posts" */
+  /** An array relationship */
   group_posts: Array<Group_Posts>;
-  /** fetch aggregated fields from the table: "group_posts" */
+  /** An aggregate relationship */
   group_posts_aggregate: Group_Posts_Aggregate;
   /** fetch data from the table: "group_posts" using primary key columns */
   group_posts_by_pk?: Maybe<Group_Posts>;
@@ -5734,9 +5691,9 @@ export type Query_Root = {
   groups_aggregate: Groups_Aggregate;
   /** fetch data from the table: "groups" using primary key columns */
   groups_by_pk?: Maybe<Groups>;
-  /** fetch data from the table: "notifications" */
+  /** An array relationship */
   notifications: Array<Notifications>;
-  /** fetch aggregated fields from the table: "notifications" */
+  /** An aggregate relationship */
   notifications_aggregate: Notifications_Aggregate;
   /** fetch data from the table: "notifications" using primary key columns */
   notifications_by_pk?: Maybe<Notifications>;
@@ -5752,9 +5709,9 @@ export type Query_Root = {
   thing_type_aggregate: Thing_Type_Aggregate;
   /** fetch data from the table: "thing_type" using primary key columns */
   thing_type_by_pk?: Maybe<Thing_Type>;
-  /** fetch data from the table: "things" */
+  /** An array relationship */
   things: Array<Things>;
-  /** fetch aggregated fields from the table: "things" */
+  /** An aggregate relationship */
   things_aggregate: Things_Aggregate;
   /** fetch data from the table: "things" using primary key columns */
   things_by_pk?: Maybe<Things>;
@@ -6362,9 +6319,9 @@ export type Smallint_Comparison_Exp = {
 
 export type Subscription_Root = {
   __typename?: 'subscription_root';
-  /** fetch data from the table: "activities" */
+  /** An array relationship */
   activities: Array<Activities>;
-  /** fetch aggregated fields from the table: "activities" */
+  /** An aggregate relationship */
   activities_aggregate: Activities_Aggregate;
   /** fetch data from the table: "activities" using primary key columns */
   activities_by_pk?: Maybe<Activities>;
@@ -6386,15 +6343,15 @@ export type Subscription_Root = {
   chat_groups_aggregate: Chat_Groups_Aggregate;
   /** fetch data from the table: "chat_groups" using primary key columns */
   chat_groups_by_pk?: Maybe<Chat_Groups>;
-  /** fetch data from the table: "chat_messages" */
+  /** An array relationship */
   chat_messages: Array<Chat_Messages>;
-  /** fetch aggregated fields from the table: "chat_messages" */
+  /** An aggregate relationship */
   chat_messages_aggregate: Chat_Messages_Aggregate;
   /** fetch data from the table: "chat_messages" using primary key columns */
   chat_messages_by_pk?: Maybe<Chat_Messages>;
-  /** fetch data from the table: "comments" */
+  /** An array relationship */
   comments: Array<Comments>;
-  /** fetch aggregated fields from the table: "comments" */
+  /** An aggregate relationship */
   comments_aggregate: Comments_Aggregate;
   /** fetch data from the table: "comments" using primary key columns */
   comments_by_pk?: Maybe<Comments>;
@@ -6416,9 +6373,9 @@ export type Subscription_Root = {
   group_join_request_status_aggregate: Group_Join_Request_Status_Aggregate;
   /** fetch data from the table: "group_join_request_status" using primary key columns */
   group_join_request_status_by_pk?: Maybe<Group_Join_Request_Status>;
-  /** fetch data from the table: "group_join_requests" */
+  /** An array relationship */
   group_join_requests: Array<Group_Join_Requests>;
-  /** fetch aggregated fields from the table: "group_join_requests" */
+  /** An aggregate relationship */
   group_join_requests_aggregate: Group_Join_Requests_Aggregate;
   /** fetch data from the table: "group_join_requests" using primary key columns */
   group_join_requests_by_pk?: Maybe<Group_Join_Requests>;
@@ -6446,9 +6403,9 @@ export type Subscription_Root = {
   group_post_type_aggregate: Group_Post_Type_Aggregate;
   /** fetch data from the table: "group_post_type" using primary key columns */
   group_post_type_by_pk?: Maybe<Group_Post_Type>;
-  /** fetch data from the table: "group_posts" */
+  /** An array relationship */
   group_posts: Array<Group_Posts>;
-  /** fetch aggregated fields from the table: "group_posts" */
+  /** An aggregate relationship */
   group_posts_aggregate: Group_Posts_Aggregate;
   /** fetch data from the table: "group_posts" using primary key columns */
   group_posts_by_pk?: Maybe<Group_Posts>;
@@ -6470,9 +6427,9 @@ export type Subscription_Root = {
   groups_aggregate: Groups_Aggregate;
   /** fetch data from the table: "groups" using primary key columns */
   groups_by_pk?: Maybe<Groups>;
-  /** fetch data from the table: "notifications" */
+  /** An array relationship */
   notifications: Array<Notifications>;
-  /** fetch aggregated fields from the table: "notifications" */
+  /** An aggregate relationship */
   notifications_aggregate: Notifications_Aggregate;
   /** fetch data from the table: "notifications" using primary key columns */
   notifications_by_pk?: Maybe<Notifications>;
@@ -6488,9 +6445,9 @@ export type Subscription_Root = {
   thing_type_aggregate: Thing_Type_Aggregate;
   /** fetch data from the table: "thing_type" using primary key columns */
   thing_type_by_pk?: Maybe<Thing_Type>;
-  /** fetch data from the table: "things" */
+  /** An array relationship */
   things: Array<Things>;
-  /** fetch aggregated fields from the table: "things" */
+  /** An aggregate relationship */
   things_aggregate: Things_Aggregate;
   /** fetch data from the table: "things" using primary key columns */
   things_by_pk?: Maybe<Things>;
@@ -7258,10 +7215,17 @@ export type Thing_Images_Mutation_Response = {
   returning: Array<Thing_Images>;
 };
 
+/** input type for inserting object relation for remote table "thing_images" */
+export type Thing_Images_Obj_Rel_Insert_Input = {
+  data: Thing_Images_Insert_Input;
+  /** on conflict condition */
+  on_conflict?: Maybe<Thing_Images_On_Conflict>;
+};
+
 /** on conflict condition type for table "thing_images" */
 export type Thing_Images_On_Conflict = {
   constraint: Thing_Images_Constraint;
-  update_columns: Array<Thing_Images_Update_Column>;
+  update_columns?: Array<Thing_Images_Update_Column>;
   where?: Maybe<Thing_Images_Bool_Exp>;
 };
 
@@ -7503,7 +7467,7 @@ export type Thing_Type_Mutation_Response = {
 /** on conflict condition type for table "thing_type" */
 export type Thing_Type_On_Conflict = {
   constraint: Thing_Type_Constraint;
-  update_columns: Array<Thing_Type_Update_Column>;
+  update_columns?: Array<Thing_Type_Update_Column>;
   where?: Maybe<Thing_Type_Bool_Exp>;
 };
 
@@ -7762,7 +7726,7 @@ export type Things_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "things" */
 export type Things_On_Conflict = {
   constraint: Things_Constraint;
-  update_columns: Array<Things_Update_Column>;
+  update_columns?: Array<Things_Update_Column>;
   where?: Maybe<Things_Bool_Exp>;
 };
 
@@ -7965,6 +7929,7 @@ export type User_Private_Set_Input = {
 /** columns and relationships of "users" */
 export type Users = {
   __typename?: 'users';
+  auth0_id?: Maybe<Scalars['String']>;
   /** An array relationship */
   chat_group_memberships: Array<Chat_Group_Members>;
   /** An aggregate relationship */
@@ -8000,6 +7965,9 @@ export type Users = {
   password_hash?: Maybe<Scalars['String']>;
   /** An object relationship */
   private_info?: Maybe<User_Private>;
+  /** An object relationship */
+  profile_picture?: Maybe<File_Uploads>;
+  profile_picture_id?: Maybe<Scalars['uuid']>;
   /** An array relationship */
   things: Array<Things>;
   /** An aggregate relationship */
@@ -8169,11 +8137,26 @@ export type Users_Aggregate_FieldsCountArgs = {
   distinct?: Maybe<Scalars['Boolean']>;
 };
 
+/** order by aggregate values of table "users" */
+export type Users_Aggregate_Order_By = {
+  count?: Maybe<Order_By>;
+  max?: Maybe<Users_Max_Order_By>;
+  min?: Maybe<Users_Min_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "users" */
+export type Users_Arr_Rel_Insert_Input = {
+  data: Array<Users_Insert_Input>;
+  /** on conflict condition */
+  on_conflict?: Maybe<Users_On_Conflict>;
+};
+
 /** Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'. */
 export type Users_Bool_Exp = {
   _and?: Maybe<Array<Users_Bool_Exp>>;
   _not?: Maybe<Users_Bool_Exp>;
   _or?: Maybe<Array<Users_Bool_Exp>>;
+  auth0_id?: Maybe<String_Comparison_Exp>;
   chat_group_memberships?: Maybe<Chat_Group_Members_Bool_Exp>;
   chat_messages?: Maybe<Chat_Messages_Bool_Exp>;
   comments?: Maybe<Comments_Bool_Exp>;
@@ -8190,6 +8173,8 @@ export type Users_Bool_Exp = {
   name?: Maybe<String_Comparison_Exp>;
   password_hash?: Maybe<String_Comparison_Exp>;
   private_info?: Maybe<User_Private_Bool_Exp>;
+  profile_picture?: Maybe<File_Uploads_Bool_Exp>;
+  profile_picture_id?: Maybe<Uuid_Comparison_Exp>;
   things?: Maybe<Things_Bool_Exp>;
   updated_at?: Maybe<Timestamptz_Comparison_Exp>;
 };
@@ -8199,6 +8184,8 @@ export enum Users_Constraint {
   /** unique or primary key constraint */
   Email = 'email',
   /** unique or primary key constraint */
+  UsersAuth0IdKey = 'users_auth0_id_key',
+  /** unique or primary key constraint */
   UsersEmailKey = 'users_email_key',
   /** unique or primary key constraint */
   UsersPkey = 'users_pkey'
@@ -8206,6 +8193,7 @@ export enum Users_Constraint {
 
 /** input type for inserting data into table "users" */
 export type Users_Insert_Input = {
+  auth0_id?: Maybe<Scalars['String']>;
   chat_group_memberships?: Maybe<Chat_Group_Members_Arr_Rel_Insert_Input>;
   chat_messages?: Maybe<Chat_Messages_Arr_Rel_Insert_Input>;
   comments?: Maybe<Comments_Arr_Rel_Insert_Input>;
@@ -8222,6 +8210,8 @@ export type Users_Insert_Input = {
   name?: Maybe<Scalars['String']>;
   password_hash?: Maybe<Scalars['String']>;
   private_info?: Maybe<User_Private_Obj_Rel_Insert_Input>;
+  profile_picture?: Maybe<File_Uploads_Obj_Rel_Insert_Input>;
+  profile_picture_id?: Maybe<Scalars['uuid']>;
   things?: Maybe<Things_Arr_Rel_Insert_Input>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
@@ -8229,6 +8219,7 @@ export type Users_Insert_Input = {
 /** aggregate max on columns */
 export type Users_Max_Fields = {
   __typename?: 'users_max_fields';
+  auth0_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   email?: Maybe<Scalars['String']>;
   email_verified?: Maybe<Scalars['timestamptz']>;
@@ -8238,12 +8229,30 @@ export type Users_Max_Fields = {
   last_seen?: Maybe<Scalars['timestamptz']>;
   name?: Maybe<Scalars['String']>;
   password_hash?: Maybe<Scalars['String']>;
+  profile_picture_id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by max() on columns of table "users" */
+export type Users_Max_Order_By = {
+  auth0_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  email?: Maybe<Order_By>;
+  email_verified?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  image?: Maybe<Order_By>;
+  last_chat_notification?: Maybe<Order_By>;
+  last_seen?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  password_hash?: Maybe<Order_By>;
+  profile_picture_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
 };
 
 /** aggregate min on columns */
 export type Users_Min_Fields = {
   __typename?: 'users_min_fields';
+  auth0_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   email?: Maybe<Scalars['String']>;
   email_verified?: Maybe<Scalars['timestamptz']>;
@@ -8253,7 +8262,24 @@ export type Users_Min_Fields = {
   last_seen?: Maybe<Scalars['timestamptz']>;
   name?: Maybe<Scalars['String']>;
   password_hash?: Maybe<Scalars['String']>;
+  profile_picture_id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** order by min() on columns of table "users" */
+export type Users_Min_Order_By = {
+  auth0_id?: Maybe<Order_By>;
+  created_at?: Maybe<Order_By>;
+  email?: Maybe<Order_By>;
+  email_verified?: Maybe<Order_By>;
+  id?: Maybe<Order_By>;
+  image?: Maybe<Order_By>;
+  last_chat_notification?: Maybe<Order_By>;
+  last_seen?: Maybe<Order_By>;
+  name?: Maybe<Order_By>;
+  password_hash?: Maybe<Order_By>;
+  profile_picture_id?: Maybe<Order_By>;
+  updated_at?: Maybe<Order_By>;
 };
 
 /** response of any mutation on the table "users" */
@@ -8275,12 +8301,13 @@ export type Users_Obj_Rel_Insert_Input = {
 /** on conflict condition type for table "users" */
 export type Users_On_Conflict = {
   constraint: Users_Constraint;
-  update_columns: Array<Users_Update_Column>;
+  update_columns?: Array<Users_Update_Column>;
   where?: Maybe<Users_Bool_Exp>;
 };
 
 /** Ordering options when selecting data from "users". */
 export type Users_Order_By = {
+  auth0_id?: Maybe<Order_By>;
   chat_group_memberships_aggregate?: Maybe<Chat_Group_Members_Aggregate_Order_By>;
   chat_messages_aggregate?: Maybe<Chat_Messages_Aggregate_Order_By>;
   comments_aggregate?: Maybe<Comments_Aggregate_Order_By>;
@@ -8297,6 +8324,8 @@ export type Users_Order_By = {
   name?: Maybe<Order_By>;
   password_hash?: Maybe<Order_By>;
   private_info?: Maybe<User_Private_Order_By>;
+  profile_picture?: Maybe<File_Uploads_Order_By>;
+  profile_picture_id?: Maybe<Order_By>;
   things_aggregate?: Maybe<Things_Aggregate_Order_By>;
   updated_at?: Maybe<Order_By>;
 };
@@ -8309,6 +8338,8 @@ export type Users_Pk_Columns_Input = {
 /** select columns of table "users" */
 export enum Users_Select_Column {
   /** column name */
+  Auth0Id = 'auth0_id',
+  /** column name */
   CreatedAt = 'created_at',
   /** column name */
   Email = 'email',
@@ -8327,11 +8358,14 @@ export enum Users_Select_Column {
   /** column name */
   PasswordHash = 'password_hash',
   /** column name */
+  ProfilePictureId = 'profile_picture_id',
+  /** column name */
   UpdatedAt = 'updated_at'
 }
 
 /** input type for updating data in table "users" */
 export type Users_Set_Input = {
+  auth0_id?: Maybe<Scalars['String']>;
   created_at?: Maybe<Scalars['timestamptz']>;
   email?: Maybe<Scalars['String']>;
   email_verified?: Maybe<Scalars['timestamptz']>;
@@ -8341,11 +8375,14 @@ export type Users_Set_Input = {
   last_seen?: Maybe<Scalars['timestamptz']>;
   name?: Maybe<Scalars['String']>;
   password_hash?: Maybe<Scalars['String']>;
+  profile_picture_id?: Maybe<Scalars['uuid']>;
   updated_at?: Maybe<Scalars['timestamptz']>;
 };
 
 /** update columns of table "users" */
 export enum Users_Update_Column {
+  /** column name */
+  Auth0Id = 'auth0_id',
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
@@ -8364,6 +8401,8 @@ export enum Users_Update_Column {
   Name = 'name',
   /** column name */
   PasswordHash = 'password_hash',
+  /** column name */
+  ProfilePictureId = 'profile_picture_id',
   /** column name */
   UpdatedAt = 'updated_at'
 }
@@ -8499,7 +8538,7 @@ export type Verification_Requests_Mutation_Response = {
 /** on conflict condition type for table "verification_requests" */
 export type Verification_Requests_On_Conflict = {
   constraint: Verification_Requests_Constraint;
-  update_columns: Array<Verification_Requests_Update_Column>;
+  update_columns?: Array<Verification_Requests_Update_Column>;
   where?: Maybe<Verification_Requests_Bool_Exp>;
 };
 
@@ -8602,145 +8641,19 @@ export type Verification_Requests_Variance_Fields = {
   id?: Maybe<Scalars['Float']>;
 };
 
-export type DetailedActivityFragment = (
-  { __typename?: 'activities' }
-  & Pick<Activities, 'id' | 'created_at' | 'verb'>
-  & { actor: (
-    { __typename?: 'users' }
-    & UserCardFragment
-  ), entity: (
-    { __typename?: 'entities' }
-    & DetailedEntityFragment
-  ) }
-);
+export type DetailedActivityFragment = { __typename?: 'activities', id: any, created_at: any, verb: Activity_Verb_Enum, actor?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }>, entity: { __typename?: 'entities', id: any, group?: Maybe<{ __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }>, user?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }>, group_post?: Maybe<{ __typename?: 'group_posts', id: any, created_at: any, updated_at: any, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: any, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group: { __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: any, thing: { __typename?: 'things', id: any, name: string, description: string, category?: Maybe<string>, type: Thing_Type_Enum, expiry?: Maybe<any>, short_id: string, images: Array<{ __typename?: 'thing_images', id: any, description: string, order: number, file: { __typename?: 'file_uploads', id: any, name: string, url: string, mime_type?: Maybe<string>, size: number } }>, owner: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group_member?: Maybe<{ __typename?: 'group_members', id: any, role: Group_Role_Enum, created_at: any, group: { __typename?: 'groups', id: any, short_id: string, name: string }, user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }> } };
 
-export type ActivityCardFragment = (
-  { __typename?: 'activities' }
-  & Pick<Activities, 'id' | 'created_at' | 'verb'>
-  & { entity: (
-    { __typename?: 'entities' }
-    & EntityCardFragment
-  ), secondary_entity: (
-    { __typename?: 'entities' }
-    & EntityCardFragment
-  ), actor: (
-    { __typename?: 'users' }
-    & UserCardFragment
-  ) }
-);
+export type ActivityCardFragment = { __typename?: 'activities', id: any, created_at: any, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: any, group?: Maybe<{ __typename?: 'groups', id: any, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: any, response?: Maybe<string>, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: any, post: { __typename?: 'group_posts', id: any, author_id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: any, thing: { __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }> }, secondary_entity?: Maybe<{ __typename?: 'entities', id: any, group?: Maybe<{ __typename?: 'groups', id: any, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: any, response?: Maybe<string>, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: any, post: { __typename?: 'group_posts', id: any, author_id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: any, thing: { __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }> }>, actor?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }> };
 
-export type NotificationCardFragment = (
-  { __typename?: 'notifications' }
-  & Pick<Notifications, 'id' | 'read_at' | 'created_at'>
-  & { activity: (
-    { __typename?: 'activities' }
-    & ActivityCardFragment
-  ) }
-);
+export type NotificationCardFragment = { __typename?: 'notifications', id: any, read_at?: Maybe<any>, created_at: any, activity: { __typename?: 'activities', id: any, created_at: any, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: any, group?: Maybe<{ __typename?: 'groups', id: any, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: any, response?: Maybe<string>, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: any, post: { __typename?: 'group_posts', id: any, author_id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: any, thing: { __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }> }, secondary_entity?: Maybe<{ __typename?: 'entities', id: any, group?: Maybe<{ __typename?: 'groups', id: any, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: any, response?: Maybe<string>, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: any, post: { __typename?: 'group_posts', id: any, author_id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: any, thing: { __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }> }>, actor?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }> } };
 
-export type GroupRefFragment = (
-  { __typename?: 'groups' }
-  & Pick<Groups, 'id' | 'short_id' | 'name'>
-);
+export type GroupRefFragment = { __typename?: 'groups', id: any, short_id: string, name: string };
 
-export type ThingRefFragment = (
-  { __typename?: 'things' }
-  & Pick<Things, 'id' | 'short_id' | 'name'>
-  & { images: Array<(
-    { __typename?: 'thing_images' }
-    & { file: (
-      { __typename?: 'file_uploads' }
-      & Pick<File_Uploads, 'url'>
-    ) }
-  )> }
-);
+export type ThingRefFragment = { __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> };
 
-export type EntityCardFragment = (
-  { __typename?: 'entities' }
-  & Pick<Entities, 'id'>
-  & { group: (
-    { __typename?: 'groups' }
-    & GroupRefFragment
-  ), thing: (
-    { __typename?: 'things' }
-    & ThingRefFragment
-  ), user: (
-    { __typename?: 'users' }
-    & UserCardFragment
-  ), group_join_request: (
-    { __typename?: 'group_join_requests' }
-    & Pick<Group_Join_Requests, 'id' | 'response'>
-    & { group: (
-      { __typename?: 'groups' }
-      & GroupRefFragment
-    ) }
-  ), group_post_comment: (
-    { __typename?: 'group_post_comment' }
-    & Pick<Group_Post_Comment, 'id'>
-    & { post: (
-      { __typename?: 'group_posts' }
-      & Pick<Group_Posts, 'id' | 'author_id'>
-      & { group: (
-        { __typename?: 'groups' }
-        & GroupRefFragment
-      ) }
-    ), comment: (
-      { __typename?: 'comments' }
-      & CommentCardFragment
-    ) }
-  ), group_post: (
-    { __typename?: 'group_posts' }
-    & Pick<Group_Posts, 'id'>
-    & { group: (
-      { __typename?: 'groups' }
-      & GroupRefFragment
-    ) }
-  ), group_thing: (
-    { __typename?: 'group_thing' }
-    & Pick<Group_Thing, 'id'>
-    & { thing: (
-      { __typename?: 'things' }
-      & ThingRefFragment
-    ), group: (
-      { __typename?: 'groups' }
-      & GroupRefFragment
-    ) }
-  ), group_member: (
-    { __typename?: 'group_members' }
-    & { user: (
-      { __typename?: 'users' }
-      & UserCardFragment
-    ), group: (
-      { __typename?: 'groups' }
-      & GroupRefFragment
-    ) }
-  ) }
-);
+export type EntityCardFragment = { __typename?: 'entities', id: any, group?: Maybe<{ __typename?: 'groups', id: any, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: any, response?: Maybe<string>, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: any, post: { __typename?: 'group_posts', id: any, author_id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: any, thing: { __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }> };
 
-export type DetailedEntityFragment = (
-  { __typename?: 'entities' }
-  & Pick<Entities, 'id'>
-  & { group: (
-    { __typename?: 'groups' }
-    & GroupCardFragment
-  ), user: (
-    { __typename?: 'users' }
-    & UserCardFragment
-  ), group_post: (
-    { __typename?: 'group_posts' }
-    & GroupPostFragment
-  ), group_thing: (
-    { __typename?: 'group_thing' }
-    & Pick<Group_Thing, 'id'>
-    & { thing: (
-      { __typename?: 'things' }
-      & ThingCardFragment
-    ) }
-  ), group_member: (
-    { __typename?: 'group_members' }
-    & GroupMemberWithGroupCardFragment
-  ) }
-);
+export type DetailedEntityFragment = { __typename?: 'entities', id: any, group?: Maybe<{ __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }>, user?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }>, group_post?: Maybe<{ __typename?: 'group_posts', id: any, created_at: any, updated_at: any, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: any, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group: { __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: any, thing: { __typename?: 'things', id: any, name: string, description: string, category?: Maybe<string>, type: Thing_Type_Enum, expiry?: Maybe<any>, short_id: string, images: Array<{ __typename?: 'thing_images', id: any, description: string, order: number, file: { __typename?: 'file_uploads', id: any, name: string, url: string, mime_type?: Maybe<string>, size: number } }>, owner: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group_member?: Maybe<{ __typename?: 'group_members', id: any, role: Group_Role_Enum, created_at: any, group: { __typename?: 'groups', id: any, short_id: string, name: string }, user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }> };
 
 export type GroupActivityQueryVariables = Exact<{
   shortId: Scalars['String'];
@@ -8749,44 +8662,11 @@ export type GroupActivityQueryVariables = Exact<{
 }>;
 
 
-export type GroupActivityQuery = (
-  { __typename?: 'query_root' }
-  & { groups: Array<(
-    { __typename?: 'groups' }
-    & { activities: Array<(
-      { __typename?: 'activities' }
-      & DetailedActivityFragment
-    )> }
-  )> }
-);
+export type GroupActivityQuery = { __typename?: 'query_root', groups: Array<{ __typename?: 'groups', activities: Array<{ __typename?: 'activities', id: any, created_at: any, verb: Activity_Verb_Enum, actor?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }>, entity: { __typename?: 'entities', id: any, group?: Maybe<{ __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }>, user?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }>, group_post?: Maybe<{ __typename?: 'group_posts', id: any, created_at: any, updated_at: any, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: any, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group: { __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: any, thing: { __typename?: 'things', id: any, name: string, description: string, category?: Maybe<string>, type: Thing_Type_Enum, expiry?: Maybe<any>, short_id: string, images: Array<{ __typename?: 'thing_images', id: any, description: string, order: number, file: { __typename?: 'file_uploads', id: any, name: string, url: string, mime_type?: Maybe<string>, size: number } }>, owner: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group_member?: Maybe<{ __typename?: 'group_members', id: any, role: Group_Role_Enum, created_at: any, group: { __typename?: 'groups', id: any, short_id: string, name: string }, user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }> } }> }> };
 
-export type ChatMessageCardFragment = (
-  { __typename?: 'chat_messages' }
-  & Pick<Chat_Messages, 'id' | 'sender_id' | 'message' | 'created_at'>
-  & { entity: (
-    { __typename?: 'entities' }
-    & EntityCardFragment
-  ) }
-);
+export type ChatMessageCardFragment = { __typename?: 'chat_messages', id: any, sender_id: any, message: string, created_at: any, entity?: Maybe<{ __typename?: 'entities', id: any, group?: Maybe<{ __typename?: 'groups', id: any, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: any, response?: Maybe<string>, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: any, post: { __typename?: 'group_posts', id: any, author_id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: any, thing: { __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }> }> };
 
-export type ChatGroupCardFragment = (
-  { __typename?: 'chat_groups' }
-  & Pick<Chat_Groups, 'id' | 'name'>
-  & { members: Array<(
-    { __typename?: 'chat_group_members' }
-    & { user: (
-      { __typename?: 'users' }
-      & UserCardFragment
-    ) }
-  )>, messages: Array<(
-    { __typename?: 'chat_messages' }
-    & Pick<Chat_Messages, 'message'>
-    & { sender: (
-      { __typename?: 'users' }
-      & UserCardFragment
-    ) }
-  )> }
-);
+export type ChatGroupCardFragment = { __typename?: 'chat_groups', id: any, name: string, members: Array<{ __typename?: 'chat_group_members', user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }>, messages: Array<{ __typename?: 'chat_messages', message: string, sender: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }> };
 
 export type ChatMessagesQueryVariables = Exact<{
   where: Chat_Messages_Bool_Exp;
@@ -8794,153 +8674,49 @@ export type ChatMessagesQueryVariables = Exact<{
 }>;
 
 
-export type ChatMessagesQuery = (
-  { __typename?: 'query_root' }
-  & { chat_messages: Array<(
-    { __typename?: 'chat_messages' }
-    & ChatMessageCardFragment
-  )> }
-);
+export type ChatMessagesQuery = { __typename?: 'query_root', chat_messages: Array<{ __typename?: 'chat_messages', id: any, sender_id: any, message: string, created_at: any, entity?: Maybe<{ __typename?: 'entities', id: any, group?: Maybe<{ __typename?: 'groups', id: any, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: any, response?: Maybe<string>, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: any, post: { __typename?: 'group_posts', id: any, author_id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: any, thing: { __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }> }> }> };
 
 export type ChatGroupsSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ChatGroupsSubscription = (
-  { __typename?: 'subscription_root' }
-  & { chat_groups: Array<(
-    { __typename?: 'chat_groups' }
-    & ChatGroupCardFragment
-  )> }
-);
+export type ChatGroupsSubscription = { __typename?: 'subscription_root', chat_groups: Array<{ __typename?: 'chat_groups', id: any, name: string, members: Array<{ __typename?: 'chat_group_members', user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }>, messages: Array<{ __typename?: 'chat_messages', message: string, sender: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }> }> };
 
 export type ChatMessagesFeedSubscriptionVariables = Exact<{
   where: Chat_Messages_Bool_Exp;
 }>;
 
 
-export type ChatMessagesFeedSubscription = (
-  { __typename?: 'subscription_root' }
-  & { chat_messages: Array<(
-    { __typename?: 'chat_messages' }
-    & ChatMessageCardFragment
-  )> }
-);
+export type ChatMessagesFeedSubscription = { __typename?: 'subscription_root', chat_messages: Array<{ __typename?: 'chat_messages', id: any, sender_id: any, message: string, created_at: any, entity?: Maybe<{ __typename?: 'entities', id: any, group?: Maybe<{ __typename?: 'groups', id: any, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: any, response?: Maybe<string>, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: any, post: { __typename?: 'group_posts', id: any, author_id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: any, thing: { __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }> }> }> };
 
 export type CreateChatGroupMutationVariables = Exact<{
   input: CreateChatGroupInput;
 }>;
 
 
-export type CreateChatGroupMutation = (
-  { __typename?: 'mutation_root' }
-  & { createChatGroup?: Maybe<(
-    { __typename?: 'CreateChatGroupResult' }
-    & { chat_group: Array<(
-      { __typename?: 'chat_groups' }
-      & ChatGroupCardFragment
-    )> }
-  )> }
-);
+export type CreateChatGroupMutation = { __typename?: 'mutation_root', createChatGroup?: Maybe<{ __typename?: 'CreateChatGroupResult', chat_group: { __typename?: 'chat_groups', id: any, name: string, members: Array<{ __typename?: 'chat_group_members', user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }>, messages: Array<{ __typename?: 'chat_messages', message: string, sender: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }> } }> };
 
 export type CreateChatMessageMutationVariables = Exact<{
   input: Chat_Messages_Insert_Input;
 }>;
 
 
-export type CreateChatMessageMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_chat_messages_one?: Maybe<(
-    { __typename?: 'chat_messages' }
-    & ChatMessageCardFragment
-  )> }
-);
+export type CreateChatMessageMutation = { __typename?: 'mutation_root', insert_chat_messages_one?: Maybe<{ __typename?: 'chat_messages', id: any, sender_id: any, message: string, created_at: any, entity?: Maybe<{ __typename?: 'entities', id: any, group?: Maybe<{ __typename?: 'groups', id: any, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: any, response?: Maybe<string>, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: any, post: { __typename?: 'group_posts', id: any, author_id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: any, thing: { __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }> }> }> };
 
-export type CommentCardFragment = (
-  { __typename?: 'comments' }
-  & Pick<Comments, 'id' | 'content' | 'created_at'>
-  & { author: (
-    { __typename?: 'users' }
-    & UserCardFragment
-  ) }
-);
+export type CommentCardFragment = { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } };
 
-export type GroupMemberCardFragment = (
-  { __typename?: 'group_members' }
-  & Pick<Group_Members, 'id' | 'role' | 'created_at'>
-  & { user: (
-    { __typename?: 'users' }
-    & UserCardFragment
-  ) }
-);
+export type GroupMemberCardFragment = { __typename?: 'group_members', id: any, role: Group_Role_Enum, created_at: any, user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } };
 
-export type GroupMemberWithGroupCardFragment = (
-  { __typename?: 'group_members' }
-  & { group: (
-    { __typename?: 'groups' }
-    & Pick<Groups, 'id' | 'short_id' | 'name'>
-  ) }
-  & GroupMemberCardFragment
-);
+export type GroupMemberWithGroupCardFragment = { __typename?: 'group_members', id: any, role: Group_Role_Enum, created_at: any, group: { __typename?: 'groups', id: any, short_id: string, name: string }, user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } };
 
-export type GroupCardFragment = (
-  { __typename?: 'groups' }
-  & Pick<Groups, 'id' | 'short_id' | 'name' | 'created_at' | 'description' | 'public'>
-  & { memberships_aggregate: (
-    { __typename?: 'group_members_aggregate' }
-    & { aggregate?: Maybe<(
-      { __typename?: 'group_members_aggregate_fields' }
-      & Pick<Group_Members_Aggregate_Fields, 'count'>
-    )> }
-  ), thing_relations_aggregate: (
-    { __typename?: 'group_thing_aggregate' }
-    & { aggregate?: Maybe<(
-      { __typename?: 'group_thing_aggregate_fields' }
-      & Pick<Group_Thing_Aggregate_Fields, 'count'>
-    )> }
-  ) }
-);
+export type GroupCardFragment = { __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } };
 
-export type GroupDetailsFragment = (
-  { __typename?: 'groups' }
-  & { memberships: Array<(
-    { __typename?: 'group_members' }
-    & GroupMemberCardFragment
-  )> }
-  & GroupCardFragment
-);
+export type GroupDetailsFragment = { __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships: Array<{ __typename?: 'group_members', id: any, role: Group_Role_Enum, created_at: any, user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }>, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } };
 
-export type GroupJoinRequestCardFragment = (
-  { __typename?: 'group_join_requests' }
-  & Pick<Group_Join_Requests, 'id' | 'created_at' | 'updated_at' | 'status' | 'group_id' | 'message'>
-  & { user: (
-    { __typename?: 'users' }
-    & UserCardFragment
-  ) }
-);
+export type GroupJoinRequestCardFragment = { __typename?: 'group_join_requests', id: any, created_at: any, updated_at: any, status?: Maybe<Group_Join_Request_Status_Enum>, group_id: any, message: string, user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } };
 
-export type GroupJoinTokenCardFragment = (
-  { __typename?: 'group_join_tokens' }
-  & Pick<Group_Join_Tokens, 'id' | 'created_at' | 'updated_at' | 'token' | 'disabled' | 'note'>
-);
+export type GroupJoinTokenCardFragment = { __typename?: 'group_join_tokens', id: any, created_at: any, updated_at: any, token: string, disabled: boolean, note?: Maybe<string> };
 
-export type GroupPostFragment = (
-  { __typename?: 'group_posts' }
-  & Pick<Group_Posts, 'id' | 'created_at' | 'updated_at' | 'type' | 'resolved' | 'content'>
-  & { comments: Array<(
-    { __typename?: 'group_post_comment' }
-    & Pick<Group_Post_Comment, 'id'>
-    & { comment: (
-      { __typename?: 'comments' }
-      & CommentCardFragment
-    ) }
-  )>, group: (
-    { __typename?: 'groups' }
-    & GroupCardFragment
-  ), author: (
-    { __typename?: 'users' }
-    & UserCardFragment
-  ) }
-);
+export type GroupPostFragment = { __typename?: 'group_posts', id: any, created_at: any, updated_at: any, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: any, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group: { __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } };
 
 export type ListGroupsQueryVariables = Exact<{
   limit: Scalars['Int'];
@@ -8950,109 +8726,52 @@ export type ListGroupsQueryVariables = Exact<{
 }>;
 
 
-export type ListGroupsQuery = (
-  { __typename?: 'query_root' }
-  & { groups_aggregate: (
-    { __typename?: 'groups_aggregate' }
-    & { aggregate?: Maybe<(
-      { __typename?: 'groups_aggregate_fields' }
-      & Pick<Groups_Aggregate_Fields, 'count'>
-    )> }
-  ), groups: Array<(
-    { __typename?: 'groups' }
-    & GroupCardFragment
-  )> }
-);
+export type ListGroupsQuery = { __typename?: 'query_root', groups_aggregate: { __typename?: 'groups_aggregate', aggregate?: Maybe<{ __typename?: 'groups_aggregate_fields', count: number }> }, groups: Array<{ __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }> };
 
 export type GroupDetailsQueryVariables = Exact<{
   shortId: Scalars['String'];
 }>;
 
 
-export type GroupDetailsQuery = (
-  { __typename?: 'query_root' }
-  & { groups: Array<(
-    { __typename?: 'groups' }
-    & GroupDetailsFragment
-  )> }
-);
+export type GroupDetailsQuery = { __typename?: 'query_root', groups: Array<{ __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships: Array<{ __typename?: 'group_members', id: any, role: Group_Role_Enum, created_at: any, user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }>, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }> };
 
 export type GroupJoinRequestsQueryVariables = Exact<{
   where: Group_Join_Requests_Bool_Exp;
 }>;
 
 
-export type GroupJoinRequestsQuery = (
-  { __typename?: 'query_root' }
-  & { group_join_requests: Array<(
-    { __typename?: 'group_join_requests' }
-    & GroupJoinRequestCardFragment
-  )> }
-);
+export type GroupJoinRequestsQuery = { __typename?: 'query_root', group_join_requests: Array<{ __typename?: 'group_join_requests', id: any, created_at: any, updated_at: any, status?: Maybe<Group_Join_Request_Status_Enum>, group_id: any, message: string, user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }> };
 
 export type GroupJoinTokensQueryVariables = Exact<{
   where: Group_Join_Tokens_Bool_Exp;
 }>;
 
 
-export type GroupJoinTokensQuery = (
-  { __typename?: 'query_root' }
-  & { group_join_tokens: Array<(
-    { __typename?: 'group_join_tokens' }
-    & GroupJoinTokenCardFragment
-  )> }
-);
+export type GroupJoinTokensQuery = { __typename?: 'query_root', group_join_tokens: Array<{ __typename?: 'group_join_tokens', id: any, created_at: any, updated_at: any, token: string, disabled: boolean, note?: Maybe<string> }> };
 
 export type GroupPostListQueryVariables = Exact<{
   where: Group_Posts_Bool_Exp;
   limit: Scalars['Int'];
   offset: Scalars['Int'];
-  orderBy?: Maybe<Array<Group_Posts_Order_By>>;
+  orderBy?: Maybe<Array<Group_Posts_Order_By> | Group_Posts_Order_By>;
 }>;
 
 
-export type GroupPostListQuery = (
-  { __typename?: 'query_root' }
-  & { group_posts: Array<(
-    { __typename?: 'group_posts' }
-    & GroupPostFragment
-  )>, group_posts_aggregate: (
-    { __typename?: 'group_posts_aggregate' }
-    & { aggregate?: Maybe<(
-      { __typename?: 'group_posts_aggregate_fields' }
-      & Pick<Group_Posts_Aggregate_Fields, 'count'>
-    )> }
-  ) }
-);
+export type GroupPostListQuery = { __typename?: 'query_root', group_posts: Array<{ __typename?: 'group_posts', id: any, created_at: any, updated_at: any, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: any, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group: { __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }>, group_posts_aggregate: { __typename?: 'group_posts_aggregate', aggregate?: Maybe<{ __typename?: 'group_posts_aggregate_fields', count: number }> } };
 
 export type ActivityListQueryVariables = Exact<{
   offset?: Maybe<Scalars['Int']>;
 }>;
 
 
-export type ActivityListQuery = (
-  { __typename?: 'query_root' }
-  & { activities: Array<(
-    { __typename?: 'activities' }
-    & ActivityCardFragment
-  )> }
-);
+export type ActivityListQuery = { __typename?: 'query_root', activities: Array<{ __typename?: 'activities', id: any, created_at: any, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: any, group?: Maybe<{ __typename?: 'groups', id: any, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: any, response?: Maybe<string>, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: any, post: { __typename?: 'group_posts', id: any, author_id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: any, thing: { __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }> }, secondary_entity?: Maybe<{ __typename?: 'entities', id: any, group?: Maybe<{ __typename?: 'groups', id: any, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: any, response?: Maybe<string>, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: any, post: { __typename?: 'group_posts', id: any, author_id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: any, thing: { __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }> }>, actor?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }> }> };
 
 export type CreateGroupMutationVariables = Exact<{
   input: CreateGroupInput;
 }>;
 
 
-export type CreateGroupMutation = (
-  { __typename?: 'mutation_root' }
-  & { createGroup?: Maybe<(
-    { __typename?: 'CreateGroupResult' }
-    & { group: Array<(
-      { __typename?: 'groups' }
-      & GroupCardFragment
-    )> }
-  )> }
-);
+export type CreateGroupMutation = { __typename?: 'mutation_root', createGroup: { __typename?: 'CreateGroupResult', group: { __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } } } };
 
 export type UpdateGroupMutationVariables = Exact<{
   id: Scalars['uuid'];
@@ -9060,39 +8779,21 @@ export type UpdateGroupMutationVariables = Exact<{
 }>;
 
 
-export type UpdateGroupMutation = (
-  { __typename?: 'mutation_root' }
-  & { update_groups_by_pk?: Maybe<(
-    { __typename?: 'groups' }
-    & GroupDetailsFragment
-  )> }
-);
+export type UpdateGroupMutation = { __typename?: 'mutation_root', update_groups_by_pk?: Maybe<{ __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships: Array<{ __typename?: 'group_members', id: any, role: Group_Role_Enum, created_at: any, user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }>, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }> };
 
 export type DeleteGroupMutationVariables = Exact<{
   id: Scalars['uuid'];
 }>;
 
 
-export type DeleteGroupMutation = (
-  { __typename?: 'mutation_root' }
-  & { delete_groups_by_pk?: Maybe<(
-    { __typename?: 'groups' }
-    & GroupCardFragment
-  )> }
-);
+export type DeleteGroupMutation = { __typename?: 'mutation_root', delete_groups_by_pk?: Maybe<{ __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }> };
 
 export type CreateGroupPostMutationVariables = Exact<{
   input: Group_Posts_Insert_Input;
 }>;
 
 
-export type CreateGroupPostMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_group_posts_one?: Maybe<(
-    { __typename?: 'group_posts' }
-    & GroupPostFragment
-  )> }
-);
+export type CreateGroupPostMutation = { __typename?: 'mutation_root', insert_group_posts_one?: Maybe<{ __typename?: 'group_posts', id: any, created_at: any, updated_at: any, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: any, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group: { __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }> };
 
 export type UpdateGroupPostMutationVariables = Exact<{
   id: Scalars['uuid'];
@@ -9100,13 +8801,7 @@ export type UpdateGroupPostMutationVariables = Exact<{
 }>;
 
 
-export type UpdateGroupPostMutation = (
-  { __typename?: 'mutation_root' }
-  & { update_group_posts_by_pk?: Maybe<(
-    { __typename?: 'group_posts' }
-    & GroupPostFragment
-  )> }
-);
+export type UpdateGroupPostMutation = { __typename?: 'mutation_root', update_group_posts_by_pk?: Maybe<{ __typename?: 'group_posts', id: any, created_at: any, updated_at: any, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: any, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group: { __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }> };
 
 export type CreateGroupPostCommentMutationVariables = Exact<{
   groupPostId: Scalars['uuid'];
@@ -9114,19 +8809,7 @@ export type CreateGroupPostCommentMutationVariables = Exact<{
 }>;
 
 
-export type CreateGroupPostCommentMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_group_post_comment_one?: Maybe<(
-    { __typename?: 'group_post_comment' }
-    & { comment: (
-      { __typename?: 'comments' }
-      & CommentCardFragment
-    ), post: (
-      { __typename?: 'group_posts' }
-      & GroupPostFragment
-    ) }
-  )> }
-);
+export type CreateGroupPostCommentMutation = { __typename?: 'mutation_root', insert_group_post_comment_one?: Maybe<{ __typename?: 'group_post_comment', comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }, post: { __typename?: 'group_posts', id: any, created_at: any, updated_at: any, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: any, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group: { __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }> };
 
 export type LeaveGroupMutationVariables = Exact<{
   groupId: Scalars['uuid'];
@@ -9134,129 +8817,56 @@ export type LeaveGroupMutationVariables = Exact<{
 }>;
 
 
-export type LeaveGroupMutation = (
-  { __typename?: 'mutation_root' }
-  & { delete_group_members?: Maybe<(
-    { __typename?: 'group_members_mutation_response' }
-    & Pick<Group_Members_Mutation_Response, 'affected_rows'>
-  )> }
-);
+export type LeaveGroupMutation = { __typename?: 'mutation_root', delete_group_members?: Maybe<{ __typename?: 'group_members_mutation_response', affected_rows: number }> };
 
 export type JoinGroupMutationVariables = Exact<{
   groupId: Scalars['uuid'];
 }>;
 
 
-export type JoinGroupMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_group_members_one?: Maybe<(
-    { __typename?: 'group_members' }
-    & { user: (
-      { __typename?: 'users' }
-      & UserPrivateDetailFragment
-    ) }
-    & GroupMemberCardFragment
-  )> }
-);
+export type JoinGroupMutation = { __typename?: 'mutation_root', insert_group_members_one?: Maybe<{ __typename?: 'group_members', id: any, role: Group_Role_Enum, created_at: any, user: { __typename?: 'users', id: any, name: string, image?: Maybe<string>, created_at: any, memberships: Array<{ __typename?: 'group_members', id: any, role: Group_Role_Enum, group: { __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } } }>, private_info?: Maybe<{ __typename?: 'user_private', email?: Maybe<string> }>, group_join_requests: Array<{ __typename?: 'group_join_requests', id: any, created_at: any, updated_at: any, status?: Maybe<Group_Join_Request_Status_Enum>, group_id: any, message: string, user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }> } }> };
 
 export type JoinGroupWithTokenMutationVariables = Exact<{
   input: JoinGroupInput;
 }>;
 
 
-export type JoinGroupWithTokenMutation = (
-  { __typename?: 'mutation_root' }
-  & { joinGroup?: Maybe<(
-    { __typename?: 'JoinGroupResult' }
-    & { group: Array<(
-      { __typename?: 'groups' }
-      & Pick<Groups, 'id'>
-    )>, user: Array<(
-      { __typename?: 'users' }
-      & UserPrivateDetailFragment
-    )> }
-  )> }
-);
+export type JoinGroupWithTokenMutation = { __typename?: 'mutation_root', joinGroup?: Maybe<{ __typename?: 'JoinGroupResult', group: { __typename?: 'groups', id: any }, user: { __typename?: 'users', created_at: any, id: any, name: string, image?: Maybe<string>, memberships: Array<{ __typename?: 'group_members', id: any, role: Group_Role_Enum, group: { __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } } }>, private_info?: Maybe<{ __typename?: 'user_private', email?: Maybe<string> }>, group_join_requests: Array<{ __typename?: 'group_join_requests', id: any, created_at: any, updated_at: any, status?: Maybe<Group_Join_Request_Status_Enum>, group_id: any, message: string, user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }> } }> };
 
 export type RequestJoinGroupMutationVariables = Exact<{
   input: RequestJoinGroupInput;
 }>;
 
 
-export type RequestJoinGroupMutation = (
-  { __typename?: 'mutation_root' }
-  & { requestJoinGroup?: Maybe<(
-    { __typename?: 'RequestJoinGroupResult' }
-    & { group: Array<(
-      { __typename?: 'groups' }
-      & GroupCardFragment
-    )>, user: Array<(
-      { __typename?: 'users' }
-      & UserJoinRequestsFragment
-    )> }
-  )> }
-);
+export type RequestJoinGroupMutation = { __typename?: 'mutation_root', requestJoinGroup?: Maybe<{ __typename?: 'RequestJoinGroupResult', group: { __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } }, user: { __typename?: 'users', id: any, group_join_requests: Array<{ __typename?: 'group_join_requests', id: any, created_at: any, updated_at: any, status?: Maybe<Group_Join_Request_Status_Enum>, group_id: any, message: string, user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }> } }> };
 
 export type CancelJoinRequestMutationVariables = Exact<{
   requestId: Scalars['uuid'];
 }>;
 
 
-export type CancelJoinRequestMutation = (
-  { __typename?: 'mutation_root' }
-  & { delete_group_join_requests?: Maybe<(
-    { __typename?: 'group_join_requests_mutation_response' }
-    & { returning: Array<(
-      { __typename?: 'group_join_requests' }
-      & { user: (
-        { __typename?: 'users' }
-        & UserJoinRequestsFragment
-      ) }
-    )> }
-  )> }
-);
+export type CancelJoinRequestMutation = { __typename?: 'mutation_root', delete_group_join_requests?: Maybe<{ __typename?: 'group_join_requests_mutation_response', returning: Array<{ __typename?: 'group_join_requests', user: { __typename?: 'users', id: any, group_join_requests: Array<{ __typename?: 'group_join_requests', id: any, created_at: any, updated_at: any, status?: Maybe<Group_Join_Request_Status_Enum>, group_id: any, message: string, user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }> } }> }> };
 
 export type HandleJoinRequestMutationVariables = Exact<{
   input: HandleJoinRequestInput;
 }>;
 
 
-export type HandleJoinRequestMutation = (
-  { __typename?: 'mutation_root' }
-  & { handleJoinRequest?: Maybe<(
-    { __typename?: 'HandleJoinRequestResult' }
-    & { join_request: Array<(
-      { __typename?: 'group_join_requests' }
-      & GroupJoinRequestCardFragment
-    )> }
-  )> }
-);
+export type HandleJoinRequestMutation = { __typename?: 'mutation_root', handleJoinRequest: { __typename?: 'HandleJoinRequestResult', join_request: { __typename?: 'group_join_requests', id: any, created_at: any, updated_at: any, status?: Maybe<Group_Join_Request_Status_Enum>, group_id: any, message: string, user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } } };
 
 export type CreateJoinTokenMutationVariables = Exact<{
   input: Group_Join_Tokens_Insert_Input;
 }>;
 
 
-export type CreateJoinTokenMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_group_join_tokens_one?: Maybe<(
-    { __typename?: 'group_join_tokens' }
-    & GroupJoinTokenCardFragment
-  )> }
-);
+export type CreateJoinTokenMutation = { __typename?: 'mutation_root', insert_group_join_tokens_one?: Maybe<{ __typename?: 'group_join_tokens', id: any, created_at: any, updated_at: any, token: string, disabled: boolean, note?: Maybe<string> }> };
 
 export type DeleteJoinTokenMutationVariables = Exact<{
   id: Scalars['uuid'];
 }>;
 
 
-export type DeleteJoinTokenMutation = (
-  { __typename?: 'mutation_root' }
-  & { delete_group_join_tokens_by_pk?: Maybe<(
-    { __typename?: 'group_join_tokens' }
-    & GroupJoinTokenCardFragment
-  )> }
-);
+export type DeleteJoinTokenMutation = { __typename?: 'mutation_root', delete_group_join_tokens_by_pk?: Maybe<{ __typename?: 'group_join_tokens', id: any, created_at: any, updated_at: any, token: string, disabled: boolean, note?: Maybe<string> }> };
 
 export type UpdateJoinTokenMutationVariables = Exact<{
   id: Scalars['uuid'];
@@ -9264,13 +8874,7 @@ export type UpdateJoinTokenMutationVariables = Exact<{
 }>;
 
 
-export type UpdateJoinTokenMutation = (
-  { __typename?: 'mutation_root' }
-  & { update_group_join_tokens_by_pk?: Maybe<(
-    { __typename?: 'group_join_tokens' }
-    & GroupJoinTokenCardFragment
-  )> }
-);
+export type UpdateJoinTokenMutation = { __typename?: 'mutation_root', update_group_join_tokens_by_pk?: Maybe<{ __typename?: 'group_join_tokens', id: any, created_at: any, updated_at: any, token: string, disabled: boolean, note?: Maybe<string> }> };
 
 export type SearchCountsQueryVariables = Exact<{
   thingWhere: Things_Bool_Exp;
@@ -9279,195 +8883,68 @@ export type SearchCountsQueryVariables = Exact<{
 }>;
 
 
-export type SearchCountsQuery = (
-  { __typename?: 'query_root' }
-  & { users_aggregate: (
-    { __typename?: 'users_aggregate' }
-    & { aggregate?: Maybe<(
-      { __typename?: 'users_aggregate_fields' }
-      & Pick<Users_Aggregate_Fields, 'count'>
-    )> }
-  ), groups_aggregate: (
-    { __typename?: 'groups_aggregate' }
-    & { aggregate?: Maybe<(
-      { __typename?: 'groups_aggregate_fields' }
-      & Pick<Groups_Aggregate_Fields, 'count'>
-    )> }
-  ), things_aggregate: (
-    { __typename?: 'things_aggregate' }
-    & { aggregate?: Maybe<(
-      { __typename?: 'things_aggregate_fields' }
-      & Pick<Things_Aggregate_Fields, 'count'>
-    )> }
-  ) }
-);
+export type SearchCountsQuery = { __typename?: 'query_root', users_aggregate: { __typename?: 'users_aggregate', aggregate?: Maybe<{ __typename?: 'users_aggregate_fields', count: number }> }, groups_aggregate: { __typename?: 'groups_aggregate', aggregate?: Maybe<{ __typename?: 'groups_aggregate_fields', count: number }> }, things_aggregate: { __typename?: 'things_aggregate', aggregate?: Maybe<{ __typename?: 'things_aggregate_fields', count: number }> } };
 
-export type ThingCardFragment = (
-  { __typename?: 'things' }
-  & Pick<Things, 'id' | 'name' | 'description' | 'category' | 'type' | 'expiry' | 'short_id'>
-  & { images: Array<(
-    { __typename?: 'thing_images' }
-    & ThingImageCardFragment
-  )>, owner: (
-    { __typename?: 'users' }
-    & UserCardFragment
-  ) }
-);
+export type ThingCardFragment = { __typename?: 'things', id: any, name: string, description: string, category?: Maybe<string>, type: Thing_Type_Enum, expiry?: Maybe<any>, short_id: string, images: Array<{ __typename?: 'thing_images', id: any, description: string, order: number, file: { __typename?: 'file_uploads', id: any, name: string, url: string, mime_type?: Maybe<string>, size: number } }>, owner: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } };
 
-export type ThingImageCardFragment = (
-  { __typename?: 'thing_images' }
-  & Pick<Thing_Images, 'id' | 'description' | 'order'>
-  & { file: (
-    { __typename?: 'file_uploads' }
-    & FileUploadCardFragment
-  ) }
-);
+export type ThingImageCardFragment = { __typename?: 'thing_images', id: any, description: string, order: number, file: { __typename?: 'file_uploads', id: any, name: string, url: string, mime_type?: Maybe<string>, size: number } };
 
-export type ThingDetailsFragment = (
-  { __typename?: 'things' }
-  & Pick<Things, 'enabled'>
-  & { group_relations: Array<(
-    { __typename?: 'group_thing' }
-    & Pick<Group_Thing, 'id'>
-    & { group: (
-      { __typename?: 'groups' }
-      & GroupCardFragment
-    ) }
-  )> }
-  & ThingCardFragment
-);
+export type ThingDetailsFragment = { __typename?: 'things', enabled: boolean, id: any, name: string, description: string, category?: Maybe<string>, type: Thing_Type_Enum, expiry?: Maybe<any>, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } } }>, images: Array<{ __typename?: 'thing_images', id: any, description: string, order: number, file: { __typename?: 'file_uploads', id: any, name: string, url: string, mime_type?: Maybe<string>, size: number } }>, owner: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } };
 
 export type ThingListQueryVariables = Exact<{
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
-  orderBy?: Maybe<Array<Things_Order_By>>;
+  orderBy?: Maybe<Array<Things_Order_By> | Things_Order_By>;
   where: Things_Bool_Exp;
 }>;
 
 
-export type ThingListQuery = (
-  { __typename?: 'query_root' }
-  & { things: Array<(
-    { __typename?: 'things' }
-    & ThingCardFragment
-  )>, things_aggregate: (
-    { __typename?: 'things_aggregate' }
-    & { aggregate?: Maybe<(
-      { __typename?: 'things_aggregate_fields' }
-      & Pick<Things_Aggregate_Fields, 'count'>
-    )> }
-  ) }
-);
+export type ThingListQuery = { __typename?: 'query_root', things: Array<{ __typename?: 'things', id: any, name: string, description: string, category?: Maybe<string>, type: Thing_Type_Enum, expiry?: Maybe<any>, short_id: string, images: Array<{ __typename?: 'thing_images', id: any, description: string, order: number, file: { __typename?: 'file_uploads', id: any, name: string, url: string, mime_type?: Maybe<string>, size: number } }>, owner: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }>, things_aggregate: { __typename?: 'things_aggregate', aggregate?: Maybe<{ __typename?: 'things_aggregate_fields', count: number }> } };
 
 export type ThingDetailsQueryVariables = Exact<{
   shortId: Scalars['String'];
 }>;
 
 
-export type ThingDetailsQuery = (
-  { __typename?: 'query_root' }
-  & { things: Array<(
-    { __typename?: 'things' }
-    & ThingDetailsFragment
-  )> }
-);
+export type ThingDetailsQuery = { __typename?: 'query_root', things: Array<{ __typename?: 'things', enabled: boolean, id: any, name: string, description: string, category?: Maybe<string>, type: Thing_Type_Enum, expiry?: Maybe<any>, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } } }>, images: Array<{ __typename?: 'thing_images', id: any, description: string, order: number, file: { __typename?: 'file_uploads', id: any, name: string, url: string, mime_type?: Maybe<string>, size: number } }>, owner: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }> };
 
 export type CreateThingMutationVariables = Exact<{
   input: Things_Insert_Input;
 }>;
 
 
-export type CreateThingMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_things_one?: Maybe<(
-    { __typename?: 'things' }
-    & ThingDetailsFragment
-  )> }
-);
+export type CreateThingMutation = { __typename?: 'mutation_root', insert_things_one?: Maybe<{ __typename?: 'things', enabled: boolean, id: any, name: string, description: string, category?: Maybe<string>, type: Thing_Type_Enum, expiry?: Maybe<any>, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } } }>, images: Array<{ __typename?: 'thing_images', id: any, description: string, order: number, file: { __typename?: 'file_uploads', id: any, name: string, url: string, mime_type?: Maybe<string>, size: number } }>, owner: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }> };
 
 export type UpdateThingMutationVariables = Exact<{
   input: UpdateThingInput;
 }>;
 
 
-export type UpdateThingMutation = (
-  { __typename?: 'mutation_root' }
-  & { updateThing?: Maybe<(
-    { __typename?: 'UpdateThingResult' }
-    & { thing: Array<(
-      { __typename?: 'things' }
-      & ThingDetailsFragment
-    )> }
-  )> }
-);
+export type UpdateThingMutation = { __typename?: 'mutation_root', updateThing?: Maybe<{ __typename?: 'UpdateThingResult', thing: { __typename?: 'things', enabled: boolean, id: any, name: string, description: string, category?: Maybe<string>, type: Thing_Type_Enum, expiry?: Maybe<any>, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } } }>, images: Array<{ __typename?: 'thing_images', id: any, description: string, order: number, file: { __typename?: 'file_uploads', id: any, name: string, url: string, mime_type?: Maybe<string>, size: number } }>, owner: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }> };
 
 export type DeleteThingMutationVariables = Exact<{
   id: Scalars['uuid'];
 }>;
 
 
-export type DeleteThingMutation = (
-  { __typename?: 'mutation_root' }
-  & { delete_things_by_pk?: Maybe<(
-    { __typename?: 'things' }
-    & ThingDetailsFragment
-  )> }
-);
+export type DeleteThingMutation = { __typename?: 'mutation_root', delete_things_by_pk?: Maybe<{ __typename?: 'things', enabled: boolean, id: any, name: string, description: string, category?: Maybe<string>, type: Thing_Type_Enum, expiry?: Maybe<any>, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } } }>, images: Array<{ __typename?: 'thing_images', id: any, description: string, order: number, file: { __typename?: 'file_uploads', id: any, name: string, url: string, mime_type?: Maybe<string>, size: number } }>, owner: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }> };
 
-export type FileUploadCardFragment = (
-  { __typename?: 'file_uploads' }
-  & Pick<File_Uploads, 'id' | 'name' | 'url' | 'mime_type' | 'size'>
-);
+export type FileUploadCardFragment = { __typename?: 'file_uploads', id: any, name: string, url: string, mime_type?: Maybe<string>, size: number };
 
 export type InsertFileUploadMutationVariables = Exact<{
   input: File_Uploads_Insert_Input;
 }>;
 
 
-export type InsertFileUploadMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_file_uploads_one?: Maybe<(
-    { __typename?: 'file_uploads' }
-    & FileUploadCardFragment
-  )> }
-);
+export type InsertFileUploadMutation = { __typename?: 'mutation_root', insert_file_uploads_one?: Maybe<{ __typename?: 'file_uploads', id: any, name: string, url: string, mime_type?: Maybe<string>, size: number }> };
 
-export type UserCardFragment = (
-  { __typename?: 'users' }
-  & Pick<Users, 'id' | 'name' | 'image'>
-);
+export type UserCardFragment = { __typename?: 'users', id: any, name: string, image?: Maybe<string> };
 
-export type UserDetailFragment = (
-  { __typename?: 'users' }
-  & Pick<Users, 'created_at'>
-  & UserCardFragment
-);
+export type UserDetailFragment = { __typename?: 'users', created_at: any, id: any, name: string, image?: Maybe<string> };
 
-export type UserJoinRequestsFragment = (
-  { __typename?: 'users' }
-  & Pick<Users, 'id'>
-  & { group_join_requests: Array<(
-    { __typename?: 'group_join_requests' }
-    & GroupJoinRequestCardFragment
-  )> }
-);
+export type UserJoinRequestsFragment = { __typename?: 'users', id: any, group_join_requests: Array<{ __typename?: 'group_join_requests', id: any, created_at: any, updated_at: any, status?: Maybe<Group_Join_Request_Status_Enum>, group_id: any, message: string, user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }> };
 
-export type UserPrivateDetailFragment = (
-  { __typename?: 'users' }
-  & { memberships: Array<(
-    { __typename?: 'group_members' }
-    & Pick<Group_Members, 'id' | 'role'>
-    & { group: (
-      { __typename?: 'groups' }
-      & GroupCardFragment
-    ) }
-  )>, private_info?: Maybe<(
-    { __typename?: 'user_private' }
-    & Pick<User_Private, 'email'>
-  )> }
-  & UserDetailFragment
-  & UserJoinRequestsFragment
-);
+export type UserPrivateDetailFragment = { __typename?: 'users', created_at: any, id: any, name: string, image?: Maybe<string>, memberships: Array<{ __typename?: 'group_members', id: any, role: Group_Role_Enum, group: { __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } } }>, private_info?: Maybe<{ __typename?: 'user_private', email?: Maybe<string> }>, group_join_requests: Array<{ __typename?: 'group_join_requests', id: any, created_at: any, updated_at: any, status?: Maybe<Group_Join_Request_Status_Enum>, group_id: any, message: string, user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }> };
 
 export type UserListQueryVariables = Exact<{
   where?: Maybe<Users_Bool_Exp>;
@@ -9476,45 +8953,21 @@ export type UserListQueryVariables = Exact<{
 }>;
 
 
-export type UserListQuery = (
-  { __typename?: 'query_root' }
-  & { users: Array<(
-    { __typename?: 'users' }
-    & UserCardFragment
-  )>, users_aggregate: (
-    { __typename?: 'users_aggregate' }
-    & { aggregate?: Maybe<(
-      { __typename?: 'users_aggregate_fields' }
-      & Pick<Users_Aggregate_Fields, 'count'>
-    )> }
-  ) }
-);
+export type UserListQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }>, users_aggregate: { __typename?: 'users_aggregate', aggregate?: Maybe<{ __typename?: 'users_aggregate_fields', count: number }> } };
 
 export type UserPrivateDetailsQueryVariables = Exact<{
   id: Scalars['uuid'];
 }>;
 
 
-export type UserPrivateDetailsQuery = (
-  { __typename?: 'query_root' }
-  & { users_by_pk?: Maybe<(
-    { __typename?: 'users' }
-    & UserPrivateDetailFragment
-  )> }
-);
+export type UserPrivateDetailsQuery = { __typename?: 'query_root', users_by_pk?: Maybe<{ __typename?: 'users', created_at: any, id: any, name: string, image?: Maybe<string>, memberships: Array<{ __typename?: 'group_members', id: any, role: Group_Role_Enum, group: { __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } } }>, private_info?: Maybe<{ __typename?: 'user_private', email?: Maybe<string> }>, group_join_requests: Array<{ __typename?: 'group_join_requests', id: any, created_at: any, updated_at: any, status?: Maybe<Group_Join_Request_Status_Enum>, group_id: any, message: string, user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }> }> };
 
 export type NotificationsSubscriptionVariables = Exact<{
   userId: Scalars['uuid'];
 }>;
 
 
-export type NotificationsSubscription = (
-  { __typename?: 'subscription_root' }
-  & { notifications: Array<(
-    { __typename?: 'notifications' }
-    & NotificationCardFragment
-  )> }
-);
+export type NotificationsSubscription = { __typename?: 'subscription_root', notifications: Array<{ __typename?: 'notifications', id: any, read_at?: Maybe<any>, created_at: any, activity: { __typename?: 'activities', id: any, created_at: any, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: any, group?: Maybe<{ __typename?: 'groups', id: any, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: any, response?: Maybe<string>, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: any, post: { __typename?: 'group_posts', id: any, author_id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: any, thing: { __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }> }, secondary_entity?: Maybe<{ __typename?: 'entities', id: any, group?: Maybe<{ __typename?: 'groups', id: any, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: any, response?: Maybe<string>, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: any, post: { __typename?: 'group_posts', id: any, author_id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: any, thing: { __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }> }>, actor?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }> } }> };
 
 export type MarkNotificationReadMutationVariables = Exact<{
   id: Scalars['uuid'];
@@ -9522,13 +8975,7 @@ export type MarkNotificationReadMutationVariables = Exact<{
 }>;
 
 
-export type MarkNotificationReadMutation = (
-  { __typename?: 'mutation_root' }
-  & { update_notifications_by_pk?: Maybe<(
-    { __typename?: 'notifications' }
-    & NotificationCardFragment
-  )> }
-);
+export type MarkNotificationReadMutation = { __typename?: 'mutation_root', update_notifications_by_pk?: Maybe<{ __typename?: 'notifications', id: any, read_at?: Maybe<any>, created_at: any, activity: { __typename?: 'activities', id: any, created_at: any, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: any, group?: Maybe<{ __typename?: 'groups', id: any, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: any, response?: Maybe<string>, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: any, post: { __typename?: 'group_posts', id: any, author_id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: any, thing: { __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }> }, secondary_entity?: Maybe<{ __typename?: 'entities', id: any, group?: Maybe<{ __typename?: 'groups', id: any, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: any, response?: Maybe<string>, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: any, post: { __typename?: 'group_posts', id: any, author_id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: any, thing: { __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }> }>, actor?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }> } }> };
 
 export type MarkAllNotificationsReadMutationVariables = Exact<{
   userId: Scalars['uuid'];
@@ -9536,147 +8983,70 @@ export type MarkAllNotificationsReadMutationVariables = Exact<{
 }>;
 
 
-export type MarkAllNotificationsReadMutation = (
-  { __typename?: 'mutation_root' }
-  & { update_notifications?: Maybe<(
-    { __typename?: 'notifications_mutation_response' }
-    & Pick<Notifications_Mutation_Response, 'affected_rows'>
-    & { returning: Array<(
-      { __typename?: 'notifications' }
-      & NotificationCardFragment
-    )> }
-  )> }
-);
+export type MarkAllNotificationsReadMutation = { __typename?: 'mutation_root', update_notifications?: Maybe<{ __typename?: 'notifications_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'notifications', id: any, read_at?: Maybe<any>, created_at: any, activity: { __typename?: 'activities', id: any, created_at: any, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: any, group?: Maybe<{ __typename?: 'groups', id: any, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: any, response?: Maybe<string>, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: any, post: { __typename?: 'group_posts', id: any, author_id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: any, thing: { __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }> }, secondary_entity?: Maybe<{ __typename?: 'entities', id: any, group?: Maybe<{ __typename?: 'groups', id: any, short_id: string, name: string }>, thing?: Maybe<{ __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }>, user?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }>, group_join_request?: Maybe<{ __typename?: 'group_join_requests', id: any, response?: Maybe<string>, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_post_comment?: Maybe<{ __typename?: 'group_post_comment', id: any, post: { __typename?: 'group_posts', id: any, author_id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }, comment: { __typename?: 'comments', id: any, content: string, created_at: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, group_post?: Maybe<{ __typename?: 'group_posts', id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_thing?: Maybe<{ __typename?: 'group_thing', id: any, thing: { __typename?: 'things', id: any, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'file_uploads', url: string } }> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }>, group_member?: Maybe<{ __typename?: 'group_members', user: { __typename?: 'users', id: any, name: string, image?: Maybe<string> }, group: { __typename?: 'groups', id: any, short_id: string, name: string } }> }>, actor?: Maybe<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }> } }> }> };
 
 export type RegisterUserMutationVariables = Exact<{
   input: CredentialsInput;
 }>;
 
 
-export type RegisterUserMutation = (
-  { __typename?: 'mutation_root' }
-  & { registerCredentials?: Maybe<(
-    { __typename?: 'RegistrationResult' }
-    & Pick<RegistrationResult, 'user_id'>
-  )> }
-);
+export type RegisterUserMutation = { __typename?: 'mutation_root', registerCredentials?: Maybe<{ __typename?: 'RegistrationResult', user_id: any }> };
 
 export type ServerInsertActivitiesMutationVariables = Exact<{
-  input: Array<Activities_Insert_Input>;
+  input: Array<Activities_Insert_Input> | Activities_Insert_Input;
 }>;
 
 
-export type ServerInsertActivitiesMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_activities?: Maybe<(
-    { __typename?: 'activities_mutation_response' }
-    & { returning: Array<(
-      { __typename?: 'activities' }
-      & Pick<Activities, 'id'>
-    )> }
-  )> }
-);
+export type ServerInsertActivitiesMutation = { __typename?: 'mutation_root', insert_activities?: Maybe<{ __typename?: 'activities_mutation_response', returning: Array<{ __typename?: 'activities', id: any }> }> };
 
-export type ServerChatGroupFragment = (
-  { __typename?: 'chat_groups' }
-  & Pick<Chat_Groups, 'id'>
-  & { members: Array<(
-    { __typename?: 'chat_group_members' }
-    & { user: (
-      { __typename?: 'users' }
-      & Pick<Users, 'id'>
-    ) }
-  )> }
-);
+export type ServerChatGroupFragment = { __typename?: 'chat_groups', id: any, members: Array<{ __typename?: 'chat_group_members', user: { __typename?: 'users', id: any } }> };
 
 export type ServerFindChatGroupQueryVariables = Exact<{
   where: Chat_Groups_Bool_Exp;
 }>;
 
 
-export type ServerFindChatGroupQuery = (
-  { __typename?: 'query_root' }
-  & { chat_groups: Array<(
-    { __typename?: 'chat_groups' }
-    & ServerChatGroupFragment
-  )> }
-);
+export type ServerFindChatGroupQuery = { __typename?: 'query_root', chat_groups: Array<{ __typename?: 'chat_groups', id: any, members: Array<{ __typename?: 'chat_group_members', user: { __typename?: 'users', id: any } }> }> };
 
 export type ServerMostRecentChatsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ServerMostRecentChatsQuery = (
-  { __typename?: 'query_root' }
-  & { chat_groups: Array<(
-    { __typename?: 'chat_groups' }
-    & Pick<Chat_Groups, 'id'>
-  )> }
-);
+export type ServerMostRecentChatsQuery = { __typename?: 'query_root', chat_groups: Array<{ __typename?: 'chat_groups', id: any }> };
 
 export type ServerCreateChatGroupMutationVariables = Exact<{
   input: Chat_Groups_Insert_Input;
 }>;
 
 
-export type ServerCreateChatGroupMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_chat_groups_one?: Maybe<(
-    { __typename?: 'chat_groups' }
-    & Pick<Chat_Groups, 'id'>
-  )> }
-);
+export type ServerCreateChatGroupMutation = { __typename?: 'mutation_root', insert_chat_groups_one?: Maybe<{ __typename?: 'chat_groups', id: any }> };
 
 export type ServerCreateChatMessageMutationVariables = Exact<{
   input: Chat_Messages_Insert_Input;
 }>;
 
 
-export type ServerCreateChatMessageMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_chat_messages_one?: Maybe<(
-    { __typename?: 'chat_messages' }
-    & Pick<Chat_Messages, 'id'>
-  )> }
-);
+export type ServerCreateChatMessageMutation = { __typename?: 'mutation_root', insert_chat_messages_one?: Maybe<{ __typename?: 'chat_messages', id: any }> };
 
 export type ServerFindGroupQueryVariables = Exact<{
   where?: Maybe<Groups_Bool_Exp>;
 }>;
 
 
-export type ServerFindGroupQuery = (
-  { __typename?: 'query_root' }
-  & { groups: Array<(
-    { __typename?: 'groups' }
-    & Pick<Groups, 'id' | 'name'>
-  )> }
-);
+export type ServerFindGroupQuery = { __typename?: 'query_root', groups: Array<{ __typename?: 'groups', id: any, name: string }> };
 
 export type ServerFindGroupJoinRequestQueryVariables = Exact<{
   id: Scalars['uuid'];
 }>;
 
 
-export type ServerFindGroupJoinRequestQuery = (
-  { __typename?: 'query_root' }
-  & { group_join_requests_by_pk?: Maybe<(
-    { __typename?: 'group_join_requests' }
-    & Pick<Group_Join_Requests, 'id' | 'group_id' | 'user_id'>
-  )> }
-);
+export type ServerFindGroupJoinRequestQuery = { __typename?: 'query_root', group_join_requests_by_pk?: Maybe<{ __typename?: 'group_join_requests', id: any, group_id: any, user_id: any }> };
 
 export type ServerFindJoinTokenQueryVariables = Exact<{
   where: Group_Join_Tokens_Bool_Exp;
 }>;
 
 
-export type ServerFindJoinTokenQuery = (
-  { __typename?: 'query_root' }
-  & { group_join_tokens: Array<(
-    { __typename?: 'group_join_tokens' }
-    & Pick<Group_Join_Tokens, 'id' | 'token'>
-  )> }
-);
+export type ServerFindJoinTokenQuery = { __typename?: 'query_root', group_join_tokens: Array<{ __typename?: 'group_join_tokens', id: any, token: string }> };
 
 export type ServerFindGroupMembersQueryVariables = Exact<{
   groupId: Scalars['uuid'];
@@ -9684,36 +9054,14 @@ export type ServerFindGroupMembersQueryVariables = Exact<{
 }>;
 
 
-export type ServerFindGroupMembersQuery = (
-  { __typename?: 'query_root' }
-  & { groups_by_pk?: Maybe<(
-    { __typename?: 'groups' }
-    & Pick<Groups, 'id'>
-    & { memberships: Array<(
-      { __typename?: 'group_members' }
-      & { user: (
-        { __typename?: 'users' }
-        & Pick<Users, 'id'>
-      ) }
-    )> }
-  )> }
-);
+export type ServerFindGroupMembersQuery = { __typename?: 'query_root', groups_by_pk?: Maybe<{ __typename?: 'groups', id: any, memberships: Array<{ __typename?: 'group_members', user: { __typename?: 'users', id: any } }> }> };
 
 export type ServerCountGroupMembersQueryVariables = Exact<{
   where?: Maybe<Group_Members_Bool_Exp>;
 }>;
 
 
-export type ServerCountGroupMembersQuery = (
-  { __typename?: 'query_root' }
-  & { group_members_aggregate: (
-    { __typename?: 'group_members_aggregate' }
-    & { aggregate?: Maybe<(
-      { __typename?: 'group_members_aggregate_fields' }
-      & Pick<Group_Members_Aggregate_Fields, 'count'>
-    )> }
-  ) }
-);
+export type ServerCountGroupMembersQuery = { __typename?: 'query_root', group_members_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> } };
 
 export type ServerFindPostParticipantsQueryVariables = Exact<{
   groupPostId: Scalars['uuid'];
@@ -9721,83 +9069,35 @@ export type ServerFindPostParticipantsQueryVariables = Exact<{
 }>;
 
 
-export type ServerFindPostParticipantsQuery = (
-  { __typename?: 'query_root' }
-  & { postComment?: Maybe<(
-    { __typename?: 'group_post_comment' }
-    & Pick<Group_Post_Comment, 'id'>
-    & { comment: (
-      { __typename?: 'comments' }
-      & Pick<Comments, 'id'>
-      & { author: (
-        { __typename?: 'users' }
-        & UserCardFragment
-      ) }
-    ), post: (
-      { __typename?: 'group_posts' }
-      & Pick<Group_Posts, 'id' | 'group_id'>
-      & { author: (
-        { __typename?: 'users' }
-        & UserCardFragment
-      ) }
-    ) }
-  )>, participants: Array<(
-    { __typename?: 'users' }
-    & UserCardFragment
-  )> }
-);
+export type ServerFindPostParticipantsQuery = { __typename?: 'query_root', postComment?: Maybe<{ __typename?: 'group_post_comment', id: any, comment: { __typename?: 'comments', id: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }, post: { __typename?: 'group_posts', id: any, group_id: any, author: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } } }>, participants: Array<{ __typename?: 'users', id: any, name: string, image?: Maybe<string> }> };
 
 export type ServerInsertGroupJoinTokenMutationVariables = Exact<{
   input: Group_Join_Tokens_Insert_Input;
 }>;
 
 
-export type ServerInsertGroupJoinTokenMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_group_join_tokens_one?: Maybe<(
-    { __typename?: 'group_join_tokens' }
-    & Pick<Group_Join_Tokens, 'id' | 'group_id'>
-  )> }
-);
+export type ServerInsertGroupJoinTokenMutation = { __typename?: 'mutation_root', insert_group_join_tokens_one?: Maybe<{ __typename?: 'group_join_tokens', id: any, group_id: any }> };
 
 export type ServerInsertGroupMutationVariables = Exact<{
   input: Groups_Insert_Input;
 }>;
 
 
-export type ServerInsertGroupMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_groups_one?: Maybe<(
-    { __typename?: 'groups' }
-    & Pick<Groups, 'id'>
-  )> }
-);
+export type ServerInsertGroupMutation = { __typename?: 'mutation_root', insert_groups_one?: Maybe<{ __typename?: 'groups', id: any }> };
 
 export type ServerInsertGroupJoinRequestMutationVariables = Exact<{
   input: Group_Join_Requests_Insert_Input;
 }>;
 
 
-export type ServerInsertGroupJoinRequestMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_group_join_requests_one?: Maybe<(
-    { __typename?: 'group_join_requests' }
-    & Pick<Group_Join_Requests, 'group_id' | 'status'>
-  )> }
-);
+export type ServerInsertGroupJoinRequestMutation = { __typename?: 'mutation_root', insert_group_join_requests_one?: Maybe<{ __typename?: 'group_join_requests', group_id: any, status?: Maybe<Group_Join_Request_Status_Enum> }> };
 
 export type ServerInsertGroupMemberMutationVariables = Exact<{
   input: Group_Members_Insert_Input;
 }>;
 
 
-export type ServerInsertGroupMemberMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_group_members_one?: Maybe<(
-    { __typename?: 'group_members' }
-    & Pick<Group_Members, 'id'>
-  )> }
-);
+export type ServerInsertGroupMemberMutation = { __typename?: 'mutation_root', insert_group_members_one?: Maybe<{ __typename?: 'group_members', id: any }> };
 
 export type ServerUpdateGroupJoinRequestMutationVariables = Exact<{
   id: Scalars['uuid'];
@@ -9805,141 +9105,62 @@ export type ServerUpdateGroupJoinRequestMutationVariables = Exact<{
 }>;
 
 
-export type ServerUpdateGroupJoinRequestMutation = (
-  { __typename?: 'mutation_root' }
-  & { update_group_join_requests_by_pk?: Maybe<(
-    { __typename?: 'group_join_requests' }
-    & Pick<Group_Join_Requests, 'id' | 'group_id'>
-  )> }
-);
+export type ServerUpdateGroupJoinRequestMutation = { __typename?: 'mutation_root', update_group_join_requests_by_pk?: Maybe<{ __typename?: 'group_join_requests', id: any, group_id: any }> };
 
 export type ServerFetchThingPageDetailsQueryVariables = Exact<{
   shortId: Scalars['String'];
 }>;
 
 
-export type ServerFetchThingPageDetailsQuery = (
-  { __typename?: 'query_root' }
-  & { things: Array<(
-    { __typename?: 'things' }
-    & ThingDetailsFragment
-  )> }
-);
+export type ServerFetchThingPageDetailsQuery = { __typename?: 'query_root', things: Array<{ __typename?: 'things', enabled: boolean, id: any, name: string, description: string, category?: Maybe<string>, type: Thing_Type_Enum, expiry?: Maybe<any>, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: any, group: { __typename?: 'groups', id: any, short_id: string, name: string, created_at: any, description?: Maybe<string>, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: Maybe<{ __typename?: 'group_members_aggregate_fields', count: number }> }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: Maybe<{ __typename?: 'group_thing_aggregate_fields', count: number }> } } }>, images: Array<{ __typename?: 'thing_images', id: any, description: string, order: number, file: { __typename?: 'file_uploads', id: any, name: string, url: string, mime_type?: Maybe<string>, size: number } }>, owner: { __typename?: 'users', id: any, name: string, image?: Maybe<string> } }> };
 
 export type ServerFetchThingDetailsQueryVariables = Exact<{
   id: Scalars['uuid'];
 }>;
 
 
-export type ServerFetchThingDetailsQuery = (
-  { __typename?: 'query_root' }
-  & { things_by_pk?: Maybe<(
-    { __typename?: 'things' }
-    & Pick<Things, 'id' | 'short_id' | 'created_at'>
-    & { owner: (
-      { __typename?: 'users' }
-      & Pick<Users, 'id' | 'name'>
-    ), group_relations: Array<(
-      { __typename?: 'group_thing' }
-      & Pick<Group_Thing, 'id'>
-      & { group: (
-        { __typename?: 'groups' }
-        & Pick<Groups, 'id' | 'public' | 'name'>
-        & { memberships: Array<(
-          { __typename?: 'group_members' }
-          & Pick<Group_Members, 'role'>
-          & { user: (
-            { __typename?: 'users' }
-            & Pick<Users, 'id'>
-          ) }
-        )> }
-      ) }
-    )>, images: Array<(
-      { __typename?: 'thing_images' }
-      & Pick<Thing_Images, 'id' | 'file_id' | 'order' | 'description'>
-    )> }
-  )> }
-);
+export type ServerFetchThingDetailsQuery = { __typename?: 'query_root', things_by_pk?: Maybe<{ __typename?: 'things', id: any, short_id: string, created_at: any, owner: { __typename?: 'users', id: any, name: string }, group_relations: Array<{ __typename?: 'group_thing', id: any, group: { __typename?: 'groups', id: any, public: boolean, name: string, memberships: Array<{ __typename?: 'group_members', role: Group_Role_Enum, user: { __typename?: 'users', id: any } }> } }>, images: Array<{ __typename?: 'thing_images', id: any, file_id: any, order: number, description: string }> }> };
 
 export type ServerUpdateThingMutationVariables = Exact<{
   id: Scalars['uuid'];
   input: Things_Insert_Input;
-  deletedFileIds: Array<Scalars['uuid']>;
-  deletedGroupIds: Array<Scalars['uuid']>;
+  deletedFileIds: Array<Scalars['uuid']> | Scalars['uuid'];
+  deletedGroupIds: Array<Scalars['uuid']> | Scalars['uuid'];
 }>;
 
 
-export type ServerUpdateThingMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_things_one?: Maybe<(
-    { __typename?: 'things' }
-    & Pick<Things, 'id'>
-  )>, delete_thing_images?: Maybe<(
-    { __typename?: 'thing_images_mutation_response' }
-    & Pick<Thing_Images_Mutation_Response, 'affected_rows'>
-  )>, delete_group_thing?: Maybe<(
-    { __typename?: 'group_thing_mutation_response' }
-    & Pick<Group_Thing_Mutation_Response, 'affected_rows'>
-  )> }
-);
+export type ServerUpdateThingMutation = { __typename?: 'mutation_root', insert_things_one?: Maybe<{ __typename?: 'things', id: any }>, delete_thing_images?: Maybe<{ __typename?: 'thing_images_mutation_response', affected_rows: number }>, delete_group_thing?: Maybe<{ __typename?: 'group_thing_mutation_response', affected_rows: number }> };
 
 export type ServerUserCredentialsQueryVariables = Exact<{
   email: Scalars['String'];
 }>;
 
 
-export type ServerUserCredentialsQuery = (
-  { __typename?: 'query_root' }
-  & { users: Array<(
-    { __typename?: 'users' }
-    & Pick<Users, 'id' | 'password_hash'>
-  )> }
-);
+export type ServerUserCredentialsQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: any, password_hash?: Maybe<string> }> };
 
 export type ServerFindUserQueryVariables = Exact<{
   email?: Maybe<Scalars['String']>;
 }>;
 
 
-export type ServerFindUserQuery = (
-  { __typename?: 'query_root' }
-  & { users: Array<(
-    { __typename?: 'users' }
-    & Pick<Users, 'id' | 'email'>
-  )> }
-);
+export type ServerFindUserQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: any, email?: Maybe<string> }> };
 
 export type ServerInsertUserMutationVariables = Exact<{
   input: Users_Insert_Input;
 }>;
 
 
-export type ServerInsertUserMutation = (
-  { __typename?: 'mutation_root' }
-  & { insert_users_one?: Maybe<(
-    { __typename?: 'users' }
-    & Pick<Users, 'id'>
-  )> }
-);
+export type ServerInsertUserMutation = { __typename?: 'mutation_root', insert_users_one?: Maybe<{ __typename?: 'users', id: any }> };
 
 
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
 
-export type LegacyStitchingResolver<TResult, TParent, TContext, TArgs> = {
-  fragment: string;
+export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
 };
-
-export type NewStitchingResolver<TResult, TParent, TContext, TArgs> = {
-  selectionSet: string;
-  resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
-};
-export type StitchingResolver<TResult, TParent, TContext, TArgs> = LegacyStitchingResolver<TResult, TParent, TContext, TArgs> | NewStitchingResolver<TResult, TParent, TContext, TArgs>;
-export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
-  | ResolverFn<TResult, TParent, TContext, TArgs>
-  | StitchingResolver<TResult, TParent, TContext, TArgs>;
+export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> = ResolverFn<TResult, TParent, TContext, TArgs> | ResolverWithResolve<TResult, TParent, TContext, TArgs>;
 
 export type ResolverFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
@@ -10005,7 +9226,6 @@ export type ResolversTypes = {
   CreateChatGroupInput: CreateChatGroupInput;
   String: ResolverTypeWrapper<Scalars['String']>;
   CreateChatGroupResult: ResolverTypeWrapper<CreateChatGroupResult>;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
   CreateGroupInput: CreateGroupInput;
   CreateGroupResult: ResolverTypeWrapper<CreateGroupResult>;
   CreateJoinTokenInput: CreateJoinTokenInput;
@@ -10014,6 +9234,7 @@ export type ResolversTypes = {
   HandleJoinRequestInput: HandleJoinRequestInput;
   HandleJoinRequestResult: ResolverTypeWrapper<HandleJoinRequestResult>;
   Int_comparison_exp: Int_Comparison_Exp;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   JoinGroupInput: JoinGroupInput;
   JoinGroupResult: ResolverTypeWrapper<JoinGroupResult>;
   RegistrationResult: ResolverTypeWrapper<RegistrationResult>;
@@ -10415,6 +9636,7 @@ export type ResolversTypes = {
   thing_images_min_fields: ResolverTypeWrapper<Thing_Images_Min_Fields>;
   thing_images_min_order_by: Thing_Images_Min_Order_By;
   thing_images_mutation_response: ResolverTypeWrapper<Thing_Images_Mutation_Response>;
+  thing_images_obj_rel_insert_input: Thing_Images_Obj_Rel_Insert_Input;
   thing_images_on_conflict: Thing_Images_On_Conflict;
   thing_images_order_by: Thing_Images_Order_By;
   thing_images_pk_columns_input: Thing_Images_Pk_Columns_Input;
@@ -10489,11 +9711,15 @@ export type ResolversTypes = {
   users: ResolverTypeWrapper<Users>;
   users_aggregate: ResolverTypeWrapper<Users_Aggregate>;
   users_aggregate_fields: ResolverTypeWrapper<Users_Aggregate_Fields>;
+  users_aggregate_order_by: Users_Aggregate_Order_By;
+  users_arr_rel_insert_input: Users_Arr_Rel_Insert_Input;
   users_bool_exp: Users_Bool_Exp;
   users_constraint: Users_Constraint;
   users_insert_input: Users_Insert_Input;
   users_max_fields: ResolverTypeWrapper<Users_Max_Fields>;
+  users_max_order_by: Users_Max_Order_By;
   users_min_fields: ResolverTypeWrapper<Users_Min_Fields>;
+  users_min_order_by: Users_Min_Order_By;
   users_mutation_response: ResolverTypeWrapper<Users_Mutation_Response>;
   users_obj_rel_insert_input: Users_Obj_Rel_Insert_Input;
   users_on_conflict: Users_On_Conflict;
@@ -10537,7 +9763,6 @@ export type ResolversParentTypes = {
   CreateChatGroupInput: CreateChatGroupInput;
   String: Scalars['String'];
   CreateChatGroupResult: CreateChatGroupResult;
-  Int: Scalars['Int'];
   CreateGroupInput: CreateGroupInput;
   CreateGroupResult: CreateGroupResult;
   CreateJoinTokenInput: CreateJoinTokenInput;
@@ -10546,6 +9771,7 @@ export type ResolversParentTypes = {
   HandleJoinRequestInput: HandleJoinRequestInput;
   HandleJoinRequestResult: HandleJoinRequestResult;
   Int_comparison_exp: Int_Comparison_Exp;
+  Int: Scalars['Int'];
   JoinGroupInput: JoinGroupInput;
   JoinGroupResult: JoinGroupResult;
   RegistrationResult: RegistrationResult;
@@ -10884,6 +10110,7 @@ export type ResolversParentTypes = {
   thing_images_min_fields: Thing_Images_Min_Fields;
   thing_images_min_order_by: Thing_Images_Min_Order_By;
   thing_images_mutation_response: Thing_Images_Mutation_Response;
+  thing_images_obj_rel_insert_input: Thing_Images_Obj_Rel_Insert_Input;
   thing_images_on_conflict: Thing_Images_On_Conflict;
   thing_images_order_by: Thing_Images_Order_By;
   thing_images_pk_columns_input: Thing_Images_Pk_Columns_Input;
@@ -10948,10 +10175,14 @@ export type ResolversParentTypes = {
   users: Users;
   users_aggregate: Users_Aggregate;
   users_aggregate_fields: Users_Aggregate_Fields;
+  users_aggregate_order_by: Users_Aggregate_Order_By;
+  users_arr_rel_insert_input: Users_Arr_Rel_Insert_Input;
   users_bool_exp: Users_Bool_Exp;
   users_insert_input: Users_Insert_Input;
   users_max_fields: Users_Max_Fields;
+  users_max_order_by: Users_Max_Order_By;
   users_min_fields: Users_Min_Fields;
+  users_min_order_by: Users_Min_Order_By;
   users_mutation_response: Users_Mutation_Response;
   users_obj_rel_insert_input: Users_Obj_Rel_Insert_Input;
   users_on_conflict: Users_On_Conflict;
@@ -10983,72 +10214,77 @@ export type ResolversParentTypes = {
   verification_requests_variance_fields: Verification_Requests_Variance_Fields;
 };
 
+export type CachedDirectiveArgs = {   ttl?: Scalars['Int'];
+  refresh?: Scalars['Boolean']; };
+
+export type CachedDirectiveResolver<Result, Parent, ContextType = any, Args = CachedDirectiveArgs> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
 export type CreateChatGroupResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateChatGroupResult'] = ResolversParentTypes['CreateChatGroupResult']> = {
-  chat_group?: Resolver<Array<ResolversTypes['chat_groups']>, ParentType, ContextType, RequireFields<CreateChatGroupResultChat_GroupArgs, never>>;
+  chat_group?: Resolver<ResolversTypes['chat_groups'], ParentType, ContextType>;
   chat_group_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type CreateGroupResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateGroupResult'] = ResolversParentTypes['CreateGroupResult']> = {
-  group?: Resolver<Array<ResolversTypes['groups']>, ParentType, ContextType, RequireFields<CreateGroupResultGroupArgs, never>>;
+  group?: Resolver<ResolversTypes['groups'], ParentType, ContextType>;
   group_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type CreateJoinTokenResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateJoinTokenResult'] = ResolversParentTypes['CreateJoinTokenResult']> = {
-  group?: Resolver<Array<ResolversTypes['groups']>, ParentType, ContextType, RequireFields<CreateJoinTokenResultGroupArgs, never>>;
+  group?: Resolver<ResolversTypes['groups'], ParentType, ContextType>;
   group_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
-  join_token?: Resolver<Array<ResolversTypes['group_join_tokens']>, ParentType, ContextType, RequireFields<CreateJoinTokenResultJoin_TokenArgs, never>>;
+  join_token?: Resolver<ResolversTypes['group_join_tokens'], ParentType, ContextType>;
   join_token_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type HandleJoinRequestResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['HandleJoinRequestResult'] = ResolversParentTypes['HandleJoinRequestResult']> = {
-  join_request?: Resolver<Array<ResolversTypes['group_join_requests']>, ParentType, ContextType, RequireFields<HandleJoinRequestResultJoin_RequestArgs, never>>;
+  join_request?: Resolver<ResolversTypes['group_join_requests'], ParentType, ContextType>;
   join_request_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type JoinGroupResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['JoinGroupResult'] = ResolversParentTypes['JoinGroupResult']> = {
-  group?: Resolver<Array<ResolversTypes['groups']>, ParentType, ContextType, RequireFields<JoinGroupResultGroupArgs, never>>;
+  group?: Resolver<ResolversTypes['groups'], ParentType, ContextType>;
   group_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
-  user?: Resolver<Array<ResolversTypes['users']>, ParentType, ContextType, RequireFields<JoinGroupResultUserArgs, never>>;
+  user?: Resolver<ResolversTypes['users'], ParentType, ContextType>;
   user_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type RegistrationResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['RegistrationResult'] = ResolversParentTypes['RegistrationResult']> = {
-  user?: Resolver<Array<ResolversTypes['users']>, ParentType, ContextType, RequireFields<RegistrationResultUserArgs, never>>;
+  user?: Resolver<ResolversTypes['users'], ParentType, ContextType>;
   user_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type RequestJoinGroupResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['RequestJoinGroupResult'] = ResolversParentTypes['RequestJoinGroupResult']> = {
-  group?: Resolver<Array<ResolversTypes['groups']>, ParentType, ContextType, RequireFields<RequestJoinGroupResultGroupArgs, never>>;
+  group?: Resolver<ResolversTypes['groups'], ParentType, ContextType>;
   group_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
-  user?: Resolver<Array<ResolversTypes['users']>, ParentType, ContextType, RequireFields<RequestJoinGroupResultUserArgs, never>>;
+  user?: Resolver<ResolversTypes['users'], ParentType, ContextType>;
   user_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type UpdateThingResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['UpdateThingResult'] = ResolversParentTypes['UpdateThingResult']> = {
-  thing?: Resolver<Array<ResolversTypes['things']>, ParentType, ContextType, RequireFields<UpdateThingResultThingArgs, never>>;
+  thing?: Resolver<ResolversTypes['things'], ParentType, ContextType>;
   thing_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type ActivitiesResolvers<ContextType = any, ParentType extends ResolversParentTypes['activities'] = ResolversParentTypes['activities']> = {
-  actor?: Resolver<ResolversTypes['users'], ParentType, ContextType>;
+  actor?: Resolver<Maybe<ResolversTypes['users']>, ParentType, ContextType>;
   actor_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
   entity?: Resolver<ResolversTypes['entities'], ParentType, ContextType>;
   entity_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
-  group?: Resolver<ResolversTypes['groups'], ParentType, ContextType>;
+  group?: Resolver<Maybe<ResolversTypes['groups']>, ParentType, ContextType>;
   group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   notifications?: Resolver<Array<ResolversTypes['notifications']>, ParentType, ContextType, RequireFields<ActivitiesNotificationsArgs, never>>;
   notifications_aggregate?: Resolver<ResolversTypes['notifications_aggregate'], ParentType, ContextType, RequireFields<ActivitiesNotifications_AggregateArgs, never>>;
-  secondary_entity?: Resolver<ResolversTypes['entities'], ParentType, ContextType>;
+  secondary_entity?: Resolver<Maybe<ResolversTypes['entities']>, ParentType, ContextType>;
   secondary_entity_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   verb?: Resolver<ResolversTypes['activity_verb_enum'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -11226,7 +10462,7 @@ export type Chat_MessagesResolvers<ContextType = any, ParentType extends Resolve
   chat_group?: Resolver<ResolversTypes['chat_groups'], ParentType, ContextType>;
   chat_group_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
-  entity?: Resolver<ResolversTypes['entities'], ParentType, ContextType>;
+  entity?: Resolver<Maybe<ResolversTypes['entities']>, ParentType, ContextType>;
   entity_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -11329,23 +10565,23 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 
 export type EntitiesResolvers<ContextType = any, ParentType extends ResolversParentTypes['entities'] = ResolversParentTypes['entities']> = {
   dummy?: Resolver<Maybe<ResolversTypes['smallint']>, ParentType, ContextType>;
-  group?: Resolver<ResolversTypes['groups'], ParentType, ContextType>;
+  group?: Resolver<Maybe<ResolversTypes['groups']>, ParentType, ContextType>;
   group_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
-  group_join_request?: Resolver<ResolversTypes['group_join_requests'], ParentType, ContextType>;
-  group_member?: Resolver<ResolversTypes['group_members'], ParentType, ContextType>;
+  group_join_request?: Resolver<Maybe<ResolversTypes['group_join_requests']>, ParentType, ContextType>;
+  group_member?: Resolver<Maybe<ResolversTypes['group_members']>, ParentType, ContextType>;
   group_member_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
-  group_post?: Resolver<ResolversTypes['group_posts'], ParentType, ContextType>;
-  group_post_comment?: Resolver<ResolversTypes['group_post_comment'], ParentType, ContextType>;
+  group_post?: Resolver<Maybe<ResolversTypes['group_posts']>, ParentType, ContextType>;
+  group_post_comment?: Resolver<Maybe<ResolversTypes['group_post_comment']>, ParentType, ContextType>;
   group_post_comment_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   group_post_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
-  group_thing?: Resolver<ResolversTypes['group_thing'], ParentType, ContextType>;
+  group_thing?: Resolver<Maybe<ResolversTypes['group_thing']>, ParentType, ContextType>;
   group_thing_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   is_valid?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   join_request_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
-  thing?: Resolver<ResolversTypes['things'], ParentType, ContextType>;
+  thing?: Resolver<Maybe<ResolversTypes['things']>, ParentType, ContextType>;
   thing_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
-  user?: Resolver<ResolversTypes['users'], ParentType, ContextType>;
+  user?: Resolver<Maybe<ResolversTypes['users']>, ParentType, ContextType>;
   user_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -11450,11 +10686,14 @@ export type File_UploadsResolvers<ContextType = any, ParentType extends Resolver
   id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   mime_type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  owner?: Resolver<ResolversTypes['users'], ParentType, ContextType>;
+  owner?: Resolver<Maybe<ResolversTypes['users']>, ParentType, ContextType>;
   owner_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   size?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  thing_image?: Resolver<Maybe<ResolversTypes['thing_images']>, ParentType, ContextType>;
   updated_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
   url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  user_profile_pictures?: Resolver<Array<ResolversTypes['users']>, ParentType, ContextType, RequireFields<File_UploadsUser_Profile_PicturesArgs, never>>;
+  user_profile_pictures_aggregate?: Resolver<ResolversTypes['users_aggregate'], ParentType, ContextType, RequireFields<File_UploadsUser_Profile_Pictures_AggregateArgs, never>>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -12031,7 +11270,7 @@ export type Groups_Mutation_ResponseResolvers<ContextType = any, ParentType exte
 
 export type Mutation_RootResolvers<ContextType = any, ParentType extends ResolversParentTypes['mutation_root'] = ResolversParentTypes['mutation_root']> = {
   createChatGroup?: Resolver<Maybe<ResolversTypes['CreateChatGroupResult']>, ParentType, ContextType, RequireFields<Mutation_RootCreateChatGroupArgs, 'input'>>;
-  createGroup?: Resolver<Maybe<ResolversTypes['CreateGroupResult']>, ParentType, ContextType, RequireFields<Mutation_RootCreateGroupArgs, 'input'>>;
+  createGroup?: Resolver<ResolversTypes['CreateGroupResult'], ParentType, ContextType, RequireFields<Mutation_RootCreateGroupArgs, 'input'>>;
   createJoinToken?: Resolver<Maybe<ResolversTypes['CreateJoinTokenResult']>, ParentType, ContextType, RequireFields<Mutation_RootCreateJoinTokenArgs, 'input'>>;
   delete_activities?: Resolver<Maybe<ResolversTypes['activities_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_ActivitiesArgs, 'where'>>;
   delete_activities_by_pk?: Resolver<Maybe<ResolversTypes['activities']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Activities_By_PkArgs, 'id'>>;
@@ -12082,7 +11321,7 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   delete_users_by_pk?: Resolver<Maybe<ResolversTypes['users']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Users_By_PkArgs, 'id'>>;
   delete_verification_requests?: Resolver<Maybe<ResolversTypes['verification_requests_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Verification_RequestsArgs, 'where'>>;
   delete_verification_requests_by_pk?: Resolver<Maybe<ResolversTypes['verification_requests']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Verification_Requests_By_PkArgs, 'id'>>;
-  handleJoinRequest?: Resolver<Maybe<ResolversTypes['HandleJoinRequestResult']>, ParentType, ContextType, RequireFields<Mutation_RootHandleJoinRequestArgs, 'input'>>;
+  handleJoinRequest?: Resolver<ResolversTypes['HandleJoinRequestResult'], ParentType, ContextType, RequireFields<Mutation_RootHandleJoinRequestArgs, 'input'>>;
   insert_activities?: Resolver<Maybe<ResolversTypes['activities_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_ActivitiesArgs, 'objects'>>;
   insert_activities_one?: Resolver<Maybe<ResolversTypes['activities']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Activities_OneArgs, 'object'>>;
   insert_activity_verb?: Resolver<Maybe<ResolversTypes['activity_verb_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Activity_VerbArgs, 'objects'>>;
@@ -12640,6 +11879,7 @@ export type User_Private_Mutation_ResponseResolvers<ContextType = any, ParentTyp
 };
 
 export type UsersResolvers<ContextType = any, ParentType extends ResolversParentTypes['users'] = ResolversParentTypes['users']> = {
+  auth0_id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   chat_group_memberships?: Resolver<Array<ResolversTypes['chat_group_members']>, ParentType, ContextType, RequireFields<UsersChat_Group_MembershipsArgs, never>>;
   chat_group_memberships_aggregate?: Resolver<ResolversTypes['chat_group_members_aggregate'], ParentType, ContextType, RequireFields<UsersChat_Group_Memberships_AggregateArgs, never>>;
   chat_messages?: Resolver<Array<ResolversTypes['chat_messages']>, ParentType, ContextType, RequireFields<UsersChat_MessagesArgs, never>>;
@@ -12662,6 +11902,8 @@ export type UsersResolvers<ContextType = any, ParentType extends ResolversParent
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   password_hash?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   private_info?: Resolver<Maybe<ResolversTypes['user_private']>, ParentType, ContextType>;
+  profile_picture?: Resolver<Maybe<ResolversTypes['file_uploads']>, ParentType, ContextType>;
+  profile_picture_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   things?: Resolver<Array<ResolversTypes['things']>, ParentType, ContextType, RequireFields<UsersThingsArgs, never>>;
   things_aggregate?: Resolver<ResolversTypes['things_aggregate'], ParentType, ContextType, RequireFields<UsersThings_AggregateArgs, never>>;
   updated_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
@@ -12682,6 +11924,7 @@ export type Users_Aggregate_FieldsResolvers<ContextType = any, ParentType extend
 };
 
 export type Users_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['users_max_fields'] = ResolversParentTypes['users_max_fields']> = {
+  auth0_id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email_verified?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
@@ -12691,11 +11934,13 @@ export type Users_Max_FieldsResolvers<ContextType = any, ParentType extends Reso
   last_seen?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   password_hash?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  profile_picture_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type Users_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['users_min_fields'] = ResolversParentTypes['users_min_fields']> = {
+  auth0_id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email_verified?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
@@ -12705,6 +11950,7 @@ export type Users_Min_FieldsResolvers<ContextType = any, ParentType extends Reso
   last_seen?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   password_hash?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  profile_picture_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -13016,101 +12262,98 @@ export type Resolvers<ContextType = any> = {
   verification_requests_variance_fields?: Verification_Requests_Variance_FieldsResolvers<ContextType>;
 };
 
+export type DirectiveResolvers<ContextType = any> = {
+  cached?: CachedDirectiveResolver<any, any, ContextType>;
+};
 
-/**
- * @deprecated
- * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
- */
-export type IResolvers<ContextType = any> = Resolvers<ContextType>;
-
-export const UserCardFragmentDoc: DocumentNode<UserCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"users"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"image"},"arguments":[],"directives":[]}]}}]};
-export const GroupCardFragmentDoc: DocumentNode<GroupCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"groups"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"short_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"description"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"memberships_aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[],"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"thing_relations_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"thing"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"enabled"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"BooleanValue","value":true}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"_or"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"expiry"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gt"},"value":{"kind":"StringValue","value":"now()","block":false}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"expiry"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":true}}]}}]}]}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[],"directives":[]}]}}]}}]}}]};
-export const CommentCardFragmentDoc: DocumentNode<CommentCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CommentCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"comments"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"content"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"author"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},...UserCardFragmentDoc.definitions]};
-export const GroupPostFragmentDoc: DocumentNode<GroupPostFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupPost"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"group_posts"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"updated_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"resolved"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"content"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"comments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"comment"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentCard"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"author"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},...CommentCardFragmentDoc.definitions,...GroupCardFragmentDoc.definitions,...UserCardFragmentDoc.definitions]};
-export const FileUploadCardFragmentDoc: DocumentNode<FileUploadCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"FileUploadCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"file_uploads"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"mime_type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"size"},"arguments":[],"directives":[]}]}}]};
-export const ThingImageCardFragmentDoc: DocumentNode<ThingImageCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ThingImageCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"thing_images"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"description"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"order"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"file"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"FileUploadCard"},"directives":[]}]}}]}},...FileUploadCardFragmentDoc.definitions]};
-export const ThingCardFragmentDoc: DocumentNode<ThingCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ThingCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"things"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"description"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"category"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"type"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"expiry"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"short_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"images"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingImageCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},...ThingImageCardFragmentDoc.definitions,...UserCardFragmentDoc.definitions]};
-export const GroupMemberCardFragmentDoc: DocumentNode<GroupMemberCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupMemberCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"group_members"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"role"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},...UserCardFragmentDoc.definitions]};
-export const GroupMemberWithGroupCardFragmentDoc: DocumentNode<GroupMemberWithGroupCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupMemberWithGroupCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"group_members"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupMemberCard"},"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"short_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}},...GroupMemberCardFragmentDoc.definitions]};
-export const DetailedEntityFragmentDoc: DocumentNode<DetailedEntityFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"DetailedEntity"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"entities"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"group_post"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupPost"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"group_thing"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"thing"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingCard"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"group_member"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupMemberWithGroupCard"},"directives":[]}]}}]}},...GroupCardFragmentDoc.definitions,...UserCardFragmentDoc.definitions,...GroupPostFragmentDoc.definitions,...ThingCardFragmentDoc.definitions,...GroupMemberWithGroupCardFragmentDoc.definitions]};
-export const DetailedActivityFragmentDoc: DocumentNode<DetailedActivityFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"DetailedActivity"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"activities"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"verb"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"actor"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"entity"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"DetailedEntity"},"directives":[]}]}}]}},...UserCardFragmentDoc.definitions,...DetailedEntityFragmentDoc.definitions]};
-export const GroupRefFragmentDoc: DocumentNode<GroupRefFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupRef"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"groups"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"short_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]};
-export const ThingRefFragmentDoc: DocumentNode<ThingRefFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ThingRef"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"things"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"short_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"images"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"file"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"},"arguments":[],"directives":[]}]}}]}}]}}]};
-export const EntityCardFragmentDoc: DocumentNode<EntityCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"EntityCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"entities"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupRef"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"thing"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingRef"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"group_join_request"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"response"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupRef"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"group_post_comment"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"post"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"author_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupRef"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"comment"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentCard"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"group_post"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupRef"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"group_thing"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"thing"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingRef"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupRef"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"group_member"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupRef"},"directives":[]}]}}]}}]}},...GroupRefFragmentDoc.definitions,...ThingRefFragmentDoc.definitions,...UserCardFragmentDoc.definitions,...CommentCardFragmentDoc.definitions]};
-export const ActivityCardFragmentDoc: DocumentNode<ActivityCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ActivityCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"activities"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"verb"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"entity"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"EntityCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"secondary_entity"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"EntityCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"actor"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},...EntityCardFragmentDoc.definitions,...UserCardFragmentDoc.definitions]};
-export const NotificationCardFragmentDoc: DocumentNode<NotificationCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NotificationCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"notifications"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"read_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"activity"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ActivityCard"},"directives":[]}]}}]}},...ActivityCardFragmentDoc.definitions]};
-export const ChatMessageCardFragmentDoc: DocumentNode<ChatMessageCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ChatMessageCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"chat_messages"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"sender_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"message"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"entity"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"EntityCard"},"directives":[]}]}}]}},...EntityCardFragmentDoc.definitions]};
-export const ChatGroupCardFragmentDoc: DocumentNode<ChatGroupCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ChatGroupCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"chat_groups"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"members"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"messages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sender"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"message"},"arguments":[],"directives":[]}]}}]}},...UserCardFragmentDoc.definitions]};
-export const GroupDetailsFragmentDoc: DocumentNode<GroupDetailsFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupDetails"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"groups"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"},"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"memberships"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupMemberCard"},"directives":[]}]}}]}},...GroupCardFragmentDoc.definitions,...GroupMemberCardFragmentDoc.definitions]};
-export const GroupJoinTokenCardFragmentDoc: DocumentNode<GroupJoinTokenCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupJoinTokenCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"updated_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"token"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"disabled"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"note"},"arguments":[],"directives":[]}]}}]};
-export const ThingDetailsFragmentDoc: DocumentNode<ThingDetailsFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ThingDetails"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"things"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingCard"},"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"enabled"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_relations"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"},"directives":[]}]}}]}}]}},...ThingCardFragmentDoc.definitions,...GroupCardFragmentDoc.definitions]};
-export const UserDetailFragmentDoc: DocumentNode<UserDetailFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserDetail"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"users"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]}]}},...UserCardFragmentDoc.definitions]};
-export const GroupJoinRequestCardFragmentDoc: DocumentNode<GroupJoinRequestCardFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupJoinRequestCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_requests"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"updated_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"status"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"message"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},...UserCardFragmentDoc.definitions]};
-export const UserJoinRequestsFragmentDoc: DocumentNode<UserJoinRequestsFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserJoinRequests"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"users"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_join_requests"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"status"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"EnumValue","value":"pending"}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupJoinRequestCard"},"directives":[]}]}}]}},...GroupJoinRequestCardFragmentDoc.definitions]};
-export const UserPrivateDetailFragmentDoc: DocumentNode<UserPrivateDetailFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserPrivateDetail"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"users"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserDetail"},"directives":[]},{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserJoinRequests"},"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"memberships"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"role"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"private_info"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"},"arguments":[],"directives":[]}]}}]}},...UserDetailFragmentDoc.definitions,...UserJoinRequestsFragmentDoc.definitions,...GroupCardFragmentDoc.definitions]};
-export const ServerChatGroupFragmentDoc: DocumentNode<ServerChatGroupFragment, unknown> = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ServerChatGroup"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"chat_groups"}},"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"members"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]}}]};
-export const GroupActivityDocument: DocumentNode<GroupActivityQuery, GroupActivityQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GroupActivity"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"shortId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"short_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"shortId"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activities"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}]}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"verb"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_nin"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"rejected"},{"kind":"EnumValue","value":"requested_to_join"},{"kind":"EnumValue","value":"accepted"},{"kind":"EnumValue","value":"deleted"},{"kind":"EnumValue","value":"showed_interest"}]}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"entity"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_or"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_thing_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":false}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":false}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_post_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":false}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_member_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":false}}]}}]}]}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"DetailedActivity"},"directives":[]}]}}]}}]}},...DetailedActivityFragmentDoc.definitions]};
-export const ChatMessagesDocument: DocumentNode<ChatMessagesQuery, ChatMessagesQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ChatMessages"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_messages_bool_exp"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat_messages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}]}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ChatMessageCard"},"directives":[]}]}}]}},...ChatMessageCardFragmentDoc.definitions]};
-export const ChatGroupsDocument: DocumentNode<ChatGroupsSubscription, ChatGroupsSubscriptionVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"ChatGroups"},"variableDefinitions":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat_groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"messages_aggregate"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"max"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}]}}]}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ChatGroupCard"},"directives":[]}]}}]}},...ChatGroupCardFragmentDoc.definitions]};
-export const ChatMessagesFeedDocument: DocumentNode<ChatMessagesFeedSubscription, ChatMessagesFeedSubscriptionVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"ChatMessagesFeed"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_messages_bool_exp"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat_messages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ChatMessageCard"},"directives":[]}]}}]}},...ChatMessageCardFragmentDoc.definitions]};
-export const CreateChatGroupDocument: DocumentNode<CreateChatGroupMutation, CreateChatGroupMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateChatGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateChatGroupInput"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createChatGroup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat_group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ChatGroupCard"},"directives":[]}]}}]}}]}},...ChatGroupCardFragmentDoc.definitions]};
-export const CreateChatMessageDocument: DocumentNode<CreateChatMessageMutation, CreateChatMessageMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateChatMessage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_messages_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_chat_messages_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ChatMessageCard"},"directives":[]}]}}]}},...ChatMessageCardFragmentDoc.definitions]};
-export const ListGroupsDocument: DocumentNode<ListGroupsQuery, ListGroupsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ListGroups"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"groups_order_by"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"groups_bool_exp"}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[],"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"},"directives":[]}]}}]}},...GroupCardFragmentDoc.definitions]};
-export const GroupDetailsDocument: DocumentNode<GroupDetailsQuery, GroupDetailsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GroupDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"shortId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"short_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"shortId"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupDetails"},"directives":[]}]}}]}},...GroupDetailsFragmentDoc.definitions]};
-export const GroupJoinRequestsDocument: DocumentNode<GroupJoinRequestsQuery, GroupJoinRequestsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GroupJoinRequests"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_requests_bool_exp"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_join_requests"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupJoinRequestCard"},"directives":[]}]}}]}},...GroupJoinRequestCardFragmentDoc.definitions]};
-export const GroupJoinTokensDocument: DocumentNode<GroupJoinTokensQuery, GroupJoinTokensQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GroupJoinTokens"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens_bool_exp"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_join_tokens"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupJoinTokenCard"},"directives":[]}]}}]}},...GroupJoinTokenCardFragmentDoc.definitions]};
-export const GroupPostListDocument: DocumentNode<GroupPostListQuery, GroupPostListQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GroupPostList"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_posts_bool_exp"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_posts_order_by"}}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupPost"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"group_posts_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[],"directives":[]}]}}]}}]}},...GroupPostFragmentDoc.definitions]};
-export const ActivityListDocument: DocumentNode<ActivityListQuery, ActivityListQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ActivityList"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"defaultValue":{"kind":"IntValue","value":"10"},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activities"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ActivityCard"},"directives":[]}]}}]}},...ActivityCardFragmentDoc.definitions]};
-export const CreateGroupDocument: DocumentNode<CreateGroupMutation, CreateGroupMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateGroupInput"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createGroup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"},"directives":[]}]}}]}}]}},...GroupCardFragmentDoc.definitions]};
-export const UpdateGroupDocument: DocumentNode<UpdateGroupMutation, UpdateGroupMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"groups_set_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_groups_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupDetails"},"directives":[]}]}}]}},...GroupDetailsFragmentDoc.definitions]};
-export const DeleteGroupDocument: DocumentNode<DeleteGroupMutation, DeleteGroupMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_groups_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"},"directives":[]}]}}]}},...GroupCardFragmentDoc.definitions]};
-export const CreateGroupPostDocument: DocumentNode<CreateGroupPostMutation, CreateGroupPostMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateGroupPost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_posts_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_posts_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupPost"},"directives":[]}]}}]}},...GroupPostFragmentDoc.definitions]};
-export const UpdateGroupPostDocument: DocumentNode<UpdateGroupPostMutation, UpdateGroupPostMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateGroupPost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_posts_set_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_group_posts_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupPost"},"directives":[]}]}}]}},...GroupPostFragmentDoc.definitions]};
-export const CreateGroupPostCommentDocument: DocumentNode<CreateGroupPostCommentMutation, CreateGroupPostCommentMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateGroupPostComment"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupPostId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"comments_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_post_comment_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_post_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupPostId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"comment"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"comment"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"post"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupPost"},"directives":[]}]}}]}}]}},...CommentCardFragmentDoc.definitions,...GroupPostFragmentDoc.definitions]};
-export const LeaveGroupDocument: DocumentNode<LeaveGroupMutation, LeaveGroupMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LeaveGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_group_members"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"},"arguments":[],"directives":[]}]}}]}}]};
-export const JoinGroupDocument: DocumentNode<JoinGroupMutation, JoinGroupMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"JoinGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_members_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupMemberCard"},"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserPrivateDetail"},"directives":[]}]}}]}}]}},...GroupMemberCardFragmentDoc.definitions,...UserPrivateDetailFragmentDoc.definitions]};
-export const JoinGroupWithTokenDocument: DocumentNode<JoinGroupWithTokenMutation, JoinGroupWithTokenMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"JoinGroupWithToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"JoinGroupInput"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"joinGroup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserPrivateDetail"},"directives":[]}]}}]}}]}},...UserPrivateDetailFragmentDoc.definitions]};
-export const RequestJoinGroupDocument: DocumentNode<RequestJoinGroupMutation, RequestJoinGroupMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RequestJoinGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RequestJoinGroupInput"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"requestJoinGroup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserJoinRequests"},"directives":[]}]}}]}}]}},...GroupCardFragmentDoc.definitions,...UserJoinRequestsFragmentDoc.definitions]};
-export const CancelJoinRequestDocument: DocumentNode<CancelJoinRequestMutation, CancelJoinRequestMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CancelJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"requestId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_group_join_requests"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"requestId"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserJoinRequests"},"directives":[]}]}}]}}]}}]}},...UserJoinRequestsFragmentDoc.definitions]};
-export const HandleJoinRequestDocument: DocumentNode<HandleJoinRequestMutation, HandleJoinRequestMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"HandleJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"HandleJoinRequestInput"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"handleJoinRequest"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"join_request"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupJoinRequestCard"},"directives":[]}]}}]}}]}},...GroupJoinRequestCardFragmentDoc.definitions]};
-export const CreateJoinTokenDocument: DocumentNode<CreateJoinTokenMutation, CreateJoinTokenMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateJoinToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_join_tokens_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupJoinTokenCard"},"directives":[]}]}}]}},...GroupJoinTokenCardFragmentDoc.definitions]};
-export const DeleteJoinTokenDocument: DocumentNode<DeleteJoinTokenMutation, DeleteJoinTokenMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteJoinToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_group_join_tokens_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupJoinTokenCard"},"directives":[]}]}}]}},...GroupJoinTokenCardFragmentDoc.definitions]};
-export const UpdateJoinTokenDocument: DocumentNode<UpdateJoinTokenMutation, UpdateJoinTokenMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateJoinToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens_set_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_group_join_tokens_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupJoinTokenCard"},"directives":[]}]}}]}},...GroupJoinTokenCardFragmentDoc.definitions]};
-export const SearchCountsDocument: DocumentNode<SearchCountsQuery, SearchCountsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchCounts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"thingWhere"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"things_bool_exp"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupWhere"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"groups_bool_exp"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userWhere"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"users_bool_exp"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userWhere"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[],"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"groups_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupWhere"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[],"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"things_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"thingWhere"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[],"directives":[]}]}}]}}]}}]};
-export const ThingListDocument: DocumentNode<ThingListQuery, ThingListQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ThingList"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"things_order_by"}}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"things_bool_exp"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"things"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"things_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[],"directives":[]}]}}]}}]}},...ThingCardFragmentDoc.definitions]};
-export const ThingDetailsDocument: DocumentNode<ThingDetailsQuery, ThingDetailsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ThingDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"shortId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"things"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"short_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"shortId"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingDetails"},"directives":[]}]}}]}},...ThingDetailsFragmentDoc.definitions]};
-export const CreateThingDocument: DocumentNode<CreateThingMutation, CreateThingMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateThing"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"things_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_things_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingDetails"},"directives":[]}]}}]}},...ThingDetailsFragmentDoc.definitions]};
-export const UpdateThingDocument: DocumentNode<UpdateThingMutation, UpdateThingMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateThing"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateThingInput"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateThing"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"thing"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingDetails"},"directives":[]}]}}]}}]}},...ThingDetailsFragmentDoc.definitions]};
-export const DeleteThingDocument: DocumentNode<DeleteThingMutation, DeleteThingMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteThing"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_things_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingDetails"},"directives":[]}]}}]}},...ThingDetailsFragmentDoc.definitions]};
-export const InsertFileUploadDocument: DocumentNode<InsertFileUploadMutation, InsertFileUploadMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InsertFileUpload"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"file_uploads_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_file_uploads_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"FileUploadCard"},"directives":[]}]}}]}},...FileUploadCardFragmentDoc.definitions]};
-export const UserListDocument: DocumentNode<UserListQuery, UserListQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserList"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"users_bool_exp"}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"users_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[],"directives":[]}]}}]}}]}},...UserCardFragmentDoc.definitions]};
-export const UserPrivateDetailsDocument: DocumentNode<UserPrivateDetailsQuery, UserPrivateDetailsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserPrivateDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserPrivateDetail"},"directives":[]}]}}]}},...UserPrivateDetailFragmentDoc.definitions]};
-export const NotificationsDocument: DocumentNode<NotificationsSubscription, NotificationsSubscriptionVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"Notifications"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notifications"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"50"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}]}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NotificationCard"},"directives":[]}]}}]}},...NotificationCardFragmentDoc.definitions]};
-export const MarkNotificationReadDocument: DocumentNode<MarkNotificationReadMutation, MarkNotificationReadMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"MarkNotificationRead"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"readAt"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamptz"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_notifications_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"read_at"},"value":{"kind":"Variable","name":{"kind":"Name","value":"readAt"}}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NotificationCard"},"directives":[]}]}}]}},...NotificationCardFragmentDoc.definitions]};
-export const MarkAllNotificationsReadDocument: DocumentNode<MarkAllNotificationsReadMutation, MarkAllNotificationsReadMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"MarkAllNotificationsRead"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"readAt"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamptz"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_notifications"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"read_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":true}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"read_at"},"value":{"kind":"Variable","name":{"kind":"Name","value":"readAt"}}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"returning"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NotificationCard"},"directives":[]}]}}]}}]}},...NotificationCardFragmentDoc.definitions]};
-export const RegisterUserDocument: DocumentNode<RegisterUserMutation, RegisterUserMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RegisterUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CredentialsInput"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"registerCredentials"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_id"},"arguments":[],"directives":[]}]}}]}}]};
-export const ServerInsertActivitiesDocument: DocumentNode<ServerInsertActivitiesMutation, ServerInsertActivitiesMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertActivities"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"activities_insert_input"}}}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_activities"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]}}]};
-export const ServerFindChatGroupDocument: DocumentNode<ServerFindChatGroupQuery, ServerFindChatGroupQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindChatGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_groups_bool_exp"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat_groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ServerChatGroup"},"directives":[]}]}}]}},...ServerChatGroupFragmentDoc.definitions]};
-export const ServerMostRecentChatsDocument: DocumentNode<ServerMostRecentChatsQuery, ServerMostRecentChatsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerMostRecentChats"},"variableDefinitions":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat_groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"messages_aggregate"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"max"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}]}}]}]}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]};
-export const ServerCreateChatGroupDocument: DocumentNode<ServerCreateChatGroupMutation, ServerCreateChatGroupMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerCreateChatGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_groups_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_chat_groups_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]};
-export const ServerCreateChatMessageDocument: DocumentNode<ServerCreateChatMessageMutation, ServerCreateChatMessageMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerCreateChatMessage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_messages_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_chat_messages_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]};
-export const ServerFindGroupDocument: DocumentNode<ServerFindGroupQuery, ServerFindGroupQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"groups_bool_exp"}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}}]}}]};
-export const ServerFindGroupJoinRequestDocument: DocumentNode<ServerFindGroupJoinRequestQuery, ServerFindGroupJoinRequestQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindGroupJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_join_requests_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"user_id"},"arguments":[],"directives":[]}]}}]}}]};
-export const ServerFindJoinTokenDocument: DocumentNode<ServerFindJoinTokenQuery, ServerFindJoinTokenQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindJoinToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens_bool_exp"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_join_tokens"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"token"},"arguments":[],"directives":[]}]}}]}}]};
-export const ServerFindGroupMembersDocument: DocumentNode<ServerFindGroupMembersQuery, ServerFindGroupMembersQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindGroupMembers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"group_members_bool_exp"}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"memberships"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]}}]}}]};
-export const ServerCountGroupMembersDocument: DocumentNode<ServerCountGroupMembersQuery, ServerCountGroupMembersQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerCountGroupMembers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"group_members_bool_exp"}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_members_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"},"arguments":[],"directives":[]}]}}]}}]}}]};
-export const ServerFindPostParticipantsDocument: DocumentNode<ServerFindPostParticipantsQuery, ServerFindPostParticipantsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindPostParticipants"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupPostId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupPostCommentId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"postComment"},"name":{"kind":"Name","value":"group_post_comment_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupPostCommentId"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"comment"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"author"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"post"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"author"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"participants"},"name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"comments"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_post_relations"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_post_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupPostId"}}}]}}]}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"},"directives":[]}]}}]}},...UserCardFragmentDoc.definitions]};
-export const ServerInsertGroupJoinTokenDocument: DocumentNode<ServerInsertGroupJoinTokenMutation, ServerInsertGroupJoinTokenMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertGroupJoinToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_join_tokens_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]}]}}]}}]};
-export const ServerInsertGroupDocument: DocumentNode<ServerInsertGroupMutation, ServerInsertGroupMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"groups_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_groups_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]};
-export const ServerInsertGroupJoinRequestDocument: DocumentNode<ServerInsertGroupJoinRequestMutation, ServerInsertGroupJoinRequestMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertGroupJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_requests_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_join_requests_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"status"},"arguments":[],"directives":[]}]}}]}}]};
-export const ServerInsertGroupMemberDocument: DocumentNode<ServerInsertGroupMemberMutation, ServerInsertGroupMemberMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertGroupMember"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_members_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_members_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]};
-export const ServerUpdateGroupJoinRequestDocument: DocumentNode<ServerUpdateGroupJoinRequestMutation, ServerUpdateGroupJoinRequestMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerUpdateGroupJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_requests_set_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_group_join_requests_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group_id"},"arguments":[],"directives":[]}]}}]}}]};
-export const ServerFetchThingPageDetailsDocument: DocumentNode<ServerFetchThingPageDetailsQuery, ServerFetchThingPageDetailsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFetchThingPageDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"shortId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"things"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"short_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"shortId"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingDetails"},"directives":[]}]}}]}},...ThingDetailsFragmentDoc.definitions]};
-export const ServerFetchThingDetailsDocument: DocumentNode<ServerFetchThingDetailsQuery, ServerFetchThingDetailsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFetchThingDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"things_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"short_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"created_at"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"owner"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"group_relations"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"public"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"name"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"memberships"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"role"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"user"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"images"},"arguments":[],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"file_id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"order"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"description"},"arguments":[],"directives":[]}]}}]}}]}}]};
-export const ServerUpdateThingDocument: DocumentNode<ServerUpdateThingMutation, ServerUpdateThingMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerUpdateThing"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"things_insert_input"}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"deletedFileIds"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}},"directives":[]},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"deletedGroupIds"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_things_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}},{"kind":"Argument","name":{"kind":"Name","value":"on_conflict"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"constraint"},"value":{"kind":"EnumValue","value":"things_pkey"}},{"kind":"ObjectField","name":{"kind":"Name","value":"update_columns"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"name"},{"kind":"EnumValue","value":"description"},{"kind":"EnumValue","value":"type"},{"kind":"EnumValue","value":"category"},{"kind":"EnumValue","value":"enabled"},{"kind":"EnumValue","value":"expiry"}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"delete_thing_images"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"thing_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"file_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"deletedFileIds"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"},"arguments":[],"directives":[]}]}},{"kind":"Field","name":{"kind":"Name","value":"delete_group_thing"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"thing_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"group_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"deletedGroupIds"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"},"arguments":[],"directives":[]}]}}]}}]};
-export const ServerUserCredentialsDocument: DocumentNode<ServerUserCredentialsQuery, ServerUserCredentialsQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerUserCredentials"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"password_hash"},"arguments":[],"directives":[]}]}}]}}]};
-export const ServerFindUserDocument: DocumentNode<ServerFindUserQuery, ServerFindUserQueryVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}}]}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]},{"kind":"Field","name":{"kind":"Name","value":"email"},"arguments":[],"directives":[]}]}}]}}]};
-export const ServerInsertUserDocument: DocumentNode<ServerInsertUserMutation, ServerInsertUserMutationVariables> = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"users_insert_input"}}},"directives":[]}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_users_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"directives":[],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"},"arguments":[],"directives":[]}]}}]}}]};
+export const UserCardFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"users"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"image"}}]}}]} as unknown as DocumentNode<UserCardFragment, unknown>;
+export const GroupCardFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"groups"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"short_id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"public"}},{"kind":"Field","name":{"kind":"Name","value":"memberships_aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"thing_relations_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"thing"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"enabled"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"BooleanValue","value":true}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"_or"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"expiry"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_gt"},"value":{"kind":"StringValue","value":"now()","block":false}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"expiry"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":true}}]}}]}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]} as unknown as DocumentNode<GroupCardFragment, unknown>;
+export const CommentCardFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CommentCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"comments"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"}}]}}]}},...UserCardFragmentDoc.definitions]} as unknown as DocumentNode<CommentCardFragment, unknown>;
+export const GroupPostFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupPost"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"group_posts"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"resolved"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"comments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"comment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentCard"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"group"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"}}]}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"}}]}}]}},...CommentCardFragmentDoc.definitions,...GroupCardFragmentDoc.definitions,...UserCardFragmentDoc.definitions]} as unknown as DocumentNode<GroupPostFragment, unknown>;
+export const FileUploadCardFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"FileUploadCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"file_uploads"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"mime_type"}},{"kind":"Field","name":{"kind":"Name","value":"size"}}]}}]} as unknown as DocumentNode<FileUploadCardFragment, unknown>;
+export const ThingImageCardFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ThingImageCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"thing_images"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"order"}},{"kind":"Field","name":{"kind":"Name","value":"file"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"FileUploadCard"}}]}}]}},...FileUploadCardFragmentDoc.definitions]} as unknown as DocumentNode<ThingImageCardFragment, unknown>;
+export const ThingCardFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ThingCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"things"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"expiry"}},{"kind":"Field","name":{"kind":"Name","value":"short_id"}},{"kind":"Field","name":{"kind":"Name","value":"images"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingImageCard"}}]}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"}}]}}]}},...ThingImageCardFragmentDoc.definitions,...UserCardFragmentDoc.definitions]} as unknown as DocumentNode<ThingCardFragment, unknown>;
+export const GroupMemberCardFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupMemberCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"group_members"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"}}]}}]}},...UserCardFragmentDoc.definitions]} as unknown as DocumentNode<GroupMemberCardFragment, unknown>;
+export const GroupMemberWithGroupCardFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupMemberWithGroupCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"group_members"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupMemberCard"}},{"kind":"Field","name":{"kind":"Name","value":"group"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"short_id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},...GroupMemberCardFragmentDoc.definitions]} as unknown as DocumentNode<GroupMemberWithGroupCardFragment, unknown>;
+export const DetailedEntityFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"DetailedEntity"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"entities"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"group"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"}}]}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"}}]}},{"kind":"Field","name":{"kind":"Name","value":"group_post"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupPost"}}]}},{"kind":"Field","name":{"kind":"Name","value":"group_thing"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"thing"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingCard"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"group_member"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupMemberWithGroupCard"}}]}}]}},...GroupCardFragmentDoc.definitions,...UserCardFragmentDoc.definitions,...GroupPostFragmentDoc.definitions,...ThingCardFragmentDoc.definitions,...GroupMemberWithGroupCardFragmentDoc.definitions]} as unknown as DocumentNode<DetailedEntityFragment, unknown>;
+export const DetailedActivityFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"DetailedActivity"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"activities"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"verb"}},{"kind":"Field","name":{"kind":"Name","value":"actor"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"}}]}},{"kind":"Field","name":{"kind":"Name","value":"entity"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"DetailedEntity"}}]}}]}},...UserCardFragmentDoc.definitions,...DetailedEntityFragmentDoc.definitions]} as unknown as DocumentNode<DetailedActivityFragment, unknown>;
+export const GroupRefFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupRef"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"groups"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"short_id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]} as unknown as DocumentNode<GroupRefFragment, unknown>;
+export const ThingRefFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ThingRef"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"things"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"short_id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"images"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"file"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}}]}}]} as unknown as DocumentNode<ThingRefFragment, unknown>;
+export const EntityCardFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"EntityCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"entities"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"group"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupRef"}}]}},{"kind":"Field","name":{"kind":"Name","value":"thing"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingRef"}}]}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"}}]}},{"kind":"Field","name":{"kind":"Name","value":"group_join_request"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"response"}},{"kind":"Field","name":{"kind":"Name","value":"group"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupRef"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"group_post_comment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"post"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"author_id"}},{"kind":"Field","name":{"kind":"Name","value":"group"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupRef"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"comment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentCard"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"group_post"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"group"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupRef"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"group_thing"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"thing"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingRef"}}]}},{"kind":"Field","name":{"kind":"Name","value":"group"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupRef"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"group_member"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"}}]}},{"kind":"Field","name":{"kind":"Name","value":"group"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupRef"}}]}}]}}]}},...GroupRefFragmentDoc.definitions,...ThingRefFragmentDoc.definitions,...UserCardFragmentDoc.definitions,...CommentCardFragmentDoc.definitions]} as unknown as DocumentNode<EntityCardFragment, unknown>;
+export const ActivityCardFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ActivityCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"activities"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"verb"}},{"kind":"Field","name":{"kind":"Name","value":"entity"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"EntityCard"}}]}},{"kind":"Field","name":{"kind":"Name","value":"secondary_entity"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"EntityCard"}}]}},{"kind":"Field","name":{"kind":"Name","value":"actor"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"}}]}}]}},...EntityCardFragmentDoc.definitions,...UserCardFragmentDoc.definitions]} as unknown as DocumentNode<ActivityCardFragment, unknown>;
+export const NotificationCardFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"NotificationCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"notifications"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"read_at"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"activity"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ActivityCard"}}]}}]}},...ActivityCardFragmentDoc.definitions]} as unknown as DocumentNode<NotificationCardFragment, unknown>;
+export const ChatMessageCardFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ChatMessageCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"chat_messages"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"sender_id"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"entity"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"EntityCard"}}]}}]}},...EntityCardFragmentDoc.definitions]} as unknown as DocumentNode<ChatMessageCardFragment, unknown>;
+export const ChatGroupCardFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ChatGroupCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"chat_groups"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"members"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"messages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sender"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"}}]}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}},...UserCardFragmentDoc.definitions]} as unknown as DocumentNode<ChatGroupCardFragment, unknown>;
+export const GroupDetailsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupDetails"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"groups"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"}},{"kind":"Field","name":{"kind":"Name","value":"memberships"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupMemberCard"}}]}}]}},...GroupCardFragmentDoc.definitions,...GroupMemberCardFragmentDoc.definitions]} as unknown as DocumentNode<GroupDetailsFragment, unknown>;
+export const GroupJoinTokenCardFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupJoinTokenCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"token"}},{"kind":"Field","name":{"kind":"Name","value":"disabled"}},{"kind":"Field","name":{"kind":"Name","value":"note"}}]}}]} as unknown as DocumentNode<GroupJoinTokenCardFragment, unknown>;
+export const ThingDetailsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ThingDetails"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"things"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingCard"}},{"kind":"Field","name":{"kind":"Name","value":"enabled"}},{"kind":"Field","name":{"kind":"Name","value":"group_relations"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"group"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"}}]}}]}}]}},...ThingCardFragmentDoc.definitions,...GroupCardFragmentDoc.definitions]} as unknown as DocumentNode<ThingDetailsFragment, unknown>;
+export const UserDetailFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserDetail"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"users"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}}]}},...UserCardFragmentDoc.definitions]} as unknown as DocumentNode<UserDetailFragment, unknown>;
+export const GroupJoinRequestCardFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"GroupJoinRequestCard"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_requests"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"group_id"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"}}]}}]}},...UserCardFragmentDoc.definitions]} as unknown as DocumentNode<GroupJoinRequestCardFragment, unknown>;
+export const UserJoinRequestsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserJoinRequests"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"users"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"group_join_requests"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"status"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"EnumValue","value":"pending"}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupJoinRequestCard"}}]}}]}},...GroupJoinRequestCardFragmentDoc.definitions]} as unknown as DocumentNode<UserJoinRequestsFragment, unknown>;
+export const UserPrivateDetailFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserPrivateDetail"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"users"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserDetail"}},{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserJoinRequests"}},{"kind":"Field","name":{"kind":"Name","value":"memberships"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"group"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"private_info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}},...UserDetailFragmentDoc.definitions,...UserJoinRequestsFragmentDoc.definitions,...GroupCardFragmentDoc.definitions]} as unknown as DocumentNode<UserPrivateDetailFragment, unknown>;
+export const ServerChatGroupFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"ServerChatGroup"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"chat_groups"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"members"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<ServerChatGroupFragment, unknown>;
+export const GroupActivityDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GroupActivity"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"shortId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"short_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"shortId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activities"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}]}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"verb"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_nin"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"rejected"},{"kind":"EnumValue","value":"requested_to_join"},{"kind":"EnumValue","value":"accepted"},{"kind":"EnumValue","value":"deleted"},{"kind":"EnumValue","value":"showed_interest"}]}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"entity"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_or"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_thing_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":false}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":false}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_post_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":false}}]}}]},{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_member_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":false}}]}}]}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"DetailedActivity"}}]}}]}}]}},...DetailedActivityFragmentDoc.definitions]} as unknown as DocumentNode<GroupActivityQuery, GroupActivityQueryVariables>;
+export const ChatMessagesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ChatMessages"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_messages_bool_exp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat_messages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}]}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ChatMessageCard"}}]}}]}},...ChatMessageCardFragmentDoc.definitions]} as unknown as DocumentNode<ChatMessagesQuery, ChatMessagesQueryVariables>;
+export const ChatGroupsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"ChatGroups"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat_groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"messages_aggregate"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"max"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}]}}]}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ChatGroupCard"}}]}}]}},...ChatGroupCardFragmentDoc.definitions]} as unknown as DocumentNode<ChatGroupsSubscription, ChatGroupsSubscriptionVariables>;
+export const ChatMessagesFeedDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"ChatMessagesFeed"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_messages_bool_exp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat_messages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ChatMessageCard"}}]}}]}},...ChatMessageCardFragmentDoc.definitions]} as unknown as DocumentNode<ChatMessagesFeedSubscription, ChatMessagesFeedSubscriptionVariables>;
+export const CreateChatGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateChatGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateChatGroupInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createChatGroup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat_group"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ChatGroupCard"}}]}}]}}]}},...ChatGroupCardFragmentDoc.definitions]} as unknown as DocumentNode<CreateChatGroupMutation, CreateChatGroupMutationVariables>;
+export const CreateChatMessageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateChatMessage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_messages_insert_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_chat_messages_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ChatMessageCard"}}]}}]}},...ChatMessageCardFragmentDoc.definitions]} as unknown as DocumentNode<CreateChatMessageMutation, CreateChatMessageMutationVariables>;
+export const ListGroupsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ListGroups"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"groups_order_by"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"groups_bool_exp"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"}}]}}]}},...GroupCardFragmentDoc.definitions]} as unknown as DocumentNode<ListGroupsQuery, ListGroupsQueryVariables>;
+export const GroupDetailsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GroupDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"shortId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"short_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"shortId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupDetails"}}]}}]}},...GroupDetailsFragmentDoc.definitions]} as unknown as DocumentNode<GroupDetailsQuery, GroupDetailsQueryVariables>;
+export const GroupJoinRequestsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GroupJoinRequests"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_requests_bool_exp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_join_requests"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupJoinRequestCard"}}]}}]}},...GroupJoinRequestCardFragmentDoc.definitions]} as unknown as DocumentNode<GroupJoinRequestsQuery, GroupJoinRequestsQueryVariables>;
+export const GroupJoinTokensDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GroupJoinTokens"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens_bool_exp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_join_tokens"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupJoinTokenCard"}}]}}]}},...GroupJoinTokenCardFragmentDoc.definitions]} as unknown as DocumentNode<GroupJoinTokensQuery, GroupJoinTokensQueryVariables>;
+export const GroupPostListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GroupPostList"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_posts_bool_exp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_posts_order_by"}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupPost"}}]}},{"kind":"Field","name":{"kind":"Name","value":"group_posts_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}},...GroupPostFragmentDoc.definitions]} as unknown as DocumentNode<GroupPostListQuery, GroupPostListQueryVariables>;
+export const ActivityListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ActivityList"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"defaultValue":{"kind":"IntValue","value":"10"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"activities"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ActivityCard"}}]}}]}},...ActivityCardFragmentDoc.definitions]} as unknown as DocumentNode<ActivityListQuery, ActivityListQueryVariables>;
+export const CreateGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CreateGroupInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createGroup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"}}]}}]}}]}},...GroupCardFragmentDoc.definitions]} as unknown as DocumentNode<CreateGroupMutation, CreateGroupMutationVariables>;
+export const UpdateGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"groups_set_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_groups_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupDetails"}}]}}]}},...GroupDetailsFragmentDoc.definitions]} as unknown as DocumentNode<UpdateGroupMutation, UpdateGroupMutationVariables>;
+export const DeleteGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_groups_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"}}]}}]}},...GroupCardFragmentDoc.definitions]} as unknown as DocumentNode<DeleteGroupMutation, DeleteGroupMutationVariables>;
+export const CreateGroupPostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateGroupPost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_posts_insert_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_posts_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupPost"}}]}}]}},...GroupPostFragmentDoc.definitions]} as unknown as DocumentNode<CreateGroupPostMutation, CreateGroupPostMutationVariables>;
+export const UpdateGroupPostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateGroupPost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_posts_set_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_group_posts_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupPost"}}]}}]}},...GroupPostFragmentDoc.definitions]} as unknown as DocumentNode<UpdateGroupPostMutation, UpdateGroupPostMutationVariables>;
+export const CreateGroupPostCommentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateGroupPostComment"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupPostId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"comments_insert_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_post_comment_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_post_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupPostId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"comment"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"comment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentCard"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupPost"}}]}}]}}]}},...CommentCardFragmentDoc.definitions,...GroupPostFragmentDoc.definitions]} as unknown as DocumentNode<CreateGroupPostCommentMutation, CreateGroupPostCommentMutationVariables>;
+export const LeaveGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LeaveGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_group_members"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<LeaveGroupMutation, LeaveGroupMutationVariables>;
+export const JoinGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"JoinGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_members_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupMemberCard"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserPrivateDetail"}}]}}]}}]}},...GroupMemberCardFragmentDoc.definitions,...UserPrivateDetailFragmentDoc.definitions]} as unknown as DocumentNode<JoinGroupMutation, JoinGroupMutationVariables>;
+export const JoinGroupWithTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"JoinGroupWithToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"JoinGroupInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"joinGroup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserPrivateDetail"}}]}}]}}]}},...UserPrivateDetailFragmentDoc.definitions]} as unknown as DocumentNode<JoinGroupWithTokenMutation, JoinGroupWithTokenMutationVariables>;
+export const RequestJoinGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RequestJoinGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RequestJoinGroupInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"requestJoinGroup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"}}]}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserJoinRequests"}}]}}]}}]}},...GroupCardFragmentDoc.definitions,...UserJoinRequestsFragmentDoc.definitions]} as unknown as DocumentNode<RequestJoinGroupMutation, RequestJoinGroupMutationVariables>;
+export const CancelJoinRequestDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CancelJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"requestId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_group_join_requests"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"requestId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserJoinRequests"}}]}}]}}]}}]}},...UserJoinRequestsFragmentDoc.definitions]} as unknown as DocumentNode<CancelJoinRequestMutation, CancelJoinRequestMutationVariables>;
+export const HandleJoinRequestDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"HandleJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"HandleJoinRequestInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"handleJoinRequest"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"join_request"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupJoinRequestCard"}}]}}]}}]}},...GroupJoinRequestCardFragmentDoc.definitions]} as unknown as DocumentNode<HandleJoinRequestMutation, HandleJoinRequestMutationVariables>;
+export const CreateJoinTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateJoinToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens_insert_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_join_tokens_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupJoinTokenCard"}}]}}]}},...GroupJoinTokenCardFragmentDoc.definitions]} as unknown as DocumentNode<CreateJoinTokenMutation, CreateJoinTokenMutationVariables>;
+export const DeleteJoinTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteJoinToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_group_join_tokens_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupJoinTokenCard"}}]}}]}},...GroupJoinTokenCardFragmentDoc.definitions]} as unknown as DocumentNode<DeleteJoinTokenMutation, DeleteJoinTokenMutationVariables>;
+export const UpdateJoinTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateJoinToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens_set_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_group_join_tokens_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupJoinTokenCard"}}]}}]}},...GroupJoinTokenCardFragmentDoc.definitions]} as unknown as DocumentNode<UpdateJoinTokenMutation, UpdateJoinTokenMutationVariables>;
+export const SearchCountsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchCounts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"thingWhere"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"things_bool_exp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupWhere"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"groups_bool_exp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userWhere"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"users_bool_exp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userWhere"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"groups_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupWhere"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"things_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"thingWhere"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]} as unknown as DocumentNode<SearchCountsQuery, SearchCountsQueryVariables>;
+export const ThingListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ThingList"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"things_order_by"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"things_bool_exp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"things"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingCard"}}]}},{"kind":"Field","name":{"kind":"Name","value":"things_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}},...ThingCardFragmentDoc.definitions]} as unknown as DocumentNode<ThingListQuery, ThingListQueryVariables>;
+export const ThingDetailsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ThingDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"shortId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"things"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"short_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"shortId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingDetails"}}]}}]}},...ThingDetailsFragmentDoc.definitions]} as unknown as DocumentNode<ThingDetailsQuery, ThingDetailsQueryVariables>;
+export const CreateThingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateThing"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"things_insert_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_things_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingDetails"}}]}}]}},...ThingDetailsFragmentDoc.definitions]} as unknown as DocumentNode<CreateThingMutation, CreateThingMutationVariables>;
+export const UpdateThingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateThing"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UpdateThingInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateThing"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"thing"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingDetails"}}]}}]}}]}},...ThingDetailsFragmentDoc.definitions]} as unknown as DocumentNode<UpdateThingMutation, UpdateThingMutationVariables>;
+export const DeleteThingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteThing"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_things_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingDetails"}}]}}]}},...ThingDetailsFragmentDoc.definitions]} as unknown as DocumentNode<DeleteThingMutation, DeleteThingMutationVariables>;
+export const InsertFileUploadDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InsertFileUpload"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"file_uploads_insert_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_file_uploads_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"FileUploadCard"}}]}}]}},...FileUploadCardFragmentDoc.definitions]} as unknown as DocumentNode<InsertFileUploadMutation, InsertFileUploadMutationVariables>;
+export const UserListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserList"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"users_bool_exp"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"}}]}},{"kind":"Field","name":{"kind":"Name","value":"users_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}},...UserCardFragmentDoc.definitions]} as unknown as DocumentNode<UserListQuery, UserListQueryVariables>;
+export const UserPrivateDetailsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserPrivateDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserPrivateDetail"}}]}}]}},...UserPrivateDetailFragmentDoc.definitions]} as unknown as DocumentNode<UserPrivateDetailsQuery, UserPrivateDetailsQueryVariables>;
+export const NotificationsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"Notifications"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"notifications"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"50"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}]}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NotificationCard"}}]}}]}},...NotificationCardFragmentDoc.definitions]} as unknown as DocumentNode<NotificationsSubscription, NotificationsSubscriptionVariables>;
+export const MarkNotificationReadDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"MarkNotificationRead"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"readAt"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamptz"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_notifications_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"read_at"},"value":{"kind":"Variable","name":{"kind":"Name","value":"readAt"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NotificationCard"}}]}}]}},...NotificationCardFragmentDoc.definitions]} as unknown as DocumentNode<MarkNotificationReadMutation, MarkNotificationReadMutationVariables>;
+export const MarkAllNotificationsReadDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"MarkAllNotificationsRead"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"readAt"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"timestamptz"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_notifications"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"read_at"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_is_null"},"value":{"kind":"BooleanValue","value":true}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"read_at"},"value":{"kind":"Variable","name":{"kind":"Name","value":"readAt"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}},{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"NotificationCard"}}]}}]}}]}},...NotificationCardFragmentDoc.definitions]} as unknown as DocumentNode<MarkAllNotificationsReadMutation, MarkAllNotificationsReadMutationVariables>;
+export const RegisterUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RegisterUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"CredentialsInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"registerCredentials"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user_id"}}]}}]}}]} as unknown as DocumentNode<RegisterUserMutation, RegisterUserMutationVariables>;
+export const ServerInsertActivitiesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertActivities"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"activities_insert_input"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_activities"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<ServerInsertActivitiesMutation, ServerInsertActivitiesMutationVariables>;
+export const ServerFindChatGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindChatGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_groups_bool_exp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat_groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ServerChatGroup"}}]}}]}},...ServerChatGroupFragmentDoc.definitions]} as unknown as DocumentNode<ServerFindChatGroupQuery, ServerFindChatGroupQueryVariables>;
+export const ServerMostRecentChatsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerMostRecentChats"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat_groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"messages_aggregate"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"max"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}]}}]}]}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<ServerMostRecentChatsQuery, ServerMostRecentChatsQueryVariables>;
+export const ServerCreateChatGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerCreateChatGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_groups_insert_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_chat_groups_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<ServerCreateChatGroupMutation, ServerCreateChatGroupMutationVariables>;
+export const ServerCreateChatMessageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerCreateChatMessage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_messages_insert_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_chat_messages_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<ServerCreateChatMessageMutation, ServerCreateChatMessageMutationVariables>;
+export const ServerFindGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"groups_bool_exp"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<ServerFindGroupQuery, ServerFindGroupQueryVariables>;
+export const ServerFindGroupJoinRequestDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindGroupJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_join_requests_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"group_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}}]}}]}}]} as unknown as DocumentNode<ServerFindGroupJoinRequestQuery, ServerFindGroupJoinRequestQueryVariables>;
+export const ServerFindJoinTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindJoinToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens_bool_exp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_join_tokens"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"token"}}]}}]}}]} as unknown as DocumentNode<ServerFindJoinTokenQuery, ServerFindJoinTokenQueryVariables>;
+export const ServerFindGroupMembersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindGroupMembers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"group_members_bool_exp"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"memberships"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<ServerFindGroupMembersQuery, ServerFindGroupMembersQueryVariables>;
+export const ServerCountGroupMembersDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerCountGroupMembers"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"group_members_bool_exp"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_members_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]} as unknown as DocumentNode<ServerCountGroupMembersQuery, ServerCountGroupMembersQueryVariables>;
+export const ServerFindPostParticipantsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindPostParticipants"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupPostId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupPostCommentId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","alias":{"kind":"Name","value":"postComment"},"name":{"kind":"Name","value":"group_post_comment_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupPostCommentId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"comment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"post"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"group_id"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"}}]}}]}}]}},{"kind":"Field","alias":{"kind":"Name","value":"participants"},"name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"comments"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_post_relations"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_post_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupPostId"}}}]}}]}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"}}]}}]}},...UserCardFragmentDoc.definitions]} as unknown as DocumentNode<ServerFindPostParticipantsQuery, ServerFindPostParticipantsQueryVariables>;
+export const ServerInsertGroupJoinTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertGroupJoinToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens_insert_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_join_tokens_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"group_id"}}]}}]}}]} as unknown as DocumentNode<ServerInsertGroupJoinTokenMutation, ServerInsertGroupJoinTokenMutationVariables>;
+export const ServerInsertGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"groups_insert_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_groups_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<ServerInsertGroupMutation, ServerInsertGroupMutationVariables>;
+export const ServerInsertGroupJoinRequestDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertGroupJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_requests_insert_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_join_requests_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]} as unknown as DocumentNode<ServerInsertGroupJoinRequestMutation, ServerInsertGroupJoinRequestMutationVariables>;
+export const ServerInsertGroupMemberDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertGroupMember"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_members_insert_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_members_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<ServerInsertGroupMemberMutation, ServerInsertGroupMemberMutationVariables>;
+export const ServerUpdateGroupJoinRequestDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerUpdateGroupJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_requests_set_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_group_join_requests_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"group_id"}}]}}]}}]} as unknown as DocumentNode<ServerUpdateGroupJoinRequestMutation, ServerUpdateGroupJoinRequestMutationVariables>;
+export const ServerFetchThingPageDetailsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFetchThingPageDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"shortId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"things"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"short_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"shortId"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingDetails"}}]}}]}},...ThingDetailsFragmentDoc.definitions]} as unknown as DocumentNode<ServerFetchThingPageDetailsQuery, ServerFetchThingPageDetailsQueryVariables>;
+export const ServerFetchThingDetailsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFetchThingDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"things_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"short_id"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"owner"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"group_relations"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"group"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"public"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"memberships"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"images"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"file_id"}},{"kind":"Field","name":{"kind":"Name","value":"order"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]}}]} as unknown as DocumentNode<ServerFetchThingDetailsQuery, ServerFetchThingDetailsQueryVariables>;
+export const ServerUpdateThingDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerUpdateThing"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"things_insert_input"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"deletedFileIds"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"deletedGroupIds"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_things_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}},{"kind":"Argument","name":{"kind":"Name","value":"on_conflict"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"constraint"},"value":{"kind":"EnumValue","value":"things_pkey"}},{"kind":"ObjectField","name":{"kind":"Name","value":"update_columns"},"value":{"kind":"ListValue","values":[{"kind":"EnumValue","value":"name"},{"kind":"EnumValue","value":"description"},{"kind":"EnumValue","value":"type"},{"kind":"EnumValue","value":"category"},{"kind":"EnumValue","value":"enabled"},{"kind":"EnumValue","value":"expiry"}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"delete_thing_images"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"thing_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"file_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"deletedFileIds"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}},{"kind":"Field","name":{"kind":"Name","value":"delete_group_thing"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"thing_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"group_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"deletedGroupIds"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<ServerUpdateThingMutation, ServerUpdateThingMutationVariables>;
+export const ServerUserCredentialsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerUserCredentials"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"password_hash"}}]}}]}}]} as unknown as DocumentNode<ServerUserCredentialsQuery, ServerUserCredentialsQueryVariables>;
+export const ServerFindUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"users"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"email"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}}]}}]} as unknown as DocumentNode<ServerFindUserQuery, ServerFindUserQueryVariables>;
+export const ServerInsertUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"users_insert_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_users_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<ServerInsertUserMutation, ServerInsertUserMutationVariables>;
 
       export interface PossibleTypesResultData {
         possibleTypes: {

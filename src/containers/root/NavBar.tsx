@@ -1,7 +1,7 @@
 ﻿import React, { useCallback } from 'react';
 import { useMedia } from '../../utils/hooks';
 import Link from 'next/link';
-import { Button, Dropdown, Menu, Space, Tooltip, Typography } from 'antd';
+import { Dropdown, Menu, Space, Tooltip, Typography } from 'antd';
 import { urlFor } from '../../utils/urls';
 import { MessageOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import { NotificationsButton } from './NotificationList';
@@ -9,7 +9,6 @@ import { createUseStyles } from 'react-jss';
 import { useAuth } from '../../utils/auth';
 import { AuthDialog, useDialogs } from '../../components/dialogs';
 import { UserButton } from './UserButton';
-import { signOut } from 'next-auth/client';
 
 const useStyles = createUseStyles({
     header: {
@@ -85,13 +84,8 @@ const ExpandedNav = (props: { onLogin: () => unknown; onRegister: () => unknown 
             <div className={classes.user}>
                 {!auth.user && (
                     <div>
-                        <Button type="link" onClick={props.onLogin}>
-                            Log in
-                        </Button>
-                        /
-                        <Button type="link" onClick={props.onRegister}>
-                            Register
-                        </Button>
+                        <a onClick={auth.login}>Login</a> /
+                        <a href={urlFor.auth.register()}>Register</a>
                     </div>
                 )}
 
@@ -146,13 +140,14 @@ const CollapsedNav = () => {
                         <Link href={urlFor.user.settings()}>Account settings</Link>
                     </Menu.Item>
                     <Menu.Item>
-                        <a onClick={() => signOut()}>Log out</a>
+                        <a onClick={auth.logout}>Logout</a>
                     </Menu.Item>
                 </>
             ) : (
                 <>
                     <Menu.Item>
-                        <Link href={urlFor.auth.login()}>Login</Link>
+                        <a href={urlFor.auth.login()}>Login</a>
+                        {/*<Link href={urlFor.auth.login()}>Login</Link>*/}
                     </Menu.Item>
 
                     <Menu.Item>

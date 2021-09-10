@@ -28,10 +28,11 @@ const useStyles = createUseStyles({
             background: '#1890ff',
         },
 
-        '& .slick-next, & .slick-prev, & .slick-next:hover, & .slick-prev:hover, & .slick-next:focus, & .slick-prev:focus': {
-            fontSize: '1.2em',
-            color: 'black',
-        },
+        '& .slick-next, & .slick-prev, & .slick-next:hover, & .slick-prev:hover, & .slick-next:focus, & .slick-prev:focus':
+            {
+                fontSize: '1.2em',
+                color: 'black',
+            },
     },
 });
 
@@ -65,7 +66,13 @@ export const ImageGalleryModal = (props: ImageGalleryModalProps) => {
                 prevArrow={<ArrowLeftOutlined />}>
                 {props.images.map((image) => (
                     <div className={classes.image} key={image.id}>
-                        <Image src={image.url} width={500} height={500} objectFit="contain" />
+                        <Image
+                            alt={image.description}
+                            src={image.url}
+                            width={500}
+                            height={500}
+                            objectFit="contain"
+                        />
                         <Typography.Paragraph className={classes.description}>
                             {image.description}
                         </Typography.Paragraph>

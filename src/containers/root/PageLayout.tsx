@@ -36,12 +36,19 @@ const useStyles = createUseStyles({
         alignItems: 'center',
         justifyContent: 'center',
         flex: 'none',
-        height: 50,
+        flexWrap: 'wrap',
         padding: '0 10px',
         backgroundColor: '#EEE',
         marginTop: '2em',
+        '& > *': {
+            marginRight: '2em',
+        },
     },
     footerLink: {
+        height: 40,
+        flex: 'none',
+        display: 'flex',
+        alignItems: 'center',
         '& a': { color: 'black' },
     },
     root: {
@@ -93,25 +100,23 @@ export const PageLayout = (props: PageLayoutProps) => {
                 </div>
                 {!props.noFooter && (
                     <div className={classes.footer}>
-                        <Space size="large" split={<Divider type="vertical" />}>
-                            <span>© Reshared</span>
+                        <span className={classes.footerLink}>© Reshared</span>
 
-                            <Link href={urlFor.site.privacy()}>
-                                <a className={classes.footerLink}>Privacy Policy</a>
-                            </Link>
+                        <Link href={urlFor.site.privacy()}>
+                            <a className={classes.footerLink}>Privacy Policy</a>
+                        </Link>
 
-                            <Link href={urlFor.site.terms()}>
-                                <a className={classes.footerLink}>Terms of Service</a>
-                            </Link>
+                        <Link href={urlFor.site.terms()}>
+                            <a className={classes.footerLink}>Terms of Service</a>
+                        </Link>
 
-                            <Link href={urlFor.site.contact()}>
-                                <a className={classes.footerLink}>Contact</a>
-                            </Link>
+                        <Link href={urlFor.site.contact()}>
+                            <a className={classes.footerLink}>Contact</a>
+                        </Link>
 
-                            <Link href={urlFor.site.attributions()}>
-                                <a className={classes.footerLink}>Attributions</a>
-                            </Link>
-                        </Space>
+                        <Link href={urlFor.site.attributions()}>
+                            <a className={classes.footerLink}>Attributions</a>
+                        </Link>
                     </div>
                 )}
             </Content>

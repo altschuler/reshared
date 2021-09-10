@@ -4,6 +4,15 @@ schema {
   subscription: subscription_root
 }
 
+"""whether this query should be cached (Hasura Cloud only)"""
+directive @cached(
+  """measured in seconds"""
+  ttl: Int! = 60
+
+  """refresh the cache entry"""
+  refresh: Boolean! = false
+) on QUERY
+
 """
 Boolean expression to compare columns of type "Boolean". All fields are combined with logical 'AND'.
 """
@@ -26,22 +35,8 @@ input CreateChatGroupInput {
 }
 
 type CreateChatGroupResult {
-  chat_group(
-    """distinct select on columns"""
-    distinct_on: [chat_groups_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [chat_groups_order_by!]
-
-    """filter the rows returned"""
-    where: chat_groups_bool_exp
-  ): [chat_groups!]!
+  """An object relationship"""
+  chat_group: chat_groups!
   chat_group_id: uuid!
 }
 
@@ -52,22 +47,8 @@ input CreateGroupInput {
 }
 
 type CreateGroupResult {
-  group(
-    """distinct select on columns"""
-    distinct_on: [groups_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [groups_order_by!]
-
-    """filter the rows returned"""
-    where: groups_bool_exp
-  ): [groups!]!
+  """An object relationship"""
+  group: groups!
   group_id: uuid!
 }
 
@@ -76,39 +57,12 @@ input CreateJoinTokenInput {
 }
 
 type CreateJoinTokenResult {
-  group(
-    """distinct select on columns"""
-    distinct_on: [groups_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [groups_order_by!]
-
-    """filter the rows returned"""
-    where: groups_bool_exp
-  ): [groups!]!
+  """An object relationship"""
+  group: groups!
   group_id: uuid!
-  join_token(
-    """distinct select on columns"""
-    distinct_on: [group_join_tokens_select_column!]
 
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [group_join_tokens_order_by!]
-
-    """filter the rows returned"""
-    where: group_join_tokens_bool_exp
-  ): [group_join_tokens!]!
+  """An object relationship"""
+  join_token: group_join_tokens!
   join_token_id: uuid!
 }
 
@@ -125,22 +79,8 @@ input HandleJoinRequestInput {
 }
 
 type HandleJoinRequestResult {
-  join_request(
-    """distinct select on columns"""
-    distinct_on: [group_join_requests_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [group_join_requests_order_by!]
-
-    """filter the rows returned"""
-    where: group_join_requests_bool_exp
-  ): [group_join_requests!]!
+  """An object relationship"""
+  join_request: group_join_requests!
   join_request_id: uuid!
 }
 
@@ -165,59 +105,18 @@ input JoinGroupInput {
 }
 
 type JoinGroupResult {
-  group(
-    """distinct select on columns"""
-    distinct_on: [groups_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [groups_order_by!]
-
-    """filter the rows returned"""
-    where: groups_bool_exp
-  ): [groups!]!
+  """An object relationship"""
+  group: groups!
   group_id: uuid!
-  user(
-    """distinct select on columns"""
-    distinct_on: [users_select_column!]
 
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [users_order_by!]
-
-    """filter the rows returned"""
-    where: users_bool_exp
-  ): [users!]!
+  """An object relationship"""
+  user: users!
   user_id: uuid!
 }
 
 type RegistrationResult {
-  user(
-    """distinct select on columns"""
-    distinct_on: [users_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [users_order_by!]
-
-    """filter the rows returned"""
-    where: users_bool_exp
-  ): [users!]!
+  """An object relationship"""
+  user: users!
   user_id: uuid!
 }
 
@@ -227,39 +126,12 @@ input RequestJoinGroupInput {
 }
 
 type RequestJoinGroupResult {
-  group(
-    """distinct select on columns"""
-    distinct_on: [groups_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [groups_order_by!]
-
-    """filter the rows returned"""
-    where: groups_bool_exp
-  ): [groups!]!
+  """An object relationship"""
+  group: groups!
   group_id: uuid!
-  user(
-    """distinct select on columns"""
-    distinct_on: [users_select_column!]
 
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [users_order_by!]
-
-    """filter the rows returned"""
-    where: users_bool_exp
-  ): [users!]!
+  """An object relationship"""
+  user: users!
   user_id: uuid!
 }
 
@@ -274,6 +146,11 @@ input String_comparison_exp {
   """does the column match the given case-insensitive pattern"""
   _ilike: String
   _in: [String!]
+
+  """
+  does the column match the given POSIX regular expression, case insensitive
+  """
+  _iregex: String
   _is_null: Boolean
 
   """does the column match the given pattern"""
@@ -286,11 +163,26 @@ input String_comparison_exp {
   _nilike: String
   _nin: [String!]
 
+  """
+  does the column NOT match the given POSIX regular expression, case insensitive
+  """
+  _niregex: String
+
   """does the column NOT match the given pattern"""
   _nlike: String
 
+  """
+  does the column NOT match the given POSIX regular expression, case sensitive
+  """
+  _nregex: String
+
   """does the column NOT match the given SQL regular expression"""
   _nsimilar: String
+
+  """
+  does the column match the given POSIX regular expression, case sensitive
+  """
+  _regex: String
 
   """does the column match the given SQL regular expression"""
   _similar: String
@@ -319,22 +211,8 @@ input UpdateThingInput {
 }
 
 type UpdateThingResult {
-  thing(
-    """distinct select on columns"""
-    distinct_on: [things_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [things_order_by!]
-
-    """filter the rows returned"""
-    where: things_bool_exp
-  ): [things!]!
+  """An object relationship"""
+  thing: things!
   thing_id: uuid!
 }
 
@@ -343,7 +221,7 @@ columns and relationships of "activities"
 """
 type activities {
   """An object relationship"""
-  actor: users!
+  actor: users
   actor_id: uuid
   created_at: timestamptz!
 
@@ -352,7 +230,7 @@ type activities {
   entity_id: uuid!
 
   """An object relationship"""
-  group: groups!
+  group: groups
   group_id: uuid
   id: uuid!
 
@@ -393,7 +271,7 @@ type activities {
   ): notifications_aggregate!
 
   """An object relationship"""
-  secondary_entity: entities!
+  secondary_entity: entities
   secondary_entity_id: uuid
   verb: activity_verb_enum!
 }
@@ -551,7 +429,7 @@ on conflict condition type for table "activities"
 """
 input activities_on_conflict {
   constraint: activities_constraint!
-  update_columns: [activities_update_column!]!
+  update_columns: [activities_update_column!]! = []
   where: activities_bool_exp
 }
 
@@ -764,7 +642,7 @@ on conflict condition type for table "activity_verb"
 """
 input activity_verb_on_conflict {
   constraint: activity_verb_constraint!
-  update_columns: [activity_verb_update_column!]!
+  update_columns: [activity_verb_update_column!]! = []
   where: activity_verb_bool_exp
 }
 
@@ -947,7 +825,7 @@ on conflict condition type for table "chat_group_members"
 """
 input chat_group_members_on_conflict {
   constraint: chat_group_members_constraint!
-  update_columns: [chat_group_members_update_column!]!
+  update_columns: [chat_group_members_update_column!]! = []
   where: chat_group_members_bool_exp
 }
 
@@ -1186,7 +1064,7 @@ on conflict condition type for table "chat_groups"
 """
 input chat_groups_on_conflict {
   constraint: chat_groups_constraint!
-  update_columns: [chat_groups_update_column!]!
+  update_columns: [chat_groups_update_column!]! = []
   where: chat_groups_bool_exp
 }
 
@@ -1259,7 +1137,7 @@ type chat_messages {
   created_at: timestamptz!
 
   """An object relationship"""
-  entity: entities!
+  entity: entities
   entity_id: uuid
   id: uuid!
   message: String!
@@ -1406,7 +1284,7 @@ on conflict condition type for table "chat_messages"
 """
 input chat_messages_on_conflict {
   constraint: chat_messages_constraint!
-  update_columns: [chat_messages_update_column!]!
+  update_columns: [chat_messages_update_column!]! = []
   where: chat_messages_bool_exp
 }
 
@@ -1674,7 +1552,7 @@ on conflict condition type for table "comments"
 """
 input comments_on_conflict {
   constraint: comments_constraint!
-  update_columns: [comments_update_column!]!
+  update_columns: [comments_update_column!]! = []
   where: comments_bool_exp
 }
 
@@ -1769,26 +1647,26 @@ type entities {
   dummy: smallint
 
   """An object relationship"""
-  group: groups!
+  group: groups
   group_id: uuid
 
   """An object relationship"""
-  group_join_request: group_join_requests!
+  group_join_request: group_join_requests
 
   """An object relationship"""
-  group_member: group_members!
+  group_member: group_members
   group_member_id: uuid
 
   """An object relationship"""
-  group_post: group_posts!
+  group_post: group_posts
 
   """An object relationship"""
-  group_post_comment: group_post_comment!
+  group_post_comment: group_post_comment
   group_post_comment_id: uuid
   group_post_id: uuid
 
   """An object relationship"""
-  group_thing: group_thing!
+  group_thing: group_thing
   group_thing_id: uuid
   id: uuid!
 
@@ -1799,11 +1677,11 @@ type entities {
   join_request_id: uuid
 
   """An object relationship"""
-  thing: things!
+  thing: things
   thing_id: uuid
 
   """An object relationship"""
-  user: users!
+  user: users
   user_id: uuid
 }
 
@@ -1857,6 +1735,7 @@ input entities_bool_exp {
   group_thing: group_thing_bool_exp
   group_thing_id: uuid_comparison_exp
   id: uuid_comparison_exp
+  is_valid: Boolean_comparison_exp
   join_request_id: uuid_comparison_exp
   thing: things_bool_exp
   thing_id: uuid_comparison_exp
@@ -1981,7 +1860,7 @@ on conflict condition type for table "entities"
 """
 input entities_on_conflict {
   constraint: entities_constraint!
-  update_columns: [entities_update_column!]!
+  update_columns: [entities_update_column!]! = []
   where: entities_bool_exp
 }
 
@@ -2000,6 +1879,7 @@ input entities_order_by {
   group_thing: group_thing_order_by
   group_thing_id: order_by
   id: order_by
+  is_valid: order_by
   join_request_id: order_by
   thing: things_order_by
   thing_id: order_by
@@ -2143,11 +2023,50 @@ type file_uploads {
   name: String!
 
   """An object relationship"""
-  owner: users!
+  owner: users
   owner_id: uuid
   size: Int!
+
+  """An object relationship"""
+  thing_image: thing_images
   updated_at: timestamptz!
   url: String!
+
+  """An array relationship"""
+  user_profile_pictures(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): [users!]!
+
+  """An aggregate relationship"""
+  user_profile_pictures_aggregate(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): users_aggregate!
 }
 
 """
@@ -2194,8 +2113,10 @@ input file_uploads_bool_exp {
   owner: users_bool_exp
   owner_id: uuid_comparison_exp
   size: Int_comparison_exp
+  thing_image: thing_images_bool_exp
   updated_at: timestamptz_comparison_exp
   url: String_comparison_exp
+  user_profile_pictures: users_bool_exp
 }
 
 """
@@ -2227,8 +2148,10 @@ input file_uploads_insert_input {
   owner: users_obj_rel_insert_input
   owner_id: uuid
   size: Int
+  thing_image: thing_images_obj_rel_insert_input
   updated_at: timestamptz
   url: String
+  user_profile_pictures: users_arr_rel_insert_input
 }
 
 """aggregate max on columns"""
@@ -2281,7 +2204,7 @@ on conflict condition type for table "file_uploads"
 """
 input file_uploads_on_conflict {
   constraint: file_uploads_constraint!
-  update_columns: [file_uploads_update_column!]!
+  update_columns: [file_uploads_update_column!]! = []
   where: file_uploads_bool_exp
 }
 
@@ -2294,8 +2217,10 @@ input file_uploads_order_by {
   owner: users_order_by
   owner_id: order_by
   size: order_by
+  thing_image: thing_images_order_by
   updated_at: order_by
   url: order_by
+  user_profile_pictures_aggregate: users_aggregate_order_by
 }
 
 """primary key columns input for table: file_uploads"""
@@ -2515,7 +2440,7 @@ on conflict condition type for table "group_join_request_status"
 """
 input group_join_request_status_on_conflict {
   constraint: group_join_request_status_constraint!
-  update_columns: [group_join_request_status_update_column!]!
+  update_columns: [group_join_request_status_update_column!]! = []
   where: group_join_request_status_bool_exp
 }
 
@@ -2740,7 +2665,7 @@ on conflict condition type for table "group_join_requests"
 """
 input group_join_requests_on_conflict {
   constraint: group_join_requests_constraint!
-  update_columns: [group_join_requests_update_column!]!
+  update_columns: [group_join_requests_update_column!]! = []
   where: group_join_requests_bool_exp
 }
 
@@ -2994,7 +2919,7 @@ on conflict condition type for table "group_join_tokens"
 """
 input group_join_tokens_on_conflict {
   constraint: group_join_tokens_constraint!
-  update_columns: [group_join_tokens_update_column!]!
+  update_columns: [group_join_tokens_update_column!]! = []
   where: group_join_tokens_bool_exp
 }
 
@@ -3239,7 +3164,7 @@ on conflict condition type for table "group_members"
 """
 input group_members_on_conflict {
   constraint: group_members_constraint!
-  update_columns: [group_members_update_column!]!
+  update_columns: [group_members_update_column!]! = []
   where: group_members_bool_exp
 }
 
@@ -3473,7 +3398,7 @@ on conflict condition type for table "group_post_comment"
 """
 input group_post_comment_on_conflict {
   constraint: group_post_comment_constraint!
-  update_columns: [group_post_comment_update_column!]!
+  update_columns: [group_post_comment_update_column!]! = []
   where: group_post_comment_bool_exp
 }
 
@@ -3643,7 +3568,7 @@ on conflict condition type for table "group_post_type"
 """
 input group_post_type_on_conflict {
   constraint: group_post_type_constraint!
-  update_columns: [group_post_type_update_column!]!
+  update_columns: [group_post_type_update_column!]! = []
   where: group_post_type_bool_exp
 }
 
@@ -3894,7 +3819,7 @@ on conflict condition type for table "group_posts"
 """
 input group_posts_on_conflict {
   constraint: group_posts_constraint!
-  update_columns: [group_posts_update_column!]!
+  update_columns: [group_posts_update_column!]! = []
   where: group_posts_bool_exp
 }
 
@@ -4092,7 +4017,7 @@ on conflict condition type for table "group_role"
 """
 input group_role_on_conflict {
   constraint: group_role_constraint!
-  update_columns: [group_role_update_column!]!
+  update_columns: [group_role_update_column!]! = []
   where: group_role_bool_exp
 }
 
@@ -4296,7 +4221,7 @@ on conflict condition type for table "group_thing"
 """
 input group_thing_on_conflict {
   constraint: group_thing_constraint!
-  update_columns: [group_thing_update_column!]!
+  update_columns: [group_thing_update_column!]! = []
   where: group_thing_bool_exp
 }
 
@@ -4675,7 +4600,7 @@ on conflict condition type for table "groups"
 """
 input groups_on_conflict {
   constraint: groups_constraint!
-  update_columns: [groups_update_column!]!
+  update_columns: [groups_update_column!]! = []
   where: groups_bool_exp
 }
 
@@ -4768,7 +4693,7 @@ enum groups_update_column {
 """mutation root"""
 type mutation_root {
   createChatGroup(input: CreateChatGroupInput!): CreateChatGroupResult
-  createGroup(input: CreateGroupInput!): CreateGroupResult
+  createGroup(input: CreateGroupInput!): CreateGroupResult!
   createJoinToken(input: CreateJoinTokenInput!): CreateJoinTokenResult
 
   """
@@ -5090,7 +5015,7 @@ type mutation_root {
   delete single row from the table: "verification_requests"
   """
   delete_verification_requests_by_pk(id: Int!): verification_requests
-  handleJoinRequest(input: HandleJoinRequestInput!): HandleJoinRequestResult
+  handleJoinRequest(input: HandleJoinRequestInput!): HandleJoinRequestResult!
 
   """
   insert data into the table: "activities"
@@ -6301,7 +6226,7 @@ on conflict condition type for table "notifications"
 """
 input notifications_on_conflict {
   constraint: notifications_constraint!
-  update_columns: [notifications_update_column!]!
+  update_columns: [notifications_update_column!]! = []
   where: notifications_bool_exp
 }
 
@@ -6394,9 +6319,7 @@ enum order_by {
 }
 
 type query_root {
-  """
-  fetch data from the table: "activities"
-  """
+  """An array relationship"""
   activities(
     """distinct select on columns"""
     distinct_on: [activities_select_column!]
@@ -6414,9 +6337,7 @@ type query_root {
     where: activities_bool_exp
   ): [activities!]!
 
-  """
-  fetch aggregated fields from the table: "activities"
-  """
+  """An aggregate relationship"""
   activities_aggregate(
     """distinct select on columns"""
     distinct_on: [activities_select_column!]
@@ -6568,9 +6489,7 @@ type query_root {
   """fetch data from the table: "chat_groups" using primary key columns"""
   chat_groups_by_pk(id: uuid!): chat_groups
 
-  """
-  fetch data from the table: "chat_messages"
-  """
+  """An array relationship"""
   chat_messages(
     """distinct select on columns"""
     distinct_on: [chat_messages_select_column!]
@@ -6588,9 +6507,7 @@ type query_root {
     where: chat_messages_bool_exp
   ): [chat_messages!]!
 
-  """
-  fetch aggregated fields from the table: "chat_messages"
-  """
+  """An aggregate relationship"""
   chat_messages_aggregate(
     """distinct select on columns"""
     distinct_on: [chat_messages_select_column!]
@@ -6611,9 +6528,7 @@ type query_root {
   """fetch data from the table: "chat_messages" using primary key columns"""
   chat_messages_by_pk(id: uuid!): chat_messages
 
-  """
-  fetch data from the table: "comments"
-  """
+  """An array relationship"""
   comments(
     """distinct select on columns"""
     distinct_on: [comments_select_column!]
@@ -6631,9 +6546,7 @@ type query_root {
     where: comments_bool_exp
   ): [comments!]!
 
-  """
-  fetch aggregated fields from the table: "comments"
-  """
+  """An aggregate relationship"""
   comments_aggregate(
     """distinct select on columns"""
     distinct_on: [comments_select_column!]
@@ -6785,9 +6698,7 @@ type query_root {
   """
   group_join_request_status_by_pk(value: String!): group_join_request_status
 
-  """
-  fetch data from the table: "group_join_requests"
-  """
+  """An array relationship"""
   group_join_requests(
     """distinct select on columns"""
     distinct_on: [group_join_requests_select_column!]
@@ -6805,9 +6716,7 @@ type query_root {
     where: group_join_requests_bool_exp
   ): [group_join_requests!]!
 
-  """
-  fetch aggregated fields from the table: "group_join_requests"
-  """
+  """An aggregate relationship"""
   group_join_requests_aggregate(
     """distinct select on columns"""
     distinct_on: [group_join_requests_select_column!]
@@ -7006,9 +6915,7 @@ type query_root {
   """fetch data from the table: "group_post_type" using primary key columns"""
   group_post_type_by_pk(value: String!): group_post_type
 
-  """
-  fetch data from the table: "group_posts"
-  """
+  """An array relationship"""
   group_posts(
     """distinct select on columns"""
     distinct_on: [group_posts_select_column!]
@@ -7026,9 +6933,7 @@ type query_root {
     where: group_posts_bool_exp
   ): [group_posts!]!
 
-  """
-  fetch aggregated fields from the table: "group_posts"
-  """
+  """An aggregate relationship"""
   group_posts_aggregate(
     """distinct select on columns"""
     distinct_on: [group_posts_select_column!]
@@ -7178,9 +7083,7 @@ type query_root {
   """fetch data from the table: "groups" using primary key columns"""
   groups_by_pk(id: uuid!): groups
 
-  """
-  fetch data from the table: "notifications"
-  """
+  """An array relationship"""
   notifications(
     """distinct select on columns"""
     distinct_on: [notifications_select_column!]
@@ -7198,9 +7101,7 @@ type query_root {
     where: notifications_bool_exp
   ): [notifications!]!
 
-  """
-  fetch aggregated fields from the table: "notifications"
-  """
+  """An aggregate relationship"""
   notifications_aggregate(
     """distinct select on columns"""
     distinct_on: [notifications_select_column!]
@@ -7307,9 +7208,7 @@ type query_root {
   """fetch data from the table: "thing_type" using primary key columns"""
   thing_type_by_pk(value: String!): thing_type
 
-  """
-  fetch data from the table: "things"
-  """
+  """An array relationship"""
   things(
     """distinct select on columns"""
     distinct_on: [things_select_column!]
@@ -7327,9 +7226,7 @@ type query_root {
     where: things_bool_exp
   ): [things!]!
 
-  """
-  fetch aggregated fields from the table: "things"
-  """
+  """An aggregate relationship"""
   things_aggregate(
     """distinct select on columns"""
     distinct_on: [things_select_column!]
@@ -7497,9 +7394,7 @@ input smallint_comparison_exp {
 }
 
 type subscription_root {
-  """
-  fetch data from the table: "activities"
-  """
+  """An array relationship"""
   activities(
     """distinct select on columns"""
     distinct_on: [activities_select_column!]
@@ -7517,9 +7412,7 @@ type subscription_root {
     where: activities_bool_exp
   ): [activities!]!
 
-  """
-  fetch aggregated fields from the table: "activities"
-  """
+  """An aggregate relationship"""
   activities_aggregate(
     """distinct select on columns"""
     distinct_on: [activities_select_column!]
@@ -7671,9 +7564,7 @@ type subscription_root {
   """fetch data from the table: "chat_groups" using primary key columns"""
   chat_groups_by_pk(id: uuid!): chat_groups
 
-  """
-  fetch data from the table: "chat_messages"
-  """
+  """An array relationship"""
   chat_messages(
     """distinct select on columns"""
     distinct_on: [chat_messages_select_column!]
@@ -7691,9 +7582,7 @@ type subscription_root {
     where: chat_messages_bool_exp
   ): [chat_messages!]!
 
-  """
-  fetch aggregated fields from the table: "chat_messages"
-  """
+  """An aggregate relationship"""
   chat_messages_aggregate(
     """distinct select on columns"""
     distinct_on: [chat_messages_select_column!]
@@ -7714,9 +7603,7 @@ type subscription_root {
   """fetch data from the table: "chat_messages" using primary key columns"""
   chat_messages_by_pk(id: uuid!): chat_messages
 
-  """
-  fetch data from the table: "comments"
-  """
+  """An array relationship"""
   comments(
     """distinct select on columns"""
     distinct_on: [comments_select_column!]
@@ -7734,9 +7621,7 @@ type subscription_root {
     where: comments_bool_exp
   ): [comments!]!
 
-  """
-  fetch aggregated fields from the table: "comments"
-  """
+  """An aggregate relationship"""
   comments_aggregate(
     """distinct select on columns"""
     distinct_on: [comments_select_column!]
@@ -7888,9 +7773,7 @@ type subscription_root {
   """
   group_join_request_status_by_pk(value: String!): group_join_request_status
 
-  """
-  fetch data from the table: "group_join_requests"
-  """
+  """An array relationship"""
   group_join_requests(
     """distinct select on columns"""
     distinct_on: [group_join_requests_select_column!]
@@ -7908,9 +7791,7 @@ type subscription_root {
     where: group_join_requests_bool_exp
   ): [group_join_requests!]!
 
-  """
-  fetch aggregated fields from the table: "group_join_requests"
-  """
+  """An aggregate relationship"""
   group_join_requests_aggregate(
     """distinct select on columns"""
     distinct_on: [group_join_requests_select_column!]
@@ -8109,9 +7990,7 @@ type subscription_root {
   """fetch data from the table: "group_post_type" using primary key columns"""
   group_post_type_by_pk(value: String!): group_post_type
 
-  """
-  fetch data from the table: "group_posts"
-  """
+  """An array relationship"""
   group_posts(
     """distinct select on columns"""
     distinct_on: [group_posts_select_column!]
@@ -8129,9 +8008,7 @@ type subscription_root {
     where: group_posts_bool_exp
   ): [group_posts!]!
 
-  """
-  fetch aggregated fields from the table: "group_posts"
-  """
+  """An aggregate relationship"""
   group_posts_aggregate(
     """distinct select on columns"""
     distinct_on: [group_posts_select_column!]
@@ -8281,9 +8158,7 @@ type subscription_root {
   """fetch data from the table: "groups" using primary key columns"""
   groups_by_pk(id: uuid!): groups
 
-  """
-  fetch data from the table: "notifications"
-  """
+  """An array relationship"""
   notifications(
     """distinct select on columns"""
     distinct_on: [notifications_select_column!]
@@ -8301,9 +8176,7 @@ type subscription_root {
     where: notifications_bool_exp
   ): [notifications!]!
 
-  """
-  fetch aggregated fields from the table: "notifications"
-  """
+  """An aggregate relationship"""
   notifications_aggregate(
     """distinct select on columns"""
     distinct_on: [notifications_select_column!]
@@ -8410,9 +8283,7 @@ type subscription_root {
   """fetch data from the table: "thing_type" using primary key columns"""
   thing_type_by_pk(value: String!): thing_type
 
-  """
-  fetch data from the table: "things"
-  """
+  """An array relationship"""
   things(
     """distinct select on columns"""
     distinct_on: [things_select_column!]
@@ -8430,9 +8301,7 @@ type subscription_root {
     where: things_bool_exp
   ): [things!]!
 
-  """
-  fetch aggregated fields from the table: "things"
-  """
+  """An aggregate relationship"""
   things_aggregate(
     """distinct select on columns"""
     distinct_on: [things_select_column!]
@@ -8776,11 +8645,21 @@ type thing_images_mutation_response {
 }
 
 """
+input type for inserting object relation for remote table "thing_images"
+"""
+input thing_images_obj_rel_insert_input {
+  data: thing_images_insert_input!
+
+  """on conflict condition"""
+  on_conflict: thing_images_on_conflict
+}
+
+"""
 on conflict condition type for table "thing_images"
 """
 input thing_images_on_conflict {
   constraint: thing_images_constraint!
-  update_columns: [thing_images_update_column!]!
+  update_columns: [thing_images_update_column!]! = []
   where: thing_images_bool_exp
 }
 
@@ -9056,7 +8935,7 @@ on conflict condition type for table "thing_type"
 """
 input thing_type_on_conflict {
   constraint: thing_type_constraint!
-  update_columns: [thing_type_update_column!]!
+  update_columns: [thing_type_update_column!]! = []
   where: thing_type_bool_exp
 }
 
@@ -9365,7 +9244,7 @@ on conflict condition type for table "things"
 """
 input things_on_conflict {
   constraint: things_constraint!
-  update_columns: [things_update_column!]!
+  update_columns: [things_update_column!]! = []
   where: things_bool_exp
 }
 
@@ -9605,6 +9484,8 @@ input user_private_set_input {
 columns and relationships of "users"
 """
 type users {
+  auth0_id: String
+
   """An array relationship"""
   chat_group_memberships(
     """distinct select on columns"""
@@ -9833,6 +9714,10 @@ type users {
   """An object relationship"""
   private_info: user_private
 
+  """An object relationship"""
+  profile_picture: file_uploads
+  profile_picture_id: uuid
+
   """An array relationship"""
   things(
     """distinct select on columns"""
@@ -9889,12 +9774,32 @@ type users_aggregate_fields {
 }
 
 """
+order by aggregate values of table "users"
+"""
+input users_aggregate_order_by {
+  count: order_by
+  max: users_max_order_by
+  min: users_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "users"
+"""
+input users_arr_rel_insert_input {
+  data: [users_insert_input!]!
+
+  """on conflict condition"""
+  on_conflict: users_on_conflict
+}
+
+"""
 Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'.
 """
 input users_bool_exp {
   _and: [users_bool_exp!]
   _not: users_bool_exp
   _or: [users_bool_exp!]
+  auth0_id: String_comparison_exp
   chat_group_memberships: chat_group_members_bool_exp
   chat_messages: chat_messages_bool_exp
   comments: comments_bool_exp
@@ -9911,6 +9816,8 @@ input users_bool_exp {
   name: String_comparison_exp
   password_hash: String_comparison_exp
   private_info: user_private_bool_exp
+  profile_picture: file_uploads_bool_exp
+  profile_picture_id: uuid_comparison_exp
   things: things_bool_exp
   updated_at: timestamptz_comparison_exp
 }
@@ -9923,6 +9830,9 @@ enum users_constraint {
   email
 
   """unique or primary key constraint"""
+  users_auth0_id_key
+
+  """unique or primary key constraint"""
   users_email_key
 
   """unique or primary key constraint"""
@@ -9933,6 +9843,7 @@ enum users_constraint {
 input type for inserting data into table "users"
 """
 input users_insert_input {
+  auth0_id: String
   chat_group_memberships: chat_group_members_arr_rel_insert_input
   chat_messages: chat_messages_arr_rel_insert_input
   comments: comments_arr_rel_insert_input
@@ -9949,12 +9860,15 @@ input users_insert_input {
   name: String
   password_hash: String
   private_info: user_private_obj_rel_insert_input
+  profile_picture: file_uploads_obj_rel_insert_input
+  profile_picture_id: uuid
   things: things_arr_rel_insert_input
   updated_at: timestamptz
 }
 
 """aggregate max on columns"""
 type users_max_fields {
+  auth0_id: String
   created_at: timestamptz
   email: String
   email_verified: timestamptz
@@ -9964,11 +9878,31 @@ type users_max_fields {
   last_seen: timestamptz
   name: String
   password_hash: String
+  profile_picture_id: uuid
   updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "users"
+"""
+input users_max_order_by {
+  auth0_id: order_by
+  created_at: order_by
+  email: order_by
+  email_verified: order_by
+  id: order_by
+  image: order_by
+  last_chat_notification: order_by
+  last_seen: order_by
+  name: order_by
+  password_hash: order_by
+  profile_picture_id: order_by
+  updated_at: order_by
 }
 
 """aggregate min on columns"""
 type users_min_fields {
+  auth0_id: String
   created_at: timestamptz
   email: String
   email_verified: timestamptz
@@ -9978,7 +9912,26 @@ type users_min_fields {
   last_seen: timestamptz
   name: String
   password_hash: String
+  profile_picture_id: uuid
   updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "users"
+"""
+input users_min_order_by {
+  auth0_id: order_by
+  created_at: order_by
+  email: order_by
+  email_verified: order_by
+  id: order_by
+  image: order_by
+  last_chat_notification: order_by
+  last_seen: order_by
+  name: order_by
+  password_hash: order_by
+  profile_picture_id: order_by
+  updated_at: order_by
 }
 
 """
@@ -10007,12 +9960,13 @@ on conflict condition type for table "users"
 """
 input users_on_conflict {
   constraint: users_constraint!
-  update_columns: [users_update_column!]!
+  update_columns: [users_update_column!]! = []
   where: users_bool_exp
 }
 
 """Ordering options when selecting data from "users"."""
 input users_order_by {
+  auth0_id: order_by
   chat_group_memberships_aggregate: chat_group_members_aggregate_order_by
   chat_messages_aggregate: chat_messages_aggregate_order_by
   comments_aggregate: comments_aggregate_order_by
@@ -10029,6 +9983,8 @@ input users_order_by {
   name: order_by
   password_hash: order_by
   private_info: user_private_order_by
+  profile_picture: file_uploads_order_by
+  profile_picture_id: order_by
   things_aggregate: things_aggregate_order_by
   updated_at: order_by
 }
@@ -10043,6 +9999,9 @@ select columns of table "users"
 """
 enum users_select_column {
   """column name"""
+  auth0_id
+
+  """column name"""
   created_at
 
   """column name"""
@@ -10068,6 +10027,9 @@ enum users_select_column {
 
   """column name"""
   password_hash
+
+  """column name"""
+  profile_picture_id
 
   """column name"""
   updated_at
@@ -10077,6 +10039,7 @@ enum users_select_column {
 input type for updating data in table "users"
 """
 input users_set_input {
+  auth0_id: String
   created_at: timestamptz
   email: String
   email_verified: timestamptz
@@ -10086,6 +10049,7 @@ input users_set_input {
   last_seen: timestamptz
   name: String
   password_hash: String
+  profile_picture_id: uuid
   updated_at: timestamptz
 }
 
@@ -10093,6 +10057,9 @@ input users_set_input {
 update columns of table "users"
 """
 enum users_update_column {
+  """column name"""
+  auth0_id
+
   """column name"""
   created_at
 
@@ -10119,6 +10086,9 @@ enum users_update_column {
 
   """column name"""
   password_hash
+
+  """column name"""
+  profile_picture_id
 
   """column name"""
   updated_at
@@ -10264,7 +10234,7 @@ on conflict condition type for table "verification_requests"
 """
 input verification_requests_on_conflict {
   constraint: verification_requests_constraint!
-  update_columns: [verification_requests_update_column!]!
+  update_columns: [verification_requests_update_column!]! = []
   where: verification_requests_bool_exp
 }
 

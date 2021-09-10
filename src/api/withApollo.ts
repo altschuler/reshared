@@ -3,17 +3,22 @@ import merge from 'deepmerge';
 import isEqual from 'lodash/isEqual';
 import { makeApolloClient } from './apolloClient';
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
+import { useAuth0 } from '@auth0/auth0-react';
+import { GetIdTokenClaimsFn } from './types';
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
 
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
-function createApolloClient(token?: string) {
-    return makeApolloClient(typeof window === 'undefined', token);
-}
-
-export function initializeApollo(initialState: any = null, token?: string) {
-    const _apolloClient = apolloClient ?? createApolloClient(token);
+const createApolloClient = (token?: string | null, getIdTokenClaimsFn?: GetIdTokenClaimsFn) => {
+    return makeApolloClient(typeof window === 'undefined', token, getIdTokenClaimsFn);
+};
+export const initializeApollo = (
+    initialState: any = null,
+    token?: string | null,
+    getIdTokenClaimsFn?: GetIdTokenClaimsFn,
+) => {
+    const _apolloClient = apolloClient ?? createApolloClient(token, getIdTokenClaimsFn);
 
     // If your page has Next.js data fetching methods that use Apollo Client, the initial state
     // gets hydrated here
@@ -39,18 +44,22 @@ export function initializeApollo(initialState: any = null, token?: string) {
     if (!apolloClient) apolloClient = _apolloClient;
 
     return _apolloClient;
-}
+};
 
-export function addApolloState(client: ApolloClient<NormalizedCacheObject> | null, pageProps) {
+export const addApolloState = (client: ApolloClient<NormalizedCacheObject> | null, pageProps) => {
     if (pageProps?.props && client) {
         pageProps.props[APOLLO_STATE_PROP_NAME] = client.cache.extract();
     }
 
     return pageProps;
-}
+};
 
-export function useApollo(pageProps) {
+export const useApollo = (pageProps) => {
+    const { getIdTokenClaims } = useAuth0();
     const state = pageProps[APOLLO_STATE_PROP_NAME];
-    const store = useMemo(() => initializeApollo(state), [state]);
-    return store;
-}
+
+    return useMemo(
+        () => initializeApollo(state, null, getIdTokenClaims),
+        [getIdTokenClaims, state],
+    );
+};
