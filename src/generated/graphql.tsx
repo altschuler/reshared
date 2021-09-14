@@ -78,6 +78,17 @@ export type CredentialsInput = {
   password: Scalars['String'];
 };
 
+export type DeleteThingInput = {
+  id: Scalars['uuid'];
+};
+
+export type DeleteThingOutput = {
+  __typename?: 'DeleteThingOutput';
+  /** An object relationship */
+  thing: Things;
+  thing_id: Scalars['uuid'];
+};
+
 export type HandleJoinRequestInput = {
   accepted: Scalars['Boolean'];
   join_request_id: Scalars['uuid'];
@@ -4033,6 +4044,7 @@ export type Mutation_Root = {
   createChatGroup?: Maybe<CreateChatGroupResult>;
   createGroup: CreateGroupResult;
   createJoinToken?: Maybe<CreateJoinTokenResult>;
+  deleteThing?: Maybe<DeleteThingOutput>;
   /** delete data from the table: "activities" */
   delete_activities?: Maybe<Activities_Mutation_Response>;
   /** delete single row from the table: "activities" */
@@ -4352,6 +4364,12 @@ export type Mutation_RootCreateGroupArgs = {
 /** mutation root */
 export type Mutation_RootCreateJoinTokenArgs = {
   input: CreateJoinTokenInput;
+};
+
+
+/** mutation root */
+export type Mutation_RootDeleteThingArgs = {
+  input: DeleteThingInput;
 };
 
 

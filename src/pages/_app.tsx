@@ -29,8 +29,10 @@ const theme = {};
 const App = ({ Component, pageProps }: AppProps) => {
     return (
         <Auth0Provider
+            useRefreshTokens
             clientId={process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID!}
-            domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN!}>
+            domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN!}
+            cacheLocation="localstorage">
             <AuthProvider pageProps={pageProps}>
                 <ThemeProvider theme={theme}>
                     <DialogsProvider>

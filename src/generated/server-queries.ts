@@ -78,6 +78,17 @@ export type CredentialsInput = {
   password: Scalars['String'];
 };
 
+export type DeleteThingInput = {
+  id: Scalars['uuid'];
+};
+
+export type DeleteThingOutput = {
+  __typename?: 'DeleteThingOutput';
+  /** An object relationship */
+  thing: Things;
+  thing_id: Scalars['uuid'];
+};
+
 export type HandleJoinRequestInput = {
   accepted: Scalars['Boolean'];
   join_request_id: Scalars['uuid'];
@@ -4033,6 +4044,7 @@ export type Mutation_Root = {
   createChatGroup?: Maybe<CreateChatGroupResult>;
   createGroup: CreateGroupResult;
   createJoinToken?: Maybe<CreateJoinTokenResult>;
+  deleteThing?: Maybe<DeleteThingOutput>;
   /** delete data from the table: "activities" */
   delete_activities?: Maybe<Activities_Mutation_Response>;
   /** delete single row from the table: "activities" */
@@ -4352,6 +4364,12 @@ export type Mutation_RootCreateGroupArgs = {
 /** mutation root */
 export type Mutation_RootCreateJoinTokenArgs = {
   input: CreateJoinTokenInput;
+};
+
+
+/** mutation root */
+export type Mutation_RootDeleteThingArgs = {
+  input: DeleteThingInput;
 };
 
 
@@ -9231,6 +9249,8 @@ export type ResolversTypes = {
   CreateJoinTokenInput: CreateJoinTokenInput;
   CreateJoinTokenResult: ResolverTypeWrapper<CreateJoinTokenResult>;
   CredentialsInput: CredentialsInput;
+  DeleteThingInput: DeleteThingInput;
+  DeleteThingOutput: ResolverTypeWrapper<DeleteThingOutput>;
   HandleJoinRequestInput: HandleJoinRequestInput;
   HandleJoinRequestResult: ResolverTypeWrapper<HandleJoinRequestResult>;
   Int_comparison_exp: Int_Comparison_Exp;
@@ -9768,6 +9788,8 @@ export type ResolversParentTypes = {
   CreateJoinTokenInput: CreateJoinTokenInput;
   CreateJoinTokenResult: CreateJoinTokenResult;
   CredentialsInput: CredentialsInput;
+  DeleteThingInput: DeleteThingInput;
+  DeleteThingOutput: DeleteThingOutput;
   HandleJoinRequestInput: HandleJoinRequestInput;
   HandleJoinRequestResult: HandleJoinRequestResult;
   Int_comparison_exp: Int_Comparison_Exp;
@@ -10236,6 +10258,12 @@ export type CreateJoinTokenResultResolvers<ContextType = any, ParentType extends
   group_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   join_token?: Resolver<ResolversTypes['group_join_tokens'], ParentType, ContextType>;
   join_token_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type DeleteThingOutputResolvers<ContextType = any, ParentType extends ResolversParentTypes['DeleteThingOutput'] = ResolversParentTypes['DeleteThingOutput']> = {
+  thing?: Resolver<ResolversTypes['things'], ParentType, ContextType>;
+  thing_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -11272,6 +11300,7 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   createChatGroup?: Resolver<Maybe<ResolversTypes['CreateChatGroupResult']>, ParentType, ContextType, RequireFields<Mutation_RootCreateChatGroupArgs, 'input'>>;
   createGroup?: Resolver<ResolversTypes['CreateGroupResult'], ParentType, ContextType, RequireFields<Mutation_RootCreateGroupArgs, 'input'>>;
   createJoinToken?: Resolver<Maybe<ResolversTypes['CreateJoinTokenResult']>, ParentType, ContextType, RequireFields<Mutation_RootCreateJoinTokenArgs, 'input'>>;
+  deleteThing?: Resolver<Maybe<ResolversTypes['DeleteThingOutput']>, ParentType, ContextType, RequireFields<Mutation_RootDeleteThingArgs, 'input'>>;
   delete_activities?: Resolver<Maybe<ResolversTypes['activities_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_ActivitiesArgs, 'where'>>;
   delete_activities_by_pk?: Resolver<Maybe<ResolversTypes['activities']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Activities_By_PkArgs, 'id'>>;
   delete_activity_verb?: Resolver<Maybe<ResolversTypes['activity_verb_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Activity_VerbArgs, 'where'>>;
@@ -12066,6 +12095,7 @@ export type Resolvers<ContextType = any> = {
   CreateChatGroupResult?: CreateChatGroupResultResolvers<ContextType>;
   CreateGroupResult?: CreateGroupResultResolvers<ContextType>;
   CreateJoinTokenResult?: CreateJoinTokenResultResolvers<ContextType>;
+  DeleteThingOutput?: DeleteThingOutputResolvers<ContextType>;
   HandleJoinRequestResult?: HandleJoinRequestResultResolvers<ContextType>;
   JoinGroupResult?: JoinGroupResultResolvers<ContextType>;
   RegistrationResult?: RegistrationResultResolvers<ContextType>;

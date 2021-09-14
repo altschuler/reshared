@@ -72,6 +72,16 @@ input CredentialsInput {
   password: String!
 }
 
+input DeleteThingInput {
+  id: uuid!
+}
+
+type DeleteThingOutput {
+  """An object relationship"""
+  thing: things!
+  thing_id: uuid!
+}
+
 input HandleJoinRequestInput {
   accepted: Boolean!
   join_request_id: uuid!
@@ -4695,6 +4705,7 @@ type mutation_root {
   createChatGroup(input: CreateChatGroupInput!): CreateChatGroupResult
   createGroup(input: CreateGroupInput!): CreateGroupResult!
   createJoinToken(input: CreateJoinTokenInput!): CreateJoinTokenResult
+  deleteThing(input: DeleteThingInput!): DeleteThingOutput
 
   """
   delete data from the table: "activities"

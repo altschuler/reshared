@@ -5,20 +5,21 @@
     Things_Order_By,
     useThingListQuery,
 } from '../generated/graphql';
+import { head } from 'lodash';
 import { useAuth } from '../utils/auth';
 import { EditThingDrawer, useDialogs } from './dialogs';
 import { usePagination } from '../utils/list';
-import { ReactNode, useCallback, useEffect, useState } from 'react';
+import React, { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import { Button, Input, List, Space } from 'antd';
 import { ownsThing } from '../utils/thing';
-import { EditOutlined } from '@ant-design/icons';
-import { ImageThumbList, UserAvatar } from './display';
+import { EditOutlined, PictureOutlined } from '@ant-design/icons';
+import { ThingTypeTag, ImageThumbList, UserAvatar } from './display';
 import Link from 'next/link';
 import { createUseStyles } from 'react-jss';
 import { useDebounce } from '../utils/hooks';
 import { ThingInterestButton } from './ThingInterestButton';
 import { urlFor } from '../utils/urls';
-import { ThingTypeTag } from './display/ThingTypeTag';
+import Image from 'next/image';
 
 const useStyles = createUseStyles({
     search: {
@@ -52,7 +53,6 @@ export interface ThingListProps {
 }
 
 export const ThingList = (props: ThingListProps) => {
-    const auth = useAuth();
     const [query, setQuery] = useState('');
     const debouncedQuery = useDebounce(query, 300);
     const { showDialog } = useDialogs();
@@ -106,34 +106,65 @@ export const ThingList = (props: ThingListProps) => {
             dataSource={things}
             locale={props.emptyText ? { emptyText: props.emptyText } : undefined}
             renderItem={(thing) => (
-                <List.Item
-                    key={thing.id}
-                    actions={[
-                        ownsThing(thing, auth.user) ? (
-                            <Button
-                                title="This is your thing, click to edit"
-                                icon={<EditOutlined />}
-                                key="edit"
-                                onClick={() => handleEdit(thing)}
-                            />
-                        ) : (
-                            <ThingInterestButton thing={thing} />
-                        ),
-                    ]}>
-                    <List.Item.Meta
-                        avatar={<UserAvatar user={thing.owner} />}
-                        title={
-                            <Space>
-                                <Link href={urlFor.thing(thing)}>{thing.name}</Link>
-                                <ThingTypeTag type={thing.type} />
-                            </Space>
-                        }
-                        description={thing.description}
-                    />
-
-                    <ImageThumbList thing={thing} />
-                </List.Item>
+                <ThingItem key={thing.id} thing={thing} onEdit={() => handleEdit(thing)} />
             )}
         />
     );
+};
+
+interface ThingItemProps {
+    thing: ThingCardFragment;
+    onEdit: () => unknown;
+}
+
+const ThingItem = (props: ThingItemProps) => {
+    const auth = useAuth();
+    const image = useMemo(() => head(props.thing.images), [props.thing.images]);
+
+    const avatar = (
+        <div style={{ width: 50, height: 50 }}>
+            {image ? (
+                <Image
+                    title={image.description}
+                    width={50}
+                    height={50}
+                    objectFit="cover"
+                    alt={image.description || image.file.name}
+                    src={image.file.url}
+                />
+            ) : (
+                <PictureOutlined style={{ fontSize: 50, opacity: 0.07 }} />
+            )}
+        </div>
+    );
+
+    return (
+        <List.Item
+            actions={[
+                ownsThing(props.thing, auth.user) ? (
+                    <Button
+                        title="This is your thing, click to edit"
+                        icon={<EditOutlined />}
+                        key="edit"
+                        onClick={props.onEdit}
+                    />
+                ) : (
+                    <ThingInterestButton thing={props.thing} />
+                ),
+            ]}>
+            <List.Item.Meta
+                avatar={avatar}
+                title={
+                    <Space>
+                        <Link href={urlFor.thing(props.thing)}>{props.thing.name}</Link>
+                        <ThingTypeTag type={props.thing.type} />
+                    </Space>
+                }
+                description={props.thing.description}
+            />
+
+            <UserAvatar user={props.thing.owner} />
+        </List.Item>
+    );
+    // <ImageThumbList thing={props.thing} />;
 };

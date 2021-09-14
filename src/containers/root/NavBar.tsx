@@ -146,12 +146,11 @@ const CollapsedNav = () => {
             ) : (
                 <>
                     <Menu.Item>
-                        <a href={urlFor.auth.login()}>Login</a>
-                        {/*<Link href={urlFor.auth.login()}>Login</Link>*/}
+                        <a onClick={auth.login}>Login</a> /
                     </Menu.Item>
 
                     <Menu.Item>
-                        <Link href={urlFor.auth.register()}>Register</Link>
+                        <a href={urlFor.auth.register()}>Register</a>
                     </Menu.Item>
                 </>
             )}
