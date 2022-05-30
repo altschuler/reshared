@@ -8,8 +8,6 @@ export interface JwtToken extends JWTClaims {
 }
 
 export const decodeToken = (token: string) => {
-    console.log(jwtSecret);
-    console.log(token);
     try {
         const decoded = jwt.verify(token, jwtSecret.key, {
             algorithms: [jwtSecret.type],
