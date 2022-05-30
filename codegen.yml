@@ -1,41 +1,41 @@
 ﻿overwrite: true
 schema:
-  #  - ${NEXT_PUBLIC_GRAPHQL_ENDPOINT}:
-  - http://localhost:8080/v1/graphql:
-      headers:
-        X-Hasura-Admin-Secret: NOTSAFE
+    #  - ${NEXT_PUBLIC_GRAPHQL_ENDPOINT}:
+    - http://localhost:1337/v1/graphql:
+          headers:
+              X-Hasura-Admin-Secret: nhost-admin-secret
 generates:
-  ./src/generated/schema.graphql:
-    plugins:
-      - schema-ast
-  ./src/generated/server-queries.ts:
-    documents:
-      - './src/**/*.graphql'
-    plugins:
-      - typescript
-      - typescript-operations
-      - typescript-resolvers
-      - typed-document-node
-      - fragment-matcher
-  ./src/generated/graphql.tsx:
-    documents:
-      - './src/**/*.graphql'
-      - '!./src/generated/**'
-      - '!./src/pages/api/**'
-      - '!./src/server/**'
-    plugins:
-      - typescript
-      - typescript-operations
-      - typescript-react-apollo
-      - fragment-matcher
-      - named-operations-object
-    config:
-      withHooks: true
-      withRefetchFn: true
-      withComponent: false
-      withHOC: false
-      identifierName: GqlOps
-      scalars:
-        timestamptz: Date
-        timestamp: Date
-        uuid: string
+    ./src/generated/schema.graphql:
+        plugins:
+            - schema-ast
+    ./src/generated/server-queries.ts:
+        documents:
+            - './src/**/*.graphql'
+        plugins:
+            - typescript
+            - typescript-operations
+            - typescript-resolvers
+            - typed-document-node
+            - fragment-matcher
+    ./src/generated/graphql.tsx:
+        documents:
+            - './src/**/*.graphql'
+            - '!./src/generated/**'
+            - '!./src/pages/api/**'
+            - '!./src/server/**'
+        plugins:
+            - typescript
+            - typescript-operations
+            - typescript-react-apollo
+            - fragment-matcher
+            - named-operations-object
+        config:
+            withHooks: true
+            withRefetchFn: true
+            withComponent: false
+            withHOC: false
+            identifierName: GqlOps
+            scalars:
+                timestamptz: Date
+                timestamp: Date
+                uuid: string

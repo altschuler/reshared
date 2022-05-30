@@ -5,7 +5,7 @@ export const hasuraClient = new ApolloClient({
         fetch,
         uri: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT,
         headers: {
-            'x-hasura-admin-secret': process.env.HASURA_ADMIN_SECRET,
+            'x-hasura-admin-secret': process.env.NHOST_ADMIN_SECRET,
         },
     }),
     cache: new InMemoryCache(),

@@ -6,11 +6,11 @@ schema {
 
 """whether this query should be cached (Hasura Cloud only)"""
 directive @cached(
-  """measured in seconds"""
-  ttl: Int! = 60
-
   """refresh the cache entry"""
   refresh: Boolean! = false
+
+  """measured in seconds"""
+  ttl: Int! = 60
 ) on QUERY
 
 """
@@ -70,16 +70,6 @@ input CredentialsInput {
   email: String
   name: String!
   password: String!
-}
-
-input DeleteThingInput {
-  id: uuid!
-}
-
-type DeleteThingOutput {
-  """An object relationship"""
-  thing: things!
-  thing_id: uuid!
 }
 
 input HandleJoinRequestInput {
@@ -318,7 +308,7 @@ input type for inserting array relation for remote table "activities"
 input activities_arr_rel_insert_input {
   data: [activities_insert_input!]!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: activities_on_conflict
 }
 
@@ -430,12 +420,12 @@ input type for inserting object relation for remote table "activities"
 input activities_obj_rel_insert_input {
   data: activities_insert_input!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: activities_on_conflict
 }
 
 """
-on conflict condition type for table "activities"
+on_conflict condition type for table "activities"
 """
 input activities_on_conflict {
   constraint: activities_constraint!
@@ -648,7 +638,7 @@ type activity_verb_mutation_response {
 }
 
 """
-on conflict condition type for table "activity_verb"
+on_conflict condition type for table "activity_verb"
 """
 input activity_verb_on_conflict {
   constraint: activity_verb_constraint!
@@ -698,6 +688,1518 @@ enum activity_verb_update_column {
 }
 
 """
+columns and relationships of "auth.provider_requests"
+"""
+type authProviderRequests {
+  id: uuid!
+  options(
+    """JSON select path"""
+    path: String
+  ): jsonb
+}
+
+"""
+aggregated selection of "auth.provider_requests"
+"""
+type authProviderRequests_aggregate {
+  aggregate: authProviderRequests_aggregate_fields
+  nodes: [authProviderRequests!]!
+}
+
+"""
+aggregate fields of "auth.provider_requests"
+"""
+type authProviderRequests_aggregate_fields {
+  count(columns: [authProviderRequests_select_column!], distinct: Boolean): Int!
+  max: authProviderRequests_max_fields
+  min: authProviderRequests_min_fields
+}
+
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input authProviderRequests_append_input {
+  options: jsonb
+}
+
+"""
+Boolean expression to filter rows from the table "auth.provider_requests". All fields are combined with a logical 'AND'.
+"""
+input authProviderRequests_bool_exp {
+  _and: [authProviderRequests_bool_exp!]
+  _not: authProviderRequests_bool_exp
+  _or: [authProviderRequests_bool_exp!]
+  id: uuid_comparison_exp
+  options: jsonb_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "auth.provider_requests"
+"""
+enum authProviderRequests_constraint {
+  """unique or primary key constraint"""
+  provider_requests_pkey
+}
+
+"""
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input authProviderRequests_delete_at_path_input {
+  options: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+"""
+input authProviderRequests_delete_elem_input {
+  options: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input authProviderRequests_delete_key_input {
+  options: String
+}
+
+"""
+input type for inserting data into table "auth.provider_requests"
+"""
+input authProviderRequests_insert_input {
+  id: uuid
+  options: jsonb
+}
+
+"""aggregate max on columns"""
+type authProviderRequests_max_fields {
+  id: uuid
+}
+
+"""aggregate min on columns"""
+type authProviderRequests_min_fields {
+  id: uuid
+}
+
+"""
+response of any mutation on the table "auth.provider_requests"
+"""
+type authProviderRequests_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [authProviderRequests!]!
+}
+
+"""
+on_conflict condition type for table "auth.provider_requests"
+"""
+input authProviderRequests_on_conflict {
+  constraint: authProviderRequests_constraint!
+  update_columns: [authProviderRequests_update_column!]! = []
+  where: authProviderRequests_bool_exp
+}
+
+"""Ordering options when selecting data from "auth.provider_requests"."""
+input authProviderRequests_order_by {
+  id: order_by
+  options: order_by
+}
+
+"""primary key columns input for table: authProviderRequests"""
+input authProviderRequests_pk_columns_input {
+  id: uuid!
+}
+
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input authProviderRequests_prepend_input {
+  options: jsonb
+}
+
+"""
+select columns of table "auth.provider_requests"
+"""
+enum authProviderRequests_select_column {
+  """column name"""
+  id
+
+  """column name"""
+  options
+}
+
+"""
+input type for updating data in table "auth.provider_requests"
+"""
+input authProviderRequests_set_input {
+  id: uuid
+  options: jsonb
+}
+
+"""
+update columns of table "auth.provider_requests"
+"""
+enum authProviderRequests_update_column {
+  """column name"""
+  id
+
+  """column name"""
+  options
+}
+
+"""
+columns and relationships of "auth.providers"
+"""
+type authProviders {
+  id: String!
+
+  """An array relationship"""
+  userProviders(
+    """distinct select on columns"""
+    distinct_on: [authUserProviders_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserProviders_order_by!]
+
+    """filter the rows returned"""
+    where: authUserProviders_bool_exp
+  ): [authUserProviders!]!
+
+  """An aggregate relationship"""
+  userProviders_aggregate(
+    """distinct select on columns"""
+    distinct_on: [authUserProviders_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserProviders_order_by!]
+
+    """filter the rows returned"""
+    where: authUserProviders_bool_exp
+  ): authUserProviders_aggregate!
+}
+
+"""
+aggregated selection of "auth.providers"
+"""
+type authProviders_aggregate {
+  aggregate: authProviders_aggregate_fields
+  nodes: [authProviders!]!
+}
+
+"""
+aggregate fields of "auth.providers"
+"""
+type authProviders_aggregate_fields {
+  count(columns: [authProviders_select_column!], distinct: Boolean): Int!
+  max: authProviders_max_fields
+  min: authProviders_min_fields
+}
+
+"""
+Boolean expression to filter rows from the table "auth.providers". All fields are combined with a logical 'AND'.
+"""
+input authProviders_bool_exp {
+  _and: [authProviders_bool_exp!]
+  _not: authProviders_bool_exp
+  _or: [authProviders_bool_exp!]
+  id: String_comparison_exp
+  userProviders: authUserProviders_bool_exp
+}
+
+"""
+unique or primary key constraints on table "auth.providers"
+"""
+enum authProviders_constraint {
+  """unique or primary key constraint"""
+  providers_pkey
+}
+
+"""
+input type for inserting data into table "auth.providers"
+"""
+input authProviders_insert_input {
+  id: String
+  userProviders: authUserProviders_arr_rel_insert_input
+}
+
+"""aggregate max on columns"""
+type authProviders_max_fields {
+  id: String
+}
+
+"""aggregate min on columns"""
+type authProviders_min_fields {
+  id: String
+}
+
+"""
+response of any mutation on the table "auth.providers"
+"""
+type authProviders_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [authProviders!]!
+}
+
+"""
+input type for inserting object relation for remote table "auth.providers"
+"""
+input authProviders_obj_rel_insert_input {
+  data: authProviders_insert_input!
+
+  """upsert condition"""
+  on_conflict: authProviders_on_conflict
+}
+
+"""
+on_conflict condition type for table "auth.providers"
+"""
+input authProviders_on_conflict {
+  constraint: authProviders_constraint!
+  update_columns: [authProviders_update_column!]! = []
+  where: authProviders_bool_exp
+}
+
+"""Ordering options when selecting data from "auth.providers"."""
+input authProviders_order_by {
+  id: order_by
+  userProviders_aggregate: authUserProviders_aggregate_order_by
+}
+
+"""primary key columns input for table: authProviders"""
+input authProviders_pk_columns_input {
+  id: String!
+}
+
+"""
+select columns of table "auth.providers"
+"""
+enum authProviders_select_column {
+  """column name"""
+  id
+}
+
+"""
+input type for updating data in table "auth.providers"
+"""
+input authProviders_set_input {
+  id: String
+}
+
+"""
+update columns of table "auth.providers"
+"""
+enum authProviders_update_column {
+  """column name"""
+  id
+}
+
+"""
+columns and relationships of "auth.refresh_tokens"
+"""
+type authRefreshTokens {
+  createdAt: timestamptz!
+  expiresAt: timestamptz!
+  refreshToken: uuid!
+
+  """An object relationship"""
+  user: users!
+  userId: uuid!
+}
+
+"""
+aggregated selection of "auth.refresh_tokens"
+"""
+type authRefreshTokens_aggregate {
+  aggregate: authRefreshTokens_aggregate_fields
+  nodes: [authRefreshTokens!]!
+}
+
+"""
+aggregate fields of "auth.refresh_tokens"
+"""
+type authRefreshTokens_aggregate_fields {
+  count(columns: [authRefreshTokens_select_column!], distinct: Boolean): Int!
+  max: authRefreshTokens_max_fields
+  min: authRefreshTokens_min_fields
+}
+
+"""
+order by aggregate values of table "auth.refresh_tokens"
+"""
+input authRefreshTokens_aggregate_order_by {
+  count: order_by
+  max: authRefreshTokens_max_order_by
+  min: authRefreshTokens_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "auth.refresh_tokens"
+"""
+input authRefreshTokens_arr_rel_insert_input {
+  data: [authRefreshTokens_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: authRefreshTokens_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "auth.refresh_tokens". All fields are combined with a logical 'AND'.
+"""
+input authRefreshTokens_bool_exp {
+  _and: [authRefreshTokens_bool_exp!]
+  _not: authRefreshTokens_bool_exp
+  _or: [authRefreshTokens_bool_exp!]
+  createdAt: timestamptz_comparison_exp
+  expiresAt: timestamptz_comparison_exp
+  refreshToken: uuid_comparison_exp
+  user: users_bool_exp
+  userId: uuid_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "auth.refresh_tokens"
+"""
+enum authRefreshTokens_constraint {
+  """unique or primary key constraint"""
+  refresh_tokens_pkey
+}
+
+"""
+input type for inserting data into table "auth.refresh_tokens"
+"""
+input authRefreshTokens_insert_input {
+  createdAt: timestamptz
+  expiresAt: timestamptz
+  refreshToken: uuid
+  user: users_obj_rel_insert_input
+  userId: uuid
+}
+
+"""aggregate max on columns"""
+type authRefreshTokens_max_fields {
+  createdAt: timestamptz
+  expiresAt: timestamptz
+  refreshToken: uuid
+  userId: uuid
+}
+
+"""
+order by max() on columns of table "auth.refresh_tokens"
+"""
+input authRefreshTokens_max_order_by {
+  createdAt: order_by
+  expiresAt: order_by
+  refreshToken: order_by
+  userId: order_by
+}
+
+"""aggregate min on columns"""
+type authRefreshTokens_min_fields {
+  createdAt: timestamptz
+  expiresAt: timestamptz
+  refreshToken: uuid
+  userId: uuid
+}
+
+"""
+order by min() on columns of table "auth.refresh_tokens"
+"""
+input authRefreshTokens_min_order_by {
+  createdAt: order_by
+  expiresAt: order_by
+  refreshToken: order_by
+  userId: order_by
+}
+
+"""
+response of any mutation on the table "auth.refresh_tokens"
+"""
+type authRefreshTokens_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [authRefreshTokens!]!
+}
+
+"""
+on_conflict condition type for table "auth.refresh_tokens"
+"""
+input authRefreshTokens_on_conflict {
+  constraint: authRefreshTokens_constraint!
+  update_columns: [authRefreshTokens_update_column!]! = []
+  where: authRefreshTokens_bool_exp
+}
+
+"""Ordering options when selecting data from "auth.refresh_tokens"."""
+input authRefreshTokens_order_by {
+  createdAt: order_by
+  expiresAt: order_by
+  refreshToken: order_by
+  user: users_order_by
+  userId: order_by
+}
+
+"""primary key columns input for table: authRefreshTokens"""
+input authRefreshTokens_pk_columns_input {
+  refreshToken: uuid!
+}
+
+"""
+select columns of table "auth.refresh_tokens"
+"""
+enum authRefreshTokens_select_column {
+  """column name"""
+  createdAt
+
+  """column name"""
+  expiresAt
+
+  """column name"""
+  refreshToken
+
+  """column name"""
+  userId
+}
+
+"""
+input type for updating data in table "auth.refresh_tokens"
+"""
+input authRefreshTokens_set_input {
+  createdAt: timestamptz
+  expiresAt: timestamptz
+  refreshToken: uuid
+  userId: uuid
+}
+
+"""
+update columns of table "auth.refresh_tokens"
+"""
+enum authRefreshTokens_update_column {
+  """column name"""
+  createdAt
+
+  """column name"""
+  expiresAt
+
+  """column name"""
+  refreshToken
+
+  """column name"""
+  userId
+}
+
+"""
+columns and relationships of "auth.roles"
+"""
+type authRoles {
+  role: String!
+
+  """An array relationship"""
+  userRoles(
+    """distinct select on columns"""
+    distinct_on: [authUserRoles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserRoles_order_by!]
+
+    """filter the rows returned"""
+    where: authUserRoles_bool_exp
+  ): [authUserRoles!]!
+
+  """An aggregate relationship"""
+  userRoles_aggregate(
+    """distinct select on columns"""
+    distinct_on: [authUserRoles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserRoles_order_by!]
+
+    """filter the rows returned"""
+    where: authUserRoles_bool_exp
+  ): authUserRoles_aggregate!
+
+  """An array relationship"""
+  usersByDefaultRole(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): [users!]!
+
+  """An aggregate relationship"""
+  usersByDefaultRole_aggregate(
+    """distinct select on columns"""
+    distinct_on: [users_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [users_order_by!]
+
+    """filter the rows returned"""
+    where: users_bool_exp
+  ): users_aggregate!
+}
+
+"""
+aggregated selection of "auth.roles"
+"""
+type authRoles_aggregate {
+  aggregate: authRoles_aggregate_fields
+  nodes: [authRoles!]!
+}
+
+"""
+aggregate fields of "auth.roles"
+"""
+type authRoles_aggregate_fields {
+  count(columns: [authRoles_select_column!], distinct: Boolean): Int!
+  max: authRoles_max_fields
+  min: authRoles_min_fields
+}
+
+"""
+Boolean expression to filter rows from the table "auth.roles". All fields are combined with a logical 'AND'.
+"""
+input authRoles_bool_exp {
+  _and: [authRoles_bool_exp!]
+  _not: authRoles_bool_exp
+  _or: [authRoles_bool_exp!]
+  role: String_comparison_exp
+  userRoles: authUserRoles_bool_exp
+  usersByDefaultRole: users_bool_exp
+}
+
+"""
+unique or primary key constraints on table "auth.roles"
+"""
+enum authRoles_constraint {
+  """unique or primary key constraint"""
+  roles_pkey
+}
+
+"""
+input type for inserting data into table "auth.roles"
+"""
+input authRoles_insert_input {
+  role: String
+  userRoles: authUserRoles_arr_rel_insert_input
+  usersByDefaultRole: users_arr_rel_insert_input
+}
+
+"""aggregate max on columns"""
+type authRoles_max_fields {
+  role: String
+}
+
+"""aggregate min on columns"""
+type authRoles_min_fields {
+  role: String
+}
+
+"""
+response of any mutation on the table "auth.roles"
+"""
+type authRoles_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [authRoles!]!
+}
+
+"""
+input type for inserting object relation for remote table "auth.roles"
+"""
+input authRoles_obj_rel_insert_input {
+  data: authRoles_insert_input!
+
+  """upsert condition"""
+  on_conflict: authRoles_on_conflict
+}
+
+"""
+on_conflict condition type for table "auth.roles"
+"""
+input authRoles_on_conflict {
+  constraint: authRoles_constraint!
+  update_columns: [authRoles_update_column!]! = []
+  where: authRoles_bool_exp
+}
+
+"""Ordering options when selecting data from "auth.roles"."""
+input authRoles_order_by {
+  role: order_by
+  userRoles_aggregate: authUserRoles_aggregate_order_by
+  usersByDefaultRole_aggregate: users_aggregate_order_by
+}
+
+"""primary key columns input for table: authRoles"""
+input authRoles_pk_columns_input {
+  role: String!
+}
+
+"""
+select columns of table "auth.roles"
+"""
+enum authRoles_select_column {
+  """column name"""
+  role
+}
+
+"""
+input type for updating data in table "auth.roles"
+"""
+input authRoles_set_input {
+  role: String
+}
+
+"""
+update columns of table "auth.roles"
+"""
+enum authRoles_update_column {
+  """column name"""
+  role
+}
+
+"""
+columns and relationships of "auth.user_providers"
+"""
+type authUserProviders {
+  accessToken: String!
+  createdAt: timestamptz!
+  id: uuid!
+
+  """An object relationship"""
+  provider: authProviders!
+  providerId: String!
+  providerUserId: String!
+  refreshToken: String
+  updatedAt: timestamptz!
+
+  """An object relationship"""
+  user: users!
+  userId: uuid!
+}
+
+"""
+aggregated selection of "auth.user_providers"
+"""
+type authUserProviders_aggregate {
+  aggregate: authUserProviders_aggregate_fields
+  nodes: [authUserProviders!]!
+}
+
+"""
+aggregate fields of "auth.user_providers"
+"""
+type authUserProviders_aggregate_fields {
+  count(columns: [authUserProviders_select_column!], distinct: Boolean): Int!
+  max: authUserProviders_max_fields
+  min: authUserProviders_min_fields
+}
+
+"""
+order by aggregate values of table "auth.user_providers"
+"""
+input authUserProviders_aggregate_order_by {
+  count: order_by
+  max: authUserProviders_max_order_by
+  min: authUserProviders_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "auth.user_providers"
+"""
+input authUserProviders_arr_rel_insert_input {
+  data: [authUserProviders_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: authUserProviders_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "auth.user_providers". All fields are combined with a logical 'AND'.
+"""
+input authUserProviders_bool_exp {
+  _and: [authUserProviders_bool_exp!]
+  _not: authUserProviders_bool_exp
+  _or: [authUserProviders_bool_exp!]
+  accessToken: String_comparison_exp
+  createdAt: timestamptz_comparison_exp
+  id: uuid_comparison_exp
+  provider: authProviders_bool_exp
+  providerId: String_comparison_exp
+  providerUserId: String_comparison_exp
+  refreshToken: String_comparison_exp
+  updatedAt: timestamptz_comparison_exp
+  user: users_bool_exp
+  userId: uuid_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "auth.user_providers"
+"""
+enum authUserProviders_constraint {
+  """unique or primary key constraint"""
+  user_providers_pkey
+
+  """unique or primary key constraint"""
+  user_providers_provider_id_provider_user_id_key
+
+  """unique or primary key constraint"""
+  user_providers_user_id_provider_id_key
+}
+
+"""
+input type for inserting data into table "auth.user_providers"
+"""
+input authUserProviders_insert_input {
+  accessToken: String
+  createdAt: timestamptz
+  id: uuid
+  provider: authProviders_obj_rel_insert_input
+  providerId: String
+  providerUserId: String
+  refreshToken: String
+  updatedAt: timestamptz
+  user: users_obj_rel_insert_input
+  userId: uuid
+}
+
+"""aggregate max on columns"""
+type authUserProviders_max_fields {
+  accessToken: String
+  createdAt: timestamptz
+  id: uuid
+  providerId: String
+  providerUserId: String
+  refreshToken: String
+  updatedAt: timestamptz
+  userId: uuid
+}
+
+"""
+order by max() on columns of table "auth.user_providers"
+"""
+input authUserProviders_max_order_by {
+  accessToken: order_by
+  createdAt: order_by
+  id: order_by
+  providerId: order_by
+  providerUserId: order_by
+  refreshToken: order_by
+  updatedAt: order_by
+  userId: order_by
+}
+
+"""aggregate min on columns"""
+type authUserProviders_min_fields {
+  accessToken: String
+  createdAt: timestamptz
+  id: uuid
+  providerId: String
+  providerUserId: String
+  refreshToken: String
+  updatedAt: timestamptz
+  userId: uuid
+}
+
+"""
+order by min() on columns of table "auth.user_providers"
+"""
+input authUserProviders_min_order_by {
+  accessToken: order_by
+  createdAt: order_by
+  id: order_by
+  providerId: order_by
+  providerUserId: order_by
+  refreshToken: order_by
+  updatedAt: order_by
+  userId: order_by
+}
+
+"""
+response of any mutation on the table "auth.user_providers"
+"""
+type authUserProviders_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [authUserProviders!]!
+}
+
+"""
+on_conflict condition type for table "auth.user_providers"
+"""
+input authUserProviders_on_conflict {
+  constraint: authUserProviders_constraint!
+  update_columns: [authUserProviders_update_column!]! = []
+  where: authUserProviders_bool_exp
+}
+
+"""Ordering options when selecting data from "auth.user_providers"."""
+input authUserProviders_order_by {
+  accessToken: order_by
+  createdAt: order_by
+  id: order_by
+  provider: authProviders_order_by
+  providerId: order_by
+  providerUserId: order_by
+  refreshToken: order_by
+  updatedAt: order_by
+  user: users_order_by
+  userId: order_by
+}
+
+"""primary key columns input for table: authUserProviders"""
+input authUserProviders_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "auth.user_providers"
+"""
+enum authUserProviders_select_column {
+  """column name"""
+  accessToken
+
+  """column name"""
+  createdAt
+
+  """column name"""
+  id
+
+  """column name"""
+  providerId
+
+  """column name"""
+  providerUserId
+
+  """column name"""
+  refreshToken
+
+  """column name"""
+  updatedAt
+
+  """column name"""
+  userId
+}
+
+"""
+input type for updating data in table "auth.user_providers"
+"""
+input authUserProviders_set_input {
+  accessToken: String
+  createdAt: timestamptz
+  id: uuid
+  providerId: String
+  providerUserId: String
+  refreshToken: String
+  updatedAt: timestamptz
+  userId: uuid
+}
+
+"""
+update columns of table "auth.user_providers"
+"""
+enum authUserProviders_update_column {
+  """column name"""
+  accessToken
+
+  """column name"""
+  createdAt
+
+  """column name"""
+  id
+
+  """column name"""
+  providerId
+
+  """column name"""
+  providerUserId
+
+  """column name"""
+  refreshToken
+
+  """column name"""
+  updatedAt
+
+  """column name"""
+  userId
+}
+
+"""
+columns and relationships of "auth.user_roles"
+"""
+type authUserRoles {
+  createdAt: timestamptz!
+  id: uuid!
+  role: String!
+
+  """An object relationship"""
+  roleByRole: authRoles!
+
+  """An object relationship"""
+  user: users!
+  userId: uuid!
+}
+
+"""
+aggregated selection of "auth.user_roles"
+"""
+type authUserRoles_aggregate {
+  aggregate: authUserRoles_aggregate_fields
+  nodes: [authUserRoles!]!
+}
+
+"""
+aggregate fields of "auth.user_roles"
+"""
+type authUserRoles_aggregate_fields {
+  count(columns: [authUserRoles_select_column!], distinct: Boolean): Int!
+  max: authUserRoles_max_fields
+  min: authUserRoles_min_fields
+}
+
+"""
+order by aggregate values of table "auth.user_roles"
+"""
+input authUserRoles_aggregate_order_by {
+  count: order_by
+  max: authUserRoles_max_order_by
+  min: authUserRoles_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "auth.user_roles"
+"""
+input authUserRoles_arr_rel_insert_input {
+  data: [authUserRoles_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: authUserRoles_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "auth.user_roles". All fields are combined with a logical 'AND'.
+"""
+input authUserRoles_bool_exp {
+  _and: [authUserRoles_bool_exp!]
+  _not: authUserRoles_bool_exp
+  _or: [authUserRoles_bool_exp!]
+  createdAt: timestamptz_comparison_exp
+  id: uuid_comparison_exp
+  role: String_comparison_exp
+  roleByRole: authRoles_bool_exp
+  user: users_bool_exp
+  userId: uuid_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "auth.user_roles"
+"""
+enum authUserRoles_constraint {
+  """unique or primary key constraint"""
+  user_roles_pkey
+
+  """unique or primary key constraint"""
+  user_roles_user_id_role_key
+}
+
+"""
+input type for inserting data into table "auth.user_roles"
+"""
+input authUserRoles_insert_input {
+  createdAt: timestamptz
+  id: uuid
+  role: String
+  roleByRole: authRoles_obj_rel_insert_input
+  user: users_obj_rel_insert_input
+  userId: uuid
+}
+
+"""aggregate max on columns"""
+type authUserRoles_max_fields {
+  createdAt: timestamptz
+  id: uuid
+  role: String
+  userId: uuid
+}
+
+"""
+order by max() on columns of table "auth.user_roles"
+"""
+input authUserRoles_max_order_by {
+  createdAt: order_by
+  id: order_by
+  role: order_by
+  userId: order_by
+}
+
+"""aggregate min on columns"""
+type authUserRoles_min_fields {
+  createdAt: timestamptz
+  id: uuid
+  role: String
+  userId: uuid
+}
+
+"""
+order by min() on columns of table "auth.user_roles"
+"""
+input authUserRoles_min_order_by {
+  createdAt: order_by
+  id: order_by
+  role: order_by
+  userId: order_by
+}
+
+"""
+response of any mutation on the table "auth.user_roles"
+"""
+type authUserRoles_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [authUserRoles!]!
+}
+
+"""
+on_conflict condition type for table "auth.user_roles"
+"""
+input authUserRoles_on_conflict {
+  constraint: authUserRoles_constraint!
+  update_columns: [authUserRoles_update_column!]! = []
+  where: authUserRoles_bool_exp
+}
+
+"""Ordering options when selecting data from "auth.user_roles"."""
+input authUserRoles_order_by {
+  createdAt: order_by
+  id: order_by
+  role: order_by
+  roleByRole: authRoles_order_by
+  user: users_order_by
+  userId: order_by
+}
+
+"""primary key columns input for table: authUserRoles"""
+input authUserRoles_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "auth.user_roles"
+"""
+enum authUserRoles_select_column {
+  """column name"""
+  createdAt
+
+  """column name"""
+  id
+
+  """column name"""
+  role
+
+  """column name"""
+  userId
+}
+
+"""
+input type for updating data in table "auth.user_roles"
+"""
+input authUserRoles_set_input {
+  createdAt: timestamptz
+  id: uuid
+  role: String
+  userId: uuid
+}
+
+"""
+update columns of table "auth.user_roles"
+"""
+enum authUserRoles_update_column {
+  """column name"""
+  createdAt
+
+  """column name"""
+  id
+
+  """column name"""
+  role
+
+  """column name"""
+  userId
+}
+
+"""
+columns and relationships of "storage.buckets"
+"""
+type buckets {
+  cacheControl: String
+  createdAt: timestamptz!
+  downloadExpiration: Int!
+
+  """
+  fetch data from the table: "storage.files"
+  """
+  files(
+    """distinct select on columns"""
+    distinct_on: [files_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [files_order_by!]
+
+    """filter the rows returned"""
+    where: files_bool_exp
+  ): [files!]!
+
+  """An aggregate relationship"""
+  files_aggregate(
+    """distinct select on columns"""
+    distinct_on: [files_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [files_order_by!]
+
+    """filter the rows returned"""
+    where: files_bool_exp
+  ): files_aggregate!
+  id: String!
+  maxUploadFileSize: Int!
+  minUploadFileSize: Int!
+  presignedUrlsEnabled: Boolean!
+  updatedAt: timestamptz!
+}
+
+"""
+aggregated selection of "storage.buckets"
+"""
+type buckets_aggregate {
+  aggregate: buckets_aggregate_fields
+  nodes: [buckets!]!
+}
+
+"""
+aggregate fields of "storage.buckets"
+"""
+type buckets_aggregate_fields {
+  avg: buckets_avg_fields
+  count(columns: [buckets_select_column!], distinct: Boolean): Int!
+  max: buckets_max_fields
+  min: buckets_min_fields
+  stddev: buckets_stddev_fields
+  stddev_pop: buckets_stddev_pop_fields
+  stddev_samp: buckets_stddev_samp_fields
+  sum: buckets_sum_fields
+  var_pop: buckets_var_pop_fields
+  var_samp: buckets_var_samp_fields
+  variance: buckets_variance_fields
+}
+
+"""aggregate avg on columns"""
+type buckets_avg_fields {
+  downloadExpiration: Float
+  maxUploadFileSize: Float
+  minUploadFileSize: Float
+}
+
+"""
+Boolean expression to filter rows from the table "storage.buckets". All fields are combined with a logical 'AND'.
+"""
+input buckets_bool_exp {
+  _and: [buckets_bool_exp!]
+  _not: buckets_bool_exp
+  _or: [buckets_bool_exp!]
+  cacheControl: String_comparison_exp
+  createdAt: timestamptz_comparison_exp
+  downloadExpiration: Int_comparison_exp
+  files: files_bool_exp
+  id: String_comparison_exp
+  maxUploadFileSize: Int_comparison_exp
+  minUploadFileSize: Int_comparison_exp
+  presignedUrlsEnabled: Boolean_comparison_exp
+  updatedAt: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "storage.buckets"
+"""
+enum buckets_constraint {
+  """unique or primary key constraint"""
+  buckets_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "storage.buckets"
+"""
+input buckets_inc_input {
+  downloadExpiration: Int
+  maxUploadFileSize: Int
+  minUploadFileSize: Int
+}
+
+"""
+input type for inserting data into table "storage.buckets"
+"""
+input buckets_insert_input {
+  cacheControl: String
+  createdAt: timestamptz
+  downloadExpiration: Int
+  files: files_arr_rel_insert_input
+  id: String
+  maxUploadFileSize: Int
+  minUploadFileSize: Int
+  presignedUrlsEnabled: Boolean
+  updatedAt: timestamptz
+}
+
+"""aggregate max on columns"""
+type buckets_max_fields {
+  cacheControl: String
+  createdAt: timestamptz
+  downloadExpiration: Int
+  id: String
+  maxUploadFileSize: Int
+  minUploadFileSize: Int
+  updatedAt: timestamptz
+}
+
+"""aggregate min on columns"""
+type buckets_min_fields {
+  cacheControl: String
+  createdAt: timestamptz
+  downloadExpiration: Int
+  id: String
+  maxUploadFileSize: Int
+  minUploadFileSize: Int
+  updatedAt: timestamptz
+}
+
+"""
+response of any mutation on the table "storage.buckets"
+"""
+type buckets_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [buckets!]!
+}
+
+"""
+input type for inserting object relation for remote table "storage.buckets"
+"""
+input buckets_obj_rel_insert_input {
+  data: buckets_insert_input!
+
+  """upsert condition"""
+  on_conflict: buckets_on_conflict
+}
+
+"""
+on_conflict condition type for table "storage.buckets"
+"""
+input buckets_on_conflict {
+  constraint: buckets_constraint!
+  update_columns: [buckets_update_column!]! = []
+  where: buckets_bool_exp
+}
+
+"""Ordering options when selecting data from "storage.buckets"."""
+input buckets_order_by {
+  cacheControl: order_by
+  createdAt: order_by
+  downloadExpiration: order_by
+  files_aggregate: files_aggregate_order_by
+  id: order_by
+  maxUploadFileSize: order_by
+  minUploadFileSize: order_by
+  presignedUrlsEnabled: order_by
+  updatedAt: order_by
+}
+
+"""primary key columns input for table: buckets"""
+input buckets_pk_columns_input {
+  id: String!
+}
+
+"""
+select columns of table "storage.buckets"
+"""
+enum buckets_select_column {
+  """column name"""
+  cacheControl
+
+  """column name"""
+  createdAt
+
+  """column name"""
+  downloadExpiration
+
+  """column name"""
+  id
+
+  """column name"""
+  maxUploadFileSize
+
+  """column name"""
+  minUploadFileSize
+
+  """column name"""
+  presignedUrlsEnabled
+
+  """column name"""
+  updatedAt
+}
+
+"""
+input type for updating data in table "storage.buckets"
+"""
+input buckets_set_input {
+  cacheControl: String
+  createdAt: timestamptz
+  downloadExpiration: Int
+  id: String
+  maxUploadFileSize: Int
+  minUploadFileSize: Int
+  presignedUrlsEnabled: Boolean
+  updatedAt: timestamptz
+}
+
+"""aggregate stddev on columns"""
+type buckets_stddev_fields {
+  downloadExpiration: Float
+  maxUploadFileSize: Float
+  minUploadFileSize: Float
+}
+
+"""aggregate stddev_pop on columns"""
+type buckets_stddev_pop_fields {
+  downloadExpiration: Float
+  maxUploadFileSize: Float
+  minUploadFileSize: Float
+}
+
+"""aggregate stddev_samp on columns"""
+type buckets_stddev_samp_fields {
+  downloadExpiration: Float
+  maxUploadFileSize: Float
+  minUploadFileSize: Float
+}
+
+"""aggregate sum on columns"""
+type buckets_sum_fields {
+  downloadExpiration: Int
+  maxUploadFileSize: Int
+  minUploadFileSize: Int
+}
+
+"""
+update columns of table "storage.buckets"
+"""
+enum buckets_update_column {
+  """column name"""
+  cacheControl
+
+  """column name"""
+  createdAt
+
+  """column name"""
+  downloadExpiration
+
+  """column name"""
+  id
+
+  """column name"""
+  maxUploadFileSize
+
+  """column name"""
+  minUploadFileSize
+
+  """column name"""
+  presignedUrlsEnabled
+
+  """column name"""
+  updatedAt
+}
+
+"""aggregate var_pop on columns"""
+type buckets_var_pop_fields {
+  downloadExpiration: Float
+  maxUploadFileSize: Float
+  minUploadFileSize: Float
+}
+
+"""aggregate var_samp on columns"""
+type buckets_var_samp_fields {
+  downloadExpiration: Float
+  maxUploadFileSize: Float
+  minUploadFileSize: Float
+}
+
+"""aggregate variance on columns"""
+type buckets_variance_fields {
+  downloadExpiration: Float
+  maxUploadFileSize: Float
+  minUploadFileSize: Float
+}
+
+"""
 columns and relationships of "chat_group_members"
 """
 type chat_group_members {
@@ -744,7 +2246,7 @@ input type for inserting array relation for remote table "chat_group_members"
 input chat_group_members_arr_rel_insert_input {
   data: [chat_group_members_insert_input!]!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: chat_group_members_on_conflict
 }
 
@@ -831,7 +2333,7 @@ type chat_group_members_mutation_response {
 }
 
 """
-on conflict condition type for table "chat_group_members"
+on_conflict condition type for table "chat_group_members"
 """
 input chat_group_members_on_conflict {
   constraint: chat_group_members_constraint!
@@ -1065,12 +2567,12 @@ input type for inserting object relation for remote table "chat_groups"
 input chat_groups_obj_rel_insert_input {
   data: chat_groups_insert_input!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: chat_groups_on_conflict
 }
 
 """
-on conflict condition type for table "chat_groups"
+on_conflict condition type for table "chat_groups"
 """
 input chat_groups_on_conflict {
   constraint: chat_groups_constraint!
@@ -1189,7 +2691,7 @@ input type for inserting array relation for remote table "chat_messages"
 input chat_messages_arr_rel_insert_input {
   data: [chat_messages_insert_input!]!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: chat_messages_on_conflict
 }
 
@@ -1290,7 +2792,7 @@ type chat_messages_mutation_response {
 }
 
 """
-on conflict condition type for table "chat_messages"
+on_conflict condition type for table "chat_messages"
 """
 input chat_messages_on_conflict {
   constraint: chat_messages_constraint!
@@ -1374,6 +2876,61 @@ enum chat_messages_update_column {
   sender_id
 }
 
+scalar citext
+
+"""
+Boolean expression to compare columns of type "citext". All fields are combined with logical 'AND'.
+"""
+input citext_comparison_exp {
+  _eq: citext
+  _gt: citext
+  _gte: citext
+
+  """does the column match the given case-insensitive pattern"""
+  _ilike: citext
+  _in: [citext!]
+
+  """
+  does the column match the given POSIX regular expression, case insensitive
+  """
+  _iregex: citext
+  _is_null: Boolean
+
+  """does the column match the given pattern"""
+  _like: citext
+  _lt: citext
+  _lte: citext
+  _neq: citext
+
+  """does the column NOT match the given case-insensitive pattern"""
+  _nilike: citext
+  _nin: [citext!]
+
+  """
+  does the column NOT match the given POSIX regular expression, case insensitive
+  """
+  _niregex: citext
+
+  """does the column NOT match the given pattern"""
+  _nlike: citext
+
+  """
+  does the column NOT match the given POSIX regular expression, case sensitive
+  """
+  _nregex: citext
+
+  """does the column NOT match the given SQL regular expression"""
+  _nsimilar: citext
+
+  """
+  does the column match the given POSIX regular expression, case sensitive
+  """
+  _regex: citext
+
+  """does the column match the given SQL regular expression"""
+  _similar: citext
+}
+
 """
 columns and relationships of "comments"
 """
@@ -1455,7 +3012,7 @@ input type for inserting array relation for remote table "comments"
 input comments_arr_rel_insert_input {
   data: [comments_insert_input!]!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: comments_on_conflict
 }
 
@@ -1553,12 +3110,12 @@ input type for inserting object relation for remote table "comments"
 input comments_obj_rel_insert_input {
   data: comments_insert_input!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: comments_on_conflict
 }
 
 """
-on conflict condition type for table "comments"
+on_conflict condition type for table "comments"
 """
 input comments_on_conflict {
   constraint: comments_constraint!
@@ -1861,12 +3418,12 @@ input type for inserting object relation for remote table "entities"
 input entities_obj_rel_insert_input {
   data: entities_insert_input!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: entities_on_conflict
 }
 
 """
-on conflict condition type for table "entities"
+on_conflict condition type for table "entities"
 """
 input entities_on_conflict {
   constraint: entities_constraint!
@@ -2041,42 +3598,6 @@ type file_uploads {
   thing_image: thing_images
   updated_at: timestamptz!
   url: String!
-
-  """An array relationship"""
-  user_profile_pictures(
-    """distinct select on columns"""
-    distinct_on: [users_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [users_order_by!]
-
-    """filter the rows returned"""
-    where: users_bool_exp
-  ): [users!]!
-
-  """An aggregate relationship"""
-  user_profile_pictures_aggregate(
-    """distinct select on columns"""
-    distinct_on: [users_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [users_order_by!]
-
-    """filter the rows returned"""
-    where: users_bool_exp
-  ): users_aggregate!
 }
 
 """
@@ -2104,9 +3625,43 @@ type file_uploads_aggregate_fields {
   variance: file_uploads_variance_fields
 }
 
+"""
+order by aggregate values of table "file_uploads"
+"""
+input file_uploads_aggregate_order_by {
+  avg: file_uploads_avg_order_by
+  count: order_by
+  max: file_uploads_max_order_by
+  min: file_uploads_min_order_by
+  stddev: file_uploads_stddev_order_by
+  stddev_pop: file_uploads_stddev_pop_order_by
+  stddev_samp: file_uploads_stddev_samp_order_by
+  sum: file_uploads_sum_order_by
+  var_pop: file_uploads_var_pop_order_by
+  var_samp: file_uploads_var_samp_order_by
+  variance: file_uploads_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "file_uploads"
+"""
+input file_uploads_arr_rel_insert_input {
+  data: [file_uploads_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: file_uploads_on_conflict
+}
+
 """aggregate avg on columns"""
 type file_uploads_avg_fields {
   size: Float
+}
+
+"""
+order by avg() on columns of table "file_uploads"
+"""
+input file_uploads_avg_order_by {
+  size: order_by
 }
 
 """
@@ -2126,7 +3681,6 @@ input file_uploads_bool_exp {
   thing_image: thing_images_bool_exp
   updated_at: timestamptz_comparison_exp
   url: String_comparison_exp
-  user_profile_pictures: users_bool_exp
 }
 
 """
@@ -2161,7 +3715,6 @@ input file_uploads_insert_input {
   thing_image: thing_images_obj_rel_insert_input
   updated_at: timestamptz
   url: String
-  user_profile_pictures: users_arr_rel_insert_input
 }
 
 """aggregate max on columns"""
@@ -2176,6 +3729,20 @@ type file_uploads_max_fields {
   url: String
 }
 
+"""
+order by max() on columns of table "file_uploads"
+"""
+input file_uploads_max_order_by {
+  created_at: order_by
+  id: order_by
+  mime_type: order_by
+  name: order_by
+  owner_id: order_by
+  size: order_by
+  updated_at: order_by
+  url: order_by
+}
+
 """aggregate min on columns"""
 type file_uploads_min_fields {
   created_at: timestamptz
@@ -2186,6 +3753,20 @@ type file_uploads_min_fields {
   size: Int
   updated_at: timestamptz
   url: String
+}
+
+"""
+order by min() on columns of table "file_uploads"
+"""
+input file_uploads_min_order_by {
+  created_at: order_by
+  id: order_by
+  mime_type: order_by
+  name: order_by
+  owner_id: order_by
+  size: order_by
+  updated_at: order_by
+  url: order_by
 }
 
 """
@@ -2205,12 +3786,12 @@ input type for inserting object relation for remote table "file_uploads"
 input file_uploads_obj_rel_insert_input {
   data: file_uploads_insert_input!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: file_uploads_on_conflict
 }
 
 """
-on conflict condition type for table "file_uploads"
+on_conflict condition type for table "file_uploads"
 """
 input file_uploads_on_conflict {
   constraint: file_uploads_constraint!
@@ -2230,7 +3811,6 @@ input file_uploads_order_by {
   thing_image: thing_images_order_by
   updated_at: order_by
   url: order_by
-  user_profile_pictures_aggregate: users_aggregate_order_by
 }
 
 """primary key columns input for table: file_uploads"""
@@ -2286,9 +3866,23 @@ type file_uploads_stddev_fields {
   size: Float
 }
 
+"""
+order by stddev() on columns of table "file_uploads"
+"""
+input file_uploads_stddev_order_by {
+  size: order_by
+}
+
 """aggregate stddev_pop on columns"""
 type file_uploads_stddev_pop_fields {
   size: Float
+}
+
+"""
+order by stddev_pop() on columns of table "file_uploads"
+"""
+input file_uploads_stddev_pop_order_by {
+  size: order_by
 }
 
 """aggregate stddev_samp on columns"""
@@ -2296,9 +3890,23 @@ type file_uploads_stddev_samp_fields {
   size: Float
 }
 
+"""
+order by stddev_samp() on columns of table "file_uploads"
+"""
+input file_uploads_stddev_samp_order_by {
+  size: order_by
+}
+
 """aggregate sum on columns"""
 type file_uploads_sum_fields {
   size: Int
+}
+
+"""
+order by sum() on columns of table "file_uploads"
+"""
+input file_uploads_sum_order_by {
+  size: order_by
 }
 
 """
@@ -2335,14 +3943,435 @@ type file_uploads_var_pop_fields {
   size: Float
 }
 
+"""
+order by var_pop() on columns of table "file_uploads"
+"""
+input file_uploads_var_pop_order_by {
+  size: order_by
+}
+
 """aggregate var_samp on columns"""
 type file_uploads_var_samp_fields {
   size: Float
 }
 
+"""
+order by var_samp() on columns of table "file_uploads"
+"""
+input file_uploads_var_samp_order_by {
+  size: order_by
+}
+
 """aggregate variance on columns"""
 type file_uploads_variance_fields {
   size: Float
+}
+
+"""
+order by variance() on columns of table "file_uploads"
+"""
+input file_uploads_variance_order_by {
+  size: order_by
+}
+
+"""
+columns and relationships of "storage.files"
+"""
+type files {
+  """An object relationship"""
+  bucket: buckets!
+  bucketId: String!
+  createdAt: timestamptz!
+  etag: String
+  id: uuid!
+  isUploaded: Boolean
+  mimeType: String
+  name: String
+  size: Int
+  updatedAt: timestamptz!
+  uploadedByUserId: uuid
+}
+
+"""
+aggregated selection of "storage.files"
+"""
+type files_aggregate {
+  aggregate: files_aggregate_fields
+  nodes: [files!]!
+}
+
+"""
+aggregate fields of "storage.files"
+"""
+type files_aggregate_fields {
+  avg: files_avg_fields
+  count(columns: [files_select_column!], distinct: Boolean): Int!
+  max: files_max_fields
+  min: files_min_fields
+  stddev: files_stddev_fields
+  stddev_pop: files_stddev_pop_fields
+  stddev_samp: files_stddev_samp_fields
+  sum: files_sum_fields
+  var_pop: files_var_pop_fields
+  var_samp: files_var_samp_fields
+  variance: files_variance_fields
+}
+
+"""
+order by aggregate values of table "storage.files"
+"""
+input files_aggregate_order_by {
+  avg: files_avg_order_by
+  count: order_by
+  max: files_max_order_by
+  min: files_min_order_by
+  stddev: files_stddev_order_by
+  stddev_pop: files_stddev_pop_order_by
+  stddev_samp: files_stddev_samp_order_by
+  sum: files_sum_order_by
+  var_pop: files_var_pop_order_by
+  var_samp: files_var_samp_order_by
+  variance: files_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "storage.files"
+"""
+input files_arr_rel_insert_input {
+  data: [files_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: files_on_conflict
+}
+
+"""aggregate avg on columns"""
+type files_avg_fields {
+  size: Float
+}
+
+"""
+order by avg() on columns of table "storage.files"
+"""
+input files_avg_order_by {
+  size: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "storage.files". All fields are combined with a logical 'AND'.
+"""
+input files_bool_exp {
+  _and: [files_bool_exp!]
+  _not: files_bool_exp
+  _or: [files_bool_exp!]
+  bucket: buckets_bool_exp
+  bucketId: String_comparison_exp
+  createdAt: timestamptz_comparison_exp
+  etag: String_comparison_exp
+  id: uuid_comparison_exp
+  isUploaded: Boolean_comparison_exp
+  mimeType: String_comparison_exp
+  name: String_comparison_exp
+  size: Int_comparison_exp
+  updatedAt: timestamptz_comparison_exp
+  uploadedByUserId: uuid_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "storage.files"
+"""
+enum files_constraint {
+  """unique or primary key constraint"""
+  files_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "storage.files"
+"""
+input files_inc_input {
+  size: Int
+}
+
+"""
+input type for inserting data into table "storage.files"
+"""
+input files_insert_input {
+  bucket: buckets_obj_rel_insert_input
+  bucketId: String
+  createdAt: timestamptz
+  etag: String
+  id: uuid
+  isUploaded: Boolean
+  mimeType: String
+  name: String
+  size: Int
+  updatedAt: timestamptz
+  uploadedByUserId: uuid
+}
+
+"""aggregate max on columns"""
+type files_max_fields {
+  bucketId: String
+  createdAt: timestamptz
+  etag: String
+  id: uuid
+  mimeType: String
+  name: String
+  size: Int
+  updatedAt: timestamptz
+  uploadedByUserId: uuid
+}
+
+"""
+order by max() on columns of table "storage.files"
+"""
+input files_max_order_by {
+  bucketId: order_by
+  createdAt: order_by
+  etag: order_by
+  id: order_by
+  mimeType: order_by
+  name: order_by
+  size: order_by
+  updatedAt: order_by
+  uploadedByUserId: order_by
+}
+
+"""aggregate min on columns"""
+type files_min_fields {
+  bucketId: String
+  createdAt: timestamptz
+  etag: String
+  id: uuid
+  mimeType: String
+  name: String
+  size: Int
+  updatedAt: timestamptz
+  uploadedByUserId: uuid
+}
+
+"""
+order by min() on columns of table "storage.files"
+"""
+input files_min_order_by {
+  bucketId: order_by
+  createdAt: order_by
+  etag: order_by
+  id: order_by
+  mimeType: order_by
+  name: order_by
+  size: order_by
+  updatedAt: order_by
+  uploadedByUserId: order_by
+}
+
+"""
+response of any mutation on the table "storage.files"
+"""
+type files_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [files!]!
+}
+
+"""
+on_conflict condition type for table "storage.files"
+"""
+input files_on_conflict {
+  constraint: files_constraint!
+  update_columns: [files_update_column!]! = []
+  where: files_bool_exp
+}
+
+"""Ordering options when selecting data from "storage.files"."""
+input files_order_by {
+  bucket: buckets_order_by
+  bucketId: order_by
+  createdAt: order_by
+  etag: order_by
+  id: order_by
+  isUploaded: order_by
+  mimeType: order_by
+  name: order_by
+  size: order_by
+  updatedAt: order_by
+  uploadedByUserId: order_by
+}
+
+"""primary key columns input for table: files"""
+input files_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "storage.files"
+"""
+enum files_select_column {
+  """column name"""
+  bucketId
+
+  """column name"""
+  createdAt
+
+  """column name"""
+  etag
+
+  """column name"""
+  id
+
+  """column name"""
+  isUploaded
+
+  """column name"""
+  mimeType
+
+  """column name"""
+  name
+
+  """column name"""
+  size
+
+  """column name"""
+  updatedAt
+
+  """column name"""
+  uploadedByUserId
+}
+
+"""
+input type for updating data in table "storage.files"
+"""
+input files_set_input {
+  bucketId: String
+  createdAt: timestamptz
+  etag: String
+  id: uuid
+  isUploaded: Boolean
+  mimeType: String
+  name: String
+  size: Int
+  updatedAt: timestamptz
+  uploadedByUserId: uuid
+}
+
+"""aggregate stddev on columns"""
+type files_stddev_fields {
+  size: Float
+}
+
+"""
+order by stddev() on columns of table "storage.files"
+"""
+input files_stddev_order_by {
+  size: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type files_stddev_pop_fields {
+  size: Float
+}
+
+"""
+order by stddev_pop() on columns of table "storage.files"
+"""
+input files_stddev_pop_order_by {
+  size: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type files_stddev_samp_fields {
+  size: Float
+}
+
+"""
+order by stddev_samp() on columns of table "storage.files"
+"""
+input files_stddev_samp_order_by {
+  size: order_by
+}
+
+"""aggregate sum on columns"""
+type files_sum_fields {
+  size: Int
+}
+
+"""
+order by sum() on columns of table "storage.files"
+"""
+input files_sum_order_by {
+  size: order_by
+}
+
+"""
+update columns of table "storage.files"
+"""
+enum files_update_column {
+  """column name"""
+  bucketId
+
+  """column name"""
+  createdAt
+
+  """column name"""
+  etag
+
+  """column name"""
+  id
+
+  """column name"""
+  isUploaded
+
+  """column name"""
+  mimeType
+
+  """column name"""
+  name
+
+  """column name"""
+  size
+
+  """column name"""
+  updatedAt
+
+  """column name"""
+  uploadedByUserId
+}
+
+"""aggregate var_pop on columns"""
+type files_var_pop_fields {
+  size: Float
+}
+
+"""
+order by var_pop() on columns of table "storage.files"
+"""
+input files_var_pop_order_by {
+  size: order_by
+}
+
+"""aggregate var_samp on columns"""
+type files_var_samp_fields {
+  size: Float
+}
+
+"""
+order by var_samp() on columns of table "storage.files"
+"""
+input files_var_samp_order_by {
+  size: order_by
+}
+
+"""aggregate variance on columns"""
+type files_variance_fields {
+  size: Float
+}
+
+"""
+order by variance() on columns of table "storage.files"
+"""
+input files_variance_order_by {
+  size: order_by
 }
 
 """
@@ -2390,16 +4419,16 @@ enum group_join_request_status_constraint {
 }
 
 enum group_join_request_status_enum {
-  """Request accepted"""
+  """accepted status"""
   accepted
 
-  """Request cancelled"""
+  """cancelled status"""
   cancelled
 
-  """Pending status"""
+  """pending status"""
   pending
 
-  """Request rejected"""
+  """rejected status"""
   rejected
 }
 
@@ -2446,7 +4475,7 @@ type group_join_request_status_mutation_response {
 }
 
 """
-on conflict condition type for table "group_join_request_status"
+on_conflict condition type for table "group_join_request_status"
 """
 input group_join_request_status_on_conflict {
   constraint: group_join_request_status_constraint!
@@ -2548,7 +4577,7 @@ input type for inserting array relation for remote table "group_join_requests"
 input group_join_requests_arr_rel_insert_input {
   data: [group_join_requests_insert_input!]!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: group_join_requests_on_conflict
 }
 
@@ -2666,12 +4695,12 @@ input type for inserting object relation for remote table "group_join_requests"
 input group_join_requests_obj_rel_insert_input {
   data: group_join_requests_insert_input!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: group_join_requests_on_conflict
 }
 
 """
-on conflict condition type for table "group_join_requests"
+on_conflict condition type for table "group_join_requests"
 """
 input group_join_requests_on_conflict {
   constraint: group_join_requests_constraint!
@@ -2826,7 +4855,7 @@ input type for inserting array relation for remote table "group_join_tokens"
 input group_join_tokens_arr_rel_insert_input {
   data: [group_join_tokens_insert_input!]!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: group_join_tokens_on_conflict
 }
 
@@ -2925,7 +4954,7 @@ type group_join_tokens_mutation_response {
 }
 
 """
-on conflict condition type for table "group_join_tokens"
+on_conflict condition type for table "group_join_tokens"
 """
 input group_join_tokens_on_conflict {
   constraint: group_join_tokens_constraint!
@@ -3065,7 +5094,7 @@ input type for inserting array relation for remote table "group_members"
 input group_members_arr_rel_insert_input {
   data: [group_members_insert_input!]!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: group_members_on_conflict
 }
 
@@ -3165,12 +5194,12 @@ input type for inserting object relation for remote table "group_members"
 input group_members_obj_rel_insert_input {
   data: group_members_insert_input!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: group_members_on_conflict
 }
 
 """
-on conflict condition type for table "group_members"
+on_conflict condition type for table "group_members"
 """
 input group_members_on_conflict {
   constraint: group_members_constraint!
@@ -3301,7 +5330,7 @@ input type for inserting array relation for remote table "group_post_comment"
 input group_post_comment_arr_rel_insert_input {
   data: [group_post_comment_insert_input!]!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: group_post_comment_on_conflict
 }
 
@@ -3399,12 +5428,12 @@ input type for inserting object relation for remote table "group_post_comment"
 input group_post_comment_obj_rel_insert_input {
   data: group_post_comment_insert_input!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: group_post_comment_on_conflict
 }
 
 """
-on conflict condition type for table "group_post_comment"
+on_conflict condition type for table "group_post_comment"
 """
 input group_post_comment_on_conflict {
   constraint: group_post_comment_constraint!
@@ -3574,7 +5603,7 @@ type group_post_type_mutation_response {
 }
 
 """
-on conflict condition type for table "group_post_type"
+on_conflict condition type for table "group_post_type"
 """
 input group_post_type_on_conflict {
   constraint: group_post_type_constraint!
@@ -3710,7 +5739,7 @@ input type for inserting array relation for remote table "group_posts"
 input group_posts_arr_rel_insert_input {
   data: [group_posts_insert_input!]!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: group_posts_on_conflict
 }
 
@@ -3820,12 +5849,12 @@ input type for inserting object relation for remote table "group_posts"
 input group_posts_obj_rel_insert_input {
   data: group_posts_insert_input!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: group_posts_on_conflict
 }
 
 """
-on conflict condition type for table "group_posts"
+on_conflict condition type for table "group_posts"
 """
 input group_posts_on_conflict {
   constraint: group_posts_constraint!
@@ -3973,7 +6002,7 @@ enum group_role_enum {
   """group administrator role"""
   admin
 
-  """the owner of the group"""
+  """owner of the group"""
   owner
 
   """regular member"""
@@ -4023,7 +6052,7 @@ type group_role_mutation_response {
 }
 
 """
-on conflict condition type for table "group_role"
+on_conflict condition type for table "group_role"
 """
 input group_role_on_conflict {
   constraint: group_role_constraint!
@@ -4121,7 +6150,7 @@ input type for inserting array relation for remote table "group_thing"
 input group_thing_arr_rel_insert_input {
   data: [group_thing_insert_input!]!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: group_thing_on_conflict
 }
 
@@ -4222,12 +6251,12 @@ input type for inserting object relation for remote table "group_thing"
 input group_thing_obj_rel_insert_input {
   data: group_thing_insert_input!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: group_thing_on_conflict
 }
 
 """
-on conflict condition type for table "group_thing"
+on_conflict condition type for table "group_thing"
 """
 input group_thing_on_conflict {
   constraint: group_thing_constraint!
@@ -4601,12 +6630,12 @@ input type for inserting object relation for remote table "groups"
 input groups_obj_rel_insert_input {
   data: groups_insert_input!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: groups_on_conflict
 }
 
 """
-on conflict condition type for table "groups"
+on_conflict condition type for table "groups"
 """
 input groups_on_conflict {
   constraint: groups_constraint!
@@ -4700,12 +6729,159 @@ enum groups_update_column {
   updated_at
 }
 
+scalar jsonb
+
+"""
+Boolean expression to compare columns of type "jsonb". All fields are combined with logical 'AND'.
+"""
+input jsonb_comparison_exp {
+  """is the column contained in the given json value"""
+  _contained_in: jsonb
+
+  """does the column contain the given json value at the top level"""
+  _contains: jsonb
+  _eq: jsonb
+  _gt: jsonb
+  _gte: jsonb
+
+  """does the string exist as a top-level key in the column"""
+  _has_key: String
+
+  """do all of these strings exist as top-level keys in the column"""
+  _has_keys_all: [String!]
+
+  """do any of these strings exist as top-level keys in the column"""
+  _has_keys_any: [String!]
+  _in: [jsonb!]
+  _is_null: Boolean
+  _lt: jsonb
+  _lte: jsonb
+  _neq: jsonb
+  _nin: [jsonb!]
+}
+
 """mutation root"""
 type mutation_root {
   createChatGroup(input: CreateChatGroupInput!): CreateChatGroupResult
   createGroup(input: CreateGroupInput!): CreateGroupResult!
   createJoinToken(input: CreateJoinTokenInput!): CreateJoinTokenResult
-  deleteThing(input: DeleteThingInput!): DeleteThingOutput
+
+  """
+  delete single row from the table: "auth.providers"
+  """
+  deleteAuthProvider(id: String!): authProviders
+
+  """
+  delete single row from the table: "auth.provider_requests"
+  """
+  deleteAuthProviderRequest(id: uuid!): authProviderRequests
+
+  """
+  delete data from the table: "auth.provider_requests"
+  """
+  deleteAuthProviderRequests(
+    """filter the rows which have to be deleted"""
+    where: authProviderRequests_bool_exp!
+  ): authProviderRequests_mutation_response
+
+  """
+  delete data from the table: "auth.providers"
+  """
+  deleteAuthProviders(
+    """filter the rows which have to be deleted"""
+    where: authProviders_bool_exp!
+  ): authProviders_mutation_response
+
+  """
+  delete single row from the table: "auth.refresh_tokens"
+  """
+  deleteAuthRefreshToken(refreshToken: uuid!): authRefreshTokens
+
+  """
+  delete data from the table: "auth.refresh_tokens"
+  """
+  deleteAuthRefreshTokens(
+    """filter the rows which have to be deleted"""
+    where: authRefreshTokens_bool_exp!
+  ): authRefreshTokens_mutation_response
+
+  """
+  delete single row from the table: "auth.roles"
+  """
+  deleteAuthRole(role: String!): authRoles
+
+  """
+  delete data from the table: "auth.roles"
+  """
+  deleteAuthRoles(
+    """filter the rows which have to be deleted"""
+    where: authRoles_bool_exp!
+  ): authRoles_mutation_response
+
+  """
+  delete single row from the table: "auth.user_providers"
+  """
+  deleteAuthUserProvider(id: uuid!): authUserProviders
+
+  """
+  delete data from the table: "auth.user_providers"
+  """
+  deleteAuthUserProviders(
+    """filter the rows which have to be deleted"""
+    where: authUserProviders_bool_exp!
+  ): authUserProviders_mutation_response
+
+  """
+  delete single row from the table: "auth.user_roles"
+  """
+  deleteAuthUserRole(id: uuid!): authUserRoles
+
+  """
+  delete data from the table: "auth.user_roles"
+  """
+  deleteAuthUserRoles(
+    """filter the rows which have to be deleted"""
+    where: authUserRoles_bool_exp!
+  ): authUserRoles_mutation_response
+
+  """
+  delete single row from the table: "storage.buckets"
+  """
+  deleteBucket(id: String!): buckets
+
+  """
+  delete data from the table: "storage.buckets"
+  """
+  deleteBuckets(
+    """filter the rows which have to be deleted"""
+    where: buckets_bool_exp!
+  ): buckets_mutation_response
+
+  """
+  delete single row from the table: "storage.files"
+  """
+  deleteFile(id: uuid!): files
+
+  """
+  delete data from the table: "storage.files"
+  """
+  deleteFiles(
+    """filter the rows which have to be deleted"""
+    where: files_bool_exp!
+  ): files_mutation_response
+
+  """
+  delete single row from the table: "auth.users"
+  """
+  deleteUser(id: uuid!): users
+
+  """
+  delete data from the table: "auth.users"
+  """
+  deleteUsers(
+    """filter the rows which have to be deleted"""
+    where: users_bool_exp!
+  ): users_mutation_response
 
   """
   delete data from the table: "activities"
@@ -4992,41 +7168,205 @@ type mutation_root {
   delete single row from the table: "things"
   """
   delete_things_by_pk(id: uuid!): things
-
-  """
-  delete data from the table: "user_private"
-  """
-  delete_user_private(
-    """filter the rows which have to be deleted"""
-    where: user_private_bool_exp!
-  ): user_private_mutation_response
-
-  """
-  delete data from the table: "users"
-  """
-  delete_users(
-    """filter the rows which have to be deleted"""
-    where: users_bool_exp!
-  ): users_mutation_response
-
-  """
-  delete single row from the table: "users"
-  """
-  delete_users_by_pk(id: uuid!): users
-
-  """
-  delete data from the table: "verification_requests"
-  """
-  delete_verification_requests(
-    """filter the rows which have to be deleted"""
-    where: verification_requests_bool_exp!
-  ): verification_requests_mutation_response
-
-  """
-  delete single row from the table: "verification_requests"
-  """
-  delete_verification_requests_by_pk(id: Int!): verification_requests
   handleJoinRequest(input: HandleJoinRequestInput!): HandleJoinRequestResult!
+
+  """
+  insert a single row into the table: "auth.providers"
+  """
+  insertAuthProvider(
+    """the row to be inserted"""
+    object: authProviders_insert_input!
+
+    """upsert condition"""
+    on_conflict: authProviders_on_conflict
+  ): authProviders
+
+  """
+  insert a single row into the table: "auth.provider_requests"
+  """
+  insertAuthProviderRequest(
+    """the row to be inserted"""
+    object: authProviderRequests_insert_input!
+
+    """upsert condition"""
+    on_conflict: authProviderRequests_on_conflict
+  ): authProviderRequests
+
+  """
+  insert data into the table: "auth.provider_requests"
+  """
+  insertAuthProviderRequests(
+    """the rows to be inserted"""
+    objects: [authProviderRequests_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: authProviderRequests_on_conflict
+  ): authProviderRequests_mutation_response
+
+  """
+  insert data into the table: "auth.providers"
+  """
+  insertAuthProviders(
+    """the rows to be inserted"""
+    objects: [authProviders_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: authProviders_on_conflict
+  ): authProviders_mutation_response
+
+  """
+  insert a single row into the table: "auth.refresh_tokens"
+  """
+  insertAuthRefreshToken(
+    """the row to be inserted"""
+    object: authRefreshTokens_insert_input!
+
+    """upsert condition"""
+    on_conflict: authRefreshTokens_on_conflict
+  ): authRefreshTokens
+
+  """
+  insert data into the table: "auth.refresh_tokens"
+  """
+  insertAuthRefreshTokens(
+    """the rows to be inserted"""
+    objects: [authRefreshTokens_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: authRefreshTokens_on_conflict
+  ): authRefreshTokens_mutation_response
+
+  """
+  insert a single row into the table: "auth.roles"
+  """
+  insertAuthRole(
+    """the row to be inserted"""
+    object: authRoles_insert_input!
+
+    """upsert condition"""
+    on_conflict: authRoles_on_conflict
+  ): authRoles
+
+  """
+  insert data into the table: "auth.roles"
+  """
+  insertAuthRoles(
+    """the rows to be inserted"""
+    objects: [authRoles_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: authRoles_on_conflict
+  ): authRoles_mutation_response
+
+  """
+  insert a single row into the table: "auth.user_providers"
+  """
+  insertAuthUserProvider(
+    """the row to be inserted"""
+    object: authUserProviders_insert_input!
+
+    """upsert condition"""
+    on_conflict: authUserProviders_on_conflict
+  ): authUserProviders
+
+  """
+  insert data into the table: "auth.user_providers"
+  """
+  insertAuthUserProviders(
+    """the rows to be inserted"""
+    objects: [authUserProviders_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: authUserProviders_on_conflict
+  ): authUserProviders_mutation_response
+
+  """
+  insert a single row into the table: "auth.user_roles"
+  """
+  insertAuthUserRole(
+    """the row to be inserted"""
+    object: authUserRoles_insert_input!
+
+    """upsert condition"""
+    on_conflict: authUserRoles_on_conflict
+  ): authUserRoles
+
+  """
+  insert data into the table: "auth.user_roles"
+  """
+  insertAuthUserRoles(
+    """the rows to be inserted"""
+    objects: [authUserRoles_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: authUserRoles_on_conflict
+  ): authUserRoles_mutation_response
+
+  """
+  insert a single row into the table: "storage.buckets"
+  """
+  insertBucket(
+    """the row to be inserted"""
+    object: buckets_insert_input!
+
+    """upsert condition"""
+    on_conflict: buckets_on_conflict
+  ): buckets
+
+  """
+  insert data into the table: "storage.buckets"
+  """
+  insertBuckets(
+    """the rows to be inserted"""
+    objects: [buckets_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: buckets_on_conflict
+  ): buckets_mutation_response
+
+  """
+  insert a single row into the table: "storage.files"
+  """
+  insertFile(
+    """the row to be inserted"""
+    object: files_insert_input!
+
+    """upsert condition"""
+    on_conflict: files_on_conflict
+  ): files
+
+  """
+  insert data into the table: "storage.files"
+  """
+  insertFiles(
+    """the rows to be inserted"""
+    objects: [files_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: files_on_conflict
+  ): files_mutation_response
+
+  """
+  insert a single row into the table: "auth.users"
+  """
+  insertUser(
+    """the row to be inserted"""
+    object: users_insert_input!
+
+    """upsert condition"""
+    on_conflict: users_on_conflict
+  ): users
+
+  """
+  insert data into the table: "auth.users"
+  """
+  insertUsers(
+    """the rows to be inserted"""
+    objects: [users_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: users_on_conflict
+  ): users_mutation_response
 
   """
   insert data into the table: "activities"
@@ -5035,7 +7375,7 @@ type mutation_root {
     """the rows to be inserted"""
     objects: [activities_insert_input!]!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: activities_on_conflict
   ): activities_mutation_response
 
@@ -5046,7 +7386,7 @@ type mutation_root {
     """the row to be inserted"""
     object: activities_insert_input!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: activities_on_conflict
   ): activities
 
@@ -5057,7 +7397,7 @@ type mutation_root {
     """the rows to be inserted"""
     objects: [activity_verb_insert_input!]!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: activity_verb_on_conflict
   ): activity_verb_mutation_response
 
@@ -5068,7 +7408,7 @@ type mutation_root {
     """the row to be inserted"""
     object: activity_verb_insert_input!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: activity_verb_on_conflict
   ): activity_verb
 
@@ -5079,7 +7419,7 @@ type mutation_root {
     """the rows to be inserted"""
     objects: [chat_group_members_insert_input!]!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: chat_group_members_on_conflict
   ): chat_group_members_mutation_response
 
@@ -5090,7 +7430,7 @@ type mutation_root {
     """the row to be inserted"""
     object: chat_group_members_insert_input!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: chat_group_members_on_conflict
   ): chat_group_members
 
@@ -5101,7 +7441,7 @@ type mutation_root {
     """the rows to be inserted"""
     objects: [chat_groups_insert_input!]!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: chat_groups_on_conflict
   ): chat_groups_mutation_response
 
@@ -5112,7 +7452,7 @@ type mutation_root {
     """the row to be inserted"""
     object: chat_groups_insert_input!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: chat_groups_on_conflict
   ): chat_groups
 
@@ -5123,7 +7463,7 @@ type mutation_root {
     """the rows to be inserted"""
     objects: [chat_messages_insert_input!]!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: chat_messages_on_conflict
   ): chat_messages_mutation_response
 
@@ -5134,7 +7474,7 @@ type mutation_root {
     """the row to be inserted"""
     object: chat_messages_insert_input!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: chat_messages_on_conflict
   ): chat_messages
 
@@ -5145,7 +7485,7 @@ type mutation_root {
     """the rows to be inserted"""
     objects: [comments_insert_input!]!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: comments_on_conflict
   ): comments_mutation_response
 
@@ -5156,7 +7496,7 @@ type mutation_root {
     """the row to be inserted"""
     object: comments_insert_input!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: comments_on_conflict
   ): comments
 
@@ -5167,7 +7507,7 @@ type mutation_root {
     """the rows to be inserted"""
     objects: [entities_insert_input!]!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: entities_on_conflict
   ): entities_mutation_response
 
@@ -5178,7 +7518,7 @@ type mutation_root {
     """the row to be inserted"""
     object: entities_insert_input!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: entities_on_conflict
   ): entities
 
@@ -5189,7 +7529,7 @@ type mutation_root {
     """the rows to be inserted"""
     objects: [file_uploads_insert_input!]!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: file_uploads_on_conflict
   ): file_uploads_mutation_response
 
@@ -5200,7 +7540,7 @@ type mutation_root {
     """the row to be inserted"""
     object: file_uploads_insert_input!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: file_uploads_on_conflict
   ): file_uploads
 
@@ -5211,7 +7551,7 @@ type mutation_root {
     """the rows to be inserted"""
     objects: [group_join_request_status_insert_input!]!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: group_join_request_status_on_conflict
   ): group_join_request_status_mutation_response
 
@@ -5222,7 +7562,7 @@ type mutation_root {
     """the row to be inserted"""
     object: group_join_request_status_insert_input!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: group_join_request_status_on_conflict
   ): group_join_request_status
 
@@ -5233,7 +7573,7 @@ type mutation_root {
     """the rows to be inserted"""
     objects: [group_join_requests_insert_input!]!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: group_join_requests_on_conflict
   ): group_join_requests_mutation_response
 
@@ -5244,7 +7584,7 @@ type mutation_root {
     """the row to be inserted"""
     object: group_join_requests_insert_input!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: group_join_requests_on_conflict
   ): group_join_requests
 
@@ -5255,7 +7595,7 @@ type mutation_root {
     """the rows to be inserted"""
     objects: [group_join_tokens_insert_input!]!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: group_join_tokens_on_conflict
   ): group_join_tokens_mutation_response
 
@@ -5266,7 +7606,7 @@ type mutation_root {
     """the row to be inserted"""
     object: group_join_tokens_insert_input!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: group_join_tokens_on_conflict
   ): group_join_tokens
 
@@ -5277,7 +7617,7 @@ type mutation_root {
     """the rows to be inserted"""
     objects: [group_members_insert_input!]!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: group_members_on_conflict
   ): group_members_mutation_response
 
@@ -5288,7 +7628,7 @@ type mutation_root {
     """the row to be inserted"""
     object: group_members_insert_input!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: group_members_on_conflict
   ): group_members
 
@@ -5299,7 +7639,7 @@ type mutation_root {
     """the rows to be inserted"""
     objects: [group_post_comment_insert_input!]!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: group_post_comment_on_conflict
   ): group_post_comment_mutation_response
 
@@ -5310,7 +7650,7 @@ type mutation_root {
     """the row to be inserted"""
     object: group_post_comment_insert_input!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: group_post_comment_on_conflict
   ): group_post_comment
 
@@ -5321,7 +7661,7 @@ type mutation_root {
     """the rows to be inserted"""
     objects: [group_post_type_insert_input!]!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: group_post_type_on_conflict
   ): group_post_type_mutation_response
 
@@ -5332,7 +7672,7 @@ type mutation_root {
     """the row to be inserted"""
     object: group_post_type_insert_input!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: group_post_type_on_conflict
   ): group_post_type
 
@@ -5343,7 +7683,7 @@ type mutation_root {
     """the rows to be inserted"""
     objects: [group_posts_insert_input!]!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: group_posts_on_conflict
   ): group_posts_mutation_response
 
@@ -5354,7 +7694,7 @@ type mutation_root {
     """the row to be inserted"""
     object: group_posts_insert_input!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: group_posts_on_conflict
   ): group_posts
 
@@ -5365,7 +7705,7 @@ type mutation_root {
     """the rows to be inserted"""
     objects: [group_role_insert_input!]!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: group_role_on_conflict
   ): group_role_mutation_response
 
@@ -5376,7 +7716,7 @@ type mutation_root {
     """the row to be inserted"""
     object: group_role_insert_input!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: group_role_on_conflict
   ): group_role
 
@@ -5387,7 +7727,7 @@ type mutation_root {
     """the rows to be inserted"""
     objects: [group_thing_insert_input!]!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: group_thing_on_conflict
   ): group_thing_mutation_response
 
@@ -5398,7 +7738,7 @@ type mutation_root {
     """the row to be inserted"""
     object: group_thing_insert_input!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: group_thing_on_conflict
   ): group_thing
 
@@ -5409,7 +7749,7 @@ type mutation_root {
     """the rows to be inserted"""
     objects: [groups_insert_input!]!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: groups_on_conflict
   ): groups_mutation_response
 
@@ -5420,7 +7760,7 @@ type mutation_root {
     """the row to be inserted"""
     object: groups_insert_input!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: groups_on_conflict
   ): groups
 
@@ -5431,7 +7771,7 @@ type mutation_root {
     """the rows to be inserted"""
     objects: [notifications_insert_input!]!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: notifications_on_conflict
   ): notifications_mutation_response
 
@@ -5442,7 +7782,7 @@ type mutation_root {
     """the row to be inserted"""
     object: notifications_insert_input!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: notifications_on_conflict
   ): notifications
 
@@ -5453,7 +7793,7 @@ type mutation_root {
     """the rows to be inserted"""
     objects: [thing_images_insert_input!]!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: thing_images_on_conflict
   ): thing_images_mutation_response
 
@@ -5464,7 +7804,7 @@ type mutation_root {
     """the row to be inserted"""
     object: thing_images_insert_input!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: thing_images_on_conflict
   ): thing_images
 
@@ -5475,7 +7815,7 @@ type mutation_root {
     """the rows to be inserted"""
     objects: [thing_type_insert_input!]!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: thing_type_on_conflict
   ): thing_type_mutation_response
 
@@ -5486,7 +7826,7 @@ type mutation_root {
     """the row to be inserted"""
     object: thing_type_insert_input!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: thing_type_on_conflict
   ): thing_type
 
@@ -5497,7 +7837,7 @@ type mutation_root {
     """the rows to be inserted"""
     objects: [things_insert_input!]!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: things_on_conflict
   ): things_mutation_response
 
@@ -5508,73 +7848,289 @@ type mutation_root {
     """the row to be inserted"""
     object: things_insert_input!
 
-    """on conflict condition"""
+    """upsert condition"""
     on_conflict: things_on_conflict
   ): things
-
-  """
-  insert data into the table: "user_private"
-  """
-  insert_user_private(
-    """the rows to be inserted"""
-    objects: [user_private_insert_input!]!
-  ): user_private_mutation_response
-
-  """
-  insert a single row into the table: "user_private"
-  """
-  insert_user_private_one(
-    """the row to be inserted"""
-    object: user_private_insert_input!
-  ): user_private
-
-  """
-  insert data into the table: "users"
-  """
-  insert_users(
-    """the rows to be inserted"""
-    objects: [users_insert_input!]!
-
-    """on conflict condition"""
-    on_conflict: users_on_conflict
-  ): users_mutation_response
-
-  """
-  insert a single row into the table: "users"
-  """
-  insert_users_one(
-    """the row to be inserted"""
-    object: users_insert_input!
-
-    """on conflict condition"""
-    on_conflict: users_on_conflict
-  ): users
-
-  """
-  insert data into the table: "verification_requests"
-  """
-  insert_verification_requests(
-    """the rows to be inserted"""
-    objects: [verification_requests_insert_input!]!
-
-    """on conflict condition"""
-    on_conflict: verification_requests_on_conflict
-  ): verification_requests_mutation_response
-
-  """
-  insert a single row into the table: "verification_requests"
-  """
-  insert_verification_requests_one(
-    """the row to be inserted"""
-    object: verification_requests_insert_input!
-
-    """on conflict condition"""
-    on_conflict: verification_requests_on_conflict
-  ): verification_requests
   joinGroup(input: JoinGroupInput!): JoinGroupResult
   registerCredentials(input: CredentialsInput!): RegistrationResult
   requestJoinGroup(input: RequestJoinGroupInput!): RequestJoinGroupResult
+
+  """
+  update single row of the table: "auth.providers"
+  """
+  updateAuthProvider(
+    """sets the columns of the filtered rows to the given values"""
+    _set: authProviders_set_input
+    pk_columns: authProviders_pk_columns_input!
+  ): authProviders
+
+  """
+  update single row of the table: "auth.provider_requests"
+  """
+  updateAuthProviderRequest(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: authProviderRequests_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: authProviderRequests_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    """
+    _delete_elem: authProviderRequests_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: authProviderRequests_delete_key_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: authProviderRequests_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: authProviderRequests_set_input
+    pk_columns: authProviderRequests_pk_columns_input!
+  ): authProviderRequests
+
+  """
+  update data of the table: "auth.provider_requests"
+  """
+  updateAuthProviderRequests(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: authProviderRequests_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: authProviderRequests_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    """
+    _delete_elem: authProviderRequests_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: authProviderRequests_delete_key_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: authProviderRequests_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: authProviderRequests_set_input
+
+    """filter the rows which have to be updated"""
+    where: authProviderRequests_bool_exp!
+  ): authProviderRequests_mutation_response
+
+  """
+  update data of the table: "auth.providers"
+  """
+  updateAuthProviders(
+    """sets the columns of the filtered rows to the given values"""
+    _set: authProviders_set_input
+
+    """filter the rows which have to be updated"""
+    where: authProviders_bool_exp!
+  ): authProviders_mutation_response
+
+  """
+  update single row of the table: "auth.refresh_tokens"
+  """
+  updateAuthRefreshToken(
+    """sets the columns of the filtered rows to the given values"""
+    _set: authRefreshTokens_set_input
+    pk_columns: authRefreshTokens_pk_columns_input!
+  ): authRefreshTokens
+
+  """
+  update data of the table: "auth.refresh_tokens"
+  """
+  updateAuthRefreshTokens(
+    """sets the columns of the filtered rows to the given values"""
+    _set: authRefreshTokens_set_input
+
+    """filter the rows which have to be updated"""
+    where: authRefreshTokens_bool_exp!
+  ): authRefreshTokens_mutation_response
+
+  """
+  update single row of the table: "auth.roles"
+  """
+  updateAuthRole(
+    """sets the columns of the filtered rows to the given values"""
+    _set: authRoles_set_input
+    pk_columns: authRoles_pk_columns_input!
+  ): authRoles
+
+  """
+  update data of the table: "auth.roles"
+  """
+  updateAuthRoles(
+    """sets the columns of the filtered rows to the given values"""
+    _set: authRoles_set_input
+
+    """filter the rows which have to be updated"""
+    where: authRoles_bool_exp!
+  ): authRoles_mutation_response
+
+  """
+  update single row of the table: "auth.user_providers"
+  """
+  updateAuthUserProvider(
+    """sets the columns of the filtered rows to the given values"""
+    _set: authUserProviders_set_input
+    pk_columns: authUserProviders_pk_columns_input!
+  ): authUserProviders
+
+  """
+  update data of the table: "auth.user_providers"
+  """
+  updateAuthUserProviders(
+    """sets the columns of the filtered rows to the given values"""
+    _set: authUserProviders_set_input
+
+    """filter the rows which have to be updated"""
+    where: authUserProviders_bool_exp!
+  ): authUserProviders_mutation_response
+
+  """
+  update single row of the table: "auth.user_roles"
+  """
+  updateAuthUserRole(
+    """sets the columns of the filtered rows to the given values"""
+    _set: authUserRoles_set_input
+    pk_columns: authUserRoles_pk_columns_input!
+  ): authUserRoles
+
+  """
+  update data of the table: "auth.user_roles"
+  """
+  updateAuthUserRoles(
+    """sets the columns of the filtered rows to the given values"""
+    _set: authUserRoles_set_input
+
+    """filter the rows which have to be updated"""
+    where: authUserRoles_bool_exp!
+  ): authUserRoles_mutation_response
+
+  """
+  update single row of the table: "storage.buckets"
+  """
+  updateBucket(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: buckets_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: buckets_set_input
+    pk_columns: buckets_pk_columns_input!
+  ): buckets
+
+  """
+  update data of the table: "storage.buckets"
+  """
+  updateBuckets(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: buckets_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: buckets_set_input
+
+    """filter the rows which have to be updated"""
+    where: buckets_bool_exp!
+  ): buckets_mutation_response
+
+  """
+  update single row of the table: "storage.files"
+  """
+  updateFile(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: files_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: files_set_input
+    pk_columns: files_pk_columns_input!
+  ): files
+
+  """
+  update data of the table: "storage.files"
+  """
+  updateFiles(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: files_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: files_set_input
+
+    """filter the rows which have to be updated"""
+    where: files_bool_exp!
+  ): files_mutation_response
   updateThing(input: UpdateThingInput!): UpdateThingResult
+
+  """
+  update single row of the table: "auth.users"
+  """
+  updateUser(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: users_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: users_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    """
+    _delete_elem: users_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: users_delete_key_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: users_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: users_set_input
+    pk_columns: users_pk_columns_input!
+  ): users
+
+  """
+  update data of the table: "auth.users"
+  """
+  updateUsers(
+    """append existing jsonb value of filtered columns with new jsonb value"""
+    _append: users_append_input
+
+    """
+    delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+    """
+    _delete_at_path: users_delete_at_path_input
+
+    """
+    delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+    """
+    _delete_elem: users_delete_elem_input
+
+    """
+    delete key/value pair or string element. key/value pairs are matched based on their key value
+    """
+    _delete_key: users_delete_key_input
+
+    """prepend existing jsonb value of filtered columns with new jsonb value"""
+    _prepend: users_prepend_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: users_set_input
+
+    """filter the rows which have to be updated"""
+    where: users_bool_exp!
+  ): users_mutation_response
 
   """
   update data of the table: "activities"
@@ -6033,63 +8589,6 @@ type mutation_root {
     _set: things_set_input
     pk_columns: things_pk_columns_input!
   ): things
-
-  """
-  update data of the table: "user_private"
-  """
-  update_user_private(
-    """sets the columns of the filtered rows to the given values"""
-    _set: user_private_set_input
-
-    """filter the rows which have to be updated"""
-    where: user_private_bool_exp!
-  ): user_private_mutation_response
-
-  """
-  update data of the table: "users"
-  """
-  update_users(
-    """sets the columns of the filtered rows to the given values"""
-    _set: users_set_input
-
-    """filter the rows which have to be updated"""
-    where: users_bool_exp!
-  ): users_mutation_response
-
-  """
-  update single row of the table: "users"
-  """
-  update_users_by_pk(
-    """sets the columns of the filtered rows to the given values"""
-    _set: users_set_input
-    pk_columns: users_pk_columns_input!
-  ): users
-
-  """
-  update data of the table: "verification_requests"
-  """
-  update_verification_requests(
-    """increments the numeric columns with given value of the filtered values"""
-    _inc: verification_requests_inc_input
-
-    """sets the columns of the filtered rows to the given values"""
-    _set: verification_requests_set_input
-
-    """filter the rows which have to be updated"""
-    where: verification_requests_bool_exp!
-  ): verification_requests_mutation_response
-
-  """
-  update single row of the table: "verification_requests"
-  """
-  update_verification_requests_by_pk(
-    """increments the numeric columns with given value of the filtered values"""
-    _inc: verification_requests_inc_input
-
-    """sets the columns of the filtered rows to the given values"""
-    _set: verification_requests_set_input
-    pk_columns: verification_requests_pk_columns_input!
-  ): verification_requests
 }
 
 """
@@ -6140,7 +8639,7 @@ input type for inserting array relation for remote table "notifications"
 input notifications_arr_rel_insert_input {
   data: [notifications_insert_input!]!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: notifications_on_conflict
 }
 
@@ -6233,7 +8732,7 @@ type notifications_mutation_response {
 }
 
 """
-on conflict condition type for table "notifications"
+on_conflict condition type for table "notifications"
 """
 input notifications_on_conflict {
   constraint: notifications_constraint!
@@ -6412,9 +8911,314 @@ type query_root {
   """fetch data from the table: "activity_verb" using primary key columns"""
   activity_verb_by_pk(value: String!): activity_verb
 
+  """fetch data from the table: "auth.providers" using primary key columns"""
+  authProvider(id: String!): authProviders
+
   """
-  fetch data from the table: "chat_group_members"
+  fetch data from the table: "auth.provider_requests" using primary key columns
   """
+  authProviderRequest(id: uuid!): authProviderRequests
+
+  """
+  fetch data from the table: "auth.provider_requests"
+  """
+  authProviderRequests(
+    """distinct select on columns"""
+    distinct_on: [authProviderRequests_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authProviderRequests_order_by!]
+
+    """filter the rows returned"""
+    where: authProviderRequests_bool_exp
+  ): [authProviderRequests!]!
+
+  """
+  fetch aggregated fields from the table: "auth.provider_requests"
+  """
+  authProviderRequestsAggregate(
+    """distinct select on columns"""
+    distinct_on: [authProviderRequests_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authProviderRequests_order_by!]
+
+    """filter the rows returned"""
+    where: authProviderRequests_bool_exp
+  ): authProviderRequests_aggregate!
+
+  """
+  fetch data from the table: "auth.providers"
+  """
+  authProviders(
+    """distinct select on columns"""
+    distinct_on: [authProviders_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authProviders_order_by!]
+
+    """filter the rows returned"""
+    where: authProviders_bool_exp
+  ): [authProviders!]!
+
+  """
+  fetch aggregated fields from the table: "auth.providers"
+  """
+  authProvidersAggregate(
+    """distinct select on columns"""
+    distinct_on: [authProviders_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authProviders_order_by!]
+
+    """filter the rows returned"""
+    where: authProviders_bool_exp
+  ): authProviders_aggregate!
+
+  """
+  fetch data from the table: "auth.refresh_tokens" using primary key columns
+  """
+  authRefreshToken(refreshToken: uuid!): authRefreshTokens
+
+  """
+  fetch data from the table: "auth.refresh_tokens"
+  """
+  authRefreshTokens(
+    """distinct select on columns"""
+    distinct_on: [authRefreshTokens_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authRefreshTokens_order_by!]
+
+    """filter the rows returned"""
+    where: authRefreshTokens_bool_exp
+  ): [authRefreshTokens!]!
+
+  """
+  fetch aggregated fields from the table: "auth.refresh_tokens"
+  """
+  authRefreshTokensAggregate(
+    """distinct select on columns"""
+    distinct_on: [authRefreshTokens_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authRefreshTokens_order_by!]
+
+    """filter the rows returned"""
+    where: authRefreshTokens_bool_exp
+  ): authRefreshTokens_aggregate!
+
+  """fetch data from the table: "auth.roles" using primary key columns"""
+  authRole(role: String!): authRoles
+
+  """
+  fetch data from the table: "auth.roles"
+  """
+  authRoles(
+    """distinct select on columns"""
+    distinct_on: [authRoles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authRoles_order_by!]
+
+    """filter the rows returned"""
+    where: authRoles_bool_exp
+  ): [authRoles!]!
+
+  """
+  fetch aggregated fields from the table: "auth.roles"
+  """
+  authRolesAggregate(
+    """distinct select on columns"""
+    distinct_on: [authRoles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authRoles_order_by!]
+
+    """filter the rows returned"""
+    where: authRoles_bool_exp
+  ): authRoles_aggregate!
+
+  """
+  fetch data from the table: "auth.user_providers" using primary key columns
+  """
+  authUserProvider(id: uuid!): authUserProviders
+
+  """
+  fetch data from the table: "auth.user_providers"
+  """
+  authUserProviders(
+    """distinct select on columns"""
+    distinct_on: [authUserProviders_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserProviders_order_by!]
+
+    """filter the rows returned"""
+    where: authUserProviders_bool_exp
+  ): [authUserProviders!]!
+
+  """
+  fetch aggregated fields from the table: "auth.user_providers"
+  """
+  authUserProvidersAggregate(
+    """distinct select on columns"""
+    distinct_on: [authUserProviders_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserProviders_order_by!]
+
+    """filter the rows returned"""
+    where: authUserProviders_bool_exp
+  ): authUserProviders_aggregate!
+
+  """fetch data from the table: "auth.user_roles" using primary key columns"""
+  authUserRole(id: uuid!): authUserRoles
+
+  """
+  fetch data from the table: "auth.user_roles"
+  """
+  authUserRoles(
+    """distinct select on columns"""
+    distinct_on: [authUserRoles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserRoles_order_by!]
+
+    """filter the rows returned"""
+    where: authUserRoles_bool_exp
+  ): [authUserRoles!]!
+
+  """
+  fetch aggregated fields from the table: "auth.user_roles"
+  """
+  authUserRolesAggregate(
+    """distinct select on columns"""
+    distinct_on: [authUserRoles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserRoles_order_by!]
+
+    """filter the rows returned"""
+    where: authUserRoles_bool_exp
+  ): authUserRoles_aggregate!
+
+  """fetch data from the table: "storage.buckets" using primary key columns"""
+  bucket(id: String!): buckets
+
+  """
+  fetch data from the table: "storage.buckets"
+  """
+  buckets(
+    """distinct select on columns"""
+    distinct_on: [buckets_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [buckets_order_by!]
+
+    """filter the rows returned"""
+    where: buckets_bool_exp
+  ): [buckets!]!
+
+  """
+  fetch aggregated fields from the table: "storage.buckets"
+  """
+  bucketsAggregate(
+    """distinct select on columns"""
+    distinct_on: [buckets_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [buckets_order_by!]
+
+    """filter the rows returned"""
+    where: buckets_bool_exp
+  ): buckets_aggregate!
+
+  """An array relationship"""
   chat_group_members(
     """distinct select on columns"""
     distinct_on: [chat_group_members_select_column!]
@@ -6432,9 +9236,7 @@ type query_root {
     where: chat_group_members_bool_exp
   ): [chat_group_members!]!
 
-  """
-  fetch aggregated fields from the table: "chat_group_members"
-  """
+  """An aggregate relationship"""
   chat_group_members_aggregate(
     """distinct select on columns"""
     distinct_on: [chat_group_members_select_column!]
@@ -6621,9 +9423,10 @@ type query_root {
   """fetch data from the table: "entities" using primary key columns"""
   entities_by_pk(id: uuid!): entities
 
-  """
-  fetch data from the table: "file_uploads"
-  """
+  """fetch data from the table: "storage.files" using primary key columns"""
+  file(id: uuid!): files
+
+  """An array relationship"""
   file_uploads(
     """distinct select on columns"""
     distinct_on: [file_uploads_select_column!]
@@ -6641,9 +9444,7 @@ type query_root {
     where: file_uploads_bool_exp
   ): [file_uploads!]!
 
-  """
-  fetch aggregated fields from the table: "file_uploads"
-  """
+  """An aggregate relationship"""
   file_uploads_aggregate(
     """distinct select on columns"""
     distinct_on: [file_uploads_select_column!]
@@ -6663,6 +9464,46 @@ type query_root {
 
   """fetch data from the table: "file_uploads" using primary key columns"""
   file_uploads_by_pk(id: uuid!): file_uploads
+
+  """
+  fetch data from the table: "storage.files"
+  """
+  files(
+    """distinct select on columns"""
+    distinct_on: [files_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [files_order_by!]
+
+    """filter the rows returned"""
+    where: files_bool_exp
+  ): [files!]!
+
+  """
+  fetch aggregated fields from the table: "storage.files"
+  """
+  filesAggregate(
+    """distinct select on columns"""
+    distinct_on: [files_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [files_order_by!]
+
+    """filter the rows returned"""
+    where: files_bool_exp
+  ): files_aggregate!
 
   """
   fetch data from the table: "group_join_request_status"
@@ -7258,48 +10099,11 @@ type query_root {
   """fetch data from the table: "things" using primary key columns"""
   things_by_pk(id: uuid!): things
 
-  """
-  fetch data from the table: "user_private"
-  """
-  user_private(
-    """distinct select on columns"""
-    distinct_on: [user_private_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_private_order_by!]
-
-    """filter the rows returned"""
-    where: user_private_bool_exp
-  ): [user_private!]!
+  """fetch data from the table: "auth.users" using primary key columns"""
+  user(id: uuid!): users
 
   """
-  fetch aggregated fields from the table: "user_private"
-  """
-  user_private_aggregate(
-    """distinct select on columns"""
-    distinct_on: [user_private_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_private_order_by!]
-
-    """filter the rows returned"""
-    where: user_private_bool_exp
-  ): user_private_aggregate!
-
-  """
-  fetch data from the table: "users"
+  fetch data from the table: "auth.users"
   """
   users(
     """distinct select on columns"""
@@ -7319,9 +10123,9 @@ type query_root {
   ): [users!]!
 
   """
-  fetch aggregated fields from the table: "users"
+  fetch aggregated fields from the table: "auth.users"
   """
-  users_aggregate(
+  usersAggregate(
     """distinct select on columns"""
     distinct_on: [users_select_column!]
 
@@ -7337,54 +10141,6 @@ type query_root {
     """filter the rows returned"""
     where: users_bool_exp
   ): users_aggregate!
-
-  """fetch data from the table: "users" using primary key columns"""
-  users_by_pk(id: uuid!): users
-
-  """
-  fetch data from the table: "verification_requests"
-  """
-  verification_requests(
-    """distinct select on columns"""
-    distinct_on: [verification_requests_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [verification_requests_order_by!]
-
-    """filter the rows returned"""
-    where: verification_requests_bool_exp
-  ): [verification_requests!]!
-
-  """
-  fetch aggregated fields from the table: "verification_requests"
-  """
-  verification_requests_aggregate(
-    """distinct select on columns"""
-    distinct_on: [verification_requests_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [verification_requests_order_by!]
-
-    """filter the rows returned"""
-    where: verification_requests_bool_exp
-  ): verification_requests_aggregate!
-
-  """
-  fetch data from the table: "verification_requests" using primary key columns
-  """
-  verification_requests_by_pk(id: Int!): verification_requests
 }
 
 scalar smallint
@@ -7487,9 +10243,314 @@ type subscription_root {
   """fetch data from the table: "activity_verb" using primary key columns"""
   activity_verb_by_pk(value: String!): activity_verb
 
+  """fetch data from the table: "auth.providers" using primary key columns"""
+  authProvider(id: String!): authProviders
+
   """
-  fetch data from the table: "chat_group_members"
+  fetch data from the table: "auth.provider_requests" using primary key columns
   """
+  authProviderRequest(id: uuid!): authProviderRequests
+
+  """
+  fetch data from the table: "auth.provider_requests"
+  """
+  authProviderRequests(
+    """distinct select on columns"""
+    distinct_on: [authProviderRequests_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authProviderRequests_order_by!]
+
+    """filter the rows returned"""
+    where: authProviderRequests_bool_exp
+  ): [authProviderRequests!]!
+
+  """
+  fetch aggregated fields from the table: "auth.provider_requests"
+  """
+  authProviderRequestsAggregate(
+    """distinct select on columns"""
+    distinct_on: [authProviderRequests_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authProviderRequests_order_by!]
+
+    """filter the rows returned"""
+    where: authProviderRequests_bool_exp
+  ): authProviderRequests_aggregate!
+
+  """
+  fetch data from the table: "auth.providers"
+  """
+  authProviders(
+    """distinct select on columns"""
+    distinct_on: [authProviders_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authProviders_order_by!]
+
+    """filter the rows returned"""
+    where: authProviders_bool_exp
+  ): [authProviders!]!
+
+  """
+  fetch aggregated fields from the table: "auth.providers"
+  """
+  authProvidersAggregate(
+    """distinct select on columns"""
+    distinct_on: [authProviders_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authProviders_order_by!]
+
+    """filter the rows returned"""
+    where: authProviders_bool_exp
+  ): authProviders_aggregate!
+
+  """
+  fetch data from the table: "auth.refresh_tokens" using primary key columns
+  """
+  authRefreshToken(refreshToken: uuid!): authRefreshTokens
+
+  """
+  fetch data from the table: "auth.refresh_tokens"
+  """
+  authRefreshTokens(
+    """distinct select on columns"""
+    distinct_on: [authRefreshTokens_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authRefreshTokens_order_by!]
+
+    """filter the rows returned"""
+    where: authRefreshTokens_bool_exp
+  ): [authRefreshTokens!]!
+
+  """
+  fetch aggregated fields from the table: "auth.refresh_tokens"
+  """
+  authRefreshTokensAggregate(
+    """distinct select on columns"""
+    distinct_on: [authRefreshTokens_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authRefreshTokens_order_by!]
+
+    """filter the rows returned"""
+    where: authRefreshTokens_bool_exp
+  ): authRefreshTokens_aggregate!
+
+  """fetch data from the table: "auth.roles" using primary key columns"""
+  authRole(role: String!): authRoles
+
+  """
+  fetch data from the table: "auth.roles"
+  """
+  authRoles(
+    """distinct select on columns"""
+    distinct_on: [authRoles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authRoles_order_by!]
+
+    """filter the rows returned"""
+    where: authRoles_bool_exp
+  ): [authRoles!]!
+
+  """
+  fetch aggregated fields from the table: "auth.roles"
+  """
+  authRolesAggregate(
+    """distinct select on columns"""
+    distinct_on: [authRoles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authRoles_order_by!]
+
+    """filter the rows returned"""
+    where: authRoles_bool_exp
+  ): authRoles_aggregate!
+
+  """
+  fetch data from the table: "auth.user_providers" using primary key columns
+  """
+  authUserProvider(id: uuid!): authUserProviders
+
+  """
+  fetch data from the table: "auth.user_providers"
+  """
+  authUserProviders(
+    """distinct select on columns"""
+    distinct_on: [authUserProviders_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserProviders_order_by!]
+
+    """filter the rows returned"""
+    where: authUserProviders_bool_exp
+  ): [authUserProviders!]!
+
+  """
+  fetch aggregated fields from the table: "auth.user_providers"
+  """
+  authUserProvidersAggregate(
+    """distinct select on columns"""
+    distinct_on: [authUserProviders_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserProviders_order_by!]
+
+    """filter the rows returned"""
+    where: authUserProviders_bool_exp
+  ): authUserProviders_aggregate!
+
+  """fetch data from the table: "auth.user_roles" using primary key columns"""
+  authUserRole(id: uuid!): authUserRoles
+
+  """
+  fetch data from the table: "auth.user_roles"
+  """
+  authUserRoles(
+    """distinct select on columns"""
+    distinct_on: [authUserRoles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserRoles_order_by!]
+
+    """filter the rows returned"""
+    where: authUserRoles_bool_exp
+  ): [authUserRoles!]!
+
+  """
+  fetch aggregated fields from the table: "auth.user_roles"
+  """
+  authUserRolesAggregate(
+    """distinct select on columns"""
+    distinct_on: [authUserRoles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserRoles_order_by!]
+
+    """filter the rows returned"""
+    where: authUserRoles_bool_exp
+  ): authUserRoles_aggregate!
+
+  """fetch data from the table: "storage.buckets" using primary key columns"""
+  bucket(id: String!): buckets
+
+  """
+  fetch data from the table: "storage.buckets"
+  """
+  buckets(
+    """distinct select on columns"""
+    distinct_on: [buckets_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [buckets_order_by!]
+
+    """filter the rows returned"""
+    where: buckets_bool_exp
+  ): [buckets!]!
+
+  """
+  fetch aggregated fields from the table: "storage.buckets"
+  """
+  bucketsAggregate(
+    """distinct select on columns"""
+    distinct_on: [buckets_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [buckets_order_by!]
+
+    """filter the rows returned"""
+    where: buckets_bool_exp
+  ): buckets_aggregate!
+
+  """An array relationship"""
   chat_group_members(
     """distinct select on columns"""
     distinct_on: [chat_group_members_select_column!]
@@ -7507,9 +10568,7 @@ type subscription_root {
     where: chat_group_members_bool_exp
   ): [chat_group_members!]!
 
-  """
-  fetch aggregated fields from the table: "chat_group_members"
-  """
+  """An aggregate relationship"""
   chat_group_members_aggregate(
     """distinct select on columns"""
     distinct_on: [chat_group_members_select_column!]
@@ -7696,9 +10755,10 @@ type subscription_root {
   """fetch data from the table: "entities" using primary key columns"""
   entities_by_pk(id: uuid!): entities
 
-  """
-  fetch data from the table: "file_uploads"
-  """
+  """fetch data from the table: "storage.files" using primary key columns"""
+  file(id: uuid!): files
+
+  """An array relationship"""
   file_uploads(
     """distinct select on columns"""
     distinct_on: [file_uploads_select_column!]
@@ -7716,9 +10776,7 @@ type subscription_root {
     where: file_uploads_bool_exp
   ): [file_uploads!]!
 
-  """
-  fetch aggregated fields from the table: "file_uploads"
-  """
+  """An aggregate relationship"""
   file_uploads_aggregate(
     """distinct select on columns"""
     distinct_on: [file_uploads_select_column!]
@@ -7738,6 +10796,46 @@ type subscription_root {
 
   """fetch data from the table: "file_uploads" using primary key columns"""
   file_uploads_by_pk(id: uuid!): file_uploads
+
+  """
+  fetch data from the table: "storage.files"
+  """
+  files(
+    """distinct select on columns"""
+    distinct_on: [files_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [files_order_by!]
+
+    """filter the rows returned"""
+    where: files_bool_exp
+  ): [files!]!
+
+  """
+  fetch aggregated fields from the table: "storage.files"
+  """
+  filesAggregate(
+    """distinct select on columns"""
+    distinct_on: [files_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [files_order_by!]
+
+    """filter the rows returned"""
+    where: files_bool_exp
+  ): files_aggregate!
 
   """
   fetch data from the table: "group_join_request_status"
@@ -8333,48 +11431,11 @@ type subscription_root {
   """fetch data from the table: "things" using primary key columns"""
   things_by_pk(id: uuid!): things
 
-  """
-  fetch data from the table: "user_private"
-  """
-  user_private(
-    """distinct select on columns"""
-    distinct_on: [user_private_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_private_order_by!]
-
-    """filter the rows returned"""
-    where: user_private_bool_exp
-  ): [user_private!]!
+  """fetch data from the table: "auth.users" using primary key columns"""
+  user(id: uuid!): users
 
   """
-  fetch aggregated fields from the table: "user_private"
-  """
-  user_private_aggregate(
-    """distinct select on columns"""
-    distinct_on: [user_private_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_private_order_by!]
-
-    """filter the rows returned"""
-    where: user_private_bool_exp
-  ): user_private_aggregate!
-
-  """
-  fetch data from the table: "users"
+  fetch data from the table: "auth.users"
   """
   users(
     """distinct select on columns"""
@@ -8394,9 +11455,9 @@ type subscription_root {
   ): [users!]!
 
   """
-  fetch aggregated fields from the table: "users"
+  fetch aggregated fields from the table: "auth.users"
   """
-  users_aggregate(
+  usersAggregate(
     """distinct select on columns"""
     distinct_on: [users_select_column!]
 
@@ -8412,54 +11473,6 @@ type subscription_root {
     """filter the rows returned"""
     where: users_bool_exp
   ): users_aggregate!
-
-  """fetch data from the table: "users" using primary key columns"""
-  users_by_pk(id: uuid!): users
-
-  """
-  fetch data from the table: "verification_requests"
-  """
-  verification_requests(
-    """distinct select on columns"""
-    distinct_on: [verification_requests_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [verification_requests_order_by!]
-
-    """filter the rows returned"""
-    where: verification_requests_bool_exp
-  ): [verification_requests!]!
-
-  """
-  fetch aggregated fields from the table: "verification_requests"
-  """
-  verification_requests_aggregate(
-    """distinct select on columns"""
-    distinct_on: [verification_requests_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [verification_requests_order_by!]
-
-    """filter the rows returned"""
-    where: verification_requests_bool_exp
-  ): verification_requests_aggregate!
-
-  """
-  fetch data from the table: "verification_requests" using primary key columns
-  """
-  verification_requests_by_pk(id: Int!): verification_requests
 }
 
 """
@@ -8529,7 +11542,7 @@ input type for inserting array relation for remote table "thing_images"
 input thing_images_arr_rel_insert_input {
   data: [thing_images_insert_input!]!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: thing_images_on_conflict
 }
 
@@ -8661,12 +11674,12 @@ input type for inserting object relation for remote table "thing_images"
 input thing_images_obj_rel_insert_input {
   data: thing_images_insert_input!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: thing_images_on_conflict
 }
 
 """
-on conflict condition type for table "thing_images"
+on_conflict condition type for table "thing_images"
 """
 input thing_images_on_conflict {
   constraint: thing_images_constraint!
@@ -8942,7 +11955,7 @@ type thing_type_mutation_response {
 }
 
 """
-on conflict condition type for table "thing_type"
+on_conflict condition type for table "thing_type"
 """
 input thing_type_on_conflict {
   constraint: thing_type_constraint!
@@ -9115,7 +12128,7 @@ input type for inserting array relation for remote table "things"
 input things_arr_rel_insert_input {
   data: [things_insert_input!]!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: things_on_conflict
 }
 
@@ -9246,12 +12259,12 @@ input type for inserting object relation for remote table "things"
 input things_obj_rel_insert_input {
   data: things_insert_input!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: things_on_conflict
 }
 
 """
-on conflict condition type for table "things"
+on_conflict condition type for table "things"
 """
 input things_on_conflict {
   constraint: things_constraint!
@@ -9393,112 +12406,50 @@ input timestamptz_comparison_exp {
 }
 
 """
-columns and relationships of "user_private"
-"""
-type user_private {
-  email: String
-  user_id: uuid
-}
-
-"""
-aggregated selection of "user_private"
-"""
-type user_private_aggregate {
-  aggregate: user_private_aggregate_fields
-  nodes: [user_private!]!
-}
-
-"""
-aggregate fields of "user_private"
-"""
-type user_private_aggregate_fields {
-  count(columns: [user_private_select_column!], distinct: Boolean): Int!
-  max: user_private_max_fields
-  min: user_private_min_fields
-}
-
-"""
-Boolean expression to filter rows from the table "user_private". All fields are combined with a logical 'AND'.
-"""
-input user_private_bool_exp {
-  _and: [user_private_bool_exp!]
-  _not: user_private_bool_exp
-  _or: [user_private_bool_exp!]
-  email: String_comparison_exp
-  user_id: uuid_comparison_exp
-}
-
-"""
-input type for inserting data into table "user_private"
-"""
-input user_private_insert_input {
-  email: String
-  user_id: uuid
-}
-
-"""aggregate max on columns"""
-type user_private_max_fields {
-  email: String
-  user_id: uuid
-}
-
-"""aggregate min on columns"""
-type user_private_min_fields {
-  email: String
-  user_id: uuid
-}
-
-"""
-response of any mutation on the table "user_private"
-"""
-type user_private_mutation_response {
-  """number of rows affected by the mutation"""
-  affected_rows: Int!
-
-  """data from the rows affected by the mutation"""
-  returning: [user_private!]!
-}
-
-"""
-input type for inserting object relation for remote table "user_private"
-"""
-input user_private_obj_rel_insert_input {
-  data: user_private_insert_input!
-}
-
-"""Ordering options when selecting data from "user_private"."""
-input user_private_order_by {
-  email: order_by
-  user_id: order_by
-}
-
-"""
-select columns of table "user_private"
-"""
-enum user_private_select_column {
-  """column name"""
-  email
-
-  """column name"""
-  user_id
-}
-
-"""
-input type for updating data in table "user_private"
-"""
-input user_private_set_input {
-  email: String
-  user_id: uuid
-}
-
-"""
-columns and relationships of "users"
+columns and relationships of "auth.users"
 """
 type users {
-  auth0_id: String
+  activeMfaType: String
 
   """An array relationship"""
-  chat_group_memberships(
+  activities(
+    """distinct select on columns"""
+    distinct_on: [activities_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [activities_order_by!]
+
+    """filter the rows returned"""
+    where: activities_bool_exp
+  ): [activities!]!
+
+  """An aggregate relationship"""
+  activities_aggregate(
+    """distinct select on columns"""
+    distinct_on: [activities_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [activities_order_by!]
+
+    """filter the rows returned"""
+    where: activities_bool_exp
+  ): activities_aggregate!
+  avatarUrl: String!
+
+  """An array relationship"""
+  chat_group_members(
     """distinct select on columns"""
     distinct_on: [chat_group_members_select_column!]
 
@@ -9516,7 +12467,7 @@ type users {
   ): [chat_group_members!]!
 
   """An aggregate relationship"""
-  chat_group_memberships_aggregate(
+  chat_group_members_aggregate(
     """distinct select on columns"""
     distinct_on: [chat_group_members_select_column!]
 
@@ -9604,9 +12555,51 @@ type users {
     """filter the rows returned"""
     where: comments_bool_exp
   ): comments_aggregate!
-  created_at: timestamptz!
-  email: String
-  email_verified: timestamptz
+  createdAt: timestamptz!
+  defaultRole: String!
+
+  """An object relationship"""
+  defaultRoleByRole: authRoles!
+  disabled: Boolean!
+  displayName: String!
+  email: citext
+  emailVerified: Boolean!
+
+  """An array relationship"""
+  file_uploads(
+    """distinct select on columns"""
+    distinct_on: [file_uploads_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [file_uploads_order_by!]
+
+    """filter the rows returned"""
+    where: file_uploads_bool_exp
+  ): [file_uploads!]!
+
+  """An aggregate relationship"""
+  file_uploads_aggregate(
+    """distinct select on columns"""
+    distinct_on: [file_uploads_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [file_uploads_order_by!]
+
+    """filter the rows returned"""
+    where: file_uploads_bool_exp
+  ): file_uploads_aggregate!
 
   """An array relationship"""
   group_join_requests(
@@ -9680,9 +12673,9 @@ type users {
     where: group_posts_bool_exp
   ): group_posts_aggregate!
   id: uuid!
-  image: String
-  last_chat_notification: timestamptz
-  last_seen: timestamptz
+  isAnonymous: Boolean!
+  lastSeen: timestamptz
+  locale: String!
 
   """An array relationship"""
   memberships(
@@ -9719,15 +12712,125 @@ type users {
     """filter the rows returned"""
     where: group_members_bool_exp
   ): group_members_aggregate!
-  name: String!
-  password_hash: String
+  metadata(
+    """JSON select path"""
+    path: String
+  ): jsonb
+  newEmail: citext
 
-  """An object relationship"""
-  private_info: user_private
+  """An array relationship"""
+  notifications(
+    """distinct select on columns"""
+    distinct_on: [notifications_select_column!]
 
-  """An object relationship"""
-  profile_picture: file_uploads
-  profile_picture_id: uuid
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [notifications_order_by!]
+
+    """filter the rows returned"""
+    where: notifications_bool_exp
+  ): [notifications!]!
+
+  """An aggregate relationship"""
+  notifications_aggregate(
+    """distinct select on columns"""
+    distinct_on: [notifications_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [notifications_order_by!]
+
+    """filter the rows returned"""
+    where: notifications_bool_exp
+  ): notifications_aggregate!
+  otpHash: String
+  otpHashExpiresAt: timestamptz!
+  otpMethodLastUsed: String
+  passwordHash: String
+  phoneNumber: String
+  phoneNumberVerified: Boolean!
+
+  """An array relationship"""
+  refreshTokens(
+    """distinct select on columns"""
+    distinct_on: [authRefreshTokens_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authRefreshTokens_order_by!]
+
+    """filter the rows returned"""
+    where: authRefreshTokens_bool_exp
+  ): [authRefreshTokens!]!
+
+  """An aggregate relationship"""
+  refreshTokens_aggregate(
+    """distinct select on columns"""
+    distinct_on: [authRefreshTokens_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authRefreshTokens_order_by!]
+
+    """filter the rows returned"""
+    where: authRefreshTokens_bool_exp
+  ): authRefreshTokens_aggregate!
+
+  """An array relationship"""
+  roles(
+    """distinct select on columns"""
+    distinct_on: [authUserRoles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserRoles_order_by!]
+
+    """filter the rows returned"""
+    where: authUserRoles_bool_exp
+  ): [authUserRoles!]!
+
+  """An aggregate relationship"""
+  roles_aggregate(
+    """distinct select on columns"""
+    distinct_on: [authUserRoles_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserRoles_order_by!]
+
+    """filter the rows returned"""
+    where: authUserRoles_bool_exp
+  ): authUserRoles_aggregate!
 
   """An array relationship"""
   things(
@@ -9764,11 +12867,50 @@ type users {
     """filter the rows returned"""
     where: things_bool_exp
   ): things_aggregate!
-  updated_at: timestamptz!
+  ticket: String
+  ticketExpiresAt: timestamptz!
+  totpSecret: String
+  updatedAt: timestamptz!
+
+  """An array relationship"""
+  userProviders(
+    """distinct select on columns"""
+    distinct_on: [authUserProviders_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserProviders_order_by!]
+
+    """filter the rows returned"""
+    where: authUserProviders_bool_exp
+  ): [authUserProviders!]!
+
+  """An aggregate relationship"""
+  userProviders_aggregate(
+    """distinct select on columns"""
+    distinct_on: [authUserProviders_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserProviders_order_by!]
+
+    """filter the rows returned"""
+    where: authUserProviders_bool_exp
+  ): authUserProviders_aggregate!
 }
 
 """
-aggregated selection of "users"
+aggregated selection of "auth.users"
 """
 type users_aggregate {
   aggregate: users_aggregate_fields
@@ -9776,7 +12918,7 @@ type users_aggregate {
 }
 
 """
-aggregate fields of "users"
+aggregate fields of "auth.users"
 """
 type users_aggregate_fields {
   count(columns: [users_select_column!], distinct: Boolean): Int!
@@ -9785,7 +12927,7 @@ type users_aggregate_fields {
 }
 
 """
-order by aggregate values of table "users"
+order by aggregate values of table "auth.users"
 """
 input users_aggregate_order_by {
   count: order_by
@@ -9793,160 +12935,245 @@ input users_aggregate_order_by {
   min: users_min_order_by
 }
 
+"""append existing jsonb value of filtered columns with new jsonb value"""
+input users_append_input {
+  metadata: jsonb
+}
+
 """
-input type for inserting array relation for remote table "users"
+input type for inserting array relation for remote table "auth.users"
 """
 input users_arr_rel_insert_input {
   data: [users_insert_input!]!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: users_on_conflict
 }
 
 """
-Boolean expression to filter rows from the table "users". All fields are combined with a logical 'AND'.
+Boolean expression to filter rows from the table "auth.users". All fields are combined with a logical 'AND'.
 """
 input users_bool_exp {
   _and: [users_bool_exp!]
   _not: users_bool_exp
   _or: [users_bool_exp!]
-  auth0_id: String_comparison_exp
-  chat_group_memberships: chat_group_members_bool_exp
+  activeMfaType: String_comparison_exp
+  activities: activities_bool_exp
+  avatarUrl: String_comparison_exp
+  chat_group_members: chat_group_members_bool_exp
   chat_messages: chat_messages_bool_exp
   comments: comments_bool_exp
-  created_at: timestamptz_comparison_exp
-  email: String_comparison_exp
-  email_verified: timestamptz_comparison_exp
+  createdAt: timestamptz_comparison_exp
+  defaultRole: String_comparison_exp
+  defaultRoleByRole: authRoles_bool_exp
+  disabled: Boolean_comparison_exp
+  displayName: String_comparison_exp
+  email: citext_comparison_exp
+  emailVerified: Boolean_comparison_exp
+  file_uploads: file_uploads_bool_exp
   group_join_requests: group_join_requests_bool_exp
   group_posts: group_posts_bool_exp
   id: uuid_comparison_exp
-  image: String_comparison_exp
-  last_chat_notification: timestamptz_comparison_exp
-  last_seen: timestamptz_comparison_exp
+  isAnonymous: Boolean_comparison_exp
+  lastSeen: timestamptz_comparison_exp
+  locale: String_comparison_exp
   memberships: group_members_bool_exp
-  name: String_comparison_exp
-  password_hash: String_comparison_exp
-  private_info: user_private_bool_exp
-  profile_picture: file_uploads_bool_exp
-  profile_picture_id: uuid_comparison_exp
+  metadata: jsonb_comparison_exp
+  newEmail: citext_comparison_exp
+  notifications: notifications_bool_exp
+  otpHash: String_comparison_exp
+  otpHashExpiresAt: timestamptz_comparison_exp
+  otpMethodLastUsed: String_comparison_exp
+  passwordHash: String_comparison_exp
+  phoneNumber: String_comparison_exp
+  phoneNumberVerified: Boolean_comparison_exp
+  refreshTokens: authRefreshTokens_bool_exp
+  roles: authUserRoles_bool_exp
   things: things_bool_exp
-  updated_at: timestamptz_comparison_exp
+  ticket: String_comparison_exp
+  ticketExpiresAt: timestamptz_comparison_exp
+  totpSecret: String_comparison_exp
+  updatedAt: timestamptz_comparison_exp
+  userProviders: authUserProviders_bool_exp
 }
 
 """
-unique or primary key constraints on table "users"
+unique or primary key constraints on table "auth.users"
 """
 enum users_constraint {
   """unique or primary key constraint"""
-  email
-
-  """unique or primary key constraint"""
-  users_auth0_id_key
-
-  """unique or primary key constraint"""
   users_email_key
+
+  """unique or primary key constraint"""
+  users_phone_number_key
 
   """unique or primary key constraint"""
   users_pkey
 }
 
 """
-input type for inserting data into table "users"
+delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+"""
+input users_delete_at_path_input {
+  metadata: [String!]
+}
+
+"""
+delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+"""
+input users_delete_elem_input {
+  metadata: Int
+}
+
+"""
+delete key/value pair or string element. key/value pairs are matched based on their key value
+"""
+input users_delete_key_input {
+  metadata: String
+}
+
+"""
+input type for inserting data into table "auth.users"
 """
 input users_insert_input {
-  auth0_id: String
-  chat_group_memberships: chat_group_members_arr_rel_insert_input
+  activeMfaType: String
+  activities: activities_arr_rel_insert_input
+  avatarUrl: String
+  chat_group_members: chat_group_members_arr_rel_insert_input
   chat_messages: chat_messages_arr_rel_insert_input
   comments: comments_arr_rel_insert_input
-  created_at: timestamptz
-  email: String
-  email_verified: timestamptz
+  createdAt: timestamptz
+  defaultRole: String
+  defaultRoleByRole: authRoles_obj_rel_insert_input
+  disabled: Boolean
+  displayName: String
+  email: citext
+  emailVerified: Boolean
+  file_uploads: file_uploads_arr_rel_insert_input
   group_join_requests: group_join_requests_arr_rel_insert_input
   group_posts: group_posts_arr_rel_insert_input
   id: uuid
-  image: String
-  last_chat_notification: timestamptz
-  last_seen: timestamptz
+  isAnonymous: Boolean
+  lastSeen: timestamptz
+  locale: String
   memberships: group_members_arr_rel_insert_input
-  name: String
-  password_hash: String
-  private_info: user_private_obj_rel_insert_input
-  profile_picture: file_uploads_obj_rel_insert_input
-  profile_picture_id: uuid
+  metadata: jsonb
+  newEmail: citext
+  notifications: notifications_arr_rel_insert_input
+  otpHash: String
+  otpHashExpiresAt: timestamptz
+  otpMethodLastUsed: String
+  passwordHash: String
+  phoneNumber: String
+  phoneNumberVerified: Boolean
+  refreshTokens: authRefreshTokens_arr_rel_insert_input
+  roles: authUserRoles_arr_rel_insert_input
   things: things_arr_rel_insert_input
-  updated_at: timestamptz
+  ticket: String
+  ticketExpiresAt: timestamptz
+  totpSecret: String
+  updatedAt: timestamptz
+  userProviders: authUserProviders_arr_rel_insert_input
 }
 
 """aggregate max on columns"""
 type users_max_fields {
-  auth0_id: String
-  created_at: timestamptz
-  email: String
-  email_verified: timestamptz
+  activeMfaType: String
+  avatarUrl: String
+  createdAt: timestamptz
+  defaultRole: String
+  displayName: String
+  email: citext
   id: uuid
-  image: String
-  last_chat_notification: timestamptz
-  last_seen: timestamptz
-  name: String
-  password_hash: String
-  profile_picture_id: uuid
-  updated_at: timestamptz
+  lastSeen: timestamptz
+  locale: String
+  newEmail: citext
+  otpHash: String
+  otpHashExpiresAt: timestamptz
+  otpMethodLastUsed: String
+  passwordHash: String
+  phoneNumber: String
+  ticket: String
+  ticketExpiresAt: timestamptz
+  totpSecret: String
+  updatedAt: timestamptz
 }
 
 """
-order by max() on columns of table "users"
+order by max() on columns of table "auth.users"
 """
 input users_max_order_by {
-  auth0_id: order_by
-  created_at: order_by
+  activeMfaType: order_by
+  avatarUrl: order_by
+  createdAt: order_by
+  defaultRole: order_by
+  displayName: order_by
   email: order_by
-  email_verified: order_by
   id: order_by
-  image: order_by
-  last_chat_notification: order_by
-  last_seen: order_by
-  name: order_by
-  password_hash: order_by
-  profile_picture_id: order_by
-  updated_at: order_by
+  lastSeen: order_by
+  locale: order_by
+  newEmail: order_by
+  otpHash: order_by
+  otpHashExpiresAt: order_by
+  otpMethodLastUsed: order_by
+  passwordHash: order_by
+  phoneNumber: order_by
+  ticket: order_by
+  ticketExpiresAt: order_by
+  totpSecret: order_by
+  updatedAt: order_by
 }
 
 """aggregate min on columns"""
 type users_min_fields {
-  auth0_id: String
-  created_at: timestamptz
-  email: String
-  email_verified: timestamptz
+  activeMfaType: String
+  avatarUrl: String
+  createdAt: timestamptz
+  defaultRole: String
+  displayName: String
+  email: citext
   id: uuid
-  image: String
-  last_chat_notification: timestamptz
-  last_seen: timestamptz
-  name: String
-  password_hash: String
-  profile_picture_id: uuid
-  updated_at: timestamptz
+  lastSeen: timestamptz
+  locale: String
+  newEmail: citext
+  otpHash: String
+  otpHashExpiresAt: timestamptz
+  otpMethodLastUsed: String
+  passwordHash: String
+  phoneNumber: String
+  ticket: String
+  ticketExpiresAt: timestamptz
+  totpSecret: String
+  updatedAt: timestamptz
 }
 
 """
-order by min() on columns of table "users"
+order by min() on columns of table "auth.users"
 """
 input users_min_order_by {
-  auth0_id: order_by
-  created_at: order_by
+  activeMfaType: order_by
+  avatarUrl: order_by
+  createdAt: order_by
+  defaultRole: order_by
+  displayName: order_by
   email: order_by
-  email_verified: order_by
   id: order_by
-  image: order_by
-  last_chat_notification: order_by
-  last_seen: order_by
-  name: order_by
-  password_hash: order_by
-  profile_picture_id: order_by
-  updated_at: order_by
+  lastSeen: order_by
+  locale: order_by
+  newEmail: order_by
+  otpHash: order_by
+  otpHashExpiresAt: order_by
+  otpMethodLastUsed: order_by
+  passwordHash: order_by
+  phoneNumber: order_by
+  ticket: order_by
+  ticketExpiresAt: order_by
+  totpSecret: order_by
+  updatedAt: order_by
 }
 
 """
-response of any mutation on the table "users"
+response of any mutation on the table "auth.users"
 """
 type users_mutation_response {
   """number of rows affected by the mutation"""
@@ -9957,17 +13184,17 @@ type users_mutation_response {
 }
 
 """
-input type for inserting object relation for remote table "users"
+input type for inserting object relation for remote table "auth.users"
 """
 input users_obj_rel_insert_input {
   data: users_insert_input!
 
-  """on conflict condition"""
+  """upsert condition"""
   on_conflict: users_on_conflict
 }
 
 """
-on conflict condition type for table "users"
+on_conflict condition type for table "auth.users"
 """
 input users_on_conflict {
   constraint: users_constraint!
@@ -9975,29 +13202,46 @@ input users_on_conflict {
   where: users_bool_exp
 }
 
-"""Ordering options when selecting data from "users"."""
+"""Ordering options when selecting data from "auth.users"."""
 input users_order_by {
-  auth0_id: order_by
-  chat_group_memberships_aggregate: chat_group_members_aggregate_order_by
+  activeMfaType: order_by
+  activities_aggregate: activities_aggregate_order_by
+  avatarUrl: order_by
+  chat_group_members_aggregate: chat_group_members_aggregate_order_by
   chat_messages_aggregate: chat_messages_aggregate_order_by
   comments_aggregate: comments_aggregate_order_by
-  created_at: order_by
+  createdAt: order_by
+  defaultRole: order_by
+  defaultRoleByRole: authRoles_order_by
+  disabled: order_by
+  displayName: order_by
   email: order_by
-  email_verified: order_by
+  emailVerified: order_by
+  file_uploads_aggregate: file_uploads_aggregate_order_by
   group_join_requests_aggregate: group_join_requests_aggregate_order_by
   group_posts_aggregate: group_posts_aggregate_order_by
   id: order_by
-  image: order_by
-  last_chat_notification: order_by
-  last_seen: order_by
+  isAnonymous: order_by
+  lastSeen: order_by
+  locale: order_by
   memberships_aggregate: group_members_aggregate_order_by
-  name: order_by
-  password_hash: order_by
-  private_info: user_private_order_by
-  profile_picture: file_uploads_order_by
-  profile_picture_id: order_by
+  metadata: order_by
+  newEmail: order_by
+  notifications_aggregate: notifications_aggregate_order_by
+  otpHash: order_by
+  otpHashExpiresAt: order_by
+  otpMethodLastUsed: order_by
+  passwordHash: order_by
+  phoneNumber: order_by
+  phoneNumberVerified: order_by
+  refreshTokens_aggregate: authRefreshTokens_aggregate_order_by
+  roles_aggregate: authUserRoles_aggregate_order_by
   things_aggregate: things_aggregate_order_by
-  updated_at: order_by
+  ticket: order_by
+  ticketExpiresAt: order_by
+  totpSecret: order_by
+  updatedAt: order_by
+  userProviders_aggregate: authUserProviders_aggregate_order_by
 }
 
 """primary key columns input for table: users"""
@@ -10005,104 +13249,193 @@ input users_pk_columns_input {
   id: uuid!
 }
 
+"""prepend existing jsonb value of filtered columns with new jsonb value"""
+input users_prepend_input {
+  metadata: jsonb
+}
+
 """
-select columns of table "users"
+select columns of table "auth.users"
 """
 enum users_select_column {
   """column name"""
-  auth0_id
+  activeMfaType
 
   """column name"""
-  created_at
+  avatarUrl
+
+  """column name"""
+  createdAt
+
+  """column name"""
+  defaultRole
+
+  """column name"""
+  disabled
+
+  """column name"""
+  displayName
 
   """column name"""
   email
 
   """column name"""
-  email_verified
+  emailVerified
 
   """column name"""
   id
 
   """column name"""
-  image
+  isAnonymous
 
   """column name"""
-  last_chat_notification
+  lastSeen
 
   """column name"""
-  last_seen
+  locale
 
   """column name"""
-  name
+  metadata
 
   """column name"""
-  password_hash
+  newEmail
 
   """column name"""
-  profile_picture_id
+  otpHash
 
   """column name"""
-  updated_at
+  otpHashExpiresAt
+
+  """column name"""
+  otpMethodLastUsed
+
+  """column name"""
+  passwordHash
+
+  """column name"""
+  phoneNumber
+
+  """column name"""
+  phoneNumberVerified
+
+  """column name"""
+  ticket
+
+  """column name"""
+  ticketExpiresAt
+
+  """column name"""
+  totpSecret
+
+  """column name"""
+  updatedAt
 }
 
 """
-input type for updating data in table "users"
+input type for updating data in table "auth.users"
 """
 input users_set_input {
-  auth0_id: String
-  created_at: timestamptz
-  email: String
-  email_verified: timestamptz
+  activeMfaType: String
+  avatarUrl: String
+  createdAt: timestamptz
+  defaultRole: String
+  disabled: Boolean
+  displayName: String
+  email: citext
+  emailVerified: Boolean
   id: uuid
-  image: String
-  last_chat_notification: timestamptz
-  last_seen: timestamptz
-  name: String
-  password_hash: String
-  profile_picture_id: uuid
-  updated_at: timestamptz
+  isAnonymous: Boolean
+  lastSeen: timestamptz
+  locale: String
+  metadata: jsonb
+  newEmail: citext
+  otpHash: String
+  otpHashExpiresAt: timestamptz
+  otpMethodLastUsed: String
+  passwordHash: String
+  phoneNumber: String
+  phoneNumberVerified: Boolean
+  ticket: String
+  ticketExpiresAt: timestamptz
+  totpSecret: String
+  updatedAt: timestamptz
 }
 
 """
-update columns of table "users"
+update columns of table "auth.users"
 """
 enum users_update_column {
   """column name"""
-  auth0_id
+  activeMfaType
 
   """column name"""
-  created_at
+  avatarUrl
+
+  """column name"""
+  createdAt
+
+  """column name"""
+  defaultRole
+
+  """column name"""
+  disabled
+
+  """column name"""
+  displayName
 
   """column name"""
   email
 
   """column name"""
-  email_verified
+  emailVerified
 
   """column name"""
   id
 
   """column name"""
-  image
+  isAnonymous
 
   """column name"""
-  last_chat_notification
+  lastSeen
 
   """column name"""
-  last_seen
+  locale
 
   """column name"""
-  name
+  metadata
 
   """column name"""
-  password_hash
+  newEmail
 
   """column name"""
-  profile_picture_id
+  otpHash
 
   """column name"""
-  updated_at
+  otpHashExpiresAt
+
+  """column name"""
+  otpMethodLastUsed
+
+  """column name"""
+  passwordHash
+
+  """column name"""
+  phoneNumber
+
+  """column name"""
+  phoneNumberVerified
+
+  """column name"""
+  ticket
+
+  """column name"""
+  ticketExpiresAt
+
+  """column name"""
+  totpSecret
+
+  """column name"""
+  updatedAt
 }
 
 scalar uuid
@@ -10120,239 +13453,4 @@ input uuid_comparison_exp {
   _lte: uuid
   _neq: uuid
   _nin: [uuid!]
-}
-
-"""
-columns and relationships of "verification_requests"
-"""
-type verification_requests {
-  created_at: timestamptz!
-  expires: timestamptz!
-  id: Int!
-  identifier: String!
-  token: String!
-  updated_at: timestamptz!
-}
-
-"""
-aggregated selection of "verification_requests"
-"""
-type verification_requests_aggregate {
-  aggregate: verification_requests_aggregate_fields
-  nodes: [verification_requests!]!
-}
-
-"""
-aggregate fields of "verification_requests"
-"""
-type verification_requests_aggregate_fields {
-  avg: verification_requests_avg_fields
-  count(columns: [verification_requests_select_column!], distinct: Boolean): Int!
-  max: verification_requests_max_fields
-  min: verification_requests_min_fields
-  stddev: verification_requests_stddev_fields
-  stddev_pop: verification_requests_stddev_pop_fields
-  stddev_samp: verification_requests_stddev_samp_fields
-  sum: verification_requests_sum_fields
-  var_pop: verification_requests_var_pop_fields
-  var_samp: verification_requests_var_samp_fields
-  variance: verification_requests_variance_fields
-}
-
-"""aggregate avg on columns"""
-type verification_requests_avg_fields {
-  id: Float
-}
-
-"""
-Boolean expression to filter rows from the table "verification_requests". All fields are combined with a logical 'AND'.
-"""
-input verification_requests_bool_exp {
-  _and: [verification_requests_bool_exp!]
-  _not: verification_requests_bool_exp
-  _or: [verification_requests_bool_exp!]
-  created_at: timestamptz_comparison_exp
-  expires: timestamptz_comparison_exp
-  id: Int_comparison_exp
-  identifier: String_comparison_exp
-  token: String_comparison_exp
-  updated_at: timestamptz_comparison_exp
-}
-
-"""
-unique or primary key constraints on table "verification_requests"
-"""
-enum verification_requests_constraint {
-  """unique or primary key constraint"""
-  token
-
-  """unique or primary key constraint"""
-  verification_requests_pkey
-}
-
-"""
-input type for incrementing numeric columns in table "verification_requests"
-"""
-input verification_requests_inc_input {
-  id: Int
-}
-
-"""
-input type for inserting data into table "verification_requests"
-"""
-input verification_requests_insert_input {
-  created_at: timestamptz
-  expires: timestamptz
-  id: Int
-  identifier: String
-  token: String
-  updated_at: timestamptz
-}
-
-"""aggregate max on columns"""
-type verification_requests_max_fields {
-  created_at: timestamptz
-  expires: timestamptz
-  id: Int
-  identifier: String
-  token: String
-  updated_at: timestamptz
-}
-
-"""aggregate min on columns"""
-type verification_requests_min_fields {
-  created_at: timestamptz
-  expires: timestamptz
-  id: Int
-  identifier: String
-  token: String
-  updated_at: timestamptz
-}
-
-"""
-response of any mutation on the table "verification_requests"
-"""
-type verification_requests_mutation_response {
-  """number of rows affected by the mutation"""
-  affected_rows: Int!
-
-  """data from the rows affected by the mutation"""
-  returning: [verification_requests!]!
-}
-
-"""
-on conflict condition type for table "verification_requests"
-"""
-input verification_requests_on_conflict {
-  constraint: verification_requests_constraint!
-  update_columns: [verification_requests_update_column!]! = []
-  where: verification_requests_bool_exp
-}
-
-"""Ordering options when selecting data from "verification_requests"."""
-input verification_requests_order_by {
-  created_at: order_by
-  expires: order_by
-  id: order_by
-  identifier: order_by
-  token: order_by
-  updated_at: order_by
-}
-
-"""primary key columns input for table: verification_requests"""
-input verification_requests_pk_columns_input {
-  id: Int!
-}
-
-"""
-select columns of table "verification_requests"
-"""
-enum verification_requests_select_column {
-  """column name"""
-  created_at
-
-  """column name"""
-  expires
-
-  """column name"""
-  id
-
-  """column name"""
-  identifier
-
-  """column name"""
-  token
-
-  """column name"""
-  updated_at
-}
-
-"""
-input type for updating data in table "verification_requests"
-"""
-input verification_requests_set_input {
-  created_at: timestamptz
-  expires: timestamptz
-  id: Int
-  identifier: String
-  token: String
-  updated_at: timestamptz
-}
-
-"""aggregate stddev on columns"""
-type verification_requests_stddev_fields {
-  id: Float
-}
-
-"""aggregate stddev_pop on columns"""
-type verification_requests_stddev_pop_fields {
-  id: Float
-}
-
-"""aggregate stddev_samp on columns"""
-type verification_requests_stddev_samp_fields {
-  id: Float
-}
-
-"""aggregate sum on columns"""
-type verification_requests_sum_fields {
-  id: Int
-}
-
-"""
-update columns of table "verification_requests"
-"""
-enum verification_requests_update_column {
-  """column name"""
-  created_at
-
-  """column name"""
-  expires
-
-  """column name"""
-  id
-
-  """column name"""
-  identifier
-
-  """column name"""
-  token
-
-  """column name"""
-  updated_at
-}
-
-"""aggregate var_pop on columns"""
-type verification_requests_var_pop_fields {
-  id: Float
-}
-
-"""aggregate var_samp on columns"""
-type verification_requests_var_samp_fields {
-  id: Float
-}
-
-"""aggregate variance on columns"""
-type verification_requests_variance_fields {
-  id: Float
 }

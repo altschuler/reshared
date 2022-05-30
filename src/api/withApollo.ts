@@ -3,22 +3,16 @@ import merge from 'deepmerge';
 import isEqual from 'lodash/isEqual';
 import { makeApolloClient } from './apolloClient';
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
-import { useAuth0 } from '@auth0/auth0-react';
-import { GetIdTokenClaimsFn } from './types';
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
 
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
-const createApolloClient = (token?: string | null, getIdTokenClaimsFn?: GetIdTokenClaimsFn) => {
-    return makeApolloClient(typeof window === 'undefined', token, getIdTokenClaimsFn);
+const createApolloClient = (token?: string | null) => {
+    return makeApolloClient(typeof window === 'undefined', token);
 };
-export const initializeApollo = (
-    initialState: any = null,
-    token?: string | null,
-    getIdTokenClaimsFn?: GetIdTokenClaimsFn,
-) => {
-    const _apolloClient = apolloClient ?? createApolloClient(token, getIdTokenClaimsFn);
+export const initializeApollo = (initialState: any = null, token?: string | null) => {
+    const _apolloClient = apolloClient ?? createApolloClient(token);
 
     // If your page has Next.js data fetching methods that use Apollo Client, the initial state
     // gets hydrated here
@@ -55,11 +49,7 @@ export const addApolloState = (client: ApolloClient<NormalizedCacheObject> | nul
 };
 
 export const useApollo = (pageProps) => {
-    const { getIdTokenClaims } = useAuth0();
     const state = pageProps[APOLLO_STATE_PROP_NAME];
 
-    return useMemo(
-        () => initializeApollo(state, null, getIdTokenClaims),
-        [getIdTokenClaims, state],
-    );
+    return useMemo(() => initializeApollo(state, null), [state]);
 };

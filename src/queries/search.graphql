@@ -3,7 +3,7 @@
     $groupWhere: groups_bool_exp!
     $userWhere: users_bool_exp!
 ) {
-    users_aggregate(where: $userWhere, limit: 10) {
+    usersAggregate(where: $userWhere, limit: 10) {
         aggregate {
             count
         }

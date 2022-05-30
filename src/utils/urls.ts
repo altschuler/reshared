@@ -20,8 +20,8 @@ export const urlFor = {
     home: (absolute = false) => makeUrl(absolute, '/home'),
     search: (absolute = false) => makeUrl(absolute, '/search'),
     auth: {
-        login: (absolute = false) => makeUrl(absolute, '/api/auth/login'),
-        logout: (absolute = false) => makeUrl(absolute, '/api/auth/logout'),
+        login: (absolute = false) => makeUrl(absolute, '/login'),
+        logout: (absolute = false) => makeUrl(absolute, '/logout'),
         register: (absolute = false) => makeUrl(absolute, '/register'),
     },
     chat: {

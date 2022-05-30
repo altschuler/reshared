@@ -1,19 +1,19 @@
-﻿query ServerUserCredentials($email: String!) {
-    users(limit: 1, where: { email: { _eq: $email } }) {
-        id
-        password_hash
-    }
-}
+﻿# query ServerUserCredentials($email: citext!) {
+#     users(limit: 1, where: { email: { _eq: $email } }) {
+#         id
+#         password_hash
+#     }
+# }
 
-query ServerFindUser($email: String) {
+query ServerFindUser($email: citext) {
     users(limit: 1, where: { email: { _eq: $email } }) {
         id
         email
     }
 }
 
-mutation ServerInsertUser($input: users_insert_input!) {
-    insert_users_one(object: $input) {
-        id
-    }
-}
+# mutation ServerInsertUser($input: users_insert_input!) {
+#     insert_users_one(object: $input) {
+#         id
+#     }
+# }

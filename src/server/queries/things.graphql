@@ -12,7 +12,7 @@ query ServerFetchThingDetails($id: uuid!) {
 
         owner {
             id
-            name
+            displayName
         }
 
         group_relations {

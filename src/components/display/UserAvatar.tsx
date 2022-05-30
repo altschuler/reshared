@@ -48,15 +48,16 @@ export const UserAvatar = (props: UserAvatarProps) => {
                 <Skeleton loading={false} avatar active>
                     <Card.Meta
                         avatar={
-                            <Avatar size="large" src={user?.image || undefined}>
+                            <Avatar size="large" src={user?.avatarUrl || undefined}>
                                 <span style={{ userSelect: 'none' }}>
-                                    {!user.image && (user.name.slice(0, 2).toUpperCase() || '?')}
+                                    {!user.avatarUrl &&
+                                        (user.displayName.slice(0, 2).toUpperCase() || '?')}
                                 </span>
                             </Avatar>
                         }
                         title={
                             <Space>
-                                <span>{user.name}</span>
+                                <span>{user.displayName}</span>
                                 {isSelf && <Tag>You</Tag>}
                             </Space>
                         }
@@ -64,22 +65,22 @@ export const UserAvatar = (props: UserAvatarProps) => {
                 </Skeleton>
             </Card>
         ),
-        [isSelf, user.id, user.image, user.name],
+        [isSelf, user.avatarUrl, user.displayName, user.id],
     );
 
     const avatar = useMemo(
         () => (
             <Avatar
                 size={size || 'small'}
-                src={user.image || undefined}
+                src={user.avatarUrl || undefined}
                 className={className}
                 style={style}>
                 <span style={{ userSelect: 'none' }}>
-                    {!user.image && (user.name.slice(0, 2).toUpperCase() || '?')}
+                    {!user.avatarUrl && (user.displayName.slice(0, 2).toUpperCase() || '?')}
                 </span>
             </Avatar>
         ),
-        [className, size, style, user.image, user.name],
+        [className, size, style, user.avatarUrl, user.displayName],
     );
 
     return disablePopover ? (
@@ -92,7 +93,7 @@ export const UserAvatar = (props: UserAvatarProps) => {
             content={popover}>
             {showName ? (
                 <Space size={5}>
-                    {avatar} {user.name}
+                    {avatar} {user.displayName}
                 </Space>
             ) : (
                 avatar

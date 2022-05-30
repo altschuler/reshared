@@ -84,7 +84,7 @@ const ExpandedNav = (props: { onLogin: () => unknown; onRegister: () => unknown 
             <div className={classes.user}>
                 {!auth.user && (
                     <div>
-                        <a onClick={auth.login}>Login</a> /
+                        <a href={urlFor.auth.login()}>Login</a> /
                         <a href={urlFor.auth.register()}>Register</a>
                     </div>
                 )}
@@ -126,7 +126,7 @@ const CollapsedNav = () => {
                     <Menu.ItemGroup
                         title={
                             <span>
-                                Signed in as <strong>{auth.user.name}</strong>
+                                Signed in as <strong>{auth.user.displayName}</strong>
                             </span>
                         }
                     />
@@ -146,7 +146,7 @@ const CollapsedNav = () => {
             ) : (
                 <>
                     <Menu.Item>
-                        <a onClick={auth.login}>Login</a> /
+                        <a href={urlFor.auth.login()}>Login</a> /
                     </Menu.Item>
 
                     <Menu.Item>

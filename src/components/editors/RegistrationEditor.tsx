@@ -8,6 +8,7 @@ import Link from 'next/link';
 // import { getProviders, SessionProvider, signIn } from 'next-auth/client';
 import { CredentialsInput, useRegisterUserMutation } from '../../generated/graphql';
 import { useRouter } from 'next/router';
+import { useSignUpEmailPassword } from '@nhost/react';
 
 export const registrationSchema = Joi.object<EditorRegistration>({
     name: Joi.string().min(2).max(50).messages({
@@ -172,34 +173,40 @@ export interface RegistrationFormProps {
 export const RegistrationForm = (props: RegistrationFormProps) => {
     const router = useRouter();
     const state = useRegistrationEditor();
-    const [register, registerMutation] = useRegisterUserMutation();
+    const {
+        signUpEmailPassword,
+        isLoading,
+        isSuccess,
+        needsEmailVerification,
+        isError,
+        error,
+    } = useSignUpEmailPassword();
 
     const handleRegister = useCallback(
         (state: RegistrationEditorState) => {
-            register({ variables: { input: toCredentialsInput(state) } })
-                .then(
-                    () => 2,
-                    // signIn('credentials', {
-                    //     email: state.present.email,
-                    //     password: state.present.password,
-                    // }),
-                )
-                .then(() => {
-                    state.reset();
-                    return router.push(urlFor.home());
-                })
-                .catch(console.log);
+            const input = toCredentialsInput(state);
+            signUpEmailPassword(input.email!, input.password, { displayName: input.name });
         },
-        [register, router],
+        [signUpEmailPassword],
     );
 
+    if (isSuccess) {
+        router.push(urlFor.home());
+        return null;
+    }
+
     return (
-        <RegistrationEditor
-            error={registerMutation.error?.message}
-            loading={registerMutation.loading}
-            onLogin={props.onLogin}
-            onSubmit={handleRegister}
-            state={state}
-        />
+        <div>
+            {needsEmailVerification && (
+                <Alert type="info" message="An email has been sent to verify your email" />
+            )}
+            <RegistrationEditor
+                error={error?.message}
+                loading={isLoading}
+                onLogin={props.onLogin}
+                onSubmit={handleRegister}
+                state={state}
+            />
+        </div>
     );
 };

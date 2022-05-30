@@ -107,7 +107,7 @@ export const SearchPage = () => {
     );
 
     const userWhere = useMemo(
-        (): Users_Bool_Exp => ({ name: { _ilike: `%${debouncedFilter.query}%` } }),
+        (): Users_Bool_Exp => ({ displayName: { _ilike: `%${debouncedFilter.query}%` } }),
         [debouncedFilter.query],
     );
 
@@ -121,7 +121,7 @@ export const SearchPage = () => {
             ? {
                   things: data.things_aggregate.aggregate?.count || 0,
                   groups: data.groups_aggregate.aggregate?.count || 0,
-                  users: data.users_aggregate.aggregate?.count || 0,
+                  users: data.usersAggregate.aggregate?.count || 0,
               }
             : null;
     }, [countsQuery.data, countsQuery.previousData]);

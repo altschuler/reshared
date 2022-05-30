@@ -1,26 +1,15 @@
 ﻿import jwt from 'jsonwebtoken';
+import { JWTClaims } from '@nhost/core';
 
-const jwtSecret = JSON.parse(process.env.AUTH_PRIVATE_SECRET!);
+const jwtSecret = JSON.parse(process.env.NHOST_JWT_SECRET!);
 
-type HasuraRole = 'admin' | 'user' | 'public';
-
-export interface JwtToken {
+export interface JwtToken extends JWTClaims {
     id: string;
-    name: string;
-    email: string;
-    picture: string;
-    'https://hasura.io/jwt/claims': {
-        'x-hasura-allowed-roles': HasuraRole[];
-        'x-hasura-default-role': HasuraRole;
-        'x-hasura-role': HasuraRole;
-        'x-hasura-user-id': string;
-    };
-    iat: number;
-    exp: number;
-    sub: string;
 }
 
 export const decodeToken = (token: string) => {
+    console.log(jwtSecret);
+    console.log(token);
     try {
         const decoded = jwt.verify(token, jwtSecret.key, {
             algorithms: [jwtSecret.type],
@@ -34,8 +23,4 @@ export const decodeToken = (token: string) => {
     } catch (e) {
         return null;
     }
-};
-
-export const encodeToken = (contents: JwtToken) => {
-    return jwt.sign(contents, jwtSecret.key, { algorithm: jwtSecret.type });
 };

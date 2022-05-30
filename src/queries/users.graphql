@@ -2,13 +2,13 @@
 
 fragment UserCard on users {
     id
-    name
-    image
+    displayName
+    avatarUrl
 }
 
 fragment UserDetail on users {
     ...UserCard
-    created_at
+    createdAt
 }
 
 fragment UserJoinRequests on users {
@@ -30,9 +30,9 @@ fragment UserPrivateDetail on users {
         }
     }
 
-    private_info {
-        email
-    }
+    # private_info {
+    #     email
+    # }
 }
 
 # Queries
@@ -42,7 +42,7 @@ query UserList($where: users_bool_exp, $limit: Int, $offset: Int) {
         ...UserCard
     }
 
-    users_aggregate(where: $where, limit: 10) {
+    usersAggregate(where: $where, limit: 10) {
         aggregate {
             count
         }
@@ -50,7 +50,7 @@ query UserList($where: users_bool_exp, $limit: Int, $offset: Int) {
 }
 
 query UserPrivateDetails($id: uuid!) {
-    users_by_pk(id: $id) {
+    user(id: $id) {
         ...UserPrivateDetail
     }
 }

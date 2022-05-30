@@ -4,11 +4,13 @@ import { GetServerSideProps, GetServerSidePropsContext, GetServerSidePropsResult
 import { ParsedUrlQuery } from 'querystring';
 import { addApolloState, initializeApollo } from '../api/withApollo';
 import { UserPrivateDetailsDocument } from '../generated/graphql';
-import { RESHARED_AUTH_COOKIE_NAME } from './auth';
+import {} from 'lodash';
+import { getNhostSession } from '@nhost/nextjs';
+import { User } from '@nhost/core';
 
 interface BaseGSSPData<TParams extends ParsedUrlQuery> {
     serverClient: ApolloClient<NormalizedCacheObject>;
-    token: JwtToken | null;
+    token?: User;
     nextCtx: GetServerSidePropsContext<TParams>;
 }
 
@@ -53,29 +55,29 @@ export const makeGSSP = <TProps, TParams extends ParsedUrlQuery>(
     options: GSSPOptions<TProps, TParams>,
 ): GetServerSideProps<TProps, TParams> => {
     return async (ctx: GetServerSidePropsContext<TParams>) => {
-        const idToken = ctx.req.cookies[RESHARED_AUTH_COOKIE_NAME]; // ctx.req.headers.authorization; //getSession(ctx.req, ctx.res);
-        const token = idToken ? decodeToken(idToken) : null;
+        const nhostSession = await getNhostSession(process.env.NEXT_PUBLIC_NHOST_BACKEND_URL!, ctx);
+        const idToken = nhostSession?.accessToken;
 
-        if (options.requireAuth && !token) {
+        if (options.requireAuth && !idToken) {
             return { redirect: { statusCode: 302, destination: '/login' } };
         }
 
         // Run handler
-        const userClient = token ? initializeApollo(null, idToken) : null;
-        if (userClient && token) {
-            if (token && options.preloadUser) {
+        const userClient = idToken ? initializeApollo(null, idToken) : null;
+        if (userClient && idToken) {
+            if (options.preloadUser) {
                 // Disabled because we fetch it way too often
-                await userClient.query({
-                    query: UserPrivateDetailsDocument,
-                    variables: { id: token.id },
-                });
+                // await userClient.query({
+                //     query: UserPrivateDetailsDocument,
+                //     variables: { id:  },
+                // });
             }
         }
 
         const result =
             options.handler &&
             (await options.handler({
-                token,
+                token: nhostSession?.user,
                 userClient: userClient as any,
                 serverClient: hasuraClient,
                 nextCtx: ctx,
@@ -90,7 +92,9 @@ export const makeGSSP = <TProps, TParams extends ParsedUrlQuery>(
             res = { props: { ...(res as any).props } };
         }
 
+        const final = { ...res, props: { ...((res as any).props || {}), nhostSession } };
+
         // Add apollo cache to pageProps so they'll be available on the client
-        return addApolloState(userClient, res);
+        return addApolloState(userClient, final);
     };
 };
