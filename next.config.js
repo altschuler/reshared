@@ -15,6 +15,7 @@ const {
     VERCEL_GITHUB_COMMIT_SHA,
     VERCEL_GITLAB_COMMIT_SHA,
     VERCEL_BITBUCKET_COMMIT_SHA,
+    NEXT_PUBLIC_NHOST_BACKEND_HOST,
 } = process.env;
 
 const COMMIT_SHA =
@@ -25,7 +26,7 @@ const basePath = '';
 
 module.exports = withSourceMaps({
     images: {
-        domains: [`${process.env.RS_AWS_BUCKET_NAME}.s3.amazonaws.com`],
+        domains: [NEXT_PUBLIC_NHOST_BACKEND_HOST],
     },
     env: {
         // Make the COMMIT_SHA available to the client so that Sentry events can be

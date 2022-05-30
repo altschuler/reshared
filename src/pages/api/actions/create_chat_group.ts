@@ -23,8 +23,6 @@ export default makeAuthorizedHandler<CreateChatGroupMutationVariables, CreateCha
         }),
     }),
     async (args, ctx) => {
-        console.log('THE USER ID ID ID ID');
-        console.log(ctx.token);
         const memberIds = [ctx.token.id, ...args.input.receiverIds];
         const existingQuery = await ctx.userClient.query({
             query: ServerFindChatGroupDocument,

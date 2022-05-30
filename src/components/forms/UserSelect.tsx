@@ -42,7 +42,7 @@ interface MultipleUserSelectProps extends BaseUserSelectProps {
 export type UserSelectProps = SingleUserSelectProps | MultipleUserSelectProps;
 
 const makeOption = (user: UserCardFragment): UserOption => ({
-    label: user.name,
+    label: user.displayName,
     value: user.id,
     user: user,
 });
@@ -55,7 +55,7 @@ export const UserSelect = (props: UserSelectProps) => {
 
     const { data, loading } = useUserListQuery({
         variables: {
-            where: { name: { _ilike: `%${debouncedQuery}%` }, id: { _neq: auth.user?.id } },
+            where: { displayName: { _ilike: `%${debouncedQuery}%` }, id: { _neq: auth.user?.id } },
             limit: 10,
         },
     });
@@ -79,7 +79,7 @@ export const UserSelect = (props: UserSelectProps) => {
 
     const filterUser = useCallback(
         (input: string, option: UserOption) =>
-            option.user.name.toLowerCase().indexOf(input.toLowerCase()) !== -1,
+            option.user.displayName.toLowerCase().indexOf(input.toLowerCase()) !== -1,
         [],
     );
 

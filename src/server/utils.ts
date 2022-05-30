@@ -131,38 +131,40 @@ export interface HasuraEventPayload<T> {
     };
 }
 
-export const makeEventHandler = <T>(
-    handler: (args: HasuraEventPayload<T>, ctx: EventHandlerContext) => Promise<void>,
-    allowUnauthorized?: boolean,
-) => async (req: NextApiRequest, res: NextApiResponse) => {
-    // Verify secret
-    const secret = req.headers['x-webhook-secret'];
-    if (!secret || secret !== process.env.EVENT_WEBHOOK_SECRET) {
-        return errorReply(res, 401, 'Wrong or missing secret');
-    }
+export const makeEventHandler =
+    <T>(
+        handler: (args: HasuraEventPayload<T>, ctx: EventHandlerContext) => Promise<void>,
+        allowUnauthorized?: boolean,
+    ) =>
+    async (req: NextApiRequest, res: NextApiResponse) => {
+        // Verify secret
+        const secret = req.headers['x-webhook-secret'];
+        if (!secret || secret !== process.env.NHOST_WEBHOOK_SECRET) {
+            return errorReply(res, 401, 'Wrong or missing secret');
+        }
 
-    const payload = req.body as HasuraEventPayload<T>;
+        const payload = req.body as HasuraEventPayload<T>;
 
-    const userId = payload.event.session_variables['x-hasura-user-id'] as string;
+        const userId = payload.event.session_variables['x-hasura-user-id'] as string;
 
-    if (!allowUnauthorized && (payload.event.op === 'MANUAL' || !userId)) {
-        return res.json({
-            success: true,
-            message: 'ok: skipping manual trigger or missing user',
-        });
-    }
+        if (!allowUnauthorized && (payload.event.op === 'MANUAL' || !userId)) {
+            return res.json({
+                success: true,
+                message: 'ok: skipping manual trigger or missing user',
+            });
+        }
 
-    try {
-        await handler(req.body, {
-            req,
-            res,
-            userId,
-            adminClient: hasuraClient,
-            error: (msg: string, status = 400) => errorReply(res, status, msg),
-            success: (output: unknown) => res.json(output),
-        });
-    } catch (err) {
-        console.log(err);
-        errorReply(res, 400, 'Error: ' + err.message);
-    }
-};
+        try {
+            await handler(req.body, {
+                req,
+                res,
+                userId,
+                adminClient: hasuraClient,
+                error: (msg: string, status = 400) => errorReply(res, status, msg),
+                success: (output: unknown) => res.json(output),
+            });
+        } catch (err) {
+            console.log(err);
+            errorReply(res, 400, 'Error: ' + err.message);
+        }
+    };

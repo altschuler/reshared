@@ -1,17 +1,7 @@
 ﻿# Fragments
 
-fragment FileUploadCard on file_uploads {
+fragment FileUploadCard on files {
     id
     name
-    url
-    mime_type
-    size
-}
-
-# Mutations
-
-mutation InsertFileUpload($input: file_uploads_insert_input!) {
-    insert_file_uploads_one(object: $input) {
-        ...FileUploadCard
-    }
+    mimeType
 }

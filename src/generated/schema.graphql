@@ -1882,9 +1882,7 @@ type buckets {
   createdAt: timestamptz!
   downloadExpiration: Int!
 
-  """
-  fetch data from the table: "storage.files"
-  """
+  """An array relationship"""
   files(
     """distinct select on columns"""
     distinct_on: [files_select_column!]
@@ -3781,16 +3779,6 @@ type file_uploads_mutation_response {
 }
 
 """
-input type for inserting object relation for remote table "file_uploads"
-"""
-input file_uploads_obj_rel_insert_input {
-  data: file_uploads_insert_input!
-
-  """upsert condition"""
-  on_conflict: file_uploads_on_conflict
-}
-
-"""
 on_conflict condition type for table "file_uploads"
 """
 input file_uploads_on_conflict {
@@ -3990,6 +3978,9 @@ type files {
   size: Int
   updatedAt: timestamptz!
   uploadedByUserId: uuid
+
+  """An object relationship"""
+  uploaded_by: users
 }
 
 """
@@ -4074,6 +4065,7 @@ input files_bool_exp {
   size: Int_comparison_exp
   updatedAt: timestamptz_comparison_exp
   uploadedByUserId: uuid_comparison_exp
+  uploaded_by: users_bool_exp
 }
 
 """
@@ -4106,6 +4098,7 @@ input files_insert_input {
   size: Int
   updatedAt: timestamptz
   uploadedByUserId: uuid
+  uploaded_by: users_obj_rel_insert_input
 }
 
 """aggregate max on columns"""
@@ -4176,6 +4169,16 @@ type files_mutation_response {
 }
 
 """
+input type for inserting object relation for remote table "storage.files"
+"""
+input files_obj_rel_insert_input {
+  data: files_insert_input!
+
+  """upsert condition"""
+  on_conflict: files_on_conflict
+}
+
+"""
 on_conflict condition type for table "storage.files"
 """
 input files_on_conflict {
@@ -4197,6 +4200,7 @@ input files_order_by {
   size: order_by
   updatedAt: order_by
   uploadedByUserId: order_by
+  uploaded_by: users_order_by
 }
 
 """primary key columns input for table: files"""
@@ -9465,9 +9469,7 @@ type query_root {
   """fetch data from the table: "file_uploads" using primary key columns"""
   file_uploads_by_pk(id: uuid!): file_uploads
 
-  """
-  fetch data from the table: "storage.files"
-  """
+  """An array relationship"""
   files(
     """distinct select on columns"""
     distinct_on: [files_select_column!]
@@ -10797,9 +10799,7 @@ type subscription_root {
   """fetch data from the table: "file_uploads" using primary key columns"""
   file_uploads_by_pk(id: uuid!): file_uploads
 
-  """
-  fetch data from the table: "storage.files"
-  """
+  """An array relationship"""
   files(
     """distinct select on columns"""
     distinct_on: [files_select_column!]
@@ -11483,7 +11483,7 @@ type thing_images {
   description: String!
 
   """An object relationship"""
-  file: file_uploads!
+  file: files!
   file_id: uuid!
   id: uuid!
   order: Int!
@@ -11567,7 +11567,7 @@ input thing_images_bool_exp {
   _or: [thing_images_bool_exp!]
   created_at: timestamptz_comparison_exp
   description: String_comparison_exp
-  file: file_uploads_bool_exp
+  file: files_bool_exp
   file_id: uuid_comparison_exp
   id: uuid_comparison_exp
   order: Int_comparison_exp
@@ -11600,7 +11600,7 @@ input type for inserting data into table "thing_images"
 input thing_images_insert_input {
   created_at: timestamptz
   description: String
-  file: file_uploads_obj_rel_insert_input
+  file: files_obj_rel_insert_input
   file_id: uuid
   id: uuid
   order: Int
@@ -11691,7 +11691,7 @@ input thing_images_on_conflict {
 input thing_images_order_by {
   created_at: order_by
   description: order_by
-  file: file_uploads_order_by
+  file: files_order_by
   file_id: order_by
   id: order_by
   order: order_by

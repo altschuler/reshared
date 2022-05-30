@@ -17,7 +17,7 @@ export const UserButton = ({ user }: UserButtonProps) => {
             <Menu.ItemGroup
                 title={
                     <span>
-                        Signed in as <strong>{user.name}</strong>
+                        Signed in as <strong>{auth.user?.displayName}</strong>
                     </span>
                 }
             />

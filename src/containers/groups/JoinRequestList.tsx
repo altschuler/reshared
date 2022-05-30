@@ -82,7 +82,7 @@ export const JoinRequestList = (props: JoinRequestListProps) => {
                     ]}>
                     <List.Item.Meta
                         avatar={<UserAvatar user={req.user} />}
-                        title={<Link href={`/u/${req.user.id}`}>{req.user.name}</Link>}
+                        title={<Link href={`/u/${req.user.id}`}>{req.user.displayName}</Link>}
                         description={
                             <Typography.Text>
                                 Request sent on <DateDisplay utc={req.created_at} showDistance />:{' '}

@@ -141,7 +141,7 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                 title={props.group.name}
                 extra={[
                     isMember && (
-                        <Link key="home" href={urlFor.group.home(props.group)}>
+                        <Link passHref key="home" href={urlFor.group.home(props.group)}>
                             <Button type="link" className={btnClass('home')}>
                                 Home
                             </Button>
@@ -149,7 +149,7 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                     ),
 
                     isMember && (
-                        <Link key="things" href={urlFor.group.things(props.group)}>
+                        <Link passHref key="things" href={urlFor.group.things(props.group)}>
                             <Button type="link" className={btnClass('things')}>
                                 Things
                             </Button>
@@ -157,7 +157,7 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                     ),
 
                     isMember && (
-                        <Link key="members" href={urlFor.group.members(props.group)}>
+                        <Link passHref key="members" href={urlFor.group.members(props.group)}>
                             <Button type="link" className={btnClass('members')}>
                                 Members
                             </Button>
@@ -165,7 +165,7 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                     ),
 
                     isAdmin && (
-                        <Link key="settings" href={urlFor.group.settings(props.group)}>
+                        <Link passHref key="settings" href={urlFor.group.settings(props.group)}>
                             <Button type="link" className={btnClass('settings')}>
                                 Settings
                             </Button>

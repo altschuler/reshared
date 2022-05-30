@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { ThingCardFragment } from '../../generated/graphql';
 import { createUseStyles } from 'react-jss';
 import { ImageGalleryModal, useDialogs } from '../dialogs';
+import { ThingImageDisplay } from './ImageDisplay';
+import { useNhostClient } from '@nhost/react';
 
 const useStyles = createUseStyles({
     search: {
@@ -32,6 +34,7 @@ export interface ImageThumbListProps {
 export const ImageThumbList = (props: ImageThumbListProps) => {
     const { showDialog } = useDialogs();
     const classes = useStyles();
+    const nhost = useNhostClient();
 
     const handleShowGallery = useCallback(
         (startIndex: number) =>
@@ -41,23 +44,21 @@ export const ImageThumbList = (props: ImageThumbListProps) => {
                 images: props.thing.images.map((i) => ({
                     id: i.id,
                     description: i.description,
-                    url: i.file.url,
+                    url: nhost.storage.getPublicUrl({ fileId: i.file.id }),
                 })),
             }),
-        [props.thing.images, props.thing.name, showDialog],
+        [nhost.storage, props.thing.images, props.thing.name, showDialog],
     );
 
     return (
         <Space>
             {props.thing.images.map((img, index) => (
                 <div key={img.id} className={classes.thumbnail}>
-                    <Image
-                        title={img.description}
+                    <ThingImageDisplay
+                        image={img}
+                        thing={props.thing}
                         width={40}
                         height={40}
-                        objectFit="cover"
-                        alt={img.description || img.file.name}
-                        src={img.file.url}
                         onClick={() => handleShowGallery(index)}
                     />
                 </div>

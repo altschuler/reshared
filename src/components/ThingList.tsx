@@ -20,6 +20,8 @@ import { useDebounce } from '../utils/hooks';
 import { ThingInterestButton } from './ThingInterestButton';
 import { urlFor } from '../utils/urls';
 import Image from 'next/image';
+import { useNhostClient } from '@nhost/react';
+import { ThingImageDisplay } from './display/ImageDisplay';
 
 const useStyles = createUseStyles({
     search: {
@@ -119,19 +121,13 @@ interface ThingItemProps {
 
 const ThingItem = (props: ThingItemProps) => {
     const auth = useAuth();
-    const image = useMemo(() => head(props.thing.images), [props.thing.images]);
+    const image = head(props.thing.images);
+    const nhost = useNhostClient();
 
     const avatar = (
         <div style={{ width: 50, height: 50 }}>
             {image ? (
-                <Image
-                    title={image.description}
-                    width={50}
-                    height={50}
-                    objectFit="cover"
-                    alt={image.description || image.file.name}
-                    src={image.file.url}
-                />
+                <ThingImageDisplay image={image} thing={props.thing} width={50} height={50} />
             ) : (
                 <PictureOutlined style={{ fontSize: 50, opacity: 0.07 }} />
             )}

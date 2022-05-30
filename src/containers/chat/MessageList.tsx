@@ -16,6 +16,7 @@ import { DateDisplay } from '../../components/display';
 import Link from 'next/link';
 import { urlFor } from '../../utils/urls';
 import Image from 'next/image';
+import { useNhostClient } from '@nhost/react';
 
 const useStyles = createUseStyles({
     list: {
@@ -159,7 +160,7 @@ export const MessageList = (props: MessageListProps) => {
                                 classes.messageGroup,
                                 mg.isMe && classes.messageGroupMe,
                             )}>
-                            {!mg.isMe && <div>{mg.sender.name}</div>}
+                            {!mg.isMe && <div>{mg.sender.displayName}</div>}
 
                             {mg.messages.map((m) => (
                                 <div
@@ -184,12 +185,16 @@ export const MessageList = (props: MessageListProps) => {
 
 const BubbleExtra = ({ entity }: { entity?: EntityCardFragment }) => {
     const classes = useStyles();
+    // TODO(nhost): make an image wrapper
+    const nhost = useNhostClient();
+
     // Only thing entities supported for now
     if (!entity?.thing) {
         return null;
     }
 
     const image = head(entity.thing.images);
+
     return (
         <div className={classes.bubbleExtra}>
             <Space>
@@ -199,7 +204,7 @@ const BubbleExtra = ({ entity }: { entity?: EntityCardFragment }) => {
                         height={20}
                         objectFit="cover"
                         alt="Thing thumbnail"
-                        src={image.file.url}
+                        src={nhost.storage.getPublicUrl({ fileId: image.file.id })}
                     />
                 )}
                 <Link href={urlFor.thing(entity.thing)}>{entity.thing.name}</Link>

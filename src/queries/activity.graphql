@@ -46,7 +46,7 @@ fragment ThingRef on things {
     name
     images(limit: 1) {
         file {
-            url
+            ...FileUploadCard
         }
     }
 }

@@ -30,6 +30,7 @@ export const UserAvatar = (props: UserAvatarProps) => {
     const classes = useStyles();
     const auth = useAuth();
     const isSelf = useMemo(() => auth.user && auth.user.id === user.id, [auth.user, user.id]);
+
     const popover = useMemo(
         () => (
             <Card
@@ -48,10 +49,12 @@ export const UserAvatar = (props: UserAvatarProps) => {
                 <Skeleton loading={false} avatar active>
                     <Card.Meta
                         avatar={
-                            <Avatar size="large" src={user?.avatarUrl || undefined}>
+                            <Avatar size="large">
                                 <span style={{ userSelect: 'none' }}>
-                                    {!user.avatarUrl &&
-                                        (user.displayName.slice(0, 2).toUpperCase() || '?')}
+                                    {
+                                        /*!user.avatarUrl &&*/
+                                        user.displayName.slice(0, 2).toUpperCase() || '?'
+                                    }
                                 </span>
                             </Avatar>
                         }
@@ -65,22 +68,18 @@ export const UserAvatar = (props: UserAvatarProps) => {
                 </Skeleton>
             </Card>
         ),
-        [isSelf, user.avatarUrl, user.displayName, user.id],
+        [isSelf, user.displayName, user.id],
     );
 
     const avatar = useMemo(
         () => (
-            <Avatar
-                size={size || 'small'}
-                src={user.avatarUrl || undefined}
-                className={className}
-                style={style}>
+            <Avatar size={size || 'small'} className={className} style={style}>
                 <span style={{ userSelect: 'none' }}>
-                    {!user.avatarUrl && (user.displayName.slice(0, 2).toUpperCase() || '?')}
+                    {/*!user.avatarUrl && */ user.displayName.slice(0, 2).toUpperCase() || '?'}
                 </span>
             </Avatar>
         ),
-        [className, size, style, user.avatarUrl, user.displayName],
+        [className, size, style, user.displayName],
     );
 
     return disablePopover ? (

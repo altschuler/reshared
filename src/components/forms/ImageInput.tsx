@@ -6,10 +6,10 @@ import { DeleteFilled } from '@ant-design/icons';
 import { createUseStyles } from 'react-jss';
 import Image from 'next/image';
 
-import { useFileUpload } from '../../utils/files';
 import { EditorThingImage } from '../editors';
 import { removeAt } from '../../utils/array';
 import { useAuth } from '../../utils/auth';
+import { useNhostClient } from '@nhost/nextjs';
 
 export interface ImageInputProps {
     value: EditorThingImage[];
@@ -68,14 +68,16 @@ const useStyles = createUseStyles({
 export const ImageInput = ({ value, errors, onChange, onTouch }: ImageInputProps) => {
     const classes = useStyles();
     const [loading, setLoading] = useState(false);
-    const { upload } = useFileUpload();
+    // const { upload } = useFileUpload();
     const auth = useAuth();
+    const nhost = useNhostClient();
+    console.log(nhost.auth.getAuthenticationStatus());
 
     const handleUpload = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
             const files = Array.from(e.target.files || []);
 
-            if (!auth.token || isEmpty(files)) {
+            if (!auth.user || isEmpty(files)) {
                 return;
             }
 
@@ -88,16 +90,27 @@ export const ImageInput = ({ value, errors, onChange, onTouch }: ImageInputProps
             }
 
             setLoading(true);
-            Promise.all(files.map((file) => upload(file, auth.token as string)))
+
+            Promise.all(files.map((file) => nhost.storage.upload({ file })))
                 .then((fileUploads) =>
                     onChange([
                         ...value,
-                        ...fileUploads.map((file) => ({ description: '', order: 100, file })),
+                        ...fileUploads
+                            .filter((f) => !!f.fileMetadata)
+                            .map((file) => ({
+                                description: '',
+                                order: 100,
+                                file: {
+                                    id: file.fileMetadata!.id,
+                                    name: file.fileMetadata!.name,
+                                    mimeType: file.fileMetadata!.mimeType,
+                                },
+                            })),
                     ]),
                 )
                 .finally(() => setLoading(false));
         },
-        [auth.token, onChange, upload, value],
+        [auth.user, nhost.storage, onChange, value],
     );
 
     const handleDescriptionChange = useCallback(
@@ -135,12 +148,13 @@ export const ImageInput = ({ value, errors, onChange, onTouch }: ImageInputProps
                 <Space direction="vertical">
                     {value.map((img, index) => {
                         const descriptionError = get(errors, ['images', index, 'description']);
+
                         return (
                             <Space key={img.file?.id} className={classes.imageItem}>
                                 <Image
                                     alt={img.description || 'Image preview'}
                                     className={classes.thumbnail}
-                                    src={img.file.url}
+                                    src={nhost.storage.getPublicUrl({ fileId: img.file.id })}
                                     width={80}
                                     height={80}
                                 />

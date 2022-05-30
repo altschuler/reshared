@@ -88,7 +88,7 @@ export const Sidebar = (props: SidebarProps) => {
                         .filter((u) => u.id !== auth.user?.id);
                     const lastMessage = head(chatGroup.messages);
                     const formatted = lastMessage
-                        ? `${lastMessage.sender?.name}: ${lastMessage.message}`
+                        ? `${lastMessage.sender?.displayName}: ${lastMessage.message}`
                         : '';
                     const selected = props.selected && chatGroup.id === props.selected?.id;
                     return (
@@ -100,7 +100,9 @@ export const Sidebar = (props: SidebarProps) => {
                             )}>
                             <List.Item.Meta
                                 avatar={<UserAvatarList users={otherMembers} />}
-                                title={!collapsed && otherMembers.map((u) => u.name).join(', ')}
+                                title={
+                                    !collapsed && otherMembers.map((u) => u.displayName).join(', ')
+                                }
                                 description={
                                     !collapsed && (
                                         <Typography.Text className={classes.lastMessage} ellipsis>

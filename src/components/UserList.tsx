@@ -26,7 +26,7 @@ export const UserList = (props: UserListProps) => {
 
     const results = data || previousData;
     const users = results?.users || [];
-    const total = results?.users_aggregate.aggregate?.count || 0;
+    const total = results?.usersAggregate.aggregate?.count || 0;
     useEffect(() => pgn.setTotal(total), [pgn, total]);
 
     // TODO: show things shared, groups, chat button
@@ -42,7 +42,7 @@ export const UserList = (props: UserListProps) => {
                         avatar={<UserAvatar user={user} />}
                         title={
                             <Space>
-                                <Link href={`/user/${user.id}`}>{user.name}</Link>
+                                <Link href={`/user/${user.id}`}>{user.displayName}</Link>
                             </Space>
                         }
                     />

@@ -17,6 +17,8 @@ import { createUseStyles } from 'react-jss';
 import { ThingInterestButton } from '../../components/ThingInterestButton';
 import { useRouter } from 'next/router';
 import { urlFor } from '../../utils/urls';
+import { ThingImageDisplay } from '../../components/display/ImageDisplay';
+import { useNhostClient } from '@nhost/react';
 
 const useStyles = createUseStyles({
     header: {
@@ -45,6 +47,7 @@ export const ThingPage = () => {
     const classes = useStyles();
     const auth = useAuth();
     const params = useRouter().query;
+    const nhost = useNhostClient();
     const { showDialog } = useDialogs();
 
     const query = useThingDetailsQuery({
@@ -56,15 +59,15 @@ export const ThingPage = () => {
     const handleShowGallery = useCallback(
         (thing: ThingCardFragment, startIndex: number) =>
             showDialog(ImageGalleryModal, {
-                title: `Images for ${thing.name}`,
+                title: `Images of ${thing.name}`,
                 startIndex,
                 images: thing.images.map((i) => ({
                     id: i.id,
                     description: i.description,
-                    url: i.file.url,
+                    url: nhost.storage.getPublicUrl({ fileId: i.file.id }),
                 })),
             }),
-        [showDialog],
+        [nhost.storage, showDialog],
     );
 
     const handleEdit = useCallback(
@@ -103,7 +106,7 @@ export const ThingPage = () => {
                         <Descriptions.Item
                             label={<Typography.Title level={5}>Owner</Typography.Title>}>
                             <Space align="center" size={5}>
-                                <UserAvatar user={thing.owner} /> {thing.owner.name}
+                                <UserAvatar user={thing.owner} /> {thing.owner.displayName}
                             </Space>
                         </Descriptions.Item>
 
@@ -144,13 +147,11 @@ export const ThingPage = () => {
                     <div className={classes.imageList}>
                         {thing.images.map((img, index) => (
                             <div key={img.id} className={classes.thumbnail}>
-                                <Image
-                                    title={img.description}
+                                <ThingImageDisplay
+                                    image={img}
+                                    thing={thing}
                                     width={100}
                                     height={100}
-                                    objectFit="cover"
-                                    alt={img.description || img.file.name}
-                                    src={img.file.url}
                                     onClick={() => handleShowGallery(thing, index)}
                                 />
                             </div>

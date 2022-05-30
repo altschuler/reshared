@@ -34,7 +34,7 @@ export const MemberList = ({ memberships }: MemberListProps) => {
                         avatar={<UserAvatar user={member.user} />}
                         title={
                             <Space>
-                                <Link href={`/u/${member.user.id}`}>{member.user.name}</Link>
+                                <Link href={`/u/${member.user.id}`}>{member.user.displayName}</Link>
                                 {member.role === Group_Role_Enum.Admin && (
                                     <Tag color="blue">Admin</Tag>
                                 )}

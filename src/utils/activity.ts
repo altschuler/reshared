@@ -5,7 +5,7 @@ export const activityMessage = (
     currentUser: UserCardFragment | null,
 ) => {
     const ent = activity.entity;
-    const actor = activity.actor?.name || '[Deleted user]';
+    const actor = activity.actor?.displayName || '[Deleted user]';
 
     if (ent.group_thing) {
         if (activity.verb === Activity_Verb_Enum.Added) {
