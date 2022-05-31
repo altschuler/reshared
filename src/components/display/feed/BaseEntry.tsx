@@ -58,7 +58,7 @@ export const BaseEntry = (props: BaseEntryProps) => {
                 </div>
                 <div className={classes.headerText}>
                     <span>
-                        {props.actor.name} {props.title}
+                        {props.actor.displayName} {props.title}
                     </span>
 
                     <Typography.Text type="secondary" className={classes.date}>

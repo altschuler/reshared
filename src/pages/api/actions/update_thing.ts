@@ -76,6 +76,7 @@ export default makeAuthorizedHandler<UpdateThingMutationVariables, UpdateThingRe
                 deletedGroupIds,
                 deletedFileIds,
                 input: {
+                    id: existing.id,
                     category: args.input.category,
                     name: args.input.name,
                     type: args.input.type as Thing_Type_Enum | undefined,
@@ -112,6 +113,7 @@ export default makeAuthorizedHandler<UpdateThingMutationVariables, UpdateThingRe
             },
         });
 
+        // @ts-expect-error
         ctx.success({ thing_id: mutation.data?.insert_things_one?.id });
     },
 );

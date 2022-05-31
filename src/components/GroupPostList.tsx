@@ -136,7 +136,7 @@ const GroupPostDisplay = ({ post }: GroupPostDisplayProps) => {
             size="small"
             title={
                 <span>
-                    <UserAvatar showName user={post.author} /> {title}
+                    <UserAvatar showName user={post.author} /> {post.author.displayName} {title}
                 </span>
             }
             extra={[
@@ -160,7 +160,7 @@ const GroupPostDisplay = ({ post }: GroupPostDisplayProps) => {
                     renderItem={(comment) => (
                         <li>
                             <Comment
-                                author={comment.comment.author.name}
+                                author={comment.comment.author.displayName}
                                 avatar={<UserAvatar user={comment.comment.author} />}
                                 content={comment.comment.content}
                                 datetime={

@@ -69,6 +69,7 @@ export const LoginForm = (props: LoginFormProps) => {
                         loading={login.isLoading}
                         className={classes.login}
                         type="primary"
+                        htmlType="submit"
                         onClick={handleCredentialsLogin}>
                         {props.submitLabel || 'Log in'}
                     </Button>
