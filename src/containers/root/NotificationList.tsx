@@ -5,6 +5,7 @@ import {
     useMarkNotificationReadMutation,
     useNotificationsSubscription,
     UserDetailFragment,
+    useUpdateChatGroupMemberMutation,
 } from '../../generated/graphql';
 import { Badge, Button, List, message, Modal, Popover, Tooltip, Typography } from 'antd';
 import { DateDisplay, UserAvatar } from '../../components/display';
@@ -14,6 +15,7 @@ import { useAuth } from '../../utils/auth';
 import { useRouter } from 'next/router';
 import { urlFor } from '../../utils/urls';
 import { activityMessage } from '../../utils/activity';
+import { formatISO } from 'date-fns';
 
 // List
 export interface NotificationListProps {
@@ -62,12 +64,14 @@ export const NotificationList = ({ notifications, loading, onSelect }: Notificat
                             <Tooltip title="Mark as read">
                                 <span
                                     style={{ cursor: 'pointer' }}
-                                    onClick={() => handleMarkRead(notification)}>
+                                    onClick={() => handleMarkRead(notification)}
+                                >
                                     <Badge color="blue" />
                                 </span>
                             </Tooltip>
                         )
-                    }>
+                    }
+                >
                     <List.Item.Meta
                         avatar={activity.actor && <UserAvatar user={activity.actor} />}
                         title={
@@ -136,12 +140,12 @@ export const NotificationsButton = () => {
     });
 
     const [markAllRead, markAllMutation] = useMarkAllNotificationsReadMutation({
-        variables: { userId: user.id, readAt: new Date() },
+        variables: { userId: user.id, readAt: formatISO(new Date()) },
     });
 
     const notifications = useMemo(() => data?.notifications || [], [data?.notifications]);
 
-    const hasNew = useMemo(() => notifications.some((n) => !n.read_at), [notifications]);
+    const newCount = useMemo(() => notifications.filter((n) => !n.read_at).length, [notifications]);
 
     const handleMarkAllRead = useCallback(() => {
         markAllRead().then((res) => {
@@ -171,8 +175,8 @@ export const NotificationsButton = () => {
 
     return (
         <Popover
-            visible={open}
-            onVisibleChange={(isOpen) => setOpen(isOpen)}
+            open={open}
+            onOpenChange={(isOpen) => setOpen(isOpen)}
             content={menu}
             placement="bottomRight"
             trigger="click"
@@ -180,7 +184,7 @@ export const NotificationsButton = () => {
             title={
                 <div className={classes.title}>
                     <Typography.Title level={5}>Activity</Typography.Title>
-                    {hasNew && (
+                    {!!newCount && (
                         <div className={classes.markAllButton}>
                             <Tooltip title="Mark all read">
                                 <Button
@@ -194,10 +198,13 @@ export const NotificationsButton = () => {
                         </div>
                     )}
                 </div>
-            }>
-            <Badge dot={hasNew} overflowCount={9}>
+            }
+        >
+            <Badge size="small" count={newCount} overflowCount={9}>
                 <Tooltip title="Notifications">
-                    <NotificationOutlined style={{ cursor: 'pointer', color: 'white' }} />
+                    <NotificationOutlined
+                        style={{ fontSize: '1.5em', cursor: 'pointer', color: 'white' }}
+                    />
                 </Tooltip>
             </Badge>
         </Popover>

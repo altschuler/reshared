@@ -42,7 +42,6 @@ export const NewMessageForm = (props: NewMessageFormProps) => {
                 variables: {
                     input: {
                         chat_group_id: props.chatGroup.id,
-                        sender_id: auth.user.id,
                         message: message.trim(),
                     },
                 },

@@ -3,7 +3,6 @@ import Joi from 'joi';
 import { decodeToken, JwtToken } from './auth';
 import { hasuraClient, makeHasuraUserClient } from './hasuraClient';
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
-import { useDecodedAccessToken } from '@nhost/nextjs';
 
 export const errorReply = (res: NextApiResponse, status: number, message: string) => {
     res.status(status);

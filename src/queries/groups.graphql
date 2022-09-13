@@ -146,7 +146,7 @@ query GroupPostList(
     }
 }
 
-query ActivityList($offset: Int = 10) {
+query ActivityList($offset: Int = 0) {
     activities(limit: 10, offset: $offset, order_by: [{ created_at: desc }]) {
         ...ActivityCard
     }

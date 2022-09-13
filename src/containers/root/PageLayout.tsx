@@ -67,7 +67,6 @@ export interface PageLayoutProps {
     horizontal?: boolean;
     centered?: boolean;
     children?: ReactNode;
-    contentRef?: MutableRefObject<HTMLDivElement | null>;
     loading?: boolean;
     error?: string;
 }
@@ -85,7 +84,6 @@ export const PageLayout = (props: PageLayoutProps) => {
                 {/*    <Breadcrumb.Item>App</Breadcrumb.Item>*/}
                 {/*</Breadcrumb>*/}
                 <div
-                    ref={props.contentRef}
                     className={clsx(
                         classes.pageContent,
                         props.noScroll && classes.pageContentNoScroll,

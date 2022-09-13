@@ -13,11 +13,13 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  bigint: any;
+  bytea: any;
   citext: any;
   date: any;
   jsonb: any;
   smallint: any;
-  timestamptz: Date;
+  timestamptz: string;
   uuid: string;
 };
 
@@ -42,9 +44,19 @@ export type CreateChatGroupInput = {
 
 export type CreateChatGroupResult = {
   __typename?: 'CreateChatGroupResult';
-  /** An object relationship */
-  chat_group: Chat_Groups;
+  chat_group?: Maybe<Chat_Groups>;
   chat_group_id: Scalars['uuid'];
+};
+
+export type CreateChatMessageInput = {
+  chat_group_id: Scalars['uuid'];
+  message: Scalars['String'];
+};
+
+export type CreateChatMessageResult = {
+  __typename?: 'CreateChatMessageResult';
+  chat_message?: Maybe<Chat_Messages>;
+  chat_messages_id: Scalars['uuid'];
 };
 
 export type CreateGroupInput = {
@@ -55,8 +67,7 @@ export type CreateGroupInput = {
 
 export type CreateGroupResult = {
   __typename?: 'CreateGroupResult';
-  /** An object relationship */
-  group: Groups;
+  group?: Maybe<Groups>;
   group_id: Scalars['uuid'];
 };
 
@@ -66,11 +77,9 @@ export type CreateJoinTokenInput = {
 
 export type CreateJoinTokenResult = {
   __typename?: 'CreateJoinTokenResult';
-  /** An object relationship */
-  group: Groups;
+  group?: Maybe<Groups>;
   group_id: Scalars['uuid'];
-  /** An object relationship */
-  join_token: Group_Join_Tokens;
+  join_token?: Maybe<Group_Join_Tokens>;
   join_token_id: Scalars['uuid'];
 };
 
@@ -88,8 +97,7 @@ export type HandleJoinRequestInput = {
 
 export type HandleJoinRequestResult = {
   __typename?: 'HandleJoinRequestResult';
-  /** An object relationship */
-  join_request: Group_Join_Requests;
+  join_request?: Maybe<Group_Join_Requests>;
   join_request_id: Scalars['uuid'];
 };
 
@@ -113,18 +121,15 @@ export type JoinGroupInput = {
 
 export type JoinGroupResult = {
   __typename?: 'JoinGroupResult';
-  /** An object relationship */
-  group: Groups;
+  group?: Maybe<Groups>;
   group_id: Scalars['uuid'];
-  /** An object relationship */
-  user: Users;
+  user?: Maybe<Users>;
   user_id: Scalars['uuid'];
 };
 
 export type RegistrationResult = {
   __typename?: 'RegistrationResult';
-  /** An object relationship */
-  user: Users;
+  user?: Maybe<Users>;
   user_id: Scalars['uuid'];
 };
 
@@ -135,11 +140,9 @@ export type RequestJoinGroupInput = {
 
 export type RequestJoinGroupResult = {
   __typename?: 'RequestJoinGroupResult';
-  /** An object relationship */
-  group: Groups;
+  group?: Maybe<Groups>;
   group_id: Scalars['uuid'];
-  /** An object relationship */
-  user: Users;
+  user?: Maybe<Users>;
   user_id: Scalars['uuid'];
 };
 
@@ -200,8 +203,7 @@ export type UpdateThingInput = {
 
 export type UpdateThingResult = {
   __typename?: 'UpdateThingResult';
-  /** An object relationship */
-  thing: Things;
+  thing?: Maybe<Things>;
   thing_id: Scalars['uuid'];
 };
 
@@ -306,7 +308,7 @@ export type Activities_Bool_Exp = {
 
 /** unique or primary key constraints on table "activities" */
 export enum Activities_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   ActivitiesPkey = 'activities_pkey'
 }
 
@@ -459,6 +461,12 @@ export enum Activities_Update_Column {
   Verb = 'verb'
 }
 
+export type Activities_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Activities_Set_Input>;
+  where: Activities_Bool_Exp;
+};
+
 /** columns and relationships of "activity_verb" */
 export type Activity_Verb = {
   __typename?: 'activity_verb';
@@ -499,7 +507,7 @@ export type Activity_Verb_Bool_Exp = {
 
 /** unique or primary key constraints on table "activity_verb" */
 export enum Activity_Verb_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   ActivityVerbPkey = 'activity_verb_pkey'
 }
 
@@ -604,7 +612,13 @@ export enum Activity_Verb_Update_Column {
   Value = 'value'
 }
 
-/** columns and relationships of "auth.provider_requests" */
+export type Activity_Verb_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Activity_Verb_Set_Input>;
+  where: Activity_Verb_Bool_Exp;
+};
+
+/** Oauth requests, inserted before redirecting to the provider's site. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type AuthProviderRequests = {
   __typename?: 'authProviderRequests';
   id: Scalars['uuid'];
@@ -612,7 +626,7 @@ export type AuthProviderRequests = {
 };
 
 
-/** columns and relationships of "auth.provider_requests" */
+/** Oauth requests, inserted before redirecting to the provider's site. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type AuthProviderRequestsOptionsArgs = {
   path?: InputMaybe<Scalars['String']>;
 };
@@ -655,7 +669,7 @@ export type AuthProviderRequests_Bool_Exp = {
 
 /** unique or primary key constraints on table "auth.provider_requests" */
 export enum AuthProviderRequests_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   ProviderRequestsPkey = 'provider_requests_pkey'
 }
 
@@ -746,7 +760,23 @@ export enum AuthProviderRequests_Update_Column {
   Options = 'options'
 }
 
-/** columns and relationships of "auth.providers" */
+export type AuthProviderRequests_Updates = {
+  /** append existing jsonb value of filtered columns with new jsonb value */
+  _append?: InputMaybe<AuthProviderRequests_Append_Input>;
+  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+  _delete_at_path?: InputMaybe<AuthProviderRequests_Delete_At_Path_Input>;
+  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+  _delete_elem?: InputMaybe<AuthProviderRequests_Delete_Elem_Input>;
+  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
+  _delete_key?: InputMaybe<AuthProviderRequests_Delete_Key_Input>;
+  /** prepend existing jsonb value of filtered columns with new jsonb value */
+  _prepend?: InputMaybe<AuthProviderRequests_Prepend_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<AuthProviderRequests_Set_Input>;
+  where: AuthProviderRequests_Bool_Exp;
+};
+
+/** List of available Oauth providers. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type AuthProviders = {
   __typename?: 'authProviders';
   id: Scalars['String'];
@@ -757,7 +787,7 @@ export type AuthProviders = {
 };
 
 
-/** columns and relationships of "auth.providers" */
+/** List of available Oauth providers. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type AuthProvidersUserProvidersArgs = {
   distinct_on?: InputMaybe<Array<AuthUserProviders_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -767,7 +797,7 @@ export type AuthProvidersUserProvidersArgs = {
 };
 
 
-/** columns and relationships of "auth.providers" */
+/** List of available Oauth providers. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type AuthProvidersUserProviders_AggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthUserProviders_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -809,7 +839,7 @@ export type AuthProviders_Bool_Exp = {
 
 /** unique or primary key constraints on table "auth.providers" */
 export enum AuthProviders_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   ProvidersPkey = 'providers_pkey'
 }
 
@@ -882,7 +912,13 @@ export enum AuthProviders_Update_Column {
   Id = 'id'
 }
 
-/** columns and relationships of "auth.refresh_tokens" */
+export type AuthProviders_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<AuthProviders_Set_Input>;
+  where: AuthProviders_Bool_Exp;
+};
+
+/** User refresh tokens. Hasura auth uses them to rotate new access tokens as long as the refresh token is not expired. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type AuthRefreshTokens = {
   __typename?: 'authRefreshTokens';
   createdAt: Scalars['timestamptz'];
@@ -943,7 +979,7 @@ export type AuthRefreshTokens_Bool_Exp = {
 
 /** unique or primary key constraints on table "auth.refresh_tokens" */
 export enum AuthRefreshTokens_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "refresh_token" */
   RefreshTokensPkey = 'refresh_tokens_pkey'
 }
 
@@ -1052,7 +1088,13 @@ export enum AuthRefreshTokens_Update_Column {
   UserId = 'userId'
 }
 
-/** columns and relationships of "auth.roles" */
+export type AuthRefreshTokens_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<AuthRefreshTokens_Set_Input>;
+  where: AuthRefreshTokens_Bool_Exp;
+};
+
+/** Persistent Hasura roles for users. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type AuthRoles = {
   __typename?: 'authRoles';
   role: Scalars['String'];
@@ -1067,7 +1109,7 @@ export type AuthRoles = {
 };
 
 
-/** columns and relationships of "auth.roles" */
+/** Persistent Hasura roles for users. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type AuthRolesUserRolesArgs = {
   distinct_on?: InputMaybe<Array<AuthUserRoles_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -1077,7 +1119,7 @@ export type AuthRolesUserRolesArgs = {
 };
 
 
-/** columns and relationships of "auth.roles" */
+/** Persistent Hasura roles for users. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type AuthRolesUserRoles_AggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthUserRoles_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -1087,7 +1129,7 @@ export type AuthRolesUserRoles_AggregateArgs = {
 };
 
 
-/** columns and relationships of "auth.roles" */
+/** Persistent Hasura roles for users. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type AuthRolesUsersByDefaultRoleArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -1097,7 +1139,7 @@ export type AuthRolesUsersByDefaultRoleArgs = {
 };
 
 
-/** columns and relationships of "auth.roles" */
+/** Persistent Hasura roles for users. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type AuthRolesUsersByDefaultRole_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -1140,7 +1182,7 @@ export type AuthRoles_Bool_Exp = {
 
 /** unique or primary key constraints on table "auth.roles" */
 export enum AuthRoles_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "role" */
   RolesPkey = 'roles_pkey'
 }
 
@@ -1215,7 +1257,337 @@ export enum AuthRoles_Update_Column {
   Role = 'role'
 }
 
-/** columns and relationships of "auth.user_providers" */
+export type AuthRoles_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<AuthRoles_Set_Input>;
+  where: AuthRoles_Bool_Exp;
+};
+
+/** User webauthn authenticators. Don't modify its structure as Hasura Auth relies on it to function properly. */
+export type AuthUserAuthenticators = {
+  __typename?: 'authUserAuthenticators';
+  counter: Scalars['bigint'];
+  credentialId: Scalars['String'];
+  credentialPublicKey?: Maybe<Scalars['bytea']>;
+  id: Scalars['uuid'];
+  nickname?: Maybe<Scalars['String']>;
+  transports: Scalars['String'];
+  /** An object relationship */
+  user: Users;
+  userId: Scalars['uuid'];
+};
+
+/** aggregated selection of "auth.user_authenticators" */
+export type AuthUserAuthenticators_Aggregate = {
+  __typename?: 'authUserAuthenticators_aggregate';
+  aggregate?: Maybe<AuthUserAuthenticators_Aggregate_Fields>;
+  nodes: Array<AuthUserAuthenticators>;
+};
+
+/** aggregate fields of "auth.user_authenticators" */
+export type AuthUserAuthenticators_Aggregate_Fields = {
+  __typename?: 'authUserAuthenticators_aggregate_fields';
+  avg?: Maybe<AuthUserAuthenticators_Avg_Fields>;
+  count: Scalars['Int'];
+  max?: Maybe<AuthUserAuthenticators_Max_Fields>;
+  min?: Maybe<AuthUserAuthenticators_Min_Fields>;
+  stddev?: Maybe<AuthUserAuthenticators_Stddev_Fields>;
+  stddev_pop?: Maybe<AuthUserAuthenticators_Stddev_Pop_Fields>;
+  stddev_samp?: Maybe<AuthUserAuthenticators_Stddev_Samp_Fields>;
+  sum?: Maybe<AuthUserAuthenticators_Sum_Fields>;
+  var_pop?: Maybe<AuthUserAuthenticators_Var_Pop_Fields>;
+  var_samp?: Maybe<AuthUserAuthenticators_Var_Samp_Fields>;
+  variance?: Maybe<AuthUserAuthenticators_Variance_Fields>;
+};
+
+
+/** aggregate fields of "auth.user_authenticators" */
+export type AuthUserAuthenticators_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<AuthUserAuthenticators_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** order by aggregate values of table "auth.user_authenticators" */
+export type AuthUserAuthenticators_Aggregate_Order_By = {
+  avg?: InputMaybe<AuthUserAuthenticators_Avg_Order_By>;
+  count?: InputMaybe<Order_By>;
+  max?: InputMaybe<AuthUserAuthenticators_Max_Order_By>;
+  min?: InputMaybe<AuthUserAuthenticators_Min_Order_By>;
+  stddev?: InputMaybe<AuthUserAuthenticators_Stddev_Order_By>;
+  stddev_pop?: InputMaybe<AuthUserAuthenticators_Stddev_Pop_Order_By>;
+  stddev_samp?: InputMaybe<AuthUserAuthenticators_Stddev_Samp_Order_By>;
+  sum?: InputMaybe<AuthUserAuthenticators_Sum_Order_By>;
+  var_pop?: InputMaybe<AuthUserAuthenticators_Var_Pop_Order_By>;
+  var_samp?: InputMaybe<AuthUserAuthenticators_Var_Samp_Order_By>;
+  variance?: InputMaybe<AuthUserAuthenticators_Variance_Order_By>;
+};
+
+/** input type for inserting array relation for remote table "auth.user_authenticators" */
+export type AuthUserAuthenticators_Arr_Rel_Insert_Input = {
+  data: Array<AuthUserAuthenticators_Insert_Input>;
+  /** upsert condition */
+  on_conflict?: InputMaybe<AuthUserAuthenticators_On_Conflict>;
+};
+
+/** aggregate avg on columns */
+export type AuthUserAuthenticators_Avg_Fields = {
+  __typename?: 'authUserAuthenticators_avg_fields';
+  counter?: Maybe<Scalars['Float']>;
+};
+
+/** order by avg() on columns of table "auth.user_authenticators" */
+export type AuthUserAuthenticators_Avg_Order_By = {
+  counter?: InputMaybe<Order_By>;
+};
+
+/** Boolean expression to filter rows from the table "auth.user_authenticators". All fields are combined with a logical 'AND'. */
+export type AuthUserAuthenticators_Bool_Exp = {
+  _and?: InputMaybe<Array<AuthUserAuthenticators_Bool_Exp>>;
+  _not?: InputMaybe<AuthUserAuthenticators_Bool_Exp>;
+  _or?: InputMaybe<Array<AuthUserAuthenticators_Bool_Exp>>;
+  counter?: InputMaybe<Bigint_Comparison_Exp>;
+  credentialId?: InputMaybe<String_Comparison_Exp>;
+  credentialPublicKey?: InputMaybe<Bytea_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  nickname?: InputMaybe<String_Comparison_Exp>;
+  transports?: InputMaybe<String_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
+  userId?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "auth.user_authenticators" */
+export enum AuthUserAuthenticators_Constraint {
+  /** unique or primary key constraint on columns "credential_id" */
+  UserAuthenticatorsCredentialIdKey = 'user_authenticators_credential_id_key',
+  /** unique or primary key constraint on columns "id" */
+  UserAuthenticatorsPkey = 'user_authenticators_pkey'
+}
+
+/** input type for incrementing numeric columns in table "auth.user_authenticators" */
+export type AuthUserAuthenticators_Inc_Input = {
+  counter?: InputMaybe<Scalars['bigint']>;
+};
+
+/** input type for inserting data into table "auth.user_authenticators" */
+export type AuthUserAuthenticators_Insert_Input = {
+  counter?: InputMaybe<Scalars['bigint']>;
+  credentialId?: InputMaybe<Scalars['String']>;
+  credentialPublicKey?: InputMaybe<Scalars['bytea']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  nickname?: InputMaybe<Scalars['String']>;
+  transports?: InputMaybe<Scalars['String']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+  userId?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type AuthUserAuthenticators_Max_Fields = {
+  __typename?: 'authUserAuthenticators_max_fields';
+  counter?: Maybe<Scalars['bigint']>;
+  credentialId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  nickname?: Maybe<Scalars['String']>;
+  transports?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['uuid']>;
+};
+
+/** order by max() on columns of table "auth.user_authenticators" */
+export type AuthUserAuthenticators_Max_Order_By = {
+  counter?: InputMaybe<Order_By>;
+  credentialId?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  nickname?: InputMaybe<Order_By>;
+  transports?: InputMaybe<Order_By>;
+  userId?: InputMaybe<Order_By>;
+};
+
+/** aggregate min on columns */
+export type AuthUserAuthenticators_Min_Fields = {
+  __typename?: 'authUserAuthenticators_min_fields';
+  counter?: Maybe<Scalars['bigint']>;
+  credentialId?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['uuid']>;
+  nickname?: Maybe<Scalars['String']>;
+  transports?: Maybe<Scalars['String']>;
+  userId?: Maybe<Scalars['uuid']>;
+};
+
+/** order by min() on columns of table "auth.user_authenticators" */
+export type AuthUserAuthenticators_Min_Order_By = {
+  counter?: InputMaybe<Order_By>;
+  credentialId?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  nickname?: InputMaybe<Order_By>;
+  transports?: InputMaybe<Order_By>;
+  userId?: InputMaybe<Order_By>;
+};
+
+/** response of any mutation on the table "auth.user_authenticators" */
+export type AuthUserAuthenticators_Mutation_Response = {
+  __typename?: 'authUserAuthenticators_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<AuthUserAuthenticators>;
+};
+
+/** on_conflict condition type for table "auth.user_authenticators" */
+export type AuthUserAuthenticators_On_Conflict = {
+  constraint: AuthUserAuthenticators_Constraint;
+  update_columns?: Array<AuthUserAuthenticators_Update_Column>;
+  where?: InputMaybe<AuthUserAuthenticators_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "auth.user_authenticators". */
+export type AuthUserAuthenticators_Order_By = {
+  counter?: InputMaybe<Order_By>;
+  credentialId?: InputMaybe<Order_By>;
+  credentialPublicKey?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  nickname?: InputMaybe<Order_By>;
+  transports?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
+  userId?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: authUserAuthenticators */
+export type AuthUserAuthenticators_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "auth.user_authenticators" */
+export enum AuthUserAuthenticators_Select_Column {
+  /** column name */
+  Counter = 'counter',
+  /** column name */
+  CredentialId = 'credentialId',
+  /** column name */
+  CredentialPublicKey = 'credentialPublicKey',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Nickname = 'nickname',
+  /** column name */
+  Transports = 'transports',
+  /** column name */
+  UserId = 'userId'
+}
+
+/** input type for updating data in table "auth.user_authenticators" */
+export type AuthUserAuthenticators_Set_Input = {
+  counter?: InputMaybe<Scalars['bigint']>;
+  credentialId?: InputMaybe<Scalars['String']>;
+  credentialPublicKey?: InputMaybe<Scalars['bytea']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  nickname?: InputMaybe<Scalars['String']>;
+  transports?: InputMaybe<Scalars['String']>;
+  userId?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate stddev on columns */
+export type AuthUserAuthenticators_Stddev_Fields = {
+  __typename?: 'authUserAuthenticators_stddev_fields';
+  counter?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev() on columns of table "auth.user_authenticators" */
+export type AuthUserAuthenticators_Stddev_Order_By = {
+  counter?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_pop on columns */
+export type AuthUserAuthenticators_Stddev_Pop_Fields = {
+  __typename?: 'authUserAuthenticators_stddev_pop_fields';
+  counter?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_pop() on columns of table "auth.user_authenticators" */
+export type AuthUserAuthenticators_Stddev_Pop_Order_By = {
+  counter?: InputMaybe<Order_By>;
+};
+
+/** aggregate stddev_samp on columns */
+export type AuthUserAuthenticators_Stddev_Samp_Fields = {
+  __typename?: 'authUserAuthenticators_stddev_samp_fields';
+  counter?: Maybe<Scalars['Float']>;
+};
+
+/** order by stddev_samp() on columns of table "auth.user_authenticators" */
+export type AuthUserAuthenticators_Stddev_Samp_Order_By = {
+  counter?: InputMaybe<Order_By>;
+};
+
+/** aggregate sum on columns */
+export type AuthUserAuthenticators_Sum_Fields = {
+  __typename?: 'authUserAuthenticators_sum_fields';
+  counter?: Maybe<Scalars['bigint']>;
+};
+
+/** order by sum() on columns of table "auth.user_authenticators" */
+export type AuthUserAuthenticators_Sum_Order_By = {
+  counter?: InputMaybe<Order_By>;
+};
+
+/** update columns of table "auth.user_authenticators" */
+export enum AuthUserAuthenticators_Update_Column {
+  /** column name */
+  Counter = 'counter',
+  /** column name */
+  CredentialId = 'credentialId',
+  /** column name */
+  CredentialPublicKey = 'credentialPublicKey',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  Nickname = 'nickname',
+  /** column name */
+  Transports = 'transports',
+  /** column name */
+  UserId = 'userId'
+}
+
+export type AuthUserAuthenticators_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<AuthUserAuthenticators_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<AuthUserAuthenticators_Set_Input>;
+  where: AuthUserAuthenticators_Bool_Exp;
+};
+
+/** aggregate var_pop on columns */
+export type AuthUserAuthenticators_Var_Pop_Fields = {
+  __typename?: 'authUserAuthenticators_var_pop_fields';
+  counter?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_pop() on columns of table "auth.user_authenticators" */
+export type AuthUserAuthenticators_Var_Pop_Order_By = {
+  counter?: InputMaybe<Order_By>;
+};
+
+/** aggregate var_samp on columns */
+export type AuthUserAuthenticators_Var_Samp_Fields = {
+  __typename?: 'authUserAuthenticators_var_samp_fields';
+  counter?: Maybe<Scalars['Float']>;
+};
+
+/** order by var_samp() on columns of table "auth.user_authenticators" */
+export type AuthUserAuthenticators_Var_Samp_Order_By = {
+  counter?: InputMaybe<Order_By>;
+};
+
+/** aggregate variance on columns */
+export type AuthUserAuthenticators_Variance_Fields = {
+  __typename?: 'authUserAuthenticators_variance_fields';
+  counter?: Maybe<Scalars['Float']>;
+};
+
+/** order by variance() on columns of table "auth.user_authenticators" */
+export type AuthUserAuthenticators_Variance_Order_By = {
+  counter?: InputMaybe<Order_By>;
+};
+
+/** Active providers for a given user. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type AuthUserProviders = {
   __typename?: 'authUserProviders';
   accessToken: Scalars['String'];
@@ -1287,11 +1659,11 @@ export type AuthUserProviders_Bool_Exp = {
 
 /** unique or primary key constraints on table "auth.user_providers" */
 export enum AuthUserProviders_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   UserProvidersPkey = 'user_providers_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "provider_id", "provider_user_id" */
   UserProvidersProviderIdProviderUserIdKey = 'user_providers_provider_id_provider_user_id_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "provider_id", "user_id" */
   UserProvidersUserIdProviderIdKey = 'user_providers_user_id_provider_id_key'
 }
 
@@ -1446,7 +1818,13 @@ export enum AuthUserProviders_Update_Column {
   UserId = 'userId'
 }
 
-/** columns and relationships of "auth.user_roles" */
+export type AuthUserProviders_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<AuthUserProviders_Set_Input>;
+  where: AuthUserProviders_Bool_Exp;
+};
+
+/** Roles of users. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type AuthUserRoles = {
   __typename?: 'authUserRoles';
   createdAt: Scalars['timestamptz'];
@@ -1510,9 +1888,9 @@ export type AuthUserRoles_Bool_Exp = {
 
 /** unique or primary key constraints on table "auth.user_roles" */
 export enum AuthUserRoles_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   UserRolesPkey = 'user_roles_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "user_id", "role" */
   UserRolesUserIdRoleKey = 'user_roles_user_id_role_key'
 }
 
@@ -1623,6 +2001,25 @@ export enum AuthUserRoles_Update_Column {
   UserId = 'userId'
 }
 
+export type AuthUserRoles_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<AuthUserRoles_Set_Input>;
+  where: AuthUserRoles_Bool_Exp;
+};
+
+/** Boolean expression to compare columns of type "bigint". All fields are combined with logical 'AND'. */
+export type Bigint_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['bigint']>;
+  _gt?: InputMaybe<Scalars['bigint']>;
+  _gte?: InputMaybe<Scalars['bigint']>;
+  _in?: InputMaybe<Array<Scalars['bigint']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _lt?: InputMaybe<Scalars['bigint']>;
+  _lte?: InputMaybe<Scalars['bigint']>;
+  _neq?: InputMaybe<Scalars['bigint']>;
+  _nin?: InputMaybe<Array<Scalars['bigint']>>;
+};
+
 /** columns and relationships of "storage.buckets" */
 export type Buckets = {
   __typename?: 'buckets';
@@ -1716,7 +2113,7 @@ export type Buckets_Bool_Exp = {
 
 /** unique or primary key constraints on table "storage.buckets" */
 export enum Buckets_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   BucketsPkey = 'buckets_pkey'
 }
 
@@ -1889,6 +2286,14 @@ export enum Buckets_Update_Column {
   UpdatedAt = 'updatedAt'
 }
 
+export type Buckets_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Buckets_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Buckets_Set_Input>;
+  where: Buckets_Bool_Exp;
+};
+
 /** aggregate var_pop on columns */
 export type Buckets_Var_Pop_Fields = {
   __typename?: 'buckets_var_pop_fields';
@@ -1913,6 +2318,141 @@ export type Buckets_Variance_Fields = {
   minUploadFileSize?: Maybe<Scalars['Float']>;
 };
 
+/** Boolean expression to compare columns of type "bytea". All fields are combined with logical 'AND'. */
+export type Bytea_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['bytea']>;
+  _gt?: InputMaybe<Scalars['bytea']>;
+  _gte?: InputMaybe<Scalars['bytea']>;
+  _in?: InputMaybe<Array<Scalars['bytea']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']>;
+  _lt?: InputMaybe<Scalars['bytea']>;
+  _lte?: InputMaybe<Scalars['bytea']>;
+  _neq?: InputMaybe<Scalars['bytea']>;
+  _nin?: InputMaybe<Array<Scalars['bytea']>>;
+};
+
+/** columns and relationships of "chat_group_member_info" */
+export type Chat_Group_Member_Info = {
+  __typename?: 'chat_group_member_info';
+  /** An object relationship */
+  chat_group?: Maybe<Chat_Groups>;
+  chat_group_id?: Maybe<Scalars['uuid']>;
+  /** An object relationship */
+  chat_group_member?: Maybe<Chat_Group_Members>;
+  has_unread?: Maybe<Scalars['Boolean']>;
+  id?: Maybe<Scalars['uuid']>;
+  last_message_at?: Maybe<Scalars['timestamptz']>;
+  last_read?: Maybe<Scalars['timestamptz']>;
+  /** An object relationship */
+  user?: Maybe<Users>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregated selection of "chat_group_member_info" */
+export type Chat_Group_Member_Info_Aggregate = {
+  __typename?: 'chat_group_member_info_aggregate';
+  aggregate?: Maybe<Chat_Group_Member_Info_Aggregate_Fields>;
+  nodes: Array<Chat_Group_Member_Info>;
+};
+
+/** aggregate fields of "chat_group_member_info" */
+export type Chat_Group_Member_Info_Aggregate_Fields = {
+  __typename?: 'chat_group_member_info_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Chat_Group_Member_Info_Max_Fields>;
+  min?: Maybe<Chat_Group_Member_Info_Min_Fields>;
+};
+
+
+/** aggregate fields of "chat_group_member_info" */
+export type Chat_Group_Member_Info_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Chat_Group_Member_Info_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "chat_group_member_info". All fields are combined with a logical 'AND'. */
+export type Chat_Group_Member_Info_Bool_Exp = {
+  _and?: InputMaybe<Array<Chat_Group_Member_Info_Bool_Exp>>;
+  _not?: InputMaybe<Chat_Group_Member_Info_Bool_Exp>;
+  _or?: InputMaybe<Array<Chat_Group_Member_Info_Bool_Exp>>;
+  chat_group?: InputMaybe<Chat_Groups_Bool_Exp>;
+  chat_group_id?: InputMaybe<Uuid_Comparison_Exp>;
+  chat_group_member?: InputMaybe<Chat_Group_Members_Bool_Exp>;
+  has_unread?: InputMaybe<Boolean_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  last_message_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  last_read?: InputMaybe<Timestamptz_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
+  user_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** input type for inserting data into table "chat_group_member_info" */
+export type Chat_Group_Member_Info_Insert_Input = {
+  chat_group?: InputMaybe<Chat_Groups_Obj_Rel_Insert_Input>;
+  chat_group_id?: InputMaybe<Scalars['uuid']>;
+  chat_group_member?: InputMaybe<Chat_Group_Members_Obj_Rel_Insert_Input>;
+  has_unread?: InputMaybe<Scalars['Boolean']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  last_message_at?: InputMaybe<Scalars['timestamptz']>;
+  last_read?: InputMaybe<Scalars['timestamptz']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type Chat_Group_Member_Info_Max_Fields = {
+  __typename?: 'chat_group_member_info_max_fields';
+  chat_group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  last_message_at?: Maybe<Scalars['timestamptz']>;
+  last_read?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate min on columns */
+export type Chat_Group_Member_Info_Min_Fields = {
+  __typename?: 'chat_group_member_info_min_fields';
+  chat_group_id?: Maybe<Scalars['uuid']>;
+  id?: Maybe<Scalars['uuid']>;
+  last_message_at?: Maybe<Scalars['timestamptz']>;
+  last_read?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** input type for inserting object relation for remote table "chat_group_member_info" */
+export type Chat_Group_Member_Info_Obj_Rel_Insert_Input = {
+  data: Chat_Group_Member_Info_Insert_Input;
+};
+
+/** Ordering options when selecting data from "chat_group_member_info". */
+export type Chat_Group_Member_Info_Order_By = {
+  chat_group?: InputMaybe<Chat_Groups_Order_By>;
+  chat_group_id?: InputMaybe<Order_By>;
+  chat_group_member?: InputMaybe<Chat_Group_Members_Order_By>;
+  has_unread?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  last_message_at?: InputMaybe<Order_By>;
+  last_read?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** select columns of table "chat_group_member_info" */
+export enum Chat_Group_Member_Info_Select_Column {
+  /** column name */
+  ChatGroupId = 'chat_group_id',
+  /** column name */
+  HasUnread = 'has_unread',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  LastMessageAt = 'last_message_at',
+  /** column name */
+  LastRead = 'last_read',
+  /** column name */
+  UserId = 'user_id'
+}
+
 /** columns and relationships of "chat_group_members" */
 export type Chat_Group_Members = {
   __typename?: 'chat_group_members';
@@ -1920,6 +2460,8 @@ export type Chat_Group_Members = {
   chat_group: Chat_Groups;
   chat_group_id: Scalars['uuid'];
   id: Scalars['uuid'];
+  /** An object relationship */
+  info?: Maybe<Chat_Group_Member_Info>;
   last_read?: Maybe<Scalars['timestamptz']>;
   /** An object relationship */
   user: Users;
@@ -1970,6 +2512,7 @@ export type Chat_Group_Members_Bool_Exp = {
   chat_group?: InputMaybe<Chat_Groups_Bool_Exp>;
   chat_group_id?: InputMaybe<Uuid_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
+  info?: InputMaybe<Chat_Group_Member_Info_Bool_Exp>;
   last_read?: InputMaybe<Timestamptz_Comparison_Exp>;
   user?: InputMaybe<Users_Bool_Exp>;
   user_id?: InputMaybe<Uuid_Comparison_Exp>;
@@ -1977,7 +2520,7 @@ export type Chat_Group_Members_Bool_Exp = {
 
 /** unique or primary key constraints on table "chat_group_members" */
 export enum Chat_Group_Members_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   ChatGroupMembersPkey = 'chat_group_members_pkey'
 }
 
@@ -1986,6 +2529,7 @@ export type Chat_Group_Members_Insert_Input = {
   chat_group?: InputMaybe<Chat_Groups_Obj_Rel_Insert_Input>;
   chat_group_id?: InputMaybe<Scalars['uuid']>;
   id?: InputMaybe<Scalars['uuid']>;
+  info?: InputMaybe<Chat_Group_Member_Info_Obj_Rel_Insert_Input>;
   last_read?: InputMaybe<Scalars['timestamptz']>;
   user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   user_id?: InputMaybe<Scalars['uuid']>;
@@ -2034,6 +2578,13 @@ export type Chat_Group_Members_Mutation_Response = {
   returning: Array<Chat_Group_Members>;
 };
 
+/** input type for inserting object relation for remote table "chat_group_members" */
+export type Chat_Group_Members_Obj_Rel_Insert_Input = {
+  data: Chat_Group_Members_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<Chat_Group_Members_On_Conflict>;
+};
+
 /** on_conflict condition type for table "chat_group_members" */
 export type Chat_Group_Members_On_Conflict = {
   constraint: Chat_Group_Members_Constraint;
@@ -2046,6 +2597,7 @@ export type Chat_Group_Members_Order_By = {
   chat_group?: InputMaybe<Chat_Groups_Order_By>;
   chat_group_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  info?: InputMaybe<Chat_Group_Member_Info_Order_By>;
   last_read?: InputMaybe<Order_By>;
   user?: InputMaybe<Users_Order_By>;
   user_id?: InputMaybe<Order_By>;
@@ -2087,6 +2639,12 @@ export enum Chat_Group_Members_Update_Column {
   /** column name */
   UserId = 'user_id'
 }
+
+export type Chat_Group_Members_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Chat_Group_Members_Set_Input>;
+  where: Chat_Group_Members_Bool_Exp;
+};
 
 /** columns and relationships of "chat_groups" */
 export type Chat_Groups = {
@@ -2182,7 +2740,7 @@ export type Chat_Groups_Bool_Exp = {
 
 /** unique or primary key constraints on table "chat_groups" */
 export enum Chat_Groups_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   ChatGroupsPkey = 'chat_groups_pkey'
 }
 
@@ -2284,6 +2842,12 @@ export enum Chat_Groups_Update_Column {
   UpdatedAt = 'updated_at'
 }
 
+export type Chat_Groups_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Chat_Groups_Set_Input>;
+  where: Chat_Groups_Bool_Exp;
+};
+
 /** columns and relationships of "chat_messages" */
 export type Chat_Messages = {
   __typename?: 'chat_messages';
@@ -2355,7 +2919,7 @@ export type Chat_Messages_Bool_Exp = {
 
 /** unique or primary key constraints on table "chat_messages" */
 export enum Chat_Messages_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   MessagesPkey = 'messages_pkey'
 }
 
@@ -2490,6 +3054,12 @@ export enum Chat_Messages_Update_Column {
   SenderId = 'sender_id'
 }
 
+export type Chat_Messages_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Chat_Messages_Set_Input>;
+  where: Chat_Messages_Bool_Exp;
+};
+
 /** Boolean expression to compare columns of type "citext". All fields are combined with logical 'AND'. */
 export type Citext_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['citext']>;
@@ -2611,7 +3181,7 @@ export type Comments_Bool_Exp = {
 
 /** unique or primary key constraints on table "comments" */
 export enum Comments_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   CommentPkey = 'comment_pkey'
 }
 
@@ -2740,6 +3310,12 @@ export enum Comments_Update_Column {
   UpdatedAt = 'updated_at'
 }
 
+export type Comments_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Comments_Set_Input>;
+  where: Comments_Bool_Exp;
+};
+
 /** Boolean expression to compare columns of type "date". All fields are combined with logical 'AND'. */
 export type Date_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['date']>;
@@ -2775,7 +3351,7 @@ export type Entities = {
   group_thing?: Maybe<Group_Thing>;
   group_thing_id?: Maybe<Scalars['uuid']>;
   id: Scalars['uuid'];
-  /** A computed field, executes function "entity_valid" */
+  /** Determines whether the entity points to any single existing object */
   is_valid?: Maybe<Scalars['Boolean']>;
   join_request_id?: Maybe<Scalars['uuid']>;
   /** An object relationship */
@@ -2850,23 +3426,23 @@ export type Entities_Bool_Exp = {
 
 /** unique or primary key constraints on table "entities" */
 export enum Entities_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "group_id" */
   EntitiesGroupIdKey = 'entities_group_id_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "group_member_id" */
   EntitiesGroupMemberIdKey = 'entities_group_member_id_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "group_post_comment_id" */
   EntitiesGroupPostCommentIdKey = 'entities_group_post_comment_id_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "group_post_id" */
   EntitiesGroupPostIdKey = 'entities_group_post_id_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "group_thing_id" */
   EntitiesGroupThingIdKey = 'entities_group_thing_id_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "join_request_id" */
   EntitiesJoinRequestIdKey = 'entities_join_request_id_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   EntitiesPkey = 'entities_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "thing_id" */
   EntitiesThingIdKey = 'entities_thing_id_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "user_id" */
   EntitiesUserIdKey = 'entities_user_id_key'
 }
 
@@ -3064,6 +3640,14 @@ export enum Entities_Update_Column {
   UserId = 'user_id'
 }
 
+export type Entities_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Entities_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Entities_Set_Input>;
+  where: Entities_Bool_Exp;
+};
+
 /** aggregate var_pop on columns */
 export type Entities_Var_Pop_Fields = {
   __typename?: 'entities_var_pop_fields';
@@ -3181,9 +3765,9 @@ export type File_Uploads_Bool_Exp = {
 
 /** unique or primary key constraints on table "file_uploads" */
 export enum File_Uploads_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   FileUploadsPkey = 'file_uploads_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "url" */
   FileUploadsUrlKey = 'file_uploads_url_key'
 }
 
@@ -3387,6 +3971,14 @@ export enum File_Uploads_Update_Column {
   Url = 'url'
 }
 
+export type File_Uploads_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<File_Uploads_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<File_Uploads_Set_Input>;
+  where: File_Uploads_Bool_Exp;
+};
+
 /** aggregate var_pop on columns */
 export type File_Uploads_Var_Pop_Fields = {
   __typename?: 'file_uploads_var_pop_fields';
@@ -3523,7 +4115,7 @@ export type Files_Bool_Exp = {
 
 /** unique or primary key constraints on table "storage.files" */
 export enum Files_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   FilesPkey = 'files_pkey'
 }
 
@@ -3752,6 +4344,14 @@ export enum Files_Update_Column {
   UploadedByUserId = 'uploadedByUserId'
 }
 
+export type Files_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Files_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Files_Set_Input>;
+  where: Files_Bool_Exp;
+};
+
 /** aggregate var_pop on columns */
 export type Files_Var_Pop_Fields = {
   __typename?: 'files_var_pop_fields';
@@ -3825,7 +4425,7 @@ export type Group_Join_Request_Status_Bool_Exp = {
 
 /** unique or primary key constraints on table "group_join_request_status" */
 export enum Group_Join_Request_Status_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   GroupJoinRequestStatusPkey = 'group_join_request_status_pkey'
 }
 
@@ -3918,6 +4518,12 @@ export enum Group_Join_Request_Status_Update_Column {
   Value = 'value'
 }
 
+export type Group_Join_Request_Status_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Group_Join_Request_Status_Set_Input>;
+  where: Group_Join_Request_Status_Bool_Exp;
+};
+
 /** columns and relationships of "group_join_requests" */
 export type Group_Join_Requests = {
   __typename?: 'group_join_requests';
@@ -3992,7 +4598,7 @@ export type Group_Join_Requests_Bool_Exp = {
 
 /** unique or primary key constraints on table "group_join_requests" */
 export enum Group_Join_Requests_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   GroupJoinRequestsPkey = 'group_join_requests_pkey'
 }
 
@@ -4161,6 +4767,12 @@ export enum Group_Join_Requests_Update_Column {
   UserId = 'user_id'
 }
 
+export type Group_Join_Requests_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Group_Join_Requests_Set_Input>;
+  where: Group_Join_Requests_Bool_Exp;
+};
+
 /** columns and relationships of "group_join_tokens" */
 export type Group_Join_Tokens = {
   __typename?: 'group_join_tokens';
@@ -4228,7 +4840,7 @@ export type Group_Join_Tokens_Bool_Exp = {
 
 /** unique or primary key constraints on table "group_join_tokens" */
 export enum Group_Join_Tokens_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   GroupJoinTokenPkey = 'group_join_token_pkey'
 }
 
@@ -4366,6 +4978,12 @@ export enum Group_Join_Tokens_Update_Column {
   UpdatedAt = 'updated_at'
 }
 
+export type Group_Join_Tokens_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Group_Join_Tokens_Set_Input>;
+  where: Group_Join_Tokens_Bool_Exp;
+};
+
 /** columns and relationships of "group_members" */
 export type Group_Members = {
   __typename?: 'group_members';
@@ -4434,7 +5052,7 @@ export type Group_Members_Bool_Exp = {
 
 /** unique or primary key constraints on table "group_members" */
 export enum Group_Members_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   GroupMembersPkey = 'group_members_pkey'
 }
 
@@ -4570,6 +5188,12 @@ export enum Group_Members_Update_Column {
   UserId = 'user_id'
 }
 
+export type Group_Members_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Group_Members_Set_Input>;
+  where: Group_Members_Bool_Exp;
+};
+
 /** columns and relationships of "group_post_comment" */
 export type Group_Post_Comment = {
   __typename?: 'group_post_comment';
@@ -4636,7 +5260,7 @@ export type Group_Post_Comment_Bool_Exp = {
 
 /** unique or primary key constraints on table "group_post_comment" */
 export enum Group_Post_Comment_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   GroupPostCommentPkey = 'group_post_comment_pkey'
 }
 
@@ -4765,6 +5389,12 @@ export enum Group_Post_Comment_Update_Column {
   UpdatedAt = 'updated_at'
 }
 
+export type Group_Post_Comment_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Group_Post_Comment_Set_Input>;
+  where: Group_Post_Comment_Bool_Exp;
+};
+
 /** columns and relationships of "group_post_type" */
 export type Group_Post_Type = {
   __typename?: 'group_post_type';
@@ -4805,7 +5435,7 @@ export type Group_Post_Type_Bool_Exp = {
 
 /** unique or primary key constraints on table "group_post_type" */
 export enum Group_Post_Type_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   GroupPostTypePkey = 'group_post_type_pkey'
 }
 
@@ -4893,6 +5523,12 @@ export enum Group_Post_Type_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type Group_Post_Type_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Group_Post_Type_Set_Input>;
+  where: Group_Post_Type_Bool_Exp;
+};
 
 /** columns and relationships of "group_posts" */
 export type Group_Posts = {
@@ -4991,7 +5627,7 @@ export type Group_Posts_Bool_Exp = {
 
 /** unique or primary key constraints on table "group_posts" */
 export enum Group_Posts_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   GroupPostPkey = 'group_post_pkey'
 }
 
@@ -5147,6 +5783,12 @@ export enum Group_Posts_Update_Column {
   UpdatedAt = 'updated_at'
 }
 
+export type Group_Posts_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Group_Posts_Set_Input>;
+  where: Group_Posts_Bool_Exp;
+};
+
 /** columns and relationships of "group_role" */
 export type Group_Role = {
   __typename?: 'group_role';
@@ -5187,7 +5829,7 @@ export type Group_Role_Bool_Exp = {
 
 /** unique or primary key constraints on table "group_role" */
 export enum Group_Role_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   GroupRolePkey = 'group_role_pkey'
 }
 
@@ -5278,6 +5920,12 @@ export enum Group_Role_Update_Column {
   Value = 'value'
 }
 
+export type Group_Role_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Group_Role_Set_Input>;
+  where: Group_Role_Bool_Exp;
+};
+
 /** columns and relationships of "group_thing" */
 export type Group_Thing = {
   __typename?: 'group_thing';
@@ -5344,9 +5992,9 @@ export type Group_Thing_Bool_Exp = {
 
 /** unique or primary key constraints on table "group_thing" */
 export enum Group_Thing_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "thing_id", "group_id" */
   GroupThingGroupIdThingIdKey = 'group_thing_group_id_thing_id_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   GroupThingPkey = 'group_thing_pkey'
 }
 
@@ -5474,6 +6122,12 @@ export enum Group_Thing_Update_Column {
   /** column name */
   UpdatedAt = 'updated_at'
 }
+
+export type Group_Thing_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Group_Thing_Set_Input>;
+  where: Group_Thing_Bool_Exp;
+};
 
 /** columns and relationships of "groups" */
 export type Groups = {
@@ -5650,11 +6304,11 @@ export type Groups_Bool_Exp = {
 
 /** unique or primary key constraints on table "groups" */
 export enum Groups_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "name" */
   GroupsNameKey = 'groups_name_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   GroupsPkey = 'groups_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "short_id" */
   GroupsShortIdKey = 'groups_short_id_key'
 }
 
@@ -5787,8 +6441,19 @@ export enum Groups_Update_Column {
   UpdatedAt = 'updated_at'
 }
 
+export type Groups_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Groups_Set_Input>;
+  where: Groups_Bool_Exp;
+};
+
+export type Jsonb_Cast_Exp = {
+  String?: InputMaybe<String_Comparison_Exp>;
+};
+
 /** Boolean expression to compare columns of type "jsonb". All fields are combined with logical 'AND'. */
 export type Jsonb_Comparison_Exp = {
+  _cast?: InputMaybe<Jsonb_Cast_Exp>;
   /** is the column contained in the given json value */
   _contained_in?: InputMaybe<Scalars['jsonb']>;
   /** does the column contain the given json value at the top level */
@@ -5814,6 +6479,8 @@ export type Jsonb_Comparison_Exp = {
 export type Mutation_Root = {
   __typename?: 'mutation_root';
   createChatGroup?: Maybe<CreateChatGroupResult>;
+  /** write new message in a chat group */
+  createChatMessage: CreateChatMessageResult;
   createGroup: CreateGroupResult;
   createJoinToken?: Maybe<CreateJoinTokenResult>;
   /** delete single row from the table: "auth.providers" */
@@ -5832,6 +6499,10 @@ export type Mutation_Root = {
   deleteAuthRole?: Maybe<AuthRoles>;
   /** delete data from the table: "auth.roles" */
   deleteAuthRoles?: Maybe<AuthRoles_Mutation_Response>;
+  /** delete single row from the table: "auth.user_authenticators" */
+  deleteAuthUserAuthenticator?: Maybe<AuthUserAuthenticators>;
+  /** delete data from the table: "auth.user_authenticators" */
+  deleteAuthUserAuthenticators?: Maybe<AuthUserAuthenticators_Mutation_Response>;
   /** delete single row from the table: "auth.user_providers" */
   deleteAuthUserProvider?: Maybe<AuthUserProviders>;
   /** delete data from the table: "auth.user_providers" */
@@ -5940,6 +6611,14 @@ export type Mutation_Root = {
   delete_things?: Maybe<Things_Mutation_Response>;
   /** delete single row from the table: "things" */
   delete_things_by_pk?: Maybe<Things>;
+  /** delete data from the table: "user_profile" */
+  delete_user_profile?: Maybe<User_Profile_Mutation_Response>;
+  /** delete single row from the table: "user_profile" */
+  delete_user_profile_by_pk?: Maybe<User_Profile>;
+  /** delete data from the table: "user_settings" */
+  delete_user_settings?: Maybe<User_Settings_Mutation_Response>;
+  /** delete single row from the table: "user_settings" */
+  delete_user_settings_by_pk?: Maybe<User_Settings>;
   handleJoinRequest: HandleJoinRequestResult;
   /** insert a single row into the table: "auth.providers" */
   insertAuthProvider?: Maybe<AuthProviders>;
@@ -5957,6 +6636,10 @@ export type Mutation_Root = {
   insertAuthRole?: Maybe<AuthRoles>;
   /** insert data into the table: "auth.roles" */
   insertAuthRoles?: Maybe<AuthRoles_Mutation_Response>;
+  /** insert a single row into the table: "auth.user_authenticators" */
+  insertAuthUserAuthenticator?: Maybe<AuthUserAuthenticators>;
+  /** insert data into the table: "auth.user_authenticators" */
+  insertAuthUserAuthenticators?: Maybe<AuthUserAuthenticators_Mutation_Response>;
   /** insert a single row into the table: "auth.user_providers" */
   insertAuthUserProvider?: Maybe<AuthUserProviders>;
   /** insert data into the table: "auth.user_providers" */
@@ -6065,6 +6748,14 @@ export type Mutation_Root = {
   insert_things?: Maybe<Things_Mutation_Response>;
   /** insert a single row into the table: "things" */
   insert_things_one?: Maybe<Things>;
+  /** insert data into the table: "user_profile" */
+  insert_user_profile?: Maybe<User_Profile_Mutation_Response>;
+  /** insert a single row into the table: "user_profile" */
+  insert_user_profile_one?: Maybe<User_Profile>;
+  /** insert data into the table: "user_settings" */
+  insert_user_settings?: Maybe<User_Settings_Mutation_Response>;
+  /** insert a single row into the table: "user_settings" */
+  insert_user_settings_one?: Maybe<User_Settings>;
   joinGroup?: Maybe<JoinGroupResult>;
   registerCredentials?: Maybe<RegistrationResult>;
   requestJoinGroup?: Maybe<RequestJoinGroupResult>;
@@ -6084,6 +6775,10 @@ export type Mutation_Root = {
   updateAuthRole?: Maybe<AuthRoles>;
   /** update data of the table: "auth.roles" */
   updateAuthRoles?: Maybe<AuthRoles_Mutation_Response>;
+  /** update single row of the table: "auth.user_authenticators" */
+  updateAuthUserAuthenticator?: Maybe<AuthUserAuthenticators>;
+  /** update data of the table: "auth.user_authenticators" */
+  updateAuthUserAuthenticators?: Maybe<AuthUserAuthenticators_Mutation_Response>;
   /** update single row of the table: "auth.user_providers" */
   updateAuthUserProvider?: Maybe<AuthUserProviders>;
   /** update data of the table: "auth.user_providers" */
@@ -6109,96 +6804,178 @@ export type Mutation_Root = {
   update_activities?: Maybe<Activities_Mutation_Response>;
   /** update single row of the table: "activities" */
   update_activities_by_pk?: Maybe<Activities>;
+  /** update multiples rows of table: "activities" */
+  update_activities_many?: Maybe<Array<Maybe<Activities_Mutation_Response>>>;
   /** update data of the table: "activity_verb" */
   update_activity_verb?: Maybe<Activity_Verb_Mutation_Response>;
   /** update single row of the table: "activity_verb" */
   update_activity_verb_by_pk?: Maybe<Activity_Verb>;
+  /** update multiples rows of table: "activity_verb" */
+  update_activity_verb_many?: Maybe<Array<Maybe<Activity_Verb_Mutation_Response>>>;
+  /** update multiples rows of table: "auth.provider_requests" */
+  update_authProviderRequests_many?: Maybe<Array<Maybe<AuthProviderRequests_Mutation_Response>>>;
+  /** update multiples rows of table: "auth.providers" */
+  update_authProviders_many?: Maybe<Array<Maybe<AuthProviders_Mutation_Response>>>;
+  /** update multiples rows of table: "auth.refresh_tokens" */
+  update_authRefreshTokens_many?: Maybe<Array<Maybe<AuthRefreshTokens_Mutation_Response>>>;
+  /** update multiples rows of table: "auth.roles" */
+  update_authRoles_many?: Maybe<Array<Maybe<AuthRoles_Mutation_Response>>>;
+  /** update multiples rows of table: "auth.user_authenticators" */
+  update_authUserAuthenticators_many?: Maybe<Array<Maybe<AuthUserAuthenticators_Mutation_Response>>>;
+  /** update multiples rows of table: "auth.user_providers" */
+  update_authUserProviders_many?: Maybe<Array<Maybe<AuthUserProviders_Mutation_Response>>>;
+  /** update multiples rows of table: "auth.user_roles" */
+  update_authUserRoles_many?: Maybe<Array<Maybe<AuthUserRoles_Mutation_Response>>>;
+  /** update multiples rows of table: "storage.buckets" */
+  update_buckets_many?: Maybe<Array<Maybe<Buckets_Mutation_Response>>>;
   /** update data of the table: "chat_group_members" */
   update_chat_group_members?: Maybe<Chat_Group_Members_Mutation_Response>;
   /** update single row of the table: "chat_group_members" */
   update_chat_group_members_by_pk?: Maybe<Chat_Group_Members>;
+  /** update multiples rows of table: "chat_group_members" */
+  update_chat_group_members_many?: Maybe<Array<Maybe<Chat_Group_Members_Mutation_Response>>>;
   /** update data of the table: "chat_groups" */
   update_chat_groups?: Maybe<Chat_Groups_Mutation_Response>;
   /** update single row of the table: "chat_groups" */
   update_chat_groups_by_pk?: Maybe<Chat_Groups>;
+  /** update multiples rows of table: "chat_groups" */
+  update_chat_groups_many?: Maybe<Array<Maybe<Chat_Groups_Mutation_Response>>>;
   /** update data of the table: "chat_messages" */
   update_chat_messages?: Maybe<Chat_Messages_Mutation_Response>;
   /** update single row of the table: "chat_messages" */
   update_chat_messages_by_pk?: Maybe<Chat_Messages>;
+  /** update multiples rows of table: "chat_messages" */
+  update_chat_messages_many?: Maybe<Array<Maybe<Chat_Messages_Mutation_Response>>>;
   /** update data of the table: "comments" */
   update_comments?: Maybe<Comments_Mutation_Response>;
   /** update single row of the table: "comments" */
   update_comments_by_pk?: Maybe<Comments>;
+  /** update multiples rows of table: "comments" */
+  update_comments_many?: Maybe<Array<Maybe<Comments_Mutation_Response>>>;
   /** update data of the table: "entities" */
   update_entities?: Maybe<Entities_Mutation_Response>;
   /** update single row of the table: "entities" */
   update_entities_by_pk?: Maybe<Entities>;
+  /** update multiples rows of table: "entities" */
+  update_entities_many?: Maybe<Array<Maybe<Entities_Mutation_Response>>>;
   /** update data of the table: "file_uploads" */
   update_file_uploads?: Maybe<File_Uploads_Mutation_Response>;
   /** update single row of the table: "file_uploads" */
   update_file_uploads_by_pk?: Maybe<File_Uploads>;
+  /** update multiples rows of table: "file_uploads" */
+  update_file_uploads_many?: Maybe<Array<Maybe<File_Uploads_Mutation_Response>>>;
+  /** update multiples rows of table: "storage.files" */
+  update_files_many?: Maybe<Array<Maybe<Files_Mutation_Response>>>;
   /** update data of the table: "group_join_request_status" */
   update_group_join_request_status?: Maybe<Group_Join_Request_Status_Mutation_Response>;
   /** update single row of the table: "group_join_request_status" */
   update_group_join_request_status_by_pk?: Maybe<Group_Join_Request_Status>;
+  /** update multiples rows of table: "group_join_request_status" */
+  update_group_join_request_status_many?: Maybe<Array<Maybe<Group_Join_Request_Status_Mutation_Response>>>;
   /** update data of the table: "group_join_requests" */
   update_group_join_requests?: Maybe<Group_Join_Requests_Mutation_Response>;
   /** update single row of the table: "group_join_requests" */
   update_group_join_requests_by_pk?: Maybe<Group_Join_Requests>;
+  /** update multiples rows of table: "group_join_requests" */
+  update_group_join_requests_many?: Maybe<Array<Maybe<Group_Join_Requests_Mutation_Response>>>;
   /** update data of the table: "group_join_tokens" */
   update_group_join_tokens?: Maybe<Group_Join_Tokens_Mutation_Response>;
   /** update single row of the table: "group_join_tokens" */
   update_group_join_tokens_by_pk?: Maybe<Group_Join_Tokens>;
+  /** update multiples rows of table: "group_join_tokens" */
+  update_group_join_tokens_many?: Maybe<Array<Maybe<Group_Join_Tokens_Mutation_Response>>>;
   /** update data of the table: "group_members" */
   update_group_members?: Maybe<Group_Members_Mutation_Response>;
   /** update single row of the table: "group_members" */
   update_group_members_by_pk?: Maybe<Group_Members>;
+  /** update multiples rows of table: "group_members" */
+  update_group_members_many?: Maybe<Array<Maybe<Group_Members_Mutation_Response>>>;
   /** update data of the table: "group_post_comment" */
   update_group_post_comment?: Maybe<Group_Post_Comment_Mutation_Response>;
   /** update single row of the table: "group_post_comment" */
   update_group_post_comment_by_pk?: Maybe<Group_Post_Comment>;
+  /** update multiples rows of table: "group_post_comment" */
+  update_group_post_comment_many?: Maybe<Array<Maybe<Group_Post_Comment_Mutation_Response>>>;
   /** update data of the table: "group_post_type" */
   update_group_post_type?: Maybe<Group_Post_Type_Mutation_Response>;
   /** update single row of the table: "group_post_type" */
   update_group_post_type_by_pk?: Maybe<Group_Post_Type>;
+  /** update multiples rows of table: "group_post_type" */
+  update_group_post_type_many?: Maybe<Array<Maybe<Group_Post_Type_Mutation_Response>>>;
   /** update data of the table: "group_posts" */
   update_group_posts?: Maybe<Group_Posts_Mutation_Response>;
   /** update single row of the table: "group_posts" */
   update_group_posts_by_pk?: Maybe<Group_Posts>;
+  /** update multiples rows of table: "group_posts" */
+  update_group_posts_many?: Maybe<Array<Maybe<Group_Posts_Mutation_Response>>>;
   /** update data of the table: "group_role" */
   update_group_role?: Maybe<Group_Role_Mutation_Response>;
   /** update single row of the table: "group_role" */
   update_group_role_by_pk?: Maybe<Group_Role>;
+  /** update multiples rows of table: "group_role" */
+  update_group_role_many?: Maybe<Array<Maybe<Group_Role_Mutation_Response>>>;
   /** update data of the table: "group_thing" */
   update_group_thing?: Maybe<Group_Thing_Mutation_Response>;
   /** update single row of the table: "group_thing" */
   update_group_thing_by_pk?: Maybe<Group_Thing>;
+  /** update multiples rows of table: "group_thing" */
+  update_group_thing_many?: Maybe<Array<Maybe<Group_Thing_Mutation_Response>>>;
   /** update data of the table: "groups" */
   update_groups?: Maybe<Groups_Mutation_Response>;
   /** update single row of the table: "groups" */
   update_groups_by_pk?: Maybe<Groups>;
+  /** update multiples rows of table: "groups" */
+  update_groups_many?: Maybe<Array<Maybe<Groups_Mutation_Response>>>;
   /** update data of the table: "notifications" */
   update_notifications?: Maybe<Notifications_Mutation_Response>;
   /** update single row of the table: "notifications" */
   update_notifications_by_pk?: Maybe<Notifications>;
+  /** update multiples rows of table: "notifications" */
+  update_notifications_many?: Maybe<Array<Maybe<Notifications_Mutation_Response>>>;
   /** update data of the table: "thing_images" */
   update_thing_images?: Maybe<Thing_Images_Mutation_Response>;
   /** update single row of the table: "thing_images" */
   update_thing_images_by_pk?: Maybe<Thing_Images>;
+  /** update multiples rows of table: "thing_images" */
+  update_thing_images_many?: Maybe<Array<Maybe<Thing_Images_Mutation_Response>>>;
   /** update data of the table: "thing_type" */
   update_thing_type?: Maybe<Thing_Type_Mutation_Response>;
   /** update single row of the table: "thing_type" */
   update_thing_type_by_pk?: Maybe<Thing_Type>;
+  /** update multiples rows of table: "thing_type" */
+  update_thing_type_many?: Maybe<Array<Maybe<Thing_Type_Mutation_Response>>>;
   /** update data of the table: "things" */
   update_things?: Maybe<Things_Mutation_Response>;
   /** update single row of the table: "things" */
   update_things_by_pk?: Maybe<Things>;
+  /** update multiples rows of table: "things" */
+  update_things_many?: Maybe<Array<Maybe<Things_Mutation_Response>>>;
+  /** update data of the table: "user_profile" */
+  update_user_profile?: Maybe<User_Profile_Mutation_Response>;
+  /** update single row of the table: "user_profile" */
+  update_user_profile_by_pk?: Maybe<User_Profile>;
+  /** update multiples rows of table: "user_profile" */
+  update_user_profile_many?: Maybe<Array<Maybe<User_Profile_Mutation_Response>>>;
+  /** update data of the table: "user_settings" */
+  update_user_settings?: Maybe<User_Settings_Mutation_Response>;
+  /** update single row of the table: "user_settings" */
+  update_user_settings_by_pk?: Maybe<User_Settings>;
+  /** update multiples rows of table: "user_settings" */
+  update_user_settings_many?: Maybe<Array<Maybe<User_Settings_Mutation_Response>>>;
+  /** update multiples rows of table: "auth.users" */
+  update_users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
 };
 
 
 /** mutation root */
 export type Mutation_RootCreateChatGroupArgs = {
   input: CreateChatGroupInput;
+};
+
+
+/** mutation root */
+export type Mutation_RootCreateChatMessageArgs = {
+  input?: InputMaybe<CreateChatMessageInput>;
 };
 
 
@@ -6259,6 +7036,18 @@ export type Mutation_RootDeleteAuthRoleArgs = {
 /** mutation root */
 export type Mutation_RootDeleteAuthRolesArgs = {
   where: AuthRoles_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDeleteAuthUserAuthenticatorArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDeleteAuthUserAuthenticatorsArgs = {
+  where: AuthUserAuthenticators_Bool_Exp;
 };
 
 
@@ -6587,6 +7376,30 @@ export type Mutation_RootDelete_Things_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootDelete_User_ProfileArgs = {
+  where: User_Profile_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_User_Profile_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_User_SettingsArgs = {
+  where: User_Settings_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_User_Settings_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
 export type Mutation_RootHandleJoinRequestArgs = {
   input: HandleJoinRequestInput;
 };
@@ -6645,6 +7458,20 @@ export type Mutation_RootInsertAuthRoleArgs = {
 export type Mutation_RootInsertAuthRolesArgs = {
   objects: Array<AuthRoles_Insert_Input>;
   on_conflict?: InputMaybe<AuthRoles_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsertAuthUserAuthenticatorArgs = {
+  object: AuthUserAuthenticators_Insert_Input;
+  on_conflict?: InputMaybe<AuthUserAuthenticators_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsertAuthUserAuthenticatorsArgs = {
+  objects: Array<AuthUserAuthenticators_Insert_Input>;
+  on_conflict?: InputMaybe<AuthUserAuthenticators_On_Conflict>;
 };
 
 
@@ -7027,6 +7854,34 @@ export type Mutation_RootInsert_Things_OneArgs = {
 
 
 /** mutation root */
+export type Mutation_RootInsert_User_ProfileArgs = {
+  objects: Array<User_Profile_Insert_Input>;
+  on_conflict?: InputMaybe<User_Profile_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_User_Profile_OneArgs = {
+  object: User_Profile_Insert_Input;
+  on_conflict?: InputMaybe<User_Profile_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_User_SettingsArgs = {
+  objects: Array<User_Settings_Insert_Input>;
+  on_conflict?: InputMaybe<User_Settings_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_User_Settings_OneArgs = {
+  object: User_Settings_Insert_Input;
+  on_conflict?: InputMaybe<User_Settings_On_Conflict>;
+};
+
+
+/** mutation root */
 export type Mutation_RootJoinGroupArgs = {
   input: JoinGroupInput;
 };
@@ -7107,6 +7962,22 @@ export type Mutation_RootUpdateAuthRoleArgs = {
 export type Mutation_RootUpdateAuthRolesArgs = {
   _set?: InputMaybe<AuthRoles_Set_Input>;
   where: AuthRoles_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdateAuthUserAuthenticatorArgs = {
+  _inc?: InputMaybe<AuthUserAuthenticators_Inc_Input>;
+  _set?: InputMaybe<AuthUserAuthenticators_Set_Input>;
+  pk_columns: AuthUserAuthenticators_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdateAuthUserAuthenticatorsArgs = {
+  _inc?: InputMaybe<AuthUserAuthenticators_Inc_Input>;
+  _set?: InputMaybe<AuthUserAuthenticators_Set_Input>;
+  where: AuthUserAuthenticators_Bool_Exp;
 };
 
 
@@ -7215,6 +8086,12 @@ export type Mutation_RootUpdate_Activities_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Activities_ManyArgs = {
+  updates: Array<Activities_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Activity_VerbArgs = {
   _set?: InputMaybe<Activity_Verb_Set_Input>;
   where: Activity_Verb_Bool_Exp;
@@ -7225,6 +8102,60 @@ export type Mutation_RootUpdate_Activity_VerbArgs = {
 export type Mutation_RootUpdate_Activity_Verb_By_PkArgs = {
   _set?: InputMaybe<Activity_Verb_Set_Input>;
   pk_columns: Activity_Verb_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Activity_Verb_ManyArgs = {
+  updates: Array<Activity_Verb_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_AuthProviderRequests_ManyArgs = {
+  updates: Array<AuthProviderRequests_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_AuthProviders_ManyArgs = {
+  updates: Array<AuthProviders_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_AuthRefreshTokens_ManyArgs = {
+  updates: Array<AuthRefreshTokens_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_AuthRoles_ManyArgs = {
+  updates: Array<AuthRoles_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_AuthUserAuthenticators_ManyArgs = {
+  updates: Array<AuthUserAuthenticators_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_AuthUserProviders_ManyArgs = {
+  updates: Array<AuthUserProviders_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_AuthUserRoles_ManyArgs = {
+  updates: Array<AuthUserRoles_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Buckets_ManyArgs = {
+  updates: Array<Buckets_Updates>;
 };
 
 
@@ -7243,6 +8174,12 @@ export type Mutation_RootUpdate_Chat_Group_Members_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Chat_Group_Members_ManyArgs = {
+  updates: Array<Chat_Group_Members_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Chat_GroupsArgs = {
   _set?: InputMaybe<Chat_Groups_Set_Input>;
   where: Chat_Groups_Bool_Exp;
@@ -7253,6 +8190,12 @@ export type Mutation_RootUpdate_Chat_GroupsArgs = {
 export type Mutation_RootUpdate_Chat_Groups_By_PkArgs = {
   _set?: InputMaybe<Chat_Groups_Set_Input>;
   pk_columns: Chat_Groups_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Chat_Groups_ManyArgs = {
+  updates: Array<Chat_Groups_Updates>;
 };
 
 
@@ -7271,6 +8214,12 @@ export type Mutation_RootUpdate_Chat_Messages_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Chat_Messages_ManyArgs = {
+  updates: Array<Chat_Messages_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_CommentsArgs = {
   _set?: InputMaybe<Comments_Set_Input>;
   where: Comments_Bool_Exp;
@@ -7281,6 +8230,12 @@ export type Mutation_RootUpdate_CommentsArgs = {
 export type Mutation_RootUpdate_Comments_By_PkArgs = {
   _set?: InputMaybe<Comments_Set_Input>;
   pk_columns: Comments_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Comments_ManyArgs = {
+  updates: Array<Comments_Updates>;
 };
 
 
@@ -7301,6 +8256,12 @@ export type Mutation_RootUpdate_Entities_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Entities_ManyArgs = {
+  updates: Array<Entities_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_File_UploadsArgs = {
   _inc?: InputMaybe<File_Uploads_Inc_Input>;
   _set?: InputMaybe<File_Uploads_Set_Input>;
@@ -7313,6 +8274,18 @@ export type Mutation_RootUpdate_File_Uploads_By_PkArgs = {
   _inc?: InputMaybe<File_Uploads_Inc_Input>;
   _set?: InputMaybe<File_Uploads_Set_Input>;
   pk_columns: File_Uploads_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_File_Uploads_ManyArgs = {
+  updates: Array<File_Uploads_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Files_ManyArgs = {
+  updates: Array<Files_Updates>;
 };
 
 
@@ -7331,6 +8304,12 @@ export type Mutation_RootUpdate_Group_Join_Request_Status_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Group_Join_Request_Status_ManyArgs = {
+  updates: Array<Group_Join_Request_Status_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Group_Join_RequestsArgs = {
   _set?: InputMaybe<Group_Join_Requests_Set_Input>;
   where: Group_Join_Requests_Bool_Exp;
@@ -7341,6 +8320,12 @@ export type Mutation_RootUpdate_Group_Join_RequestsArgs = {
 export type Mutation_RootUpdate_Group_Join_Requests_By_PkArgs = {
   _set?: InputMaybe<Group_Join_Requests_Set_Input>;
   pk_columns: Group_Join_Requests_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_Join_Requests_ManyArgs = {
+  updates: Array<Group_Join_Requests_Updates>;
 };
 
 
@@ -7359,6 +8344,12 @@ export type Mutation_RootUpdate_Group_Join_Tokens_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Group_Join_Tokens_ManyArgs = {
+  updates: Array<Group_Join_Tokens_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Group_MembersArgs = {
   _set?: InputMaybe<Group_Members_Set_Input>;
   where: Group_Members_Bool_Exp;
@@ -7369,6 +8360,12 @@ export type Mutation_RootUpdate_Group_MembersArgs = {
 export type Mutation_RootUpdate_Group_Members_By_PkArgs = {
   _set?: InputMaybe<Group_Members_Set_Input>;
   pk_columns: Group_Members_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_Members_ManyArgs = {
+  updates: Array<Group_Members_Updates>;
 };
 
 
@@ -7387,6 +8384,12 @@ export type Mutation_RootUpdate_Group_Post_Comment_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Group_Post_Comment_ManyArgs = {
+  updates: Array<Group_Post_Comment_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Group_Post_TypeArgs = {
   _set?: InputMaybe<Group_Post_Type_Set_Input>;
   where: Group_Post_Type_Bool_Exp;
@@ -7397,6 +8400,12 @@ export type Mutation_RootUpdate_Group_Post_TypeArgs = {
 export type Mutation_RootUpdate_Group_Post_Type_By_PkArgs = {
   _set?: InputMaybe<Group_Post_Type_Set_Input>;
   pk_columns: Group_Post_Type_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_Post_Type_ManyArgs = {
+  updates: Array<Group_Post_Type_Updates>;
 };
 
 
@@ -7415,6 +8424,12 @@ export type Mutation_RootUpdate_Group_Posts_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Group_Posts_ManyArgs = {
+  updates: Array<Group_Posts_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Group_RoleArgs = {
   _set?: InputMaybe<Group_Role_Set_Input>;
   where: Group_Role_Bool_Exp;
@@ -7425,6 +8440,12 @@ export type Mutation_RootUpdate_Group_RoleArgs = {
 export type Mutation_RootUpdate_Group_Role_By_PkArgs = {
   _set?: InputMaybe<Group_Role_Set_Input>;
   pk_columns: Group_Role_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Group_Role_ManyArgs = {
+  updates: Array<Group_Role_Updates>;
 };
 
 
@@ -7443,6 +8464,12 @@ export type Mutation_RootUpdate_Group_Thing_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Group_Thing_ManyArgs = {
+  updates: Array<Group_Thing_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_GroupsArgs = {
   _set?: InputMaybe<Groups_Set_Input>;
   where: Groups_Bool_Exp;
@@ -7457,6 +8484,12 @@ export type Mutation_RootUpdate_Groups_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Groups_ManyArgs = {
+  updates: Array<Groups_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_NotificationsArgs = {
   _set?: InputMaybe<Notifications_Set_Input>;
   where: Notifications_Bool_Exp;
@@ -7467,6 +8500,12 @@ export type Mutation_RootUpdate_NotificationsArgs = {
 export type Mutation_RootUpdate_Notifications_By_PkArgs = {
   _set?: InputMaybe<Notifications_Set_Input>;
   pk_columns: Notifications_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Notifications_ManyArgs = {
+  updates: Array<Notifications_Updates>;
 };
 
 
@@ -7487,6 +8526,12 @@ export type Mutation_RootUpdate_Thing_Images_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Thing_Images_ManyArgs = {
+  updates: Array<Thing_Images_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_Thing_TypeArgs = {
   _set?: InputMaybe<Thing_Type_Set_Input>;
   where: Thing_Type_Bool_Exp;
@@ -7501,6 +8546,12 @@ export type Mutation_RootUpdate_Thing_Type_By_PkArgs = {
 
 
 /** mutation root */
+export type Mutation_RootUpdate_Thing_Type_ManyArgs = {
+  updates: Array<Thing_Type_Updates>;
+};
+
+
+/** mutation root */
 export type Mutation_RootUpdate_ThingsArgs = {
   _set?: InputMaybe<Things_Set_Input>;
   where: Things_Bool_Exp;
@@ -7511,6 +8562,58 @@ export type Mutation_RootUpdate_ThingsArgs = {
 export type Mutation_RootUpdate_Things_By_PkArgs = {
   _set?: InputMaybe<Things_Set_Input>;
   pk_columns: Things_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Things_ManyArgs = {
+  updates: Array<Things_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_ProfileArgs = {
+  _set?: InputMaybe<User_Profile_Set_Input>;
+  where: User_Profile_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Profile_By_PkArgs = {
+  _set?: InputMaybe<User_Profile_Set_Input>;
+  pk_columns: User_Profile_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Profile_ManyArgs = {
+  updates: Array<User_Profile_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_SettingsArgs = {
+  _set?: InputMaybe<User_Settings_Set_Input>;
+  where: User_Settings_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Settings_By_PkArgs = {
+  _set?: InputMaybe<User_Settings_Set_Input>;
+  pk_columns: User_Settings_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_User_Settings_ManyArgs = {
+  updates: Array<User_Settings_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Users_ManyArgs = {
+  updates: Array<Users_Updates>;
 };
 
 /** columns and relationships of "notifications" */
@@ -7579,7 +8682,7 @@ export type Notifications_Bool_Exp = {
 
 /** unique or primary key constraints on table "notifications" */
 export enum Notifications_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   NotificationsPkey = 'notifications_pkey'
 }
 
@@ -7701,6 +8804,12 @@ export enum Notifications_Update_Column {
   UserId = 'user_id'
 }
 
+export type Notifications_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Notifications_Set_Input>;
+  where: Notifications_Bool_Exp;
+};
+
 /** column ordering options */
 export enum Order_By {
   /** in ascending order, nulls last */
@@ -7755,6 +8864,12 @@ export type Query_Root = {
   authRoles: Array<AuthRoles>;
   /** fetch aggregated fields from the table: "auth.roles" */
   authRolesAggregate: AuthRoles_Aggregate;
+  /** fetch data from the table: "auth.user_authenticators" using primary key columns */
+  authUserAuthenticator?: Maybe<AuthUserAuthenticators>;
+  /** fetch data from the table: "auth.user_authenticators" */
+  authUserAuthenticators: Array<AuthUserAuthenticators>;
+  /** fetch aggregated fields from the table: "auth.user_authenticators" */
+  authUserAuthenticatorsAggregate: AuthUserAuthenticators_Aggregate;
   /** fetch data from the table: "auth.user_providers" using primary key columns */
   authUserProvider?: Maybe<AuthUserProviders>;
   /** fetch data from the table: "auth.user_providers" */
@@ -7773,6 +8888,10 @@ export type Query_Root = {
   buckets: Array<Buckets>;
   /** fetch aggregated fields from the table: "storage.buckets" */
   bucketsAggregate: Buckets_Aggregate;
+  /** fetch data from the table: "chat_group_member_info" */
+  chat_group_member_info: Array<Chat_Group_Member_Info>;
+  /** fetch aggregated fields from the table: "chat_group_member_info" */
+  chat_group_member_info_aggregate: Chat_Group_Member_Info_Aggregate;
   /** An array relationship */
   chat_group_members: Array<Chat_Group_Members>;
   /** An aggregate relationship */
@@ -7901,6 +9020,18 @@ export type Query_Root = {
   things_by_pk?: Maybe<Things>;
   /** fetch data from the table: "auth.users" using primary key columns */
   user?: Maybe<Users>;
+  /** fetch data from the table: "user_profile" */
+  user_profile: Array<User_Profile>;
+  /** fetch aggregated fields from the table: "user_profile" */
+  user_profile_aggregate: User_Profile_Aggregate;
+  /** fetch data from the table: "user_profile" using primary key columns */
+  user_profile_by_pk?: Maybe<User_Profile>;
+  /** fetch data from the table: "user_settings" */
+  user_settings: Array<User_Settings>;
+  /** fetch aggregated fields from the table: "user_settings" */
+  user_settings_aggregate: User_Settings_Aggregate;
+  /** fetch data from the table: "user_settings" using primary key columns */
+  user_settings_by_pk?: Maybe<User_Settings>;
   /** fetch data from the table: "auth.users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "auth.users" */
@@ -8046,6 +9177,29 @@ export type Query_RootAuthRolesAggregateArgs = {
 };
 
 
+export type Query_RootAuthUserAuthenticatorArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_RootAuthUserAuthenticatorsArgs = {
+  distinct_on?: InputMaybe<Array<AuthUserAuthenticators_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<AuthUserAuthenticators_Order_By>>;
+  where?: InputMaybe<AuthUserAuthenticators_Bool_Exp>;
+};
+
+
+export type Query_RootAuthUserAuthenticatorsAggregateArgs = {
+  distinct_on?: InputMaybe<Array<AuthUserAuthenticators_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<AuthUserAuthenticators_Order_By>>;
+  where?: InputMaybe<AuthUserAuthenticators_Bool_Exp>;
+};
+
+
 export type Query_RootAuthUserProviderArgs = {
   id: Scalars['uuid'];
 };
@@ -8112,6 +9266,24 @@ export type Query_RootBucketsAggregateArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<Buckets_Order_By>>;
   where?: InputMaybe<Buckets_Bool_Exp>;
+};
+
+
+export type Query_RootChat_Group_Member_InfoArgs = {
+  distinct_on?: InputMaybe<Array<Chat_Group_Member_Info_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Chat_Group_Member_Info_Order_By>>;
+  where?: InputMaybe<Chat_Group_Member_Info_Bool_Exp>;
+};
+
+
+export type Query_RootChat_Group_Member_Info_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Chat_Group_Member_Info_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Chat_Group_Member_Info_Order_By>>;
+  where?: InputMaybe<Chat_Group_Member_Info_Bool_Exp>;
 };
 
 
@@ -8603,6 +9775,52 @@ export type Query_RootUserArgs = {
 };
 
 
+export type Query_RootUser_ProfileArgs = {
+  distinct_on?: InputMaybe<Array<User_Profile_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Profile_Order_By>>;
+  where?: InputMaybe<User_Profile_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Profile_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Profile_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Profile_Order_By>>;
+  where?: InputMaybe<User_Profile_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Profile_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_RootUser_SettingsArgs = {
+  distinct_on?: InputMaybe<Array<User_Settings_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Settings_Order_By>>;
+  where?: InputMaybe<User_Settings_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Settings_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Settings_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Settings_Order_By>>;
+  where?: InputMaybe<User_Settings_Bool_Exp>;
+};
+
+
+export type Query_RootUser_Settings_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
 export type Query_RootUsersArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -8671,6 +9889,12 @@ export type Subscription_Root = {
   authRoles: Array<AuthRoles>;
   /** fetch aggregated fields from the table: "auth.roles" */
   authRolesAggregate: AuthRoles_Aggregate;
+  /** fetch data from the table: "auth.user_authenticators" using primary key columns */
+  authUserAuthenticator?: Maybe<AuthUserAuthenticators>;
+  /** fetch data from the table: "auth.user_authenticators" */
+  authUserAuthenticators: Array<AuthUserAuthenticators>;
+  /** fetch aggregated fields from the table: "auth.user_authenticators" */
+  authUserAuthenticatorsAggregate: AuthUserAuthenticators_Aggregate;
   /** fetch data from the table: "auth.user_providers" using primary key columns */
   authUserProvider?: Maybe<AuthUserProviders>;
   /** fetch data from the table: "auth.user_providers" */
@@ -8689,6 +9913,10 @@ export type Subscription_Root = {
   buckets: Array<Buckets>;
   /** fetch aggregated fields from the table: "storage.buckets" */
   bucketsAggregate: Buckets_Aggregate;
+  /** fetch data from the table: "chat_group_member_info" */
+  chat_group_member_info: Array<Chat_Group_Member_Info>;
+  /** fetch aggregated fields from the table: "chat_group_member_info" */
+  chat_group_member_info_aggregate: Chat_Group_Member_Info_Aggregate;
   /** An array relationship */
   chat_group_members: Array<Chat_Group_Members>;
   /** An aggregate relationship */
@@ -8817,6 +10045,18 @@ export type Subscription_Root = {
   things_by_pk?: Maybe<Things>;
   /** fetch data from the table: "auth.users" using primary key columns */
   user?: Maybe<Users>;
+  /** fetch data from the table: "user_profile" */
+  user_profile: Array<User_Profile>;
+  /** fetch aggregated fields from the table: "user_profile" */
+  user_profile_aggregate: User_Profile_Aggregate;
+  /** fetch data from the table: "user_profile" using primary key columns */
+  user_profile_by_pk?: Maybe<User_Profile>;
+  /** fetch data from the table: "user_settings" */
+  user_settings: Array<User_Settings>;
+  /** fetch aggregated fields from the table: "user_settings" */
+  user_settings_aggregate: User_Settings_Aggregate;
+  /** fetch data from the table: "user_settings" using primary key columns */
+  user_settings_by_pk?: Maybe<User_Settings>;
   /** fetch data from the table: "auth.users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "auth.users" */
@@ -8962,6 +10202,29 @@ export type Subscription_RootAuthRolesAggregateArgs = {
 };
 
 
+export type Subscription_RootAuthUserAuthenticatorArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootAuthUserAuthenticatorsArgs = {
+  distinct_on?: InputMaybe<Array<AuthUserAuthenticators_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<AuthUserAuthenticators_Order_By>>;
+  where?: InputMaybe<AuthUserAuthenticators_Bool_Exp>;
+};
+
+
+export type Subscription_RootAuthUserAuthenticatorsAggregateArgs = {
+  distinct_on?: InputMaybe<Array<AuthUserAuthenticators_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<AuthUserAuthenticators_Order_By>>;
+  where?: InputMaybe<AuthUserAuthenticators_Bool_Exp>;
+};
+
+
 export type Subscription_RootAuthUserProviderArgs = {
   id: Scalars['uuid'];
 };
@@ -9028,6 +10291,24 @@ export type Subscription_RootBucketsAggregateArgs = {
   offset?: InputMaybe<Scalars['Int']>;
   order_by?: InputMaybe<Array<Buckets_Order_By>>;
   where?: InputMaybe<Buckets_Bool_Exp>;
+};
+
+
+export type Subscription_RootChat_Group_Member_InfoArgs = {
+  distinct_on?: InputMaybe<Array<Chat_Group_Member_Info_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Chat_Group_Member_Info_Order_By>>;
+  where?: InputMaybe<Chat_Group_Member_Info_Bool_Exp>;
+};
+
+
+export type Subscription_RootChat_Group_Member_Info_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Chat_Group_Member_Info_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Chat_Group_Member_Info_Order_By>>;
+  where?: InputMaybe<Chat_Group_Member_Info_Bool_Exp>;
 };
 
 
@@ -9519,6 +10800,52 @@ export type Subscription_RootUserArgs = {
 };
 
 
+export type Subscription_RootUser_ProfileArgs = {
+  distinct_on?: InputMaybe<Array<User_Profile_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Profile_Order_By>>;
+  where?: InputMaybe<User_Profile_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Profile_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Profile_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Profile_Order_By>>;
+  where?: InputMaybe<User_Profile_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Profile_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootUser_SettingsArgs = {
+  distinct_on?: InputMaybe<Array<User_Settings_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Settings_Order_By>>;
+  where?: InputMaybe<User_Settings_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Settings_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<User_Settings_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<User_Settings_Order_By>>;
+  where?: InputMaybe<User_Settings_Bool_Exp>;
+};
+
+
+export type Subscription_RootUser_Settings_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
 export type Subscription_RootUsersArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -9633,9 +10960,9 @@ export type Thing_Images_Bool_Exp = {
 
 /** unique or primary key constraints on table "thing_images" */
 export enum Thing_Images_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "file_id" */
   ThingImagesFileIdKey = 'thing_images_file_id_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   ThingImagesPkey = 'thing_images_pkey'
 }
 
@@ -9835,6 +11162,14 @@ export enum Thing_Images_Update_Column {
   UpdatedAt = 'updated_at'
 }
 
+export type Thing_Images_Updates = {
+  /** increments the numeric columns with given value of the filtered values */
+  _inc?: InputMaybe<Thing_Images_Inc_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Thing_Images_Set_Input>;
+  where: Thing_Images_Bool_Exp;
+};
+
 /** aggregate var_pop on columns */
 export type Thing_Images_Var_Pop_Fields = {
   __typename?: 'thing_images_var_pop_fields';
@@ -9908,7 +11243,7 @@ export type Thing_Type_Bool_Exp = {
 
 /** unique or primary key constraints on table "thing_type" */
 export enum Thing_Type_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "value" */
   ThingTypePkey = 'thing_type_pkey'
 }
 
@@ -10000,6 +11335,12 @@ export enum Thing_Type_Update_Column {
   /** column name */
   Value = 'value'
 }
+
+export type Thing_Type_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Thing_Type_Set_Input>;
+  where: Thing_Type_Bool_Exp;
+};
 
 /** columns and relationships of "things" */
 export type Things = {
@@ -10126,9 +11467,9 @@ export type Things_Bool_Exp = {
 
 /** unique or primary key constraints on table "things" */
 export enum Things_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   ThingsPkey = 'things_pkey',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "short_id" */
   ThingsShortIdKey = 'things_short_id_key'
 }
 
@@ -10317,6 +11658,12 @@ export enum Things_Update_Column {
   UpdatedAt = 'updated_at'
 }
 
+export type Things_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Things_Set_Input>;
+  where: Things_Bool_Exp;
+};
+
 /** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
 export type Timestamptz_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['timestamptz']>;
@@ -10330,7 +11677,337 @@ export type Timestamptz_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['timestamptz']>>;
 };
 
-/** columns and relationships of "auth.users" */
+/** Public profile data for a user */
+export type User_Profile = {
+  __typename?: 'user_profile';
+  /** An object relationship */
+  avatar: Files;
+  avatar_id: Scalars['uuid'];
+  created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  updated_at: Scalars['timestamptz'];
+  /** An object relationship */
+  user: Users;
+  user_id: Scalars['uuid'];
+};
+
+/** aggregated selection of "user_profile" */
+export type User_Profile_Aggregate = {
+  __typename?: 'user_profile_aggregate';
+  aggregate?: Maybe<User_Profile_Aggregate_Fields>;
+  nodes: Array<User_Profile>;
+};
+
+/** aggregate fields of "user_profile" */
+export type User_Profile_Aggregate_Fields = {
+  __typename?: 'user_profile_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<User_Profile_Max_Fields>;
+  min?: Maybe<User_Profile_Min_Fields>;
+};
+
+
+/** aggregate fields of "user_profile" */
+export type User_Profile_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<User_Profile_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "user_profile". All fields are combined with a logical 'AND'. */
+export type User_Profile_Bool_Exp = {
+  _and?: InputMaybe<Array<User_Profile_Bool_Exp>>;
+  _not?: InputMaybe<User_Profile_Bool_Exp>;
+  _or?: InputMaybe<Array<User_Profile_Bool_Exp>>;
+  avatar?: InputMaybe<Files_Bool_Exp>;
+  avatar_id?: InputMaybe<Uuid_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
+  user_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "user_profile" */
+export enum User_Profile_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  UserProfilePkey = 'user_profile_pkey',
+  /** unique or primary key constraint on columns "user_id" */
+  UserProfileUserIdKey = 'user_profile_user_id_key'
+}
+
+/** input type for inserting data into table "user_profile" */
+export type User_Profile_Insert_Input = {
+  avatar?: InputMaybe<Files_Obj_Rel_Insert_Input>;
+  avatar_id?: InputMaybe<Scalars['uuid']>;
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type User_Profile_Max_Fields = {
+  __typename?: 'user_profile_max_fields';
+  avatar_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate min on columns */
+export type User_Profile_Min_Fields = {
+  __typename?: 'user_profile_min_fields';
+  avatar_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** response of any mutation on the table "user_profile" */
+export type User_Profile_Mutation_Response = {
+  __typename?: 'user_profile_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<User_Profile>;
+};
+
+/** on_conflict condition type for table "user_profile" */
+export type User_Profile_On_Conflict = {
+  constraint: User_Profile_Constraint;
+  update_columns?: Array<User_Profile_Update_Column>;
+  where?: InputMaybe<User_Profile_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "user_profile". */
+export type User_Profile_Order_By = {
+  avatar?: InputMaybe<Files_Order_By>;
+  avatar_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: user_profile */
+export type User_Profile_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "user_profile" */
+export enum User_Profile_Select_Column {
+  /** column name */
+  AvatarId = 'avatar_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "user_profile" */
+export type User_Profile_Set_Input = {
+  avatar_id?: InputMaybe<Scalars['uuid']>;
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** update columns of table "user_profile" */
+export enum User_Profile_Update_Column {
+  /** column name */
+  AvatarId = 'avatar_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+export type User_Profile_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<User_Profile_Set_Input>;
+  where: User_Profile_Bool_Exp;
+};
+
+/** Private settings for a user */
+export type User_Settings = {
+  __typename?: 'user_settings';
+  /** An object relationship */
+  avatar?: Maybe<Files>;
+  avatar_file_id?: Maybe<Scalars['uuid']>;
+  created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  updated_at: Scalars['timestamptz'];
+  /** An object relationship */
+  user: Users;
+  user_id: Scalars['uuid'];
+};
+
+/** aggregated selection of "user_settings" */
+export type User_Settings_Aggregate = {
+  __typename?: 'user_settings_aggregate';
+  aggregate?: Maybe<User_Settings_Aggregate_Fields>;
+  nodes: Array<User_Settings>;
+};
+
+/** aggregate fields of "user_settings" */
+export type User_Settings_Aggregate_Fields = {
+  __typename?: 'user_settings_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<User_Settings_Max_Fields>;
+  min?: Maybe<User_Settings_Min_Fields>;
+};
+
+
+/** aggregate fields of "user_settings" */
+export type User_Settings_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<User_Settings_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "user_settings". All fields are combined with a logical 'AND'. */
+export type User_Settings_Bool_Exp = {
+  _and?: InputMaybe<Array<User_Settings_Bool_Exp>>;
+  _not?: InputMaybe<User_Settings_Bool_Exp>;
+  _or?: InputMaybe<Array<User_Settings_Bool_Exp>>;
+  avatar?: InputMaybe<Files_Bool_Exp>;
+  avatar_file_id?: InputMaybe<Uuid_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  user?: InputMaybe<Users_Bool_Exp>;
+  user_id?: InputMaybe<Uuid_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "user_settings" */
+export enum User_Settings_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  UserSettingsPkey = 'user_settings_pkey',
+  /** unique or primary key constraint on columns "user_id" */
+  UserSettingsUserIdFk = 'user_settings_user_id_fk',
+  /** unique or primary key constraint on columns "user_id" */
+  UserSettingsUserIdKey = 'user_settings_user_id_key'
+}
+
+/** input type for inserting data into table "user_settings" */
+export type User_Settings_Insert_Input = {
+  avatar?: InputMaybe<Files_Obj_Rel_Insert_Input>;
+  avatar_file_id?: InputMaybe<Scalars['uuid']>;
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** aggregate max on columns */
+export type User_Settings_Max_Fields = {
+  __typename?: 'user_settings_max_fields';
+  avatar_file_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** aggregate min on columns */
+export type User_Settings_Min_Fields = {
+  __typename?: 'user_settings_min_fields';
+  avatar_file_id?: Maybe<Scalars['uuid']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+  user_id?: Maybe<Scalars['uuid']>;
+};
+
+/** response of any mutation on the table "user_settings" */
+export type User_Settings_Mutation_Response = {
+  __typename?: 'user_settings_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<User_Settings>;
+};
+
+/** on_conflict condition type for table "user_settings" */
+export type User_Settings_On_Conflict = {
+  constraint: User_Settings_Constraint;
+  update_columns?: Array<User_Settings_Update_Column>;
+  where?: InputMaybe<User_Settings_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "user_settings". */
+export type User_Settings_Order_By = {
+  avatar?: InputMaybe<Files_Order_By>;
+  avatar_file_id?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+  user?: InputMaybe<Users_Order_By>;
+  user_id?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: user_settings */
+export type User_Settings_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "user_settings" */
+export enum User_Settings_Select_Column {
+  /** column name */
+  AvatarFileId = 'avatar_file_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+/** input type for updating data in table "user_settings" */
+export type User_Settings_Set_Input = {
+  avatar_file_id?: InputMaybe<Scalars['uuid']>;
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+  user_id?: InputMaybe<Scalars['uuid']>;
+};
+
+/** update columns of table "user_settings" */
+export enum User_Settings_Update_Column {
+  /** column name */
+  AvatarFileId = 'avatar_file_id',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at',
+  /** column name */
+  UserId = 'user_id'
+}
+
+export type User_Settings_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<User_Settings_Set_Input>;
+  where: User_Settings_Bool_Exp;
+};
+
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type Users = {
   __typename?: 'users';
   activeMfaType?: Maybe<Scalars['String']>;
@@ -10338,6 +12015,10 @@ export type Users = {
   activities: Array<Activities>;
   /** An aggregate relationship */
   activities_aggregate: Activities_Aggregate;
+  /** An array relationship */
+  authenticators: Array<AuthUserAuthenticators>;
+  /** An aggregate relationship */
+  authenticators_aggregate: AuthUserAuthenticators_Aggregate;
   avatarUrl: Scalars['String'];
   /** An array relationship */
   chat_group_members: Array<Chat_Group_Members>;
@@ -10352,6 +12033,7 @@ export type Users = {
   /** An aggregate relationship */
   comments_aggregate: Comments_Aggregate;
   createdAt: Scalars['timestamptz'];
+  currentChallenge?: Maybe<Scalars['String']>;
   defaultRole: Scalars['String'];
   /** An object relationship */
   defaultRoleByRole: AuthRoles;
@@ -10414,7 +12096,7 @@ export type Users = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersActivitiesArgs = {
   distinct_on?: InputMaybe<Array<Activities_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10424,7 +12106,7 @@ export type UsersActivitiesArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersActivities_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Activities_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10434,7 +12116,27 @@ export type UsersActivities_AggregateArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
+export type UsersAuthenticatorsArgs = {
+  distinct_on?: InputMaybe<Array<AuthUserAuthenticators_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<AuthUserAuthenticators_Order_By>>;
+  where?: InputMaybe<AuthUserAuthenticators_Bool_Exp>;
+};
+
+
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
+export type UsersAuthenticators_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<AuthUserAuthenticators_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<AuthUserAuthenticators_Order_By>>;
+  where?: InputMaybe<AuthUserAuthenticators_Bool_Exp>;
+};
+
+
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersChat_Group_MembersArgs = {
   distinct_on?: InputMaybe<Array<Chat_Group_Members_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10444,7 +12146,7 @@ export type UsersChat_Group_MembersArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersChat_Group_Members_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Chat_Group_Members_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10454,7 +12156,7 @@ export type UsersChat_Group_Members_AggregateArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersChat_MessagesArgs = {
   distinct_on?: InputMaybe<Array<Chat_Messages_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10464,7 +12166,7 @@ export type UsersChat_MessagesArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersChat_Messages_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Chat_Messages_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10474,7 +12176,7 @@ export type UsersChat_Messages_AggregateArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersCommentsArgs = {
   distinct_on?: InputMaybe<Array<Comments_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10484,7 +12186,7 @@ export type UsersCommentsArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersComments_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Comments_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10494,7 +12196,7 @@ export type UsersComments_AggregateArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersFile_UploadsArgs = {
   distinct_on?: InputMaybe<Array<File_Uploads_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10504,7 +12206,7 @@ export type UsersFile_UploadsArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersFile_Uploads_AggregateArgs = {
   distinct_on?: InputMaybe<Array<File_Uploads_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10514,7 +12216,7 @@ export type UsersFile_Uploads_AggregateArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersGroup_Join_RequestsArgs = {
   distinct_on?: InputMaybe<Array<Group_Join_Requests_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10524,7 +12226,7 @@ export type UsersGroup_Join_RequestsArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersGroup_Join_Requests_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Group_Join_Requests_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10534,7 +12236,7 @@ export type UsersGroup_Join_Requests_AggregateArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersGroup_PostsArgs = {
   distinct_on?: InputMaybe<Array<Group_Posts_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10544,7 +12246,7 @@ export type UsersGroup_PostsArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersGroup_Posts_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Group_Posts_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10554,7 +12256,7 @@ export type UsersGroup_Posts_AggregateArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersMembershipsArgs = {
   distinct_on?: InputMaybe<Array<Group_Members_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10564,7 +12266,7 @@ export type UsersMembershipsArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersMemberships_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Group_Members_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10574,13 +12276,13 @@ export type UsersMemberships_AggregateArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersMetadataArgs = {
   path?: InputMaybe<Scalars['String']>;
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersNotificationsArgs = {
   distinct_on?: InputMaybe<Array<Notifications_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10590,7 +12292,7 @@ export type UsersNotificationsArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersNotifications_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Notifications_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10600,7 +12302,7 @@ export type UsersNotifications_AggregateArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersRefreshTokensArgs = {
   distinct_on?: InputMaybe<Array<AuthRefreshTokens_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10610,7 +12312,7 @@ export type UsersRefreshTokensArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersRefreshTokens_AggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthRefreshTokens_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10620,7 +12322,7 @@ export type UsersRefreshTokens_AggregateArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersRolesArgs = {
   distinct_on?: InputMaybe<Array<AuthUserRoles_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10630,7 +12332,7 @@ export type UsersRolesArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersRoles_AggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthUserRoles_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10640,7 +12342,7 @@ export type UsersRoles_AggregateArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersThingsArgs = {
   distinct_on?: InputMaybe<Array<Things_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10650,7 +12352,7 @@ export type UsersThingsArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersThings_AggregateArgs = {
   distinct_on?: InputMaybe<Array<Things_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10660,7 +12362,7 @@ export type UsersThings_AggregateArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersUserProvidersArgs = {
   distinct_on?: InputMaybe<Array<AuthUserProviders_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10670,7 +12372,7 @@ export type UsersUserProvidersArgs = {
 };
 
 
-/** columns and relationships of "auth.users" */
+/** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
 export type UsersUserProviders_AggregateArgs = {
   distinct_on?: InputMaybe<Array<AuthUserProviders_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10727,11 +12429,13 @@ export type Users_Bool_Exp = {
   _or?: InputMaybe<Array<Users_Bool_Exp>>;
   activeMfaType?: InputMaybe<String_Comparison_Exp>;
   activities?: InputMaybe<Activities_Bool_Exp>;
+  authenticators?: InputMaybe<AuthUserAuthenticators_Bool_Exp>;
   avatarUrl?: InputMaybe<String_Comparison_Exp>;
   chat_group_members?: InputMaybe<Chat_Group_Members_Bool_Exp>;
   chat_messages?: InputMaybe<Chat_Messages_Bool_Exp>;
   comments?: InputMaybe<Comments_Bool_Exp>;
   createdAt?: InputMaybe<Timestamptz_Comparison_Exp>;
+  currentChallenge?: InputMaybe<String_Comparison_Exp>;
   defaultRole?: InputMaybe<String_Comparison_Exp>;
   defaultRoleByRole?: InputMaybe<AuthRoles_Bool_Exp>;
   disabled?: InputMaybe<Boolean_Comparison_Exp>;
@@ -10767,11 +12471,11 @@ export type Users_Bool_Exp = {
 
 /** unique or primary key constraints on table "auth.users" */
 export enum Users_Constraint {
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "email" */
   UsersEmailKey = 'users_email_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "phone_number" */
   UsersPhoneNumberKey = 'users_phone_number_key',
-  /** unique or primary key constraint */
+  /** unique or primary key constraint on columns "id" */
   UsersPkey = 'users_pkey'
 }
 
@@ -10794,11 +12498,13 @@ export type Users_Delete_Key_Input = {
 export type Users_Insert_Input = {
   activeMfaType?: InputMaybe<Scalars['String']>;
   activities?: InputMaybe<Activities_Arr_Rel_Insert_Input>;
+  authenticators?: InputMaybe<AuthUserAuthenticators_Arr_Rel_Insert_Input>;
   avatarUrl?: InputMaybe<Scalars['String']>;
   chat_group_members?: InputMaybe<Chat_Group_Members_Arr_Rel_Insert_Input>;
   chat_messages?: InputMaybe<Chat_Messages_Arr_Rel_Insert_Input>;
   comments?: InputMaybe<Comments_Arr_Rel_Insert_Input>;
   createdAt?: InputMaybe<Scalars['timestamptz']>;
+  currentChallenge?: InputMaybe<Scalars['String']>;
   defaultRole?: InputMaybe<Scalars['String']>;
   defaultRoleByRole?: InputMaybe<AuthRoles_Obj_Rel_Insert_Input>;
   disabled?: InputMaybe<Scalars['Boolean']>;
@@ -10838,6 +12544,7 @@ export type Users_Max_Fields = {
   activeMfaType?: Maybe<Scalars['String']>;
   avatarUrl?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
+  currentChallenge?: Maybe<Scalars['String']>;
   defaultRole?: Maybe<Scalars['String']>;
   displayName?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['citext']>;
@@ -10861,6 +12568,7 @@ export type Users_Max_Order_By = {
   activeMfaType?: InputMaybe<Order_By>;
   avatarUrl?: InputMaybe<Order_By>;
   createdAt?: InputMaybe<Order_By>;
+  currentChallenge?: InputMaybe<Order_By>;
   defaultRole?: InputMaybe<Order_By>;
   displayName?: InputMaybe<Order_By>;
   email?: InputMaybe<Order_By>;
@@ -10885,6 +12593,7 @@ export type Users_Min_Fields = {
   activeMfaType?: Maybe<Scalars['String']>;
   avatarUrl?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['timestamptz']>;
+  currentChallenge?: Maybe<Scalars['String']>;
   defaultRole?: Maybe<Scalars['String']>;
   displayName?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['citext']>;
@@ -10908,6 +12617,7 @@ export type Users_Min_Order_By = {
   activeMfaType?: InputMaybe<Order_By>;
   avatarUrl?: InputMaybe<Order_By>;
   createdAt?: InputMaybe<Order_By>;
+  currentChallenge?: InputMaybe<Order_By>;
   defaultRole?: InputMaybe<Order_By>;
   displayName?: InputMaybe<Order_By>;
   email?: InputMaybe<Order_By>;
@@ -10953,11 +12663,13 @@ export type Users_On_Conflict = {
 export type Users_Order_By = {
   activeMfaType?: InputMaybe<Order_By>;
   activities_aggregate?: InputMaybe<Activities_Aggregate_Order_By>;
+  authenticators_aggregate?: InputMaybe<AuthUserAuthenticators_Aggregate_Order_By>;
   avatarUrl?: InputMaybe<Order_By>;
   chat_group_members_aggregate?: InputMaybe<Chat_Group_Members_Aggregate_Order_By>;
   chat_messages_aggregate?: InputMaybe<Chat_Messages_Aggregate_Order_By>;
   comments_aggregate?: InputMaybe<Comments_Aggregate_Order_By>;
   createdAt?: InputMaybe<Order_By>;
+  currentChallenge?: InputMaybe<Order_By>;
   defaultRole?: InputMaybe<Order_By>;
   defaultRoleByRole?: InputMaybe<AuthRoles_Order_By>;
   disabled?: InputMaybe<Order_By>;
@@ -11010,6 +12722,8 @@ export enum Users_Select_Column {
   /** column name */
   CreatedAt = 'createdAt',
   /** column name */
+  CurrentChallenge = 'currentChallenge',
+  /** column name */
   DefaultRole = 'defaultRole',
   /** column name */
   Disabled = 'disabled',
@@ -11058,6 +12772,7 @@ export type Users_Set_Input = {
   activeMfaType?: InputMaybe<Scalars['String']>;
   avatarUrl?: InputMaybe<Scalars['String']>;
   createdAt?: InputMaybe<Scalars['timestamptz']>;
+  currentChallenge?: InputMaybe<Scalars['String']>;
   defaultRole?: InputMaybe<Scalars['String']>;
   disabled?: InputMaybe<Scalars['Boolean']>;
   displayName?: InputMaybe<Scalars['String']>;
@@ -11089,6 +12804,8 @@ export enum Users_Update_Column {
   AvatarUrl = 'avatarUrl',
   /** column name */
   CreatedAt = 'createdAt',
+  /** column name */
+  CurrentChallenge = 'currentChallenge',
   /** column name */
   DefaultRole = 'defaultRole',
   /** column name */
@@ -11133,6 +12850,22 @@ export enum Users_Update_Column {
   UpdatedAt = 'updatedAt'
 }
 
+export type Users_Updates = {
+  /** append existing jsonb value of filtered columns with new jsonb value */
+  _append?: InputMaybe<Users_Append_Input>;
+  /** delete the field or element with specified path (for JSON arrays, negative integers count from the end) */
+  _delete_at_path?: InputMaybe<Users_Delete_At_Path_Input>;
+  /** delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array */
+  _delete_elem?: InputMaybe<Users_Delete_Elem_Input>;
+  /** delete key/value pair or string element. key/value pairs are matched based on their key value */
+  _delete_key?: InputMaybe<Users_Delete_Key_Input>;
+  /** prepend existing jsonb value of filtered columns with new jsonb value */
+  _prepend?: InputMaybe<Users_Prepend_Input>;
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Users_Set_Input>;
+  where: Users_Bool_Exp;
+};
+
 /** Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'. */
 export type Uuid_Comparison_Exp = {
   _eq?: InputMaybe<Scalars['uuid']>;
@@ -11146,19 +12879,19 @@ export type Uuid_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['uuid']>>;
 };
 
-export type DetailedActivityFragment = { __typename?: 'activities', id: string, created_at: Date, verb: Activity_Verb_Enum, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_post?: { __typename?: 'group_posts', id: string, created_at: Date, updated_at: Date, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_member?: { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: Date, group: { __typename?: 'groups', id: string, short_id: string, name: string }, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null } };
+export type DetailedActivityFragment = { __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_post?: { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_member?: { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, group: { __typename?: 'groups', id: string, short_id: string, name: string }, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null } };
 
-export type ActivityCardFragment = { __typename?: 'activities', id: string, created_at: Date, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null };
+export type ActivityCardFragment = { __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null };
 
-export type NotificationCardFragment = { __typename?: 'notifications', id: string, read_at?: Date | null, created_at: Date, activity: { __typename?: 'activities', id: string, created_at: Date, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null } };
+export type NotificationCardFragment = { __typename?: 'notifications', id: string, read_at?: string | null, created_at: string, activity: { __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null } };
 
 export type GroupRefFragment = { __typename?: 'groups', id: string, short_id: string, name: string };
 
 export type ThingRefFragment = { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> };
 
-export type EntityCardFragment = { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null };
+export type EntityCardFragment = { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null };
 
-export type DetailedEntityFragment = { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_post?: { __typename?: 'group_posts', id: string, created_at: Date, updated_at: Date, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_member?: { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: Date, group: { __typename?: 'groups', id: string, short_id: string, name: string }, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null };
+export type DetailedEntityFragment = { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_post?: { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_member?: { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, group: { __typename?: 'groups', id: string, short_id: string, name: string }, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null };
 
 export type GroupActivityQueryVariables = Exact<{
   shortId: Scalars['String'];
@@ -11167,11 +12900,13 @@ export type GroupActivityQueryVariables = Exact<{
 }>;
 
 
-export type GroupActivityQuery = { __typename?: 'query_root', groups: Array<{ __typename?: 'groups', activities: Array<{ __typename?: 'activities', id: string, created_at: Date, verb: Activity_Verb_Enum, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_post?: { __typename?: 'group_posts', id: string, created_at: Date, updated_at: Date, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_member?: { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: Date, group: { __typename?: 'groups', id: string, short_id: string, name: string }, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null } }> }> };
+export type GroupActivityQuery = { __typename?: 'query_root', groups: Array<{ __typename?: 'groups', activities: Array<{ __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_post?: { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_member?: { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, group: { __typename?: 'groups', id: string, short_id: string, name: string }, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null } }> }> };
 
-export type ChatMessageCardFragment = { __typename?: 'chat_messages', id: string, sender_id: string, message: string, created_at: Date, entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null };
+export type ChatMessageCardFragment = { __typename?: 'chat_messages', id: string, sender_id: string, message: string, created_at: string, entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null };
 
-export type ChatGroupCardFragment = { __typename?: 'chat_groups', id: string, name: string, members: Array<{ __typename?: 'chat_group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, messages: Array<{ __typename?: 'chat_messages', message: string, sender: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> };
+export type ChatGroupMemberCardFragment = { __typename?: 'chat_group_members', id: string, last_read?: string | null, info?: { __typename?: 'chat_group_member_info', has_unread?: boolean | null } | null, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } };
+
+export type ChatGroupCardFragment = { __typename?: 'chat_groups', id: string, name: string, members: Array<{ __typename?: 'chat_group_members', id: string, last_read?: string | null, info?: { __typename?: 'chat_group_member_info', has_unread?: boolean | null } | null, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, messages: Array<{ __typename?: 'chat_messages', created_at: string, message: string, sender: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> };
 
 export type ChatMessagesQueryVariables = Exact<{
   where: Chat_Messages_Bool_Exp;
@@ -11179,49 +12914,65 @@ export type ChatMessagesQueryVariables = Exact<{
 }>;
 
 
-export type ChatMessagesQuery = { __typename?: 'query_root', chat_messages: Array<{ __typename?: 'chat_messages', id: string, sender_id: string, message: string, created_at: Date, entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null }> };
+export type ChatMessagesQuery = { __typename?: 'query_root', chat_messages: Array<{ __typename?: 'chat_messages', id: string, sender_id: string, message: string, created_at: string, entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null }> };
 
 export type ChatGroupsSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ChatGroupsSubscription = { __typename?: 'subscription_root', chat_groups: Array<{ __typename?: 'chat_groups', id: string, name: string, members: Array<{ __typename?: 'chat_group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, messages: Array<{ __typename?: 'chat_messages', message: string, sender: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> }> };
+export type ChatGroupsSubscription = { __typename?: 'subscription_root', chat_groups: Array<{ __typename?: 'chat_groups', id: string, name: string, members: Array<{ __typename?: 'chat_group_members', id: string, last_read?: string | null, info?: { __typename?: 'chat_group_member_info', has_unread?: boolean | null } | null, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, messages: Array<{ __typename?: 'chat_messages', created_at: string, message: string, sender: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> }> };
 
 export type ChatMessagesFeedSubscriptionVariables = Exact<{
   where: Chat_Messages_Bool_Exp;
 }>;
 
 
-export type ChatMessagesFeedSubscription = { __typename?: 'subscription_root', chat_messages: Array<{ __typename?: 'chat_messages', id: string, sender_id: string, message: string, created_at: Date, entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null }> };
+export type ChatMessagesFeedSubscription = { __typename?: 'subscription_root', chat_messages: Array<{ __typename?: 'chat_messages', id: string, sender_id: string, message: string, created_at: string, entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null }> };
 
 export type CreateChatGroupMutationVariables = Exact<{
   input: CreateChatGroupInput;
 }>;
 
 
-export type CreateChatGroupMutation = { __typename?: 'mutation_root', createChatGroup?: { __typename?: 'CreateChatGroupResult', chat_group: { __typename?: 'chat_groups', id: string, name: string, members: Array<{ __typename?: 'chat_group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, messages: Array<{ __typename?: 'chat_messages', message: string, sender: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> } } | null };
+export type CreateChatGroupMutation = { __typename?: 'mutation_root', createChatGroup?: { __typename?: 'CreateChatGroupResult', chat_group?: { __typename?: 'chat_groups', id: string, name: string, members: Array<{ __typename?: 'chat_group_members', id: string, last_read?: string | null, info?: { __typename?: 'chat_group_member_info', has_unread?: boolean | null } | null, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, messages: Array<{ __typename?: 'chat_messages', created_at: string, message: string, sender: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> } | null } | null };
 
-export type CreateChatMessageMutationVariables = Exact<{
-  input: Chat_Messages_Insert_Input;
+export type UpdateChatGroupMutationVariables = Exact<{
+  id: Scalars['uuid'];
+  input: Chat_Groups_Set_Input;
 }>;
 
 
-export type CreateChatMessageMutation = { __typename?: 'mutation_root', insert_chat_messages_one?: { __typename?: 'chat_messages', id: string, sender_id: string, message: string, created_at: Date, entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null } | null };
+export type UpdateChatGroupMutation = { __typename?: 'mutation_root', update_chat_groups_by_pk?: { __typename?: 'chat_groups', id: string, name: string, members: Array<{ __typename?: 'chat_group_members', id: string, last_read?: string | null, info?: { __typename?: 'chat_group_member_info', has_unread?: boolean | null } | null, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, messages: Array<{ __typename?: 'chat_messages', created_at: string, message: string, sender: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> } | null };
 
-export type CommentCardFragment = { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } };
+export type CreateChatMessageMutationVariables = Exact<{
+  input: CreateChatMessageInput;
+}>;
 
-export type GroupMemberCardFragment = { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: Date, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } };
 
-export type GroupMemberWithGroupCardFragment = { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: Date, group: { __typename?: 'groups', id: string, short_id: string, name: string }, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } };
+export type CreateChatMessageMutation = { __typename?: 'mutation_root', createChatMessage: { __typename?: 'CreateChatMessageResult', chat_message?: { __typename?: 'chat_messages', id: string, sender_id: string, message: string, created_at: string, entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null } | null } };
 
-export type GroupCardFragment = { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } };
+export type UpdateChatGroupMemberMutationVariables = Exact<{
+  id: Scalars['uuid'];
+  input: Chat_Group_Members_Set_Input;
+}>;
 
-export type GroupDetailsFragment = { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: Date, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } };
 
-export type GroupJoinRequestCardFragment = { __typename?: 'group_join_requests', id: string, created_at: Date, updated_at: Date, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } };
+export type UpdateChatGroupMemberMutation = { __typename?: 'mutation_root', update_chat_group_members_by_pk?: { __typename?: 'chat_group_members', id: string, last_read?: string | null, info?: { __typename?: 'chat_group_member_info', has_unread?: boolean | null } | null, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null };
 
-export type GroupJoinTokenCardFragment = { __typename?: 'group_join_tokens', id: string, created_at: Date, updated_at: Date, token: string, disabled: boolean, note?: string | null };
+export type CommentCardFragment = { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } };
 
-export type GroupPostFragment = { __typename?: 'group_posts', id: string, created_at: Date, updated_at: Date, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } };
+export type GroupMemberCardFragment = { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } };
+
+export type GroupMemberWithGroupCardFragment = { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, group: { __typename?: 'groups', id: string, short_id: string, name: string }, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } };
+
+export type GroupCardFragment = { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } };
+
+export type GroupDetailsFragment = { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } };
+
+export type GroupJoinRequestCardFragment = { __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } };
+
+export type GroupJoinTokenCardFragment = { __typename?: 'group_join_tokens', id: string, created_at: string, updated_at: string, token: string, disabled: boolean, note?: string | null };
+
+export type GroupPostFragment = { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } };
 
 export type ListGroupsQueryVariables = Exact<{
   limit: Scalars['Int'];
@@ -11231,28 +12982,28 @@ export type ListGroupsQueryVariables = Exact<{
 }>;
 
 
-export type ListGroupsQuery = { __typename?: 'query_root', groups_aggregate: { __typename?: 'groups_aggregate', aggregate?: { __typename?: 'groups_aggregate_fields', count: number } | null }, groups: Array<{ __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }> };
+export type ListGroupsQuery = { __typename?: 'query_root', groups_aggregate: { __typename?: 'groups_aggregate', aggregate?: { __typename?: 'groups_aggregate_fields', count: number } | null }, groups: Array<{ __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }> };
 
 export type GroupDetailsQueryVariables = Exact<{
   shortId: Scalars['String'];
 }>;
 
 
-export type GroupDetailsQuery = { __typename?: 'query_root', groups: Array<{ __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: Date, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }> };
+export type GroupDetailsQuery = { __typename?: 'query_root', groups: Array<{ __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }> };
 
 export type GroupJoinRequestsQueryVariables = Exact<{
   where: Group_Join_Requests_Bool_Exp;
 }>;
 
 
-export type GroupJoinRequestsQuery = { __typename?: 'query_root', group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: Date, updated_at: Date, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> };
+export type GroupJoinRequestsQuery = { __typename?: 'query_root', group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> };
 
 export type GroupJoinTokensQueryVariables = Exact<{
   where: Group_Join_Tokens_Bool_Exp;
 }>;
 
 
-export type GroupJoinTokensQuery = { __typename?: 'query_root', group_join_tokens: Array<{ __typename?: 'group_join_tokens', id: string, created_at: Date, updated_at: Date, token: string, disabled: boolean, note?: string | null }> };
+export type GroupJoinTokensQuery = { __typename?: 'query_root', group_join_tokens: Array<{ __typename?: 'group_join_tokens', id: string, created_at: string, updated_at: string, token: string, disabled: boolean, note?: string | null }> };
 
 export type GroupPostListQueryVariables = Exact<{
   where: Group_Posts_Bool_Exp;
@@ -11262,21 +13013,21 @@ export type GroupPostListQueryVariables = Exact<{
 }>;
 
 
-export type GroupPostListQuery = { __typename?: 'query_root', group_posts: Array<{ __typename?: 'group_posts', id: string, created_at: Date, updated_at: Date, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, group_posts_aggregate: { __typename?: 'group_posts_aggregate', aggregate?: { __typename?: 'group_posts_aggregate_fields', count: number } | null } };
+export type GroupPostListQuery = { __typename?: 'query_root', group_posts: Array<{ __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, group_posts_aggregate: { __typename?: 'group_posts_aggregate', aggregate?: { __typename?: 'group_posts_aggregate_fields', count: number } | null } };
 
 export type ActivityListQueryVariables = Exact<{
   offset?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type ActivityListQuery = { __typename?: 'query_root', activities: Array<{ __typename?: 'activities', id: string, created_at: Date, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null }> };
+export type ActivityListQuery = { __typename?: 'query_root', activities: Array<{ __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null }> };
 
 export type CreateGroupMutationVariables = Exact<{
   input: CreateGroupInput;
 }>;
 
 
-export type CreateGroupMutation = { __typename?: 'mutation_root', createGroup: { __typename?: 'CreateGroupResult', group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } } };
+export type CreateGroupMutation = { __typename?: 'mutation_root', createGroup: { __typename?: 'CreateGroupResult', group?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null } };
 
 export type UpdateGroupMutationVariables = Exact<{
   id: Scalars['uuid'];
@@ -11284,21 +13035,21 @@ export type UpdateGroupMutationVariables = Exact<{
 }>;
 
 
-export type UpdateGroupMutation = { __typename?: 'mutation_root', update_groups_by_pk?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: Date, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null };
+export type UpdateGroupMutation = { __typename?: 'mutation_root', update_groups_by_pk?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null };
 
 export type DeleteGroupMutationVariables = Exact<{
   id: Scalars['uuid'];
 }>;
 
 
-export type DeleteGroupMutation = { __typename?: 'mutation_root', delete_groups_by_pk?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null };
+export type DeleteGroupMutation = { __typename?: 'mutation_root', delete_groups_by_pk?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null };
 
 export type CreateGroupPostMutationVariables = Exact<{
   input: Group_Posts_Insert_Input;
 }>;
 
 
-export type CreateGroupPostMutation = { __typename?: 'mutation_root', insert_group_posts_one?: { __typename?: 'group_posts', id: string, created_at: Date, updated_at: Date, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null };
+export type CreateGroupPostMutation = { __typename?: 'mutation_root', insert_group_posts_one?: { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null };
 
 export type UpdateGroupPostMutationVariables = Exact<{
   id: Scalars['uuid'];
@@ -11306,7 +13057,7 @@ export type UpdateGroupPostMutationVariables = Exact<{
 }>;
 
 
-export type UpdateGroupPostMutation = { __typename?: 'mutation_root', update_group_posts_by_pk?: { __typename?: 'group_posts', id: string, created_at: Date, updated_at: Date, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null };
+export type UpdateGroupPostMutation = { __typename?: 'mutation_root', update_group_posts_by_pk?: { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null };
 
 export type CreateGroupPostCommentMutationVariables = Exact<{
   groupPostId: Scalars['uuid'];
@@ -11314,7 +13065,7 @@ export type CreateGroupPostCommentMutationVariables = Exact<{
 }>;
 
 
-export type CreateGroupPostCommentMutation = { __typename?: 'mutation_root', insert_group_post_comment_one?: { __typename?: 'group_post_comment', comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }, post: { __typename?: 'group_posts', id: string, created_at: Date, updated_at: Date, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null };
+export type CreateGroupPostCommentMutation = { __typename?: 'mutation_root', insert_group_post_comment_one?: { __typename?: 'group_post_comment', comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }, post: { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null };
 
 export type LeaveGroupMutationVariables = Exact<{
   groupId: Scalars['uuid'];
@@ -11329,49 +13080,49 @@ export type JoinGroupMutationVariables = Exact<{
 }>;
 
 
-export type JoinGroupMutation = { __typename?: 'mutation_root', insert_group_members_one?: { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: Date, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, createdAt: Date, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: Date, updated_at: Date, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> } } | null };
+export type JoinGroupMutation = { __typename?: 'mutation_root', insert_group_members_one?: { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, createdAt: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> } } | null };
 
 export type JoinGroupWithTokenMutationVariables = Exact<{
   input: JoinGroupInput;
 }>;
 
 
-export type JoinGroupWithTokenMutation = { __typename?: 'mutation_root', joinGroup?: { __typename?: 'JoinGroupResult', group: { __typename?: 'groups', id: string }, user: { __typename?: 'users', createdAt: Date, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: Date, updated_at: Date, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> } } | null };
+export type JoinGroupWithTokenMutation = { __typename?: 'mutation_root', joinGroup?: { __typename?: 'JoinGroupResult', group?: { __typename?: 'groups', id: string } | null, user?: { __typename?: 'users', createdAt: string, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> } | null } | null };
 
 export type RequestJoinGroupMutationVariables = Exact<{
   input: RequestJoinGroupInput;
 }>;
 
 
-export type RequestJoinGroupMutation = { __typename?: 'mutation_root', requestJoinGroup?: { __typename?: 'RequestJoinGroupResult', group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, user: { __typename?: 'users', id: string, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: Date, updated_at: Date, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> } } | null };
+export type RequestJoinGroupMutation = { __typename?: 'mutation_root', requestJoinGroup?: { __typename?: 'RequestJoinGroupResult', group?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null, user?: { __typename?: 'users', id: string, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> } | null } | null };
 
 export type CancelJoinRequestMutationVariables = Exact<{
   requestId: Scalars['uuid'];
 }>;
 
 
-export type CancelJoinRequestMutation = { __typename?: 'mutation_root', delete_group_join_requests?: { __typename?: 'group_join_requests_mutation_response', returning: Array<{ __typename?: 'group_join_requests', user: { __typename?: 'users', id: string, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: Date, updated_at: Date, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> } }> } | null };
+export type CancelJoinRequestMutation = { __typename?: 'mutation_root', delete_group_join_requests?: { __typename?: 'group_join_requests_mutation_response', returning: Array<{ __typename?: 'group_join_requests', user: { __typename?: 'users', id: string, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> } }> } | null };
 
 export type HandleJoinRequestMutationVariables = Exact<{
   input: HandleJoinRequestInput;
 }>;
 
 
-export type HandleJoinRequestMutation = { __typename?: 'mutation_root', handleJoinRequest: { __typename?: 'HandleJoinRequestResult', join_request: { __typename?: 'group_join_requests', id: string, created_at: Date, updated_at: Date, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } };
+export type HandleJoinRequestMutation = { __typename?: 'mutation_root', handleJoinRequest: { __typename?: 'HandleJoinRequestResult', join_request?: { __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null } };
 
 export type CreateJoinTokenMutationVariables = Exact<{
   input: Group_Join_Tokens_Insert_Input;
 }>;
 
 
-export type CreateJoinTokenMutation = { __typename?: 'mutation_root', insert_group_join_tokens_one?: { __typename?: 'group_join_tokens', id: string, created_at: Date, updated_at: Date, token: string, disabled: boolean, note?: string | null } | null };
+export type CreateJoinTokenMutation = { __typename?: 'mutation_root', insert_group_join_tokens_one?: { __typename?: 'group_join_tokens', id: string, created_at: string, updated_at: string, token: string, disabled: boolean, note?: string | null } | null };
 
 export type DeleteJoinTokenMutationVariables = Exact<{
   id: Scalars['uuid'];
 }>;
 
 
-export type DeleteJoinTokenMutation = { __typename?: 'mutation_root', delete_group_join_tokens_by_pk?: { __typename?: 'group_join_tokens', id: string, created_at: Date, updated_at: Date, token: string, disabled: boolean, note?: string | null } | null };
+export type DeleteJoinTokenMutation = { __typename?: 'mutation_root', delete_group_join_tokens_by_pk?: { __typename?: 'group_join_tokens', id: string, created_at: string, updated_at: string, token: string, disabled: boolean, note?: string | null } | null };
 
 export type UpdateJoinTokenMutationVariables = Exact<{
   id: Scalars['uuid'];
@@ -11379,7 +13130,7 @@ export type UpdateJoinTokenMutationVariables = Exact<{
 }>;
 
 
-export type UpdateJoinTokenMutation = { __typename?: 'mutation_root', update_group_join_tokens_by_pk?: { __typename?: 'group_join_tokens', id: string, created_at: Date, updated_at: Date, token: string, disabled: boolean, note?: string | null } | null };
+export type UpdateJoinTokenMutation = { __typename?: 'mutation_root', update_group_join_tokens_by_pk?: { __typename?: 'group_join_tokens', id: string, created_at: string, updated_at: string, token: string, disabled: boolean, note?: string | null } | null };
 
 export type SearchCountsQueryVariables = Exact<{
   thingWhere: Things_Bool_Exp;
@@ -11394,7 +13145,7 @@ export type ThingCardFragment = { __typename?: 'things', id: string, name: strin
 
 export type ThingImageCardFragment = { __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } };
 
-export type ThingDetailsFragment = { __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } };
+export type ThingDetailsFragment = { __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } };
 
 export type ThingListQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
@@ -11411,38 +13162,38 @@ export type ThingDetailsQueryVariables = Exact<{
 }>;
 
 
-export type ThingDetailsQuery = { __typename?: 'query_root', things: Array<{ __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> };
+export type ThingDetailsQuery = { __typename?: 'query_root', things: Array<{ __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> };
 
 export type CreateThingMutationVariables = Exact<{
   input: Things_Insert_Input;
 }>;
 
 
-export type CreateThingMutation = { __typename?: 'mutation_root', insert_things_one?: { __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null };
+export type CreateThingMutation = { __typename?: 'mutation_root', insert_things_one?: { __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null };
 
 export type UpdateThingMutationVariables = Exact<{
   input: UpdateThingInput;
 }>;
 
 
-export type UpdateThingMutation = { __typename?: 'mutation_root', updateThing?: { __typename?: 'UpdateThingResult', thing: { __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null };
+export type UpdateThingMutation = { __typename?: 'mutation_root', updateThing?: { __typename?: 'UpdateThingResult', thing?: { __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null } | null };
 
 export type DeleteThingMutationVariables = Exact<{
   id: Scalars['uuid'];
 }>;
 
 
-export type DeleteThingMutation = { __typename?: 'mutation_root', delete_things_by_pk?: { __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null };
+export type DeleteThingMutation = { __typename?: 'mutation_root', delete_things_by_pk?: { __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null };
 
 export type FileUploadCardFragment = { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null };
 
 export type UserCardFragment = { __typename?: 'users', id: string, displayName: string, avatarUrl: string };
 
-export type UserDetailFragment = { __typename?: 'users', createdAt: Date, id: string, displayName: string, avatarUrl: string };
+export type UserDetailFragment = { __typename?: 'users', createdAt: string, id: string, displayName: string, avatarUrl: string };
 
-export type UserJoinRequestsFragment = { __typename?: 'users', id: string, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: Date, updated_at: Date, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> };
+export type UserJoinRequestsFragment = { __typename?: 'users', id: string, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> };
 
-export type UserPrivateDetailFragment = { __typename?: 'users', createdAt: Date, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: Date, updated_at: Date, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> };
+export type UserPrivateDetailFragment = { __typename?: 'users', createdAt: string, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> };
 
 export type UserListQueryVariables = Exact<{
   where?: InputMaybe<Users_Bool_Exp>;
@@ -11458,14 +13209,14 @@ export type UserPrivateDetailsQueryVariables = Exact<{
 }>;
 
 
-export type UserPrivateDetailsQuery = { __typename?: 'query_root', user?: { __typename?: 'users', createdAt: Date, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: Date, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: Date, updated_at: Date, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> } | null };
+export type UserPrivateDetailsQuery = { __typename?: 'query_root', user?: { __typename?: 'users', createdAt: string, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> } | null };
 
 export type NotificationsSubscriptionVariables = Exact<{
   userId: Scalars['uuid'];
 }>;
 
 
-export type NotificationsSubscription = { __typename?: 'subscription_root', notifications: Array<{ __typename?: 'notifications', id: string, read_at?: Date | null, created_at: Date, activity: { __typename?: 'activities', id: string, created_at: Date, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null } }> };
+export type NotificationsSubscription = { __typename?: 'subscription_root', notifications: Array<{ __typename?: 'notifications', id: string, read_at?: string | null, created_at: string, activity: { __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null } }> };
 
 export type MarkNotificationReadMutationVariables = Exact<{
   id: Scalars['uuid'];
@@ -11473,7 +13224,7 @@ export type MarkNotificationReadMutationVariables = Exact<{
 }>;
 
 
-export type MarkNotificationReadMutation = { __typename?: 'mutation_root', update_notifications_by_pk?: { __typename?: 'notifications', id: string, read_at?: Date | null, created_at: Date, activity: { __typename?: 'activities', id: string, created_at: Date, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null } } | null };
+export type MarkNotificationReadMutation = { __typename?: 'mutation_root', update_notifications_by_pk?: { __typename?: 'notifications', id: string, read_at?: string | null, created_at: string, activity: { __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null } } | null };
 
 export type MarkAllNotificationsReadMutationVariables = Exact<{
   userId: Scalars['uuid'];
@@ -11481,7 +13232,7 @@ export type MarkAllNotificationsReadMutationVariables = Exact<{
 }>;
 
 
-export type MarkAllNotificationsReadMutation = { __typename?: 'mutation_root', update_notifications?: { __typename?: 'notifications_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'notifications', id: string, read_at?: Date | null, created_at: Date, activity: { __typename?: 'activities', id: string, created_at: Date, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: Date, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null } }> } | null };
+export type MarkAllNotificationsReadMutation = { __typename?: 'mutation_root', update_notifications?: { __typename?: 'notifications_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'notifications', id: string, read_at?: string | null, created_at: string, activity: { __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null } }> } | null };
 
 export type RegisterUserMutationVariables = Exact<{
   input: CredentialsInput;
@@ -11766,23 +13517,35 @@ export const ChatMessageCardFragmentDoc = gql`
   }
 }
     ${EntityCardFragmentDoc}`;
+export const ChatGroupMemberCardFragmentDoc = gql`
+    fragment ChatGroupMemberCard on chat_group_members {
+  id
+  last_read
+  info {
+    has_unread
+  }
+  user {
+    ...UserCard
+  }
+}
+    ${UserCardFragmentDoc}`;
 export const ChatGroupCardFragmentDoc = gql`
     fragment ChatGroupCard on chat_groups {
   id
   name
   members {
-    user {
-      ...UserCard
-    }
+    ...ChatGroupMemberCard
   }
   messages(limit: 1, order_by: [{created_at: desc}]) {
+    created_at
     sender {
       ...UserCard
     }
     message
   }
 }
-    ${UserCardFragmentDoc}`;
+    ${ChatGroupMemberCardFragmentDoc}
+${UserCardFragmentDoc}`;
 export const GroupDetailsFragmentDoc = gql`
     fragment GroupDetails on groups {
   ...GroupCard
@@ -12037,10 +13800,46 @@ export function useCreateChatGroupMutation(baseOptions?: Apollo.MutationHookOpti
 export type CreateChatGroupMutationHookResult = ReturnType<typeof useCreateChatGroupMutation>;
 export type CreateChatGroupMutationResult = Apollo.MutationResult<CreateChatGroupMutation>;
 export type CreateChatGroupMutationOptions = Apollo.BaseMutationOptions<CreateChatGroupMutation, CreateChatGroupMutationVariables>;
+export const UpdateChatGroupDocument = gql`
+    mutation UpdateChatGroup($id: uuid!, $input: chat_groups_set_input!) {
+  update_chat_groups_by_pk(pk_columns: {id: $id}, _set: $input) {
+    ...ChatGroupCard
+  }
+}
+    ${ChatGroupCardFragmentDoc}`;
+export type UpdateChatGroupMutationFn = Apollo.MutationFunction<UpdateChatGroupMutation, UpdateChatGroupMutationVariables>;
+
+/**
+ * __useUpdateChatGroupMutation__
+ *
+ * To run a mutation, you first call `useUpdateChatGroupMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateChatGroupMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateChatGroupMutation, { data, loading, error }] = useUpdateChatGroupMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateChatGroupMutation(baseOptions?: Apollo.MutationHookOptions<UpdateChatGroupMutation, UpdateChatGroupMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateChatGroupMutation, UpdateChatGroupMutationVariables>(UpdateChatGroupDocument, options);
+      }
+export type UpdateChatGroupMutationHookResult = ReturnType<typeof useUpdateChatGroupMutation>;
+export type UpdateChatGroupMutationResult = Apollo.MutationResult<UpdateChatGroupMutation>;
+export type UpdateChatGroupMutationOptions = Apollo.BaseMutationOptions<UpdateChatGroupMutation, UpdateChatGroupMutationVariables>;
 export const CreateChatMessageDocument = gql`
-    mutation CreateChatMessage($input: chat_messages_insert_input!) {
-  insert_chat_messages_one(object: $input) {
-    ...ChatMessageCard
+    mutation CreateChatMessage($input: CreateChatMessageInput!) {
+  createChatMessage(input: $input) {
+    chat_message {
+      ...ChatMessageCard
+    }
   }
 }
     ${ChatMessageCardFragmentDoc}`;
@@ -12070,6 +13869,40 @@ export function useCreateChatMessageMutation(baseOptions?: Apollo.MutationHookOp
 export type CreateChatMessageMutationHookResult = ReturnType<typeof useCreateChatMessageMutation>;
 export type CreateChatMessageMutationResult = Apollo.MutationResult<CreateChatMessageMutation>;
 export type CreateChatMessageMutationOptions = Apollo.BaseMutationOptions<CreateChatMessageMutation, CreateChatMessageMutationVariables>;
+export const UpdateChatGroupMemberDocument = gql`
+    mutation UpdateChatGroupMember($id: uuid!, $input: chat_group_members_set_input!) {
+  update_chat_group_members_by_pk(pk_columns: {id: $id}, _set: $input) {
+    ...ChatGroupMemberCard
+  }
+}
+    ${ChatGroupMemberCardFragmentDoc}`;
+export type UpdateChatGroupMemberMutationFn = Apollo.MutationFunction<UpdateChatGroupMemberMutation, UpdateChatGroupMemberMutationVariables>;
+
+/**
+ * __useUpdateChatGroupMemberMutation__
+ *
+ * To run a mutation, you first call `useUpdateChatGroupMemberMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateChatGroupMemberMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateChatGroupMemberMutation, { data, loading, error }] = useUpdateChatGroupMemberMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateChatGroupMemberMutation(baseOptions?: Apollo.MutationHookOptions<UpdateChatGroupMemberMutation, UpdateChatGroupMemberMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateChatGroupMemberMutation, UpdateChatGroupMemberMutationVariables>(UpdateChatGroupMemberDocument, options);
+      }
+export type UpdateChatGroupMemberMutationHookResult = ReturnType<typeof useUpdateChatGroupMemberMutation>;
+export type UpdateChatGroupMemberMutationResult = Apollo.MutationResult<UpdateChatGroupMemberMutation>;
+export type UpdateChatGroupMemberMutationOptions = Apollo.BaseMutationOptions<UpdateChatGroupMemberMutation, UpdateChatGroupMemberMutationVariables>;
 export const ListGroupsDocument = gql`
     query ListGroups($limit: Int!, $offset: Int!, $orderBy: groups_order_by!, $where: groups_bool_exp) {
   groups_aggregate(where: $where) {
@@ -12277,7 +14110,7 @@ export function refetchGroupPostListQuery(variables: GroupPostListQueryVariables
       return { query: GroupPostListDocument, variables: variables }
     }
 export const ActivityListDocument = gql`
-    query ActivityList($offset: Int = 10) {
+    query ActivityList($offset: Int = 0) {
   activities(limit: 10, offset: $offset, order_by: [{created_at: desc}]) {
     ...ActivityCard
   }
@@ -13337,7 +15170,9 @@ export const GqlOps = {
   },
   Mutation: {
     CreateChatGroup: 'CreateChatGroup',
+    UpdateChatGroup: 'UpdateChatGroup',
     CreateChatMessage: 'CreateChatMessage',
+    UpdateChatGroupMember: 'UpdateChatGroupMember',
     CreateGroup: 'CreateGroup',
     UpdateGroup: 'UpdateGroup',
     DeleteGroup: 'DeleteGroup',
@@ -13374,6 +15209,7 @@ export const GqlOps = {
     EntityCard: 'EntityCard',
     DetailedEntity: 'DetailedEntity',
     ChatMessageCard: 'ChatMessageCard',
+    ChatGroupMemberCard: 'ChatGroupMemberCard',
     ChatGroupCard: 'ChatGroupCard',
     CommentCard: 'CommentCard',
     GroupMemberCard: 'GroupMemberCard',

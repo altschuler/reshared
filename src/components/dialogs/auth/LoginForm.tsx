@@ -1,7 +1,4 @@
-﻿import { Typography, Alert, Button, Divider, Form, Input, Space } from 'antd';
-import { values } from 'lodash';
-// import { getProviders, SessionProvider, signIn } from 'next-auth/client';
-import { useEffect, useMemo, useState } from 'react';
+﻿import { Typography, Alert, Button, Form, Input } from 'antd';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { createUseStyles } from 'react-jss';
@@ -29,7 +26,6 @@ interface LoginFormProps {
     // providers?: { [key: string]: SessionProvider };
     onRegister?: () => any;
     submitLabel?: string;
-    callbackUrl?: string;
 }
 
 export const LoginForm = (props: LoginFormProps) => {
@@ -41,12 +37,15 @@ export const LoginForm = (props: LoginFormProps) => {
     const handleCredentialsLogin = () => {
         const values = form.getFieldsValue();
 
-        login.signInEmailPassword(values.email, values.password);
+        try {
+            login.signInEmailPassword(values.email, values.password);
+        } catch (e) {
+            console.log(e);
+        }
     };
 
     if (login.isSuccess) {
         router.push(urlFor.home());
-        return null;
     }
 
     return (
@@ -54,13 +53,15 @@ export const LoginForm = (props: LoginFormProps) => {
             <Form form={form} hideRequiredMark name="basic" validateTrigger="onBlur">
                 <Form.Item
                     name="email"
-                    rules={[{ required: true, message: 'Email goes here', type: 'email' }]}>
+                    rules={[{ required: true, message: 'Email', type: 'email' }]}
+                >
                     <Input placeholder="Email" />
                 </Form.Item>
 
                 <Form.Item
                     name="password"
-                    rules={[{ required: true, message: 'Password goes here' }]}>
+                    rules={[{ required: true, message: 'Password goes here' }]}
+                >
                     <Input.Password placeholder="Password" />
                 </Form.Item>
 
@@ -70,7 +71,8 @@ export const LoginForm = (props: LoginFormProps) => {
                         className={classes.login}
                         type="primary"
                         htmlType="submit"
-                        onClick={handleCredentialsLogin}>
+                        onClick={handleCredentialsLogin}
+                    >
                         {props.submitLabel || 'Log in'}
                     </Button>
                     <Typography.Text className="signup-text">

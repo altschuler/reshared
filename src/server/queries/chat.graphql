@@ -25,8 +25,17 @@ mutation ServerCreateChatGroup($input: chat_groups_insert_input!) {
     }
 }
 
-mutation ServerCreateChatMessage($input: chat_messages_insert_input!) {
-    insert_chat_messages_one(object: $input) {
+mutation ServerCreateChatMessage($chat_group_id: uuid!, $user_id: uuid!, $message: String!) {
+    insert_chat_messages_one(
+        object: { chat_group_id: $chat_group_id, message: $message, sender_id: $user_id }
+    ) {
         id
+    }
+
+    update_chat_group_members(
+        where: { chat_group_id: { _eq: $chat_group_id }, user_id: { _eq: $user_id } }
+        _set: { last_read: "now()" }
+    ) {
+        affected_rows
     }
 }

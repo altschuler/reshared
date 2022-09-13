@@ -1,5 +1,4 @@
 ﻿import React, { useCallback, useMemo, useState } from 'react';
-import { head } from 'lodash';
 import {
     useChatGroupsSubscription,
     useCreateChatGroupMutation,
@@ -39,7 +38,7 @@ export interface ChatPageNewProps {
     to?: UserCardFragment[];
 }
 
-export const ChatNewPage = (props) => {
+export const ChatNewPage = (props: ChatPageNewProps) => {
     const classes = useStyles();
     const router = useRouter();
 

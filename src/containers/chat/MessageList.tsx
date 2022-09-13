@@ -88,6 +88,7 @@ export const MessageList = (props: MessageListProps) => {
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
     const [messages, setMessages] = useState<ChatMessageCardFragment[]>([]);
 
+    // TODO: use streaming subscriptions for this
     // Get initial message list once per chatGroup change
     const { loading } = useChatMessagesQuery({
         variables: { where: { chat_group_id: { _eq: props.chatGroup.id } }, limit: 100 },
@@ -159,17 +160,20 @@ export const MessageList = (props: MessageListProps) => {
                             className={clsx(
                                 classes.messageGroup,
                                 mg.isMe && classes.messageGroupMe,
-                            )}>
+                            )}
+                        >
                             {!mg.isMe && <div>{mg.sender.displayName}</div>}
 
                             {mg.messages.map((m) => (
                                 <div
                                     key={m.id}
-                                    className={clsx(classes.bubble, mg.isMe && classes.bubbleMe)}>
+                                    className={clsx(classes.bubble, mg.isMe && classes.bubbleMe)}
+                                >
                                     {m.entity && <BubbleExtra entity={m.entity} />}
 
                                     <Tooltip
-                                        title={<DateDisplay mode="datetime" utc={m.created_at} />}>
+                                        title={<DateDisplay mode="datetime" utc={m.created_at} />}
+                                    >
                                         <div className={classes.bubbleText}>{m.message}</div>
                                     </Tooltip>
                                 </div>

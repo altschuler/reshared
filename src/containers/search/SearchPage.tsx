@@ -55,13 +55,15 @@ const useStyles = createUseStyles({
 });
 
 const typeSchema = Joi.string().valid('thing', 'group', 'user').default('thing');
+
 export const SearchPage = () => {
     const router = useRouter();
     const classes = useStyles();
 
-    const defaultType = useMemo(() => typeSchema.validate(router.query.t).value || 'thing', [
-        router.query.t,
-    ]);
+    const defaultType = useMemo(
+        () => typeSchema.validate(router.query.t).value || 'thing',
+        [router.query.t],
+    );
     const { value: options, update: updateOptions } = useStateObject<SearchOptions>({
         type: defaultType,
         query: '',

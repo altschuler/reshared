@@ -28,9 +28,9 @@ export default makeAuthorizedHandler<CreateChatGroupMutationVariables, CreateCha
             query: ServerFindChatGroupDocument,
             variables: {
                 where: {
-                    _and: memberIds.map((userId) => ({
-                        members: { user_id: { _eq: userId } },
-                    })),
+                    // Find groups where all members are part of the ids and no members and not part of it
+                    _and: memberIds.map((userId) => ({ members: { user_id: { _eq: userId } } })),
+                    _not: { members: { user_id: { _nin: memberIds } } },
                 },
             },
         });

@@ -2,7 +2,7 @@
 import { createUseStyles } from 'react-jss';
 import { head } from 'lodash';
 import { ChatGroupCardFragment } from '../../generated/graphql';
-import { Button, List, Typography } from 'antd';
+import { Badge, Button, List, Tooltip, Typography } from 'antd';
 import { UserAvatarList } from '../../components/display';
 import { useAuth } from '../../utils/auth';
 import { urlFor } from '../../utils/urls';
@@ -67,10 +67,8 @@ export const Sidebar = (props: SidebarProps) => {
 
     return (
         <div
-            className={clsx(
-                classes.root,
-                collapsed ? classes.rootCollapsed : classes.rootExpanded,
-            )}>
+            className={clsx(classes.root, collapsed ? classes.rootCollapsed : classes.rootExpanded)}
+        >
             <Link href={urlFor.chat.new()} passHref>
                 <Button className={classes.newButton} icon={<FormOutlined />}>
                     {!collapsed && 'New Message'}
@@ -91,13 +89,12 @@ export const Sidebar = (props: SidebarProps) => {
                         ? `${lastMessage.sender?.displayName}: ${lastMessage.message}`
                         : '';
                     const selected = props.selected && chatGroup.id === props.selected?.id;
+                    const membership = chatGroup.members.find((m) => m.user.id === auth.user?.id);
                     return (
                         <List.Item
                             onClick={() => router.push(urlFor.chat.group(chatGroup))}
-                            className={clsx(
-                                classes.listItem,
-                                selected && classes.listItemSelected,
-                            )}>
+                            className={clsx(classes.listItem, selected && classes.listItemSelected)}
+                        >
                             <List.Item.Meta
                                 avatar={<UserAvatarList users={otherMembers} />}
                                 title={
@@ -111,6 +108,13 @@ export const Sidebar = (props: SidebarProps) => {
                                     )
                                 }
                             />
+                            {membership?.info?.has_unread && (
+                                <Tooltip title="Unread messages">
+                                    <span>
+                                        <Badge color="blue" />
+                                    </span>
+                                </Tooltip>
+                            )}
                         </List.Item>
                     );
                 }}

@@ -1,6 +1,8 @@
 ﻿import { UserPrivateDetailFragment, useUserPrivateDetailsQuery } from '../generated/graphql';
 import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
 import { useAuthenticationStatus, useUserId, useSignOut } from '@nhost/nextjs';
+import { useRouter } from 'next/router';
+import { urlFor } from './urls';
 
 export interface AuthContextState {
     user: UserPrivateDetailFragment | null;
@@ -33,6 +35,7 @@ export const UserProvider = (props: UserProviderProps) => {
     const { isLoading } = useAuthenticationStatus();
     const userId = useUserId();
     const signOut = useSignOut();
+    const router = useRouter();
 
     const meQuery = useUserPrivateDetailsQuery({
         skip: !userId,
@@ -45,9 +48,10 @@ export const UserProvider = (props: UserProviderProps) => {
             loading: isLoading || meQuery.loading,
             logout: () => {
                 signOut.signOut();
+                router.push(urlFor.home());
             },
         }),
-        [meQuery.data?.user, meQuery.loading, isLoading, signOut],
+        [meQuery.data?.user, meQuery.loading, isLoading, signOut, router],
     );
 
     return <AuthContext.Provider value={ctxValue}>{props.children}</AuthContext.Provider>;

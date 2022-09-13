@@ -3,12 +3,13 @@ import { useMedia } from '../../utils/hooks';
 import Link from 'next/link';
 import { Dropdown, Menu, Space, Tooltip, Typography } from 'antd';
 import { urlFor } from '../../utils/urls';
-import { MessageOutlined, MenuFoldOutlined } from '@ant-design/icons';
+import { MenuFoldOutlined } from '@ant-design/icons';
 import { NotificationsButton } from './NotificationList';
 import { createUseStyles } from 'react-jss';
 import { useAuth } from '../../utils/auth';
 import { AuthDialog, useDialogs } from '../../components/dialogs';
 import { UserButton } from './UserButton';
+import { ChatButton } from './ChatButton';
 
 const useStyles = createUseStyles({
     header: {
@@ -57,7 +58,7 @@ const useStyles = createUseStyles({
     },
 });
 
-const ExpandedNav = (props: { onLogin: () => unknown; onRegister: () => unknown }) => {
+const ExpandedNav = () => {
     const classes = useStyles();
     const auth = useAuth();
     return (
@@ -91,12 +92,7 @@ const ExpandedNav = (props: { onLogin: () => unknown; onRegister: () => unknown 
 
                 {auth.user && (
                     <Space size="large" align="center">
-                        <Link href={urlFor.chat.root()} passHref>
-                            <Tooltip title="Messages">
-                                <MessageOutlined />
-                            </Tooltip>
-                        </Link>
-
+                        <ChatButton />
                         <NotificationsButton />
                         <UserButton user={auth.user} />
                     </Space>
@@ -162,12 +158,7 @@ const CollapsedNav = () => {
             <Space size="large" align="center">
                 {auth.user && (
                     <>
-                        <Link href="/chat" passHref>
-                            <Tooltip title="Messages">
-                                <MessageOutlined />
-                            </Tooltip>
-                        </Link>
-
+                        <ChatButton />
                         <NotificationsButton />
                     </>
                 )}
@@ -202,14 +193,7 @@ export const NavBar = () => {
                 </Typography.Title>
             </div>
 
-            {collapsed ? (
-                <CollapsedNav />
-            ) : (
-                <ExpandedNav
-                    onLogin={() => handleAuth(false)}
-                    onRegister={() => handleAuth(true)}
-                />
-            )}
+            {collapsed ? <CollapsedNav /> : <ExpandedNav />}
         </header>
     );
 };

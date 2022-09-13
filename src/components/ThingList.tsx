@@ -93,6 +93,7 @@ export const ThingList = (props: ThingListProps) => {
                 props.header ||
                 (!props.hideSearch && (
                     <Input.Search
+                        size="large"
                         placeholder="Search..."
                         className={classes.search}
                         value={query}

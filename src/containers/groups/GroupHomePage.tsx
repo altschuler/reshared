@@ -1,6 +1,6 @@
 ﻿import { useMemo } from 'react';
 import { isEmpty, head } from 'lodash';
-import { Alert, Col, Row, Spin } from 'antd';
+import { Alert, Col, Row, Space, Spin } from 'antd';
 import { GroupLayout } from './GroupLayout';
 import {
     Things_Bool_Exp,
@@ -12,7 +12,7 @@ import { createUseStyles } from 'react-jss';
 import { useRouter } from 'next/router';
 import { GroupEmptyContent } from './GroupEmptyContent';
 import { useMedia } from '../../utils/hooks';
-import { ActivityFeed } from '../../components/display';
+import { ActivityFeed, UserAvatarList } from '../../components/display';
 
 const useStyles = createUseStyles({});
 
@@ -38,7 +38,7 @@ export const GroupHomePage = () => {
     }
 
     if (error || !group) {
-        return <Alert message={error} />;
+        return <Alert message={error?.message} />;
     }
 
     const showEmpty = isMember && !isEmpty(group.thing_relations_aggregate.aggregate?.count);
@@ -53,11 +53,18 @@ export const GroupHomePage = () => {
 
     return (
         <GroupLayout activePage="home" group={group}>
-            <Row gutter={[16, 16]}>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <ActivityFeed loading={query.loading} activities={activities} />
+            </div>
+            {/* <Row gutter={[16, 16]}>
+                <Col sm={24} md={12}></Col>
                 <Col sm={24} md={12}>
-                    <ActivityFeed loading={query.loading} activities={activities} />
+                    <UserAvatarList size="default" users={group.memberships.map((m) => m.user)} />
+                    {group.memberships_aggregate.aggregate?.count} members. Invite someone.
+                    <br />
+                    {group.thing_relations_aggregate.aggregate?.count} things shared. Add something.
                 </Col>
-            </Row>
+            </Row> */}
         </GroupLayout>
     );
 };

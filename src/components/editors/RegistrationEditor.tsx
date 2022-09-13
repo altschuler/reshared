@@ -83,7 +83,8 @@ export const RegistrationEditor = (props: RegistrationEditorProps) => {
 
                 <Form.Item
                     extra="You will never ever receive spam from Reshared!"
-                    {...state.ant('email')}>
+                    {...state.ant('email')}
+                >
                     <Input
                         placeholder="Email"
                         value={present.email}
@@ -102,19 +103,22 @@ export const RegistrationEditor = (props: RegistrationEditorProps) => {
                 <Form.Item {...state.ant('consent')}>
                     <Checkbox
                         checked={present.consent}
-                        onChange={(e) => state.update({ consent: e.target.checked })}>
+                        onChange={(e) => state.update({ consent: e.target.checked })}
+                    >
                         I agree to the{' '}
                         <Typography.Link
                             target="_blank"
                             rel="noreferrer"
-                            href={urlFor.site.privacy(true)}>
+                            href={urlFor.site.privacy(true)}
+                        >
                             privacy policy
                         </Typography.Link>{' '}
                         and{' '}
                         <Typography.Link
                             target="_blank"
                             rel="noreferrer"
-                            href={urlFor.site.terms(true)}>
+                            href={urlFor.site.terms(true)}
+                        >
                             terms of service
                         </Typography.Link>
                         .
@@ -173,14 +177,8 @@ export interface RegistrationFormProps {
 export const RegistrationForm = (props: RegistrationFormProps) => {
     const router = useRouter();
     const state = useRegistrationEditor();
-    const {
-        signUpEmailPassword,
-        isLoading,
-        isSuccess,
-        needsEmailVerification,
-        isError,
-        error,
-    } = useSignUpEmailPassword();
+    const { signUpEmailPassword, isLoading, isSuccess, needsEmailVerification, isError, error } =
+        useSignUpEmailPassword();
 
     const handleRegister = useCallback(
         (state: RegistrationEditorState) => {

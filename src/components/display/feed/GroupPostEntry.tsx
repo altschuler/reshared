@@ -82,7 +82,7 @@ export const GroupPostEntry = ({ post }: GroupPostEntryProps) => {
                     renderItem={(comment) => (
                         <li>
                             <Comment
-                                author={comment.comment.author.name}
+                                author={comment.comment.author.displayName}
                                 avatar={<UserAvatar user={comment.comment.author} />}
                                 content={comment.comment.content}
                                 datetime={

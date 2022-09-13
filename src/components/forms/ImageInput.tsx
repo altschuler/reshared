@@ -71,7 +71,6 @@ export const ImageInput = ({ value, errors, onChange, onTouch }: ImageInputProps
     // const { upload } = useFileUpload();
     const auth = useAuth();
     const nhost = useNhostClient();
-    console.log(nhost.auth.getAuthenticationStatus());
 
     const handleUpload = useCallback(
         (e: ChangeEvent<HTMLInputElement>) => {
@@ -160,7 +159,8 @@ export const ImageInput = ({ value, errors, onChange, onTouch }: ImageInputProps
                                 />
                                 <Form.Item
                                     validateStatus={descriptionError ? 'error' : 'success'}
-                                    help={descriptionError}>
+                                    help={descriptionError}
+                                >
                                     <Input.TextArea
                                         onBlur={() =>
                                             onTouch(['images', `${index}`, 'description'])

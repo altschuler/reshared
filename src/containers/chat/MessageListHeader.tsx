@@ -22,24 +22,25 @@ const useStyles = createUseStyles({
 
 export interface MessageListHeaderProps {
     chatGroup: ChatGroupCardFragment;
+    onNameChange: (value: string) => unknown;
 }
 
-export const MessageListHeader = ({ chatGroup }: MessageListHeaderProps) => {
+export const MessageListHeader = ({ chatGroup, onNameChange }: MessageListHeaderProps) => {
     const classes = useStyles();
     const auth = useAuth();
     const users = useMemo(
         () => chatGroup.members.map((m) => m.user).filter((u) => u.id !== auth.user?.id),
         [auth.user?.id, chatGroup.members],
     );
-    const title = useMemo(() => chatGroup.name || users.map((u) => u.name).join(', '), [
-        chatGroup.name,
-        users,
-    ]);
+    const title = useMemo(
+        () => chatGroup.name || users.map((u) => u.displayName).join(', '),
+        [chatGroup.name, users],
+    );
 
     return (
         <div className={classes.root}>
             <UserAvatarList className={classes.avatars} users={users} />
-            <Typography.Title style={{ margin: 0 }} level={5}>
+            <Typography.Title style={{ margin: 0 }} level={5} editable={{ onChange: onNameChange }}>
                 {title}
             </Typography.Title>
         </div>

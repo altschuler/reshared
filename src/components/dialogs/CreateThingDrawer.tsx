@@ -53,7 +53,8 @@ export const CreateThingDrawer = (props: CreateThingDrawerProps) => {
             title="Share a thing"
             placement="right"
             onClose={dispose}
-            visible={visible}>
+            open={visible}
+        >
             <ThingEditor
                 error={createMutation.error?.message}
                 state={editorState}

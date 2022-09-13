@@ -35,9 +35,18 @@ input CreateChatGroupInput {
 }
 
 type CreateChatGroupResult {
-  """An object relationship"""
-  chat_group: chat_groups!
+  chat_group: chat_groups
   chat_group_id: uuid!
+}
+
+input CreateChatMessageInput {
+  chat_group_id: uuid!
+  message: String!
+}
+
+type CreateChatMessageResult {
+  chat_message: chat_messages
+  chat_messages_id: uuid!
 }
 
 input CreateGroupInput {
@@ -47,8 +56,7 @@ input CreateGroupInput {
 }
 
 type CreateGroupResult {
-  """An object relationship"""
-  group: groups!
+  group: groups
   group_id: uuid!
 }
 
@@ -57,12 +65,9 @@ input CreateJoinTokenInput {
 }
 
 type CreateJoinTokenResult {
-  """An object relationship"""
-  group: groups!
+  group: groups
   group_id: uuid!
-
-  """An object relationship"""
-  join_token: group_join_tokens!
+  join_token: group_join_tokens
   join_token_id: uuid!
 }
 
@@ -79,8 +84,7 @@ input HandleJoinRequestInput {
 }
 
 type HandleJoinRequestResult {
-  """An object relationship"""
-  join_request: group_join_requests!
+  join_request: group_join_requests
   join_request_id: uuid!
 }
 
@@ -105,18 +109,14 @@ input JoinGroupInput {
 }
 
 type JoinGroupResult {
-  """An object relationship"""
-  group: groups!
+  group: groups
   group_id: uuid!
-
-  """An object relationship"""
-  user: users!
+  user: users
   user_id: uuid!
 }
 
 type RegistrationResult {
-  """An object relationship"""
-  user: users!
+  user: users
   user_id: uuid!
 }
 
@@ -126,12 +126,9 @@ input RequestJoinGroupInput {
 }
 
 type RequestJoinGroupResult {
-  """An object relationship"""
-  group: groups!
+  group: groups
   group_id: uuid!
-
-  """An object relationship"""
-  user: users!
+  user: users
   user_id: uuid!
 }
 
@@ -211,8 +208,7 @@ input UpdateThingInput {
 }
 
 type UpdateThingResult {
-  """An object relationship"""
-  thing: things!
+  thing: things
   thing_id: uuid!
 }
 
@@ -337,7 +333,9 @@ input activities_bool_exp {
 unique or primary key constraints on table "activities"
 """
 enum activities_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   activities_pkey
 }
 
@@ -519,6 +517,12 @@ enum activities_update_column {
   verb
 }
 
+input activities_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: activities_set_input
+  where: activities_bool_exp!
+}
+
 """
 columns and relationships of "activity_verb"
 """
@@ -559,7 +563,9 @@ input activity_verb_bool_exp {
 unique or primary key constraints on table "activity_verb"
 """
 enum activity_verb_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "value"
+  """
   activity_verb_pkey
 }
 
@@ -687,8 +693,14 @@ enum activity_verb_update_column {
   value
 }
 
+input activity_verb_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: activity_verb_set_input
+  where: activity_verb_bool_exp!
+}
+
 """
-columns and relationships of "auth.provider_requests"
+Oauth requests, inserted before redirecting to the provider's site. Don't modify its structure as Hasura Auth relies on it to function properly.
 """
 type authProviderRequests {
   id: uuid!
@@ -735,7 +747,9 @@ input authProviderRequests_bool_exp {
 unique or primary key constraints on table "auth.provider_requests"
 """
 enum authProviderRequests_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   provider_requests_pkey
 }
 
@@ -844,8 +858,35 @@ enum authProviderRequests_update_column {
   options
 }
 
+input authProviderRequests_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: authProviderRequests_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: authProviderRequests_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+  """
+  _delete_elem: authProviderRequests_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: authProviderRequests_delete_key_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: authProviderRequests_prepend_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: authProviderRequests_set_input
+  where: authProviderRequests_bool_exp!
+}
+
 """
-columns and relationships of "auth.providers"
+List of available Oauth providers. Don't modify its structure as Hasura Auth relies on it to function properly.
 """
 type authProviders {
   id: String!
@@ -919,7 +960,9 @@ input authProviders_bool_exp {
 unique or primary key constraints on table "auth.providers"
 """
 enum authProviders_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   providers_pkey
 }
 
@@ -1005,8 +1048,14 @@ enum authProviders_update_column {
   id
 }
 
+input authProviders_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: authProviders_set_input
+  where: authProviders_bool_exp!
+}
+
 """
-columns and relationships of "auth.refresh_tokens"
+User refresh tokens. Hasura auth uses them to rotate new access tokens as long as the refresh token is not expired. Don't modify its structure as Hasura Auth relies on it to function properly.
 """
 type authRefreshTokens {
   createdAt: timestamptz!
@@ -1072,7 +1121,9 @@ input authRefreshTokens_bool_exp {
 unique or primary key constraints on table "auth.refresh_tokens"
 """
 enum authRefreshTokens_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "refresh_token"
+  """
   refresh_tokens_pkey
 }
 
@@ -1201,8 +1252,14 @@ enum authRefreshTokens_update_column {
   userId
 }
 
+input authRefreshTokens_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: authRefreshTokens_set_input
+  where: authRefreshTokens_bool_exp!
+}
+
 """
-columns and relationships of "auth.roles"
+Persistent Hasura roles for users. Don't modify its structure as Hasura Auth relies on it to function properly.
 """
 type authRoles {
   role: String!
@@ -1313,7 +1370,9 @@ input authRoles_bool_exp {
 unique or primary key constraints on table "auth.roles"
 """
 enum authRoles_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "role"
+  """
   roles_pkey
 }
 
@@ -1401,8 +1460,386 @@ enum authRoles_update_column {
   role
 }
 
+input authRoles_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: authRoles_set_input
+  where: authRoles_bool_exp!
+}
+
 """
-columns and relationships of "auth.user_providers"
+User webauthn authenticators. Don't modify its structure as Hasura Auth relies on it to function properly.
+"""
+type authUserAuthenticators {
+  counter: bigint!
+  credentialId: String!
+  credentialPublicKey: bytea
+  id: uuid!
+  nickname: String
+  transports: String!
+
+  """An object relationship"""
+  user: users!
+  userId: uuid!
+}
+
+"""
+aggregated selection of "auth.user_authenticators"
+"""
+type authUserAuthenticators_aggregate {
+  aggregate: authUserAuthenticators_aggregate_fields
+  nodes: [authUserAuthenticators!]!
+}
+
+"""
+aggregate fields of "auth.user_authenticators"
+"""
+type authUserAuthenticators_aggregate_fields {
+  avg: authUserAuthenticators_avg_fields
+  count(columns: [authUserAuthenticators_select_column!], distinct: Boolean): Int!
+  max: authUserAuthenticators_max_fields
+  min: authUserAuthenticators_min_fields
+  stddev: authUserAuthenticators_stddev_fields
+  stddev_pop: authUserAuthenticators_stddev_pop_fields
+  stddev_samp: authUserAuthenticators_stddev_samp_fields
+  sum: authUserAuthenticators_sum_fields
+  var_pop: authUserAuthenticators_var_pop_fields
+  var_samp: authUserAuthenticators_var_samp_fields
+  variance: authUserAuthenticators_variance_fields
+}
+
+"""
+order by aggregate values of table "auth.user_authenticators"
+"""
+input authUserAuthenticators_aggregate_order_by {
+  avg: authUserAuthenticators_avg_order_by
+  count: order_by
+  max: authUserAuthenticators_max_order_by
+  min: authUserAuthenticators_min_order_by
+  stddev: authUserAuthenticators_stddev_order_by
+  stddev_pop: authUserAuthenticators_stddev_pop_order_by
+  stddev_samp: authUserAuthenticators_stddev_samp_order_by
+  sum: authUserAuthenticators_sum_order_by
+  var_pop: authUserAuthenticators_var_pop_order_by
+  var_samp: authUserAuthenticators_var_samp_order_by
+  variance: authUserAuthenticators_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "auth.user_authenticators"
+"""
+input authUserAuthenticators_arr_rel_insert_input {
+  data: [authUserAuthenticators_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: authUserAuthenticators_on_conflict
+}
+
+"""aggregate avg on columns"""
+type authUserAuthenticators_avg_fields {
+  counter: Float
+}
+
+"""
+order by avg() on columns of table "auth.user_authenticators"
+"""
+input authUserAuthenticators_avg_order_by {
+  counter: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "auth.user_authenticators". All fields are combined with a logical 'AND'.
+"""
+input authUserAuthenticators_bool_exp {
+  _and: [authUserAuthenticators_bool_exp!]
+  _not: authUserAuthenticators_bool_exp
+  _or: [authUserAuthenticators_bool_exp!]
+  counter: bigint_comparison_exp
+  credentialId: String_comparison_exp
+  credentialPublicKey: bytea_comparison_exp
+  id: uuid_comparison_exp
+  nickname: String_comparison_exp
+  transports: String_comparison_exp
+  user: users_bool_exp
+  userId: uuid_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "auth.user_authenticators"
+"""
+enum authUserAuthenticators_constraint {
+  """
+  unique or primary key constraint on columns "credential_id"
+  """
+  user_authenticators_credential_id_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  user_authenticators_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "auth.user_authenticators"
+"""
+input authUserAuthenticators_inc_input {
+  counter: bigint
+}
+
+"""
+input type for inserting data into table "auth.user_authenticators"
+"""
+input authUserAuthenticators_insert_input {
+  counter: bigint
+  credentialId: String
+  credentialPublicKey: bytea
+  id: uuid
+  nickname: String
+  transports: String
+  user: users_obj_rel_insert_input
+  userId: uuid
+}
+
+"""aggregate max on columns"""
+type authUserAuthenticators_max_fields {
+  counter: bigint
+  credentialId: String
+  id: uuid
+  nickname: String
+  transports: String
+  userId: uuid
+}
+
+"""
+order by max() on columns of table "auth.user_authenticators"
+"""
+input authUserAuthenticators_max_order_by {
+  counter: order_by
+  credentialId: order_by
+  id: order_by
+  nickname: order_by
+  transports: order_by
+  userId: order_by
+}
+
+"""aggregate min on columns"""
+type authUserAuthenticators_min_fields {
+  counter: bigint
+  credentialId: String
+  id: uuid
+  nickname: String
+  transports: String
+  userId: uuid
+}
+
+"""
+order by min() on columns of table "auth.user_authenticators"
+"""
+input authUserAuthenticators_min_order_by {
+  counter: order_by
+  credentialId: order_by
+  id: order_by
+  nickname: order_by
+  transports: order_by
+  userId: order_by
+}
+
+"""
+response of any mutation on the table "auth.user_authenticators"
+"""
+type authUserAuthenticators_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [authUserAuthenticators!]!
+}
+
+"""
+on_conflict condition type for table "auth.user_authenticators"
+"""
+input authUserAuthenticators_on_conflict {
+  constraint: authUserAuthenticators_constraint!
+  update_columns: [authUserAuthenticators_update_column!]! = []
+  where: authUserAuthenticators_bool_exp
+}
+
+"""Ordering options when selecting data from "auth.user_authenticators"."""
+input authUserAuthenticators_order_by {
+  counter: order_by
+  credentialId: order_by
+  credentialPublicKey: order_by
+  id: order_by
+  nickname: order_by
+  transports: order_by
+  user: users_order_by
+  userId: order_by
+}
+
+"""primary key columns input for table: authUserAuthenticators"""
+input authUserAuthenticators_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "auth.user_authenticators"
+"""
+enum authUserAuthenticators_select_column {
+  """column name"""
+  counter
+
+  """column name"""
+  credentialId
+
+  """column name"""
+  credentialPublicKey
+
+  """column name"""
+  id
+
+  """column name"""
+  nickname
+
+  """column name"""
+  transports
+
+  """column name"""
+  userId
+}
+
+"""
+input type for updating data in table "auth.user_authenticators"
+"""
+input authUserAuthenticators_set_input {
+  counter: bigint
+  credentialId: String
+  credentialPublicKey: bytea
+  id: uuid
+  nickname: String
+  transports: String
+  userId: uuid
+}
+
+"""aggregate stddev on columns"""
+type authUserAuthenticators_stddev_fields {
+  counter: Float
+}
+
+"""
+order by stddev() on columns of table "auth.user_authenticators"
+"""
+input authUserAuthenticators_stddev_order_by {
+  counter: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type authUserAuthenticators_stddev_pop_fields {
+  counter: Float
+}
+
+"""
+order by stddev_pop() on columns of table "auth.user_authenticators"
+"""
+input authUserAuthenticators_stddev_pop_order_by {
+  counter: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type authUserAuthenticators_stddev_samp_fields {
+  counter: Float
+}
+
+"""
+order by stddev_samp() on columns of table "auth.user_authenticators"
+"""
+input authUserAuthenticators_stddev_samp_order_by {
+  counter: order_by
+}
+
+"""aggregate sum on columns"""
+type authUserAuthenticators_sum_fields {
+  counter: bigint
+}
+
+"""
+order by sum() on columns of table "auth.user_authenticators"
+"""
+input authUserAuthenticators_sum_order_by {
+  counter: order_by
+}
+
+"""
+update columns of table "auth.user_authenticators"
+"""
+enum authUserAuthenticators_update_column {
+  """column name"""
+  counter
+
+  """column name"""
+  credentialId
+
+  """column name"""
+  credentialPublicKey
+
+  """column name"""
+  id
+
+  """column name"""
+  nickname
+
+  """column name"""
+  transports
+
+  """column name"""
+  userId
+}
+
+input authUserAuthenticators_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: authUserAuthenticators_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: authUserAuthenticators_set_input
+  where: authUserAuthenticators_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type authUserAuthenticators_var_pop_fields {
+  counter: Float
+}
+
+"""
+order by var_pop() on columns of table "auth.user_authenticators"
+"""
+input authUserAuthenticators_var_pop_order_by {
+  counter: order_by
+}
+
+"""aggregate var_samp on columns"""
+type authUserAuthenticators_var_samp_fields {
+  counter: Float
+}
+
+"""
+order by var_samp() on columns of table "auth.user_authenticators"
+"""
+input authUserAuthenticators_var_samp_order_by {
+  counter: order_by
+}
+
+"""aggregate variance on columns"""
+type authUserAuthenticators_variance_fields {
+  counter: Float
+}
+
+"""
+order by variance() on columns of table "auth.user_authenticators"
+"""
+input authUserAuthenticators_variance_order_by {
+  counter: order_by
+}
+
+"""
+Active providers for a given user. Don't modify its structure as Hasura Auth relies on it to function properly.
 """
 type authUserProviders {
   accessToken: String!
@@ -1480,13 +1917,19 @@ input authUserProviders_bool_exp {
 unique or primary key constraints on table "auth.user_providers"
 """
 enum authUserProviders_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   user_providers_pkey
 
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "provider_id", "provider_user_id"
+  """
   user_providers_provider_id_provider_user_id_key
 
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "provider_id", "user_id"
+  """
   user_providers_user_id_provider_id_key
 }
 
@@ -1669,8 +2112,14 @@ enum authUserProviders_update_column {
   userId
 }
 
+input authUserProviders_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: authUserProviders_set_input
+  where: authUserProviders_bool_exp!
+}
+
 """
-columns and relationships of "auth.user_roles"
+Roles of users. Don't modify its structure as Hasura Auth relies on it to function properly.
 """
 type authUserRoles {
   createdAt: timestamptz!
@@ -1740,10 +2189,14 @@ input authUserRoles_bool_exp {
 unique or primary key constraints on table "auth.user_roles"
 """
 enum authUserRoles_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   user_roles_pkey
 
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "user_id", "role"
+  """
   user_roles_user_id_role_key
 }
 
@@ -1874,6 +2327,29 @@ enum authUserRoles_update_column {
   userId
 }
 
+input authUserRoles_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: authUserRoles_set_input
+  where: authUserRoles_bool_exp!
+}
+
+scalar bigint
+
+"""
+Boolean expression to compare columns of type "bigint". All fields are combined with logical 'AND'.
+"""
+input bigint_comparison_exp {
+  _eq: bigint
+  _gt: bigint
+  _gte: bigint
+  _in: [bigint!]
+  _is_null: Boolean
+  _lt: bigint
+  _lte: bigint
+  _neq: bigint
+  _nin: [bigint!]
+}
+
 """
 columns and relationships of "storage.buckets"
 """
@@ -1978,7 +2454,9 @@ input buckets_bool_exp {
 unique or primary key constraints on table "storage.buckets"
 """
 enum buckets_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   buckets_pkey
 }
 
@@ -2176,6 +2654,15 @@ enum buckets_update_column {
   updatedAt
 }
 
+input buckets_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: buckets_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: buckets_set_input
+  where: buckets_bool_exp!
+}
+
 """aggregate var_pop on columns"""
 type buckets_var_pop_fields {
   downloadExpiration: Float
@@ -2197,6 +2684,154 @@ type buckets_variance_fields {
   minUploadFileSize: Float
 }
 
+scalar bytea
+
+"""
+Boolean expression to compare columns of type "bytea". All fields are combined with logical 'AND'.
+"""
+input bytea_comparison_exp {
+  _eq: bytea
+  _gt: bytea
+  _gte: bytea
+  _in: [bytea!]
+  _is_null: Boolean
+  _lt: bytea
+  _lte: bytea
+  _neq: bytea
+  _nin: [bytea!]
+}
+
+"""
+columns and relationships of "chat_group_member_info"
+"""
+type chat_group_member_info {
+  """An object relationship"""
+  chat_group: chat_groups
+  chat_group_id: uuid
+
+  """An object relationship"""
+  chat_group_member: chat_group_members
+  has_unread: Boolean
+  id: uuid
+  last_message_at: timestamptz
+  last_read: timestamptz
+
+  """An object relationship"""
+  user: users
+  user_id: uuid
+}
+
+"""
+aggregated selection of "chat_group_member_info"
+"""
+type chat_group_member_info_aggregate {
+  aggregate: chat_group_member_info_aggregate_fields
+  nodes: [chat_group_member_info!]!
+}
+
+"""
+aggregate fields of "chat_group_member_info"
+"""
+type chat_group_member_info_aggregate_fields {
+  count(columns: [chat_group_member_info_select_column!], distinct: Boolean): Int!
+  max: chat_group_member_info_max_fields
+  min: chat_group_member_info_min_fields
+}
+
+"""
+Boolean expression to filter rows from the table "chat_group_member_info". All fields are combined with a logical 'AND'.
+"""
+input chat_group_member_info_bool_exp {
+  _and: [chat_group_member_info_bool_exp!]
+  _not: chat_group_member_info_bool_exp
+  _or: [chat_group_member_info_bool_exp!]
+  chat_group: chat_groups_bool_exp
+  chat_group_id: uuid_comparison_exp
+  chat_group_member: chat_group_members_bool_exp
+  has_unread: Boolean_comparison_exp
+  id: uuid_comparison_exp
+  last_message_at: timestamptz_comparison_exp
+  last_read: timestamptz_comparison_exp
+  user: users_bool_exp
+  user_id: uuid_comparison_exp
+}
+
+"""
+input type for inserting data into table "chat_group_member_info"
+"""
+input chat_group_member_info_insert_input {
+  chat_group: chat_groups_obj_rel_insert_input
+  chat_group_id: uuid
+  chat_group_member: chat_group_members_obj_rel_insert_input
+  has_unread: Boolean
+  id: uuid
+  last_message_at: timestamptz
+  last_read: timestamptz
+  user: users_obj_rel_insert_input
+  user_id: uuid
+}
+
+"""aggregate max on columns"""
+type chat_group_member_info_max_fields {
+  chat_group_id: uuid
+  id: uuid
+  last_message_at: timestamptz
+  last_read: timestamptz
+  user_id: uuid
+}
+
+"""aggregate min on columns"""
+type chat_group_member_info_min_fields {
+  chat_group_id: uuid
+  id: uuid
+  last_message_at: timestamptz
+  last_read: timestamptz
+  user_id: uuid
+}
+
+"""
+input type for inserting object relation for remote table "chat_group_member_info"
+"""
+input chat_group_member_info_obj_rel_insert_input {
+  data: chat_group_member_info_insert_input!
+}
+
+"""Ordering options when selecting data from "chat_group_member_info"."""
+input chat_group_member_info_order_by {
+  chat_group: chat_groups_order_by
+  chat_group_id: order_by
+  chat_group_member: chat_group_members_order_by
+  has_unread: order_by
+  id: order_by
+  last_message_at: order_by
+  last_read: order_by
+  user: users_order_by
+  user_id: order_by
+}
+
+"""
+select columns of table "chat_group_member_info"
+"""
+enum chat_group_member_info_select_column {
+  """column name"""
+  chat_group_id
+
+  """column name"""
+  has_unread
+
+  """column name"""
+  id
+
+  """column name"""
+  last_message_at
+
+  """column name"""
+  last_read
+
+  """column name"""
+  user_id
+}
+
 """
 columns and relationships of "chat_group_members"
 """
@@ -2205,6 +2840,9 @@ type chat_group_members {
   chat_group: chat_groups!
   chat_group_id: uuid!
   id: uuid!
+
+  """An object relationship"""
+  info: chat_group_member_info
   last_read: timestamptz
 
   """An object relationship"""
@@ -2258,6 +2896,7 @@ input chat_group_members_bool_exp {
   chat_group: chat_groups_bool_exp
   chat_group_id: uuid_comparison_exp
   id: uuid_comparison_exp
+  info: chat_group_member_info_bool_exp
   last_read: timestamptz_comparison_exp
   user: users_bool_exp
   user_id: uuid_comparison_exp
@@ -2267,7 +2906,9 @@ input chat_group_members_bool_exp {
 unique or primary key constraints on table "chat_group_members"
 """
 enum chat_group_members_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   chat_group_members_pkey
 }
 
@@ -2278,6 +2919,7 @@ input chat_group_members_insert_input {
   chat_group: chat_groups_obj_rel_insert_input
   chat_group_id: uuid
   id: uuid
+  info: chat_group_member_info_obj_rel_insert_input
   last_read: timestamptz
   user: users_obj_rel_insert_input
   user_id: uuid
@@ -2331,6 +2973,16 @@ type chat_group_members_mutation_response {
 }
 
 """
+input type for inserting object relation for remote table "chat_group_members"
+"""
+input chat_group_members_obj_rel_insert_input {
+  data: chat_group_members_insert_input!
+
+  """upsert condition"""
+  on_conflict: chat_group_members_on_conflict
+}
+
+"""
 on_conflict condition type for table "chat_group_members"
 """
 input chat_group_members_on_conflict {
@@ -2344,6 +2996,7 @@ input chat_group_members_order_by {
   chat_group: chat_groups_order_by
   chat_group_id: order_by
   id: order_by
+  info: chat_group_member_info_order_by
   last_read: order_by
   user: users_order_by
   user_id: order_by
@@ -2396,6 +3049,12 @@ enum chat_group_members_update_column {
 
   """column name"""
   user_id
+}
+
+input chat_group_members_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: chat_group_members_set_input
+  where: chat_group_members_bool_exp!
 }
 
 """
@@ -2516,7 +3175,9 @@ input chat_groups_bool_exp {
 unique or primary key constraints on table "chat_groups"
 """
 enum chat_groups_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   chat_groups_pkey
 }
 
@@ -2637,6 +3298,12 @@ enum chat_groups_update_column {
   updated_at
 }
 
+input chat_groups_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: chat_groups_set_input
+  where: chat_groups_bool_exp!
+}
+
 """
 columns and relationships of "chat_messages"
 """
@@ -2715,7 +3382,9 @@ input chat_messages_bool_exp {
 unique or primary key constraints on table "chat_messages"
 """
 enum chat_messages_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   messages_pkey
 }
 
@@ -2872,6 +3541,12 @@ enum chat_messages_update_column {
 
   """column name"""
   sender_id
+}
+
+input chat_messages_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: chat_messages_set_input
+  where: chat_messages_bool_exp!
 }
 
 scalar citext
@@ -3034,7 +3709,9 @@ input comments_bool_exp {
 unique or primary key constraints on table "comments"
 """
 enum comments_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   comment_pkey
 }
 
@@ -3188,6 +3865,12 @@ enum comments_update_column {
   updated_at
 }
 
+input comments_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: comments_set_input
+  where: comments_bool_exp!
+}
+
 scalar date
 
 """
@@ -3235,9 +3918,7 @@ type entities {
   group_thing_id: uuid
   id: uuid!
 
-  """
-  A computed field, executes function "entity_valid"
-  """
+  """Determines whether the entity points to any single existing object"""
   is_valid: Boolean
   join_request_id: uuid
 
@@ -3312,31 +3993,49 @@ input entities_bool_exp {
 unique or primary key constraints on table "entities"
 """
 enum entities_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "group_id"
+  """
   entities_group_id_key
 
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "group_member_id"
+  """
   entities_group_member_id_key
 
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "group_post_comment_id"
+  """
   entities_group_post_comment_id_key
 
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "group_post_id"
+  """
   entities_group_post_id_key
 
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "group_thing_id"
+  """
   entities_group_thing_id_key
 
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "join_request_id"
+  """
   entities_join_request_id_key
 
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   entities_pkey
 
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "thing_id"
+  """
   entities_thing_id_key
 
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "user_id"
+  """
   entities_user_id_key
 }
 
@@ -3563,6 +4262,15 @@ enum entities_update_column {
   user_id
 }
 
+input entities_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: entities_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: entities_set_input
+  where: entities_bool_exp!
+}
+
 """aggregate var_pop on columns"""
 type entities_var_pop_fields {
   dummy: Float
@@ -3685,10 +4393,14 @@ input file_uploads_bool_exp {
 unique or primary key constraints on table "file_uploads"
 """
 enum file_uploads_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   file_uploads_pkey
 
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "url"
+  """
   file_uploads_url_key
 }
 
@@ -3926,6 +4638,15 @@ enum file_uploads_update_column {
   url
 }
 
+input file_uploads_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: file_uploads_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: file_uploads_set_input
+  where: file_uploads_bool_exp!
+}
+
 """aggregate var_pop on columns"""
 type file_uploads_var_pop_fields {
   size: Float
@@ -4072,7 +4793,9 @@ input files_bool_exp {
 unique or primary key constraints on table "storage.files"
 """
 enum files_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   files_pkey
 }
 
@@ -4342,6 +5065,15 @@ enum files_update_column {
   uploadedByUserId
 }
 
+input files_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: files_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: files_set_input
+  where: files_bool_exp!
+}
+
 """aggregate var_pop on columns"""
 type files_var_pop_fields {
   size: Float
@@ -4418,7 +5150,9 @@ input group_join_request_status_bool_exp {
 unique or primary key constraints on table "group_join_request_status"
 """
 enum group_join_request_status_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "value"
+  """
   group_join_request_status_pkey
 }
 
@@ -4528,6 +5262,12 @@ enum group_join_request_status_update_column {
   value
 }
 
+input group_join_request_status_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: group_join_request_status_set_input
+  where: group_join_request_status_bool_exp!
+}
+
 """
 columns and relationships of "group_join_requests"
 """
@@ -4609,7 +5349,9 @@ input group_join_requests_bool_exp {
 unique or primary key constraints on table "group_join_requests"
 """
 enum group_join_requests_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   group_join_requests_pkey
 }
 
@@ -4811,6 +5553,12 @@ enum group_join_requests_update_column {
   user_id
 }
 
+input group_join_requests_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: group_join_requests_set_input
+  where: group_join_requests_bool_exp!
+}
+
 """
 columns and relationships of "group_join_tokens"
 """
@@ -4884,7 +5632,9 @@ input group_join_tokens_bool_exp {
 unique or primary key constraints on table "group_join_tokens"
 """
 enum group_join_tokens_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   group_join_token_pkey
 }
 
@@ -5048,6 +5798,12 @@ enum group_join_tokens_update_column {
   updated_at
 }
 
+input group_join_tokens_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: group_join_tokens_set_input
+  where: group_join_tokens_bool_exp!
+}
+
 """
 columns and relationships of "group_members"
 """
@@ -5123,7 +5879,9 @@ input group_members_bool_exp {
 unique or primary key constraints on table "group_members"
 """
 enum group_members_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   group_members_pkey
 }
 
@@ -5286,6 +6044,12 @@ enum group_members_update_column {
   user_id
 }
 
+input group_members_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: group_members_set_input
+  where: group_members_bool_exp!
+}
+
 """
 columns and relationships of "group_post_comment"
 """
@@ -5358,7 +6122,9 @@ input group_post_comment_bool_exp {
 unique or primary key constraints on table "group_post_comment"
 """
 enum group_post_comment_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   group_post_comment_pkey
 }
 
@@ -5512,6 +6278,12 @@ enum group_post_comment_update_column {
   updated_at
 }
 
+input group_post_comment_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: group_post_comment_set_input
+  where: group_post_comment_bool_exp!
+}
+
 """
 columns and relationships of "group_post_type"
 """
@@ -5552,7 +6324,9 @@ input group_post_type_bool_exp {
 unique or primary key constraints on table "group_post_type"
 """
 enum group_post_type_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "value"
+  """
   group_post_type_pkey
 }
 
@@ -5654,6 +6428,12 @@ enum group_post_type_update_column {
 
   """column name"""
   value
+}
+
+input group_post_type_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: group_post_type_set_input
+  where: group_post_type_bool_exp!
 }
 
 """
@@ -5771,7 +6551,9 @@ input group_posts_bool_exp {
 unique or primary key constraints on table "group_posts"
 """
 enum group_posts_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   group_post_pkey
 }
 
@@ -5958,6 +6740,12 @@ enum group_posts_update_column {
   updated_at
 }
 
+input group_posts_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: group_posts_set_input
+  where: group_posts_bool_exp!
+}
+
 """
 columns and relationships of "group_role"
 """
@@ -5998,7 +6786,9 @@ input group_role_bool_exp {
 unique or primary key constraints on table "group_role"
 """
 enum group_role_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "value"
+  """
   group_role_pkey
 }
 
@@ -6105,6 +6895,12 @@ enum group_role_update_column {
   value
 }
 
+input group_role_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: group_role_set_input
+  where: group_role_bool_exp!
+}
+
 """
 columns and relationships of "group_thing"
 """
@@ -6178,10 +6974,14 @@ input group_thing_bool_exp {
 unique or primary key constraints on table "group_thing"
 """
 enum group_thing_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "thing_id", "group_id"
+  """
   group_thing_group_id_thing_id_key
 
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   group_thing_pkey
 }
 
@@ -6333,6 +7133,12 @@ enum group_thing_update_column {
 
   """column name"""
   updated_at
+}
+
+input group_thing_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: group_thing_set_input
+  where: group_thing_bool_exp!
 }
 
 """
@@ -6569,13 +7375,19 @@ input groups_bool_exp {
 unique or primary key constraints on table "groups"
 """
 enum groups_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "name"
+  """
   groups_name_key
 
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   groups_pkey
 
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "short_id"
+  """
   groups_short_id_key
 }
 
@@ -6733,12 +7545,24 @@ enum groups_update_column {
   updated_at
 }
 
+input groups_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: groups_set_input
+  where: groups_bool_exp!
+}
+
 scalar jsonb
+
+input jsonb_cast_exp {
+  String: String_comparison_exp
+}
 
 """
 Boolean expression to compare columns of type "jsonb". All fields are combined with logical 'AND'.
 """
 input jsonb_comparison_exp {
+  _cast: jsonb_cast_exp
+
   """is the column contained in the given json value"""
   _contained_in: jsonb
 
@@ -6767,6 +7591,9 @@ input jsonb_comparison_exp {
 """mutation root"""
 type mutation_root {
   createChatGroup(input: CreateChatGroupInput!): CreateChatGroupResult
+
+  """write new message in a chat group"""
+  createChatMessage(input: CreateChatMessageInput): CreateChatMessageResult!
   createGroup(input: CreateGroupInput!): CreateGroupResult!
   createJoinToken(input: CreateJoinTokenInput!): CreateJoinTokenResult
 
@@ -6821,6 +7648,19 @@ type mutation_root {
     """filter the rows which have to be deleted"""
     where: authRoles_bool_exp!
   ): authRoles_mutation_response
+
+  """
+  delete single row from the table: "auth.user_authenticators"
+  """
+  deleteAuthUserAuthenticator(id: uuid!): authUserAuthenticators
+
+  """
+  delete data from the table: "auth.user_authenticators"
+  """
+  deleteAuthUserAuthenticators(
+    """filter the rows which have to be deleted"""
+    where: authUserAuthenticators_bool_exp!
+  ): authUserAuthenticators_mutation_response
 
   """
   delete single row from the table: "auth.user_providers"
@@ -7172,6 +8012,32 @@ type mutation_root {
   delete single row from the table: "things"
   """
   delete_things_by_pk(id: uuid!): things
+
+  """
+  delete data from the table: "user_profile"
+  """
+  delete_user_profile(
+    """filter the rows which have to be deleted"""
+    where: user_profile_bool_exp!
+  ): user_profile_mutation_response
+
+  """
+  delete single row from the table: "user_profile"
+  """
+  delete_user_profile_by_pk(id: uuid!): user_profile
+
+  """
+  delete data from the table: "user_settings"
+  """
+  delete_user_settings(
+    """filter the rows which have to be deleted"""
+    where: user_settings_bool_exp!
+  ): user_settings_mutation_response
+
+  """
+  delete single row from the table: "user_settings"
+  """
+  delete_user_settings_by_pk(id: uuid!): user_settings
   handleJoinRequest(input: HandleJoinRequestInput!): HandleJoinRequestResult!
 
   """
@@ -7261,6 +8127,28 @@ type mutation_root {
     """upsert condition"""
     on_conflict: authRoles_on_conflict
   ): authRoles_mutation_response
+
+  """
+  insert a single row into the table: "auth.user_authenticators"
+  """
+  insertAuthUserAuthenticator(
+    """the row to be inserted"""
+    object: authUserAuthenticators_insert_input!
+
+    """upsert condition"""
+    on_conflict: authUserAuthenticators_on_conflict
+  ): authUserAuthenticators
+
+  """
+  insert data into the table: "auth.user_authenticators"
+  """
+  insertAuthUserAuthenticators(
+    """the rows to be inserted"""
+    objects: [authUserAuthenticators_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: authUserAuthenticators_on_conflict
+  ): authUserAuthenticators_mutation_response
 
   """
   insert a single row into the table: "auth.user_providers"
@@ -7855,6 +8743,50 @@ type mutation_root {
     """upsert condition"""
     on_conflict: things_on_conflict
   ): things
+
+  """
+  insert data into the table: "user_profile"
+  """
+  insert_user_profile(
+    """the rows to be inserted"""
+    objects: [user_profile_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: user_profile_on_conflict
+  ): user_profile_mutation_response
+
+  """
+  insert a single row into the table: "user_profile"
+  """
+  insert_user_profile_one(
+    """the row to be inserted"""
+    object: user_profile_insert_input!
+
+    """upsert condition"""
+    on_conflict: user_profile_on_conflict
+  ): user_profile
+
+  """
+  insert data into the table: "user_settings"
+  """
+  insert_user_settings(
+    """the rows to be inserted"""
+    objects: [user_settings_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: user_settings_on_conflict
+  ): user_settings_mutation_response
+
+  """
+  insert a single row into the table: "user_settings"
+  """
+  insert_user_settings_one(
+    """the row to be inserted"""
+    object: user_settings_insert_input!
+
+    """upsert condition"""
+    on_conflict: user_settings_on_conflict
+  ): user_settings
   joinGroup(input: JoinGroupInput!): JoinGroupResult
   registerCredentials(input: CredentialsInput!): RegistrationResult
   requestJoinGroup(input: RequestJoinGroupInput!): RequestJoinGroupResult
@@ -7980,6 +8912,32 @@ type mutation_root {
     """filter the rows which have to be updated"""
     where: authRoles_bool_exp!
   ): authRoles_mutation_response
+
+  """
+  update single row of the table: "auth.user_authenticators"
+  """
+  updateAuthUserAuthenticator(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: authUserAuthenticators_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: authUserAuthenticators_set_input
+    pk_columns: authUserAuthenticators_pk_columns_input!
+  ): authUserAuthenticators
+
+  """
+  update data of the table: "auth.user_authenticators"
+  """
+  updateAuthUserAuthenticators(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: authUserAuthenticators_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: authUserAuthenticators_set_input
+
+    """filter the rows which have to be updated"""
+    where: authUserAuthenticators_bool_exp!
+  ): authUserAuthenticators_mutation_response
 
   """
   update single row of the table: "auth.user_providers"
@@ -8157,6 +9115,14 @@ type mutation_root {
   ): activities
 
   """
+  update multiples rows of table: "activities"
+  """
+  update_activities_many(
+    """updates to execute, in order"""
+    updates: [activities_updates!]!
+  ): [activities_mutation_response]
+
+  """
   update data of the table: "activity_verb"
   """
   update_activity_verb(
@@ -8175,6 +9141,78 @@ type mutation_root {
     _set: activity_verb_set_input
     pk_columns: activity_verb_pk_columns_input!
   ): activity_verb
+
+  """
+  update multiples rows of table: "activity_verb"
+  """
+  update_activity_verb_many(
+    """updates to execute, in order"""
+    updates: [activity_verb_updates!]!
+  ): [activity_verb_mutation_response]
+
+  """
+  update multiples rows of table: "auth.provider_requests"
+  """
+  update_authProviderRequests_many(
+    """updates to execute, in order"""
+    updates: [authProviderRequests_updates!]!
+  ): [authProviderRequests_mutation_response]
+
+  """
+  update multiples rows of table: "auth.providers"
+  """
+  update_authProviders_many(
+    """updates to execute, in order"""
+    updates: [authProviders_updates!]!
+  ): [authProviders_mutation_response]
+
+  """
+  update multiples rows of table: "auth.refresh_tokens"
+  """
+  update_authRefreshTokens_many(
+    """updates to execute, in order"""
+    updates: [authRefreshTokens_updates!]!
+  ): [authRefreshTokens_mutation_response]
+
+  """
+  update multiples rows of table: "auth.roles"
+  """
+  update_authRoles_many(
+    """updates to execute, in order"""
+    updates: [authRoles_updates!]!
+  ): [authRoles_mutation_response]
+
+  """
+  update multiples rows of table: "auth.user_authenticators"
+  """
+  update_authUserAuthenticators_many(
+    """updates to execute, in order"""
+    updates: [authUserAuthenticators_updates!]!
+  ): [authUserAuthenticators_mutation_response]
+
+  """
+  update multiples rows of table: "auth.user_providers"
+  """
+  update_authUserProviders_many(
+    """updates to execute, in order"""
+    updates: [authUserProviders_updates!]!
+  ): [authUserProviders_mutation_response]
+
+  """
+  update multiples rows of table: "auth.user_roles"
+  """
+  update_authUserRoles_many(
+    """updates to execute, in order"""
+    updates: [authUserRoles_updates!]!
+  ): [authUserRoles_mutation_response]
+
+  """
+  update multiples rows of table: "storage.buckets"
+  """
+  update_buckets_many(
+    """updates to execute, in order"""
+    updates: [buckets_updates!]!
+  ): [buckets_mutation_response]
 
   """
   update data of the table: "chat_group_members"
@@ -8197,6 +9235,14 @@ type mutation_root {
   ): chat_group_members
 
   """
+  update multiples rows of table: "chat_group_members"
+  """
+  update_chat_group_members_many(
+    """updates to execute, in order"""
+    updates: [chat_group_members_updates!]!
+  ): [chat_group_members_mutation_response]
+
+  """
   update data of the table: "chat_groups"
   """
   update_chat_groups(
@@ -8215,6 +9261,14 @@ type mutation_root {
     _set: chat_groups_set_input
     pk_columns: chat_groups_pk_columns_input!
   ): chat_groups
+
+  """
+  update multiples rows of table: "chat_groups"
+  """
+  update_chat_groups_many(
+    """updates to execute, in order"""
+    updates: [chat_groups_updates!]!
+  ): [chat_groups_mutation_response]
 
   """
   update data of the table: "chat_messages"
@@ -8237,6 +9291,14 @@ type mutation_root {
   ): chat_messages
 
   """
+  update multiples rows of table: "chat_messages"
+  """
+  update_chat_messages_many(
+    """updates to execute, in order"""
+    updates: [chat_messages_updates!]!
+  ): [chat_messages_mutation_response]
+
+  """
   update data of the table: "comments"
   """
   update_comments(
@@ -8255,6 +9317,14 @@ type mutation_root {
     _set: comments_set_input
     pk_columns: comments_pk_columns_input!
   ): comments
+
+  """
+  update multiples rows of table: "comments"
+  """
+  update_comments_many(
+    """updates to execute, in order"""
+    updates: [comments_updates!]!
+  ): [comments_mutation_response]
 
   """
   update data of the table: "entities"
@@ -8283,6 +9353,14 @@ type mutation_root {
   ): entities
 
   """
+  update multiples rows of table: "entities"
+  """
+  update_entities_many(
+    """updates to execute, in order"""
+    updates: [entities_updates!]!
+  ): [entities_mutation_response]
+
+  """
   update data of the table: "file_uploads"
   """
   update_file_uploads(
@@ -8309,6 +9387,22 @@ type mutation_root {
   ): file_uploads
 
   """
+  update multiples rows of table: "file_uploads"
+  """
+  update_file_uploads_many(
+    """updates to execute, in order"""
+    updates: [file_uploads_updates!]!
+  ): [file_uploads_mutation_response]
+
+  """
+  update multiples rows of table: "storage.files"
+  """
+  update_files_many(
+    """updates to execute, in order"""
+    updates: [files_updates!]!
+  ): [files_mutation_response]
+
+  """
   update data of the table: "group_join_request_status"
   """
   update_group_join_request_status(
@@ -8327,6 +9421,14 @@ type mutation_root {
     _set: group_join_request_status_set_input
     pk_columns: group_join_request_status_pk_columns_input!
   ): group_join_request_status
+
+  """
+  update multiples rows of table: "group_join_request_status"
+  """
+  update_group_join_request_status_many(
+    """updates to execute, in order"""
+    updates: [group_join_request_status_updates!]!
+  ): [group_join_request_status_mutation_response]
 
   """
   update data of the table: "group_join_requests"
@@ -8349,6 +9451,14 @@ type mutation_root {
   ): group_join_requests
 
   """
+  update multiples rows of table: "group_join_requests"
+  """
+  update_group_join_requests_many(
+    """updates to execute, in order"""
+    updates: [group_join_requests_updates!]!
+  ): [group_join_requests_mutation_response]
+
+  """
   update data of the table: "group_join_tokens"
   """
   update_group_join_tokens(
@@ -8367,6 +9477,14 @@ type mutation_root {
     _set: group_join_tokens_set_input
     pk_columns: group_join_tokens_pk_columns_input!
   ): group_join_tokens
+
+  """
+  update multiples rows of table: "group_join_tokens"
+  """
+  update_group_join_tokens_many(
+    """updates to execute, in order"""
+    updates: [group_join_tokens_updates!]!
+  ): [group_join_tokens_mutation_response]
 
   """
   update data of the table: "group_members"
@@ -8389,6 +9507,14 @@ type mutation_root {
   ): group_members
 
   """
+  update multiples rows of table: "group_members"
+  """
+  update_group_members_many(
+    """updates to execute, in order"""
+    updates: [group_members_updates!]!
+  ): [group_members_mutation_response]
+
+  """
   update data of the table: "group_post_comment"
   """
   update_group_post_comment(
@@ -8407,6 +9533,14 @@ type mutation_root {
     _set: group_post_comment_set_input
     pk_columns: group_post_comment_pk_columns_input!
   ): group_post_comment
+
+  """
+  update multiples rows of table: "group_post_comment"
+  """
+  update_group_post_comment_many(
+    """updates to execute, in order"""
+    updates: [group_post_comment_updates!]!
+  ): [group_post_comment_mutation_response]
 
   """
   update data of the table: "group_post_type"
@@ -8429,6 +9563,14 @@ type mutation_root {
   ): group_post_type
 
   """
+  update multiples rows of table: "group_post_type"
+  """
+  update_group_post_type_many(
+    """updates to execute, in order"""
+    updates: [group_post_type_updates!]!
+  ): [group_post_type_mutation_response]
+
+  """
   update data of the table: "group_posts"
   """
   update_group_posts(
@@ -8447,6 +9589,14 @@ type mutation_root {
     _set: group_posts_set_input
     pk_columns: group_posts_pk_columns_input!
   ): group_posts
+
+  """
+  update multiples rows of table: "group_posts"
+  """
+  update_group_posts_many(
+    """updates to execute, in order"""
+    updates: [group_posts_updates!]!
+  ): [group_posts_mutation_response]
 
   """
   update data of the table: "group_role"
@@ -8469,6 +9619,14 @@ type mutation_root {
   ): group_role
 
   """
+  update multiples rows of table: "group_role"
+  """
+  update_group_role_many(
+    """updates to execute, in order"""
+    updates: [group_role_updates!]!
+  ): [group_role_mutation_response]
+
+  """
   update data of the table: "group_thing"
   """
   update_group_thing(
@@ -8487,6 +9645,14 @@ type mutation_root {
     _set: group_thing_set_input
     pk_columns: group_thing_pk_columns_input!
   ): group_thing
+
+  """
+  update multiples rows of table: "group_thing"
+  """
+  update_group_thing_many(
+    """updates to execute, in order"""
+    updates: [group_thing_updates!]!
+  ): [group_thing_mutation_response]
 
   """
   update data of the table: "groups"
@@ -8509,6 +9675,14 @@ type mutation_root {
   ): groups
 
   """
+  update multiples rows of table: "groups"
+  """
+  update_groups_many(
+    """updates to execute, in order"""
+    updates: [groups_updates!]!
+  ): [groups_mutation_response]
+
+  """
   update data of the table: "notifications"
   """
   update_notifications(
@@ -8527,6 +9701,14 @@ type mutation_root {
     _set: notifications_set_input
     pk_columns: notifications_pk_columns_input!
   ): notifications
+
+  """
+  update multiples rows of table: "notifications"
+  """
+  update_notifications_many(
+    """updates to execute, in order"""
+    updates: [notifications_updates!]!
+  ): [notifications_mutation_response]
 
   """
   update data of the table: "thing_images"
@@ -8555,6 +9737,14 @@ type mutation_root {
   ): thing_images
 
   """
+  update multiples rows of table: "thing_images"
+  """
+  update_thing_images_many(
+    """updates to execute, in order"""
+    updates: [thing_images_updates!]!
+  ): [thing_images_mutation_response]
+
+  """
   update data of the table: "thing_type"
   """
   update_thing_type(
@@ -8575,6 +9765,14 @@ type mutation_root {
   ): thing_type
 
   """
+  update multiples rows of table: "thing_type"
+  """
+  update_thing_type_many(
+    """updates to execute, in order"""
+    updates: [thing_type_updates!]!
+  ): [thing_type_mutation_response]
+
+  """
   update data of the table: "things"
   """
   update_things(
@@ -8593,6 +9791,78 @@ type mutation_root {
     _set: things_set_input
     pk_columns: things_pk_columns_input!
   ): things
+
+  """
+  update multiples rows of table: "things"
+  """
+  update_things_many(
+    """updates to execute, in order"""
+    updates: [things_updates!]!
+  ): [things_mutation_response]
+
+  """
+  update data of the table: "user_profile"
+  """
+  update_user_profile(
+    """sets the columns of the filtered rows to the given values"""
+    _set: user_profile_set_input
+
+    """filter the rows which have to be updated"""
+    where: user_profile_bool_exp!
+  ): user_profile_mutation_response
+
+  """
+  update single row of the table: "user_profile"
+  """
+  update_user_profile_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: user_profile_set_input
+    pk_columns: user_profile_pk_columns_input!
+  ): user_profile
+
+  """
+  update multiples rows of table: "user_profile"
+  """
+  update_user_profile_many(
+    """updates to execute, in order"""
+    updates: [user_profile_updates!]!
+  ): [user_profile_mutation_response]
+
+  """
+  update data of the table: "user_settings"
+  """
+  update_user_settings(
+    """sets the columns of the filtered rows to the given values"""
+    _set: user_settings_set_input
+
+    """filter the rows which have to be updated"""
+    where: user_settings_bool_exp!
+  ): user_settings_mutation_response
+
+  """
+  update single row of the table: "user_settings"
+  """
+  update_user_settings_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: user_settings_set_input
+    pk_columns: user_settings_pk_columns_input!
+  ): user_settings
+
+  """
+  update multiples rows of table: "user_settings"
+  """
+  update_user_settings_many(
+    """updates to execute, in order"""
+    updates: [user_settings_updates!]!
+  ): [user_settings_mutation_response]
+
+  """
+  update multiples rows of table: "auth.users"
+  """
+  update_users_many(
+    """updates to execute, in order"""
+    updates: [users_updates!]!
+  ): [users_mutation_response]
 }
 
 """
@@ -8667,7 +9937,9 @@ input notifications_bool_exp {
 unique or primary key constraints on table "notifications"
 """
 enum notifications_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   notifications_pkey
 }
 
@@ -8809,6 +10081,12 @@ enum notifications_update_column {
 
   """column name"""
   user_id
+}
+
+input notifications_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: notifications_set_input
+  where: notifications_bool_exp!
 }
 
 """column ordering options"""
@@ -9092,6 +10370,51 @@ type query_root {
   ): authRoles_aggregate!
 
   """
+  fetch data from the table: "auth.user_authenticators" using primary key columns
+  """
+  authUserAuthenticator(id: uuid!): authUserAuthenticators
+
+  """
+  fetch data from the table: "auth.user_authenticators"
+  """
+  authUserAuthenticators(
+    """distinct select on columns"""
+    distinct_on: [authUserAuthenticators_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserAuthenticators_order_by!]
+
+    """filter the rows returned"""
+    where: authUserAuthenticators_bool_exp
+  ): [authUserAuthenticators!]!
+
+  """
+  fetch aggregated fields from the table: "auth.user_authenticators"
+  """
+  authUserAuthenticatorsAggregate(
+    """distinct select on columns"""
+    distinct_on: [authUserAuthenticators_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserAuthenticators_order_by!]
+
+    """filter the rows returned"""
+    where: authUserAuthenticators_bool_exp
+  ): authUserAuthenticators_aggregate!
+
+  """
   fetch data from the table: "auth.user_providers" using primary key columns
   """
   authUserProvider(id: uuid!): authUserProviders
@@ -9221,6 +10544,46 @@ type query_root {
     """filter the rows returned"""
     where: buckets_bool_exp
   ): buckets_aggregate!
+
+  """
+  fetch data from the table: "chat_group_member_info"
+  """
+  chat_group_member_info(
+    """distinct select on columns"""
+    distinct_on: [chat_group_member_info_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_group_member_info_order_by!]
+
+    """filter the rows returned"""
+    where: chat_group_member_info_bool_exp
+  ): [chat_group_member_info!]!
+
+  """
+  fetch aggregated fields from the table: "chat_group_member_info"
+  """
+  chat_group_member_info_aggregate(
+    """distinct select on columns"""
+    distinct_on: [chat_group_member_info_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_group_member_info_order_by!]
+
+    """filter the rows returned"""
+    where: chat_group_member_info_bool_exp
+  ): chat_group_member_info_aggregate!
 
   """An array relationship"""
   chat_group_members(
@@ -10103,6 +11466,92 @@ type query_root {
 
   """fetch data from the table: "auth.users" using primary key columns"""
   user(id: uuid!): users
+
+  """
+  fetch data from the table: "user_profile"
+  """
+  user_profile(
+    """distinct select on columns"""
+    distinct_on: [user_profile_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_profile_order_by!]
+
+    """filter the rows returned"""
+    where: user_profile_bool_exp
+  ): [user_profile!]!
+
+  """
+  fetch aggregated fields from the table: "user_profile"
+  """
+  user_profile_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_profile_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_profile_order_by!]
+
+    """filter the rows returned"""
+    where: user_profile_bool_exp
+  ): user_profile_aggregate!
+
+  """fetch data from the table: "user_profile" using primary key columns"""
+  user_profile_by_pk(id: uuid!): user_profile
+
+  """
+  fetch data from the table: "user_settings"
+  """
+  user_settings(
+    """distinct select on columns"""
+    distinct_on: [user_settings_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_settings_order_by!]
+
+    """filter the rows returned"""
+    where: user_settings_bool_exp
+  ): [user_settings!]!
+
+  """
+  fetch aggregated fields from the table: "user_settings"
+  """
+  user_settings_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_settings_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_settings_order_by!]
+
+    """filter the rows returned"""
+    where: user_settings_bool_exp
+  ): user_settings_aggregate!
+
+  """fetch data from the table: "user_settings" using primary key columns"""
+  user_settings_by_pk(id: uuid!): user_settings
 
   """
   fetch data from the table: "auth.users"
@@ -10422,6 +11871,51 @@ type subscription_root {
   ): authRoles_aggregate!
 
   """
+  fetch data from the table: "auth.user_authenticators" using primary key columns
+  """
+  authUserAuthenticator(id: uuid!): authUserAuthenticators
+
+  """
+  fetch data from the table: "auth.user_authenticators"
+  """
+  authUserAuthenticators(
+    """distinct select on columns"""
+    distinct_on: [authUserAuthenticators_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserAuthenticators_order_by!]
+
+    """filter the rows returned"""
+    where: authUserAuthenticators_bool_exp
+  ): [authUserAuthenticators!]!
+
+  """
+  fetch aggregated fields from the table: "auth.user_authenticators"
+  """
+  authUserAuthenticatorsAggregate(
+    """distinct select on columns"""
+    distinct_on: [authUserAuthenticators_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserAuthenticators_order_by!]
+
+    """filter the rows returned"""
+    where: authUserAuthenticators_bool_exp
+  ): authUserAuthenticators_aggregate!
+
+  """
   fetch data from the table: "auth.user_providers" using primary key columns
   """
   authUserProvider(id: uuid!): authUserProviders
@@ -10551,6 +12045,46 @@ type subscription_root {
     """filter the rows returned"""
     where: buckets_bool_exp
   ): buckets_aggregate!
+
+  """
+  fetch data from the table: "chat_group_member_info"
+  """
+  chat_group_member_info(
+    """distinct select on columns"""
+    distinct_on: [chat_group_member_info_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_group_member_info_order_by!]
+
+    """filter the rows returned"""
+    where: chat_group_member_info_bool_exp
+  ): [chat_group_member_info!]!
+
+  """
+  fetch aggregated fields from the table: "chat_group_member_info"
+  """
+  chat_group_member_info_aggregate(
+    """distinct select on columns"""
+    distinct_on: [chat_group_member_info_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [chat_group_member_info_order_by!]
+
+    """filter the rows returned"""
+    where: chat_group_member_info_bool_exp
+  ): chat_group_member_info_aggregate!
 
   """An array relationship"""
   chat_group_members(
@@ -11435,6 +12969,92 @@ type subscription_root {
   user(id: uuid!): users
 
   """
+  fetch data from the table: "user_profile"
+  """
+  user_profile(
+    """distinct select on columns"""
+    distinct_on: [user_profile_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_profile_order_by!]
+
+    """filter the rows returned"""
+    where: user_profile_bool_exp
+  ): [user_profile!]!
+
+  """
+  fetch aggregated fields from the table: "user_profile"
+  """
+  user_profile_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_profile_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_profile_order_by!]
+
+    """filter the rows returned"""
+    where: user_profile_bool_exp
+  ): user_profile_aggregate!
+
+  """fetch data from the table: "user_profile" using primary key columns"""
+  user_profile_by_pk(id: uuid!): user_profile
+
+  """
+  fetch data from the table: "user_settings"
+  """
+  user_settings(
+    """distinct select on columns"""
+    distinct_on: [user_settings_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_settings_order_by!]
+
+    """filter the rows returned"""
+    where: user_settings_bool_exp
+  ): [user_settings!]!
+
+  """
+  fetch aggregated fields from the table: "user_settings"
+  """
+  user_settings_aggregate(
+    """distinct select on columns"""
+    distinct_on: [user_settings_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [user_settings_order_by!]
+
+    """filter the rows returned"""
+    where: user_settings_bool_exp
+  ): user_settings_aggregate!
+
+  """fetch data from the table: "user_settings" using primary key columns"""
+  user_settings_by_pk(id: uuid!): user_settings
+
+  """
   fetch data from the table: "auth.users"
   """
   users(
@@ -11580,10 +13200,14 @@ input thing_images_bool_exp {
 unique or primary key constraints on table "thing_images"
 """
 enum thing_images_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "file_id"
+  """
   thing_images_file_id_key
 
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   thing_images_pkey
 }
 
@@ -11818,6 +13442,15 @@ enum thing_images_update_column {
   updated_at
 }
 
+input thing_images_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: thing_images_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: thing_images_set_input
+  where: thing_images_bool_exp!
+}
+
 """aggregate var_pop on columns"""
 type thing_images_var_pop_fields {
   order: Float
@@ -11894,7 +13527,9 @@ input thing_type_bool_exp {
 unique or primary key constraints on table "thing_type"
 """
 enum thing_type_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "value"
+  """
   thing_type_pkey
 }
 
@@ -12002,6 +13637,12 @@ enum thing_type_update_column {
 
   """column name"""
   value
+}
+
+input thing_type_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: thing_type_set_input
+  where: thing_type_bool_exp!
 }
 
 """
@@ -12159,10 +13800,14 @@ input things_bool_exp {
 unique or primary key constraints on table "things"
 """
 enum things_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   things_pkey
 
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "short_id"
+  """
   things_short_id_key
 }
 
@@ -12388,6 +14033,12 @@ enum things_update_column {
   updated_at
 }
 
+input things_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: things_set_input
+  where: things_bool_exp!
+}
+
 scalar timestamptz
 
 """
@@ -12405,8 +14056,385 @@ input timestamptz_comparison_exp {
   _nin: [timestamptz!]
 }
 
+"""Public profile data for a user"""
+type user_profile {
+  """An object relationship"""
+  avatar: files!
+  avatar_id: uuid!
+  created_at: timestamptz!
+  id: uuid!
+  updated_at: timestamptz!
+
+  """An object relationship"""
+  user: users!
+  user_id: uuid!
+}
+
 """
-columns and relationships of "auth.users"
+aggregated selection of "user_profile"
+"""
+type user_profile_aggregate {
+  aggregate: user_profile_aggregate_fields
+  nodes: [user_profile!]!
+}
+
+"""
+aggregate fields of "user_profile"
+"""
+type user_profile_aggregate_fields {
+  count(columns: [user_profile_select_column!], distinct: Boolean): Int!
+  max: user_profile_max_fields
+  min: user_profile_min_fields
+}
+
+"""
+Boolean expression to filter rows from the table "user_profile". All fields are combined with a logical 'AND'.
+"""
+input user_profile_bool_exp {
+  _and: [user_profile_bool_exp!]
+  _not: user_profile_bool_exp
+  _or: [user_profile_bool_exp!]
+  avatar: files_bool_exp
+  avatar_id: uuid_comparison_exp
+  created_at: timestamptz_comparison_exp
+  id: uuid_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  user: users_bool_exp
+  user_id: uuid_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "user_profile"
+"""
+enum user_profile_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  user_profile_pkey
+
+  """
+  unique or primary key constraint on columns "user_id"
+  """
+  user_profile_user_id_key
+}
+
+"""
+input type for inserting data into table "user_profile"
+"""
+input user_profile_insert_input {
+  avatar: files_obj_rel_insert_input
+  avatar_id: uuid
+  created_at: timestamptz
+  id: uuid
+  updated_at: timestamptz
+  user: users_obj_rel_insert_input
+  user_id: uuid
+}
+
+"""aggregate max on columns"""
+type user_profile_max_fields {
+  avatar_id: uuid
+  created_at: timestamptz
+  id: uuid
+  updated_at: timestamptz
+  user_id: uuid
+}
+
+"""aggregate min on columns"""
+type user_profile_min_fields {
+  avatar_id: uuid
+  created_at: timestamptz
+  id: uuid
+  updated_at: timestamptz
+  user_id: uuid
+}
+
+"""
+response of any mutation on the table "user_profile"
+"""
+type user_profile_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [user_profile!]!
+}
+
+"""
+on_conflict condition type for table "user_profile"
+"""
+input user_profile_on_conflict {
+  constraint: user_profile_constraint!
+  update_columns: [user_profile_update_column!]! = []
+  where: user_profile_bool_exp
+}
+
+"""Ordering options when selecting data from "user_profile"."""
+input user_profile_order_by {
+  avatar: files_order_by
+  avatar_id: order_by
+  created_at: order_by
+  id: order_by
+  updated_at: order_by
+  user: users_order_by
+  user_id: order_by
+}
+
+"""primary key columns input for table: user_profile"""
+input user_profile_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "user_profile"
+"""
+enum user_profile_select_column {
+  """column name"""
+  avatar_id
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "user_profile"
+"""
+input user_profile_set_input {
+  avatar_id: uuid
+  created_at: timestamptz
+  id: uuid
+  updated_at: timestamptz
+  user_id: uuid
+}
+
+"""
+update columns of table "user_profile"
+"""
+enum user_profile_update_column {
+  """column name"""
+  avatar_id
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  user_id
+}
+
+input user_profile_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: user_profile_set_input
+  where: user_profile_bool_exp!
+}
+
+"""Private settings for a user"""
+type user_settings {
+  """An object relationship"""
+  avatar: files
+  avatar_file_id: uuid
+  created_at: timestamptz!
+  id: uuid!
+  updated_at: timestamptz!
+
+  """An object relationship"""
+  user: users!
+  user_id: uuid!
+}
+
+"""
+aggregated selection of "user_settings"
+"""
+type user_settings_aggregate {
+  aggregate: user_settings_aggregate_fields
+  nodes: [user_settings!]!
+}
+
+"""
+aggregate fields of "user_settings"
+"""
+type user_settings_aggregate_fields {
+  count(columns: [user_settings_select_column!], distinct: Boolean): Int!
+  max: user_settings_max_fields
+  min: user_settings_min_fields
+}
+
+"""
+Boolean expression to filter rows from the table "user_settings". All fields are combined with a logical 'AND'.
+"""
+input user_settings_bool_exp {
+  _and: [user_settings_bool_exp!]
+  _not: user_settings_bool_exp
+  _or: [user_settings_bool_exp!]
+  avatar: files_bool_exp
+  avatar_file_id: uuid_comparison_exp
+  created_at: timestamptz_comparison_exp
+  id: uuid_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  user: users_bool_exp
+  user_id: uuid_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "user_settings"
+"""
+enum user_settings_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  user_settings_pkey
+
+  """
+  unique or primary key constraint on columns "user_id"
+  """
+  user_settings_user_id_fk
+
+  """
+  unique or primary key constraint on columns "user_id"
+  """
+  user_settings_user_id_key
+}
+
+"""
+input type for inserting data into table "user_settings"
+"""
+input user_settings_insert_input {
+  avatar: files_obj_rel_insert_input
+  avatar_file_id: uuid
+  created_at: timestamptz
+  id: uuid
+  updated_at: timestamptz
+  user: users_obj_rel_insert_input
+  user_id: uuid
+}
+
+"""aggregate max on columns"""
+type user_settings_max_fields {
+  avatar_file_id: uuid
+  created_at: timestamptz
+  id: uuid
+  updated_at: timestamptz
+  user_id: uuid
+}
+
+"""aggregate min on columns"""
+type user_settings_min_fields {
+  avatar_file_id: uuid
+  created_at: timestamptz
+  id: uuid
+  updated_at: timestamptz
+  user_id: uuid
+}
+
+"""
+response of any mutation on the table "user_settings"
+"""
+type user_settings_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [user_settings!]!
+}
+
+"""
+on_conflict condition type for table "user_settings"
+"""
+input user_settings_on_conflict {
+  constraint: user_settings_constraint!
+  update_columns: [user_settings_update_column!]! = []
+  where: user_settings_bool_exp
+}
+
+"""Ordering options when selecting data from "user_settings"."""
+input user_settings_order_by {
+  avatar: files_order_by
+  avatar_file_id: order_by
+  created_at: order_by
+  id: order_by
+  updated_at: order_by
+  user: users_order_by
+  user_id: order_by
+}
+
+"""primary key columns input for table: user_settings"""
+input user_settings_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "user_settings"
+"""
+enum user_settings_select_column {
+  """column name"""
+  avatar_file_id
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  user_id
+}
+
+"""
+input type for updating data in table "user_settings"
+"""
+input user_settings_set_input {
+  avatar_file_id: uuid
+  created_at: timestamptz
+  id: uuid
+  updated_at: timestamptz
+  user_id: uuid
+}
+
+"""
+update columns of table "user_settings"
+"""
+enum user_settings_update_column {
+  """column name"""
+  avatar_file_id
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  user_id
+}
+
+input user_settings_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: user_settings_set_input
+  where: user_settings_bool_exp!
+}
+
+"""
+User account information. Don't modify its structure as Hasura Auth relies on it to function properly.
 """
 type users {
   activeMfaType: String
@@ -12446,6 +14474,42 @@ type users {
     """filter the rows returned"""
     where: activities_bool_exp
   ): activities_aggregate!
+
+  """An array relationship"""
+  authenticators(
+    """distinct select on columns"""
+    distinct_on: [authUserAuthenticators_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserAuthenticators_order_by!]
+
+    """filter the rows returned"""
+    where: authUserAuthenticators_bool_exp
+  ): [authUserAuthenticators!]!
+
+  """An aggregate relationship"""
+  authenticators_aggregate(
+    """distinct select on columns"""
+    distinct_on: [authUserAuthenticators_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserAuthenticators_order_by!]
+
+    """filter the rows returned"""
+    where: authUserAuthenticators_bool_exp
+  ): authUserAuthenticators_aggregate!
   avatarUrl: String!
 
   """An array relationship"""
@@ -12556,6 +14620,7 @@ type users {
     where: comments_bool_exp
   ): comments_aggregate!
   createdAt: timestamptz!
+  currentChallenge: String
   defaultRole: String!
 
   """An object relationship"""
@@ -12959,11 +15024,13 @@ input users_bool_exp {
   _or: [users_bool_exp!]
   activeMfaType: String_comparison_exp
   activities: activities_bool_exp
+  authenticators: authUserAuthenticators_bool_exp
   avatarUrl: String_comparison_exp
   chat_group_members: chat_group_members_bool_exp
   chat_messages: chat_messages_bool_exp
   comments: comments_bool_exp
   createdAt: timestamptz_comparison_exp
+  currentChallenge: String_comparison_exp
   defaultRole: String_comparison_exp
   defaultRoleByRole: authRoles_bool_exp
   disabled: Boolean_comparison_exp
@@ -13001,13 +15068,19 @@ input users_bool_exp {
 unique or primary key constraints on table "auth.users"
 """
 enum users_constraint {
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "email"
+  """
   users_email_key
 
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "phone_number"
+  """
   users_phone_number_key
 
-  """unique or primary key constraint"""
+  """
+  unique or primary key constraint on columns "id"
+  """
   users_pkey
 }
 
@@ -13038,11 +15111,13 @@ input type for inserting data into table "auth.users"
 input users_insert_input {
   activeMfaType: String
   activities: activities_arr_rel_insert_input
+  authenticators: authUserAuthenticators_arr_rel_insert_input
   avatarUrl: String
   chat_group_members: chat_group_members_arr_rel_insert_input
   chat_messages: chat_messages_arr_rel_insert_input
   comments: comments_arr_rel_insert_input
   createdAt: timestamptz
+  currentChallenge: String
   defaultRole: String
   defaultRoleByRole: authRoles_obj_rel_insert_input
   disabled: Boolean
@@ -13081,6 +15156,7 @@ type users_max_fields {
   activeMfaType: String
   avatarUrl: String
   createdAt: timestamptz
+  currentChallenge: String
   defaultRole: String
   displayName: String
   email: citext
@@ -13106,6 +15182,7 @@ input users_max_order_by {
   activeMfaType: order_by
   avatarUrl: order_by
   createdAt: order_by
+  currentChallenge: order_by
   defaultRole: order_by
   displayName: order_by
   email: order_by
@@ -13129,6 +15206,7 @@ type users_min_fields {
   activeMfaType: String
   avatarUrl: String
   createdAt: timestamptz
+  currentChallenge: String
   defaultRole: String
   displayName: String
   email: citext
@@ -13154,6 +15232,7 @@ input users_min_order_by {
   activeMfaType: order_by
   avatarUrl: order_by
   createdAt: order_by
+  currentChallenge: order_by
   defaultRole: order_by
   displayName: order_by
   email: order_by
@@ -13206,11 +15285,13 @@ input users_on_conflict {
 input users_order_by {
   activeMfaType: order_by
   activities_aggregate: activities_aggregate_order_by
+  authenticators_aggregate: authUserAuthenticators_aggregate_order_by
   avatarUrl: order_by
   chat_group_members_aggregate: chat_group_members_aggregate_order_by
   chat_messages_aggregate: chat_messages_aggregate_order_by
   comments_aggregate: comments_aggregate_order_by
   createdAt: order_by
+  currentChallenge: order_by
   defaultRole: order_by
   defaultRoleByRole: authRoles_order_by
   disabled: order_by
@@ -13266,6 +15347,9 @@ enum users_select_column {
 
   """column name"""
   createdAt
+
+  """column name"""
+  currentChallenge
 
   """column name"""
   defaultRole
@@ -13338,6 +15422,7 @@ input users_set_input {
   activeMfaType: String
   avatarUrl: String
   createdAt: timestamptz
+  currentChallenge: String
   defaultRole: String
   disabled: Boolean
   displayName: String
@@ -13373,6 +15458,9 @@ enum users_update_column {
 
   """column name"""
   createdAt
+
+  """column name"""
+  currentChallenge
 
   """column name"""
   defaultRole
@@ -13436,6 +15524,33 @@ enum users_update_column {
 
   """column name"""
   updatedAt
+}
+
+input users_updates {
+  """append existing jsonb value of filtered columns with new jsonb value"""
+  _append: users_append_input
+
+  """
+  delete the field or element with specified path (for JSON arrays, negative integers count from the end)
+  """
+  _delete_at_path: users_delete_at_path_input
+
+  """
+  delete the array element with specified index (negative integers count from the end). throws an error if top level container is not an array
+  """
+  _delete_elem: users_delete_elem_input
+
+  """
+  delete key/value pair or string element. key/value pairs are matched based on their key value
+  """
+  _delete_key: users_delete_key_input
+
+  """prepend existing jsonb value of filtered columns with new jsonb value"""
+  _prepend: users_prepend_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: users_set_input
+  where: users_bool_exp!
 }
 
 scalar uuid

@@ -8,19 +8,28 @@
     }
 }
 
+fragment ChatGroupMemberCard on chat_group_members {
+    id
+    last_read
+    info {
+        has_unread
+    }
+    user {
+        ...UserCard
+    }
+}
+
 fragment ChatGroupCard on chat_groups {
     id
-
     name
 
     members {
-        user {
-            ...UserCard
-        }
+        ...ChatGroupMemberCard
     }
 
     # Get the latest message
     messages(limit: 1, order_by: [{ created_at: desc }]) {
+        created_at
         sender {
             ...UserCard
         }
@@ -54,8 +63,24 @@ mutation CreateChatGroup($input: CreateChatGroupInput!) {
     }
 }
 
-mutation CreateChatMessage($input: chat_messages_insert_input!) {
-    insert_chat_messages_one(object: $input) {
+mutation UpdateChatGroup($id: uuid!, $input: chat_groups_set_input!) {
+    update_chat_groups_by_pk(pk_columns: { id: $id }, _set: $input) {
+        ...ChatGroupCard
+    }
+}
+
+mutation CreateChatMessage(
+    $input: CreateChatMessageInput!
+) {
+  createChatMessage(input: $input) {
+    chat_message {
         ...ChatMessageCard
+    }
+  }
+}
+
+mutation UpdateChatGroupMember($id: uuid!, $input: chat_group_members_set_input!) {
+    update_chat_group_members_by_pk(pk_columns: { id: $id }, _set: $input) {
+        ...ChatGroupMemberCard
     }
 }

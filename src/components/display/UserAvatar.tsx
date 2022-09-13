@@ -104,13 +104,15 @@ export const UserAvatar = (props: UserAvatarProps) => {
 export const UserAvatarList = ({
     users,
     className,
+    size,
 }: {
     users: UserCardFragment[];
     className?: string;
+    size?: 'small' | 'default' | 'large';
 }) => (
-    <Avatar.Group className={className} maxCount={3}>
+    <Avatar.Group className={className} maxCount={3} size={size || 'small'}>
         {users.map((user) => (
-            <UserAvatar key={user.id} user={user} />
+            <UserAvatar key={user.id} user={user} size={size || 'small'} />
         ))}
     </Avatar.Group>
 );

@@ -1,5 +1,9 @@
-﻿import React, { useMemo } from 'react';
-import { useChatGroupsSubscription } from '../../generated/graphql';
+﻿import React, { useCallback, useEffect, useMemo } from 'react';
+import {
+    useChatGroupsSubscription,
+    useUpdateChatGroupMemberMutation,
+    useUpdateChatGroupMutation,
+} from '../../generated/graphql';
 import { head } from 'lodash';
 import { createUseStyles } from 'react-jss';
 import { Sidebar } from './Sidebar';
@@ -8,6 +12,9 @@ import { MessageList } from './MessageList';
 import { PageLayout } from '../root/PageLayout';
 import { NewMessageForm } from './NewMessageForm';
 import { MessageListHeader } from './MessageListHeader';
+import { useAuth } from '../../utils/auth';
+import { formatISO } from 'date-fns';
+import { message } from 'antd';
 
 const useStyles = createUseStyles({
     root: {
@@ -28,19 +35,48 @@ const useStyles = createUseStyles({
 });
 
 export const ChatPage = () => {
+    const auth = useAuth();
     const classes = useStyles();
     const router = useRouter();
     const groupId = head(router.query.groupId);
 
     const groupsSub = useChatGroupsSubscription();
-    const chatGroups = useMemo(() => groupsSub.data?.chat_groups || [], [
-        groupsSub.data?.chat_groups,
-    ]);
+    const [updateGroup] = useUpdateChatGroupMutation();
+    const [updateGroupMember] = useUpdateChatGroupMemberMutation({
+        onError: (err) => message.error('Could not mark conversation as read'),
+    });
+
+    const chatGroups = useMemo(
+        () => groupsSub.data?.chat_groups || [],
+        [groupsSub.data?.chat_groups],
+    );
 
     const selected = useMemo(
         () => (groupId ? chatGroups.find((cg) => cg.id === groupId) || null : null),
         [chatGroups, groupId],
     );
+
+    const handleNameChange = useCallback(
+        (name: string) => {
+            if (!selected) {
+                return;
+            }
+            updateGroup({ variables: { id: selected.id, input: { name } } });
+        },
+        [selected],
+    );
+
+    useEffect(() => {
+        if (selected && auth.user) {
+            const membership = selected.members.find((m) => m.user.id === auth.user!.id);
+
+            if (membership && (membership.last_read === null || membership?.info?.has_unread)) {
+                updateGroupMember({
+                    variables: { id: membership.id, input: { last_read: formatISO(new Date()) } },
+                });
+            }
+        }
+    }, [groupId, auth.user]); // TODO: add some sort of focus trigger
 
     return (
         <PageLayout noScroll noFooter horizontal>
@@ -50,7 +86,7 @@ export const ChatPage = () => {
             <div className={classes.messages}>
                 {selected && (
                     <>
-                        <MessageListHeader chatGroup={selected} />
+                        <MessageListHeader chatGroup={selected} onNameChange={handleNameChange} />
                         <MessageList chatGroup={selected} />
                         <NewMessageForm chatGroup={selected} />
                     </>

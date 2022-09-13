@@ -32,7 +32,7 @@ export const ThingInterestButton = ({ thing }: { thing: ThingCardFragment }) => 
             },
         })
             .then((result) => {
-                const created = head(result.data?.createChatGroup?.chat_group);
+                const created = result.data?.createChatGroup?.chat_group;
                 if (created) {
                     return router.push(urlFor.chat.group(created));
                 }
@@ -53,9 +53,9 @@ export const ThingInterestButton = ({ thing }: { thing: ThingCardFragment }) => 
     const content = (
         <div className={classes.contentRoot}>
             <Typography.Paragraph>
-                If you&apos;re interested in this thing, let {thing.owner.name} know by sending them
-                a message which will include a reference to this thing. Let them know relevant
-                details such as when/how much/for what/how many.
+                If you&apos;re interested in this thing, let {thing.owner.displayName} know by
+                sending them a message which will include a reference to this thing. Let them know
+                relevant details such as when/how much/for what/how many.
             </Typography.Paragraph>
             <Input.TextArea
                 autoSize
@@ -72,7 +72,8 @@ export const ThingInterestButton = ({ thing }: { thing: ThingCardFragment }) => 
                     type="primary"
                     onClick={handleConfirm}
                     loading={mutation.loading}
-                    disabled={mutation.loading}>
+                    disabled={mutation.loading}
+                >
                     Send
                 </Button>
             </Space>
@@ -81,13 +82,14 @@ export const ThingInterestButton = ({ thing }: { thing: ThingCardFragment }) => 
 
     return (
         <Popover
-            visible={visible}
-            onVisibleChange={handleVisibleChange}
+            open={visible}
+            onOpenChange={handleVisibleChange}
             arrowPointAtCenter={false}
             trigger="click"
-            content={content}>
+            content={content}
+        >
             <Button
-                title={`Let ${thing.owner.name} know you're interested in this`}
+                title={`Let ${thing.owner.displayName} know you're interested in this`}
                 icon={<BellOutlined />}
             />
         </Popover>

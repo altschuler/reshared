@@ -5,7 +5,7 @@ import { makeApolloClient } from './apolloClient';
 import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 
 export const APOLLO_STATE_PROP_NAME = '__APOLLO_STATE__';
-
+/*
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
 const createApolloClient = (token?: string | null) => {
@@ -53,3 +53,5 @@ export const useApollo = (pageProps) => {
 
     return useMemo(() => initializeApollo(state, null), [state]);
 };
+
+*/

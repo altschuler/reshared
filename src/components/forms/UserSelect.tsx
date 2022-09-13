@@ -1,7 +1,7 @@
 ﻿import React, { useCallback, useMemo, useState } from 'react';
 import { Select } from 'antd';
 import { useAuth } from '../../utils/auth';
-import { GroupCardFragment, UserCardFragment, useUserListQuery } from '../../generated/graphql';
+import { UserCardFragment, useUserListQuery } from '../../generated/graphql';
 import { createUseStyles } from 'react-jss';
 import { useDebounce } from '../../utils/hooks';
 import clsx from 'clsx';
