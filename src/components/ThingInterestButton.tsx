@@ -25,6 +25,7 @@ export const ThingInterestButton = ({ thing }: { thing: ThingCardFragment }) => 
     const [visible, setVisible] = useState(false);
 
     const [send, mutation] = useCreateChatGroupMutation();
+
     const handleConfirm = useCallback(() => {
         send({
             variables: {

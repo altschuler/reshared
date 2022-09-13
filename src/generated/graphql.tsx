@@ -37,7 +37,7 @@ export type Boolean_Comparison_Exp = {
 };
 
 export type CreateChatGroupInput = {
-  message?: InputMaybe<Scalars['String']>;
+  message: Scalars['String'];
   receiverIds: Array<Scalars['uuid']>;
   thing_id?: InputMaybe<Scalars['uuid']>;
 };

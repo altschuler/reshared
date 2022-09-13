@@ -25,9 +25,19 @@ mutation ServerCreateChatGroup($input: chat_groups_insert_input!) {
     }
 }
 
-mutation ServerCreateChatMessage($chat_group_id: uuid!, $user_id: uuid!, $message: String!) {
+mutation ServerCreateChatMessage(
+    $chat_group_id: uuid!
+    $user_id: uuid!
+    $message: String!
+    $entity: entities_obj_rel_insert_input
+) {
     insert_chat_messages_one(
-        object: { chat_group_id: $chat_group_id, message: $message, sender_id: $user_id }
+        object: {
+            chat_group_id: $chat_group_id
+            message: $message
+            sender_id: $user_id
+            entity: $entity
+        }
     ) {
         id
     }

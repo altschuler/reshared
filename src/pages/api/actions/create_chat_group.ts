@@ -36,28 +36,27 @@ export default makeAuthorizedHandler<CreateChatGroupMutationVariables, CreateCha
         });
 
         const existing = head(existingQuery.data.chat_groups);
+        console.log('existing: ', existing);
         if (existing) {
             // Add message to existing chat group
             // NOTE: using `dummy` here to be able to upsert the entity
             await ctx.userClient.mutate({
                 mutation: ServerCreateChatMessageDocument,
                 variables: {
-                    input: {
-                        sender_id: ctx.token.id,
-                        chat_group_id: existing.id,
-                        message: args.input.message,
-                        ...(args.input.thing_id
-                            ? {
-                                  entity: {
-                                      data: { thing_id: args.input.thing_id, dummy: 1 },
-                                      on_conflict: {
-                                          constraint: Entities_Constraint.EntitiesThingIdKey,
-                                          update_columns: [Entities_Update_Column.Dummy],
-                                      },
+                    user_id: ctx.token.id,
+                    chat_group_id: existing.id,
+                    message: args.input.message,
+                    ...(args.input.thing_id
+                        ? {
+                              entity: {
+                                  data: { thing_id: args.input.thing_id, dummy: 1 },
+                                  on_conflict: {
+                                      constraint: Entities_Constraint.EntitiesThingIdKey,
+                                      update_columns: [Entities_Update_Column.Dummy],
                                   },
-                              }
-                            : {}),
-                    },
+                              },
+                          }
+                        : {}),
                 },
             });
 
@@ -76,7 +75,32 @@ export default makeAuthorizedHandler<CreateChatGroupMutationVariables, CreateCha
                     },
                     messages: args.input.message
                         ? // TODO: sender_id should be set automatically
-                          { data: [{ message: args.input.message, sender_id: ctx.token.id }] }
+                          {
+                              data: [
+                                  {
+                                      message: args.input.message,
+                                      sender_id: ctx.token.id,
+
+                                      ...(args.input.thing_id
+                                          ? {
+                                                entity: {
+                                                    data: {
+                                                        thing_id: args.input.thing_id,
+                                                        dummy: 1,
+                                                    },
+                                                    on_conflict: {
+                                                        constraint:
+                                                            Entities_Constraint.EntitiesThingIdKey,
+                                                        update_columns: [
+                                                            Entities_Update_Column.Dummy,
+                                                        ],
+                                                    },
+                                                },
+                                            }
+                                          : {}),
+                                  },
+                              ],
+                          }
                         : undefined,
                 },
             },

@@ -29,7 +29,7 @@ input Boolean_comparison_exp {
 }
 
 input CreateChatGroupInput {
-  message: String
+  message: String!
   receiverIds: [uuid!]!
   thing_id: uuid
 }
