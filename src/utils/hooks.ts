@@ -9,8 +9,8 @@ export const useStateObject = <T>(initial: T) => {
 };
 
 // Source: https://usehooks.com/useDebounce/
-export const useDebounce = (value, delay) => {
-    const [debouncedValue, setDebouncedValue] = useState(value);
+export const useDebounce = <T>(value: T, delay: number): T => {
+    const [debouncedValue, setDebouncedValue] = useState<T>(value);
 
     useEffect(() => {
         const handler = setTimeout(() => setDebouncedValue(value), delay);

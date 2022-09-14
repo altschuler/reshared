@@ -1,32 +1,22 @@
 ﻿import { PageLayout } from '../root/PageLayout';
-import { useAuth } from '../../utils/auth';
 import Link from 'next/link';
 import { Button, Card, Col, Row, Typography } from 'antd';
-import { createUseStyles } from 'react-jss';
 import { useCallback } from 'react';
 import { CreateGroupDrawer, useDialogs } from '../../components/dialogs';
 import { urlFor } from '../../utils/urls';
 import { useRouter } from 'next/router';
 import { GroupCardFragment } from '../../generated/graphql';
 
-const useStyles = createUseStyles({
-    quickActions: {
-        marginBottom: '2em',
-    },
-});
-
 export const Onboarding = () => {
-    const auth = useAuth();
     const router = useRouter();
     const dialogs = useDialogs();
-    const classes = useStyles();
 
     const handleCreateGroup = useCallback(
         () =>
             dialogs
                 .showDialog(CreateGroupDrawer)
                 .then((group: GroupCardFragment) => router.push(urlFor.group.home(group))),
-        [dialogs],
+        [dialogs, router],
     );
 
     return (
@@ -47,7 +37,8 @@ export const Onboarding = () => {
                             <Button key="create" type="primary" onClick={handleCreateGroup}>
                                 Create a group
                             </Button>,
-                        ]}>
+                        ]}
+                    >
                         <Card.Meta
                             title="I want to create a new group"
                             description="If you're setting up Reshared for your community. Create a group then invite others to join it."
@@ -63,13 +54,15 @@ export const Onboarding = () => {
                                 <Link
                                     key="find"
                                     href={{ pathname: urlFor.search(), query: { t: 'group' } }}
-                                    passHref>
+                                    passHref
+                                >
                                     <Button type="primary">Find group</Button>
                                 </Link>,
                                 <Link key="invite" href={urlFor.search()} passHref>
                                     <Button type="primary">I have an invitation</Button>
                                 </Link>,
-                            ]}>
+                            ]}
+                        >
                             <Card.Meta
                                 title="I want to join an existing group"
                                 description={

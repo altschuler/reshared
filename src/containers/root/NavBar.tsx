@@ -1,15 +1,14 @@
-﻿import React, { useCallback } from 'react';
-import { useMedia } from '../../utils/hooks';
+﻿import { useMedia } from '../../utils/hooks';
 import Link from 'next/link';
-import { Dropdown, Menu, Space, Tooltip, Typography } from 'antd';
+import { Dropdown, Input, Menu, Space, Typography } from 'antd';
 import { urlFor } from '../../utils/urls';
 import { MenuFoldOutlined } from '@ant-design/icons';
 import { NotificationsButton } from './NotificationList';
 import { createUseStyles } from 'react-jss';
 import { useAuth } from '../../utils/auth';
-import { AuthDialog, useDialogs } from '../../components/dialogs';
 import { UserButton } from './UserButton';
 import { ChatButton } from './ChatButton';
+import { useRouter } from 'next/router';
 
 const useStyles = createUseStyles({
     header: {
@@ -61,16 +60,16 @@ const useStyles = createUseStyles({
 const ExpandedNav = () => {
     const classes = useStyles();
     const auth = useAuth();
+    const router = useRouter();
+    const handleSearch = (query: string) =>
+        router.push({ pathname: urlFor.search(), query: { query } });
+
     return (
         <>
             <div className={classes.nav}>
-                <Space size="large">
+                <Space size="large" align="center">
                     <Link href={urlFor.home()}>
                         <a className={classes.navLink}>Home</a>
-                    </Link>
-
-                    <Link href={urlFor.search()}>
-                        <a className={classes.navLink}>Find</a>
                     </Link>
 
                     <Link href={urlFor.user.things()}>
@@ -80,6 +79,12 @@ const ExpandedNav = () => {
                     <Link href={urlFor.group.list()}>
                         <a className={classes.navLink}>My Groups</a>
                     </Link>
+                    <Input.Search
+                        placeholder="Find things, groups, users..."
+                        style={{ display: 'block' }}
+                        defaultValue={router.query.query}
+                        onSearch={handleSearch}
+                    />
                 </Space>
             </div>
             <div className={classes.user}>
@@ -175,13 +180,7 @@ const CollapsedNav = () => {
 
 export const NavBar = () => {
     const classes = useStyles();
-    const { showDialog } = useDialogs();
     const collapsed = useMedia(['(max-width: 800px)'], [true], false);
-
-    const handleAuth = useCallback(
-        (startOnRegister: boolean) => showDialog(AuthDialog, { startOnRegister }),
-        [showDialog],
-    );
 
     return (
         <header className={classes.header}>

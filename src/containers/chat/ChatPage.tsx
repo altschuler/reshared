@@ -63,7 +63,7 @@ export const ChatPage = () => {
             }
             updateGroup({ variables: { id: selected.id, input: { name } } });
         },
-        [selected],
+        [selected, updateGroup],
     );
 
     useEffect(() => {
@@ -76,7 +76,7 @@ export const ChatPage = () => {
                 });
             }
         }
-    }, [groupId, auth.user]); // TODO: add some sort of focus trigger
+    }, [groupId, selected, auth.user, updateGroupMember]); // TODO: add some sort of focus trigger
 
     return (
         <PageLayout noScroll noFooter horizontal>

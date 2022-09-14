@@ -31,7 +31,6 @@ export interface GroupFilter {
 
 export interface SearchOptions {
     type: 'thing' | 'group' | 'user';
-    query: string;
     thingFilter: ThingFilter;
     groupFilter: GroupFilter;
 }
@@ -57,7 +56,8 @@ const CountItem = ({ label, count, selected, onClick }: CountItemProps) => {
     return (
         <Typography.Title
             level={5}
-            className={clsx(classes.countItem, selected && classes.countItemSelected)}>
+            className={clsx(classes.countItem, selected && classes.countItemSelected)}
+        >
             <span onClick={onClick}>
                 {label} {isNumber(count) ? <span>({count === 10 ? '10+' : count})</span> : ''}
             </span>
@@ -186,10 +186,10 @@ const GroupFilterForm = (props: GroupFilterFormProps) => {
         }
     }, []);
 
-    const privacyValue = useMemo(() => fromFilter(props.value.public), [
-        fromFilter,
-        props.value.public,
-    ]);
+    const privacyValue = useMemo(
+        () => fromFilter(props.value.public),
+        [fromFilter, props.value.public],
+    );
 
     return (
         <Form colon={false} layout="vertical">

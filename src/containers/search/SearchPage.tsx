@@ -1,9 +1,9 @@
 ﻿import { useCallback, useMemo } from 'react';
 import { isEmpty } from 'lodash';
 import { PageLayout } from '../root/PageLayout';
-import { Button, Input, Space, Typography } from 'antd';
+import { Button, Space, Typography } from 'antd';
 import { createUseStyles } from 'react-jss';
-import { useDebounce, useMedia, useStateObject } from '../../utils/hooks';
+import { useMedia, useStateObject } from '../../utils/hooks';
 import {
     GroupCardFragment,
     Groups_Bool_Exp,
@@ -59,14 +59,15 @@ const typeSchema = Joi.string().valid('thing', 'group', 'user').default('thing')
 export const SearchPage = () => {
     const router = useRouter();
     const classes = useStyles();
+    const query = router.query.query;
 
     const defaultType = useMemo(
         () => typeSchema.validate(router.query.t).value || 'thing',
         [router.query.t],
     );
+
     const { value: options, update: updateOptions } = useStateObject<SearchOptions>({
         type: defaultType,
-        query: '',
         thingFilter: {
             type: [],
             groups: [],
@@ -76,8 +77,6 @@ export const SearchPage = () => {
         },
     });
 
-    const debouncedFilter = useDebounce(options, 300);
-
     const thingWhere = useMemo(
         (): Things_Bool_Exp => ({
             type: !isEmpty(options.thingFilter.type)
@@ -86,12 +85,9 @@ export const SearchPage = () => {
             group_relations: !isEmpty(options.thingFilter.groups)
                 ? { group: { id: { _in: options.thingFilter.groups.map((g) => g.id) } } }
                 : undefined,
-            _or: [
-                { name: { _ilike: `%${debouncedFilter.query}%` } },
-                { description: { _ilike: `%${debouncedFilter.query}%` } },
-            ],
+            _or: [{ name: { _ilike: `%${query}%` } }, { description: { _ilike: `%${query}%` } }],
         }),
-        [options.thingFilter.type, options.thingFilter.groups, debouncedFilter.query],
+        [options.thingFilter.type, options.thingFilter.groups, query],
     );
 
     const groupWhere = useMemo(
@@ -100,17 +96,14 @@ export const SearchPage = () => {
                 options.groupFilter.public === null
                     ? undefined
                     : { _eq: options.groupFilter.public },
-            _or: [
-                { name: { _ilike: `%${debouncedFilter.query}%` } },
-                { description: { _ilike: `%${debouncedFilter.query}%` } },
-            ],
+            _or: [{ name: { _ilike: `%${query}%` } }, { description: { _ilike: `%${query}%` } }],
         }),
-        [options.groupFilter.public, debouncedFilter.query],
+        [options.groupFilter.public, query],
     );
 
     const userWhere = useMemo(
-        (): Users_Bool_Exp => ({ displayName: { _ilike: `%${debouncedFilter.query}%` } }),
-        [debouncedFilter.query],
+        (): Users_Bool_Exp => ({ displayName: { _ilike: `%${query}%` } }),
+        [query],
     );
 
     const countsQuery = useSearchCountsQuery({
@@ -132,16 +125,6 @@ export const SearchPage = () => {
 
     return (
         <PageLayout padded>
-            <div className={classes.searchBar}>
-                <Input.Search
-                    size="large"
-                    value={options.query}
-                    onChange={(e) => updateOptions({ query: e.target.value })}
-                    autoFocus
-                    placeholder="What are you looking for?"
-                />
-            </div>
-
             <div className={classes.content}>
                 <div className={classes.sidebar}>
                     <Sidebar counts={counts} onChange={updateOptions} options={options} />
