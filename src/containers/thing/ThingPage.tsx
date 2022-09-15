@@ -16,7 +16,7 @@ import { createUseStyles } from 'react-jss';
 import { ThingInterestButton } from '../../components/ThingInterestButton';
 import { useRouter } from 'next/router';
 import { urlFor } from '../../utils/urls';
-import { ThingImageDisplay } from '../../components/display/ImageDisplay';
+import { ThingImageDisplay } from '../../components/display/ThingImageDisplay';
 import { useNhostClient } from '@nhost/react';
 
 const useStyles = createUseStyles({

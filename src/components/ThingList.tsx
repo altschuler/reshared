@@ -9,19 +9,16 @@ import { head } from 'lodash';
 import { useAuth } from '../utils/auth';
 import { EditThingDrawer, useDialogs } from './dialogs';
 import { usePagination } from '../utils/list';
-import React, { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { ReactNode, useCallback, useEffect, useState } from 'react';
 import { Button, Input, List, Space } from 'antd';
 import { ownsThing } from '../utils/thing';
 import { EditOutlined, PictureOutlined } from '@ant-design/icons';
-import { ThingTypeTag, ImageThumbList, UserAvatar } from './display';
+import { ThingTypeTag, UserAvatar, ThingImageDisplay } from './display';
 import Link from 'next/link';
 import { createUseStyles } from 'react-jss';
 import { useDebounce } from '../utils/hooks';
 import { ThingInterestButton } from './ThingInterestButton';
 import { urlFor } from '../utils/urls';
-import Image from 'next/image';
-import { useNhostClient } from '@nhost/react';
-import { ThingImageDisplay } from './display/ImageDisplay';
 
 const useStyles = createUseStyles({
     search: {
@@ -49,7 +46,7 @@ export interface ThingListProps {
     skip?: boolean;
     orderBy?: Things_Order_By[];
     hideSearch?: boolean;
-    emptyText?: ReactNode | (() => ReactNode);
+    emptyText?: ReactNode;
     header?: ReactNode;
     extra?: ReactNode;
 }
@@ -123,7 +120,6 @@ interface ThingItemProps {
 const ThingItem = (props: ThingItemProps) => {
     const auth = useAuth();
     const image = head(props.thing.images);
-    const nhost = useNhostClient();
 
     const avatar = (
         <div style={{ width: 50, height: 50 }}>

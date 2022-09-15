@@ -1,28 +1,21 @@
 import React from 'react';
-import Image from 'next/image';
+import Image, { ImageProps } from 'next/image';
 import { useNhostClient } from '@nhost/react';
-import { ThingCardFragment, ThingImageCardFragment } from '../../generated/graphql';
+import { FileUploadCardFragment } from '../../generated/graphql';
 
-export interface ThingImageDisplayProps {
-    image: ThingImageCardFragment;
-    thing: ThingCardFragment;
-    width: number;
-    height: number;
-    onClick?: () => unknown;
+export interface ImageDisplayProps extends Omit<ImageProps, 'src'> {
+    file: FileUploadCardFragment;
 }
 
-export const ThingImageDisplay = (props: ThingImageDisplayProps) => {
+export const ImageDisplay = (props: ImageDisplayProps) => {
     const nhost = useNhostClient();
+    const { file, ...rest } = props;
 
     return (
         <Image
-            title={props.image.description}
-            width={props.width}
-            height={props.height}
             objectFit="cover"
-            alt={props.image.description || `An image of ${props.thing.name}`}
-            src={nhost.storage.getPublicUrl({ fileId: props.image.file.id })}
-            onClick={props.onClick}
+            src={nhost.storage.getPublicUrl({ fileId: props.file.id })}
+            {...rest}
         />
     );
 };

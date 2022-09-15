@@ -1,189 +1,83 @@
-﻿import { ChangeEvent, useCallback, useState } from 'react';
-import { isEmpty, get } from 'lodash';
-
-import { Form, Button, Input, Modal, Space, Spin } from 'antd';
-import { DeleteFilled } from '@ant-design/icons';
-import { createUseStyles } from 'react-jss';
-import Image from 'next/image';
-
-import { EditorThingImage } from '../editors';
-import { removeAt } from '../../utils/array';
-import { useAuth } from '../../utils/auth';
+import { useCallback, useState } from 'react';
 import { useNhostClient } from '@nhost/nextjs';
+import { message, Space, Typography, Upload } from 'antd';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { RcFile } from 'antd/lib/upload';
+import { FileUploadCardFragment } from '../../generated/graphql';
+import { ImageDisplay } from '../display';
 
 export interface ImageInputProps {
-    value: EditorThingImage[];
-    errors: any;
-    onChange: (value: EditorThingImage[]) => unknown;
-    onTouch: (path: string[]) => unknown;
+    value: FileUploadCardFragment | null;
+    width?: number;
+    height?: number;
+    onChange: (value: FileUploadCardFragment | null) => unknown;
 }
 
-const useStyles = createUseStyles({
-    root: {
-        display: 'flex',
-        flexDirection: 'column',
-    },
-
-    dashedBox: {
-        border: '1px dashed #D9D9D9',
-        backgroundColor: '#FAFAFA',
-        width: 104,
-        height: 104,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        borderRadius: 2,
-        transition: 'border-color 0.3s',
-        cursor: 'pointer',
-
-        '&:hover': {
-            borderColor: '#1890ff',
-        },
-    },
-
-    imageItem: {
-        // width: 400,
-        height: 100,
-        display: 'flex',
-        '& > *': {
-            marginRight: '2em',
-        },
-    },
-
-    thumbnail: {
-        flex: 'none',
-    },
-
-    uploadButton: {
-        marginBottom: '1em',
-        alignSelf: 'flex-start',
-    },
-
-    imageList: {
-        display: 'flex',
-    },
-});
-
-export const ImageInput = ({ value, errors, onChange, onTouch }: ImageInputProps) => {
-    const classes = useStyles();
-    const [loading, setLoading] = useState(false);
-    // const { upload } = useFileUpload();
-    const auth = useAuth();
+export const ImageInput = (props: ImageInputProps) => {
     const nhost = useNhostClient();
+    const [loading, setLoading] = useState(false);
 
-    const handleUpload = useCallback(
-        (e: ChangeEvent<HTMLInputElement>) => {
-            const files = Array.from(e.target.files || []);
-
-            if (!auth.user || isEmpty(files)) {
-                return;
-            }
-
-            if (files.some((f) => !f.type.match(/^image\/./))) {
-                Modal.error({
-                    title: 'Unsupported file',
-                    content: 'Only image files are supported',
-                });
-                return;
-            }
-
+    const handleUploadImage = useCallback(
+        async (file: RcFile) => {
             setLoading(true);
+            const uploaded = await nhost.storage.upload({ file });
 
-            Promise.all(files.map((file) => nhost.storage.upload({ file })))
-                .then((fileUploads) =>
-                    onChange([
-                        ...value,
-                        ...fileUploads
-                            .filter((f) => !!f.fileMetadata)
-                            .map((file) => ({
-                                description: '',
-                                order: 100,
-                                file: {
-                                    id: file.fileMetadata!.id,
-                                    name: file.fileMetadata!.name,
-                                    mimeType: file.fileMetadata!.mimeType,
-                                },
-                            })),
-                    ]),
-                )
-                .finally(() => setLoading(false));
+            if (uploaded.error) {
+                message.error(uploaded.error.message);
+            } else {
+                props.onChange(uploaded.fileMetadata);
+            }
+
+            setLoading(false);
+
+            return '';
         },
-        [auth.user, nhost.storage, onChange, value],
+        [nhost, props.onChange],
     );
 
-    const handleDescriptionChange = useCallback(
-        (index: number, description: string) => {
-            onChange(value.map((img, i) => (i === index ? { ...img, description } : img)));
-        },
-        [onChange, value],
-    );
+    const handleRemove = useCallback(() => {
+        props.onChange(null);
+    }, []);
 
-    const handleRemoveImage = useCallback(
-        (index: number) => {
-            onChange(removeAt(value, index));
-        },
-        [onChange, value],
-    );
+    const beforeUpload = (file: RcFile) => {
+        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+        if (!isJpgOrPng) {
+            message.error('Only JPG and PNG files are allowed');
+        }
+        const isLt2M = file.size / 1024 / 1024 < 5;
+        if (!isLt2M) {
+            message.error('Image must smaller than 5MB');
+        }
+        return isJpgOrPng && isLt2M;
+    };
 
-    return (
-        <div className={classes.root}>
-            <label className={classes.uploadButton}>
-                <div className="ant-btn">
-                    <span>Add Image {loading && <Spin />}</span>
-                </div>
-
-                <input
-                    multiple
-                    style={{ display: 'none' }}
-                    disabled={loading}
-                    accept="image/*"
-                    type="file"
-                    onChange={handleUpload}
-                />
-            </label>
-
-            <div className={classes.imageList}>
-                <Space direction="vertical">
-                    {value.map((img, index) => {
-                        const descriptionError = get(errors, ['images', index, 'description']);
-
-                        return (
-                            <Space key={img.file?.id} className={classes.imageItem}>
-                                <Image
-                                    alt={img.description || 'Image preview'}
-                                    className={classes.thumbnail}
-                                    src={nhost.storage.getPublicUrl({ fileId: img.file.id })}
-                                    width={80}
-                                    height={80}
-                                />
-                                <Form.Item
-                                    validateStatus={descriptionError ? 'error' : 'success'}
-                                    help={descriptionError}
-                                >
-                                    <Input.TextArea
-                                        onBlur={() =>
-                                            onTouch(['images', `${index}`, 'description'])
-                                        }
-                                        value={img.description}
-                                        placeholder="Description (optional)"
-                                        rows={2}
-                                        onChange={(e) =>
-                                            handleDescriptionChange(index, e.target.value)
-                                        }
-                                    />
-                                </Form.Item>
-                                <Button
-                                    size="small"
-                                    shape="circle"
-                                    icon={<DeleteFilled />}
-                                    onClick={() => handleRemoveImage(index)}
-                                />
-                            </Space>
-                        );
-                    })}
-                </Space>
-            </div>
+    const uploadButton = (
+        <div>
+            {loading ? <LoadingOutlined /> : <PlusOutlined />}
+            <div style={{ marginTop: 8 }}>Upload</div>
         </div>
+    );
+
+    // className = "avatar-uploader"
+    return (
+        <Space direction="vertical" align="center" size={0}>
+            <Upload
+                action={handleUploadImage}
+                beforeUpload={beforeUpload}
+                showUploadList={false}
+                listType="picture-card">
+                {props.value ? (
+                    <ImageDisplay
+                        width={props.width || 100}
+                        height={props.height || 100}
+                        file={props.value}
+                    />
+                ) : (
+                    uploadButton
+                )}
+            </Upload>
+
+            {props.value && <Typography.Link onClick={handleRemove}>Remove</Typography.Link>}
+        </Space>
     );
 };

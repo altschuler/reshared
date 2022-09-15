@@ -5,15 +5,11 @@ import { Alert, Spin, Row, Col } from 'antd';
 import { GroupLayout } from './GroupLayout';
 import { JoinRequestList } from './JoinRequestList';
 import { useMembership } from '../../utils/group';
-import { createUseStyles } from 'react-jss';
 import { MemberList } from './MemberList';
-
-const useStyles = createUseStyles({});
 
 export const GroupMembersPage = () => {
     const router = useRouter();
 
-    const classes = useStyles();
     const { id } = router.query;
 
     const { data, loading, error } = useGroupDetailsQuery({ variables: { shortId: id as string } });

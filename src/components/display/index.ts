@@ -6,5 +6,6 @@ export * from './ThingTypeTag';
 export * from './ErrorDisplay';
 export * from './ActivityList';
 export * from './ImageThumbList';
+export * from './ThingImageDisplay';
 export * from './ImageDisplay';
 export * from './feed';

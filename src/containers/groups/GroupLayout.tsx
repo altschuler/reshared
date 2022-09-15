@@ -1,4 +1,6 @@
-﻿import {
+﻿import { EllipsisOutlined } from '@ant-design/icons';
+import { useNhostClient } from '@nhost/react';
+import {
     Button,
     Divider,
     Dropdown,
@@ -10,21 +12,16 @@
     Typography,
 } from 'antd';
 import Link from 'next/link';
-import React, { ReactNode, useCallback } from 'react';
-import {
-    GqlOps,
-    GroupCardFragment,
-    ThingCardFragment,
-    useLeaveGroupMutation,
-} from '../../generated/graphql';
-import { EllipsisOutlined } from '@ant-design/icons';
-import { createUseStyles } from 'react-jss';
-import { useMembership } from '../../utils/group';
 import { useRouter } from 'next/router';
+import { ReactNode, useCallback } from 'react';
+import { createUseStyles } from 'react-jss';
+import { CreatePostDrawer, CreateThingDrawer, useDialogs } from '../../components/dialogs';
+import { ImageDisplay } from '../../components/display';
+import { GqlOps, GroupCardFragment, useLeaveGroupMutation } from '../../generated/graphql';
+import { useMembership } from '../../utils/group';
 import { urlFor } from '../../utils/urls';
-import { JoinButton } from './JoinButton';
-import { useDialogs, CreateThingDrawer, CreatePostDrawer } from '../../components/dialogs';
 import { PageLayout } from '../root/PageLayout';
+import { JoinButton } from './JoinButton';
 
 export type GroupPage = 'home' | 'members' | 'settings' | 'things';
 
@@ -57,6 +54,7 @@ export const GroupLayout = (props: GroupLayoutProps) => {
     const router = useRouter();
     const { isAdmin, isMember, user } = useMembership(props.group);
     const btnClass = (page: GroupPage) => (props.activePage === page ? classes.active : undefined);
+    const nhost = useNhostClient();
 
     const [leave, mutation] = useLeaveGroupMutation({
         refetchQueries: [GqlOps.Query.UserPrivateDetails],
@@ -125,7 +123,8 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                                 group, not your account or other groups in which they are shared).
                             </Typography.Paragraph>
                         </div>
-                    }>
+                    }
+                >
                     <Button type="primary" danger loading={mutation.loading}>
                         Leave Group
                     </Button>
@@ -139,6 +138,19 @@ export const GroupLayout = (props: GroupLayoutProps) => {
             <PageHeader
                 className={classes.header}
                 title={props.group.name}
+                avatar={
+                    props.group.banner_file
+                        ? {
+                              icon: (
+                                  <ImageDisplay
+                                      width={100}
+                                      height={100}
+                                      file={props.group.banner_file}
+                                  />
+                              ),
+                          }
+                        : undefined
+                }
                 extra={[
                     isMember && (
                         <Link passHref key="home" href={urlFor.group.home(props.group)}>
@@ -195,7 +207,8 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                     ),
 
                     !isMember && <JoinButton key="join" group={props.group} />,
-                ]}>
+                ]}
+            >
                 {props.children}
             </PageHeader>
         </PageLayout>

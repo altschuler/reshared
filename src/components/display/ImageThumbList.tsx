@@ -1,10 +1,9 @@
 ﻿import React, { useCallback } from 'react';
 import { Space } from 'antd';
-import Image from 'next/image';
 import { ThingCardFragment } from '../../generated/graphql';
 import { createUseStyles } from 'react-jss';
 import { ImageGalleryModal, useDialogs } from '../dialogs';
-import { ThingImageDisplay } from './ImageDisplay';
+import { ThingImageDisplay } from './ThingImageDisplay';
 import { useNhostClient } from '@nhost/react';
 
 const useStyles = createUseStyles({

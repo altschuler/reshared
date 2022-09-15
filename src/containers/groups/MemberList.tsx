@@ -21,6 +21,7 @@ export const MemberList = ({ memberships }: MemberListProps) => {
     useEffect(() => {
         pgn.setTotal(memberships.length);
     }, [memberships.length, pgn]);
+    console.log('memberships: ', memberships);
 
     return (
         <List
@@ -37,6 +38,9 @@ export const MemberList = ({ memberships }: MemberListProps) => {
                                 <Link href={`/u/${member.user.id}`}>{member.user.displayName}</Link>
                                 {member.role === Group_Role_Enum.Admin && (
                                     <Tag color="blue">Admin</Tag>
+                                )}
+                                {member.role === Group_Role_Enum.Owner && (
+                                    <Tag color="blue">Owner</Tag>
                                 )}
                             </Space>
                         }

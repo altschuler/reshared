@@ -7180,6 +7180,10 @@ type groups {
     """filter the rows returned"""
     where: activities_bool_exp
   ): activities_aggregate!
+
+  """An object relationship"""
+  banner_file: files
+  banner_file_id: uuid
   created_at: timestamptz!
   description: String
   id: uuid!
@@ -7358,6 +7362,8 @@ input groups_bool_exp {
   _not: groups_bool_exp
   _or: [groups_bool_exp!]
   activities: activities_bool_exp
+  banner_file: files_bool_exp
+  banner_file_id: uuid_comparison_exp
   created_at: timestamptz_comparison_exp
   description: String_comparison_exp
   id: uuid_comparison_exp
@@ -7396,6 +7402,8 @@ input type for inserting data into table "groups"
 """
 input groups_insert_input {
   activities: activities_arr_rel_insert_input
+  banner_file: files_obj_rel_insert_input
+  banner_file_id: uuid
   created_at: timestamptz
   description: String
   id: uuid
@@ -7411,6 +7419,7 @@ input groups_insert_input {
 
 """aggregate max on columns"""
 type groups_max_fields {
+  banner_file_id: uuid
   created_at: timestamptz
   description: String
   id: uuid
@@ -7421,6 +7430,7 @@ type groups_max_fields {
 
 """aggregate min on columns"""
 type groups_min_fields {
+  banner_file_id: uuid
   created_at: timestamptz
   description: String
   id: uuid
@@ -7462,6 +7472,8 @@ input groups_on_conflict {
 """Ordering options when selecting data from "groups"."""
 input groups_order_by {
   activities_aggregate: activities_aggregate_order_by
+  banner_file: files_order_by
+  banner_file_id: order_by
   created_at: order_by
   description: order_by
   id: order_by
@@ -7484,6 +7496,9 @@ input groups_pk_columns_input {
 select columns of table "groups"
 """
 enum groups_select_column {
+  """column name"""
+  banner_file_id
+
   """column name"""
   created_at
 
@@ -7510,6 +7525,7 @@ enum groups_select_column {
 input type for updating data in table "groups"
 """
 input groups_set_input {
+  banner_file_id: uuid
   created_at: timestamptz
   description: String
   id: uuid
@@ -7523,6 +7539,9 @@ input groups_set_input {
 update columns of table "groups"
 """
 enum groups_update_column {
+  """column name"""
+  banner_file_id
+
   """column name"""
   created_at
 

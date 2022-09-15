@@ -15,7 +15,7 @@
         "printWidth": 100,
         "tabWidth": 4,
         "singleQuote": true,
-        "jsxBracketSameLine": true,
+        "bracketSameLine": true,
         "trailingComma": "all"
     },
     "dependencies": {
@@ -33,6 +33,7 @@
         "@sentry/webpack-plugin": "^1.17.1",
         "abortcontroller-polyfill": "^1.7.3",
         "antd": "^4.16.11",
+        "antd-img-crop": "^4.2.4",
         "apollo-server-micro": "^3.1.2",
         "bcryptjs": "^2.4.3",
         "clsx": "^1.1.1",

@@ -1,12 +1,15 @@
-﻿import { Alert, Button, Checkbox, Form, Input } from 'antd';
+﻿import ImgCrop from 'antd-img-crop';
+import { Alert, Button, Checkbox, Form, Input, Space, Upload } from 'antd';
 import { createUseEditor, EditorState } from '../AbstractEditor';
 import {
     CreateGroupInput,
+    FileUploadCardFragment,
     GroupDetailsFragment,
     Groups_Set_Input,
 } from '../../../generated/graphql';
-import * as Joi from 'joi';
+import Joi from 'joi';
 import { useCallback } from 'react';
+import { ImageInput } from '../../forms/ImageInput';
 
 export const groupSchema = Joi.object<EditorGroup>({
     name: Joi.string().min(2).max(50).messages({
@@ -21,12 +24,14 @@ export interface EditorGroup {
     name: string;
     description: string;
     public: boolean;
+    banner_file: FileUploadCardFragment | null;
 }
 
 export const makeEditorGroup = (source?: GroupDetailsFragment): EditorGroup => ({
     name: source?.name || '',
     description: source?.description || '',
     public: source?.public || false,
+    banner_file: source?.banner_file || null,
 });
 
 export type GroupEditorState = EditorState<EditorGroup>;
@@ -76,6 +81,13 @@ export const GroupEditor = (props: GroupEditorProps) => {
                     </Checkbox>
                 </Form.Item>
 
+                <Form.Item label="Image">
+                    <ImageInput
+                        value={present.banner_file}
+                        onChange={(banner_file) => state.update({ banner_file })}
+                    />
+                </Form.Item>
+
                 <Form.Item>
                     <Button
                         loading={loading}
@@ -108,4 +120,5 @@ export const asGroupUpdateInput = ({ present }: GroupEditorState): Groups_Set_In
     name: present.name,
     description: present.description,
     public: present.public,
+    banner_file_id: present.banner_file?.id || null,
 });

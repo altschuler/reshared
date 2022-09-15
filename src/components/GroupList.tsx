@@ -1,30 +1,29 @@
-﻿import { Avatar, List, Space, Tooltip } from 'antd';
+﻿import { ReactNode, useEffect } from 'react';
 import {
     CheckCircleTwoTone,
-    CheckOutlined,
     EyeInvisibleOutlined,
     EyeOutlined,
     GiftOutlined,
     TeamOutlined,
 } from '@ant-design/icons';
-import { JoinButton } from '../containers/groups/JoinButton';
+import { Avatar, List, Space, Tooltip } from 'antd';
 import Link from 'next/link';
-import { urlFor } from '../utils/urls';
-import { usePagination } from '../utils/list';
 import {
     Groups_Bool_Exp,
     Groups_Order_By,
     Order_By,
     useListGroupsQuery,
 } from '../generated/graphql';
-import { ReactNode, useEffect } from 'react';
-import { isMember } from '../utils/group';
 import { useAuth } from '../utils/auth';
+import { isMember } from '../utils/group';
+import { usePagination } from '../utils/list';
+import { urlFor } from '../utils/urls';
+import { ImageDisplay } from './display';
 
 export interface GroupListProps {
     where: Groups_Bool_Exp;
     orderBy?: Groups_Order_By[];
-    emptyText?: ReactNode | (() => ReactNode);
+    emptyText?: ReactNode;
 }
 
 const IconText = ({ icon, text }: { icon: ReactNode; text: string | number }) => (
@@ -84,9 +83,22 @@ export const GroupList = (props: GroupListProps) => {
                             text={group.thing_relations_aggregate.aggregate?.count || 0}
                             key="things"
                         />,
-                    ]}>
+                    ]}
+                >
                     <List.Item.Meta
-                        avatar={<Avatar src={''} />}
+                        avatar={
+                            <Avatar
+                                icon={
+                                    group.banner_file && (
+                                        <ImageDisplay
+                                            width={100}
+                                            height={100}
+                                            file={group.banner_file}
+                                        />
+                                    )
+                                }
+                            />
+                        }
                         title={<Link href={urlFor.group.home(group)}>{group.name}</Link>}
                         description={group.description}
                     />

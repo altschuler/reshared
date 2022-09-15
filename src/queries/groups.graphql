@@ -26,6 +26,10 @@ fragment GroupCard on groups {
     description
     public
 
+    banner_file {
+        ...FileUploadCard
+    }
+
     memberships_aggregate {
         aggregate {
             count
