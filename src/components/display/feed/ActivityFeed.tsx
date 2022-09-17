@@ -15,6 +15,7 @@ const renderActivity = (activity: DetailedActivityFragment) => {
     if (post) {
         return <GroupPostEntry post={post} />;
     }
+
     const groupThing = activity.entity.group_thing;
     if (groupThing) {
         return <ThingEntry activity={activity} thing={groupThing.thing} />;

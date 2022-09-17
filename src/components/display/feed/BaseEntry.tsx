@@ -42,7 +42,7 @@ const useStyles = createUseStyles({
 
 export interface BaseEntryProps {
     actor: UserCardFragment;
-    date: Date;
+    date: Date | string;
     title: ReactNode;
     extra?: ReactNode;
     children?: ReactNode;

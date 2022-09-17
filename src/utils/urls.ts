@@ -66,6 +66,8 @@ export const urlFor = {
             return urlFor.thing(ent.group_thing.thing);
         } else if (ent.group_post) {
             return urlFor.group.home(ent.group_post.group);
+        } else if (ent.group_member) {
+            return urlFor.group.home(ent.group_member.group);
         } else if (ent.group_post_comment) {
             // TODO: link to post somehow
             return urlFor.group.home(ent.group_post_comment.post.group);

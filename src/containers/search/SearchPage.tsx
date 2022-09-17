@@ -59,7 +59,7 @@ const typeSchema = Joi.string().valid('thing', 'group', 'user').default('thing')
 export const SearchPage = () => {
     const router = useRouter();
     const classes = useStyles();
-    const query = router.query.query;
+    const query = router.query.query || '';
 
     const defaultType = useMemo(
         () => typeSchema.validate(router.query.t).value || 'thing',
