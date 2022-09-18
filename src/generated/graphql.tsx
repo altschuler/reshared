@@ -13364,7 +13364,7 @@ export const GroupActivityDocument = gql`
       order_by: [{created_at: desc}]
       limit: $limit
       offset: $offset
-      where: {verb: {_nin: [rejected, requested_to_join, accepted, deleted, showed_interest]}, entity: {_or: [{group_thing_id: {_is_null: false}}, {group_id: {_is_null: false}}, {group_post_id: {_is_null: false}}, {group_member_id: {_is_null: false}}]}}
+      where: {_and: [{verb: {_nin: [rejected, requested_to_join, accepted, deleted, showed_interest]}, entity: {_or: [{group_thing_id: {_is_null: false}}, {group_id: {_is_null: false}}, {group_post_id: {_is_null: false}}, {group_member_id: {_is_null: false}}]}}, {_not: {entity: {group_post_id: {_is_null: false}}, verb: {_eq: updated}}}]}
     ) {
       ...DetailedActivity
     }

@@ -7,9 +7,9 @@ import {
     GroupCardFragment,
     GroupPostFragment,
 } from '../../generated/graphql';
-import * as Joi from 'joi';
+import Joi from 'joi';
 import { useCallback, useMemo } from 'react';
-import { GroupPostTypeSelect } from '../forms';
+import { GroupPostTypeSelect, GroupSelect } from '../forms';
 import { HeartOutlined } from '@ant-design/icons';
 
 export const postSchema = Joi.object<EditorPost>({
@@ -43,6 +43,7 @@ export interface PostEditorProps {
     loading?: boolean;
     error?: string;
     submitLabel?: string;
+    showGroup?: boolean;
     onSubmit: (state: PostEditorState) => unknown;
 }
 
@@ -73,9 +74,17 @@ export const PostEditor = (props: PostEditorProps) => {
 
     return (
         <div>
-            <Typography.Title level={5}>Post in {present.group?.name}</Typography.Title>
+            <Form layout="horizontal" {...state.ant('group')}>
+                {props.showGroup && (
+                    <Form.Item label="Group">
+                        <GroupSelect
+                            multiple={false}
+                            value={present.group}
+                            onChange={(group) => state.update({ group })}
+                        />
+                    </Form.Item>
+                )}
 
-            <Form layout="vertical">
                 <Form.Item extra={typeExtra} {...state.ant('type')}>
                     <GroupPostTypeSelect
                         multiple={false}

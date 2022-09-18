@@ -4,6 +4,7 @@ import {
     GqlOps,
     GroupCardFragment,
     GroupPostFragment,
+    Group_Post_Type_Enum,
     useCreateGroupPostMutation,
 } from '../../generated/graphql';
 import { DialogProps } from './DialogProvider';
@@ -11,12 +12,13 @@ import { asPostCreateInput, PostEditor, PostEditorState, usePostEditor } from '.
 
 export interface CreatePostDrawerProps extends DialogProps<GroupPostFragment | null> {
     group: GroupCardFragment;
+    type?: Group_Post_Type_Enum;
 }
 
 export const CreatePostDrawer = (props: CreatePostDrawerProps) => {
-    const { group, resolve, dispose, visible } = props;
+    const { group, type, resolve, dispose, visible } = props;
 
-    const editorState = usePostEditor({ group });
+    const editorState = usePostEditor({ group, type });
 
     const [createPost, mutation] = useCreateGroupPostMutation({
         refetchQueries: [GqlOps.Query.GroupPostList, GqlOps.Query.GroupActivity],
@@ -36,15 +38,24 @@ export const CreatePostDrawer = (props: CreatePostDrawerProps) => {
         [createPost, resolve],
     );
 
+    const title = editorState.present.group
+        ? `Create post in ${editorState.present.group.name}`
+        : 'Create post';
+
     return (
         <Drawer
             bodyStyle={{ maxWidth: '100%' }}
             width={400}
-            title={`Post in ${group.name}`}
+            title={title}
             placement="right"
             onClose={dispose}
             visible={visible}>
-            <PostEditor state={editorState} loading={mutation.loading} onSubmit={handlePost} />
+            <PostEditor
+                showGroup={!props.group}
+                state={editorState}
+                loading={mutation.loading}
+                onSubmit={handlePost}
+            />
         </Drawer>
     );
 };

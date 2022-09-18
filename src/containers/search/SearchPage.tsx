@@ -6,7 +6,9 @@ import { createUseStyles } from 'react-jss';
 import { useMedia, useStateObject } from '../../utils/hooks';
 import {
     GroupCardFragment,
+    GroupPostFragment,
     Groups_Bool_Exp,
+    Group_Post_Type_Enum,
     Things_Bool_Exp,
     Users_Bool_Exp,
     useSearchCountsQuery,
@@ -16,7 +18,7 @@ import { useRouter } from 'next/router';
 import { SearchOptions, Sidebar } from './Sidebar';
 import { GroupList } from '../../components/GroupList';
 import { UserList } from '../../components/UserList';
-import { CreateGroupDrawer, useDialogs } from '../../components/dialogs';
+import { CreateGroupDrawer, CreatePostDrawer, useDialogs } from '../../components/dialogs';
 import { urlFor } from '../../utils/urls';
 import Joi from 'joi';
 
@@ -60,6 +62,15 @@ export const SearchPage = () => {
     const router = useRouter();
     const classes = useStyles();
     const query = router.query.query || '';
+    const dialogs = useDialogs();
+
+    const handleAsk = useCallback(
+        () =>
+            dialogs
+                .showDialog(CreatePostDrawer, { type: Group_Post_Type_Enum.Request })
+                .then((post: GroupPostFragment) => router.push(urlFor.group.home(post.group))),
+        [dialogs, router],
+    );
 
     const defaultType = useMemo(
         () => typeSchema.validate(router.query.t).value || 'thing',
@@ -140,7 +151,7 @@ export const SearchPage = () => {
                                     <Typography.Title level={5}>
                                         Not finding what you need?
                                     </Typography.Title>
-                                    <Button>Ask for something</Button>
+                                    <Button onClick={handleAsk}>Ask for something</Button>
                                 </Space>
                             }
                         />
