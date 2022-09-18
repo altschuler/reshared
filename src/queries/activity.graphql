@@ -137,6 +137,7 @@ fragment DetailedEntity on entities {
         ...GroupMemberWithGroupCard
     }
 }
+
 query GroupActivity($shortId: String!, $limit: Int!, $offset: Int!) {
     groups(limit: 1, where: { short_id: { _eq: $shortId } }) {
         activities(
@@ -164,6 +165,7 @@ query GroupActivity($shortId: String!, $limit: Int!, $offset: Int!) {
                             verb: { _eq: updated }
                         }
                     }
+                    { entity: { is_valid: { _eq: true } } }
                 ]
             }
         ) {

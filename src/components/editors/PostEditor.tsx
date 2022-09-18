@@ -1,4 +1,4 @@
-﻿import { Alert, Button, Form, Input, Typography } from 'antd';
+﻿import { Alert, Button, Form, Input, Popconfirm, Space, Typography } from 'antd';
 import { createUseEditor, EditorState } from './AbstractEditor';
 import {
     Group_Post_Type_Enum,
@@ -44,6 +44,7 @@ export interface PostEditorProps {
     error?: string;
     submitLabel?: string;
     showGroup?: boolean;
+    onDelete?: () => unknown;
     onSubmit: (state: PostEditorState) => unknown;
 }
 
@@ -105,13 +106,28 @@ export const PostEditor = (props: PostEditorProps) => {
                 </Form.Item>
 
                 <Form.Item>
-                    <Button
-                        loading={loading}
-                        disabled={loading}
-                        type="primary"
-                        onClick={handleSubmit}>
-                        {submitLabel || 'Post'}
-                    </Button>
+                    <Space>
+                        <Button
+                            loading={loading}
+                            disabled={loading}
+                            type="primary"
+                            onClick={handleSubmit}>
+                            {submitLabel || 'Post'}
+                        </Button>
+
+                        {props.onDelete && (
+                            <Popconfirm
+                                title="Are you sure you want to delete this post?"
+                                onConfirm={props.onDelete}
+                                okText="Yes"
+                                okType="danger"
+                                cancelText="No">
+                                <Button loading={loading} disabled={loading} type="default" danger>
+                                    Delete
+                                </Button>
+                            </Popconfirm>
+                        )}
+                    </Space>
                 </Form.Item>
 
                 {error && (

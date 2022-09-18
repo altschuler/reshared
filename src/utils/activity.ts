@@ -78,6 +78,7 @@ export const activityMessage = (
         return `${actor} ${activity.verb} user`;
     }
 
+    console.log(ent);
     // TODO: log sentry
     return `Unknown activity, this is a bug in the application!`;
 };

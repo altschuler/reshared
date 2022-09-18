@@ -27,7 +27,9 @@ const useStyles = createUseStyles({
 export const JoinButton = ({ group }: { group: GroupCardFragment }) => {
     const auth = useAuth();
     const classes = useStyles();
-    const [join, joinMutation] = useJoinGroupMutation();
+    const [join, joinMutation] = useJoinGroupMutation({
+        context: { headers: { 'x-hasura-role': 'me' } },
+    });
     const [requestJoin, requestJoinMutation] = useRequestJoinGroupMutation();
     const [cancelRequest, cancelRequestMutation] = useCancelJoinRequestMutation();
     const [requestMessage, setRequestMessage] = useState('');

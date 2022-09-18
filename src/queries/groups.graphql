@@ -151,7 +151,12 @@ query GroupPostList(
 }
 
 query ActivityList($offset: Int = 0) {
-    activities(limit: 10, offset: $offset, order_by: [{ created_at: desc }]) {
+    activities(
+        limit: 10
+        offset: $offset
+        where: { entity: { is_valid: { _eq: true } } }
+        order_by: [{ created_at: desc }]
+    ) {
         ...ActivityCard
     }
 }
@@ -276,5 +281,11 @@ mutation DeleteJoinToken($id: uuid!) {
 mutation UpdateJoinToken($id: uuid!, $input: group_join_tokens_set_input!) {
     update_group_join_tokens_by_pk(pk_columns: { id: $id }, _set: $input) {
         ...GroupJoinTokenCard
+    }
+}
+
+mutation DeleteGroupPost($id: uuid!) {
+    delete_group_posts_by_pk(id: $id) {
+        id
     }
 }

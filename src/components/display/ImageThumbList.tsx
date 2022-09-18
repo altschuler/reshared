@@ -5,6 +5,7 @@ import { createUseStyles } from 'react-jss';
 import { ImageGalleryModal, useDialogs } from '../dialogs';
 import { ThingImageDisplay } from './ThingImageDisplay';
 import { useNhostClient } from '@nhost/react';
+import { isEmpty } from 'lodash';
 
 const useStyles = createUseStyles({
     search: {
@@ -48,6 +49,10 @@ export const ImageThumbList = (props: ImageThumbListProps) => {
             }),
         [nhost.storage, props.thing.images, props.thing.name, showDialog],
     );
+
+    if (isEmpty(props.thing.images)) {
+        return null;
+    }
 
     return (
         <Space>

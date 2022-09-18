@@ -12857,6 +12857,13 @@ export type UpdateJoinTokenMutationVariables = Exact<{
 
 export type UpdateJoinTokenMutation = { __typename?: 'mutation_root', update_group_join_tokens_by_pk?: { __typename?: 'group_join_tokens', id: string, created_at: string, updated_at: string, token: string, disabled: boolean, note?: string | null } | null };
 
+export type DeleteGroupPostMutationVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type DeleteGroupPostMutation = { __typename?: 'mutation_root', delete_group_posts_by_pk?: { __typename?: 'group_posts', id: string } | null };
+
 export type SearchCountsQueryVariables = Exact<{
   thingWhere: Things_Bool_Exp;
   groupWhere: Groups_Bool_Exp;
@@ -13364,7 +13371,7 @@ export const GroupActivityDocument = gql`
       order_by: [{created_at: desc}]
       limit: $limit
       offset: $offset
-      where: {_and: [{verb: {_nin: [rejected, requested_to_join, accepted, deleted, showed_interest]}, entity: {_or: [{group_thing_id: {_is_null: false}}, {group_id: {_is_null: false}}, {group_post_id: {_is_null: false}}, {group_member_id: {_is_null: false}}]}}, {_not: {entity: {group_post_id: {_is_null: false}}, verb: {_eq: updated}}}]}
+      where: {_and: [{verb: {_nin: [rejected, requested_to_join, accepted, deleted, showed_interest]}, entity: {_or: [{group_thing_id: {_is_null: false}}, {group_id: {_is_null: false}}, {group_post_id: {_is_null: false}}, {group_member_id: {_is_null: false}}]}}, {_not: {entity: {group_post_id: {_is_null: false}}, verb: {_eq: updated}}}, {entity: {is_valid: {_eq: true}}}]}
     ) {
       ...DetailedActivity
     }
@@ -13848,7 +13855,12 @@ export function refetchGroupPostListQuery(variables: GroupPostListQueryVariables
     }
 export const ActivityListDocument = gql`
     query ActivityList($offset: Int = 0) {
-  activities(limit: 10, offset: $offset, order_by: [{created_at: desc}]) {
+  activities(
+    limit: 10
+    offset: $offset
+    where: {entity: {is_valid: {_eq: true}}}
+    order_by: [{created_at: desc}]
+  ) {
     ...ActivityCard
   }
 }
@@ -14417,6 +14429,39 @@ export function useUpdateJoinTokenMutation(baseOptions?: Apollo.MutationHookOpti
 export type UpdateJoinTokenMutationHookResult = ReturnType<typeof useUpdateJoinTokenMutation>;
 export type UpdateJoinTokenMutationResult = Apollo.MutationResult<UpdateJoinTokenMutation>;
 export type UpdateJoinTokenMutationOptions = Apollo.BaseMutationOptions<UpdateJoinTokenMutation, UpdateJoinTokenMutationVariables>;
+export const DeleteGroupPostDocument = gql`
+    mutation DeleteGroupPost($id: uuid!) {
+  delete_group_posts_by_pk(id: $id) {
+    id
+  }
+}
+    `;
+export type DeleteGroupPostMutationFn = Apollo.MutationFunction<DeleteGroupPostMutation, DeleteGroupPostMutationVariables>;
+
+/**
+ * __useDeleteGroupPostMutation__
+ *
+ * To run a mutation, you first call `useDeleteGroupPostMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteGroupPostMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteGroupPostMutation, { data, loading, error }] = useDeleteGroupPostMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteGroupPostMutation(baseOptions?: Apollo.MutationHookOptions<DeleteGroupPostMutation, DeleteGroupPostMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteGroupPostMutation, DeleteGroupPostMutationVariables>(DeleteGroupPostDocument, options);
+      }
+export type DeleteGroupPostMutationHookResult = ReturnType<typeof useDeleteGroupPostMutation>;
+export type DeleteGroupPostMutationResult = Apollo.MutationResult<DeleteGroupPostMutation>;
+export type DeleteGroupPostMutationOptions = Apollo.BaseMutationOptions<DeleteGroupPostMutation, DeleteGroupPostMutationVariables>;
 export const SearchCountsDocument = gql`
     query SearchCounts($thingWhere: things_bool_exp!, $groupWhere: groups_bool_exp!, $userWhere: users_bool_exp!) {
   usersAggregate(where: $userWhere, limit: 10) {
@@ -14742,7 +14787,7 @@ export const NotificationsDocument = gql`
   notifications(
     limit: 50
     order_by: [{created_at: desc}]
-    where: {user_id: {_eq: $userId}}
+    where: {user_id: {_eq: $userId}, activity: {entity: {is_valid: {_eq: true}}}}
   ) {
     ...NotificationCard
   }
@@ -14965,6 +15010,7 @@ export const GqlOps = {
     CreateJoinToken: 'CreateJoinToken',
     DeleteJoinToken: 'DeleteJoinToken',
     UpdateJoinToken: 'UpdateJoinToken',
+    DeleteGroupPost: 'DeleteGroupPost',
     CreateThing: 'CreateThing',
     UpdateThing: 'UpdateThing',
     DeleteThing: 'DeleteThing',

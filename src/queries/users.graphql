@@ -61,7 +61,7 @@ subscription Notifications($userId: uuid!) {
     notifications(
         limit: 50
         order_by: [{ created_at: desc }]
-        where: { user_id: { _eq: $userId } }
+        where: { user_id: { _eq: $userId }, activity: { entity: { is_valid: { _eq: true } } } }
     ) {
         ...NotificationCard
     }

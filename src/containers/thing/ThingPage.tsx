@@ -94,19 +94,16 @@ export const ThingPage = () => {
                             <Button
                                 key="edit"
                                 title="This is your thing, click to edit"
-                                onClick={() => handleEdit(thing)}
-                            >
+                                onClick={() => handleEdit(thing)}>
                                 Edit
                             </Button>
                         ) : (
                             <ThingInterestButton key="interest" thing={thing} />
                         ),
-                    ]}
-                >
+                    ]}>
                     <Descriptions colon={false}>
                         <Descriptions.Item
-                            label={<Typography.Title level={5}>Owner</Typography.Title>}
-                        >
+                            label={<Typography.Title level={5}>Owner</Typography.Title>}>
                             <Space align="center" size={5}>
                                 <UserAvatar user={thing.owner} /> {thing.owner.displayName}
                             </Space>
@@ -114,28 +111,24 @@ export const ThingPage = () => {
 
                         {thing.description && (
                             <Descriptions.Item
-                                label={<Typography.Title level={5}>Description</Typography.Title>}
-                            >
+                                label={<Typography.Title level={5}>Description</Typography.Title>}>
                                 {thing.description}
                             </Descriptions.Item>
                         )}
 
                         <Descriptions.Item
-                            label={<Typography.Title level={5}>Type</Typography.Title>}
-                        >
+                            label={<Typography.Title level={5}>Type</Typography.Title>}>
                             <ThingTypeTag type={thing.type} />
                         </Descriptions.Item>
 
                         <Descriptions.Item
-                            label={<Typography.Title level={5}>Shared in</Typography.Title>}
-                        >
+                            label={<Typography.Title level={5}>Shared in</Typography.Title>}>
                             <Space split={<Divider type="vertical" />}>
                                 {thing.group_relations.map((r) => (
                                     <Link
                                         key={r.group.id}
                                         href={urlFor.group.home(r.group)}
-                                        passHref
-                                    >
+                                        passHref>
                                         <Typography.Link>{r.group.name}</Typography.Link>
                                     </Link>
                                 ))}
@@ -144,8 +137,7 @@ export const ThingPage = () => {
 
                         {thing.expiry && (
                             <Descriptions.Item
-                                label={<Typography.Title level={5}>Expires</Typography.Title>}
-                            >
+                                label={<Typography.Title level={5}>Expires</Typography.Title>}>
                                 <DateDisplay mode="datetime" showDistance utc={thing.expiry} />
                             </Descriptions.Item>
                         )}

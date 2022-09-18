@@ -1,10 +1,11 @@
-﻿import { Drawer, message } from 'antd';
+﻿import { Drawer, message, Modal } from 'antd';
 import { useCallback } from 'react';
 import {
     GqlOps,
     GroupCardFragment,
     GroupPostFragment,
     useCreateGroupPostMutation,
+    useDeleteGroupPostMutation,
     useUpdateGroupMutation,
     useUpdateGroupPostMutation,
 } from '../../generated/graphql';
@@ -28,6 +29,9 @@ export const EditPostDrawer = (props: EditPostDrawerProps) => {
     const editorState = usePostEditor(makeEditorPost(post));
 
     const [updatePost, mutation] = useUpdateGroupPostMutation({});
+    const [remove, removeMutation] = useDeleteGroupPostMutation({
+        refetchQueries: [GqlOps.Query.GroupPostList, GqlOps.Query.GroupActivity],
+    });
 
     const handlePost = useCallback(
         (state: PostEditorState) => {
@@ -45,6 +49,19 @@ export const EditPostDrawer = (props: EditPostDrawerProps) => {
         [post.id, resolve, updatePost],
     );
 
+    const handleDelete = useCallback(() => {
+        if (!post) {
+            return;
+        }
+
+        remove({ variables: { id: post.id } })
+            .then(() => {
+                message.success('Post has been deleted');
+                dispose();
+            })
+            .catch((err) => Modal.error({ title: 'Failed to delete post', content: err.message }));
+    }, [post]);
+
     return (
         <Drawer
             bodyStyle={{ maxWidth: '100%' }}
@@ -53,7 +70,13 @@ export const EditPostDrawer = (props: EditPostDrawerProps) => {
             placement="right"
             onClose={dispose}
             visible={visible}>
-            <PostEditor state={editorState} loading={mutation.loading} onSubmit={handlePost} />
+            <PostEditor
+                state={editorState}
+                loading={mutation.loading}
+                onSubmit={handlePost}
+                onDelete={handleDelete}
+                submitLabel="Update"
+            />
         </Drawer>
     );
 };
