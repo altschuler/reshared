@@ -1,4 +1,4 @@
-import { Button, Input, Space } from 'antd';
+import { Button, Input, Space, Typography } from 'antd';
 import { useState } from 'react';
 
 export interface EditableInputProps {
@@ -15,14 +15,18 @@ export const EditableInput = (props: EditableInputProps) => {
     const Component = props.password ? Input.Password : Input;
 
     const handleCancel = () => {
-        setValue(props.defaultValue || '');
+        setValue(props.password ? '•••••' : props.defaultValue || '');
         setEditing(false);
     };
 
     const handleSave = () => {
         setLoading(true);
+        const capturedValue = value;
+        if (props.password) {
+            setValue('•••••');
+        }
         props
-            .onSave(value)
+            .onSave(capturedValue)
             .catch(() => setValue(props.defaultValue || ''))
             .finally(() => setLoading(false));
         setEditing(false);
@@ -30,23 +34,18 @@ export const EditableInput = (props: EditableInputProps) => {
 
     const handleEdit = () => {
         if (props.password) {
-            setValue('');
+            setValue('•••••');
         }
         setEditing(true);
     };
 
     return (
         <Space direction="horizontal">
-            <Component
-                disabled={!editing}
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
-            />
-
             {editing ? (
                 <>
+                    <Component value={value} onChange={(e) => setValue(e.target.value)} />
                     <Button
-                        type="text"
+                        size="small"
                         color="primary"
                         loading={loading}
                         disabled={loading}
@@ -54,14 +53,17 @@ export const EditableInput = (props: EditableInputProps) => {
                         Save
                     </Button>
 
-                    <Button type="text" onClick={handleCancel} disabled={loading}>
+                    <Button size="small" onClick={handleCancel} disabled={loading}>
                         Cancel
                     </Button>
                 </>
             ) : (
-                <Button type="text" onClick={handleEdit}>
-                    Edit
-                </Button>
+                <>
+                    <Typography.Text>{value}</Typography.Text>
+                    <Button size="small" onClick={handleEdit}>
+                        Edit
+                    </Button>
+                </>
             )}
         </Space>
     );

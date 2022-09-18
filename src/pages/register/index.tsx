@@ -1,8 +1,8 @@
 ﻿import { Typography } from 'antd';
-import { PageLayout } from '../containers/root/PageLayout';
-import { makeGSSP } from '../utils/gssp';
+import { PageLayout } from '../../containers/root/PageLayout';
+import { makeGSSP } from '../../utils/gssp';
 import { createUseStyles } from 'react-jss';
-import { RegistrationForm } from '../components/editors';
+import { RegistrationForm } from '../../components/editors';
 
 const useStyles = createUseStyles({
     form: {

@@ -1,4 +1,5 @@
-﻿import { Activity_Verb_Enum, ActivityCardFragment } from '../generated/graphql';
+﻿import { UrlObject } from 'url';
+import { Activity_Verb_Enum, ActivityCardFragment } from '../generated/graphql';
 
 const makeUrl = (absolute: boolean, path: string) =>
     `${absolute ? process.env.NEXT_PUBLIC_ROOT_URL : ''}${path}`;
@@ -18,7 +19,10 @@ interface ChatGroupWithId {
 export const urlFor = {
     root: (absolute = false) => makeUrl(absolute, '/'),
     home: (absolute = false) => makeUrl(absolute, '/home'),
-    search: (absolute = false) => makeUrl(absolute, `/search`),
+    search: (search = '', type = '', absolute = false) => ({
+        pathname: makeUrl(absolute, `/search`),
+        query: { search, t: type },
+    }),
     messages: {
         emailChanged: (absolute = false) => makeUrl(absolute, `/email-changed`),
     },
@@ -26,6 +30,15 @@ export const urlFor = {
         login: (absolute = false) => makeUrl(absolute, '/login'),
         logout: (absolute = false) => makeUrl(absolute, '/logout'),
         register: (absolute = false) => makeUrl(absolute, '/register'),
+        reset: (email = '', absolute = false) => ({
+            pathname: makeUrl(absolute, '/reset-password'),
+            query: { email },
+        }),
+        verify: (email: string, absolute = false) =>
+            ({
+                pathname: makeUrl(absolute, '/register/verify'),
+                query: { email },
+            } as UrlObject),
     },
     chat: {
         root: (absolute = false) => makeUrl(absolute, '/chat'),

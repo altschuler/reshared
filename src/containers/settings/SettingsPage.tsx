@@ -1,5 +1,6 @@
 import { useNhostClient } from '@nhost/react';
-import { Form, message, Modal, Typography } from 'antd';
+import { Alert, Form, message, Modal, Typography } from 'antd';
+import { useRouter } from 'next/router';
 import { EditableInput } from '../../components/EditableInput';
 import { ImageInput } from '../../components/forms/ImageInput';
 import {
@@ -14,12 +15,17 @@ import { PageLayout } from '../root/PageLayout';
 export const SettingsPage = () => {
     const auth = useAuth();
     const nhost = useNhostClient();
+    const router = useRouter();
+
     const [updateUser, userMutation] = useUpdateUserMutation({
         context: { headers: { 'x-hasura-role': 'me' } },
     });
     const [updateProfile, profileMutation] = useUpdateUserProfileMutation({
         context: { headers: { 'x-hasura-role': 'me' } },
     });
+
+    const isResetPasswordRedirect = router.query.type === 'passwordReset';
+    const isEmailChange = router.query.type === 'emailConfirmChange';
 
     const handleChangeName = async (newName: string) => {
         if (!auth.user) {
@@ -40,7 +46,7 @@ export const SettingsPage = () => {
         try {
             const res = await nhost.auth.changeEmail({
                 newEmail,
-                options: { redirectTo: urlFor.messages.emailChanged(true) },
+                options: { redirectTo: urlFor.user.settings() },
             });
             if (res.error) {
                 throw res.error;
@@ -88,6 +94,18 @@ export const SettingsPage = () => {
 
     return (
         <PageLayout padded loading={auth.loading}>
+            {isResetPasswordRedirect && (
+                <Alert
+                    showIcon
+                    message="You have been logged in automatically"
+                    description="You can change your password below."
+                />
+            )}
+
+            {isEmailChange && (
+                <Alert type="success" showIcon message="Your email has been verified" />
+            )}
+
             <Typography.Title level={5}>Profile</Typography.Title>
             <Typography.Paragraph italic>Publicly visible information.</Typography.Paragraph>
 
@@ -118,7 +136,7 @@ export const SettingsPage = () => {
                     </Form.Item>
 
                     <Form.Item label="Password">
-                        <EditableInput onSave={handleChangePassword} password defaultValue="" />
+                        <EditableInput onSave={handleChangePassword} password />
                     </Form.Item>
                 </Form>
             )}

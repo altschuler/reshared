@@ -5,7 +5,6 @@ import { useCallback } from 'react';
 import { urlFor } from '../../utils/urls';
 import Link from 'next/link';
 // import { getProviders, SessionProvider, signIn } from 'next-auth/client';
-import { CredentialsInput } from '../../generated/graphql';
 import { useRouter } from 'next/router';
 import { useSignUpEmailPassword } from '@nhost/react';
 
@@ -126,7 +125,7 @@ export const RegistrationEditor = (props: RegistrationEditorProps) => {
                             {props.submitLabel || 'Register'}
                         </Button>
 
-                        <Typography.Text className="signup-text">
+                        <Typography.Text>
                             Already have an account?{' '}
                             {props.onLogin ? (
                                 <Typography.Link onClick={props.onLogin}>Sign in</Typography.Link>
@@ -158,7 +157,7 @@ export const RegistrationEditor = (props: RegistrationEditorProps) => {
 };
 
 export const useRegistrationEditor = createUseEditor(makeEditorRegistration(), registrationSchema);
-export const toCredentialsInput = (state: RegistrationEditorState): CredentialsInput => ({
+export const toCredentialsInput = (state: RegistrationEditorState) => ({
     name: state.present.name,
     email: state.present.email,
     password: state.present.password,
@@ -182,6 +181,10 @@ export const RegistrationForm = (props: RegistrationFormProps) => {
         },
         [signUpEmailPassword],
     );
+
+    if (needsEmailVerification) {
+        router.push(urlFor.auth.verify(state.present.email));
+    }
 
     if (isSuccess) {
         router.push(urlFor.home());

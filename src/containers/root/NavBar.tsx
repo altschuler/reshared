@@ -61,8 +61,7 @@ const ExpandedNav = () => {
     const classes = useStyles();
     const auth = useAuth();
     const router = useRouter();
-    const handleSearch = (query: string) =>
-        router.push({ pathname: urlFor.search(), query: { query } });
+    const handleSearch = (query: string) => router.push(urlFor.search(query));
 
     return (
         <>
