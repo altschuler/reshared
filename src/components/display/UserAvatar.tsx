@@ -6,6 +6,7 @@ import { createUseStyles } from 'react-jss';
 import { CSSProperties, useMemo } from 'react';
 import { urlFor } from '../../utils/urls';
 import { useAuth } from '../../utils/auth';
+import { useNhostClient } from '@nhost/react';
 
 const useStyles = createUseStyles({
     overlay: {
@@ -30,6 +31,7 @@ export const UserAvatar = (props: UserAvatarProps) => {
     const classes = useStyles();
     const auth = useAuth();
     const isSelf = useMemo(() => auth.user && auth.user.id === user.id, [auth.user, user.id]);
+    const nhost = useNhostClient();
 
     const popover = useMemo(
         () => (
@@ -49,12 +51,16 @@ export const UserAvatar = (props: UserAvatarProps) => {
                 <Skeleton loading={false} avatar active>
                     <Card.Meta
                         avatar={
-                            <Avatar size="large">
+                            <Avatar
+                                size="large"
+                                src={
+                                    user.user_profile?.avatar &&
+                                    nhost.storage.getPublicUrl({
+                                        fileId: user.user_profile?.avatar?.id,
+                                    })
+                                }>
                                 <span style={{ userSelect: 'none' }}>
-                                    {
-                                        /*!user.avatarUrl &&*/
-                                        user.displayName.slice(0, 2).toUpperCase() || '?'
-                                    }
+                                    {user.displayName.slice(0, 2).toUpperCase() || '?'}
                                 </span>
                             </Avatar>
                         }
@@ -73,9 +79,16 @@ export const UserAvatar = (props: UserAvatarProps) => {
 
     const avatar = useMemo(
         () => (
-            <Avatar size={size || 'small'} className={className} style={style}>
+            <Avatar
+                size={size || 'small'}
+                src={
+                    user.user_profile?.avatar &&
+                    nhost.storage.getPublicUrl({ fileId: user.user_profile?.avatar?.id })
+                }
+                className={className}
+                style={style}>
                 <span style={{ userSelect: 'none' }}>
-                    {/*!user.avatarUrl && */ user.displayName.slice(0, 2).toUpperCase() || '?'}
+                    {user.displayName.slice(0, 2).toUpperCase() || '?'}
                 </span>
             </Avatar>
         ),

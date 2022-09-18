@@ -1,4 +1,16 @@
 {
-    "schema": ["./src/generated/schema.graphql"],
-    "documents": ["./src/queries/*.graphql"]
+  "name": "Local schema",
+  "schemaPath": "./src/generated/schema.graphql",
+  "documents": "./src/queries/*.graphql",
+  "extensions": {
+    "endpoints": {
+      "Local server": {
+        "url": "http://localhost:8080/v1/graphql",
+        "headers": {
+          "x-hasura-admin-secret": "<secret>"
+        },
+        "introspect": true
+      }
+    }
+  }
 }

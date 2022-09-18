@@ -8,6 +8,8 @@ import { useAuth } from '../../utils/auth';
 import { useCallback, useState } from 'react';
 import { Button, Input, message, Popconfirm } from 'antd';
 import { createUseStyles } from 'react-jss';
+import Link from 'next/link';
+import { urlFor } from '../../utils/urls';
 
 const useStyles = createUseStyles({
     requestForm: {
@@ -56,7 +58,11 @@ export const JoinButton = ({ group }: { group: GroupCardFragment }) => {
 
     // Anonymous
     if (!auth.user) {
-        return <Button type="link">Sign up to join group</Button>;
+        return (
+            <Link href={urlFor.auth.register()} passHref>
+                <Button type="link">Sign up to join group</Button>
+            </Link>
+        );
     }
 
     // Member

@@ -1,12 +1,11 @@
 ﻿import { Alert, Button, Checkbox, Divider, Form, Input, Space, Typography } from 'antd';
-import { values } from 'lodash';
 import { createUseEditor, EditorState } from './AbstractEditor';
 import * as Joi from 'joi';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import { urlFor } from '../../utils/urls';
 import Link from 'next/link';
 // import { getProviders, SessionProvider, signIn } from 'next-auth/client';
-import { CredentialsInput, useRegisterUserMutation } from '../../generated/graphql';
+import { CredentialsInput } from '../../generated/graphql';
 import { useRouter } from 'next/router';
 import { useSignUpEmailPassword } from '@nhost/react';
 
@@ -83,8 +82,7 @@ export const RegistrationEditor = (props: RegistrationEditorProps) => {
 
                 <Form.Item
                     extra="You will never ever receive spam from Reshared!"
-                    {...state.ant('email')}
-                >
+                    {...state.ant('email')}>
                     <Input
                         placeholder="Email"
                         value={present.email}
@@ -103,22 +101,19 @@ export const RegistrationEditor = (props: RegistrationEditorProps) => {
                 <Form.Item {...state.ant('consent')}>
                     <Checkbox
                         checked={present.consent}
-                        onChange={(e) => state.update({ consent: e.target.checked })}
-                    >
+                        onChange={(e) => state.update({ consent: e.target.checked })}>
                         I agree to the{' '}
                         <Typography.Link
                             target="_blank"
                             rel="noreferrer"
-                            href={urlFor.site.privacy(true)}
-                        >
+                            href={urlFor.site.privacy(true)}>
                             privacy policy
                         </Typography.Link>{' '}
                         and{' '}
                         <Typography.Link
                             target="_blank"
                             rel="noreferrer"
-                            href={urlFor.site.terms(true)}
-                        >
+                            href={urlFor.site.terms(true)}>
                             terms of service
                         </Typography.Link>
                         .

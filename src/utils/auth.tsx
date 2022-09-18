@@ -1,5 +1,5 @@
 ﻿import { UserPrivateDetailFragment, useUserPrivateDetailsQuery } from '../generated/graphql';
-import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, ReactNode, useContext, useMemo } from 'react';
 import { useAuthenticationStatus, useUserId, useSignOut } from '@nhost/nextjs';
 import { useRouter } from 'next/router';
 import { urlFor } from './urls';
@@ -40,6 +40,9 @@ export const UserProvider = (props: UserProviderProps) => {
     const meQuery = useUserPrivateDetailsQuery({
         skip: !userId,
         variables: { id: userId || '' },
+        context: {
+            headers: { 'x-hasura-role': 'me' },
+        },
     });
 
     const ctxValue = useMemo(

@@ -4,11 +4,12 @@ fragment UserCard on users {
     id
     displayName
     avatarUrl
-}
 
-fragment UserDetail on users {
-    ...UserCard
-    createdAt
+    user_profile {
+        avatar {
+            ...FileUploadCard
+        }
+    }
 }
 
 fragment UserJoinRequests on users {
@@ -19,8 +20,12 @@ fragment UserJoinRequests on users {
 }
 
 fragment UserPrivateDetail on users {
-    ...UserDetail
+    ...UserCard
     ...UserJoinRequests
+
+    createdAt
+    email
+    emailVerified
 
     memberships {
         id
@@ -29,10 +34,6 @@ fragment UserPrivateDetail on users {
             ...GroupCard
         }
     }
-
-    # private_info {
-    #     email
-    # }
 }
 
 # Queries
@@ -86,8 +87,23 @@ mutation MarkAllNotificationsRead($userId: uuid!, $readAt: timestamptz!) {
     }
 }
 
-mutation RegisterUser($input: CredentialsInput!) {
-    registerCredentials(input: $input) {
-        user_id
+mutation UpdateUser($userId: uuid!, $input: users_set_input!) {
+    updateUser(pk_columns: { id: $userId }, _set: $input) {
+        ...UserPrivateDetail
+    }
+}
+
+mutation UpdateUserProfile($userId: uuid!, $input: user_profile_insert_input!) {
+    insert_user_profile_one(
+        object: $input
+        on_conflict: {
+            where: { user_id: { _eq: $userId } }
+            constraint: user_profile_user_id_key
+            update_columns: [avatar_id]
+        }
+    ) {
+        user {
+            ...UserPrivateDetail
+        }
     }
 }

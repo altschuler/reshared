@@ -83,12 +83,6 @@ export type CreateJoinTokenResult = {
   join_token_id: Scalars['uuid'];
 };
 
-export type CredentialsInput = {
-  email?: InputMaybe<Scalars['String']>;
-  name: Scalars['String'];
-  password: Scalars['String'];
-};
-
 export type HandleJoinRequestInput = {
   accepted: Scalars['Boolean'];
   join_request_id: Scalars['uuid'];
@@ -123,12 +117,6 @@ export type JoinGroupResult = {
   __typename?: 'JoinGroupResult';
   group?: Maybe<Groups>;
   group_id: Scalars['uuid'];
-  user?: Maybe<Users>;
-  user_id: Scalars['uuid'];
-};
-
-export type RegistrationResult = {
-  __typename?: 'RegistrationResult';
   user?: Maybe<Users>;
   user_id: Scalars['uuid'];
 };
@@ -6631,10 +6619,6 @@ export type Mutation_Root = {
   delete_user_profile?: Maybe<User_Profile_Mutation_Response>;
   /** delete single row from the table: "user_profile" */
   delete_user_profile_by_pk?: Maybe<User_Profile>;
-  /** delete data from the table: "user_settings" */
-  delete_user_settings?: Maybe<User_Settings_Mutation_Response>;
-  /** delete single row from the table: "user_settings" */
-  delete_user_settings_by_pk?: Maybe<User_Settings>;
   handleJoinRequest: HandleJoinRequestResult;
   /** insert a single row into the table: "auth.providers" */
   insertAuthProvider?: Maybe<AuthProviders>;
@@ -6768,12 +6752,7 @@ export type Mutation_Root = {
   insert_user_profile?: Maybe<User_Profile_Mutation_Response>;
   /** insert a single row into the table: "user_profile" */
   insert_user_profile_one?: Maybe<User_Profile>;
-  /** insert data into the table: "user_settings" */
-  insert_user_settings?: Maybe<User_Settings_Mutation_Response>;
-  /** insert a single row into the table: "user_settings" */
-  insert_user_settings_one?: Maybe<User_Settings>;
   joinGroup?: Maybe<JoinGroupResult>;
-  registerCredentials?: Maybe<RegistrationResult>;
   requestJoinGroup?: Maybe<RequestJoinGroupResult>;
   /** update single row of the table: "auth.providers" */
   updateAuthProvider?: Maybe<AuthProviders>;
@@ -6972,12 +6951,6 @@ export type Mutation_Root = {
   update_user_profile_by_pk?: Maybe<User_Profile>;
   /** update multiples rows of table: "user_profile" */
   update_user_profile_many?: Maybe<Array<Maybe<User_Profile_Mutation_Response>>>;
-  /** update data of the table: "user_settings" */
-  update_user_settings?: Maybe<User_Settings_Mutation_Response>;
-  /** update single row of the table: "user_settings" */
-  update_user_settings_by_pk?: Maybe<User_Settings>;
-  /** update multiples rows of table: "user_settings" */
-  update_user_settings_many?: Maybe<Array<Maybe<User_Settings_Mutation_Response>>>;
   /** update multiples rows of table: "auth.users" */
   update_users_many?: Maybe<Array<Maybe<Users_Mutation_Response>>>;
 };
@@ -7399,18 +7372,6 @@ export type Mutation_RootDelete_User_ProfileArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_User_Profile_By_PkArgs = {
-  id: Scalars['uuid'];
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_User_SettingsArgs = {
-  where: User_Settings_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootDelete_User_Settings_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -7884,28 +7845,8 @@ export type Mutation_RootInsert_User_Profile_OneArgs = {
 
 
 /** mutation root */
-export type Mutation_RootInsert_User_SettingsArgs = {
-  objects: Array<User_Settings_Insert_Input>;
-  on_conflict?: InputMaybe<User_Settings_On_Conflict>;
-};
-
-
-/** mutation root */
-export type Mutation_RootInsert_User_Settings_OneArgs = {
-  object: User_Settings_Insert_Input;
-  on_conflict?: InputMaybe<User_Settings_On_Conflict>;
-};
-
-
-/** mutation root */
 export type Mutation_RootJoinGroupArgs = {
   input: JoinGroupInput;
-};
-
-
-/** mutation root */
-export type Mutation_RootRegisterCredentialsArgs = {
-  input: CredentialsInput;
 };
 
 
@@ -8608,26 +8549,6 @@ export type Mutation_RootUpdate_User_Profile_ManyArgs = {
 
 
 /** mutation root */
-export type Mutation_RootUpdate_User_SettingsArgs = {
-  _set?: InputMaybe<User_Settings_Set_Input>;
-  where: User_Settings_Bool_Exp;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_User_Settings_By_PkArgs = {
-  _set?: InputMaybe<User_Settings_Set_Input>;
-  pk_columns: User_Settings_Pk_Columns_Input;
-};
-
-
-/** mutation root */
-export type Mutation_RootUpdate_User_Settings_ManyArgs = {
-  updates: Array<User_Settings_Updates>;
-};
-
-
-/** mutation root */
 export type Mutation_RootUpdate_Users_ManyArgs = {
   updates: Array<Users_Updates>;
 };
@@ -9042,12 +8963,6 @@ export type Query_Root = {
   user_profile_aggregate: User_Profile_Aggregate;
   /** fetch data from the table: "user_profile" using primary key columns */
   user_profile_by_pk?: Maybe<User_Profile>;
-  /** fetch data from the table: "user_settings" */
-  user_settings: Array<User_Settings>;
-  /** fetch aggregated fields from the table: "user_settings" */
-  user_settings_aggregate: User_Settings_Aggregate;
-  /** fetch data from the table: "user_settings" using primary key columns */
-  user_settings_by_pk?: Maybe<User_Settings>;
   /** fetch data from the table: "auth.users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "auth.users" */
@@ -9814,29 +9729,6 @@ export type Query_RootUser_Profile_By_PkArgs = {
 };
 
 
-export type Query_RootUser_SettingsArgs = {
-  distinct_on?: InputMaybe<Array<User_Settings_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<User_Settings_Order_By>>;
-  where?: InputMaybe<User_Settings_Bool_Exp>;
-};
-
-
-export type Query_RootUser_Settings_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<User_Settings_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<User_Settings_Order_By>>;
-  where?: InputMaybe<User_Settings_Bool_Exp>;
-};
-
-
-export type Query_RootUser_Settings_By_PkArgs = {
-  id: Scalars['uuid'];
-};
-
-
 export type Query_RootUsersArgs = {
   distinct_on?: InputMaybe<Array<Users_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']>;
@@ -10067,12 +9959,6 @@ export type Subscription_Root = {
   user_profile_aggregate: User_Profile_Aggregate;
   /** fetch data from the table: "user_profile" using primary key columns */
   user_profile_by_pk?: Maybe<User_Profile>;
-  /** fetch data from the table: "user_settings" */
-  user_settings: Array<User_Settings>;
-  /** fetch aggregated fields from the table: "user_settings" */
-  user_settings_aggregate: User_Settings_Aggregate;
-  /** fetch data from the table: "user_settings" using primary key columns */
-  user_settings_by_pk?: Maybe<User_Settings>;
   /** fetch data from the table: "auth.users" */
   users: Array<Users>;
   /** fetch aggregated fields from the table: "auth.users" */
@@ -10835,29 +10721,6 @@ export type Subscription_RootUser_Profile_AggregateArgs = {
 
 
 export type Subscription_RootUser_Profile_By_PkArgs = {
-  id: Scalars['uuid'];
-};
-
-
-export type Subscription_RootUser_SettingsArgs = {
-  distinct_on?: InputMaybe<Array<User_Settings_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<User_Settings_Order_By>>;
-  where?: InputMaybe<User_Settings_Bool_Exp>;
-};
-
-
-export type Subscription_RootUser_Settings_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<User_Settings_Select_Column>>;
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-  order_by?: InputMaybe<Array<User_Settings_Order_By>>;
-  where?: InputMaybe<User_Settings_Bool_Exp>;
-};
-
-
-export type Subscription_RootUser_Settings_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -11697,8 +11560,8 @@ export type Timestamptz_Comparison_Exp = {
 export type User_Profile = {
   __typename?: 'user_profile';
   /** An object relationship */
-  avatar: Files;
-  avatar_id: Scalars['uuid'];
+  avatar?: Maybe<Files>;
+  avatar_id?: Maybe<Scalars['uuid']>;
   created_at: Scalars['timestamptz'];
   id: Scalars['uuid'];
   updated_at: Scalars['timestamptz'];
@@ -11791,6 +11654,13 @@ export type User_Profile_Mutation_Response = {
   returning: Array<User_Profile>;
 };
 
+/** input type for inserting object relation for remote table "user_profile" */
+export type User_Profile_Obj_Rel_Insert_Input = {
+  data: User_Profile_Insert_Input;
+  /** upsert condition */
+  on_conflict?: InputMaybe<User_Profile_On_Conflict>;
+};
+
 /** on_conflict condition type for table "user_profile" */
 export type User_Profile_On_Conflict = {
   constraint: User_Profile_Constraint;
@@ -11855,172 +11725,6 @@ export type User_Profile_Updates = {
   /** sets the columns of the filtered rows to the given values */
   _set?: InputMaybe<User_Profile_Set_Input>;
   where: User_Profile_Bool_Exp;
-};
-
-/** Private settings for a user */
-export type User_Settings = {
-  __typename?: 'user_settings';
-  /** An object relationship */
-  avatar?: Maybe<Files>;
-  avatar_file_id?: Maybe<Scalars['uuid']>;
-  created_at: Scalars['timestamptz'];
-  id: Scalars['uuid'];
-  updated_at: Scalars['timestamptz'];
-  /** An object relationship */
-  user: Users;
-  user_id: Scalars['uuid'];
-};
-
-/** aggregated selection of "user_settings" */
-export type User_Settings_Aggregate = {
-  __typename?: 'user_settings_aggregate';
-  aggregate?: Maybe<User_Settings_Aggregate_Fields>;
-  nodes: Array<User_Settings>;
-};
-
-/** aggregate fields of "user_settings" */
-export type User_Settings_Aggregate_Fields = {
-  __typename?: 'user_settings_aggregate_fields';
-  count: Scalars['Int'];
-  max?: Maybe<User_Settings_Max_Fields>;
-  min?: Maybe<User_Settings_Min_Fields>;
-};
-
-
-/** aggregate fields of "user_settings" */
-export type User_Settings_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<User_Settings_Select_Column>>;
-  distinct?: InputMaybe<Scalars['Boolean']>;
-};
-
-/** Boolean expression to filter rows from the table "user_settings". All fields are combined with a logical 'AND'. */
-export type User_Settings_Bool_Exp = {
-  _and?: InputMaybe<Array<User_Settings_Bool_Exp>>;
-  _not?: InputMaybe<User_Settings_Bool_Exp>;
-  _or?: InputMaybe<Array<User_Settings_Bool_Exp>>;
-  avatar?: InputMaybe<Files_Bool_Exp>;
-  avatar_file_id?: InputMaybe<Uuid_Comparison_Exp>;
-  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
-  id?: InputMaybe<Uuid_Comparison_Exp>;
-  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
-  user?: InputMaybe<Users_Bool_Exp>;
-  user_id?: InputMaybe<Uuid_Comparison_Exp>;
-};
-
-/** unique or primary key constraints on table "user_settings" */
-export enum User_Settings_Constraint {
-  /** unique or primary key constraint on columns "id" */
-  UserSettingsPkey = 'user_settings_pkey',
-  /** unique or primary key constraint on columns "user_id" */
-  UserSettingsUserIdFk = 'user_settings_user_id_fk',
-  /** unique or primary key constraint on columns "user_id" */
-  UserSettingsUserIdKey = 'user_settings_user_id_key'
-}
-
-/** input type for inserting data into table "user_settings" */
-export type User_Settings_Insert_Input = {
-  avatar?: InputMaybe<Files_Obj_Rel_Insert_Input>;
-  avatar_file_id?: InputMaybe<Scalars['uuid']>;
-  created_at?: InputMaybe<Scalars['timestamptz']>;
-  id?: InputMaybe<Scalars['uuid']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']>;
-  user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
-  user_id?: InputMaybe<Scalars['uuid']>;
-};
-
-/** aggregate max on columns */
-export type User_Settings_Max_Fields = {
-  __typename?: 'user_settings_max_fields';
-  avatar_file_id?: Maybe<Scalars['uuid']>;
-  created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
-  updated_at?: Maybe<Scalars['timestamptz']>;
-  user_id?: Maybe<Scalars['uuid']>;
-};
-
-/** aggregate min on columns */
-export type User_Settings_Min_Fields = {
-  __typename?: 'user_settings_min_fields';
-  avatar_file_id?: Maybe<Scalars['uuid']>;
-  created_at?: Maybe<Scalars['timestamptz']>;
-  id?: Maybe<Scalars['uuid']>;
-  updated_at?: Maybe<Scalars['timestamptz']>;
-  user_id?: Maybe<Scalars['uuid']>;
-};
-
-/** response of any mutation on the table "user_settings" */
-export type User_Settings_Mutation_Response = {
-  __typename?: 'user_settings_mutation_response';
-  /** number of rows affected by the mutation */
-  affected_rows: Scalars['Int'];
-  /** data from the rows affected by the mutation */
-  returning: Array<User_Settings>;
-};
-
-/** on_conflict condition type for table "user_settings" */
-export type User_Settings_On_Conflict = {
-  constraint: User_Settings_Constraint;
-  update_columns?: Array<User_Settings_Update_Column>;
-  where?: InputMaybe<User_Settings_Bool_Exp>;
-};
-
-/** Ordering options when selecting data from "user_settings". */
-export type User_Settings_Order_By = {
-  avatar?: InputMaybe<Files_Order_By>;
-  avatar_file_id?: InputMaybe<Order_By>;
-  created_at?: InputMaybe<Order_By>;
-  id?: InputMaybe<Order_By>;
-  updated_at?: InputMaybe<Order_By>;
-  user?: InputMaybe<Users_Order_By>;
-  user_id?: InputMaybe<Order_By>;
-};
-
-/** primary key columns input for table: user_settings */
-export type User_Settings_Pk_Columns_Input = {
-  id: Scalars['uuid'];
-};
-
-/** select columns of table "user_settings" */
-export enum User_Settings_Select_Column {
-  /** column name */
-  AvatarFileId = 'avatar_file_id',
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  UpdatedAt = 'updated_at',
-  /** column name */
-  UserId = 'user_id'
-}
-
-/** input type for updating data in table "user_settings" */
-export type User_Settings_Set_Input = {
-  avatar_file_id?: InputMaybe<Scalars['uuid']>;
-  created_at?: InputMaybe<Scalars['timestamptz']>;
-  id?: InputMaybe<Scalars['uuid']>;
-  updated_at?: InputMaybe<Scalars['timestamptz']>;
-  user_id?: InputMaybe<Scalars['uuid']>;
-};
-
-/** update columns of table "user_settings" */
-export enum User_Settings_Update_Column {
-  /** column name */
-  AvatarFileId = 'avatar_file_id',
-  /** column name */
-  CreatedAt = 'created_at',
-  /** column name */
-  Id = 'id',
-  /** column name */
-  UpdatedAt = 'updated_at',
-  /** column name */
-  UserId = 'user_id'
-}
-
-export type User_Settings_Updates = {
-  /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<User_Settings_Set_Input>;
-  where: User_Settings_Bool_Exp;
 };
 
 /** User account information. Don't modify its structure as Hasura Auth relies on it to function properly. */
@@ -12109,6 +11813,8 @@ export type Users = {
   userProviders: Array<AuthUserProviders>;
   /** An aggregate relationship */
   userProviders_aggregate: AuthUserProviders_Aggregate;
+  /** An object relationship */
+  user_profile?: Maybe<User_Profile>;
 };
 
 
@@ -12483,6 +12189,7 @@ export type Users_Bool_Exp = {
   totpSecret?: InputMaybe<String_Comparison_Exp>;
   updatedAt?: InputMaybe<Timestamptz_Comparison_Exp>;
   userProviders?: InputMaybe<AuthUserProviders_Bool_Exp>;
+  user_profile?: InputMaybe<User_Profile_Bool_Exp>;
 };
 
 /** unique or primary key constraints on table "auth.users" */
@@ -12552,6 +12259,7 @@ export type Users_Insert_Input = {
   totpSecret?: InputMaybe<Scalars['String']>;
   updatedAt?: InputMaybe<Scalars['timestamptz']>;
   userProviders?: InputMaybe<AuthUserProviders_Arr_Rel_Insert_Input>;
+  user_profile?: InputMaybe<User_Profile_Obj_Rel_Insert_Input>;
 };
 
 /** aggregate max on columns */
@@ -12717,6 +12425,7 @@ export type Users_Order_By = {
   totpSecret?: InputMaybe<Order_By>;
   updatedAt?: InputMaybe<Order_By>;
   userProviders_aggregate?: InputMaybe<AuthUserProviders_Aggregate_Order_By>;
+  user_profile?: InputMaybe<User_Profile_Order_By>;
 };
 
 /** primary key columns input for table: users */
@@ -12895,19 +12604,19 @@ export type Uuid_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['uuid']>>;
 };
 
-export type DetailedActivityFragment = { __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_post?: { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_member?: { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, group: { __typename?: 'groups', id: string, short_id: string, name: string }, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null } };
+export type DetailedActivityFragment = { __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, group_post?: { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } } | null, group_member?: { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, group: { __typename?: 'groups', id: string, short_id: string, name: string }, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } | null } };
 
-export type ActivityCardFragment = { __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null };
+export type ActivityCardFragment = { __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null };
 
-export type NotificationCardFragment = { __typename?: 'notifications', id: string, read_at?: string | null, created_at: string, activity: { __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null } };
+export type NotificationCardFragment = { __typename?: 'notifications', id: string, read_at?: string | null, created_at: string, activity: { __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null } };
 
 export type GroupRefFragment = { __typename?: 'groups', id: string, short_id: string, name: string };
 
 export type ThingRefFragment = { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> };
 
-export type EntityCardFragment = { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null };
+export type EntityCardFragment = { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null };
 
-export type DetailedEntityFragment = { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_post?: { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_member?: { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, group: { __typename?: 'groups', id: string, short_id: string, name: string }, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null };
+export type DetailedEntityFragment = { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, group_post?: { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } } | null, group_member?: { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, group: { __typename?: 'groups', id: string, short_id: string, name: string }, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } | null };
 
 export type GroupActivityQueryVariables = Exact<{
   shortId: Scalars['String'];
@@ -12916,13 +12625,13 @@ export type GroupActivityQueryVariables = Exact<{
 }>;
 
 
-export type GroupActivityQuery = { __typename?: 'query_root', groups: Array<{ __typename?: 'groups', activities: Array<{ __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_post?: { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_member?: { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, group: { __typename?: 'groups', id: string, short_id: string, name: string }, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null } }> }> };
+export type GroupActivityQuery = { __typename?: 'query_root', groups: Array<{ __typename?: 'groups', activities: Array<{ __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, group_post?: { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } } | null, group_member?: { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, group: { __typename?: 'groups', id: string, short_id: string, name: string }, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } | null } }> }> };
 
-export type ChatMessageCardFragment = { __typename?: 'chat_messages', id: string, sender_id: string, message: string, created_at: string, entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null };
+export type ChatMessageCardFragment = { __typename?: 'chat_messages', id: string, sender_id: string, message: string, created_at: string, entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null };
 
-export type ChatGroupMemberCardFragment = { __typename?: 'chat_group_members', id: string, last_read?: string | null, info?: { __typename?: 'chat_group_member_info', has_unread?: boolean | null } | null, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } };
+export type ChatGroupMemberCardFragment = { __typename?: 'chat_group_members', id: string, last_read?: string | null, info?: { __typename?: 'chat_group_member_info', has_unread?: boolean | null } | null, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } };
 
-export type ChatGroupCardFragment = { __typename?: 'chat_groups', id: string, name: string, members: Array<{ __typename?: 'chat_group_members', id: string, last_read?: string | null, info?: { __typename?: 'chat_group_member_info', has_unread?: boolean | null } | null, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, messages: Array<{ __typename?: 'chat_messages', created_at: string, message: string, sender: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> };
+export type ChatGroupCardFragment = { __typename?: 'chat_groups', id: string, name: string, members: Array<{ __typename?: 'chat_group_members', id: string, last_read?: string | null, info?: { __typename?: 'chat_group_member_info', has_unread?: boolean | null } | null, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }>, messages: Array<{ __typename?: 'chat_messages', created_at: string, message: string, sender: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> };
 
 export type ChatMessagesQueryVariables = Exact<{
   where: Chat_Messages_Bool_Exp;
@@ -12930,26 +12639,26 @@ export type ChatMessagesQueryVariables = Exact<{
 }>;
 
 
-export type ChatMessagesQuery = { __typename?: 'query_root', chat_messages: Array<{ __typename?: 'chat_messages', id: string, sender_id: string, message: string, created_at: string, entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null }> };
+export type ChatMessagesQuery = { __typename?: 'query_root', chat_messages: Array<{ __typename?: 'chat_messages', id: string, sender_id: string, message: string, created_at: string, entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null }> };
 
 export type ChatGroupsSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ChatGroupsSubscription = { __typename?: 'subscription_root', chat_groups: Array<{ __typename?: 'chat_groups', id: string, name: string, members: Array<{ __typename?: 'chat_group_members', id: string, last_read?: string | null, info?: { __typename?: 'chat_group_member_info', has_unread?: boolean | null } | null, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, messages: Array<{ __typename?: 'chat_messages', created_at: string, message: string, sender: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> }> };
+export type ChatGroupsSubscription = { __typename?: 'subscription_root', chat_groups: Array<{ __typename?: 'chat_groups', id: string, name: string, members: Array<{ __typename?: 'chat_group_members', id: string, last_read?: string | null, info?: { __typename?: 'chat_group_member_info', has_unread?: boolean | null } | null, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }>, messages: Array<{ __typename?: 'chat_messages', created_at: string, message: string, sender: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> }> };
 
 export type ChatMessagesFeedSubscriptionVariables = Exact<{
   where: Chat_Messages_Bool_Exp;
 }>;
 
 
-export type ChatMessagesFeedSubscription = { __typename?: 'subscription_root', chat_messages: Array<{ __typename?: 'chat_messages', id: string, sender_id: string, message: string, created_at: string, entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null }> };
+export type ChatMessagesFeedSubscription = { __typename?: 'subscription_root', chat_messages: Array<{ __typename?: 'chat_messages', id: string, sender_id: string, message: string, created_at: string, entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null }> };
 
 export type CreateChatGroupMutationVariables = Exact<{
   input: CreateChatGroupInput;
 }>;
 
 
-export type CreateChatGroupMutation = { __typename?: 'mutation_root', createChatGroup?: { __typename?: 'CreateChatGroupResult', chat_group?: { __typename?: 'chat_groups', id: string, name: string, members: Array<{ __typename?: 'chat_group_members', id: string, last_read?: string | null, info?: { __typename?: 'chat_group_member_info', has_unread?: boolean | null } | null, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, messages: Array<{ __typename?: 'chat_messages', created_at: string, message: string, sender: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> } | null } | null };
+export type CreateChatGroupMutation = { __typename?: 'mutation_root', createChatGroup?: { __typename?: 'CreateChatGroupResult', chat_group?: { __typename?: 'chat_groups', id: string, name: string, members: Array<{ __typename?: 'chat_group_members', id: string, last_read?: string | null, info?: { __typename?: 'chat_group_member_info', has_unread?: boolean | null } | null, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }>, messages: Array<{ __typename?: 'chat_messages', created_at: string, message: string, sender: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> } | null } | null };
 
 export type UpdateChatGroupMutationVariables = Exact<{
   id: Scalars['uuid'];
@@ -12957,14 +12666,14 @@ export type UpdateChatGroupMutationVariables = Exact<{
 }>;
 
 
-export type UpdateChatGroupMutation = { __typename?: 'mutation_root', update_chat_groups_by_pk?: { __typename?: 'chat_groups', id: string, name: string, members: Array<{ __typename?: 'chat_group_members', id: string, last_read?: string | null, info?: { __typename?: 'chat_group_member_info', has_unread?: boolean | null } | null, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, messages: Array<{ __typename?: 'chat_messages', created_at: string, message: string, sender: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> } | null };
+export type UpdateChatGroupMutation = { __typename?: 'mutation_root', update_chat_groups_by_pk?: { __typename?: 'chat_groups', id: string, name: string, members: Array<{ __typename?: 'chat_group_members', id: string, last_read?: string | null, info?: { __typename?: 'chat_group_member_info', has_unread?: boolean | null } | null, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }>, messages: Array<{ __typename?: 'chat_messages', created_at: string, message: string, sender: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> } | null };
 
 export type CreateChatMessageMutationVariables = Exact<{
   input: CreateChatMessageInput;
 }>;
 
 
-export type CreateChatMessageMutation = { __typename?: 'mutation_root', createChatMessage: { __typename?: 'CreateChatMessageResult', chat_message?: { __typename?: 'chat_messages', id: string, sender_id: string, message: string, created_at: string, entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null } | null } };
+export type CreateChatMessageMutation = { __typename?: 'mutation_root', createChatMessage: { __typename?: 'CreateChatMessageResult', chat_message?: { __typename?: 'chat_messages', id: string, sender_id: string, message: string, created_at: string, entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null } | null } };
 
 export type UpdateChatGroupMemberMutationVariables = Exact<{
   id: Scalars['uuid'];
@@ -12972,23 +12681,23 @@ export type UpdateChatGroupMemberMutationVariables = Exact<{
 }>;
 
 
-export type UpdateChatGroupMemberMutation = { __typename?: 'mutation_root', update_chat_group_members_by_pk?: { __typename?: 'chat_group_members', id: string, last_read?: string | null, info?: { __typename?: 'chat_group_member_info', has_unread?: boolean | null } | null, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null };
+export type UpdateChatGroupMemberMutation = { __typename?: 'mutation_root', update_chat_group_members_by_pk?: { __typename?: 'chat_group_members', id: string, last_read?: string | null, info?: { __typename?: 'chat_group_member_info', has_unread?: boolean | null } | null, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } | null };
 
-export type CommentCardFragment = { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } };
+export type CommentCardFragment = { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } };
 
-export type GroupMemberCardFragment = { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } };
+export type GroupMemberCardFragment = { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } };
 
-export type GroupMemberWithGroupCardFragment = { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, group: { __typename?: 'groups', id: string, short_id: string, name: string }, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } };
+export type GroupMemberWithGroupCardFragment = { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, group: { __typename?: 'groups', id: string, short_id: string, name: string }, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } };
 
 export type GroupCardFragment = { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } };
 
-export type GroupDetailsFragment = { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } };
+export type GroupDetailsFragment = { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }>, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } };
 
-export type GroupJoinRequestCardFragment = { __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } };
+export type GroupJoinRequestCardFragment = { __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } };
 
 export type GroupJoinTokenCardFragment = { __typename?: 'group_join_tokens', id: string, created_at: string, updated_at: string, token: string, disabled: boolean, note?: string | null };
 
-export type GroupPostFragment = { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } };
+export type GroupPostFragment = { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } };
 
 export type ListGroupsQueryVariables = Exact<{
   limit: Scalars['Int'];
@@ -13005,14 +12714,14 @@ export type GroupDetailsQueryVariables = Exact<{
 }>;
 
 
-export type GroupDetailsQuery = { __typename?: 'query_root', groups: Array<{ __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }> };
+export type GroupDetailsQuery = { __typename?: 'query_root', groups: Array<{ __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }>, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }> };
 
 export type GroupJoinRequestsQueryVariables = Exact<{
   where: Group_Join_Requests_Bool_Exp;
 }>;
 
 
-export type GroupJoinRequestsQuery = { __typename?: 'query_root', group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> };
+export type GroupJoinRequestsQuery = { __typename?: 'query_root', group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> };
 
 export type GroupJoinTokensQueryVariables = Exact<{
   where: Group_Join_Tokens_Bool_Exp;
@@ -13029,14 +12738,14 @@ export type GroupPostListQueryVariables = Exact<{
 }>;
 
 
-export type GroupPostListQuery = { __typename?: 'query_root', group_posts: Array<{ __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, group_posts_aggregate: { __typename?: 'group_posts_aggregate', aggregate?: { __typename?: 'group_posts_aggregate_fields', count: number } | null } };
+export type GroupPostListQuery = { __typename?: 'query_root', group_posts: Array<{ __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }>, group_posts_aggregate: { __typename?: 'group_posts_aggregate', aggregate?: { __typename?: 'group_posts_aggregate_fields', count: number } | null } };
 
 export type ActivityListQueryVariables = Exact<{
   offset?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type ActivityListQuery = { __typename?: 'query_root', activities: Array<{ __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null }> };
+export type ActivityListQuery = { __typename?: 'query_root', activities: Array<{ __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null }> };
 
 export type CreateGroupMutationVariables = Exact<{
   input: CreateGroupInput;
@@ -13051,7 +12760,7 @@ export type UpdateGroupMutationVariables = Exact<{
 }>;
 
 
-export type UpdateGroupMutation = { __typename?: 'mutation_root', update_groups_by_pk?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null };
+export type UpdateGroupMutation = { __typename?: 'mutation_root', update_groups_by_pk?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }>, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null };
 
 export type DeleteGroupMutationVariables = Exact<{
   id: Scalars['uuid'];
@@ -13065,7 +12774,7 @@ export type CreateGroupPostMutationVariables = Exact<{
 }>;
 
 
-export type CreateGroupPostMutation = { __typename?: 'mutation_root', insert_group_posts_one?: { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null };
+export type CreateGroupPostMutation = { __typename?: 'mutation_root', insert_group_posts_one?: { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } | null };
 
 export type UpdateGroupPostMutationVariables = Exact<{
   id: Scalars['uuid'];
@@ -13073,7 +12782,7 @@ export type UpdateGroupPostMutationVariables = Exact<{
 }>;
 
 
-export type UpdateGroupPostMutation = { __typename?: 'mutation_root', update_group_posts_by_pk?: { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null };
+export type UpdateGroupPostMutation = { __typename?: 'mutation_root', update_group_posts_by_pk?: { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } | null };
 
 export type CreateGroupPostCommentMutationVariables = Exact<{
   groupPostId: Scalars['uuid'];
@@ -13081,7 +12790,7 @@ export type CreateGroupPostCommentMutationVariables = Exact<{
 }>;
 
 
-export type CreateGroupPostCommentMutation = { __typename?: 'mutation_root', insert_group_post_comment_one?: { __typename?: 'group_post_comment', comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }, post: { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null };
+export type CreateGroupPostCommentMutation = { __typename?: 'mutation_root', insert_group_post_comment_one?: { __typename?: 'group_post_comment', comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }, post: { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } } | null };
 
 export type LeaveGroupMutationVariables = Exact<{
   groupId: Scalars['uuid'];
@@ -13096,35 +12805,35 @@ export type JoinGroupMutationVariables = Exact<{
 }>;
 
 
-export type JoinGroupMutation = { __typename?: 'mutation_root', insert_group_members_one?: { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, createdAt: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> } } | null };
+export type JoinGroupMutation = { __typename?: 'mutation_root', insert_group_members_one?: { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, user: { __typename?: 'users', createdAt: string, email?: any | null, emailVerified: boolean, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> } } | null };
 
 export type JoinGroupWithTokenMutationVariables = Exact<{
   input: JoinGroupInput;
 }>;
 
 
-export type JoinGroupWithTokenMutation = { __typename?: 'mutation_root', joinGroup?: { __typename?: 'JoinGroupResult', group?: { __typename?: 'groups', id: string } | null, user?: { __typename?: 'users', createdAt: string, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> } | null } | null };
+export type JoinGroupWithTokenMutation = { __typename?: 'mutation_root', joinGroup?: { __typename?: 'JoinGroupResult', group?: { __typename?: 'groups', id: string } | null, user?: { __typename?: 'users', createdAt: string, email?: any | null, emailVerified: boolean, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> } | null } | null };
 
 export type RequestJoinGroupMutationVariables = Exact<{
   input: RequestJoinGroupInput;
 }>;
 
 
-export type RequestJoinGroupMutation = { __typename?: 'mutation_root', requestJoinGroup?: { __typename?: 'RequestJoinGroupResult', group?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null, user?: { __typename?: 'users', id: string, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> } | null } | null };
+export type RequestJoinGroupMutation = { __typename?: 'mutation_root', requestJoinGroup?: { __typename?: 'RequestJoinGroupResult', group?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null, user?: { __typename?: 'users', id: string, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> } | null } | null };
 
 export type CancelJoinRequestMutationVariables = Exact<{
   requestId: Scalars['uuid'];
 }>;
 
 
-export type CancelJoinRequestMutation = { __typename?: 'mutation_root', delete_group_join_requests?: { __typename?: 'group_join_requests_mutation_response', returning: Array<{ __typename?: 'group_join_requests', user: { __typename?: 'users', id: string, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> } }> } | null };
+export type CancelJoinRequestMutation = { __typename?: 'mutation_root', delete_group_join_requests?: { __typename?: 'group_join_requests_mutation_response', returning: Array<{ __typename?: 'group_join_requests', user: { __typename?: 'users', id: string, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> } }> } | null };
 
 export type HandleJoinRequestMutationVariables = Exact<{
   input: HandleJoinRequestInput;
 }>;
 
 
-export type HandleJoinRequestMutation = { __typename?: 'mutation_root', handleJoinRequest: { __typename?: 'HandleJoinRequestResult', join_request?: { __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null } };
+export type HandleJoinRequestMutation = { __typename?: 'mutation_root', handleJoinRequest: { __typename?: 'HandleJoinRequestResult', join_request?: { __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } | null } };
 
 export type CreateJoinTokenMutationVariables = Exact<{
   input: Group_Join_Tokens_Insert_Input;
@@ -13157,11 +12866,11 @@ export type SearchCountsQueryVariables = Exact<{
 
 export type SearchCountsQuery = { __typename?: 'query_root', usersAggregate: { __typename?: 'users_aggregate', aggregate?: { __typename?: 'users_aggregate_fields', count: number } | null }, groups_aggregate: { __typename?: 'groups_aggregate', aggregate?: { __typename?: 'groups_aggregate_fields', count: number } | null }, things_aggregate: { __typename?: 'things_aggregate', aggregate?: { __typename?: 'things_aggregate_fields', count: number } | null } };
 
-export type ThingCardFragment = { __typename?: 'things', id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } };
+export type ThingCardFragment = { __typename?: 'things', id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } };
 
 export type ThingImageCardFragment = { __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } };
 
-export type ThingDetailsFragment = { __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } };
+export type ThingDetailsFragment = { __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } };
 
 export type ThingListQueryVariables = Exact<{
   limit?: InputMaybe<Scalars['Int']>;
@@ -13171,45 +12880,43 @@ export type ThingListQueryVariables = Exact<{
 }>;
 
 
-export type ThingListQuery = { __typename?: 'query_root', things: Array<{ __typename?: 'things', id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }>, things_aggregate: { __typename?: 'things_aggregate', aggregate?: { __typename?: 'things_aggregate_fields', count: number } | null } };
+export type ThingListQuery = { __typename?: 'query_root', things: Array<{ __typename?: 'things', id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }>, things_aggregate: { __typename?: 'things_aggregate', aggregate?: { __typename?: 'things_aggregate_fields', count: number } | null } };
 
 export type ThingDetailsQueryVariables = Exact<{
   shortId: Scalars['String'];
 }>;
 
 
-export type ThingDetailsQuery = { __typename?: 'query_root', things: Array<{ __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> };
+export type ThingDetailsQuery = { __typename?: 'query_root', things: Array<{ __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> };
 
 export type CreateThingMutationVariables = Exact<{
   input: Things_Insert_Input;
 }>;
 
 
-export type CreateThingMutation = { __typename?: 'mutation_root', insert_things_one?: { __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null };
+export type CreateThingMutation = { __typename?: 'mutation_root', insert_things_one?: { __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } | null };
 
 export type UpdateThingMutationVariables = Exact<{
   input: UpdateThingInput;
 }>;
 
 
-export type UpdateThingMutation = { __typename?: 'mutation_root', updateThing?: { __typename?: 'UpdateThingResult', thing?: { __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null } | null };
+export type UpdateThingMutation = { __typename?: 'mutation_root', updateThing?: { __typename?: 'UpdateThingResult', thing?: { __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } | null } | null };
 
 export type DeleteThingMutationVariables = Exact<{
   id: Scalars['uuid'];
 }>;
 
 
-export type DeleteThingMutation = { __typename?: 'mutation_root', delete_things_by_pk?: { __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } | null };
+export type DeleteThingMutation = { __typename?: 'mutation_root', delete_things_by_pk?: { __typename?: 'things', enabled: boolean, id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, group_relations: Array<{ __typename?: 'group_thing', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } | null };
 
 export type FileUploadCardFragment = { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null };
 
-export type UserCardFragment = { __typename?: 'users', id: string, displayName: string, avatarUrl: string };
+export type UserCardFragment = { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null };
 
-export type UserDetailFragment = { __typename?: 'users', createdAt: string, id: string, displayName: string, avatarUrl: string };
+export type UserJoinRequestsFragment = { __typename?: 'users', id: string, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> };
 
-export type UserJoinRequestsFragment = { __typename?: 'users', id: string, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> };
-
-export type UserPrivateDetailFragment = { __typename?: 'users', createdAt: string, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> };
+export type UserPrivateDetailFragment = { __typename?: 'users', createdAt: string, email?: any | null, emailVerified: boolean, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> };
 
 export type UserListQueryVariables = Exact<{
   where?: InputMaybe<Users_Bool_Exp>;
@@ -13218,21 +12925,21 @@ export type UserListQueryVariables = Exact<{
 }>;
 
 
-export type UserListQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: string, displayName: string, avatarUrl: string }>, usersAggregate: { __typename?: 'users_aggregate', aggregate?: { __typename?: 'users_aggregate_fields', count: number } | null } };
+export type UserListQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null }>, usersAggregate: { __typename?: 'users_aggregate', aggregate?: { __typename?: 'users_aggregate_fields', count: number } | null } };
 
 export type UserPrivateDetailsQueryVariables = Exact<{
   id: Scalars['uuid'];
 }>;
 
 
-export type UserPrivateDetailsQuery = { __typename?: 'query_root', user?: { __typename?: 'users', createdAt: string, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } }> } | null };
+export type UserPrivateDetailsQuery = { __typename?: 'query_root', user?: { __typename?: 'users', createdAt: string, email?: any | null, emailVerified: boolean, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> } | null };
 
 export type NotificationsSubscriptionVariables = Exact<{
   userId: Scalars['uuid'];
 }>;
 
 
-export type NotificationsSubscription = { __typename?: 'subscription_root', notifications: Array<{ __typename?: 'notifications', id: string, read_at?: string | null, created_at: string, activity: { __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null } }> };
+export type NotificationsSubscription = { __typename?: 'subscription_root', notifications: Array<{ __typename?: 'notifications', id: string, read_at?: string | null, created_at: string, activity: { __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null } }> };
 
 export type MarkNotificationReadMutationVariables = Exact<{
   id: Scalars['uuid'];
@@ -13240,7 +12947,7 @@ export type MarkNotificationReadMutationVariables = Exact<{
 }>;
 
 
-export type MarkNotificationReadMutation = { __typename?: 'mutation_root', update_notifications_by_pk?: { __typename?: 'notifications', id: string, read_at?: string | null, created_at: string, activity: { __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null } } | null };
+export type MarkNotificationReadMutation = { __typename?: 'mutation_root', update_notifications_by_pk?: { __typename?: 'notifications', id: string, read_at?: string | null, created_at: string, activity: { __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null } } | null };
 
 export type MarkAllNotificationsReadMutationVariables = Exact<{
   userId: Scalars['uuid'];
@@ -13248,22 +12955,24 @@ export type MarkAllNotificationsReadMutationVariables = Exact<{
 }>;
 
 
-export type MarkAllNotificationsReadMutation = { __typename?: 'mutation_root', update_notifications?: { __typename?: 'notifications_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'notifications', id: string, read_at?: string | null, created_at: string, activity: { __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string } | null } }> } | null };
+export type MarkAllNotificationsReadMutation = { __typename?: 'mutation_root', update_notifications?: { __typename?: 'notifications_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'notifications', id: string, read_at?: string | null, created_at: string, activity: { __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null }, secondary_entity?: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string } | null, thing?: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, group_join_request?: { __typename?: 'group_join_requests', id: string, response?: string | null, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_post_comment?: { __typename?: 'group_post_comment', id: string, post: { __typename?: 'group_posts', id: string, author_id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } }, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } } | null, group_post?: { __typename?: 'group_posts', id: string, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, short_id: string, name: string, images: Array<{ __typename?: 'thing_images', file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }> }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null } | null, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null } }> } | null };
 
-export type RegisterUserMutationVariables = Exact<{
-  input: CredentialsInput;
+export type UpdateUserMutationVariables = Exact<{
+  userId: Scalars['uuid'];
+  input: Users_Set_Input;
 }>;
 
 
-export type RegisterUserMutation = { __typename?: 'mutation_root', registerCredentials?: { __typename?: 'RegistrationResult', user_id: string } | null };
+export type UpdateUserMutation = { __typename?: 'mutation_root', updateUser?: { __typename?: 'users', createdAt: string, email?: any | null, emailVerified: boolean, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> } | null };
 
-export const UserCardFragmentDoc = gql`
-    fragment UserCard on users {
-  id
-  displayName
-  avatarUrl
-}
-    `;
+export type UpdateUserProfileMutationVariables = Exact<{
+  userId: Scalars['uuid'];
+  input: User_Profile_Insert_Input;
+}>;
+
+
+export type UpdateUserProfileMutation = { __typename?: 'mutation_root', insert_user_profile_one?: { __typename?: 'user_profile', user: { __typename?: 'users', createdAt: string, email?: any | null, emailVerified: boolean, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> } } | null };
+
 export const FileUploadCardFragmentDoc = gql`
     fragment FileUploadCard on files {
   id
@@ -13271,6 +12980,18 @@ export const FileUploadCardFragmentDoc = gql`
   mimeType
 }
     `;
+export const UserCardFragmentDoc = gql`
+    fragment UserCard on users {
+  id
+  displayName
+  avatarUrl
+  user_profile {
+    avatar {
+      ...FileUploadCard
+    }
+  }
+}
+    ${FileUploadCardFragmentDoc}`;
 export const GroupCardFragmentDoc = gql`
     fragment GroupCard on groups {
   id
@@ -13597,12 +13318,6 @@ export const ThingDetailsFragmentDoc = gql`
 }
     ${ThingCardFragmentDoc}
 ${GroupCardFragmentDoc}`;
-export const UserDetailFragmentDoc = gql`
-    fragment UserDetail on users {
-  ...UserCard
-  createdAt
-}
-    ${UserCardFragmentDoc}`;
 export const GroupJoinRequestCardFragmentDoc = gql`
     fragment GroupJoinRequestCard on group_join_requests {
   id
@@ -13626,8 +13341,11 @@ export const UserJoinRequestsFragmentDoc = gql`
     ${GroupJoinRequestCardFragmentDoc}`;
 export const UserPrivateDetailFragmentDoc = gql`
     fragment UserPrivateDetail on users {
-  ...UserDetail
+  ...UserCard
   ...UserJoinRequests
+  createdAt
+  email
+  emailVerified
   memberships {
     id
     role
@@ -13636,7 +13354,7 @@ export const UserPrivateDetailFragmentDoc = gql`
     }
   }
 }
-    ${UserDetailFragmentDoc}
+    ${UserCardFragmentDoc}
 ${UserJoinRequestsFragmentDoc}
 ${GroupCardFragmentDoc}`;
 export const GroupActivityDocument = gql`
@@ -15127,39 +14845,79 @@ export function useMarkAllNotificationsReadMutation(baseOptions?: Apollo.Mutatio
 export type MarkAllNotificationsReadMutationHookResult = ReturnType<typeof useMarkAllNotificationsReadMutation>;
 export type MarkAllNotificationsReadMutationResult = Apollo.MutationResult<MarkAllNotificationsReadMutation>;
 export type MarkAllNotificationsReadMutationOptions = Apollo.BaseMutationOptions<MarkAllNotificationsReadMutation, MarkAllNotificationsReadMutationVariables>;
-export const RegisterUserDocument = gql`
-    mutation RegisterUser($input: CredentialsInput!) {
-  registerCredentials(input: $input) {
-    user_id
+export const UpdateUserDocument = gql`
+    mutation UpdateUser($userId: uuid!, $input: users_set_input!) {
+  updateUser(pk_columns: {id: $userId}, _set: $input) {
+    ...UserPrivateDetail
   }
 }
-    `;
-export type RegisterUserMutationFn = Apollo.MutationFunction<RegisterUserMutation, RegisterUserMutationVariables>;
+    ${UserPrivateDetailFragmentDoc}`;
+export type UpdateUserMutationFn = Apollo.MutationFunction<UpdateUserMutation, UpdateUserMutationVariables>;
 
 /**
- * __useRegisterUserMutation__
+ * __useUpdateUserMutation__
  *
- * To run a mutation, you first call `useRegisterUserMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useRegisterUserMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useUpdateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [registerUserMutation, { data, loading, error }] = useRegisterUserMutation({
+ * const [updateUserMutation, { data, loading, error }] = useUpdateUserMutation({
  *   variables: {
+ *      userId: // value for 'userId'
  *      input: // value for 'input'
  *   },
  * });
  */
-export function useRegisterUserMutation(baseOptions?: Apollo.MutationHookOptions<RegisterUserMutation, RegisterUserMutationVariables>) {
+export function useUpdateUserMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserMutation, UpdateUserMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<RegisterUserMutation, RegisterUserMutationVariables>(RegisterUserDocument, options);
+        return Apollo.useMutation<UpdateUserMutation, UpdateUserMutationVariables>(UpdateUserDocument, options);
       }
-export type RegisterUserMutationHookResult = ReturnType<typeof useRegisterUserMutation>;
-export type RegisterUserMutationResult = Apollo.MutationResult<RegisterUserMutation>;
-export type RegisterUserMutationOptions = Apollo.BaseMutationOptions<RegisterUserMutation, RegisterUserMutationVariables>;
+export type UpdateUserMutationHookResult = ReturnType<typeof useUpdateUserMutation>;
+export type UpdateUserMutationResult = Apollo.MutationResult<UpdateUserMutation>;
+export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<UpdateUserMutation, UpdateUserMutationVariables>;
+export const UpdateUserProfileDocument = gql`
+    mutation UpdateUserProfile($userId: uuid!, $input: user_profile_insert_input!) {
+  insert_user_profile_one(
+    object: $input
+    on_conflict: {where: {user_id: {_eq: $userId}}, constraint: user_profile_user_id_key, update_columns: [avatar_id]}
+  ) {
+    user {
+      ...UserPrivateDetail
+    }
+  }
+}
+    ${UserPrivateDetailFragmentDoc}`;
+export type UpdateUserProfileMutationFn = Apollo.MutationFunction<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>;
+
+/**
+ * __useUpdateUserProfileMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserProfileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserProfileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserProfileMutation, { data, loading, error }] = useUpdateUserProfileMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateUserProfileMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>(UpdateUserProfileDocument, options);
+      }
+export type UpdateUserProfileMutationHookResult = ReturnType<typeof useUpdateUserProfileMutation>;
+export type UpdateUserProfileMutationResult = Apollo.MutationResult<UpdateUserProfileMutation>;
+export type UpdateUserProfileMutationOptions = Apollo.BaseMutationOptions<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>;
 
       export interface PossibleTypesResultData {
         possibleTypes: {
@@ -15212,7 +14970,8 @@ export const GqlOps = {
     DeleteThing: 'DeleteThing',
     MarkNotificationRead: 'MarkNotificationRead',
     MarkAllNotificationsRead: 'MarkAllNotificationsRead',
-    RegisterUser: 'RegisterUser'
+    UpdateUser: 'UpdateUser',
+    UpdateUserProfile: 'UpdateUserProfile'
   },
   Subscription: {
     ChatGroups: 'ChatGroups',
@@ -15243,7 +15002,6 @@ export const GqlOps = {
     ThingDetails: 'ThingDetails',
     FileUploadCard: 'FileUploadCard',
     UserCard: 'UserCard',
-    UserDetail: 'UserDetail',
     UserJoinRequests: 'UserJoinRequests',
     UserPrivateDetail: 'UserPrivateDetail'
   }

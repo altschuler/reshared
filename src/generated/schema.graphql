@@ -71,12 +71,6 @@ type CreateJoinTokenResult {
   join_token_id: uuid!
 }
 
-input CredentialsInput {
-  email: String
-  name: String!
-  password: String!
-}
-
 input HandleJoinRequestInput {
   accepted: Boolean!
   join_request_id: uuid!
@@ -111,11 +105,6 @@ input JoinGroupInput {
 type JoinGroupResult {
   group: groups
   group_id: uuid!
-  user: users
-  user_id: uuid!
-}
-
-type RegistrationResult {
   user: users
   user_id: uuid!
 }
@@ -8044,19 +8033,6 @@ type mutation_root {
   delete single row from the table: "user_profile"
   """
   delete_user_profile_by_pk(id: uuid!): user_profile
-
-  """
-  delete data from the table: "user_settings"
-  """
-  delete_user_settings(
-    """filter the rows which have to be deleted"""
-    where: user_settings_bool_exp!
-  ): user_settings_mutation_response
-
-  """
-  delete single row from the table: "user_settings"
-  """
-  delete_user_settings_by_pk(id: uuid!): user_settings
   handleJoinRequest(input: HandleJoinRequestInput!): HandleJoinRequestResult!
 
   """
@@ -8784,30 +8760,7 @@ type mutation_root {
     """upsert condition"""
     on_conflict: user_profile_on_conflict
   ): user_profile
-
-  """
-  insert data into the table: "user_settings"
-  """
-  insert_user_settings(
-    """the rows to be inserted"""
-    objects: [user_settings_insert_input!]!
-
-    """upsert condition"""
-    on_conflict: user_settings_on_conflict
-  ): user_settings_mutation_response
-
-  """
-  insert a single row into the table: "user_settings"
-  """
-  insert_user_settings_one(
-    """the row to be inserted"""
-    object: user_settings_insert_input!
-
-    """upsert condition"""
-    on_conflict: user_settings_on_conflict
-  ): user_settings
   joinGroup(input: JoinGroupInput!): JoinGroupResult
-  registerCredentials(input: CredentialsInput!): RegistrationResult
   requestJoinGroup(input: RequestJoinGroupInput!): RequestJoinGroupResult
 
   """
@@ -9846,34 +9799,6 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [user_profile_updates!]!
   ): [user_profile_mutation_response]
-
-  """
-  update data of the table: "user_settings"
-  """
-  update_user_settings(
-    """sets the columns of the filtered rows to the given values"""
-    _set: user_settings_set_input
-
-    """filter the rows which have to be updated"""
-    where: user_settings_bool_exp!
-  ): user_settings_mutation_response
-
-  """
-  update single row of the table: "user_settings"
-  """
-  update_user_settings_by_pk(
-    """sets the columns of the filtered rows to the given values"""
-    _set: user_settings_set_input
-    pk_columns: user_settings_pk_columns_input!
-  ): user_settings
-
-  """
-  update multiples rows of table: "user_settings"
-  """
-  update_user_settings_many(
-    """updates to execute, in order"""
-    updates: [user_settings_updates!]!
-  ): [user_settings_mutation_response]
 
   """
   update multiples rows of table: "auth.users"
@@ -11530,49 +11455,6 @@ type query_root {
   user_profile_by_pk(id: uuid!): user_profile
 
   """
-  fetch data from the table: "user_settings"
-  """
-  user_settings(
-    """distinct select on columns"""
-    distinct_on: [user_settings_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_settings_order_by!]
-
-    """filter the rows returned"""
-    where: user_settings_bool_exp
-  ): [user_settings!]!
-
-  """
-  fetch aggregated fields from the table: "user_settings"
-  """
-  user_settings_aggregate(
-    """distinct select on columns"""
-    distinct_on: [user_settings_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_settings_order_by!]
-
-    """filter the rows returned"""
-    where: user_settings_bool_exp
-  ): user_settings_aggregate!
-
-  """fetch data from the table: "user_settings" using primary key columns"""
-  user_settings_by_pk(id: uuid!): user_settings
-
-  """
   fetch data from the table: "auth.users"
   """
   users(
@@ -13031,49 +12913,6 @@ type subscription_root {
   user_profile_by_pk(id: uuid!): user_profile
 
   """
-  fetch data from the table: "user_settings"
-  """
-  user_settings(
-    """distinct select on columns"""
-    distinct_on: [user_settings_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_settings_order_by!]
-
-    """filter the rows returned"""
-    where: user_settings_bool_exp
-  ): [user_settings!]!
-
-  """
-  fetch aggregated fields from the table: "user_settings"
-  """
-  user_settings_aggregate(
-    """distinct select on columns"""
-    distinct_on: [user_settings_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [user_settings_order_by!]
-
-    """filter the rows returned"""
-    where: user_settings_bool_exp
-  ): user_settings_aggregate!
-
-  """fetch data from the table: "user_settings" using primary key columns"""
-  user_settings_by_pk(id: uuid!): user_settings
-
-  """
   fetch data from the table: "auth.users"
   """
   users(
@@ -14078,8 +13917,8 @@ input timestamptz_comparison_exp {
 """Public profile data for a user"""
 type user_profile {
   """An object relationship"""
-  avatar: files!
-  avatar_id: uuid!
+  avatar: files
+  avatar_id: uuid
   created_at: timestamptz!
   id: uuid!
   updated_at: timestamptz!
@@ -14180,6 +14019,16 @@ type user_profile_mutation_response {
 }
 
 """
+input type for inserting object relation for remote table "user_profile"
+"""
+input user_profile_obj_rel_insert_input {
+  data: user_profile_insert_input!
+
+  """upsert condition"""
+  on_conflict: user_profile_on_conflict
+}
+
+"""
 on_conflict condition type for table "user_profile"
 """
 input user_profile_on_conflict {
@@ -14259,197 +14108,6 @@ input user_profile_updates {
   """sets the columns of the filtered rows to the given values"""
   _set: user_profile_set_input
   where: user_profile_bool_exp!
-}
-
-"""Private settings for a user"""
-type user_settings {
-  """An object relationship"""
-  avatar: files
-  avatar_file_id: uuid
-  created_at: timestamptz!
-  id: uuid!
-  updated_at: timestamptz!
-
-  """An object relationship"""
-  user: users!
-  user_id: uuid!
-}
-
-"""
-aggregated selection of "user_settings"
-"""
-type user_settings_aggregate {
-  aggregate: user_settings_aggregate_fields
-  nodes: [user_settings!]!
-}
-
-"""
-aggregate fields of "user_settings"
-"""
-type user_settings_aggregate_fields {
-  count(columns: [user_settings_select_column!], distinct: Boolean): Int!
-  max: user_settings_max_fields
-  min: user_settings_min_fields
-}
-
-"""
-Boolean expression to filter rows from the table "user_settings". All fields are combined with a logical 'AND'.
-"""
-input user_settings_bool_exp {
-  _and: [user_settings_bool_exp!]
-  _not: user_settings_bool_exp
-  _or: [user_settings_bool_exp!]
-  avatar: files_bool_exp
-  avatar_file_id: uuid_comparison_exp
-  created_at: timestamptz_comparison_exp
-  id: uuid_comparison_exp
-  updated_at: timestamptz_comparison_exp
-  user: users_bool_exp
-  user_id: uuid_comparison_exp
-}
-
-"""
-unique or primary key constraints on table "user_settings"
-"""
-enum user_settings_constraint {
-  """
-  unique or primary key constraint on columns "id"
-  """
-  user_settings_pkey
-
-  """
-  unique or primary key constraint on columns "user_id"
-  """
-  user_settings_user_id_fk
-
-  """
-  unique or primary key constraint on columns "user_id"
-  """
-  user_settings_user_id_key
-}
-
-"""
-input type for inserting data into table "user_settings"
-"""
-input user_settings_insert_input {
-  avatar: files_obj_rel_insert_input
-  avatar_file_id: uuid
-  created_at: timestamptz
-  id: uuid
-  updated_at: timestamptz
-  user: users_obj_rel_insert_input
-  user_id: uuid
-}
-
-"""aggregate max on columns"""
-type user_settings_max_fields {
-  avatar_file_id: uuid
-  created_at: timestamptz
-  id: uuid
-  updated_at: timestamptz
-  user_id: uuid
-}
-
-"""aggregate min on columns"""
-type user_settings_min_fields {
-  avatar_file_id: uuid
-  created_at: timestamptz
-  id: uuid
-  updated_at: timestamptz
-  user_id: uuid
-}
-
-"""
-response of any mutation on the table "user_settings"
-"""
-type user_settings_mutation_response {
-  """number of rows affected by the mutation"""
-  affected_rows: Int!
-
-  """data from the rows affected by the mutation"""
-  returning: [user_settings!]!
-}
-
-"""
-on_conflict condition type for table "user_settings"
-"""
-input user_settings_on_conflict {
-  constraint: user_settings_constraint!
-  update_columns: [user_settings_update_column!]! = []
-  where: user_settings_bool_exp
-}
-
-"""Ordering options when selecting data from "user_settings"."""
-input user_settings_order_by {
-  avatar: files_order_by
-  avatar_file_id: order_by
-  created_at: order_by
-  id: order_by
-  updated_at: order_by
-  user: users_order_by
-  user_id: order_by
-}
-
-"""primary key columns input for table: user_settings"""
-input user_settings_pk_columns_input {
-  id: uuid!
-}
-
-"""
-select columns of table "user_settings"
-"""
-enum user_settings_select_column {
-  """column name"""
-  avatar_file_id
-
-  """column name"""
-  created_at
-
-  """column name"""
-  id
-
-  """column name"""
-  updated_at
-
-  """column name"""
-  user_id
-}
-
-"""
-input type for updating data in table "user_settings"
-"""
-input user_settings_set_input {
-  avatar_file_id: uuid
-  created_at: timestamptz
-  id: uuid
-  updated_at: timestamptz
-  user_id: uuid
-}
-
-"""
-update columns of table "user_settings"
-"""
-enum user_settings_update_column {
-  """column name"""
-  avatar_file_id
-
-  """column name"""
-  created_at
-
-  """column name"""
-  id
-
-  """column name"""
-  updated_at
-
-  """column name"""
-  user_id
-}
-
-input user_settings_updates {
-  """sets the columns of the filtered rows to the given values"""
-  _set: user_settings_set_input
-  where: user_settings_bool_exp!
 }
 
 """
@@ -14991,6 +14649,9 @@ type users {
     """filter the rows returned"""
     where: authUserProviders_bool_exp
   ): authUserProviders_aggregate!
+
+  """An object relationship"""
+  user_profile: user_profile
 }
 
 """
@@ -15081,6 +14742,7 @@ input users_bool_exp {
   totpSecret: String_comparison_exp
   updatedAt: timestamptz_comparison_exp
   userProviders: authUserProviders_bool_exp
+  user_profile: user_profile_bool_exp
 }
 
 """
@@ -15168,6 +14830,7 @@ input users_insert_input {
   totpSecret: String
   updatedAt: timestamptz
   userProviders: authUserProviders_arr_rel_insert_input
+  user_profile: user_profile_obj_rel_insert_input
 }
 
 """aggregate max on columns"""
@@ -15342,6 +15005,7 @@ input users_order_by {
   totpSecret: order_by
   updatedAt: order_by
   userProviders_aggregate: authUserProviders_aggregate_order_by
+  user_profile: user_profile_order_by
 }
 
 """primary key columns input for table: users"""
