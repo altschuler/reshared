@@ -21,7 +21,7 @@ export const urlFor = {
     home: (absolute = false) => makeUrl(absolute, '/home'),
     search: (search = '', type = '', absolute = false) => ({
         pathname: makeUrl(absolute, `/search`),
-        query: { search, t: type },
+        query: { query: search, t: type },
     }),
     messages: {
         emailChanged: (absolute = false) => makeUrl(absolute, `/email-changed`),
