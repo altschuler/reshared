@@ -123,8 +123,7 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                                 group, not your account or other groups in which they are shared).
                             </Typography.Paragraph>
                         </div>
-                    }
-                >
+                    }>
                     <Button type="primary" danger loading={mutation.loading}>
                         Leave Group
                     </Button>
@@ -207,8 +206,7 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                     ),
 
                     !isMember && <JoinButton key="join" group={props.group} />,
-                ]}
-            >
+                ]}>
                 {props.children}
             </PageHeader>
         </PageLayout>

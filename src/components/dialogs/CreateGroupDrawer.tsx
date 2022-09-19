@@ -36,7 +36,7 @@ export const CreateGroupDrawer = (props: DialogProps<GroupCardFragment | null>) 
             title="Create Group"
             placement="right"
             onClose={dispose}
-            visible={visible}>
+            open={visible}>
             <GroupEditor
                 error={createMutation.error?.message}
                 state={editorState}

@@ -18,7 +18,7 @@ export interface CreatePostDrawerProps extends DialogProps<GroupPostFragment | n
 export const CreatePostDrawer = (props: CreatePostDrawerProps) => {
     const { group, type, resolve, dispose, visible } = props;
 
-    const editorState = usePostEditor({ group, type });
+    const editorState = usePostEditor({ group, type: type || Group_Post_Type_Enum.Request });
 
     const [createPost, mutation] = useCreateGroupPostMutation({
         refetchQueries: [GqlOps.Query.GroupPostList, GqlOps.Query.GroupActivity],
@@ -45,11 +45,11 @@ export const CreatePostDrawer = (props: CreatePostDrawerProps) => {
     return (
         <Drawer
             bodyStyle={{ maxWidth: '100%' }}
-            width={400}
+            width={450}
             title={title}
             placement="right"
             onClose={dispose}
-            visible={visible}>
+            open={visible}>
             <PostEditor
                 showGroup={!props.group}
                 state={editorState}

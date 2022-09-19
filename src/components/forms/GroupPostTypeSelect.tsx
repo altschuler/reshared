@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react';
 import { Group_Post_Type_Enum } from '../../generated/graphql';
-import { Select, Typography } from 'antd';
+import { Radio, Space, Typography } from 'antd';
 import { GenericSelectProps } from './utils';
 import { createUseStyles } from 'react-jss';
 
@@ -20,30 +20,26 @@ const useStyles = createUseStyles({
 export const GroupPostTypeSelect = (props: GroupPostTypeSelectProps) => {
     const classes = useStyles();
     return (
-        <Select
-            mode={props.multiple ? 'multiple' : undefined}
-            value={props.value || undefined}
-            onChange={props.onChange}
-            placeholder={props.placeholder || 'Type'}
-            allowClear={props.allowClear}
-            style={props.style}>
-            <Select.Option value={Group_Post_Type_Enum.Request}>
-                <div className={classes.option}>
-                    <Typography.Text>Ask for something</Typography.Text>
-                    <Typography.Text type="secondary">
-                        If you&apos;re looking for something that others might share
-                    </Typography.Text>
-                </div>
-            </Select.Option>
+        <Radio.Group value={props.value} onChange={(e) => props.onChange(e.target.value)}>
+            <Space direction="vertical">
+                <Radio value={Group_Post_Type_Enum.Request}>
+                    <div className={classes.option}>
+                        <Typography.Text>Ask for something</Typography.Text>
+                        <Typography.Text type="secondary">
+                            If you&apos;re looking for something that others might share
+                        </Typography.Text>
+                    </div>
+                </Radio>
 
-            <Select.Option value={Group_Post_Type_Enum.Message}>
-                <div className={classes.option}>
-                    <Typography.Text>Message</Typography.Text>
-                    <Typography.Text type="secondary">
-                        If you want to communicate something with the group
-                    </Typography.Text>
-                </div>
-            </Select.Option>
-        </Select>
+                <Radio value={Group_Post_Type_Enum.Message}>
+                    <div className={classes.option}>
+                        <Typography.Text>Post a message</Typography.Text>
+                        <Typography.Text type="secondary">
+                            If you want to communicate something with the group
+                        </Typography.Text>
+                    </div>
+                </Radio>
+            </Space>
+        </Radio.Group>
     );
 };

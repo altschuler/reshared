@@ -69,7 +69,7 @@ export const EditPostDrawer = (props: EditPostDrawerProps) => {
             title={`Edit post in ${post.group.name}`}
             placement="right"
             onClose={dispose}
-            visible={visible}>
+            open={visible}>
             <PostEditor
                 state={editorState}
                 loading={mutation.loading}

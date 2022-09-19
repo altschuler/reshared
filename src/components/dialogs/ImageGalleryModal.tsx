@@ -48,12 +48,25 @@ export interface ImageGalleryModalProps extends DialogProps<void> {
     images: ImageWithDescription[];
 }
 
+// Avoid carousel warning of currentSlide/slideCount props
+const Arrow = ({
+    left,
+    currentSlide,
+    slideCount,
+    ...rest
+}: {
+    left: boolean;
+    currentSlide?: number;
+    slideCount?: number;
+    [key: string]: any;
+}) => (left ? <ArrowLeftOutlined {...rest} /> : <ArrowRightOutlined {...rest} />);
+
 export const ImageGalleryModal = (props: ImageGalleryModalProps) => {
     const classes = useStyles();
     return (
         <Modal
             title={props.title}
-            visible={props.visible}
+            open={props.visible}
             onOk={props.dispose}
             onCancel={props.dispose}
             footer={null}>
@@ -62,8 +75,8 @@ export const ImageGalleryModal = (props: ImageGalleryModalProps) => {
                 className={classes.carousel}
                 draggable
                 arrows
-                nextArrow={<ArrowRightOutlined />}
-                prevArrow={<ArrowLeftOutlined />}>
+                nextArrow={<Arrow left={false} />}
+                prevArrow={<Arrow left />}>
                 {props.images.map((image) => (
                     <div className={classes.image} key={image.id}>
                         <Image

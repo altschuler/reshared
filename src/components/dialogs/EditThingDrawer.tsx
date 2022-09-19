@@ -63,7 +63,7 @@ export const EditThingDrawer = (props: EditThingDrawerProps) => {
             title="Edit thing"
             placement="right"
             onClose={dispose}
-            visible={visible}>
+            open={visible}>
             <Spin spinning={detailsQuery.loading}>
                 <ThingEditor
                     state={editorState}

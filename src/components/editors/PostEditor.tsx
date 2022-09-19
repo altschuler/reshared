@@ -61,23 +61,11 @@ export const PostEditor = (props: PostEditorProps) => {
         [present.type],
     );
 
-    const typeExtra = useMemo(
-        () =>
-            present.type === Group_Post_Type_Enum.Message ? (
-                <span>
-                    Please note that Reshared is not a social network. Do not post a picture of your
-                    cat or lasagne. Use message posts to communicate with the group about matters
-                    that are relevant to sharing in your community. Thank you! <HeartOutlined />
-                </span>
-            ) : null,
-        [present.type],
-    );
-
     return (
         <div>
-            <Form layout="horizontal" {...state.ant('group')}>
+            <Form layout="horizontal">
                 {props.showGroup && (
-                    <Form.Item label="Group">
+                    <Form.Item label="Group" {...state.ant('group')}>
                         <GroupSelect
                             multiple={false}
                             value={present.group}
@@ -86,7 +74,7 @@ export const PostEditor = (props: PostEditorProps) => {
                     </Form.Item>
                 )}
 
-                <Form.Item extra={typeExtra} {...state.ant('type')}>
+                <Form.Item {...state.ant('type')}>
                     <GroupPostTypeSelect
                         multiple={false}
                         value={present.type}
