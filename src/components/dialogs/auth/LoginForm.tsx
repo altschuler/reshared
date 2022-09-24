@@ -1,4 +1,4 @@
-﻿import { Typography, Alert, Button, Form, Input } from 'antd';
+﻿import { Typography, Alert, Button, Form, Input, message } from 'antd';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { createUseStyles } from 'react-jss';
@@ -46,7 +46,9 @@ export const LoginForm = (props: LoginFormProps) => {
     };
 
     const handleResendVerification = () => {
-        nhost.auth.sendVerificationEmail({ email: form.getFieldValue('email') });
+        nhost.auth
+            .sendVerificationEmail({ email: form.getFieldValue('email') })
+            .then(() => message.success('Activation email has been sent'));
     };
 
     if (login.isSuccess) {

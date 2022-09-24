@@ -1,18 +1,14 @@
-﻿import { useMemo } from 'react';
-import { isEmpty, head } from 'lodash';
-import { Alert, Col, Row, Space, Spin } from 'antd';
-import { GroupLayout } from './GroupLayout';
-import {
-    Things_Bool_Exp,
-    useGroupActivityQuery,
-    useGroupDetailsQuery,
-} from '../../generated/graphql';
-import { useMembership } from '../../utils/group';
-import { createUseStyles } from 'react-jss';
+﻿import { Alert, Spin } from 'antd';
+import { isEmpty } from 'lodash';
 import { useRouter } from 'next/router';
-import { GroupEmptyContent } from './GroupEmptyContent';
+import { useMemo } from 'react';
+import { createUseStyles } from 'react-jss';
+import { ActivityFeed } from '../../components/display';
+import { useGroupActivityQuery, useGroupDetailsQuery } from '../../generated/graphql';
+import { useMembership } from '../../utils/group';
 import { useMedia } from '../../utils/hooks';
-import { ActivityFeed, UserAvatarList } from '../../components/display';
+import { GroupEmptyContent } from './GroupEmptyContent';
+import { GroupLayout } from './GroupLayout';
 
 const useStyles = createUseStyles({});
 
