@@ -102,7 +102,7 @@ export const opToVerb = (type: 'INSERT' | 'UPDATE' | 'DELETE' | 'MANUAL'): Activ
         case 'DELETE':
             return Activity_Verb_Enum.Deleted;
         // Will only happen when run manually from hasura console
-        default:
+        case 'MANUAL':
             return Activity_Verb_Enum.Updated;
     }
 };

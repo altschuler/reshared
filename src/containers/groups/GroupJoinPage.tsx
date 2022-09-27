@@ -91,6 +91,7 @@ const LoggedInContent = ({ group, token }: { group: GroupCardFragment; token: st
 
     const [join, mutation] = useJoinGroupWithTokenMutation({
         variables: { input: { group_id: group.id, join_token: token } },
+        context: { headers: { 'x-hasura-role': 'me' } },
     });
 
     const handleJoin = useCallback(() => {
