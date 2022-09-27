@@ -44,15 +44,5 @@ export default makeAuthorizedHandler<CreateGroupMutationVariables, CreateGroupRe
         });
 
         ctx.success({ group_id: mutation.data?.insert_groups_one?.id });
-        //
-        // sendMail({
-        //     to: 'simon@altschuler.dk',
-        //     templateId: MailTemplate.VerifyEmail,
-        //     dynamicTemplateData: {
-        //         token: 'thisisnotreal',
-        //     },
-        // })
-        //     .then(() => console.log('mail sent'))
-        //     .catch((err) => console.log(err));
     },
 );

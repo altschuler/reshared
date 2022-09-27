@@ -55,17 +55,5 @@ export default makeAuthorizedHandler<
         });
 
         ctx.success({ group_id: args.input.group_id, user_id: ctx.token.id });
-
-        // Send mail
-        //
-        // sendMail({
-        //     to: 'simon@altschuler.dk',
-        //     templateId: MailTemplate.VerifyEmail,
-        //     dynamicTemplateData: {
-        //         token: 'thisisnotreal',
-        //     },
-        // })
-        //     .then(() => console.log('mail sent'))
-        //     .catch((err) => console.log(err));
     },
 );
