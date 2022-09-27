@@ -43,7 +43,7 @@ export const EditThingDrawer = (props: EditThingDrawerProps) => {
             .then(({ data }) => {
                 if (data?.updateThing?.thing) {
                     message.success('Thing updated');
-                    resolve(data?.updateThing?.thing);
+                    resolve(data.updateThing.thing);
                 }
             })
             .catch(noop);

@@ -82,6 +82,17 @@ type HandleJoinRequestResult {
   join_request_id: uuid!
 }
 
+input HandleTransferRequestInput {
+  accepted: Boolean!
+  response: String
+  transfer_request_id: uuid!
+}
+
+type HandleTransferRequestResult {
+  transfer_request: transfer_request
+  transfer_request_id: uuid!
+}
+
 """
 Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'.
 """
@@ -103,18 +114,6 @@ input JoinGroupInput {
 }
 
 type JoinGroupResult {
-  group: groups
-  group_id: uuid!
-  user: users
-  user_id: uuid!
-}
-
-input RequestJoinGroupInput {
-  group_id: uuid!
-  message: String
-}
-
-type RequestJoinGroupResult {
   group: groups
   group_id: uuid!
   user: users
@@ -3916,6 +3915,10 @@ type entities {
   thing_id: uuid
 
   """An object relationship"""
+  transfer_request: transfer_request
+  transfer_request_id: uuid
+
+  """An object relationship"""
   user: users
   user_id: uuid
 }
@@ -3974,6 +3977,8 @@ input entities_bool_exp {
   join_request_id: uuid_comparison_exp
   thing: things_bool_exp
   thing_id: uuid_comparison_exp
+  transfer_request: transfer_request_bool_exp
+  transfer_request_id: uuid_comparison_exp
   user: users_bool_exp
   user_id: uuid_comparison_exp
 }
@@ -4023,6 +4028,11 @@ enum entities_constraint {
   entities_thing_id_key
 
   """
+  unique or primary key constraint on columns "transfer_request_id"
+  """
+  entities_transfer_request_id_key
+
+  """
   unique or primary key constraint on columns "user_id"
   """
   entities_user_id_key
@@ -4055,6 +4065,8 @@ input entities_insert_input {
   join_request_id: uuid
   thing: things_obj_rel_insert_input
   thing_id: uuid
+  transfer_request: transfer_request_obj_rel_insert_input
+  transfer_request_id: uuid
   user: users_obj_rel_insert_input
   user_id: uuid
 }
@@ -4070,6 +4082,7 @@ type entities_max_fields {
   id: uuid
   join_request_id: uuid
   thing_id: uuid
+  transfer_request_id: uuid
   user_id: uuid
 }
 
@@ -4084,6 +4097,7 @@ type entities_min_fields {
   id: uuid
   join_request_id: uuid
   thing_id: uuid
+  transfer_request_id: uuid
   user_id: uuid
 }
 
@@ -4136,6 +4150,8 @@ input entities_order_by {
   join_request_id: order_by
   thing: things_order_by
   thing_id: order_by
+  transfer_request: transfer_request_order_by
+  transfer_request_id: order_by
   user: users_order_by
   user_id: order_by
 }
@@ -4177,6 +4193,9 @@ enum entities_select_column {
   thing_id
 
   """column name"""
+  transfer_request_id
+
+  """column name"""
   user_id
 }
 
@@ -4193,6 +4212,7 @@ input entities_set_input {
   id: uuid
   join_request_id: uuid
   thing_id: uuid
+  transfer_request_id: uuid
   user_id: uuid
 }
 
@@ -4246,6 +4266,9 @@ enum entities_update_column {
 
   """column name"""
   thing_id
+
+  """column name"""
+  transfer_request_id
 
   """column name"""
   user_id
@@ -8022,6 +8045,32 @@ type mutation_root {
   delete_things_by_pk(id: uuid!): things
 
   """
+  delete data from the table: "transfer_request"
+  """
+  delete_transfer_request(
+    """filter the rows which have to be deleted"""
+    where: transfer_request_bool_exp!
+  ): transfer_request_mutation_response
+
+  """
+  delete single row from the table: "transfer_request"
+  """
+  delete_transfer_request_by_pk(id: uuid!): transfer_request
+
+  """
+  delete data from the table: "transfer_request_status"
+  """
+  delete_transfer_request_status(
+    """filter the rows which have to be deleted"""
+    where: transfer_request_status_bool_exp!
+  ): transfer_request_status_mutation_response
+
+  """
+  delete single row from the table: "transfer_request_status"
+  """
+  delete_transfer_request_status_by_pk(value: String!): transfer_request_status
+
+  """
   delete data from the table: "user_profile"
   """
   delete_user_profile(
@@ -8034,6 +8083,9 @@ type mutation_root {
   """
   delete_user_profile_by_pk(id: uuid!): user_profile
   handleJoinRequest(input: HandleJoinRequestInput!): HandleJoinRequestResult!
+
+  """Accept or reject a transfer request"""
+  handleTransferRequest(input: HandleTransferRequestInput!): HandleTransferRequestResult
 
   """
   insert a single row into the table: "auth.providers"
@@ -8740,6 +8792,50 @@ type mutation_root {
   ): things
 
   """
+  insert data into the table: "transfer_request"
+  """
+  insert_transfer_request(
+    """the rows to be inserted"""
+    objects: [transfer_request_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: transfer_request_on_conflict
+  ): transfer_request_mutation_response
+
+  """
+  insert a single row into the table: "transfer_request"
+  """
+  insert_transfer_request_one(
+    """the row to be inserted"""
+    object: transfer_request_insert_input!
+
+    """upsert condition"""
+    on_conflict: transfer_request_on_conflict
+  ): transfer_request
+
+  """
+  insert data into the table: "transfer_request_status"
+  """
+  insert_transfer_request_status(
+    """the rows to be inserted"""
+    objects: [transfer_request_status_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: transfer_request_status_on_conflict
+  ): transfer_request_status_mutation_response
+
+  """
+  insert a single row into the table: "transfer_request_status"
+  """
+  insert_transfer_request_status_one(
+    """the row to be inserted"""
+    object: transfer_request_status_insert_input!
+
+    """upsert condition"""
+    on_conflict: transfer_request_status_on_conflict
+  ): transfer_request_status
+
+  """
   insert data into the table: "user_profile"
   """
   insert_user_profile(
@@ -8761,7 +8857,6 @@ type mutation_root {
     on_conflict: user_profile_on_conflict
   ): user_profile
   joinGroup(input: JoinGroupInput!): JoinGroupResult
-  requestJoinGroup(input: RequestJoinGroupInput!): RequestJoinGroupResult
 
   """
   update single row of the table: "auth.providers"
@@ -9771,6 +9866,62 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [things_updates!]!
   ): [things_mutation_response]
+
+  """
+  update data of the table: "transfer_request"
+  """
+  update_transfer_request(
+    """sets the columns of the filtered rows to the given values"""
+    _set: transfer_request_set_input
+
+    """filter the rows which have to be updated"""
+    where: transfer_request_bool_exp!
+  ): transfer_request_mutation_response
+
+  """
+  update single row of the table: "transfer_request"
+  """
+  update_transfer_request_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: transfer_request_set_input
+    pk_columns: transfer_request_pk_columns_input!
+  ): transfer_request
+
+  """
+  update multiples rows of table: "transfer_request"
+  """
+  update_transfer_request_many(
+    """updates to execute, in order"""
+    updates: [transfer_request_updates!]!
+  ): [transfer_request_mutation_response]
+
+  """
+  update data of the table: "transfer_request_status"
+  """
+  update_transfer_request_status(
+    """sets the columns of the filtered rows to the given values"""
+    _set: transfer_request_status_set_input
+
+    """filter the rows which have to be updated"""
+    where: transfer_request_status_bool_exp!
+  ): transfer_request_status_mutation_response
+
+  """
+  update single row of the table: "transfer_request_status"
+  """
+  update_transfer_request_status_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: transfer_request_status_set_input
+    pk_columns: transfer_request_status_pk_columns_input!
+  ): transfer_request_status
+
+  """
+  update multiples rows of table: "transfer_request_status"
+  """
+  update_transfer_request_status_many(
+    """updates to execute, in order"""
+    updates: [transfer_request_status_updates!]!
+  ): [transfer_request_status_mutation_response]
 
   """
   update data of the table: "user_profile"
@@ -11408,6 +11559,96 @@ type query_root {
   """fetch data from the table: "things" using primary key columns"""
   things_by_pk(id: uuid!): things
 
+  """
+  fetch data from the table: "transfer_request"
+  """
+  transfer_request(
+    """distinct select on columns"""
+    distinct_on: [transfer_request_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [transfer_request_order_by!]
+
+    """filter the rows returned"""
+    where: transfer_request_bool_exp
+  ): [transfer_request!]!
+
+  """
+  fetch aggregated fields from the table: "transfer_request"
+  """
+  transfer_request_aggregate(
+    """distinct select on columns"""
+    distinct_on: [transfer_request_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [transfer_request_order_by!]
+
+    """filter the rows returned"""
+    where: transfer_request_bool_exp
+  ): transfer_request_aggregate!
+
+  """
+  fetch data from the table: "transfer_request" using primary key columns
+  """
+  transfer_request_by_pk(id: uuid!): transfer_request
+
+  """
+  fetch data from the table: "transfer_request_status"
+  """
+  transfer_request_status(
+    """distinct select on columns"""
+    distinct_on: [transfer_request_status_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [transfer_request_status_order_by!]
+
+    """filter the rows returned"""
+    where: transfer_request_status_bool_exp
+  ): [transfer_request_status!]!
+
+  """
+  fetch aggregated fields from the table: "transfer_request_status"
+  """
+  transfer_request_status_aggregate(
+    """distinct select on columns"""
+    distinct_on: [transfer_request_status_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [transfer_request_status_order_by!]
+
+    """filter the rows returned"""
+    where: transfer_request_status_bool_exp
+  ): transfer_request_status_aggregate!
+
+  """
+  fetch data from the table: "transfer_request_status" using primary key columns
+  """
+  transfer_request_status_by_pk(value: String!): transfer_request_status
+
   """fetch data from the table: "auth.users" using primary key columns"""
   user(id: uuid!): users
 
@@ -12866,6 +13107,96 @@ type subscription_root {
   """fetch data from the table: "things" using primary key columns"""
   things_by_pk(id: uuid!): things
 
+  """
+  fetch data from the table: "transfer_request"
+  """
+  transfer_request(
+    """distinct select on columns"""
+    distinct_on: [transfer_request_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [transfer_request_order_by!]
+
+    """filter the rows returned"""
+    where: transfer_request_bool_exp
+  ): [transfer_request!]!
+
+  """
+  fetch aggregated fields from the table: "transfer_request"
+  """
+  transfer_request_aggregate(
+    """distinct select on columns"""
+    distinct_on: [transfer_request_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [transfer_request_order_by!]
+
+    """filter the rows returned"""
+    where: transfer_request_bool_exp
+  ): transfer_request_aggregate!
+
+  """
+  fetch data from the table: "transfer_request" using primary key columns
+  """
+  transfer_request_by_pk(id: uuid!): transfer_request
+
+  """
+  fetch data from the table: "transfer_request_status"
+  """
+  transfer_request_status(
+    """distinct select on columns"""
+    distinct_on: [transfer_request_status_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [transfer_request_status_order_by!]
+
+    """filter the rows returned"""
+    where: transfer_request_status_bool_exp
+  ): [transfer_request_status!]!
+
+  """
+  fetch aggregated fields from the table: "transfer_request_status"
+  """
+  transfer_request_status_aggregate(
+    """distinct select on columns"""
+    distinct_on: [transfer_request_status_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [transfer_request_status_order_by!]
+
+    """filter the rows returned"""
+    where: transfer_request_status_bool_exp
+  ): transfer_request_status_aggregate!
+
+  """
+  fetch data from the table: "transfer_request_status" using primary key columns
+  """
+  transfer_request_status_by_pk(value: String!): transfer_request_status
+
   """fetch data from the table: "auth.users" using primary key columns"""
   user(id: uuid!): users
 
@@ -13591,6 +13922,42 @@ type things {
   owner: users!
   owner_id: uuid!
   short_id: String!
+
+  """An array relationship"""
+  transfer_requests(
+    """distinct select on columns"""
+    distinct_on: [transfer_request_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [transfer_request_order_by!]
+
+    """filter the rows returned"""
+    where: transfer_request_bool_exp
+  ): [transfer_request!]!
+
+  """An aggregate relationship"""
+  transfer_requests_aggregate(
+    """distinct select on columns"""
+    distinct_on: [transfer_request_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [transfer_request_order_by!]
+
+    """filter the rows returned"""
+    where: transfer_request_bool_exp
+  ): transfer_request_aggregate!
   type: thing_type_enum!
   updated_at: timestamptz!
 }
@@ -13650,6 +14017,7 @@ input things_bool_exp {
   owner: users_bool_exp
   owner_id: uuid_comparison_exp
   short_id: String_comparison_exp
+  transfer_requests: transfer_request_bool_exp
   type: thing_type_enum_comparison_exp
   updated_at: timestamptz_comparison_exp
 }
@@ -13685,6 +14053,7 @@ input things_insert_input {
   owner: users_obj_rel_insert_input
   owner_id: uuid
   short_id: String
+  transfer_requests: transfer_request_arr_rel_insert_input
   type: thing_type_enum
   updated_at: timestamptz
 }
@@ -13789,6 +14158,7 @@ input things_order_by {
   owner: users_order_by
   owner_id: order_by
   short_id: order_by
+  transfer_requests_aggregate: transfer_request_aggregate_order_by
   type: order_by
   updated_at: order_by
 }
@@ -13912,6 +14282,444 @@ input timestamptz_comparison_exp {
   _lte: timestamptz
   _neq: timestamptz
   _nin: [timestamptz!]
+}
+
+"""requests to transfer a thing to another owner"""
+type transfer_request {
+  created_at: timestamptz!
+  id: uuid!
+  message: String!
+
+  """An object relationship"""
+  original_owner: users
+  original_owner_id: uuid!
+
+  """An object relationship"""
+  receiver: users
+  receiver_id: uuid!
+  status: transfer_request_status_enum!
+
+  """An object relationship"""
+  thing: things
+  thing_id: uuid!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "transfer_request"
+"""
+type transfer_request_aggregate {
+  aggregate: transfer_request_aggregate_fields
+  nodes: [transfer_request!]!
+}
+
+"""
+aggregate fields of "transfer_request"
+"""
+type transfer_request_aggregate_fields {
+  count(columns: [transfer_request_select_column!], distinct: Boolean): Int!
+  max: transfer_request_max_fields
+  min: transfer_request_min_fields
+}
+
+"""
+order by aggregate values of table "transfer_request"
+"""
+input transfer_request_aggregate_order_by {
+  count: order_by
+  max: transfer_request_max_order_by
+  min: transfer_request_min_order_by
+}
+
+"""
+input type for inserting array relation for remote table "transfer_request"
+"""
+input transfer_request_arr_rel_insert_input {
+  data: [transfer_request_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: transfer_request_on_conflict
+}
+
+"""
+Boolean expression to filter rows from the table "transfer_request". All fields are combined with a logical 'AND'.
+"""
+input transfer_request_bool_exp {
+  _and: [transfer_request_bool_exp!]
+  _not: transfer_request_bool_exp
+  _or: [transfer_request_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  id: uuid_comparison_exp
+  message: String_comparison_exp
+  original_owner: users_bool_exp
+  original_owner_id: uuid_comparison_exp
+  receiver: users_bool_exp
+  receiver_id: uuid_comparison_exp
+  status: transfer_request_status_enum_comparison_exp
+  thing: things_bool_exp
+  thing_id: uuid_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "transfer_request"
+"""
+enum transfer_request_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  transfer_request_pkey
+}
+
+"""
+input type for inserting data into table "transfer_request"
+"""
+input transfer_request_insert_input {
+  created_at: timestamptz
+  id: uuid
+  message: String
+  original_owner: users_obj_rel_insert_input
+  original_owner_id: uuid
+  receiver: users_obj_rel_insert_input
+  receiver_id: uuid
+  status: transfer_request_status_enum
+  thing: things_obj_rel_insert_input
+  thing_id: uuid
+  updated_at: timestamptz
+}
+
+"""aggregate max on columns"""
+type transfer_request_max_fields {
+  created_at: timestamptz
+  id: uuid
+  message: String
+  original_owner_id: uuid
+  receiver_id: uuid
+  thing_id: uuid
+  updated_at: timestamptz
+}
+
+"""
+order by max() on columns of table "transfer_request"
+"""
+input transfer_request_max_order_by {
+  created_at: order_by
+  id: order_by
+  message: order_by
+  original_owner_id: order_by
+  receiver_id: order_by
+  thing_id: order_by
+  updated_at: order_by
+}
+
+"""aggregate min on columns"""
+type transfer_request_min_fields {
+  created_at: timestamptz
+  id: uuid
+  message: String
+  original_owner_id: uuid
+  receiver_id: uuid
+  thing_id: uuid
+  updated_at: timestamptz
+}
+
+"""
+order by min() on columns of table "transfer_request"
+"""
+input transfer_request_min_order_by {
+  created_at: order_by
+  id: order_by
+  message: order_by
+  original_owner_id: order_by
+  receiver_id: order_by
+  thing_id: order_by
+  updated_at: order_by
+}
+
+"""
+response of any mutation on the table "transfer_request"
+"""
+type transfer_request_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [transfer_request!]!
+}
+
+"""
+input type for inserting object relation for remote table "transfer_request"
+"""
+input transfer_request_obj_rel_insert_input {
+  data: transfer_request_insert_input!
+
+  """upsert condition"""
+  on_conflict: transfer_request_on_conflict
+}
+
+"""
+on_conflict condition type for table "transfer_request"
+"""
+input transfer_request_on_conflict {
+  constraint: transfer_request_constraint!
+  update_columns: [transfer_request_update_column!]! = []
+  where: transfer_request_bool_exp
+}
+
+"""Ordering options when selecting data from "transfer_request"."""
+input transfer_request_order_by {
+  created_at: order_by
+  id: order_by
+  message: order_by
+  original_owner: users_order_by
+  original_owner_id: order_by
+  receiver: users_order_by
+  receiver_id: order_by
+  status: order_by
+  thing: things_order_by
+  thing_id: order_by
+  updated_at: order_by
+}
+
+"""primary key columns input for table: transfer_request"""
+input transfer_request_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "transfer_request"
+"""
+enum transfer_request_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  message
+
+  """column name"""
+  original_owner_id
+
+  """column name"""
+  receiver_id
+
+  """column name"""
+  status
+
+  """column name"""
+  thing_id
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "transfer_request"
+"""
+input transfer_request_set_input {
+  created_at: timestamptz
+  id: uuid
+  message: String
+  original_owner_id: uuid
+  receiver_id: uuid
+  status: transfer_request_status_enum
+  thing_id: uuid
+  updated_at: timestamptz
+}
+
+"""
+columns and relationships of "transfer_request_status"
+"""
+type transfer_request_status {
+  comment: String
+  value: String!
+}
+
+"""
+aggregated selection of "transfer_request_status"
+"""
+type transfer_request_status_aggregate {
+  aggregate: transfer_request_status_aggregate_fields
+  nodes: [transfer_request_status!]!
+}
+
+"""
+aggregate fields of "transfer_request_status"
+"""
+type transfer_request_status_aggregate_fields {
+  count(columns: [transfer_request_status_select_column!], distinct: Boolean): Int!
+  max: transfer_request_status_max_fields
+  min: transfer_request_status_min_fields
+}
+
+"""
+Boolean expression to filter rows from the table "transfer_request_status". All fields are combined with a logical 'AND'.
+"""
+input transfer_request_status_bool_exp {
+  _and: [transfer_request_status_bool_exp!]
+  _not: transfer_request_status_bool_exp
+  _or: [transfer_request_status_bool_exp!]
+  comment: String_comparison_exp
+  value: String_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "transfer_request_status"
+"""
+enum transfer_request_status_constraint {
+  """
+  unique or primary key constraint on columns "value"
+  """
+  transfer_request_status_pkey
+}
+
+enum transfer_request_status_enum {
+  """accepted status"""
+  accepted
+
+  """cancelled status"""
+  cancelled
+
+  """pending status"""
+  pending
+
+  """rejected status"""
+  rejected
+}
+
+"""
+Boolean expression to compare columns of type "transfer_request_status_enum". All fields are combined with logical 'AND'.
+"""
+input transfer_request_status_enum_comparison_exp {
+  _eq: transfer_request_status_enum
+  _in: [transfer_request_status_enum!]
+  _is_null: Boolean
+  _neq: transfer_request_status_enum
+  _nin: [transfer_request_status_enum!]
+}
+
+"""
+input type for inserting data into table "transfer_request_status"
+"""
+input transfer_request_status_insert_input {
+  comment: String
+  value: String
+}
+
+"""aggregate max on columns"""
+type transfer_request_status_max_fields {
+  comment: String
+  value: String
+}
+
+"""aggregate min on columns"""
+type transfer_request_status_min_fields {
+  comment: String
+  value: String
+}
+
+"""
+response of any mutation on the table "transfer_request_status"
+"""
+type transfer_request_status_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [transfer_request_status!]!
+}
+
+"""
+on_conflict condition type for table "transfer_request_status"
+"""
+input transfer_request_status_on_conflict {
+  constraint: transfer_request_status_constraint!
+  update_columns: [transfer_request_status_update_column!]! = []
+  where: transfer_request_status_bool_exp
+}
+
+"""Ordering options when selecting data from "transfer_request_status"."""
+input transfer_request_status_order_by {
+  comment: order_by
+  value: order_by
+}
+
+"""primary key columns input for table: transfer_request_status"""
+input transfer_request_status_pk_columns_input {
+  value: String!
+}
+
+"""
+select columns of table "transfer_request_status"
+"""
+enum transfer_request_status_select_column {
+  """column name"""
+  comment
+
+  """column name"""
+  value
+}
+
+"""
+input type for updating data in table "transfer_request_status"
+"""
+input transfer_request_status_set_input {
+  comment: String
+  value: String
+}
+
+"""
+update columns of table "transfer_request_status"
+"""
+enum transfer_request_status_update_column {
+  """column name"""
+  comment
+
+  """column name"""
+  value
+}
+
+input transfer_request_status_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: transfer_request_status_set_input
+  where: transfer_request_status_bool_exp!
+}
+
+"""
+update columns of table "transfer_request"
+"""
+enum transfer_request_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  message
+
+  """column name"""
+  original_owner_id
+
+  """column name"""
+  receiver_id
+
+  """column name"""
+  status
+
+  """column name"""
+  thing_id
+
+  """column name"""
+  updated_at
+}
+
+input transfer_request_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: transfer_request_set_input
+  where: transfer_request_bool_exp!
 }
 
 """Public profile data for a user"""

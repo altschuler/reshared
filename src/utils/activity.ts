@@ -1,9 +1,17 @@
-﻿import { Activity_Verb_Enum, ActivityCardFragment, UserCardFragment } from '../generated/graphql';
+﻿import {
+    Activity_Verb_Enum,
+    ActivityCardFragment,
+    UserCardFragment,
+    Transfer_Request_Status_Enum,
+} from '../generated/graphql';
+import * as Sentry from '@sentry/react';
+import { ReactNode } from 'react';
+import { compact } from 'lodash';
 
 export const activityMessage = (
     activity: ActivityCardFragment,
     currentUser: UserCardFragment | null,
-) => {
+): ReactNode => {
     const ent = activity.entity;
     const actor = activity.actor?.displayName || '[Deleted user]';
 
@@ -74,11 +82,37 @@ export const activityMessage = (
         return `${actor} ${activity.verb} group join request`;
     }
 
+    if (ent.transfer_request) {
+        const req = ent.transfer_request;
+        if (activity.verb === Activity_Verb_Enum.Accepted) {
+            return `${actor} accepted the transfer of ${req.thing!.name}`;
+        }
+
+        if (activity.verb === Activity_Verb_Enum.Rejected) {
+            return `${actor} rejected the transfer of ${req.thing!.name}`;
+        }
+
+        if (activity.verb === Activity_Verb_Enum.Added) {
+            const accepted = req.status === Transfer_Request_Status_Enum.Accepted;
+            const rejected = req.status === Transfer_Request_Status_Enum.Rejected;
+
+            return compact([
+                `${actor} requested to transfer ownership of ${req.thing!.name} to you`,
+                req.message && `Message from ${actor}: "${req.message}"`,
+                accepted && 'You accepted',
+                rejected && 'You rejected',
+            ]).join('. ');
+        }
+
+        // Fallback
+        return `${actor} ${activity.verb} request to transfer thing`;
+    }
+
     if (ent.user) {
         return `${actor} ${activity.verb} user`;
     }
 
-    console.log(ent);
-    // TODO: log sentry
-    return `Unknown activity, this is a bug in the application!`;
+    Sentry.captureMessage('Unhandled activity type', { extra: { activity } });
+
+    return `Unknown activity`;
 };

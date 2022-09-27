@@ -1,14 +1,21 @@
 ﻿import React, { useCallback } from 'react';
 import Link from 'next/link';
-import { Button, Descriptions, Divider, PageHeader, Space, Typography } from 'antd';
+import { Button, Descriptions, Divider, PageHeader, Popconfirm, Space, Typography } from 'antd';
 import { head } from 'lodash';
 import { PageLayout } from '../root/PageLayout';
 import {
     ThingCardFragment,
     ThingDetailsFragment,
+    Transfer_Request_Status_Enum,
     useThingDetailsQuery,
+    useUpdateTransferRequestMutation,
 } from '../../generated/graphql';
-import { EditThingDrawer, ImageGalleryModal, useDialogs } from '../../components/dialogs';
+import {
+    EditThingDrawer,
+    ImageGalleryModal,
+    TransferThingDrawer,
+    useDialogs,
+} from '../../components/dialogs';
 import { ownsThing } from '../../utils/thing';
 import { useAuth } from '../../utils/auth';
 import { DateDisplay, ThingTypeTag, UserAvatar } from '../../components/display';
@@ -54,6 +61,9 @@ export const ThingPage = () => {
     });
 
     const thing: ThingDetailsFragment | null = head(query.data?.things) || null;
+    const transferRequest = head(thing?.transfer_requests);
+
+    const [cancelTransfer, cancelTransferMutation] = useUpdateTransferRequestMutation();
 
     const handleShowGallery = useCallback(
         (thing: ThingCardFragment, startIndex: number) =>
@@ -70,9 +80,26 @@ export const ThingPage = () => {
     );
 
     const handleEdit = useCallback(
-        (thing: ThingCardFragment) => showDialog(EditThingDrawer, { thing }),
-        [showDialog],
+        () => thing && showDialog(EditThingDrawer, { thing }),
+        [showDialog, thing],
     );
+
+    const handleTransfer = useCallback(
+        () => thing && showDialog(TransferThingDrawer, { thing }),
+        [showDialog, thing],
+    );
+
+    const handleCancelTransfer = useCallback(() => {
+        if (!transferRequest) {
+            return;
+        }
+        cancelTransfer({
+            variables: {
+                id: transferRequest.id,
+                input: { status: Transfer_Request_Status_Enum.Cancelled },
+            },
+        });
+    }, [showDialog, transferRequest]);
 
     if (query.loading) {
         return <PageLayout loading />;
@@ -89,18 +116,54 @@ export const ThingPage = () => {
             {!query.loading && (
                 <PageHeader
                     title={thing.name}
-                    extra={[
-                        ownsThing(thing, auth.user) ? (
-                            <Button
-                                key="edit"
-                                title="This is your thing, click to edit"
-                                onClick={() => handleEdit(thing)}>
-                                Edit
-                            </Button>
-                        ) : (
-                            <ThingInterestButton key="interest" thing={thing} />
-                        ),
-                    ]}>
+                    extra={
+                        ownsThing(thing, auth.user)
+                            ? [
+                                  <Button
+                                      key="edit"
+                                      title="This is your thing, click to edit"
+                                      onClick={handleEdit}>
+                                      Edit
+                                  </Button>,
+
+                                  transferRequest?.status ===
+                                  Transfer_Request_Status_Enum.Pending ? (
+                                      <Popconfirm
+                                          key="cancel-transfer"
+                                          cancelText="No"
+                                          okText="Yes, cancel the request"
+                                          okType="danger"
+                                          okButtonProps={{
+                                              loading: cancelTransferMutation.loading,
+                                          }}
+                                          onConfirm={handleCancelTransfer}
+                                          title={
+                                              <div style={{ maxWidth: 400 }}>
+                                                  <Typography.Paragraph>
+                                                      Are you sure that you want to cancel the
+                                                      transfer to{' '}
+                                                      <strong>
+                                                          {transferRequest.receiver!.displayName}
+                                                      </strong>
+                                                      ?
+                                                  </Typography.Paragraph>
+                                              </div>
+                                          }>
+                                          <Button title="Cancel request to transfer thing">
+                                              Cancel transfer
+                                          </Button>
+                                      </Popconfirm>
+                                  ) : (
+                                      <Button
+                                          key="transfer"
+                                          title="Transfer ownership to someone else"
+                                          onClick={handleTransfer}>
+                                          Transfer ownership
+                                      </Button>
+                                  ),
+                              ]
+                            : [<ThingInterestButton key="interest" thing={thing} />]
+                    }>
                     <Descriptions colon={false}>
                         <Descriptions.Item
                             label={<Typography.Title level={5}>Owner</Typography.Title>}>

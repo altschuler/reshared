@@ -5,3 +5,4 @@ export * from './EditThingDrawer';
 export * from './ImageGalleryModal';
 export * from './CreatePostDrawer';
 export * from './EditPostDrawer';
+export * from './TransferThingDrawer';

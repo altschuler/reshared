@@ -114,6 +114,10 @@ fragment EntityCard on entities {
             ...GroupRef
         }
     }
+
+    transfer_request {
+        ...TransferRequestCard
+    }
 }
 
 fragment DetailedEntity on entities {

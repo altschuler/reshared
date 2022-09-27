@@ -113,7 +113,6 @@ export default makeAuthorizedHandler<UpdateThingMutationVariables, UpdateThingRe
             },
         });
 
-        // @ts-expect-error
         ctx.success({ thing_id: mutation.data?.insert_things_one?.id });
     },
 );

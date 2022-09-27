@@ -100,6 +100,8 @@ export const urlFor = {
             }
         } else if (ent.user) {
             // user
+        } else if (ent.transfer_request?.thing) {
+            return urlFor.thing(ent.transfer_request.thing);
         }
 
         // TODO: handle all cases

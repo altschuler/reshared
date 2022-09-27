@@ -236,8 +236,8 @@ mutation JoinGroupWithToken($input: JoinGroupInput!) {
     }
 }
 
-mutation RequestJoinGroup($input: RequestJoinGroupInput!) {
-    requestJoinGroup(input: $input) {
+mutation RequestJoinGroup($input: group_join_requests_insert_input!) {
+    insert_group_join_requests_one(object: $input) {
         group {
             ...GroupCard
         }

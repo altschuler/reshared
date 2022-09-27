@@ -29,8 +29,8 @@ interface BaseUserSelectProps {
 
 interface SingleUserSelectProps extends BaseUserSelectProps {
     multiple: false | undefined;
-    value: UserCardFragment | null;
-    onChange: (value: UserCardFragment) => unknown;
+    value?: UserCardFragment | null;
+    onChange?: (value: UserCardFragment) => unknown;
 }
 
 interface MultipleUserSelectProps extends BaseUserSelectProps {
@@ -71,7 +71,7 @@ export const UserSelect = (props: UserSelectProps) => {
             if (props.multiple) {
                 props.onChange((options as UserOption[]).map((o) => o.user));
             } else {
-                props.onChange((options as UserOption)?.user || null);
+                props.onChange && props.onChange((options as UserOption)?.user || null);
             }
         },
         [props],

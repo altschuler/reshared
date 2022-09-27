@@ -1,13 +1,15 @@
-﻿import React, { useCallback, useMemo, useState } from 'react';
+﻿import React, { MouseEvent, useCallback, useMemo, useState } from 'react';
 import {
+    ActivityCardFragment,
     NotificationCardFragment,
+    Transfer_Request_Status_Enum,
+    useHandleTransferRequestMutation,
     useMarkAllNotificationsReadMutation,
     useMarkNotificationReadMutation,
     useNotificationsSubscription,
-    UserDetailFragment,
-    useUpdateChatGroupMemberMutation,
+    UserPrivateDetailFragment,
 } from '../../generated/graphql';
-import { Badge, Button, List, message, Modal, Popover, Tooltip, Typography } from 'antd';
+import { Badge, Button, List, message, Modal, Popover, Space, Tooltip, Typography } from 'antd';
 import { DateDisplay, UserAvatar } from '../../components/display';
 import { CheckOutlined, NotificationOutlined } from '@ant-design/icons';
 import { createUseStyles } from 'react-jss';
@@ -32,7 +34,7 @@ export const NotificationList = ({ notifications, loading, onSelect }: Notificat
     const handleMarkRead = useCallback(
         (notification: NotificationCardFragment) => {
             markRead({
-                variables: { id: notification.id, readAt: new Date() },
+                variables: { id: notification.id, readAt: formatISO(new Date()) },
             }).catch((err) =>
                 Modal.error({ title: 'Failed to mark notification read', content: err.message }),
             );
@@ -64,19 +66,23 @@ export const NotificationList = ({ notifications, loading, onSelect }: Notificat
                             <Tooltip title="Mark as read">
                                 <span
                                     style={{ cursor: 'pointer' }}
-                                    onClick={() => handleMarkRead(notification)}
-                                >
+                                    onClick={() => handleMarkRead(notification)}>
                                     <Badge color="blue" />
                                 </span>
                             </Tooltip>
                         )
-                    }
-                >
+                    }>
                     <List.Item.Meta
                         avatar={activity.actor && <UserAvatar user={activity.actor} />}
                         title={
                             <Typography.Link onClick={() => handleClick(notification)}>
-                                {activityMessage(notification.activity, auth.user)}
+                                <Space direction="vertical">
+                                    {activityMessage(notification.activity, auth.user)}
+                                    <ActivityActions
+                                        activity={notification.activity}
+                                        onMarkRead={() => handleMarkRead(notification)}
+                                    />
+                                </Space>
                             </Typography.Link>
                         }
                         description={
@@ -102,9 +108,57 @@ export const NotificationList = ({ notifications, loading, onSelect }: Notificat
     );
 };
 
+const ActivityActions = ({
+    activity,
+    onMarkRead,
+}: {
+    activity: ActivityCardFragment;
+    onMarkRead: () => unknown;
+}) => {
+    const [handleTransferRequest, handleTransferRequestMutation] =
+        useHandleTransferRequestMutation();
+
+    const ent = activity.entity;
+
+    const respondTransferRequest = (e: MouseEvent, accepted: boolean) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        handleTransferRequest({
+            variables: {
+                input: {
+                    accepted,
+                    transfer_request_id: ent.transfer_request!.id,
+                },
+            },
+        }).then(() => {
+            onMarkRead();
+        });
+    };
+
+    if (ent.transfer_request?.status === Transfer_Request_Status_Enum.Pending) {
+        return (
+            <Space size="small">
+                <Button type="text" size="small" onClick={(e) => respondTransferRequest(e, true)}>
+                    Accept
+                </Button>
+                <Button
+                    type="text"
+                    size="small"
+                    danger
+                    onClick={(e) => respondTransferRequest(e, false)}>
+                    Reject
+                </Button>
+            </Space>
+        );
+    }
+
+    return null;
+};
+
 // Header button
 export interface NotificationsButtonProps {
-    user: UserDetailFragment;
+    user: UserPrivateDetailFragment;
 }
 
 const useStyles = createUseStyles({
@@ -198,8 +252,7 @@ export const NotificationsButton = () => {
                         </div>
                     )}
                 </div>
-            }
-        >
+            }>
             <Badge size="small" count={newCount} overflowCount={9}>
                 <Tooltip title="Notifications">
                     <NotificationOutlined

@@ -36,6 +36,29 @@ fragment ThingDetails on things {
             ...GroupCard
         }
     }
+
+    transfer_requests(limit: 1, where: { status: { _eq: pending } }) {
+        ...TransferRequestCard
+    }
+}
+
+fragment TransferRequestCard on transfer_request {
+    id
+    created_at
+    message
+    updated_at
+    status
+
+    original_owner {
+        ...UserCard
+    }
+
+    thing {
+        ...ThingCard
+    }
+    receiver {
+        ...UserCard
+    }
 }
 
 # Queries
@@ -77,5 +100,25 @@ mutation UpdateThing($input: UpdateThingInput!) {
 mutation DeleteThing($id: uuid!) {
     delete_things_by_pk(id: $id) {
         ...ThingDetails
+    }
+}
+
+mutation CreateTransferRequest($input: transfer_request_insert_input!) {
+    insert_transfer_request_one(object: $input) {
+        ...TransferRequestCard
+    }
+}
+
+mutation UpdateTransferRequest($id: uuid!, $input: transfer_request_set_input!) {
+    update_transfer_request_by_pk(pk_columns: { id: $id }, _set: $input) {
+        ...TransferRequestCard
+    }
+}
+
+mutation HandleTransferRequest($input: HandleTransferRequestInput!) {
+    handleTransferRequest(input: $input) {
+        transfer_request {
+            ...TransferRequestCard
+        }
     }
 }

@@ -39,6 +39,21 @@ query ServerFetchThingDetails($id: uuid!) {
     }
 }
 
+query ServerFindTransferRequest($id: uuid!) {
+    transfer_request_by_pk(id: $id) {
+        id
+        status
+        receiver_id
+        thing {
+            id
+            group_relations {
+                id
+                group_id
+            }
+        }
+    }
+}
+
 mutation ServerUpdateThing(
     $id: uuid!
     $input: things_insert_input!
@@ -62,5 +77,29 @@ mutation ServerUpdateThing(
 
     delete_group_thing(where: { thing_id: { _eq: $id }, group_id: { _in: $deletedGroupIds } }) {
         affected_rows
+    }
+}
+
+mutation ServerChangeThingOwner($id: uuid!, $new_owner_id: uuid!) {
+    # Remove groups that new owner is not part of
+    delete_group_thing(
+        where: {
+            thing_id: { _eq: $id }
+            group: { _not: { memberships: { user_id: { _eq: $new_owner_id } } } }
+        }
+    ) {
+        affected_rows
+    }
+
+    # Set new owner
+    update_things_by_pk(pk_columns: { id: $id }, _set: { owner_id: $new_owner_id }) {
+        id
+    }
+}
+
+mutation ServerUpdateTransferRequest($id: uuid!, $input: transfer_request_set_input!) {
+    update_transfer_request_by_pk(pk_columns: { id: $id }, _set: $input) {
+        id
+        thing_id
     }
 }

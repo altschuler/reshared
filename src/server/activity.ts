@@ -60,6 +60,10 @@ const entityConstraint = (input: Entities_Insert_Input): Entities_Constraint => 
         return Entities_Constraint.EntitiesGroupMemberIdKey;
     }
 
+    if (input.transfer_request_id) {
+        return Entities_Constraint.EntitiesTransferRequestIdKey;
+    }
+
     throw new Error('Invalid entity: no id specified');
 };
 
