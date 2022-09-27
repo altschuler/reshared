@@ -14,7 +14,7 @@ sendgrid.setApiKey(process.env.SENDGRID_API_KEY!);
 
 const makeEmail = (data: MailData): MailDataRequired => ({
     ...data,
-    from: data.from || 'info@resha.red',
+    from: data.from || 'info@reshared.org',
 });
 
 export const sendMail = (data: MailData | MailData[]) =>

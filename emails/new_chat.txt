@@ -1,0 +1,9 @@
+Hi, {{user_name}}!
+
+{{sender_name}} sent you a message on Resnext linthared:
+
+{{datetime}}: "{{message}}"
+
+Use this link to view it on Reshared: {{link}}
+
+Use this link to change your settings if you don't want to receive email notifications like this one: {{settings_link}}

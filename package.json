@@ -9,7 +9,8 @@
         "start": "next start",
         "schema": "graphql-codegen",
         "schema-watch": "dotenv -c local -- graphql-codegen --watch",
-        "lint": "next lint"
+        "lint": "next lint",
+        "compile-emails": "mjml 'emails/*.mjml' -o emails/compiled"
     },
     "prettier": {
         "printWidth": 100,
@@ -49,6 +50,7 @@
         "jsonwebtoken": "^8.5.1",
         "lodash": "^4.17.21",
         "micro": "^9.3.4",
+        "mjml": "^4.13.0",
         "nanoid": "^4.0.0",
         "next": "^12.2.5",
         "node-fetch": "^3.0.0",
