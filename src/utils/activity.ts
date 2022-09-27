@@ -95,12 +95,14 @@ export const activityMessage = (
         if (activity.verb === Activity_Verb_Enum.Added) {
             const accepted = req.status === Transfer_Request_Status_Enum.Accepted;
             const rejected = req.status === Transfer_Request_Status_Enum.Rejected;
+            const cancelled = req.status === Transfer_Request_Status_Enum.Cancelled;
 
             return compact([
                 `${actor} requested to transfer ownership of ${req.thing!.name} to you`,
                 req.message && `Message from ${actor}: "${req.message}"`,
                 accepted && 'You accepted',
                 rejected && 'You rejected',
+                cancelled && `${actor} cancelled the request`,
             ]).join('. ');
         }
 
