@@ -89,8 +89,13 @@ const ExpandedNav = () => {
             <div className={classes.user}>
                 {!auth.user && (
                     <div>
-                        <a href={urlFor.auth.login()}>Login</a> /
-                        <a href={urlFor.auth.register()}>Register</a>
+                        <a data-cy="navbar:btn:login" href={urlFor.auth.login()}>
+                            Login
+                        </a>{' '}
+                        or{' '}
+                        <a data-cy="navbar:btn:register" href={urlFor.auth.register()}>
+                            Register
+                        </a>
                     </div>
                 )}
 
@@ -146,11 +151,16 @@ const CollapsedNav = () => {
             ) : (
                 <>
                     <Menu.Item>
-                        <a href={urlFor.auth.login()}>Login</a> /
+                        <a data-cy="navbar:btn:login" href={urlFor.auth.login()}>
+                            Login
+                        </a>{' '}
+                        /
                     </Menu.Item>
 
                     <Menu.Item>
-                        <a href={urlFor.auth.register()}>Register</a>
+                        <a data-cy="navbar:btn:register" href={urlFor.auth.register()}>
+                            Register
+                        </a>
                     </Menu.Item>
                 </>
             )}

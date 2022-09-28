@@ -73,6 +73,7 @@ export const RegistrationEditor = (props: RegistrationEditorProps) => {
             <Form hideRequiredMark>
                 <Form.Item extra="Name as it appears to other users" {...state.ant('name')}>
                     <Input
+                        data-cy="in:name"
                         placeholder="Name"
                         value={present.name}
                         onChange={(e) => state.update({ name: e.target.value })}
@@ -83,6 +84,7 @@ export const RegistrationEditor = (props: RegistrationEditorProps) => {
                     extra="You will never ever receive spam from Reshared!"
                     {...state.ant('email')}>
                     <Input
+                        data-cy="in:email"
                         placeholder="Email"
                         value={present.email}
                         onChange={(e) => state.update({ email: e.target.value })}
@@ -91,6 +93,7 @@ export const RegistrationEditor = (props: RegistrationEditorProps) => {
 
                 <Form.Item extra="Minimum 8 characters" {...state.ant('password')}>
                     <Input.Password
+                        data-cy="in:password"
                         placeholder="Password"
                         value={present.password}
                         onChange={(e) => state.update({ password: e.target.value })}
@@ -99,6 +102,7 @@ export const RegistrationEditor = (props: RegistrationEditorProps) => {
 
                 <Form.Item {...state.ant('consent')}>
                     <Checkbox
+                        data-cy="cb:consent"
                         checked={present.consent}
                         onChange={(e) => state.update({ consent: e.target.checked })}>
                         I agree to the{' '}
@@ -121,7 +125,11 @@ export const RegistrationEditor = (props: RegistrationEditorProps) => {
 
                 <Form.Item>
                     <Space>
-                        <Button type="primary" loading={loading} onClick={handleSubmit}>
+                        <Button
+                            data-cy="btn:submit"
+                            type="primary"
+                            loading={loading}
+                            onClick={handleSubmit}>
                             {props.submitLabel || 'Register'}
                         </Button>
 
@@ -140,8 +148,6 @@ export const RegistrationEditor = (props: RegistrationEditorProps) => {
                 </Form.Item>
                 {error && <Alert message={error} type="error" />}
             </Form>
-
-            <Divider>Other sign-up options</Divider>
 
             {/*<Space>*/}
             {/*    {values(providers)*/}

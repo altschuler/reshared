@@ -33,6 +33,7 @@ export const ResetPasswordPage = () => {
             {reset.isSent && (
                 <Form.Item>
                     <Alert
+                        data-cy="success:alert"
                         type="success"
                         message="An email has been sent with a link to reset your password."
                     />
@@ -40,11 +41,19 @@ export const ResetPasswordPage = () => {
             )}
             <Form>
                 <Form.Item label="Email">
-                    <Input value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <Input
+                        data-cy="email:in"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
                 </Form.Item>
 
                 <Form.Item>
-                    <Button type="primary" loading={reset.isLoading} onClick={handleReset}>
+                    <Button
+                        data-cy="submit:btn"
+                        type="primary"
+                        loading={reset.isLoading}
+                        onClick={handleReset}>
                         Reset password
                     </Button>
                 </Form.Item>

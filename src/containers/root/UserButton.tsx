@@ -1,4 +1,4 @@
-﻿import { UserDetailFragment } from '../../generated/graphql';
+﻿import { UserPrivateDetailFragment } from '../../generated/graphql';
 import { Dropdown, Menu } from 'antd';
 import Link from 'next/link';
 import { urlFor } from '../../utils/urls';
@@ -7,7 +7,7 @@ import React from 'react';
 import { useAuth } from '../../utils/auth';
 
 export interface UserButtonProps {
-    user: UserDetailFragment;
+    user: UserPrivateDetailFragment;
 }
 
 export const UserButton = ({ user }: UserButtonProps) => {
@@ -16,7 +16,7 @@ export const UserButton = ({ user }: UserButtonProps) => {
         <Menu>
             <Menu.ItemGroup
                 title={
-                    <span>
+                    <span data-cy="usermenu:current-user:txt">
                         Signed in as <strong>{auth.user?.displayName}</strong>
                     </span>
                 }
@@ -36,7 +36,7 @@ export const UserButton = ({ user }: UserButtonProps) => {
 
     return (
         <Dropdown overlay={menu} trigger={['click']}>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div data-cy="navbar:user:btn" style={{ display: 'flex', alignItems: 'center' }}>
                 <UserAvatar style={{ cursor: 'pointer' }} disablePopover user={user} />
             </div>
         </Dropdown>

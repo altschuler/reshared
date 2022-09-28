@@ -5,6 +5,7 @@ export interface EditableInputProps {
     defaultValue?: string;
     password?: boolean;
     onSave: (value: string) => Promise<unknown>;
+    dataCy?: string;
 }
 
 export const EditableInput = (props: EditableInputProps) => {
@@ -34,17 +35,22 @@ export const EditableInput = (props: EditableInputProps) => {
 
     const handleEdit = () => {
         if (props.password) {
-            setValue('•••••');
+            setValue('');
         }
         setEditing(true);
     };
 
     return (
-        <Space direction="horizontal">
+        <Space direction="horizontal" data-cy={props.dataCy}>
             {editing ? (
                 <>
-                    <Component value={value} onChange={(e) => setValue(e.target.value)} />
+                    <Component
+                        data-cy="value:in"
+                        value={value}
+                        onChange={(e) => setValue(e.target.value)}
+                    />
                     <Button
+                        data-cy="save:btn"
                         size="small"
                         color="primary"
                         loading={loading}
@@ -53,14 +59,18 @@ export const EditableInput = (props: EditableInputProps) => {
                         Save
                     </Button>
 
-                    <Button size="small" onClick={handleCancel} disabled={loading}>
+                    <Button
+                        data-cy="cancel:btn"
+                        size="small"
+                        onClick={handleCancel}
+                        disabled={loading}>
                         Cancel
                     </Button>
                 </>
             ) : (
                 <>
                     <Typography.Text>{value}</Typography.Text>
-                    <Button size="small" onClick={handleEdit}>
+                    <Button data-cy="edit:btn" size="small" onClick={handleEdit}>
                         Edit
                     </Button>
                 </>

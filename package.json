@@ -10,7 +10,8 @@
         "schema": "graphql-codegen",
         "schema-watch": "dotenv -c local -- graphql-codegen --watch",
         "lint": "next lint",
-        "compile-emails": "mjml 'emails/*.mjml' -o emails/compiled"
+        "compile-emails": "mjml 'emails/*.mjml' -o emails/compiled",
+        "cypress": "cypress open"
     },
     "prettier": {
         "printWidth": 100,
@@ -80,6 +81,8 @@
         "@typescript-eslint/eslint-plugin": "^5.36.2",
         "@typescript-eslint/parser": "^5.36.2",
         "cross-env": "^7.0.3",
+        "cypress": "^10.9.0",
+        "cypress-mailhog": "^1.6.0",
         "eslint": "^8.23.0",
         "eslint-config-next": "12.2.5",
         "eslint-plugin-react": "^7.24.0",

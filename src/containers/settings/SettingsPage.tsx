@@ -113,6 +113,7 @@ export const SettingsPage = () => {
                 <Form layout="horizontal">
                     <Form.Item label="Name" help="Your name as it is shown to others">
                         <EditableInput
+                            dataCy="name:editable"
                             onSave={handleChangeName}
                             defaultValue={auth.user.displayName}
                         />
@@ -132,11 +133,19 @@ export const SettingsPage = () => {
             {auth.user && (
                 <Form layout="horizontal">
                     <Form.Item label="Email">
-                        <EditableInput onSave={handleChangeEmail} defaultValue={auth.user.email} />
+                        <EditableInput
+                            dataCy="email:editable"
+                            onSave={handleChangeEmail}
+                            defaultValue={auth.user.email}
+                        />
                     </Form.Item>
 
                     <Form.Item label="Password">
-                        <EditableInput onSave={handleChangePassword} password />
+                        <EditableInput
+                            dataCy="password:editable"
+                            onSave={handleChangePassword}
+                            password
+                        />
                     </Form.Item>
                 </Form>
             )}

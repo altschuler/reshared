@@ -76,24 +76,25 @@ export const LoginForm = (props: LoginFormProps) => {
 
                 {login.error && (
                     <Form.Item>
-                        <Alert message={login.error.message} type="error" />
+                        <Alert data-cy="error:alert" message={login.error.message} type="error" />
                     </Form.Item>
                 )}
 
                 <Form.Item
                     name="email"
                     rules={[{ required: true, message: 'Email', type: 'email' }]}>
-                    <Input placeholder="Email" />
+                    <Input data-cy="email:in" placeholder="Email" />
                 </Form.Item>
 
                 <Form.Item
                     name="password"
                     rules={[{ required: true, message: 'Password goes here' }]}>
-                    <Input.Password placeholder="Password" />
+                    <Input.Password data-cy="password:in" placeholder="Password" />
                 </Form.Item>
 
                 <Form.Item>
                     <Button
+                        data-cy="submit:btn"
                         loading={login.isLoading}
                         className={classes.login}
                         type="primary"
@@ -117,7 +118,7 @@ export const LoginForm = (props: LoginFormProps) => {
                     <Typography.Text>
                         Forgot your password?{' '}
                         <Link href={urlFor.auth.reset(form.getFieldValue('email'))} passHref>
-                            <Typography.Link>Reset password</Typography.Link>
+                            <Typography.Link data-cy="forgot:btn">Reset password</Typography.Link>
                         </Link>
                         .
                     </Typography.Text>
