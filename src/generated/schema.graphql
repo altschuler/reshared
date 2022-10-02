@@ -60,17 +60,6 @@ type CreateGroupResult {
   group_id: uuid!
 }
 
-input CreateJoinTokenInput {
-  group_id: uuid!
-}
-
-type CreateJoinTokenResult {
-  group: groups
-  group_id: uuid!
-  join_token: group_join_tokens
-  join_token_id: uuid!
-}
-
 input HandleJoinRequestInput {
   accepted: Boolean!
   join_request_id: uuid!
@@ -1455,378 +1444,6 @@ input authRoles_updates {
 }
 
 """
-User webauthn authenticators. Don't modify its structure as Hasura Auth relies on it to function properly.
-"""
-type authUserAuthenticators {
-  counter: bigint!
-  credentialId: String!
-  credentialPublicKey: bytea
-  id: uuid!
-  nickname: String
-  transports: String!
-
-  """An object relationship"""
-  user: users!
-  userId: uuid!
-}
-
-"""
-aggregated selection of "auth.user_authenticators"
-"""
-type authUserAuthenticators_aggregate {
-  aggregate: authUserAuthenticators_aggregate_fields
-  nodes: [authUserAuthenticators!]!
-}
-
-"""
-aggregate fields of "auth.user_authenticators"
-"""
-type authUserAuthenticators_aggregate_fields {
-  avg: authUserAuthenticators_avg_fields
-  count(columns: [authUserAuthenticators_select_column!], distinct: Boolean): Int!
-  max: authUserAuthenticators_max_fields
-  min: authUserAuthenticators_min_fields
-  stddev: authUserAuthenticators_stddev_fields
-  stddev_pop: authUserAuthenticators_stddev_pop_fields
-  stddev_samp: authUserAuthenticators_stddev_samp_fields
-  sum: authUserAuthenticators_sum_fields
-  var_pop: authUserAuthenticators_var_pop_fields
-  var_samp: authUserAuthenticators_var_samp_fields
-  variance: authUserAuthenticators_variance_fields
-}
-
-"""
-order by aggregate values of table "auth.user_authenticators"
-"""
-input authUserAuthenticators_aggregate_order_by {
-  avg: authUserAuthenticators_avg_order_by
-  count: order_by
-  max: authUserAuthenticators_max_order_by
-  min: authUserAuthenticators_min_order_by
-  stddev: authUserAuthenticators_stddev_order_by
-  stddev_pop: authUserAuthenticators_stddev_pop_order_by
-  stddev_samp: authUserAuthenticators_stddev_samp_order_by
-  sum: authUserAuthenticators_sum_order_by
-  var_pop: authUserAuthenticators_var_pop_order_by
-  var_samp: authUserAuthenticators_var_samp_order_by
-  variance: authUserAuthenticators_variance_order_by
-}
-
-"""
-input type for inserting array relation for remote table "auth.user_authenticators"
-"""
-input authUserAuthenticators_arr_rel_insert_input {
-  data: [authUserAuthenticators_insert_input!]!
-
-  """upsert condition"""
-  on_conflict: authUserAuthenticators_on_conflict
-}
-
-"""aggregate avg on columns"""
-type authUserAuthenticators_avg_fields {
-  counter: Float
-}
-
-"""
-order by avg() on columns of table "auth.user_authenticators"
-"""
-input authUserAuthenticators_avg_order_by {
-  counter: order_by
-}
-
-"""
-Boolean expression to filter rows from the table "auth.user_authenticators". All fields are combined with a logical 'AND'.
-"""
-input authUserAuthenticators_bool_exp {
-  _and: [authUserAuthenticators_bool_exp!]
-  _not: authUserAuthenticators_bool_exp
-  _or: [authUserAuthenticators_bool_exp!]
-  counter: bigint_comparison_exp
-  credentialId: String_comparison_exp
-  credentialPublicKey: bytea_comparison_exp
-  id: uuid_comparison_exp
-  nickname: String_comparison_exp
-  transports: String_comparison_exp
-  user: users_bool_exp
-  userId: uuid_comparison_exp
-}
-
-"""
-unique or primary key constraints on table "auth.user_authenticators"
-"""
-enum authUserAuthenticators_constraint {
-  """
-  unique or primary key constraint on columns "credential_id"
-  """
-  user_authenticators_credential_id_key
-
-  """
-  unique or primary key constraint on columns "id"
-  """
-  user_authenticators_pkey
-}
-
-"""
-input type for incrementing numeric columns in table "auth.user_authenticators"
-"""
-input authUserAuthenticators_inc_input {
-  counter: bigint
-}
-
-"""
-input type for inserting data into table "auth.user_authenticators"
-"""
-input authUserAuthenticators_insert_input {
-  counter: bigint
-  credentialId: String
-  credentialPublicKey: bytea
-  id: uuid
-  nickname: String
-  transports: String
-  user: users_obj_rel_insert_input
-  userId: uuid
-}
-
-"""aggregate max on columns"""
-type authUserAuthenticators_max_fields {
-  counter: bigint
-  credentialId: String
-  id: uuid
-  nickname: String
-  transports: String
-  userId: uuid
-}
-
-"""
-order by max() on columns of table "auth.user_authenticators"
-"""
-input authUserAuthenticators_max_order_by {
-  counter: order_by
-  credentialId: order_by
-  id: order_by
-  nickname: order_by
-  transports: order_by
-  userId: order_by
-}
-
-"""aggregate min on columns"""
-type authUserAuthenticators_min_fields {
-  counter: bigint
-  credentialId: String
-  id: uuid
-  nickname: String
-  transports: String
-  userId: uuid
-}
-
-"""
-order by min() on columns of table "auth.user_authenticators"
-"""
-input authUserAuthenticators_min_order_by {
-  counter: order_by
-  credentialId: order_by
-  id: order_by
-  nickname: order_by
-  transports: order_by
-  userId: order_by
-}
-
-"""
-response of any mutation on the table "auth.user_authenticators"
-"""
-type authUserAuthenticators_mutation_response {
-  """number of rows affected by the mutation"""
-  affected_rows: Int!
-
-  """data from the rows affected by the mutation"""
-  returning: [authUserAuthenticators!]!
-}
-
-"""
-on_conflict condition type for table "auth.user_authenticators"
-"""
-input authUserAuthenticators_on_conflict {
-  constraint: authUserAuthenticators_constraint!
-  update_columns: [authUserAuthenticators_update_column!]! = []
-  where: authUserAuthenticators_bool_exp
-}
-
-"""Ordering options when selecting data from "auth.user_authenticators"."""
-input authUserAuthenticators_order_by {
-  counter: order_by
-  credentialId: order_by
-  credentialPublicKey: order_by
-  id: order_by
-  nickname: order_by
-  transports: order_by
-  user: users_order_by
-  userId: order_by
-}
-
-"""primary key columns input for table: authUserAuthenticators"""
-input authUserAuthenticators_pk_columns_input {
-  id: uuid!
-}
-
-"""
-select columns of table "auth.user_authenticators"
-"""
-enum authUserAuthenticators_select_column {
-  """column name"""
-  counter
-
-  """column name"""
-  credentialId
-
-  """column name"""
-  credentialPublicKey
-
-  """column name"""
-  id
-
-  """column name"""
-  nickname
-
-  """column name"""
-  transports
-
-  """column name"""
-  userId
-}
-
-"""
-input type for updating data in table "auth.user_authenticators"
-"""
-input authUserAuthenticators_set_input {
-  counter: bigint
-  credentialId: String
-  credentialPublicKey: bytea
-  id: uuid
-  nickname: String
-  transports: String
-  userId: uuid
-}
-
-"""aggregate stddev on columns"""
-type authUserAuthenticators_stddev_fields {
-  counter: Float
-}
-
-"""
-order by stddev() on columns of table "auth.user_authenticators"
-"""
-input authUserAuthenticators_stddev_order_by {
-  counter: order_by
-}
-
-"""aggregate stddev_pop on columns"""
-type authUserAuthenticators_stddev_pop_fields {
-  counter: Float
-}
-
-"""
-order by stddev_pop() on columns of table "auth.user_authenticators"
-"""
-input authUserAuthenticators_stddev_pop_order_by {
-  counter: order_by
-}
-
-"""aggregate stddev_samp on columns"""
-type authUserAuthenticators_stddev_samp_fields {
-  counter: Float
-}
-
-"""
-order by stddev_samp() on columns of table "auth.user_authenticators"
-"""
-input authUserAuthenticators_stddev_samp_order_by {
-  counter: order_by
-}
-
-"""aggregate sum on columns"""
-type authUserAuthenticators_sum_fields {
-  counter: bigint
-}
-
-"""
-order by sum() on columns of table "auth.user_authenticators"
-"""
-input authUserAuthenticators_sum_order_by {
-  counter: order_by
-}
-
-"""
-update columns of table "auth.user_authenticators"
-"""
-enum authUserAuthenticators_update_column {
-  """column name"""
-  counter
-
-  """column name"""
-  credentialId
-
-  """column name"""
-  credentialPublicKey
-
-  """column name"""
-  id
-
-  """column name"""
-  nickname
-
-  """column name"""
-  transports
-
-  """column name"""
-  userId
-}
-
-input authUserAuthenticators_updates {
-  """increments the numeric columns with given value of the filtered values"""
-  _inc: authUserAuthenticators_inc_input
-
-  """sets the columns of the filtered rows to the given values"""
-  _set: authUserAuthenticators_set_input
-  where: authUserAuthenticators_bool_exp!
-}
-
-"""aggregate var_pop on columns"""
-type authUserAuthenticators_var_pop_fields {
-  counter: Float
-}
-
-"""
-order by var_pop() on columns of table "auth.user_authenticators"
-"""
-input authUserAuthenticators_var_pop_order_by {
-  counter: order_by
-}
-
-"""aggregate var_samp on columns"""
-type authUserAuthenticators_var_samp_fields {
-  counter: Float
-}
-
-"""
-order by var_samp() on columns of table "auth.user_authenticators"
-"""
-input authUserAuthenticators_var_samp_order_by {
-  counter: order_by
-}
-
-"""aggregate variance on columns"""
-type authUserAuthenticators_variance_fields {
-  counter: Float
-}
-
-"""
-order by variance() on columns of table "auth.user_authenticators"
-"""
-input authUserAuthenticators_variance_order_by {
-  counter: order_by
-}
-
-"""
 Active providers for a given user. Don't modify its structure as Hasura Auth relies on it to function properly.
 """
 type authUserProviders {
@@ -2319,6 +1936,378 @@ input authUserRoles_updates {
   """sets the columns of the filtered rows to the given values"""
   _set: authUserRoles_set_input
   where: authUserRoles_bool_exp!
+}
+
+"""
+User webauthn security keys. Don't modify its structure as Hasura Auth relies on it to function properly.
+"""
+type authUserSecurityKeys {
+  counter: bigint!
+  credentialId: String!
+  credentialPublicKey: bytea
+  id: uuid!
+  nickname: String
+  transports: String!
+
+  """An object relationship"""
+  user: users!
+  userId: uuid!
+}
+
+"""
+aggregated selection of "auth.user_security_keys"
+"""
+type authUserSecurityKeys_aggregate {
+  aggregate: authUserSecurityKeys_aggregate_fields
+  nodes: [authUserSecurityKeys!]!
+}
+
+"""
+aggregate fields of "auth.user_security_keys"
+"""
+type authUserSecurityKeys_aggregate_fields {
+  avg: authUserSecurityKeys_avg_fields
+  count(columns: [authUserSecurityKeys_select_column!], distinct: Boolean): Int!
+  max: authUserSecurityKeys_max_fields
+  min: authUserSecurityKeys_min_fields
+  stddev: authUserSecurityKeys_stddev_fields
+  stddev_pop: authUserSecurityKeys_stddev_pop_fields
+  stddev_samp: authUserSecurityKeys_stddev_samp_fields
+  sum: authUserSecurityKeys_sum_fields
+  var_pop: authUserSecurityKeys_var_pop_fields
+  var_samp: authUserSecurityKeys_var_samp_fields
+  variance: authUserSecurityKeys_variance_fields
+}
+
+"""
+order by aggregate values of table "auth.user_security_keys"
+"""
+input authUserSecurityKeys_aggregate_order_by {
+  avg: authUserSecurityKeys_avg_order_by
+  count: order_by
+  max: authUserSecurityKeys_max_order_by
+  min: authUserSecurityKeys_min_order_by
+  stddev: authUserSecurityKeys_stddev_order_by
+  stddev_pop: authUserSecurityKeys_stddev_pop_order_by
+  stddev_samp: authUserSecurityKeys_stddev_samp_order_by
+  sum: authUserSecurityKeys_sum_order_by
+  var_pop: authUserSecurityKeys_var_pop_order_by
+  var_samp: authUserSecurityKeys_var_samp_order_by
+  variance: authUserSecurityKeys_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "auth.user_security_keys"
+"""
+input authUserSecurityKeys_arr_rel_insert_input {
+  data: [authUserSecurityKeys_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: authUserSecurityKeys_on_conflict
+}
+
+"""aggregate avg on columns"""
+type authUserSecurityKeys_avg_fields {
+  counter: Float
+}
+
+"""
+order by avg() on columns of table "auth.user_security_keys"
+"""
+input authUserSecurityKeys_avg_order_by {
+  counter: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "auth.user_security_keys". All fields are combined with a logical 'AND'.
+"""
+input authUserSecurityKeys_bool_exp {
+  _and: [authUserSecurityKeys_bool_exp!]
+  _not: authUserSecurityKeys_bool_exp
+  _or: [authUserSecurityKeys_bool_exp!]
+  counter: bigint_comparison_exp
+  credentialId: String_comparison_exp
+  credentialPublicKey: bytea_comparison_exp
+  id: uuid_comparison_exp
+  nickname: String_comparison_exp
+  transports: String_comparison_exp
+  user: users_bool_exp
+  userId: uuid_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "auth.user_security_keys"
+"""
+enum authUserSecurityKeys_constraint {
+  """
+  unique or primary key constraint on columns "credential_id"
+  """
+  user_security_key_credential_id_key
+
+  """
+  unique or primary key constraint on columns "id"
+  """
+  user_security_keys_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "auth.user_security_keys"
+"""
+input authUserSecurityKeys_inc_input {
+  counter: bigint
+}
+
+"""
+input type for inserting data into table "auth.user_security_keys"
+"""
+input authUserSecurityKeys_insert_input {
+  counter: bigint
+  credentialId: String
+  credentialPublicKey: bytea
+  id: uuid
+  nickname: String
+  transports: String
+  user: users_obj_rel_insert_input
+  userId: uuid
+}
+
+"""aggregate max on columns"""
+type authUserSecurityKeys_max_fields {
+  counter: bigint
+  credentialId: String
+  id: uuid
+  nickname: String
+  transports: String
+  userId: uuid
+}
+
+"""
+order by max() on columns of table "auth.user_security_keys"
+"""
+input authUserSecurityKeys_max_order_by {
+  counter: order_by
+  credentialId: order_by
+  id: order_by
+  nickname: order_by
+  transports: order_by
+  userId: order_by
+}
+
+"""aggregate min on columns"""
+type authUserSecurityKeys_min_fields {
+  counter: bigint
+  credentialId: String
+  id: uuid
+  nickname: String
+  transports: String
+  userId: uuid
+}
+
+"""
+order by min() on columns of table "auth.user_security_keys"
+"""
+input authUserSecurityKeys_min_order_by {
+  counter: order_by
+  credentialId: order_by
+  id: order_by
+  nickname: order_by
+  transports: order_by
+  userId: order_by
+}
+
+"""
+response of any mutation on the table "auth.user_security_keys"
+"""
+type authUserSecurityKeys_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [authUserSecurityKeys!]!
+}
+
+"""
+on_conflict condition type for table "auth.user_security_keys"
+"""
+input authUserSecurityKeys_on_conflict {
+  constraint: authUserSecurityKeys_constraint!
+  update_columns: [authUserSecurityKeys_update_column!]! = []
+  where: authUserSecurityKeys_bool_exp
+}
+
+"""Ordering options when selecting data from "auth.user_security_keys"."""
+input authUserSecurityKeys_order_by {
+  counter: order_by
+  credentialId: order_by
+  credentialPublicKey: order_by
+  id: order_by
+  nickname: order_by
+  transports: order_by
+  user: users_order_by
+  userId: order_by
+}
+
+"""primary key columns input for table: authUserSecurityKeys"""
+input authUserSecurityKeys_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "auth.user_security_keys"
+"""
+enum authUserSecurityKeys_select_column {
+  """column name"""
+  counter
+
+  """column name"""
+  credentialId
+
+  """column name"""
+  credentialPublicKey
+
+  """column name"""
+  id
+
+  """column name"""
+  nickname
+
+  """column name"""
+  transports
+
+  """column name"""
+  userId
+}
+
+"""
+input type for updating data in table "auth.user_security_keys"
+"""
+input authUserSecurityKeys_set_input {
+  counter: bigint
+  credentialId: String
+  credentialPublicKey: bytea
+  id: uuid
+  nickname: String
+  transports: String
+  userId: uuid
+}
+
+"""aggregate stddev on columns"""
+type authUserSecurityKeys_stddev_fields {
+  counter: Float
+}
+
+"""
+order by stddev() on columns of table "auth.user_security_keys"
+"""
+input authUserSecurityKeys_stddev_order_by {
+  counter: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type authUserSecurityKeys_stddev_pop_fields {
+  counter: Float
+}
+
+"""
+order by stddev_pop() on columns of table "auth.user_security_keys"
+"""
+input authUserSecurityKeys_stddev_pop_order_by {
+  counter: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type authUserSecurityKeys_stddev_samp_fields {
+  counter: Float
+}
+
+"""
+order by stddev_samp() on columns of table "auth.user_security_keys"
+"""
+input authUserSecurityKeys_stddev_samp_order_by {
+  counter: order_by
+}
+
+"""aggregate sum on columns"""
+type authUserSecurityKeys_sum_fields {
+  counter: bigint
+}
+
+"""
+order by sum() on columns of table "auth.user_security_keys"
+"""
+input authUserSecurityKeys_sum_order_by {
+  counter: order_by
+}
+
+"""
+update columns of table "auth.user_security_keys"
+"""
+enum authUserSecurityKeys_update_column {
+  """column name"""
+  counter
+
+  """column name"""
+  credentialId
+
+  """column name"""
+  credentialPublicKey
+
+  """column name"""
+  id
+
+  """column name"""
+  nickname
+
+  """column name"""
+  transports
+
+  """column name"""
+  userId
+}
+
+input authUserSecurityKeys_updates {
+  """increments the numeric columns with given value of the filtered values"""
+  _inc: authUserSecurityKeys_inc_input
+
+  """sets the columns of the filtered rows to the given values"""
+  _set: authUserSecurityKeys_set_input
+  where: authUserSecurityKeys_bool_exp!
+}
+
+"""aggregate var_pop on columns"""
+type authUserSecurityKeys_var_pop_fields {
+  counter: Float
+}
+
+"""
+order by var_pop() on columns of table "auth.user_security_keys"
+"""
+input authUserSecurityKeys_var_pop_order_by {
+  counter: order_by
+}
+
+"""aggregate var_samp on columns"""
+type authUserSecurityKeys_var_samp_fields {
+  counter: Float
+}
+
+"""
+order by var_samp() on columns of table "auth.user_security_keys"
+"""
+input authUserSecurityKeys_var_samp_order_by {
+  counter: order_by
+}
+
+"""aggregate variance on columns"""
+type authUserSecurityKeys_variance_fields {
+  counter: Float
+}
+
+"""
+order by variance() on columns of table "auth.user_security_keys"
+"""
+input authUserSecurityKeys_variance_order_by {
+  counter: order_by
 }
 
 scalar bigint
@@ -7626,7 +7615,6 @@ type mutation_root {
   """write new message in a chat group"""
   createChatMessage(input: CreateChatMessageInput): CreateChatMessageResult!
   createGroup(input: CreateGroupInput!): CreateGroupResult!
-  createJoinToken(input: CreateJoinTokenInput!): CreateJoinTokenResult
 
   """
   delete single row from the table: "auth.providers"
@@ -7681,19 +7669,6 @@ type mutation_root {
   ): authRoles_mutation_response
 
   """
-  delete single row from the table: "auth.user_authenticators"
-  """
-  deleteAuthUserAuthenticator(id: uuid!): authUserAuthenticators
-
-  """
-  delete data from the table: "auth.user_authenticators"
-  """
-  deleteAuthUserAuthenticators(
-    """filter the rows which have to be deleted"""
-    where: authUserAuthenticators_bool_exp!
-  ): authUserAuthenticators_mutation_response
-
-  """
   delete single row from the table: "auth.user_providers"
   """
   deleteAuthUserProvider(id: uuid!): authUserProviders
@@ -7718,6 +7693,19 @@ type mutation_root {
     """filter the rows which have to be deleted"""
     where: authUserRoles_bool_exp!
   ): authUserRoles_mutation_response
+
+  """
+  delete single row from the table: "auth.user_security_keys"
+  """
+  deleteAuthUserSecurityKey(id: uuid!): authUserSecurityKeys
+
+  """
+  delete data from the table: "auth.user_security_keys"
+  """
+  deleteAuthUserSecurityKeys(
+    """filter the rows which have to be deleted"""
+    where: authUserSecurityKeys_bool_exp!
+  ): authUserSecurityKeys_mutation_response
 
   """
   delete single row from the table: "storage.buckets"
@@ -8176,28 +8164,6 @@ type mutation_root {
   ): authRoles_mutation_response
 
   """
-  insert a single row into the table: "auth.user_authenticators"
-  """
-  insertAuthUserAuthenticator(
-    """the row to be inserted"""
-    object: authUserAuthenticators_insert_input!
-
-    """upsert condition"""
-    on_conflict: authUserAuthenticators_on_conflict
-  ): authUserAuthenticators
-
-  """
-  insert data into the table: "auth.user_authenticators"
-  """
-  insertAuthUserAuthenticators(
-    """the rows to be inserted"""
-    objects: [authUserAuthenticators_insert_input!]!
-
-    """upsert condition"""
-    on_conflict: authUserAuthenticators_on_conflict
-  ): authUserAuthenticators_mutation_response
-
-  """
   insert a single row into the table: "auth.user_providers"
   """
   insertAuthUserProvider(
@@ -8240,6 +8206,28 @@ type mutation_root {
     """upsert condition"""
     on_conflict: authUserRoles_on_conflict
   ): authUserRoles_mutation_response
+
+  """
+  insert a single row into the table: "auth.user_security_keys"
+  """
+  insertAuthUserSecurityKey(
+    """the row to be inserted"""
+    object: authUserSecurityKeys_insert_input!
+
+    """upsert condition"""
+    on_conflict: authUserSecurityKeys_on_conflict
+  ): authUserSecurityKeys
+
+  """
+  insert data into the table: "auth.user_security_keys"
+  """
+  insertAuthUserSecurityKeys(
+    """the rows to be inserted"""
+    objects: [authUserSecurityKeys_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: authUserSecurityKeys_on_conflict
+  ): authUserSecurityKeys_mutation_response
 
   """
   insert a single row into the table: "storage.buckets"
@@ -8981,32 +8969,6 @@ type mutation_root {
   ): authRoles_mutation_response
 
   """
-  update single row of the table: "auth.user_authenticators"
-  """
-  updateAuthUserAuthenticator(
-    """increments the numeric columns with given value of the filtered values"""
-    _inc: authUserAuthenticators_inc_input
-
-    """sets the columns of the filtered rows to the given values"""
-    _set: authUserAuthenticators_set_input
-    pk_columns: authUserAuthenticators_pk_columns_input!
-  ): authUserAuthenticators
-
-  """
-  update data of the table: "auth.user_authenticators"
-  """
-  updateAuthUserAuthenticators(
-    """increments the numeric columns with given value of the filtered values"""
-    _inc: authUserAuthenticators_inc_input
-
-    """sets the columns of the filtered rows to the given values"""
-    _set: authUserAuthenticators_set_input
-
-    """filter the rows which have to be updated"""
-    where: authUserAuthenticators_bool_exp!
-  ): authUserAuthenticators_mutation_response
-
-  """
   update single row of the table: "auth.user_providers"
   """
   updateAuthUserProvider(
@@ -9045,6 +9007,32 @@ type mutation_root {
     """filter the rows which have to be updated"""
     where: authUserRoles_bool_exp!
   ): authUserRoles_mutation_response
+
+  """
+  update single row of the table: "auth.user_security_keys"
+  """
+  updateAuthUserSecurityKey(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: authUserSecurityKeys_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: authUserSecurityKeys_set_input
+    pk_columns: authUserSecurityKeys_pk_columns_input!
+  ): authUserSecurityKeys
+
+  """
+  update data of the table: "auth.user_security_keys"
+  """
+  updateAuthUserSecurityKeys(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: authUserSecurityKeys_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: authUserSecurityKeys_set_input
+
+    """filter the rows which have to be updated"""
+    where: authUserSecurityKeys_bool_exp!
+  ): authUserSecurityKeys_mutation_response
 
   """
   update single row of the table: "storage.buckets"
@@ -9250,14 +9238,6 @@ type mutation_root {
   ): [authRoles_mutation_response]
 
   """
-  update multiples rows of table: "auth.user_authenticators"
-  """
-  update_authUserAuthenticators_many(
-    """updates to execute, in order"""
-    updates: [authUserAuthenticators_updates!]!
-  ): [authUserAuthenticators_mutation_response]
-
-  """
   update multiples rows of table: "auth.user_providers"
   """
   update_authUserProviders_many(
@@ -9272,6 +9252,14 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [authUserRoles_updates!]!
   ): [authUserRoles_mutation_response]
+
+  """
+  update multiples rows of table: "auth.user_security_keys"
+  """
+  update_authUserSecurityKeys_many(
+    """updates to execute, in order"""
+    updates: [authUserSecurityKeys_updates!]!
+  ): [authUserSecurityKeys_mutation_response]
 
   """
   update multiples rows of table: "storage.buckets"
@@ -10465,51 +10453,6 @@ type query_root {
   ): authRoles_aggregate!
 
   """
-  fetch data from the table: "auth.user_authenticators" using primary key columns
-  """
-  authUserAuthenticator(id: uuid!): authUserAuthenticators
-
-  """
-  fetch data from the table: "auth.user_authenticators"
-  """
-  authUserAuthenticators(
-    """distinct select on columns"""
-    distinct_on: [authUserAuthenticators_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [authUserAuthenticators_order_by!]
-
-    """filter the rows returned"""
-    where: authUserAuthenticators_bool_exp
-  ): [authUserAuthenticators!]!
-
-  """
-  fetch aggregated fields from the table: "auth.user_authenticators"
-  """
-  authUserAuthenticatorsAggregate(
-    """distinct select on columns"""
-    distinct_on: [authUserAuthenticators_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [authUserAuthenticators_order_by!]
-
-    """filter the rows returned"""
-    where: authUserAuthenticators_bool_exp
-  ): authUserAuthenticators_aggregate!
-
-  """
   fetch data from the table: "auth.user_providers" using primary key columns
   """
   authUserProvider(id: uuid!): authUserProviders
@@ -10596,6 +10539,51 @@ type query_root {
     """filter the rows returned"""
     where: authUserRoles_bool_exp
   ): authUserRoles_aggregate!
+
+  """
+  fetch data from the table: "auth.user_security_keys" using primary key columns
+  """
+  authUserSecurityKey(id: uuid!): authUserSecurityKeys
+
+  """
+  fetch data from the table: "auth.user_security_keys"
+  """
+  authUserSecurityKeys(
+    """distinct select on columns"""
+    distinct_on: [authUserSecurityKeys_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserSecurityKeys_order_by!]
+
+    """filter the rows returned"""
+    where: authUserSecurityKeys_bool_exp
+  ): [authUserSecurityKeys!]!
+
+  """
+  fetch aggregated fields from the table: "auth.user_security_keys"
+  """
+  authUserSecurityKeysAggregate(
+    """distinct select on columns"""
+    distinct_on: [authUserSecurityKeys_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserSecurityKeys_order_by!]
+
+    """filter the rows returned"""
+    where: authUserSecurityKeys_bool_exp
+  ): authUserSecurityKeys_aggregate!
 
   """fetch data from the table: "storage.buckets" using primary key columns"""
   bucket(id: String!): buckets
@@ -12013,51 +12001,6 @@ type subscription_root {
   ): authRoles_aggregate!
 
   """
-  fetch data from the table: "auth.user_authenticators" using primary key columns
-  """
-  authUserAuthenticator(id: uuid!): authUserAuthenticators
-
-  """
-  fetch data from the table: "auth.user_authenticators"
-  """
-  authUserAuthenticators(
-    """distinct select on columns"""
-    distinct_on: [authUserAuthenticators_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [authUserAuthenticators_order_by!]
-
-    """filter the rows returned"""
-    where: authUserAuthenticators_bool_exp
-  ): [authUserAuthenticators!]!
-
-  """
-  fetch aggregated fields from the table: "auth.user_authenticators"
-  """
-  authUserAuthenticatorsAggregate(
-    """distinct select on columns"""
-    distinct_on: [authUserAuthenticators_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [authUserAuthenticators_order_by!]
-
-    """filter the rows returned"""
-    where: authUserAuthenticators_bool_exp
-  ): authUserAuthenticators_aggregate!
-
-  """
   fetch data from the table: "auth.user_providers" using primary key columns
   """
   authUserProvider(id: uuid!): authUserProviders
@@ -12144,6 +12087,51 @@ type subscription_root {
     """filter the rows returned"""
     where: authUserRoles_bool_exp
   ): authUserRoles_aggregate!
+
+  """
+  fetch data from the table: "auth.user_security_keys" using primary key columns
+  """
+  authUserSecurityKey(id: uuid!): authUserSecurityKeys
+
+  """
+  fetch data from the table: "auth.user_security_keys"
+  """
+  authUserSecurityKeys(
+    """distinct select on columns"""
+    distinct_on: [authUserSecurityKeys_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserSecurityKeys_order_by!]
+
+    """filter the rows returned"""
+    where: authUserSecurityKeys_bool_exp
+  ): [authUserSecurityKeys!]!
+
+  """
+  fetch aggregated fields from the table: "auth.user_security_keys"
+  """
+  authUserSecurityKeysAggregate(
+    """distinct select on columns"""
+    distinct_on: [authUserSecurityKeys_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserSecurityKeys_order_by!]
+
+    """filter the rows returned"""
+    where: authUserSecurityKeys_bool_exp
+  ): authUserSecurityKeys_aggregate!
 
   """fetch data from the table: "storage.buckets" using primary key columns"""
   bucket(id: String!): buckets
@@ -14959,42 +14947,6 @@ type users {
     """filter the rows returned"""
     where: activities_bool_exp
   ): activities_aggregate!
-
-  """An array relationship"""
-  authenticators(
-    """distinct select on columns"""
-    distinct_on: [authUserAuthenticators_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [authUserAuthenticators_order_by!]
-
-    """filter the rows returned"""
-    where: authUserAuthenticators_bool_exp
-  ): [authUserAuthenticators!]!
-
-  """An aggregate relationship"""
-  authenticators_aggregate(
-    """distinct select on columns"""
-    distinct_on: [authUserAuthenticators_select_column!]
-
-    """limit the number of rows returned"""
-    limit: Int
-
-    """skip the first n rows. Use only with order_by"""
-    offset: Int
-
-    """sort the rows by one or more columns"""
-    order_by: [authUserAuthenticators_order_by!]
-
-    """filter the rows returned"""
-    where: authUserAuthenticators_bool_exp
-  ): authUserAuthenticators_aggregate!
   avatarUrl: String!
 
   """An array relationship"""
@@ -15383,6 +15335,42 @@ type users {
   ): authUserRoles_aggregate!
 
   """An array relationship"""
+  securityKeys(
+    """distinct select on columns"""
+    distinct_on: [authUserSecurityKeys_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserSecurityKeys_order_by!]
+
+    """filter the rows returned"""
+    where: authUserSecurityKeys_bool_exp
+  ): [authUserSecurityKeys!]!
+
+  """An aggregate relationship"""
+  securityKeys_aggregate(
+    """distinct select on columns"""
+    distinct_on: [authUserSecurityKeys_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [authUserSecurityKeys_order_by!]
+
+    """filter the rows returned"""
+    where: authUserSecurityKeys_bool_exp
+  ): authUserSecurityKeys_aggregate!
+
+  """An array relationship"""
   things(
     """distinct select on columns"""
     distinct_on: [things_select_column!]
@@ -15512,7 +15500,6 @@ input users_bool_exp {
   _or: [users_bool_exp!]
   activeMfaType: String_comparison_exp
   activities: activities_bool_exp
-  authenticators: authUserAuthenticators_bool_exp
   avatarUrl: String_comparison_exp
   chat_group_members: chat_group_members_bool_exp
   chat_messages: chat_messages_bool_exp
@@ -15544,6 +15531,7 @@ input users_bool_exp {
   phoneNumberVerified: Boolean_comparison_exp
   refreshTokens: authRefreshTokens_bool_exp
   roles: authUserRoles_bool_exp
+  securityKeys: authUserSecurityKeys_bool_exp
   things: things_bool_exp
   ticket: String_comparison_exp
   ticketExpiresAt: timestamptz_comparison_exp
@@ -15600,7 +15588,6 @@ input type for inserting data into table "auth.users"
 input users_insert_input {
   activeMfaType: String
   activities: activities_arr_rel_insert_input
-  authenticators: authUserAuthenticators_arr_rel_insert_input
   avatarUrl: String
   chat_group_members: chat_group_members_arr_rel_insert_input
   chat_messages: chat_messages_arr_rel_insert_input
@@ -15632,6 +15619,7 @@ input users_insert_input {
   phoneNumberVerified: Boolean
   refreshTokens: authRefreshTokens_arr_rel_insert_input
   roles: authUserRoles_arr_rel_insert_input
+  securityKeys: authUserSecurityKeys_arr_rel_insert_input
   things: things_arr_rel_insert_input
   ticket: String
   ticketExpiresAt: timestamptz
@@ -15775,7 +15763,6 @@ input users_on_conflict {
 input users_order_by {
   activeMfaType: order_by
   activities_aggregate: activities_aggregate_order_by
-  authenticators_aggregate: authUserAuthenticators_aggregate_order_by
   avatarUrl: order_by
   chat_group_members_aggregate: chat_group_members_aggregate_order_by
   chat_messages_aggregate: chat_messages_aggregate_order_by
@@ -15807,6 +15794,7 @@ input users_order_by {
   phoneNumberVerified: order_by
   refreshTokens_aggregate: authRefreshTokens_aggregate_order_by
   roles_aggregate: authUserRoles_aggregate_order_by
+  securityKeys_aggregate: authUserSecurityKeys_aggregate_order_by
   things_aggregate: things_aggregate_order_by
   ticket: order_by
   ticketExpiresAt: order_by

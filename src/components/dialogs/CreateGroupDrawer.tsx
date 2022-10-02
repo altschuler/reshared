@@ -19,7 +19,7 @@ export const CreateGroupDrawer = (props: DialogProps<GroupCardFragment | null>) 
         createGroup({ variables: { input } })
             .then(({ data }) => {
                 // @ts-ignore
-                const created = data?.createGroup.group;
+                const created = data?.insert_groups_one;
                 if (created) {
                     message.success('Group created');
                     editorState.reset();

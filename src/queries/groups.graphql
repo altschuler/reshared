@@ -163,11 +163,9 @@ query ActivityList($offset: Int = 0) {
 
 # Mutations
 
-mutation CreateGroup($input: CreateGroupInput!) {
-    createGroup(input: $input) {
-        group {
-            ...GroupCard
-        }
+mutation CreateGroup($input: groups_insert_input!) {
+    insert_groups_one(object: $input) {
+        ...GroupCard
     }
 }
 
