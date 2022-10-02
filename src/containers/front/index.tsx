@@ -89,11 +89,6 @@ export const FrontPage = () => {
     return (
         <PageLayout padded>
             <div className={classes.root}>
-                <Alert
-                    showIcon
-                    message="This site is in beta and likely not ready for any meaningful use."
-                    type="warning"
-                />
                 <Typography.Title level={1} className={classes.cta}>
                     Share your <Typed />
                     <br />- with your community

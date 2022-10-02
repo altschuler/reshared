@@ -24,7 +24,7 @@ const useStyles = createUseStyles({
     },
 });
 
-export const JoinButton = ({ group }: { group: GroupCardFragment }) => {
+export const JoinButton = ({ group, dataCy }: { group: GroupCardFragment; dataCy?: string }) => {
     const auth = useAuth();
     const classes = useStyles();
     const [join, joinMutation] = useJoinGroupMutation({
@@ -62,7 +62,9 @@ export const JoinButton = ({ group }: { group: GroupCardFragment }) => {
     if (!auth.user) {
         return (
             <Link href={urlFor.auth.register()} passHref>
-                <Button type="link">Sign up to join group</Button>
+                <Button data-cy={dataCy} type="link">
+                    Sign up to join group
+                </Button>
             </Link>
         );
     }
@@ -75,7 +77,11 @@ export const JoinButton = ({ group }: { group: GroupCardFragment }) => {
     // Public, non-member
     if (group.public) {
         return (
-            <Button type="primary" loading={joinMutation.loading} onClick={handleJoin}>
+            <Button
+                data-cy={dataCy}
+                type="primary"
+                loading={joinMutation.loading}
+                onClick={handleJoin}>
                 Join
             </Button>
         );
@@ -94,7 +100,7 @@ export const JoinButton = ({ group }: { group: GroupCardFragment }) => {
                 okText="Yes"
                 okType="danger"
                 cancelText="No">
-                <Button type="default" loading={cancelRequestMutation.loading}>
+                <Button data-cy={dataCy} type="default" loading={cancelRequestMutation.loading}>
                     Request pending...
                 </Button>
             </Popconfirm>
@@ -113,16 +119,18 @@ export const JoinButton = ({ group }: { group: GroupCardFragment }) => {
                         who you are or why you would like to join {group.name}.
                     </p>
                     <Input
+                        data-cy="confirm:message:in"
                         placeholder="Message"
                         value={requestMessage}
                         onChange={(e) => setRequestMessage(e.target.value)}
                     />
                 </div>
             }
+            okButtonProps={{ ['data-cy']: 'confirm:ok:btn' } as any}
             onConfirm={handleRequest}
             okText="Send request"
             cancelText="Cancel">
-            <Button type="primary" loading={requestJoinMutation.loading}>
+            <Button data-cy={dataCy} type="primary" loading={requestJoinMutation.loading}>
                 Request to join
             </Button>
         </Popconfirm>

@@ -59,18 +59,6 @@ export type CreateChatMessageResult = {
   chat_messages_id: Scalars['uuid'];
 };
 
-export type CreateGroupInput = {
-  description: Scalars['String'];
-  name: Scalars['String'];
-  public?: InputMaybe<Scalars['Boolean']>;
-};
-
-export type CreateGroupResult = {
-  __typename?: 'CreateGroupResult';
-  group?: Maybe<Groups>;
-  group_id: Scalars['uuid'];
-};
-
 export type HandleJoinRequestInput = {
   accepted: Scalars['Boolean'];
   join_request_id: Scalars['uuid'];
@@ -6133,6 +6121,7 @@ export type Groups = {
   banner_file?: Maybe<Files>;
   banner_file_id?: Maybe<Scalars['uuid']>;
   created_at: Scalars['timestamptz'];
+  creator_id?: Maybe<Scalars['uuid']>;
   description?: Maybe<Scalars['String']>;
   id: Scalars['uuid'];
   /** An array relationship */
@@ -6288,6 +6277,7 @@ export type Groups_Bool_Exp = {
   banner_file?: InputMaybe<Files_Bool_Exp>;
   banner_file_id?: InputMaybe<Uuid_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  creator_id?: InputMaybe<Uuid_Comparison_Exp>;
   description?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   join_requests?: InputMaybe<Group_Join_Requests_Bool_Exp>;
@@ -6316,6 +6306,7 @@ export type Groups_Insert_Input = {
   banner_file?: InputMaybe<Files_Obj_Rel_Insert_Input>;
   banner_file_id?: InputMaybe<Scalars['uuid']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
+  creator_id?: InputMaybe<Scalars['uuid']>;
   description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['uuid']>;
   join_requests?: InputMaybe<Group_Join_Requests_Arr_Rel_Insert_Input>;
@@ -6333,6 +6324,7 @@ export type Groups_Max_Fields = {
   __typename?: 'groups_max_fields';
   banner_file_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  creator_id?: Maybe<Scalars['uuid']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
@@ -6345,6 +6337,7 @@ export type Groups_Min_Fields = {
   __typename?: 'groups_min_fields';
   banner_file_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  creator_id?: Maybe<Scalars['uuid']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
@@ -6381,6 +6374,7 @@ export type Groups_Order_By = {
   banner_file?: InputMaybe<Files_Order_By>;
   banner_file_id?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+  creator_id?: InputMaybe<Order_By>;
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   join_requests_aggregate?: InputMaybe<Group_Join_Requests_Aggregate_Order_By>;
@@ -6405,6 +6399,8 @@ export enum Groups_Select_Column {
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
+  CreatorId = 'creator_id',
+  /** column name */
   Description = 'description',
   /** column name */
   Id = 'id',
@@ -6422,6 +6418,7 @@ export enum Groups_Select_Column {
 export type Groups_Set_Input = {
   banner_file_id?: InputMaybe<Scalars['uuid']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
+  creator_id?: InputMaybe<Scalars['uuid']>;
   description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['uuid']>;
   name?: InputMaybe<Scalars['String']>;
@@ -6436,6 +6433,8 @@ export enum Groups_Update_Column {
   BannerFileId = 'banner_file_id',
   /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  CreatorId = 'creator_id',
   /** column name */
   Description = 'description',
   /** column name */
@@ -6490,7 +6489,6 @@ export type Mutation_Root = {
   createChatGroup?: Maybe<CreateChatGroupResult>;
   /** write new message in a chat group */
   createChatMessage: CreateChatMessageResult;
-  createGroup: CreateGroupResult;
   /** delete single row from the table: "auth.providers" */
   deleteAuthProvider?: Maybe<AuthProviders>;
   /** delete single row from the table: "auth.provider_requests" */
@@ -6998,12 +6996,6 @@ export type Mutation_RootCreateChatGroupArgs = {
 /** mutation root */
 export type Mutation_RootCreateChatMessageArgs = {
   input?: InputMaybe<CreateChatMessageInput>;
-};
-
-
-/** mutation root */
-export type Mutation_RootCreateGroupArgs = {
-  input: CreateGroupInput;
 };
 
 
@@ -13444,6 +13436,7 @@ export type LeaveGroupMutation = { __typename?: 'mutation_root', delete_group_me
 
 export type JoinGroupMutationVariables = Exact<{
   groupId: Scalars['uuid'];
+  role?: InputMaybe<Group_Role_Enum>;
 }>;
 
 
@@ -14835,8 +14828,8 @@ export type LeaveGroupMutationHookResult = ReturnType<typeof useLeaveGroupMutati
 export type LeaveGroupMutationResult = Apollo.MutationResult<LeaveGroupMutation>;
 export type LeaveGroupMutationOptions = Apollo.BaseMutationOptions<LeaveGroupMutation, LeaveGroupMutationVariables>;
 export const JoinGroupDocument = gql`
-    mutation JoinGroup($groupId: uuid!) {
-  insert_group_members_one(object: {group_id: $groupId}) {
+    mutation JoinGroup($groupId: uuid!, $role: group_role_enum = user) {
+  insert_group_members_one(object: {group_id: $groupId, role: $role}) {
     ...GroupMemberCard
     user {
       ...UserPrivateDetail
@@ -14861,6 +14854,7 @@ export type JoinGroupMutationFn = Apollo.MutationFunction<JoinGroupMutation, Joi
  * const [joinGroupMutation, { data, loading, error }] = useJoinGroupMutation({
  *   variables: {
  *      groupId: // value for 'groupId'
+ *      role: // value for 'role'
  *   },
  * });
  */

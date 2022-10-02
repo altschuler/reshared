@@ -1,7 +1,33 @@
 /// <reference types="cypress" />
 import 'cypress-mailhog';
+import { Interception } from 'cypress/types/net-stubbing';
+import { testData, TestUserName } from '../resources/data';
 
 export {};
+
+Cypress.Commands.add('login', (user: TestUserName, doLogout?: boolean) => {
+    if (doLogout) {
+        cy.logout();
+        cy.reload();
+    }
+
+    const userData = testData.users[user];
+    cy.t('navbar:btn:login').click();
+
+    cy.t('email:in').type(userData.email);
+    cy.t('password:in').type(userData.password);
+    cy.t('submit:btn').click();
+
+    cy.url().should('contain', '/home');
+    // TODO: don't wait like this
+    cy.wait(1000);
+});
+
+Cypress.Commands.add('logout', () => {
+    cy.visit('/logout');
+
+    cy.url().should('contain', '/home');
+});
 
 Cypress.Commands.add('t', (value, ...childSelectors) => {
     const chain = childSelectors.map((cs) => `[data-cy="${cs}"]`).join(' ');
@@ -32,6 +58,15 @@ Cypress.Commands.add('decodeQuotedPrintable', { prevSubject: 'optional' }, (subj
     return cy.wrap(decoded);
 });
 
+Cypress.Commands.add('waitRequest', (what: 'files' | 'graphql') => {
+    cy.wait(`@${what}`);
+});
+
+Cypress.Commands.add('interceptRequests', () => {
+    cy.intercept('**/v1/graphql**').as('graphql');
+    cy.intercept('**/v1/storage/files**').as('files');
+});
+
 declare global {
     namespace Cypress {
         interface Chainable {
@@ -40,7 +75,11 @@ declare global {
              * @example cy.dataCy('greeting')
              */
             t(value: string, ...childSelectors: string[]): Chainable<JQuery<Element>>;
+            login(user: TestUserName, doLogout?: boolean): void;
             decodeQuotedPrintable(value?: string): Chainable<string>;
+            waitRequest(what: 'files' | 'graphql'): Chainable<Interception>;
+            interceptRequests(): Chainable<Interception>;
+            logout(): void;
         }
     }
 }

@@ -1,15 +1,14 @@
-﻿import ImgCrop from 'antd-img-crop';
-import { Alert, Button, Checkbox, Form, Input, Space, Upload } from 'antd';
-import { createUseEditor, EditorState } from '../AbstractEditor';
-import {
-    CreateGroupInput,
-    FileUploadCardFragment,
-    GroupDetailsFragment,
-    Groups_Set_Input,
-} from '../../../generated/graphql';
+﻿import { Alert, Button, Checkbox, Form, Input } from 'antd';
 import Joi from 'joi';
 import { useCallback } from 'react';
+import {
+    FileUploadCardFragment,
+    GroupDetailsFragment,
+    Groups_Insert_Input,
+    Groups_Set_Input,
+} from '../../../generated/graphql';
 import { ImageInput } from '../../forms/ImageInput';
+import { createUseEditor, EditorState } from '../AbstractEditor';
 
 export const groupSchema = Joi.object<EditorGroup>({
     name: Joi.string().min(2).max(50).messages({
@@ -55,6 +54,7 @@ export const GroupEditor = (props: GroupEditorProps) => {
             <Form name="basic" layout="vertical">
                 <Form.Item label="Name" {...state.ant('name')}>
                     <Input
+                        data-cy="name:in"
                         placeholder="Name"
                         value={present.name}
                         onBlur={() => state.touch('name')}
@@ -64,6 +64,7 @@ export const GroupEditor = (props: GroupEditorProps) => {
 
                 <Form.Item label="Description" {...state.ant('description')}>
                     <Input.TextArea
+                        data-cy="description:in"
                         showCount
                         maxLength={250}
                         placeholder="Description"
@@ -75,6 +76,7 @@ export const GroupEditor = (props: GroupEditorProps) => {
 
                 <Form.Item extra="A public group is open for anyone to join">
                     <Checkbox
+                        data-cy="public:cb"
                         checked={present.public}
                         onChange={(e) => state.update({ public: e.target.checked })}>
                         Public
@@ -83,6 +85,7 @@ export const GroupEditor = (props: GroupEditorProps) => {
 
                 <Form.Item label="Image">
                     <ImageInput
+                        dataCy="images"
                         value={present.banner_file}
                         onChange={(banner_file) => state.update({ banner_file })}
                     />
@@ -90,6 +93,7 @@ export const GroupEditor = (props: GroupEditorProps) => {
 
                 <Form.Item>
                     <Button
+                        data-cy="submit:btn"
                         loading={loading}
                         disabled={loading}
                         type="primary"
@@ -100,7 +104,7 @@ export const GroupEditor = (props: GroupEditorProps) => {
 
                 {error && (
                     <Form.Item>
-                        <Alert type="error" message={error} />
+                        <Alert data-cy="error" type="error" message={error} />
                     </Form.Item>
                 )}
             </Form>
@@ -110,10 +114,11 @@ export const GroupEditor = (props: GroupEditorProps) => {
 
 export const useGroupEditor = createUseEditor(makeEditorGroup(), groupSchema);
 
-export const asGroupCreateInput = ({ present }: GroupEditorState): CreateGroupInput => ({
+export const asGroupCreateInput = ({ present }: GroupEditorState): Groups_Insert_Input => ({
     name: present.name,
     description: present.description || '',
     public: present.public,
+    banner_file_id: present.banner_file?.id || null,
 });
 
 export const asGroupUpdateInput = ({ present }: GroupEditorState): Groups_Set_Input => ({

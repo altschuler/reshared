@@ -157,7 +157,11 @@ export const SearchPage = () => {
                         />
                     )}
                     {options.type === 'group' && (
-                        <GroupList where={groupWhere} emptyText={<GroupEmptyResults />} />
+                        <GroupList
+                            dataCy="search:group-results"
+                            where={groupWhere}
+                            emptyText={<GroupEmptyResults />}
+                        />
                     )}
                     {options.type === 'user' && (
                         <UserList

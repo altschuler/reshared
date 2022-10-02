@@ -49,7 +49,7 @@ export const GroupListPage = () => {
             <PageHeader
                 title="Your Groups"
                 extra={
-                    <Button type="primary" onClick={handleCreateGroup}>
+                    <Button data-cy="create-group:btn" type="primary" onClick={handleCreateGroup}>
                         Create Group
                     </Button>
                 }>

@@ -1,7 +1,12 @@
 ﻿import { noop } from 'lodash';
 import { Drawer, message } from 'antd';
 import { useCallback } from 'react';
-import { GqlOps, GroupCardFragment, useCreateGroupMutation } from '../../generated/graphql';
+import {
+    GqlOps,
+    GroupCardFragment,
+    Group_Role_Enum,
+    useCreateGroupMutation,
+} from '../../generated/graphql';
 import { DialogProps } from './DialogProvider';
 import { asGroupCreateInput, GroupEditor, useGroupEditor } from '../editors';
 
@@ -16,7 +21,16 @@ export const CreateGroupDrawer = (props: DialogProps<GroupCardFragment | null>) 
 
     const handleCreateGroup = useCallback(() => {
         const input = asGroupCreateInput(editorState);
-        createGroup({ variables: { input } })
+        createGroup({
+            variables: {
+                input: {
+                    ...input,
+                    memberships: {
+                        data: [{ role: Group_Role_Enum.Owner }],
+                    },
+                },
+            },
+        })
             .then(({ data }) => {
                 // @ts-ignore
                 const created = data?.insert_groups_one;

@@ -68,17 +68,24 @@ const ExpandedNav = () => {
             <div className={classes.nav}>
                 <Space size="large" align="center">
                     <Link href={urlFor.home()}>
-                        <a className={classes.navLink}>Home</a>
+                        <a data-cy="navbar:home:btn" className={classes.navLink}>
+                            Home
+                        </a>
                     </Link>
 
                     <Link href={urlFor.user.things()}>
-                        <a className={classes.navLink}>My Things</a>
+                        <a data-cy="navbar:my-things:btn" className={classes.navLink}>
+                            My Things
+                        </a>
                     </Link>
 
                     <Link href={urlFor.group.list()}>
-                        <a className={classes.navLink}>My Groups</a>
+                        <a data-cy="navbar:my-groups:btn" className={classes.navLink}>
+                            My Groups
+                        </a>
                     </Link>
                     <Input.Search
+                        data-cy="navbar:search:in"
                         placeholder="Find things, groups, users..."
                         style={{ display: 'block' }}
                         defaultValue={router.query.query}
@@ -116,18 +123,18 @@ const CollapsedNav = () => {
     const auth = useAuth();
     const menu = (
         <Menu>
-            <Menu.Item>
-                <Link href={urlFor.home()}>Home</Link>
-            </Menu.Item>
-
-            <Menu.Item>
-                <Link href={urlFor.search()}>Find</Link>
-            </Menu.Item>
-
-            <Menu.Divider />
-
             {auth.user ? (
                 <>
+                    <Menu.Item>
+                        <Link href={urlFor.home()}>Home</Link>
+                    </Menu.Item>
+
+                    <Menu.Item>
+                        <Link href={urlFor.search()}>Find</Link>
+                    </Menu.Item>
+
+                    <Menu.Divider />
+
                     <Menu.ItemGroup
                         title={
                             <span>
@@ -136,15 +143,21 @@ const CollapsedNav = () => {
                         }
                     />
                     <Menu.Item>
-                        <Link href={urlFor.user.things()}>My Things</Link>
+                        <Link href={urlFor.user.things()} data-cy="navbar:my-things:btn">
+                            My Things
+                        </Link>
                     </Menu.Item>
                     <Menu.Item>
-                        <Link href={urlFor.group.list()}>My Groups</Link>
+                        <Link href={urlFor.group.list()} data-cy="navbar:my-groups:btn">
+                            My Groups
+                        </Link>
                     </Menu.Item>
                     <Menu.Item>
-                        <Link href={urlFor.user.settings()}>Account settings</Link>
+                        <Link href={urlFor.user.settings()} data-cy="navbar:settings:btn">
+                            Account settings
+                        </Link>
                     </Menu.Item>
-                    <Menu.Item>
+                    <Menu.Item data-cy="navbar:logout:btn">
                         <a onClick={auth.logout}>Logout</a>
                     </Menu.Item>
                 </>

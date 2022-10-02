@@ -59,18 +59,6 @@ export type CreateChatMessageResult = {
   chat_messages_id: Scalars['uuid'];
 };
 
-export type CreateGroupInput = {
-  description: Scalars['String'];
-  name: Scalars['String'];
-  public?: InputMaybe<Scalars['Boolean']>;
-};
-
-export type CreateGroupResult = {
-  __typename?: 'CreateGroupResult';
-  group?: Maybe<Groups>;
-  group_id: Scalars['uuid'];
-};
-
 export type HandleJoinRequestInput = {
   accepted: Scalars['Boolean'];
   join_request_id: Scalars['uuid'];
@@ -6133,6 +6121,7 @@ export type Groups = {
   banner_file?: Maybe<Files>;
   banner_file_id?: Maybe<Scalars['uuid']>;
   created_at: Scalars['timestamptz'];
+  creator_id?: Maybe<Scalars['uuid']>;
   description?: Maybe<Scalars['String']>;
   id: Scalars['uuid'];
   /** An array relationship */
@@ -6288,6 +6277,7 @@ export type Groups_Bool_Exp = {
   banner_file?: InputMaybe<Files_Bool_Exp>;
   banner_file_id?: InputMaybe<Uuid_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  creator_id?: InputMaybe<Uuid_Comparison_Exp>;
   description?: InputMaybe<String_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   join_requests?: InputMaybe<Group_Join_Requests_Bool_Exp>;
@@ -6316,6 +6306,7 @@ export type Groups_Insert_Input = {
   banner_file?: InputMaybe<Files_Obj_Rel_Insert_Input>;
   banner_file_id?: InputMaybe<Scalars['uuid']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
+  creator_id?: InputMaybe<Scalars['uuid']>;
   description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['uuid']>;
   join_requests?: InputMaybe<Group_Join_Requests_Arr_Rel_Insert_Input>;
@@ -6333,6 +6324,7 @@ export type Groups_Max_Fields = {
   __typename?: 'groups_max_fields';
   banner_file_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  creator_id?: Maybe<Scalars['uuid']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
@@ -6345,6 +6337,7 @@ export type Groups_Min_Fields = {
   __typename?: 'groups_min_fields';
   banner_file_id?: Maybe<Scalars['uuid']>;
   created_at?: Maybe<Scalars['timestamptz']>;
+  creator_id?: Maybe<Scalars['uuid']>;
   description?: Maybe<Scalars['String']>;
   id?: Maybe<Scalars['uuid']>;
   name?: Maybe<Scalars['String']>;
@@ -6381,6 +6374,7 @@ export type Groups_Order_By = {
   banner_file?: InputMaybe<Files_Order_By>;
   banner_file_id?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+  creator_id?: InputMaybe<Order_By>;
   description?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   join_requests_aggregate?: InputMaybe<Group_Join_Requests_Aggregate_Order_By>;
@@ -6405,6 +6399,8 @@ export enum Groups_Select_Column {
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
+  CreatorId = 'creator_id',
+  /** column name */
   Description = 'description',
   /** column name */
   Id = 'id',
@@ -6422,6 +6418,7 @@ export enum Groups_Select_Column {
 export type Groups_Set_Input = {
   banner_file_id?: InputMaybe<Scalars['uuid']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
+  creator_id?: InputMaybe<Scalars['uuid']>;
   description?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['uuid']>;
   name?: InputMaybe<Scalars['String']>;
@@ -6436,6 +6433,8 @@ export enum Groups_Update_Column {
   BannerFileId = 'banner_file_id',
   /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  CreatorId = 'creator_id',
   /** column name */
   Description = 'description',
   /** column name */
@@ -6490,7 +6489,6 @@ export type Mutation_Root = {
   createChatGroup?: Maybe<CreateChatGroupResult>;
   /** write new message in a chat group */
   createChatMessage: CreateChatMessageResult;
-  createGroup: CreateGroupResult;
   /** delete single row from the table: "auth.providers" */
   deleteAuthProvider?: Maybe<AuthProviders>;
   /** delete single row from the table: "auth.provider_requests" */
@@ -6998,12 +6996,6 @@ export type Mutation_RootCreateChatGroupArgs = {
 /** mutation root */
 export type Mutation_RootCreateChatMessageArgs = {
   input?: InputMaybe<CreateChatMessageInput>;
-};
-
-
-/** mutation root */
-export type Mutation_RootCreateGroupArgs = {
-  input: CreateGroupInput;
 };
 
 
@@ -13444,6 +13436,7 @@ export type LeaveGroupMutation = { __typename?: 'mutation_root', delete_group_me
 
 export type JoinGroupMutationVariables = Exact<{
   groupId: Scalars['uuid'];
+  role?: InputMaybe<Group_Role_Enum>;
 }>;
 
 
@@ -13893,8 +13886,6 @@ export type ResolversTypes = {
   CreateChatGroupResult: ResolverTypeWrapper<CreateChatGroupResult>;
   CreateChatMessageInput: CreateChatMessageInput;
   CreateChatMessageResult: ResolverTypeWrapper<CreateChatMessageResult>;
-  CreateGroupInput: CreateGroupInput;
-  CreateGroupResult: ResolverTypeWrapper<CreateGroupResult>;
   Float: ResolverTypeWrapper<Scalars['Float']>;
   HandleJoinRequestInput: HandleJoinRequestInput;
   HandleJoinRequestResult: ResolverTypeWrapper<HandleJoinRequestResult>;
@@ -14723,8 +14714,6 @@ export type ResolversParentTypes = {
   CreateChatGroupResult: CreateChatGroupResult;
   CreateChatMessageInput: CreateChatMessageInput;
   CreateChatMessageResult: CreateChatMessageResult;
-  CreateGroupInput: CreateGroupInput;
-  CreateGroupResult: CreateGroupResult;
   Float: Scalars['Float'];
   HandleJoinRequestInput: HandleJoinRequestInput;
   HandleJoinRequestResult: HandleJoinRequestResult;
@@ -15448,12 +15437,6 @@ export type CreateChatGroupResultResolvers<ContextType = any, ParentType extends
 export type CreateChatMessageResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateChatMessageResult'] = ResolversParentTypes['CreateChatMessageResult']> = {
   chat_message?: Resolver<Maybe<ResolversTypes['chat_messages']>, ParentType, ContextType>;
   chat_messages_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type CreateGroupResultResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateGroupResult'] = ResolversParentTypes['CreateGroupResult']> = {
-  group?: Resolver<Maybe<ResolversTypes['groups']>, ParentType, ContextType>;
-  group_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -17065,6 +17048,7 @@ export type GroupsResolvers<ContextType = any, ParentType extends ResolversParen
   banner_file?: Resolver<Maybe<ResolversTypes['files']>, ParentType, ContextType>;
   banner_file_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  creator_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
   join_requests?: Resolver<Array<ResolversTypes['group_join_requests']>, ParentType, ContextType, Partial<GroupsJoin_RequestsArgs>>;
@@ -17098,6 +17082,7 @@ export type Groups_Aggregate_FieldsResolvers<ContextType = any, ParentType exten
 export type Groups_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['groups_max_fields'] = ResolversParentTypes['groups_max_fields']> = {
   banner_file_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  creator_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -17109,6 +17094,7 @@ export type Groups_Max_FieldsResolvers<ContextType = any, ParentType extends Res
 export type Groups_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['groups_min_fields'] = ResolversParentTypes['groups_min_fields']> = {
   banner_file_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  creator_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -17130,7 +17116,6 @@ export interface JsonbScalarConfig extends GraphQLScalarTypeConfig<ResolversType
 export type Mutation_RootResolvers<ContextType = any, ParentType extends ResolversParentTypes['mutation_root'] = ResolversParentTypes['mutation_root']> = {
   createChatGroup?: Resolver<Maybe<ResolversTypes['CreateChatGroupResult']>, ParentType, ContextType, RequireFields<Mutation_RootCreateChatGroupArgs, 'input'>>;
   createChatMessage?: Resolver<ResolversTypes['CreateChatMessageResult'], ParentType, ContextType, Partial<Mutation_RootCreateChatMessageArgs>>;
-  createGroup?: Resolver<ResolversTypes['CreateGroupResult'], ParentType, ContextType, RequireFields<Mutation_RootCreateGroupArgs, 'input'>>;
   deleteAuthProvider?: Resolver<Maybe<ResolversTypes['authProviders']>, ParentType, ContextType, RequireFields<Mutation_RootDeleteAuthProviderArgs, 'id'>>;
   deleteAuthProviderRequest?: Resolver<Maybe<ResolversTypes['authProviderRequests']>, ParentType, ContextType, RequireFields<Mutation_RootDeleteAuthProviderRequestArgs, 'id'>>;
   deleteAuthProviderRequests?: Resolver<Maybe<ResolversTypes['authProviderRequests_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDeleteAuthProviderRequestsArgs, 'where'>>;
@@ -18138,7 +18123,6 @@ export interface UuidScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 export type Resolvers<ContextType = any> = {
   CreateChatGroupResult?: CreateChatGroupResultResolvers<ContextType>;
   CreateChatMessageResult?: CreateChatMessageResultResolvers<ContextType>;
-  CreateGroupResult?: CreateGroupResultResolvers<ContextType>;
   HandleJoinRequestResult?: HandleJoinRequestResultResolvers<ContextType>;
   HandleTransferRequestResult?: HandleTransferRequestResultResolvers<ContextType>;
   JoinGroupResult?: JoinGroupResultResolvers<ContextType>;
@@ -18471,7 +18455,7 @@ export const CreateGroupPostDocument = {"kind":"Document","definitions":[{"kind"
 export const UpdateGroupPostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateGroupPost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_posts_set_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_group_posts_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupPost"}}]}}]}},...GroupPostFragmentDoc.definitions]} as unknown as DocumentNode<UpdateGroupPostMutation, UpdateGroupPostMutationVariables>;
 export const CreateGroupPostCommentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateGroupPostComment"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupPostId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"comments_insert_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_post_comment_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_post_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupPostId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"comment"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"comment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentCard"}}]}},{"kind":"Field","name":{"kind":"Name","value":"post"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupPost"}}]}}]}}]}},...CommentCardFragmentDoc.definitions,...GroupPostFragmentDoc.definitions]} as unknown as DocumentNode<CreateGroupPostCommentMutation, CreateGroupPostCommentMutationVariables>;
 export const LeaveGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"LeaveGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_group_members"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<LeaveGroupMutation, LeaveGroupMutationVariables>;
-export const JoinGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"JoinGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_members_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupMemberCard"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserPrivateDetail"}}]}}]}}]}},...GroupMemberCardFragmentDoc.definitions,...UserPrivateDetailFragmentDoc.definitions]} as unknown as DocumentNode<JoinGroupMutation, JoinGroupMutationVariables>;
+export const JoinGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"JoinGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"role"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"group_role_enum"}},"defaultValue":{"kind":"EnumValue","value":"user"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_members_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"group_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"role"},"value":{"kind":"Variable","name":{"kind":"Name","value":"role"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupMemberCard"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserPrivateDetail"}}]}}]}}]}},...GroupMemberCardFragmentDoc.definitions,...UserPrivateDetailFragmentDoc.definitions]} as unknown as DocumentNode<JoinGroupMutation, JoinGroupMutationVariables>;
 export const JoinGroupWithTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"JoinGroupWithToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"JoinGroupInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"joinGroup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserPrivateDetail"}}]}}]}}]}},...UserPrivateDetailFragmentDoc.definitions]} as unknown as DocumentNode<JoinGroupWithTokenMutation, JoinGroupWithTokenMutationVariables>;
 export const RequestJoinGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RequestJoinGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_requests_insert_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_group_join_requests_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupCard"}}]}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserJoinRequests"}}]}}]}}]}},...GroupCardFragmentDoc.definitions,...UserJoinRequestsFragmentDoc.definitions]} as unknown as DocumentNode<RequestJoinGroupMutation, RequestJoinGroupMutationVariables>;
 export const CancelJoinRequestDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CancelJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"requestId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_group_join_requests"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"requestId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserJoinRequests"}}]}}]}}]}}]}},...UserJoinRequestsFragmentDoc.definitions]} as unknown as DocumentNode<CancelJoinRequestMutation, CancelJoinRequestMutationVariables>;

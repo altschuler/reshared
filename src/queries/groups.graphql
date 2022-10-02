@@ -213,8 +213,8 @@ mutation LeaveGroup($groupId: uuid!, $userId: uuid!) {
     }
 }
 
-mutation JoinGroup($groupId: uuid!) {
-    insert_group_members_one(object: { group_id: $groupId }) {
+mutation JoinGroup($groupId: uuid!, $role: group_role_enum = user) {
+    insert_group_members_one(object: { group_id: $groupId, role: $role }) {
         ...GroupMemberCard
         user {
             ...UserPrivateDetail

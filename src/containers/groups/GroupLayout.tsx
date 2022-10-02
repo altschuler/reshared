@@ -1,5 +1,4 @@
 ﻿import { EllipsisOutlined } from '@ant-design/icons';
-import { useNhostClient } from '@nhost/react';
 import {
     Button,
     Divider,
@@ -54,7 +53,6 @@ export const GroupLayout = (props: GroupLayoutProps) => {
     const router = useRouter();
     const { isAdmin, isMember, user } = useMembership(props.group);
     const btnClass = (page: GroupPage) => (props.activePage === page ? classes.active : undefined);
-    const nhost = useNhostClient();
 
     const [leave, mutation] = useLeaveGroupMutation({
         refetchQueries: [GqlOps.Query.UserPrivateDetails],
@@ -136,12 +134,13 @@ export const GroupLayout = (props: GroupLayoutProps) => {
         <PageLayout>
             <PageHeader
                 className={classes.header}
-                title={props.group.name}
+                title={<span data-cy="group-header:title:txt">{props.group.name}</span>}
                 avatar={
                     props.group.banner_file
                         ? {
                               icon: (
                                   <ImageDisplay
+                                      dataCy="group-header:image"
                                       width={100}
                                       height={100}
                                       file={props.group.banner_file}
@@ -153,7 +152,10 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                 extra={[
                     isMember && (
                         <Link passHref key="home" href={urlFor.group.home(props.group)}>
-                            <Button type="link" className={btnClass('home')}>
+                            <Button
+                                data-cy="group-header:home:btn"
+                                type="link"
+                                className={btnClass('home')}>
                                 Home
                             </Button>
                         </Link>
@@ -161,7 +163,10 @@ export const GroupLayout = (props: GroupLayoutProps) => {
 
                     isMember && (
                         <Link passHref key="things" href={urlFor.group.things(props.group)}>
-                            <Button type="link" className={btnClass('things')}>
+                            <Button
+                                data-cy="group-header:things:btn"
+                                type="link"
+                                className={btnClass('things')}>
                                 Things
                             </Button>
                         </Link>
@@ -169,7 +174,10 @@ export const GroupLayout = (props: GroupLayoutProps) => {
 
                     isMember && (
                         <Link passHref key="members" href={urlFor.group.members(props.group)}>
-                            <Button type="link" className={btnClass('members')}>
+                            <Button
+                                data-cy="group-header:members:btn"
+                                type="link"
+                                className={btnClass('members')}>
                                 Members
                             </Button>
                         </Link>
@@ -177,7 +185,10 @@ export const GroupLayout = (props: GroupLayoutProps) => {
 
                     isAdmin && (
                         <Link passHref key="settings" href={urlFor.group.settings(props.group)}>
-                            <Button type="link" className={btnClass('settings')}>
+                            <Button
+                                data-cy="group-header:settings:btn"
+                                type="link"
+                                className={btnClass('settings')}>
                                 Settings
                             </Button>
                         </Link>
@@ -188,24 +199,34 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                     ),
 
                     isMember && (
-                        <Button key="share" type="primary" onClick={handleShare}>
+                        <Button
+                            key="share"
+                            data-cy="group-header:share:btn"
+                            type="primary"
+                            onClick={handleShare}>
                             Share a thing
                         </Button>
                     ),
 
                     isMember && (
-                        <Button key="post" type="primary" onClick={handlePost}>
+                        <Button
+                            key="post"
+                            data-cy="group-header:ask:btn"
+                            type="primary"
+                            onClick={handlePost}>
                             Ask for a thing
                         </Button>
                     ),
 
                     isMember && (
                         <Dropdown key="more" overlay={menu}>
-                            <Button icon={<EllipsisOutlined />} />
+                            <Button data-cy="group-header:more:btn" icon={<EllipsisOutlined />} />
                         </Dropdown>
                     ),
 
-                    !isMember && <JoinButton key="join" group={props.group} />,
+                    !isMember && (
+                        <JoinButton dataCy="group-header:join:btn" key="join" group={props.group} />
+                    ),
                 ]}>
                 {props.children}
             </PageHeader>

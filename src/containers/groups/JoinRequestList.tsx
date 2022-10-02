@@ -54,6 +54,7 @@ export const JoinRequestList = (props: JoinRequestListProps) => {
 
     return (
         <List
+            data-cy="join-request-list"
             header={<Typography.Title level={5}>Pending membership requests</Typography.Title>}
             loading={loading}
             itemLayout="horizontal"
@@ -61,9 +62,11 @@ export const JoinRequestList = (props: JoinRequestListProps) => {
             locale={{ emptyText: 'No pending requests' }}
             renderItem={(req) => (
                 <List.Item
+                    data-cy="item"
                     extra={handleMutation.loading && <Spin />}
                     actions={[
                         <Button
+                            data-cy="accept:btn"
                             key="accept"
                             disabled={handleMutation.loading}
                             size="small"
@@ -72,6 +75,7 @@ export const JoinRequestList = (props: JoinRequestListProps) => {
                             Accept
                         </Button>,
                         <Button
+                            data-cy="reject:btn"
                             key="reject"
                             disabled={handleMutation.loading}
                             size="small"

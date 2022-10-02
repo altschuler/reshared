@@ -50,15 +50,15 @@ interface CountItemProps {
     count: number | undefined;
     selected: boolean;
     onClick: () => unknown;
+    dataCy?: string;
 }
-const CountItem = ({ label, count, selected, onClick }: CountItemProps) => {
+const CountItem = ({ label, count, selected, onClick, dataCy }: CountItemProps) => {
     const classes = useStyles();
     return (
         <Typography.Title
             level={5}
-            className={clsx(classes.countItem, selected && classes.countItemSelected)}
-        >
-            <span onClick={onClick}>
+            className={clsx(classes.countItem, selected && classes.countItemSelected)}>
+            <span data-cy={dataCy} onClick={onClick}>
                 {label} {isNumber(count) ? <span>({count === 10 ? '10+' : count})</span> : ''}
             </span>
         </Typography.Title>
@@ -78,6 +78,7 @@ export const Sidebar = (props: SidebarProps) => {
                 <Space direction="vertical">
                     <CountItem
                         label="Things"
+                        dataCy="search:sidebar:things:btn"
                         count={props.counts?.things}
                         selected={props.options.type === 'thing'}
                         onClick={() => handleChange({ type: 'thing' })}
@@ -85,6 +86,7 @@ export const Sidebar = (props: SidebarProps) => {
 
                     <CountItem
                         label="Groups"
+                        dataCy="search:sidebar:groups:btn"
                         count={props.counts?.groups}
                         selected={props.options.type === 'group'}
                         onClick={() => handleChange({ type: 'group' })}
@@ -92,6 +94,7 @@ export const Sidebar = (props: SidebarProps) => {
 
                     <CountItem
                         label="Users"
+                        dataCy="search:sidebar:users:btn"
                         count={props.counts?.users}
                         selected={props.options.type === 'user'}
                         onClick={() => handleChange({ type: 'user' })}

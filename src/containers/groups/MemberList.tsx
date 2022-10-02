@@ -21,16 +21,16 @@ export const MemberList = ({ memberships }: MemberListProps) => {
     useEffect(() => {
         pgn.setTotal(memberships.length);
     }, [memberships.length, pgn]);
-    console.log('memberships: ', memberships);
 
     return (
         <List
+            data-cy="member-list"
             header={<Typography.Title level={5}>Current Members</Typography.Title>}
             pagination={pgn.config}
             itemLayout="horizontal"
             dataSource={memberships}
             renderItem={(member) => (
-                <List.Item>
+                <List.Item data-cy="member-list:item">
                     <List.Item.Meta
                         avatar={<UserAvatar user={member.user} />}
                         title={

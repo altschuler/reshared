@@ -93,7 +93,7 @@ export const GroupEmptyContent = ({ group }: GroupEmptyContentProps) => {
                             </span>
                         )}
                     </Typography.Title>
-                    <JoinButton group={group} />
+                    <JoinButton dataCy="group:empty:join:btn" group={group} />
                 </div>
             )}
 

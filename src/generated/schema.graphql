@@ -49,17 +49,6 @@ type CreateChatMessageResult {
   chat_messages_id: uuid!
 }
 
-input CreateGroupInput {
-  description: String!
-  name: String!
-  public: Boolean
-}
-
-type CreateGroupResult {
-  group: groups
-  group_id: uuid!
-}
-
 input HandleJoinRequestInput {
   accepted: Boolean!
   join_request_id: uuid!
@@ -7186,6 +7175,7 @@ type groups {
   banner_file: files
   banner_file_id: uuid
   created_at: timestamptz!
+  creator_id: uuid
   description: String
   id: uuid!
 
@@ -7366,6 +7356,7 @@ input groups_bool_exp {
   banner_file: files_bool_exp
   banner_file_id: uuid_comparison_exp
   created_at: timestamptz_comparison_exp
+  creator_id: uuid_comparison_exp
   description: String_comparison_exp
   id: uuid_comparison_exp
   join_requests: group_join_requests_bool_exp
@@ -7406,6 +7397,7 @@ input groups_insert_input {
   banner_file: files_obj_rel_insert_input
   banner_file_id: uuid
   created_at: timestamptz
+  creator_id: uuid
   description: String
   id: uuid
   join_requests: group_join_requests_arr_rel_insert_input
@@ -7422,6 +7414,7 @@ input groups_insert_input {
 type groups_max_fields {
   banner_file_id: uuid
   created_at: timestamptz
+  creator_id: uuid
   description: String
   id: uuid
   name: String
@@ -7433,6 +7426,7 @@ type groups_max_fields {
 type groups_min_fields {
   banner_file_id: uuid
   created_at: timestamptz
+  creator_id: uuid
   description: String
   id: uuid
   name: String
@@ -7476,6 +7470,7 @@ input groups_order_by {
   banner_file: files_order_by
   banner_file_id: order_by
   created_at: order_by
+  creator_id: order_by
   description: order_by
   id: order_by
   join_requests_aggregate: group_join_requests_aggregate_order_by
@@ -7504,6 +7499,9 @@ enum groups_select_column {
   created_at
 
   """column name"""
+  creator_id
+
+  """column name"""
   description
 
   """column name"""
@@ -7528,6 +7526,7 @@ input type for updating data in table "groups"
 input groups_set_input {
   banner_file_id: uuid
   created_at: timestamptz
+  creator_id: uuid
   description: String
   id: uuid
   name: String
@@ -7545,6 +7544,9 @@ enum groups_update_column {
 
   """column name"""
   created_at
+
+  """column name"""
+  creator_id
 
   """column name"""
   description
@@ -7614,7 +7616,6 @@ type mutation_root {
 
   """write new message in a chat group"""
   createChatMessage(input: CreateChatMessageInput): CreateChatMessageResult!
-  createGroup(input: CreateGroupInput!): CreateGroupResult!
 
   """
   delete single row from the table: "auth.providers"

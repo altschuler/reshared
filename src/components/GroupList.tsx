@@ -24,6 +24,7 @@ export interface GroupListProps {
     where: Groups_Bool_Exp;
     orderBy?: Groups_Order_By[];
     emptyText?: ReactNode;
+    dataCy?: string;
 }
 
 const IconText = ({ icon, text }: { icon: ReactNode; text: string | number }) => (
@@ -53,6 +54,7 @@ export const GroupList = (props: GroupListProps) => {
 
     return (
         <List
+            data-cy={props.dataCy}
             loading={loading}
             itemLayout="horizontal"
             size="large"
@@ -61,6 +63,7 @@ export const GroupList = (props: GroupListProps) => {
             locale={props.emptyText ? { emptyText: props.emptyText } : undefined}
             renderItem={(group) => (
                 <List.Item
+                    data-cy={props.dataCy && `${props.dataCy}:item`}
                     key={group.name}
                     actions={[
                         isMember(group, auth.user) && (
@@ -83,8 +86,7 @@ export const GroupList = (props: GroupListProps) => {
                             text={group.thing_relations_aggregate.aggregate?.count || 0}
                             key="things"
                         />,
-                    ]}
-                >
+                    ]}>
                     <List.Item.Meta
                         avatar={
                             <Avatar
@@ -99,7 +101,11 @@ export const GroupList = (props: GroupListProps) => {
                                 }
                             />
                         }
-                        title={<Link href={urlFor.group.home(group)}>{group.name}</Link>}
+                        title={
+                            <Link passHref href={urlFor.group.home(group)}>
+                                <a data-cy="title">{group.name}</a>
+                            </Link>
+                        }
                         description={group.description}
                     />
                 </List.Item>

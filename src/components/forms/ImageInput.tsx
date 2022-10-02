@@ -11,6 +11,7 @@ export interface ImageInputProps {
     width?: number;
     height?: number;
     onChange: (value: FileUploadCardFragment | null) => unknown;
+    dataCy?: string;
 }
 
 export const ImageInput = (props: ImageInputProps) => {
@@ -60,14 +61,16 @@ export const ImageInput = (props: ImageInputProps) => {
 
     // className = "avatar-uploader"
     return (
-        <Space direction="vertical" align="center" size={0}>
+        <Space direction="vertical" align="center" size={0} data-cy={props.dataCy}>
             <Upload
+                data-cy="input"
                 action={handleUploadImage}
                 beforeUpload={beforeUpload}
                 showUploadList={false}
                 listType="picture-card">
                 {props.value ? (
                     <ImageDisplay
+                        dataCy="preview"
                         width={props.width || 100}
                         height={props.height || 100}
                         file={props.value}
@@ -77,7 +80,11 @@ export const ImageInput = (props: ImageInputProps) => {
                 )}
             </Upload>
 
-            {props.value && <Typography.Link onClick={handleRemove}>Remove</Typography.Link>}
+            {props.value && (
+                <Typography.Link data-cy="remove" onClick={handleRemove}>
+                    Remove
+                </Typography.Link>
+            )}
         </Space>
     );
 };
