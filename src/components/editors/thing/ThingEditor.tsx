@@ -13,6 +13,7 @@ import { DatePicker, GroupSelect, ThingImageInput, ThingTypeSelect } from '../..
 import Joi from 'joi';
 import { useCallback } from 'react';
 import dayjs from 'dayjs';
+import { isEmpty } from 'lodash-es';
 
 export const thingSchema = Joi.object<EditorThing>({
     id: Joi.string().uuid({ version: 'uuidv4' }).optional().allow(null),
@@ -184,13 +185,31 @@ export const ThingEditor = (props: ThingEditorProps) => {
                             </Popconfirm>
                         )}
 
-                        <Button
-                            loading={loading}
-                            disabled={loading}
-                            type="primary"
-                            onClick={handleSubmit}>
-                            {submitLabel || 'Save'}
-                        </Button>
+                        {isEmpty(present.groups) ? (
+                            <Popconfirm
+                                onConfirm={handleSubmit}
+                                okType="primary"
+                                okText="Create"
+                                title={
+                                    <Typography.Paragraph style={{ maxWidth: 300 }}>
+                                        You haven't shared {present.name || 'the thing'} in any
+                                        groups. Share it in a group for others to see. You can also
+                                        add it to a group later.
+                                    </Typography.Paragraph>
+                                }>
+                                <Button loading={loading} disabled={loading} type="primary">
+                                    {submitLabel || 'Save'}
+                                </Button>
+                            </Popconfirm>
+                        ) : (
+                            <Button
+                                onClick={handleSubmit}
+                                loading={loading}
+                                disabled={loading}
+                                type="primary">
+                                {submitLabel || 'Save'}
+                            </Button>
+                        )}
                     </Space>
                 </Form.Item>
 

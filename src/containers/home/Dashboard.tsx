@@ -10,6 +10,7 @@ import { useCallback } from 'react';
 import { CreateThingDrawer, useDialogs } from '../../components/dialogs';
 import { urlFor } from '../../utils/urls';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const useStyles = createUseStyles({
     quickActions: {
@@ -27,10 +28,17 @@ export const Dashboard = () => {
     const auth = useAuth();
     const dialogs = useDialogs();
     const classes = useStyles();
+    const router = useRouter();
 
     const query = useActivityListQuery();
 
-    const handleShare = useCallback(() => dialogs.showDialog(CreateThingDrawer), [dialogs]);
+    const handleShare = useCallback(
+        () =>
+            dialogs
+                .showDialog(CreateThingDrawer)
+                .then((thing) => thing && router.push(urlFor.thing(thing))),
+        [dialogs],
+    );
 
     return (
         <PageLayout padded>
@@ -39,8 +47,8 @@ export const Dashboard = () => {
                     <QuickAction onClick={handleShare} icon={<GiftOutlined />}>
                         Share something
                     </QuickAction>
-                    <QuickAction href={urlFor.search()} icon={<SearchOutlined />}>
-                        Find something
+                    <QuickAction icon={<SearchOutlined />}>
+                        <Link href={urlFor.search()}>Find something</Link>
                     </QuickAction>
                     <QuickAction icon={<AudioOutlined />}>Ask for something</QuickAction>
                     <QuickAction icon={<UserAddOutlined />}>Invite others</QuickAction>

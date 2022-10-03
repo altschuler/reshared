@@ -9,6 +9,7 @@ import { CreateThingDrawer, useDialogs } from '../../components/dialogs';
 import { useMembership } from '../../utils/group';
 import { GroupDetailsFragment } from '../../generated/graphql';
 import { createUseStyles } from 'react-jss';
+import { useRouter } from 'next/router';
 
 const useStyles = createUseStyles({
     emptyContent: {
@@ -23,12 +24,15 @@ export interface GroupEmptyContentProps {
 
 export const GroupEmptyContent = ({ group }: GroupEmptyContentProps) => {
     const classes = useStyles();
+    const router = useRouter();
 
     const dialogs = useDialogs();
     const { isAdmin, isMember } = useMembership(group);
 
     const handleShare = useCallback(() => {
-        dialogs.showDialog(CreateThingDrawer, { group }).then(console.log);
+        dialogs
+            .showDialog(CreateThingDrawer, { group })
+            .then((thing) => thing && router.push(urlFor.thing(thing)));
     }, [dialogs, group]);
 
     const memberCount = group.memberships.length;

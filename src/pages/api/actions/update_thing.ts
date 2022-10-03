@@ -16,7 +16,7 @@ import {
     UpdateThingMutationVariables,
     UpdateThingResult,
 } from '../../../generated/graphql';
-import { makeAuthorizedHandler, hasuraClient } from '../../../server';
+import { makeAuthorizedHandler } from '../../../server';
 
 export default makeAuthorizedHandler<UpdateThingMutationVariables, UpdateThingResult>(
     Joi.object<UpdateThingMutationVariables>({
@@ -43,7 +43,7 @@ export default makeAuthorizedHandler<UpdateThingMutationVariables, UpdateThingRe
         }),
     }),
     async (args, ctx) => {
-        const detailsQuery = await hasuraClient.query({
+        const detailsQuery = await ctx.userClient.query({
             query: ServerFetchThingDetailsDocument,
             variables: { id: args.input.id },
         });

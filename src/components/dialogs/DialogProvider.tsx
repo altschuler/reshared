@@ -25,10 +25,10 @@ export interface Dialog<T, TProps extends DialogProps<T> = DialogProps<T>> {
 }
 
 export interface DialogContextState {
-    showDialog: <T, TProps extends DialogProps<T>>(
-        component: FunctionComponent<TProps>,
+    showDialog: <TResult, TProps extends DialogProps<TResult>>(
+        component: FunctionComponent<TProps & DialogProps<TResult>>,
         extraProps?: Partial<Omit<TProps, 'resolve' | 'dispose'>>,
-    ) => Promise<T>;
+    ) => Promise<TResult>;
 }
 
 export const DialogContext = createContext<DialogContextState>({

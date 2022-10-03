@@ -90,7 +90,7 @@ export const GroupLayout = (props: GroupLayoutProps) => {
         () =>
             dialogs
                 .showDialog(CreateThingDrawer, { group: props.group })
-                .then(() => router.push(urlFor.group.home(props.group))),
+                .then((thing) => thing && router.push(urlFor.thing(thing))),
         [dialogs, props.group, router],
     );
 
