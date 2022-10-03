@@ -157,8 +157,10 @@ const CollapsedNav = () => {
                             Account settings
                         </Link>
                     </Menu.Item>
-                    <Menu.Item data-cy="navbar:logout:btn">
-                        <a onClick={auth.logout}>Logout</a>
+                    <Menu.Item>
+                        <Link href={urlFor.auth.logout()} data-cy="navbar:logout:btn">
+                            Logout
+                        </Link>
                     </Menu.Item>
                 </>
             ) : (

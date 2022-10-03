@@ -51,7 +51,7 @@ export const UserProvider = (props: UserProviderProps) => {
             loading: isLoading || meQuery.loading,
             logout: () => {
                 signOut.signOut();
-                router.push(urlFor.home());
+                router.push(urlFor.root());
             },
         }),
         [meQuery.data?.user, meQuery.loading, isLoading, signOut, router],

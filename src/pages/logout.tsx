@@ -17,7 +17,7 @@ export const LogoutPage = () => {
         if (user) {
             logout();
         } else {
-            router.push(urlFor.home());
+            router.push(urlFor.root());
         }
     }, [user, loading]);
 

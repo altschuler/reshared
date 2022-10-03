@@ -29,7 +29,7 @@ export const UserButton = ({ user }: UserButtonProps) => {
             </Menu.Item>
             <Menu.Divider />
             <Menu.Item key="logout">
-                <a onClick={auth.logout}>Logout</a>
+                <Link href={urlFor.auth.logout()}>Logout</Link>
             </Menu.Item>
         </Menu>
     );

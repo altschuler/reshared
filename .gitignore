@@ -37,3 +37,4 @@ yarn-error.log*
 .idea
 .log
 /cypress/videos/
+/cypress/screenshots/

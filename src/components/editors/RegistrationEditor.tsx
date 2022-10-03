@@ -1,12 +1,12 @@
-﻿import { Alert, Button, Checkbox, Divider, Form, Input, Space, Typography } from 'antd';
-import { createUseEditor, EditorState } from './AbstractEditor';
-import * as Joi from 'joi';
+﻿import { Alert, Button, Checkbox, Form, Input, Space, Typography } from 'antd';
+import Joi from 'joi';
+import Link from 'next/link';
 import { useCallback } from 'react';
 import { urlFor } from '../../utils/urls';
-import Link from 'next/link';
+import { createUseEditor, EditorState } from './AbstractEditor';
 // import { getProviders, SessionProvider, signIn } from 'next-auth/client';
-import { useRouter } from 'next/router';
 import { useSignUpEmailPassword } from '@nhost/react';
+import { useRouter } from 'next/router';
 
 export const registrationSchema = Joi.object<EditorRegistration>({
     name: Joi.string().min(2).max(50).messages({
@@ -58,13 +58,6 @@ export interface RegistrationEditorProps {
 export const RegistrationEditor = (props: RegistrationEditorProps) => {
     const { state, loading, error, submitLabel, onSubmit } = props;
     const { present } = state;
-    // const [providers, setProviders] = useState<{ [key: string]: SessionProvider }>({});
-
-    // useEffect(() => {
-    //     if (!providers) {
-    //         getProviders().then((r) => setProviders(r!));
-    //     }
-    // }, [providers]);
 
     const handleSubmit = useCallback(() => state.submit() && onSubmit(state), [onSubmit, state]);
 

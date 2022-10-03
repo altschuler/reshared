@@ -3,6 +3,7 @@ import { message, Typography } from 'antd';
 import { useRouter } from 'next/router';
 import { PageLayout } from '../../containers/root/PageLayout';
 import { makeGSSP } from '../../utils/gssp';
+import { isServer } from '../../utils/next';
 import { urlFor } from '../../utils/urls';
 
 export const VerifyPage = () => {
@@ -19,7 +20,7 @@ export const VerifyPage = () => {
     };
 
     // Email was verified
-    if (isSuccess) {
+    if (isSuccess && !isServer) {
         router.push(urlFor.home());
         return null;
     }

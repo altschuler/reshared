@@ -26,7 +26,7 @@ Cypress.Commands.add('login', (user: TestUserName, doLogout?: boolean) => {
 Cypress.Commands.add('logout', () => {
     cy.visit('/logout');
 
-    cy.url().should('contain', '/home');
+    cy.url().should('match', /\/$/);
 });
 
 Cypress.Commands.add('t', (value, ...childSelectors) => {
