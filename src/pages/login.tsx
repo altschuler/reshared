@@ -1,11 +1,8 @@
-﻿import React from 'react';
-import { Typography } from 'antd';
-import { PageLayout } from '../containers/root/PageLayout';
-import { makeGSSP } from '../utils/gssp';
+﻿import { Typography } from 'antd';
 import { createUseStyles } from 'react-jss';
 import { LoginForm } from '../components/dialogs/auth/LoginForm';
-import type { GetServerSideProps } from 'next';
-import { createServerSideClient, getNhostSession } from '@nhost/nextjs';
+import { PageLayout } from '../containers/root/PageLayout';
+import { makeGSSP } from '../utils/gssp';
 
 const useStyles = createUseStyles({
     form: {
@@ -30,9 +27,8 @@ export default LoginPage;
 
 export const getServerSideProps = makeGSSP({
     handler: async (data) => {
-        if (data.token?.id) {
-            // ?????
-            // return { redirect: { statusCode: 302 as 302 | 301, destination: '/' } };
+        if (data.user) {
+            return { redirect: { statusCode: 302 as 302 | 301, destination: '/' } };
         }
     },
 });

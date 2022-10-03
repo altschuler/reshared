@@ -1,9 +1,8 @@
+import { useNhostClient, useSignUpEmailPassword } from '@nhost/react';
 import { message, Typography } from 'antd';
+import { useRouter } from 'next/router';
 import { PageLayout } from '../../containers/root/PageLayout';
 import { makeGSSP } from '../../utils/gssp';
-import { createUseStyles } from 'react-jss';
-import { useRouter } from 'next/router';
-import { useNhostClient, useSignUpEmailPassword } from '@nhost/react';
 import { urlFor } from '../../utils/urls';
 
 export const VerifyPage = () => {
@@ -15,7 +14,6 @@ export const VerifyPage = () => {
 
     const handleResend = () => {
         nhost.auth.sendVerificationEmail({ email }).then((res) => {
-            console.log(res);
             message.success('Verification email has been sent');
         });
     };
@@ -44,8 +42,7 @@ export default VerifyPage;
 
 export const getServerSideProps = makeGSSP({
     handler: async (data) => {
-        if (data.token?.id) {
-            // ?????
+        if (data.user) {
             return { redirect: { statusCode: 302 as 302 | 301, destination: '/' } };
         }
     },

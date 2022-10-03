@@ -27,8 +27,7 @@ export default RegisterPage;
 
 export const getServerSideProps = makeGSSP({
     handler: async (data) => {
-        if (data.token?.id) {
-            // ?????
+        if (data.user) {
             return { redirect: { statusCode: 302 as 302 | 301, destination: '/' } };
         }
     },

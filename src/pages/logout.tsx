@@ -32,9 +32,8 @@ export default LogoutPage;
 
 export const getServerSideProps = makeGSSP({
     handler: async (data) => {
-        if (data.token?.id) {
-            // ?????
-            // return { redirect: { statusCode: 302 as 302 | 301, destination: '/' } };
+        if (!data.user) {
+            return { redirect: { statusCode: 302 as 302 | 301, destination: '/' } };
         }
     },
 });

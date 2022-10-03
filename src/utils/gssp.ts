@@ -1,13 +1,13 @@
 ﻿import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
-import { hasuraClient } from '../server';
 import { GetServerSideProps, GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import { createServerSideClient, getNhostSession, NhostSession } from '@nhost/nextjs';
 import { User } from '@nhost/core';
+import { getNhostSession } from './nhost';
+import { createApolloClient } from '@nhost/apollo';
 
 interface BaseGSSPData<TParams extends ParsedUrlQuery> {
     serverClient: ApolloClient<NormalizedCacheObject>;
-    token?: User;
+    user?: User;
     nextCtx: GetServerSidePropsContext<TParams>;
 }
 
@@ -53,47 +53,57 @@ export const makeGSSP = <TProps extends object, TParams extends ParsedUrlQuery>(
     options: GSSPOptions<TProps, TParams>,
 ): GetServerSideProps<TProps, TParams> => {
     return async (ctx: GetServerSidePropsContext<TParams>) => {
-        const nhost = await createServerSideClient(process.env.NEXT_PUBLIC_NHOST_BACKEND_URL!, ctx);
-        const nhostSession = await getNhostSession(process.env.NEXT_PUBLIC_NHOST_BACKEND_URL!, ctx);
-        const idToken = nhostSession?.accessToken;
+        const { nhost, nhostAdmin, session } = await getNhostSession(
+            process.env.NEXT_PUBLIC_NHOST_BACKEND_URL!,
+            ctx,
+        );
+        const user = session?.user;
 
-        console.log(nhostSession);
-        if (options.requireAuth && !idToken) {
-            // return { redirect: { statusCode: 302, destination: '/login' } };
+        if (options.requireAuth && !user) {
+            return { redirect: { statusCode: 302, destination: '/login' } };
         }
 
         // Run handler
-        // const userClient = idToken ? initializeApollo(null, idToken) : null;
-        // if (userClient && idToken) {
-        //     if (options.preloadUser) {
-        //         // Disabled because we fetch it way too often
-        //         // await userClient.query({
-        //         //     query: UserPrivateDetailsDocument,
-        //         //     variables: { id:  },
-        //         // });
-        //     }
-        // }
+        const userClient =
+            nhost &&
+            createApolloClient({ nhost, graphqlUrl: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT! });
 
-        // const result =
-        //     userClient &&
-        //     options.handler &&
-        //     (await options.handler({
-        //         token: nhostSession?.user,
-        //         userClient: userClient as any,
-        //         serverClient: hasuraClient,
-        //         nextCtx: ctx,
-        //     }));
+        const serverClient =
+            nhostAdmin &&
+            createApolloClient({
+                nhost: nhostAdmin,
+                graphqlUrl: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT!,
+            });
 
-        // let res: GetServerSidePropsResult<TProps> = result || {
-        //     props: options.emptyProps || ({} as any),
-        // };
+        if (userClient && user) {
+            if (options.preloadUser) {
+                // Disabled because we fetch it way too often
+                // await userClient.query({
+                //     query: UserPrivateDetailsDocument,
+                //     variables: { id:  },
+                // });
+            }
+        }
 
-        // // Add session to props
-        // if ((res as any).props) {
-        //     res = { props: { ...(res as any).props } };
-        // }
+        const result =
+            userClient &&
+            options.handler &&
+            (await options.handler({
+                user: session?.user,
+                userClient,
+                serverClient,
+                nextCtx: ctx,
+            }));
 
-        // return { ...res, props: { ...((res as any).props || {}), nhostSession } };
-        return { props: { nhostSession } as TProps };
+        let res: GetServerSidePropsResult<TProps> = result || {
+            props: options.emptyProps || ({} as any),
+        };
+
+        // Add session to props
+        if ((res as any).props) {
+            res = { props: { ...(res as any).props } };
+        }
+
+        return { ...res, props: { ...((res as any).props || {}), nhostSession: session } };
     };
 };

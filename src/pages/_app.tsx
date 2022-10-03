@@ -25,7 +25,7 @@ if (!(typeof window === 'undefined')) {
 
 const nhost = new NhostClient({
     backendUrl: process.env.NEXT_PUBLIC_NHOST_BACKEND_URL || '',
-    subdomain: 'localhost',
+    subdomain: process.env.NODE_ENV === 'development' ? 'localhost' : undefined,
 });
 
 // Error logging

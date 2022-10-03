@@ -16,7 +16,7 @@ export const getServerSideProps = makeGSSP<never, { id: string }>({
             variables: {
                 where: {
                     role: { _in: [Group_Role_Enum.Admin, Group_Role_Enum.Owner] },
-                    user_id: { _eq: data.token?.id },
+                    user_id: { _eq: data.user?.id },
                     group: { short_id: { _eq: shortId } },
                 },
             },

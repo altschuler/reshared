@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { createUseStyles } from 'react-jss';
 import { urlFor } from '../../../utils/urls';
 import { useNhostClient, useSignInEmailPassword } from '@nhost/nextjs';
+import { isServer } from '../../../utils/next';
 
 const useStyles = createUseStyles({
     root: {
@@ -51,7 +52,7 @@ export const LoginForm = (props: LoginFormProps) => {
             .then(() => message.success('Activation email has been sent'));
     };
 
-    if (login.isSuccess) {
+    if (login.isSuccess && !isServer) {
         router.push(urlFor.home());
     }
 
