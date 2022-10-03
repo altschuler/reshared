@@ -11,7 +11,8 @@
         "schema-watch": "dotenv -c local -- graphql-codegen --watch",
         "lint": "next lint",
         "compile-emails": "mjml 'emails/*.mjml' -o emails/compiled",
-        "cypress": "cypress open"
+        "cypress": "cypress open",
+        "cypress-run": "cypress run"
     },
     "prettier": {
         "printWidth": 100,

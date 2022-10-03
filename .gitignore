@@ -36,3 +36,4 @@ yarn-error.log*
 # editor
 .idea
 .log
+/cypress/videos/
