@@ -6,7 +6,7 @@
 } from '../generated/graphql';
 import * as Sentry from '@sentry/react';
 import { ReactNode } from 'react';
-import { compact } from 'lodash';
+import { compact } from 'lodash-es';
 
 export const activityMessage = (
     activity: ActivityCardFragment,

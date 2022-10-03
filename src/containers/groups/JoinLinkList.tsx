@@ -1,15 +1,15 @@
-﻿import React, { useCallback } from 'react';
-import { Button, List, message, Modal, Popconfirm, Space, Switch, Typography } from 'antd';
+﻿import { Button, List, message, Modal, Popconfirm, Space, Switch, Typography } from 'antd';
+import dayjs from 'dayjs';
+import { useCallback } from 'react';
 import {
     GqlOps,
     GroupDetailsFragment,
     GroupJoinTokenCardFragment,
     useCreateJoinTokenMutation,
-    useGroupJoinTokensQuery,
     useDeleteJoinTokenMutation,
+    useGroupJoinTokensQuery,
     useUpdateJoinTokenMutation,
 } from '../../generated/graphql';
-import { format } from 'date-fns';
 import { urlFor } from '../../utils/urls';
 
 export interface JoinRequestListProps {
@@ -42,7 +42,7 @@ export const JoinLinkList = (props: JoinRequestListProps) => {
             variables: {
                 input: {
                     group_id: props.group.id,
-                    note: `Created on ${format(new Date(), 'MM/dd/yyyy')}`,
+                    note: `Created on ${dayjs().format('MM/dd/yyyy')}`,
                 },
             },
         })

@@ -1,5 +1,5 @@
 ﻿import { Alert, Spin } from 'antd';
-import { isEmpty } from 'lodash';
+import { isEmpty } from 'lodash-es';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { createUseStyles } from 'react-jss';

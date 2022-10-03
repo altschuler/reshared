@@ -1,6 +1,6 @@
-﻿import { noop } from 'lodash';
+﻿import { noop } from 'lodash-es';
 import { Drawer, message, Spin } from 'antd';
-import { head } from 'lodash';
+import { head } from 'lodash-es';
 import { useCallback } from 'react';
 import {
     GqlOps,

@@ -1,5 +1,5 @@
 ﻿import { GroupHomePage } from '../../../containers/groups';
-import { head } from 'lodash';
+import { head } from 'lodash-es';
 import { GroupDetailsDocument, GroupDetailsQuery } from '../../../generated/graphql';
 import { makeGSSP } from '../../../utils/gssp';
 

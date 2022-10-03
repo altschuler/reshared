@@ -1,5 +1,5 @@
 ﻿import { ChangeEvent, useCallback, useState } from 'react';
-import { isEmpty, get } from 'lodash';
+import { isEmpty, get } from 'lodash-es';
 
 import { Form, Button, Input, Modal, Space, Spin } from 'antd';
 import { DeleteFilled } from '@ant-design/icons';
@@ -159,8 +159,7 @@ export const ThingImageInput = ({ value, errors, onChange, onTouch }: ThingImage
                                 />
                                 <Form.Item
                                     validateStatus={descriptionError ? 'error' : 'success'}
-                                    help={descriptionError}
-                                >
+                                    help={descriptionError}>
                                     <Input.TextArea
                                         onBlur={() =>
                                             onTouch(['images', `${index}`, 'description'])

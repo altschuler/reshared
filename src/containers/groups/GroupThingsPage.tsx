@@ -1,5 +1,5 @@
 ﻿import { Things_Bool_Exp, useGroupDetailsQuery } from '../../generated/graphql';
-import { head } from 'lodash';
+import { head } from 'lodash-es';
 import { useRouter } from 'next/router';
 import { Alert, Spin } from 'antd';
 import { GroupLayout } from './GroupLayout';

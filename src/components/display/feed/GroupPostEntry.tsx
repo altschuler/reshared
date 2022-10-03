@@ -3,7 +3,7 @@
     GroupPostFragment,
     useCreateGroupPostCommentMutation,
 } from '../../../generated/graphql';
-import { isEmpty } from 'lodash';
+import { isEmpty } from 'lodash-es';
 import { useAuth } from '../../../utils/auth';
 import { EditPostDrawer, useDialogs } from '../../dialogs';
 import { CommentEditor, CommentEditorState, useCommentEditor } from '../../editors';

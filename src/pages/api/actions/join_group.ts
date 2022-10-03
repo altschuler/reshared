@@ -1,5 +1,5 @@
 ﻿import Joi from 'joi';
-import { head } from 'lodash';
+import { head } from 'lodash-es';
 import { makeAuthorizedHandler } from '../../../server';
 import {
     ServerFindJoinTokenDocument,

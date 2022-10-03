@@ -1,5 +1,5 @@
 ﻿import { GetServerSideProps, GetServerSidePropsContext } from 'next';
-import { head } from 'lodash';
+import { head } from 'lodash-es';
 import { GroupJoinPage, GroupJoinPageProps } from '../../../../containers/groups';
 import { ServerFindJoinTokenDocument } from '../../../../generated/server-queries';
 import { hasuraClient } from '../../../../server';

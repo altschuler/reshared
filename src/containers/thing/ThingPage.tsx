@@ -1,7 +1,7 @@
 ﻿import React, { useCallback } from 'react';
 import Link from 'next/link';
 import { Button, Descriptions, Divider, PageHeader, Popconfirm, Space, Typography } from 'antd';
-import { head } from 'lodash';
+import { head } from 'lodash-es';
 import { PageLayout } from '../root/PageLayout';
 import {
     ThingCardFragment,

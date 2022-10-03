@@ -3,7 +3,7 @@
     ServerUpdateThingDocument,
 } from '../../../generated/server-queries';
 import Joi from 'joi';
-import { difference } from 'lodash';
+import { difference } from 'lodash-es';
 
 import {
     Group_Thing_Constraint,

@@ -4,7 +4,7 @@ import { ImageThumbList } from '../ImageThumbList';
 import { Space, Typography } from 'antd';
 import Link from 'next/link';
 import { urlFor } from '../../../utils/urls';
-import { isEmpty } from 'lodash';
+import { isEmpty } from 'lodash-es';
 
 export interface ThingEntryProps {
     activity: DetailedActivityFragment;

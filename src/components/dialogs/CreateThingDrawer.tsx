@@ -1,4 +1,4 @@
-﻿import { noop } from 'lodash';
+﻿import { noop } from 'lodash-es';
 import { Drawer, message } from 'antd';
 import { useCallback } from 'react';
 import {
@@ -53,8 +53,7 @@ export const CreateThingDrawer = (props: CreateThingDrawerProps) => {
             title="Share a thing"
             placement="right"
             onClose={dispose}
-            open={visible}
-        >
+            open={visible}>
             <ThingEditor
                 error={createMutation.error?.message}
                 state={editorState}

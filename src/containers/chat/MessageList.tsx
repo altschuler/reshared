@@ -1,5 +1,5 @@
 ﻿import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { isEmpty, head, uniqBy, keyBy } from 'lodash';
+import { isEmpty, head, uniqBy, keyBy } from 'lodash-es';
 import {
     ChatGroupCardFragment,
     ChatMessageCardFragment,
@@ -160,20 +160,17 @@ export const MessageList = (props: MessageListProps) => {
                             className={clsx(
                                 classes.messageGroup,
                                 mg.isMe && classes.messageGroupMe,
-                            )}
-                        >
+                            )}>
                             {!mg.isMe && <div>{mg.sender.displayName}</div>}
 
                             {mg.messages.map((m) => (
                                 <div
                                     key={m.id}
-                                    className={clsx(classes.bubble, mg.isMe && classes.bubbleMe)}
-                                >
+                                    className={clsx(classes.bubble, mg.isMe && classes.bubbleMe)}>
                                     {m.entity && <BubbleExtra entity={m.entity} />}
 
                                     <Tooltip
-                                        title={<DateDisplay mode="datetime" utc={m.created_at} />}
-                                    >
+                                        title={<DateDisplay mode="datetime" utc={m.created_at} />}>
                                         <div className={classes.bubbleText}>{m.message}</div>
                                     </Tooltip>
                                 </div>

@@ -1,5 +1,5 @@
 ﻿import { Alert, Button, Drawer, Form, Input, message, Space, Spin, Typography } from 'antd';
-import { noop } from 'lodash';
+import { noop } from 'lodash-es';
 import { useCallback } from 'react';
 import {
     ThingCardFragment,

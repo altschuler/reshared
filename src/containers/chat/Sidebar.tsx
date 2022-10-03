@@ -1,6 +1,6 @@
 ﻿import React from 'react';
 import { createUseStyles } from 'react-jss';
-import { head } from 'lodash';
+import { head } from 'lodash-es';
 import { ChatGroupCardFragment } from '../../generated/graphql';
 import { Badge, Button, List, Tooltip, Typography } from 'antd';
 import { UserAvatarList } from '../../components/display';
@@ -67,8 +67,10 @@ export const Sidebar = (props: SidebarProps) => {
 
     return (
         <div
-            className={clsx(classes.root, collapsed ? classes.rootCollapsed : classes.rootExpanded)}
-        >
+            className={clsx(
+                classes.root,
+                collapsed ? classes.rootCollapsed : classes.rootExpanded,
+            )}>
             <Link href={urlFor.chat.new()} passHref>
                 <Button className={classes.newButton} icon={<FormOutlined />}>
                     {!collapsed && 'New Message'}
@@ -93,8 +95,10 @@ export const Sidebar = (props: SidebarProps) => {
                     return (
                         <List.Item
                             onClick={() => router.push(urlFor.chat.group(chatGroup))}
-                            className={clsx(classes.listItem, selected && classes.listItemSelected)}
-                        >
+                            className={clsx(
+                                classes.listItem,
+                                selected && classes.listItemSelected,
+                            )}>
                             <List.Item.Meta
                                 avatar={<UserAvatarList users={otherMembers} />}
                                 title={

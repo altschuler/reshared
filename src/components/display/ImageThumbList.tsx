@@ -5,7 +5,7 @@ import { createUseStyles } from 'react-jss';
 import { ImageGalleryModal, useDialogs } from '../dialogs';
 import { ThingImageDisplay } from './ThingImageDisplay';
 import { useNhostClient } from '@nhost/react';
-import { isEmpty } from 'lodash';
+import { isEmpty } from 'lodash-es';
 
 const useStyles = createUseStyles({
     search: {

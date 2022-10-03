@@ -12,7 +12,7 @@ import {
 import { DatePicker, GroupSelect, ThingImageInput, ThingTypeSelect } from '../../forms';
 import Joi from 'joi';
 import { useCallback } from 'react';
-import { formatISO } from 'date-fns';
+import dayjs from 'dayjs';
 
 export const thingSchema = Joi.object<EditorThing>({
     id: Joi.string().uuid({ version: 'uuidv4' }).optional().allow(null),
@@ -125,8 +125,7 @@ export const ThingEditor = (props: ThingEditorProps) => {
 
                 <Form.Item
                     label="Shared in groups"
-                    tooltip="The thing can be shared in multiple groups, changes to the thing are applied in all groups. You can change which groups the thing is shared in at any time."
-                >
+                    tooltip="The thing can be shared in multiple groups, changes to the thing are applied in all groups. You can change which groups the thing is shared in at any time.">
                     <GroupSelect
                         style={{ minWidth: 200 }}
                         placeholder="Select one or more groups"
@@ -138,11 +137,10 @@ export const ThingEditor = (props: ThingEditorProps) => {
 
                 <Form.Item
                     label="Expiry"
-                    tooltip="Optionally select a date upon which the thing will be hidden. Useful when a thing has a last-use date, to mark the date when you will throw it out if no one has shown interest, etc. You can change or disable the expiry at any time."
-                >
+                    tooltip="Optionally select a date upon which the thing will be hidden. Useful when a thing has a last-use date, to mark the date when you will throw it out if no one has shown interest, etc. You can change or disable the expiry at any time.">
                     <DatePicker
-                        value={present.expiry || undefined}
-                        onChange={(expiry) => state.update({ expiry })}
+                        value={present.expiry ? dayjs(present.expiry) : null}
+                        onChange={(expiry) => state.update({ expiry: expiry?.toDate() })}
                     />
                 </Form.Item>
 
@@ -150,8 +148,7 @@ export const ThingEditor = (props: ThingEditorProps) => {
                     <Tooltip title="Hides the thing from others, useful if it's temporarily unavailable or you are using it yourself, etc.">
                         <Checkbox
                             checked={!present.enabled}
-                            onChange={(e) => state.update({ enabled: !e.target.checked })}
-                        >
+                            onChange={(e) => state.update({ enabled: !e.target.checked })}>
                             Hidden
                         </Checkbox>
                     </Tooltip>
@@ -177,13 +174,11 @@ export const ThingEditor = (props: ThingEditorProps) => {
                                         Are you sure you want to delete? It is permanent and all
                                         related data (images, comments) will be deleted as well.
                                     </Typography.Paragraph>
-                                }
-                            >
+                                }>
                                 <Button
                                     loading={deleteLoading}
                                     disabled={loading || deleteLoading}
-                                    danger
-                                >
+                                    danger>
                                     Delete
                                 </Button>
                             </Popconfirm>
@@ -193,8 +188,7 @@ export const ThingEditor = (props: ThingEditorProps) => {
                             loading={loading}
                             disabled={loading}
                             type="primary"
-                            onClick={handleSubmit}
-                        >
+                            onClick={handleSubmit}>
                             {submitLabel || 'Save'}
                         </Button>
                     </Space>
@@ -236,7 +230,7 @@ export const asThingUpdateInput = ({ present }: ThingEditorState): UpdateThingIn
     category: present.category,
     description: present.description,
     type: present.type,
-    expiry: present.expiry ? formatISO(present.expiry) : undefined,
+    expiry: present.expiry ? dayjs(present.expiry).toISOString() : undefined,
     enabled: present.enabled,
     images: present.images.map((i) => ({
         fileId: i.file.id,

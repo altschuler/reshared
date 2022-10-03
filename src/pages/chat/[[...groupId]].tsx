@@ -1,5 +1,5 @@
 ﻿import { ChatPage } from '../../containers/chat';
-import { head } from 'lodash';
+import { head } from 'lodash-es';
 import { ServerMostRecentChatsDocument } from '../../generated/server-queries';
 import { urlFor } from '../../utils/urls';
 import { makeGSSP } from '../../utils/gssp';

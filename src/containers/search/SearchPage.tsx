@@ -1,5 +1,5 @@
 ﻿import { useCallback, useMemo } from 'react';
-import { isEmpty } from 'lodash';
+import { isEmpty } from 'lodash-es';
 import { PageLayout } from '../root/PageLayout';
 import { Button, Space, Typography } from 'antd';
 import { createUseStyles } from 'react-jss';

@@ -1,4 +1,4 @@
-﻿import { head } from 'lodash';
+﻿import { head } from 'lodash-es';
 import Joi from 'joi';
 import {
     ServerCreateChatGroupDocument,

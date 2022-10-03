@@ -3,7 +3,7 @@
     useGroupDetailsQuery,
     useJoinGroupWithTokenMutation,
 } from '../../generated/graphql';
-import { head } from 'lodash';
+import { head } from 'lodash-es';
 import { useRouter } from 'next/router';
 import { Alert, Button, message, Space, Spin, Typography } from 'antd';
 import { GroupLayout } from './GroupLayout';

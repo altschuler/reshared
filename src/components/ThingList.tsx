@@ -5,7 +5,7 @@
     Things_Order_By,
     useThingListQuery,
 } from '../generated/graphql';
-import { head } from 'lodash';
+import { head } from 'lodash-es';
 import { useAuth } from '../utils/auth';
 import { EditThingDrawer, useDialogs } from './dialogs';
 import { usePagination } from '../utils/list';

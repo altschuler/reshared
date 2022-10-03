@@ -7,7 +7,7 @@
     useMemo,
     useState,
 } from 'react';
-import { uniqueId } from 'lodash';
+import { uniqueId } from 'lodash-es';
 
 export interface DialogProps<T> {
     visible: boolean;

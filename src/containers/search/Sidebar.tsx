@@ -1,5 +1,5 @@
 ﻿import { Divider, Form, Radio, Space, Typography } from 'antd';
-import { isNumber } from 'lodash';
+import { isNumber } from 'lodash-es';
 import { GroupSelect, ThingTypeSelect } from '../../components/forms';
 import { createUseStyles } from 'react-jss';
 import { GroupCardFragment, Thing_Type_Enum } from '../../generated/graphql';

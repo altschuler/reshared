@@ -1,5 +1,7 @@
-﻿import React from 'react';
-import { format, formatDistance, parseISO, isDate } from 'date-fns';
+﻿import dayjs from 'dayjs';
+import RelativeTime from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(RelativeTime);
 
 export type DateDisplayMode = 'datetime' | 'date' | 'time';
 
@@ -10,21 +12,19 @@ export interface DateDisplayProps {
 }
 
 const formats: { [P in DateDisplayMode]: string } = {
-    datetime: 'MMM do. yy, HH:mm',
-    date: 'MMM do. yy',
+    datetime: 'MMM D. YY, HH:mm',
+    date: 'MMM D. YY',
     time: 'HH:mm',
 };
 
 export const DateDisplay = (props: DateDisplayProps) => {
     const utc =
-        props.utc && (isDate(props.utc) ? (props.utc as Date) : parseISO(props.utc as string));
+        props.utc && (dayjs(props.utc).isValid() ? (props.utc as Date) : dayjs(props.utc, 'iso'));
 
     return (
         <span>
-            {utc ? format(utc, formats[props.mode || 'date']) : '-'}
-            {utc &&
-                props.showDistance &&
-                ` (${formatDistance(utc, new Date(), { addSuffix: true })})`}
+            {utc ? dayjs(utc).format(formats[props.mode || 'date']) : '-'}
+            {utc && props.showDistance && ` (${dayjs(utc).fromNow()})`}
         </span>
     );
 };

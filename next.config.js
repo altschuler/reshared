@@ -23,7 +23,11 @@ const COMMIT_SHA =
 process.env.SENTRY_DSN = SENTRY_DSN;
 const basePath = '';
 
-module.exports = ({
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+    enabled: process.env.ANALYZE === 'true',
+})
+
+module.exports = withBundleAnalyzer({
     images: {
         domains: [NEXT_PUBLIC_NHOST_BACKEND_HOST],
     },

@@ -1,20 +1,20 @@
-﻿import React, { useCallback, useEffect, useMemo } from 'react';
+﻿import { message } from 'antd';
+import dayjs from 'dayjs';
+import { head } from 'lodash-es';
+import { useRouter } from 'next/router';
+import { useCallback, useEffect, useMemo } from 'react';
+import { createUseStyles } from 'react-jss';
 import {
     useChatGroupsSubscription,
     useUpdateChatGroupMemberMutation,
     useUpdateChatGroupMutation,
 } from '../../generated/graphql';
-import { head } from 'lodash';
-import { createUseStyles } from 'react-jss';
-import { Sidebar } from './Sidebar';
-import { useRouter } from 'next/router';
-import { MessageList } from './MessageList';
-import { PageLayout } from '../root/PageLayout';
-import { NewMessageForm } from './NewMessageForm';
-import { MessageListHeader } from './MessageListHeader';
 import { useAuth } from '../../utils/auth';
-import { formatISO } from 'date-fns';
-import { message } from 'antd';
+import { PageLayout } from '../root/PageLayout';
+import { MessageList } from './MessageList';
+import { MessageListHeader } from './MessageListHeader';
+import { NewMessageForm } from './NewMessageForm';
+import { Sidebar } from './Sidebar';
 
 const useStyles = createUseStyles({
     root: {
@@ -72,7 +72,7 @@ export const ChatPage = () => {
 
             if (membership && (membership.last_read === null || membership?.info?.has_unread)) {
                 updateGroupMember({
-                    variables: { id: membership.id, input: { last_read: formatISO(new Date()) } },
+                    variables: { id: membership.id, input: { last_read: dayjs().toISOString() } },
                 });
             }
         }

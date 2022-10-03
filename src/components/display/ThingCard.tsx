@@ -1,5 +1,5 @@
 ﻿import { ThingCardFragment } from '../../generated/graphql';
-import { head } from 'lodash';
+import { head } from 'lodash-es';
 import { Card } from 'antd';
 import { SettingOutlined, EllipsisOutlined, EditOutlined } from '@ant-design/icons';
 import { UserAvatar } from './UserAvatar';

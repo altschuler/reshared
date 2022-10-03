@@ -4,7 +4,7 @@ import {
     useCreateChatGroupMutation,
     UserCardFragment,
 } from '../../generated/graphql';
-import { isEmpty } from 'lodash';
+import { isEmpty } from 'lodash-es';
 import { createUseStyles } from 'react-jss';
 import { Sidebar } from './Sidebar';
 import { PageLayout } from '../root/PageLayout';

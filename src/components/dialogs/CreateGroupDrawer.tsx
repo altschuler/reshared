@@ -1,4 +1,4 @@
-﻿import { noop } from 'lodash';
+﻿import { noop } from 'lodash-es';
 import { Drawer, message } from 'antd';
 import { useCallback } from 'react';
 import {

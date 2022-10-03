@@ -1,5 +1,5 @@
 ﻿import { createUseStyles } from 'react-jss';
-import { head } from 'lodash';
+import { head } from 'lodash-es';
 import { ThingCardFragment, useCreateChatGroupMutation } from '../generated/graphql';
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
@@ -73,8 +73,7 @@ export const ThingInterestButton = ({ thing }: { thing: ThingCardFragment }) => 
                     type="primary"
                     onClick={handleConfirm}
                     loading={mutation.loading}
-                    disabled={mutation.loading}
-                >
+                    disabled={mutation.loading}>
                     Send
                 </Button>
             </Space>
@@ -87,8 +86,7 @@ export const ThingInterestButton = ({ thing }: { thing: ThingCardFragment }) => 
             onOpenChange={handleVisibleChange}
             arrowPointAtCenter={false}
             trigger="click"
-            content={content}
-        >
+            content={content}>
             <Button
                 title={`Let ${thing.owner.displayName} know you're interested in this`}
                 icon={<BellOutlined />}

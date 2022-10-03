@@ -1,5 +1,5 @@
 ﻿import React, { useCallback } from 'react';
-import { isEmpty } from 'lodash';
+import { isEmpty } from 'lodash-es';
 import { Typography } from 'antd';
 import { urlFor } from '../../utils/urls';
 import Link from 'next/link';

@@ -1,4 +1,10 @@
-﻿import React, { MouseEvent, useCallback, useMemo, useState } from 'react';
+﻿import { CheckOutlined, NotificationOutlined } from '@ant-design/icons';
+import { Badge, Button, List, message, Modal, Popover, Space, Tooltip, Typography } from 'antd';
+import dayjs from 'dayjs';
+import { useRouter } from 'next/router';
+import { MouseEvent, useCallback, useMemo, useState } from 'react';
+import { createUseStyles } from 'react-jss';
+import { DateDisplay, UserAvatar } from '../../components/display';
 import {
     ActivityCardFragment,
     NotificationCardFragment,
@@ -9,15 +15,9 @@ import {
     useNotificationsSubscription,
     UserPrivateDetailFragment,
 } from '../../generated/graphql';
-import { Badge, Button, List, message, Modal, Popover, Space, Tooltip, Typography } from 'antd';
-import { DateDisplay, UserAvatar } from '../../components/display';
-import { CheckOutlined, NotificationOutlined } from '@ant-design/icons';
-import { createUseStyles } from 'react-jss';
-import { useAuth } from '../../utils/auth';
-import { useRouter } from 'next/router';
-import { urlFor } from '../../utils/urls';
 import { activityMessage } from '../../utils/activity';
-import { formatISO } from 'date-fns';
+import { useAuth } from '../../utils/auth';
+import { urlFor } from '../../utils/urls';
 
 // List
 export interface NotificationListProps {
@@ -34,7 +34,7 @@ export const NotificationList = ({ notifications, loading, onSelect }: Notificat
     const handleMarkRead = useCallback(
         (notification: NotificationCardFragment) => {
             markRead({
-                variables: { id: notification.id, readAt: formatISO(new Date()) },
+                variables: { id: notification.id, readAt: dayjs().toISOString() },
             }).catch((err) =>
                 Modal.error({ title: 'Failed to mark notification read', content: err.message }),
             );
@@ -194,7 +194,10 @@ export const NotificationsButton = () => {
     });
 
     const [markAllRead, markAllMutation] = useMarkAllNotificationsReadMutation({
-        variables: { userId: user.id, readAt: formatISO(new Date()) },
+        variables: {
+            userId: user.id,
+            readAt: dayjs().toISOString(),
+        },
     });
 
     const notifications = useMemo(() => data?.notifications || [], [data?.notifications]);
