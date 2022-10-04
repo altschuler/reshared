@@ -1,0 +1,108 @@
+name: E2E tests
+
+run-name: e2e testing
+
+on: [push]
+
+env:
+  NEXT_PUBLIC_NHOST_BACKEND_URL: http://localhost:1337
+  NEXT_PUBLIC_NHOST_BACKEND_HOST: localhost
+  NEXT_PUBLIC_GRAPHQL_ENDPOINT: http://localhost:1337/v1/graphql
+  NEXT_PUBLIC_GRAPHQL_ENDPOINT_WS: ws://localhost:1337/v1/graphql
+  NEXT_PUBLIC_ROOT_URL: http://localhost:3000
+  NHOST_JWT_SECRET: '{"type":"HS256", "key": "0f987876650b4a085e64594fae9219e7781b17506bec02489ad061fba8cb22db"}'
+  NHOST_WEBHOOK_SECRET: nhost-webhook-secret
+  NHOST_ADMIN_SECRET: nhost-admin-secret
+
+  EVENTS_BASE_URL: http://localhost:3000/api/events
+  ACTION_BASE_URL: http://localhost:3000/api/actions
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout client
+        uses: actions/checkout@v3
+        with:
+          path: client
+
+      - name: checkout backend
+        uses: actions/checkout@v3
+        with:
+          repository: altschuler/reshared-nhost
+          token: ${{ secrets.BACKEND_PAT }}
+          ref: dev
+          path: backend
+
+      - name: install sudo (for act)
+        if: ${{ env.ACT }}
+        run: apt update && apt install sudo
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'yarn'
+          cache-dependency-path: client/yarn.lock
+
+      - name: install cypress deps
+        run: sudo DEBIAN_FRONTEND=noninteractive apt-get install -y libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
+
+      - name: install yarn
+        run: npm install --global yarn
+
+      - name: install nhost
+        run: sudo curl -L https://raw.githubusercontent.com/nhost/cli/main/get.sh | bash
+
+      - name: install client deps
+        run: yarn install --prefer-offline
+        working-directory: ./client
+
+      - name: install hasura cli
+        run: curl -L https://github.com/hasura/graphql-engine/raw/stable/cli/get.sh | bash
+
+      - name: build client
+        run: yarn build
+        working-directory: ./client
+
+      - name: start client
+        run: yarn start & sleep 5 && curl http://localhost:3000 -I
+        working-directory: ./client
+
+      - name: create .env for nhost
+        run: |
+          touch .env.development
+          echo "EVENTS_BASE_URL=http://172.17.0.1:3000/api/events" >> .env.development
+          echo "ACTION_BASE_URL=http://172.17.0.1:3000/api/actions" >> .env.development
+        working-directory: ./backend
+
+      - name: start backend
+        run: nhost dev --no-browser --hasuracli hasura & sleep 140 && curl http://localhost:1337 -I
+        working-directory: ./backend
+
+      - name: test e2e
+        run: yarn run cypress-run
+        working-directory: ./client
+
+      - name: show nhost logs
+        if: always()
+        run: nhost logs
+        working-directory: ./backend
+
+      - name: Archive cypress videos
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: cypress-videos
+          path: ./client/cypress/videos
+          retention-days: 1
+  # deploy:
+  #   needs: test
+  #   steps:
+  #     - name: Some step
+  #       if: ${{ !env.ACT }}
+  #       run: ...
+
+      # - name: wait for client and backend to run
+      #   run: npx wait-on --timeout 30000 tcp:3000 # && npx wait-on --timeout 30000 http://localhost:1337
+

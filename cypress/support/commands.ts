@@ -14,6 +14,8 @@ Cypress.Commands.add('login', (user: TestUserName, doLogout?: boolean) => {
     const userData = testData.users[user];
     cy.t('navbar:btn:login').click();
 
+    cy.wait(1000);
+    cy.log(JSON.stringify(testData, null, 2));
     cy.t('email:in').type(userData.email);
     cy.t('password:in').type(userData.password);
     cy.t('submit:btn').click();
@@ -59,7 +61,8 @@ Cypress.Commands.add('decodeQuotedPrintable', { prevSubject: 'optional' }, (subj
 });
 
 Cypress.Commands.add('waitRequest', (what: 'files' | 'graphql') => {
-    cy.wait(`@${what}`);
+    // cy.wait(`@${what}`);
+    cy.wait(3000); // TODO
 });
 
 Cypress.Commands.add('interceptRequests', () => {
