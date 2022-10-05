@@ -1,39 +1,31 @@
-﻿import { useRouter } from 'next/router';
+﻿import { useSignOut } from '@nhost/react';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { ErrorDisplay } from '../components/display';
 import { PageLayout } from '../containers/root/PageLayout';
-import { useAuth } from '../utils/auth';
-import { makeGSSP } from '../utils/gssp';
+import { isServer } from '../utils/next';
 import { urlFor } from '../utils/urls';
 
 export const LogoutPage = () => {
-    const { user, loading, logout } = useAuth();
+    const { signOut, error, isSuccess } = useSignOut();
     const router = useRouter();
 
     useEffect(() => {
-        if (loading) {
-            return;
-        }
+        signOut();
+    }, []);
 
-        if (user) {
-            logout();
-        } else {
+    useEffect(() => {
+        if (isSuccess && !isServer) {
             router.push(urlFor.root());
         }
-    }, [user, loading]);
+    }, [isSuccess]);
 
     return (
         <PageLayout centered horizontal padded>
             One moment, signing you out...
+            {error && <ErrorDisplay error={error.message} />}
         </PageLayout>
     );
 };
 
 export default LogoutPage;
-
-export const getServerSideProps = makeGSSP({
-    handler: async (data) => {
-        if (!data.user) {
-            return { redirect: { statusCode: 302 as 302 | 301, destination: '/' } };
-        }
-    },
-});

@@ -8,14 +8,13 @@ export {};
 Cypress.Commands.add('login', (user: TestUserName, doLogout?: boolean) => {
     if (doLogout) {
         cy.logout();
-        cy.reload();
     }
 
     const userData = testData.users[user];
     cy.t('navbar:btn:login').click();
 
-    cy.wait(1000);
-    cy.log(JSON.stringify(testData, null, 2));
+    cy.url().should('match', /\/login$/);
+
     cy.t('email:in').type(userData.email);
     cy.t('password:in').type(userData.password);
     cy.t('submit:btn').click();
