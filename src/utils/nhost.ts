@@ -52,6 +52,7 @@ export const getNhostSession = async (
     const { accessToken, refreshToken, user } = nhost.auth.client.interpreter!.state.context;
     return {
         nhost,
+        nhostAdmin,
         session: nhost.auth.isAuthenticated()
             ? {
                   accessToken: accessToken.value!,

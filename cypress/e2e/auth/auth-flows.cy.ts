@@ -133,3 +133,5 @@ describe('auth flow', () => {
         assertLoggedIn();
     });
 });
+
+export {};

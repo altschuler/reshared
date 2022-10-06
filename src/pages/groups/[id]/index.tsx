@@ -5,7 +5,8 @@ import { makeGSSP } from '../../../utils/gssp';
 
 export default GroupHomePage;
 
-export const getServerSideProps = makeGSSP<unknown, { id: string }>({
+// TODO: add the group to props?
+export const getServerSideProps = makeGSSP<any, { id: string }>({
     requireAuth: true,
     handler: async (data) => {
         const query = await data.userClient.query<GroupDetailsQuery>({

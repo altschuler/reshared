@@ -101,7 +101,7 @@ export const DialogsProvider = (props: DialogsProviderProps) => {
             activeDialogs.map(<T extends unknown>(dialog: Dialog<T>) => (
                 <dialog.component
                     key={dialog.id}
-                    {...dialog.extraProps}
+                    {...(dialog.extraProps as any)}
                     visible={dialog.visible}
                     resolve={(value: T) => resolveDialog(dialog, value)}
                     dispose={(reason?: any) => disposeDialog(dialog, reason)}

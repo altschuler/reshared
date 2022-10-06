@@ -1,25 +1,26 @@
-import Head from 'next/head';
-import Script from 'next/script';
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
 import { Router } from 'next/router';
+import Script from 'next/script';
 
 import { UserProvider } from '../utils/auth';
 
-import '../styles/globals.scss';
 import { ThemeProvider } from 'react-jss';
 import { DialogsProvider } from '../components/dialogs';
+import '../styles/globals.scss';
 
-import { initSentry } from '../utils/sentry';
+import { NhostClient, NhostNextProvider, NhostSession } from '@nhost/nextjs';
+import { NhostApolloProvider } from '@nhost/react-apollo';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
-import { NhostNextProvider, NhostClient } from '@nhost/nextjs';
-import { NhostApolloProvider } from '@nhost/react-apollo';
+import { isServer } from '../utils/next';
 
 // Loading bar
 Router.events.on('routeChangeStart', () => NProgress.start());
 Router.events.on('routeChangeComplete', () => NProgress.done());
 Router.events.on('routeChangeError', () => NProgress.done());
-if (!(typeof window === 'undefined')) {
+
+if (!isServer) {
     NProgress.configure({ showSpinner: false });
 }
 
@@ -28,12 +29,9 @@ const nhost = new NhostClient({
     subdomain: process.env.NODE_ENV === 'development' ? 'localhost' : undefined,
 });
 
-// Error logging
-initSentry();
-
 const theme = {};
 
-const App = ({ Component, pageProps }: AppProps) => {
+const App = ({ Component, pageProps }: AppProps<{ nhostSession: NhostSession }>) => {
     return (
         <NhostNextProvider nhost={nhost} initial={pageProps.nhostSession}>
             <NhostApolloProvider nhost={nhost}>

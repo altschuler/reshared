@@ -126,6 +126,9 @@ describe('group flow', () => {
     it('accept request to join private group', () => {
         cy.login('alice', true);
 
+        if (!privateUrl) {
+            throw new Error('Private group url not stored');
+        }
         cy.visit(privateUrl);
 
         cy.t('group-header:members:btn').click();
@@ -135,3 +138,5 @@ describe('group flow', () => {
         cy.t('join-request-list', 'item').should('not.exist');
     });
 });
+
+export {};

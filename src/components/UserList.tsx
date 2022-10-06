@@ -9,7 +9,7 @@ import { UserAvatar } from './display';
 export interface UserListProps {
     where: Users_Bool_Exp;
     orderBy?: Users_Order_By[];
-    emptyText?: ReactNode | (() => ReactNode);
+    emptyText?: ReactNode;
 }
 
 export const UserList = (props: UserListProps) => {

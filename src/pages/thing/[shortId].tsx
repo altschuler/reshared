@@ -4,7 +4,7 @@ import { makeGSSP } from '../../utils/gssp';
 
 export default ThingPage;
 
-export const getServerSideProps = makeGSSP<unknown, { shortId: string }>({
+export const getServerSideProps = makeGSSP<any, { shortId: string }>({
     requireAuth: true,
     handler: async (data) => {
         await data.userClient.query({

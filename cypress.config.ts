@@ -8,6 +8,8 @@ export default defineConfig({
         },
     },
 
-    mailHogUrl: 'http://localhost:8025',
-    mailHogAuth: { user: 'user', pass: 'password' },
+    ...({
+        mailHogUrl: 'http://localhost:8025',
+        mailHogAuth: { user: 'user', pass: 'password' },
+    } as any),
 });
