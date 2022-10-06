@@ -84,11 +84,6 @@ jobs:
         run: yarn run cypress-run
         working-directory: ./client
 
-      - name: show nhost logs
-        if: always()
-        run: nhost logs
-        working-directory: ./backend
-
       - name: Archive cypress videos
         uses: actions/upload-artifact@v3
         if: always()
