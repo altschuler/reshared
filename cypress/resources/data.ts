@@ -14,11 +14,11 @@ export interface TestData {
 export const testData: TestData = {
     users: {
         alice: {
-            email: 'fnuller@reshared.org',
+            email: 'alice@reshared.org',
             password: 'awdawd123123',
         },
         bob: {
-            email: 'anna@reshared.org',
+            email: 'bob@reshared.org',
             password: 'awdawd123123',
         },
     },
