@@ -13,6 +13,8 @@ env:
   NHOST_JWT_SECRET: '{"type":"HS256", "key": "0f987876650b4a085e64594fae9219e7781b17506bec02489ad061fba8cb22db"}'
   NHOST_WEBHOOK_SECRET: nhost-webhook-secret
   NHOST_ADMIN_SECRET: nhost-admin-secret
+  SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+  SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
 
   EVENTS_BASE_URL: http://localhost:3000/api/events
   ACTION_BASE_URL: http://localhost:3000/api/actions
