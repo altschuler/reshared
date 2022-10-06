@@ -5,6 +5,13 @@ import { testData, TestUserName } from '../resources/data';
 
 export {};
 
+Cypress.on('uncaught:exception', (err) => {
+    // Ignore 'ResizeObserver: loop limit exceeded'
+    if (err.message.includes('loop limit exceeded')) {
+        return false;
+    }
+});
+
 Cypress.Commands.add('login', (user: TestUserName, doLogout?: boolean) => {
     if (doLogout) {
         cy.logout();
