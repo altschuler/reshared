@@ -36,7 +36,7 @@ describe('auth flow', () => {
         cy.wait(1000);
 
         // Find verification email and link
-        cy.mhGetMailsBySubject('Verify your email', 1)
+        cy.mhGetMailsBySubject('Activate your account on Reshared.org', 1)
             .mhFirst()
             .mhGetBody()
             .decodeQuotedPrintable()
@@ -94,7 +94,7 @@ describe('auth flow', () => {
 
         cy.t('success:alert').should('be.visible');
 
-        cy.mhGetMailsBySubject('Reset your password', 1)
+        cy.mhGetMailsBySubject('Reset your password on Reshared.org', 1)
             .mhFirst()
             .mhGetBody()
             .decodeQuotedPrintable()

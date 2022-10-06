@@ -8,6 +8,7 @@ export {};
 Cypress.Commands.add('login', (user: TestUserName, doLogout?: boolean) => {
     if (doLogout) {
         cy.logout();
+        cy.reload();
     }
 
     const userData = testData.users[user];

@@ -1,4 +1,4 @@
-﻿import { useSignOut } from '@nhost/react';
+﻿import { useAuthenticated, useSignOut } from '@nhost/react';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { ErrorDisplay } from '../components/display';
@@ -8,6 +8,7 @@ import { urlFor } from '../utils/urls';
 
 export const LogoutPage = () => {
     const { signOut, error, isSuccess } = useSignOut();
+    const isAuthenticated = useAuthenticated();
     const router = useRouter();
 
     useEffect(() => {
@@ -15,10 +16,10 @@ export const LogoutPage = () => {
     }, []);
 
     useEffect(() => {
-        if (isSuccess && !isServer) {
+        if ((!isAuthenticated || isSuccess) && !isServer) {
             router.push(urlFor.root());
         }
-    }, [isSuccess]);
+    }, [isSuccess, isAuthenticated]);
 
     return (
         <PageLayout centered horizontal padded>

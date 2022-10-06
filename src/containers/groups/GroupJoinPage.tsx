@@ -1,20 +1,19 @@
-﻿import {
+﻿import { Alert, Button, message, Space, Spin, Typography } from 'antd';
+import { head } from 'lodash-es';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useCallback } from 'react';
+import { createUseStyles } from 'react-jss';
+import { ErrorDisplay } from '../../components/display';
+import {
     GroupCardFragment,
     useGroupDetailsQuery,
     useJoinGroupWithTokenMutation,
 } from '../../generated/graphql';
-import { head } from 'lodash-es';
-import { useRouter } from 'next/router';
-import { Alert, Button, message, Space, Spin, Typography } from 'antd';
-import { GroupLayout } from './GroupLayout';
 import { useAuth } from '../../utils/auth';
 import { useMembership } from '../../utils/group';
-import { createUseStyles } from 'react-jss';
-import Link from 'next/link';
-import { useCallback } from 'react';
-import { AuthForm } from '../../components/AuthForm';
 import { urlFor } from '../../utils/urls';
-import { ErrorDisplay } from '../../components/display';
+import { GroupLayout } from './GroupLayout';
 
 const useStyles = createUseStyles({});
 
@@ -79,10 +78,9 @@ const NotLoggedInContent = ({ group }: { group: GroupCardFragment }) => {
                 justifyContent: 'center',
             }}>
             <Typography.Title style={{ marginBottom: '2em' }} level={5}>
-                You need to be logged in to join the group <i>{group.name}</i>.
+                You need to <Link href={urlFor.auth.login()}>sign in</Link> to join the group{' '}
+                <i>{group.name}</i>.
             </Typography.Title>
-
-            <AuthForm />
         </Space>
     );
 };

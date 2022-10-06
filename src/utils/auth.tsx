@@ -7,12 +7,14 @@ import { urlFor } from './urls';
 export interface AuthContextState {
     user: UserPrivateDetailFragment | null;
     loading: boolean;
+    isAuthenticated: boolean;
     logout: () => void;
 }
 
 export const AuthContext = createContext<AuthContextState>({
     user: null,
     loading: false,
+    isAuthenticated: false,
     logout: async () => {
         /*noop*/
     },
@@ -32,7 +34,7 @@ export interface UserProviderProps {
 }
 
 export const UserProvider = (props: UserProviderProps) => {
-    const { isLoading } = useAuthenticationStatus();
+    const { isLoading, isAuthenticated } = useAuthenticationStatus();
     const userId = useUserId();
     const signOut = useSignOut();
     const router = useRouter();
@@ -48,6 +50,7 @@ export const UserProvider = (props: UserProviderProps) => {
     const ctxValue = useMemo(
         () => ({
             user: meQuery.data?.user || null,
+            isAuthenticated,
             loading: isLoading || meQuery.loading,
             logout: () => {
                 signOut.signOut();
