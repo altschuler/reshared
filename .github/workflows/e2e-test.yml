@@ -52,7 +52,7 @@ jobs:
         run: yarn build
 
       - name: start client
-        run: yarn start & sleep 5 && curl http://localhost:3000 -I
+        run: yarn start & npx --yes wait-on http-get://localhost:3000
 
       - name: create .env for nhost
         run: |
@@ -62,7 +62,7 @@ jobs:
         working-directory: ./nhost
 
       - name: start backend
-        run: nhost dev --no-browser --hasuracli hasura & npx wait-on http-get://localhost:9695
+        run: nhost dev --no-browser --hasuracli hasura & npx --yes wait-on http-get://localhost:9695
         working-directory: ./nhost
 
       - name: run cypress tests
