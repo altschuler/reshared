@@ -1,6 +1,6 @@
-﻿import { makeEventHandler } from '../../../server';
-import { Group_Members } from '../../../generated/graphql';
+﻿import { Activity_Verb_Enum, Group_Members, Group_Role_Enum } from '../../../generated/graphql';
 import { ServerFindGroupMembersDocument } from '../../../generated/server-queries';
+import { HasuraEventPayload, makeEventHandler } from '../../../server';
 import { insertActivities, opToVerb } from '../../../server/activity';
 
 export default makeEventHandler<Group_Members>(async (args, ctx) => {
@@ -28,11 +28,46 @@ export default makeEventHandler<Group_Members>(async (args, ctx) => {
             groupId: membership.group_id,
             actorId: membership.user_id,
             entity: { group_member_id: membership.id },
-            verb: opToVerb(args.event.op),
-            // Notify all users in group except the new member, and only when joining
-            receivers: args.event.op === 'INSERT' ? memberIds : [],
+            verb: getVerb(args),
+            receivers: getReceivers(args, memberIds),
         },
     ]);
 
     ctx.success({ success: true });
 }, true);
+
+const getVerb = (args: HasuraEventPayload<Group_Members>) => {
+    const { old: o, new: n } = args.event.data;
+    const { Admin, User, Owner } = Group_Role_Enum;
+
+    // Became admin
+    if (args.event.op === 'UPDATE' && o?.role === User && n?.role === Admin) {
+        return Activity_Verb_Enum.BecameAdmin;
+    }
+
+    // Revoked admin
+    if (args.event.op === 'UPDATE' && o?.role === Admin && n?.role === User) {
+        return Activity_Verb_Enum.RevokedAdmin;
+    }
+
+    // Became owner
+    if (args.event.op === 'UPDATE' && n?.role === Owner) {
+        return Activity_Verb_Enum.BecameOwner;
+    }
+
+    return opToVerb(args.event.op);
+};
+
+const getReceivers = (args: HasuraEventPayload<Group_Members>, memberIds: string[]) => {
+    // Notify all users in group except the new member, and only when joining
+    if (args.event.op === 'INSERT') {
+        return memberIds;
+    }
+
+    // Notify changed user
+    if (args.event.op === 'UPDATE') {
+        return [args.event.data.new!.user_id];
+    }
+
+    return [];
+};

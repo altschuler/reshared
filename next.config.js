@@ -18,7 +18,7 @@ const moduleExports = {
         autoInstrumentServerFunctions: true,
     },
     images: {
-        domains: ['kghtoguwbjifomvtvumw.nhost.run', 'hgtsjdxovopboicvsfhk.nhost.run'],
+        domains: ['kghtoguwbjifomvtvumw.nhost.run', 'hgtsjdxovopboicvsfhk.nhost.run', 'localhost'],
     },
 };
 

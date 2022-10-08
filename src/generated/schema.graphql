@@ -490,6 +490,204 @@ input activities_updates {
 }
 
 """
+columns and relationships of "activity_comments"
+"""
+type activity_comments {
+  activity_id: uuid!
+  author_id: uuid!
+  comment_id: uuid!
+  content: String!
+  created_at: timestamptz!
+  id: uuid!
+  updated_at: timestamptz!
+}
+
+"""
+aggregated selection of "activity_comments"
+"""
+type activity_comments_aggregate {
+  aggregate: activity_comments_aggregate_fields
+  nodes: [activity_comments!]!
+}
+
+"""
+aggregate fields of "activity_comments"
+"""
+type activity_comments_aggregate_fields {
+  count(columns: [activity_comments_select_column!], distinct: Boolean): Int!
+  max: activity_comments_max_fields
+  min: activity_comments_min_fields
+}
+
+"""
+Boolean expression to filter rows from the table "activity_comments". All fields are combined with a logical 'AND'.
+"""
+input activity_comments_bool_exp {
+  _and: [activity_comments_bool_exp!]
+  _not: activity_comments_bool_exp
+  _or: [activity_comments_bool_exp!]
+  activity_id: uuid_comparison_exp
+  author_id: uuid_comparison_exp
+  comment_id: uuid_comparison_exp
+  content: String_comparison_exp
+  created_at: timestamptz_comparison_exp
+  id: uuid_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "activity_comments"
+"""
+enum activity_comments_constraint {
+  """
+  unique or primary key constraint on columns "id"
+  """
+  activity_comments_pkey
+}
+
+"""
+input type for inserting data into table "activity_comments"
+"""
+input activity_comments_insert_input {
+  activity_id: uuid
+  author_id: uuid
+  comment_id: uuid
+  content: String
+  created_at: timestamptz
+  id: uuid
+  updated_at: timestamptz
+}
+
+"""aggregate max on columns"""
+type activity_comments_max_fields {
+  activity_id: uuid
+  author_id: uuid
+  comment_id: uuid
+  content: String
+  created_at: timestamptz
+  id: uuid
+  updated_at: timestamptz
+}
+
+"""aggregate min on columns"""
+type activity_comments_min_fields {
+  activity_id: uuid
+  author_id: uuid
+  comment_id: uuid
+  content: String
+  created_at: timestamptz
+  id: uuid
+  updated_at: timestamptz
+}
+
+"""
+response of any mutation on the table "activity_comments"
+"""
+type activity_comments_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [activity_comments!]!
+}
+
+"""
+on_conflict condition type for table "activity_comments"
+"""
+input activity_comments_on_conflict {
+  constraint: activity_comments_constraint!
+  update_columns: [activity_comments_update_column!]! = []
+  where: activity_comments_bool_exp
+}
+
+"""Ordering options when selecting data from "activity_comments"."""
+input activity_comments_order_by {
+  activity_id: order_by
+  author_id: order_by
+  comment_id: order_by
+  content: order_by
+  created_at: order_by
+  id: order_by
+  updated_at: order_by
+}
+
+"""primary key columns input for table: activity_comments"""
+input activity_comments_pk_columns_input {
+  id: uuid!
+}
+
+"""
+select columns of table "activity_comments"
+"""
+enum activity_comments_select_column {
+  """column name"""
+  activity_id
+
+  """column name"""
+  author_id
+
+  """column name"""
+  comment_id
+
+  """column name"""
+  content
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "activity_comments"
+"""
+input activity_comments_set_input {
+  activity_id: uuid
+  author_id: uuid
+  comment_id: uuid
+  content: String
+  created_at: timestamptz
+  id: uuid
+  updated_at: timestamptz
+}
+
+"""
+update columns of table "activity_comments"
+"""
+enum activity_comments_update_column {
+  """column name"""
+  activity_id
+
+  """column name"""
+  author_id
+
+  """column name"""
+  comment_id
+
+  """column name"""
+  content
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  updated_at
+}
+
+input activity_comments_updates {
+  """sets the columns of the filtered rows to the given values"""
+  _set: activity_comments_set_input
+  where: activity_comments_bool_exp!
+}
+
+"""
 columns and relationships of "activity_verb"
 """
 type activity_verb {
@@ -542,6 +740,12 @@ enum activity_verb_enum {
   """added"""
   added
 
+  """became admin of group"""
+  became_admin
+
+  """became owner of group"""
+  became_owner
+
   """commented"""
   commented
 
@@ -559,6 +763,9 @@ enum activity_verb_enum {
 
   """requested_to_join"""
   requested_to_join
+
+  """revoked admin"""
+  revoked_admin
 
   """showed_interest"""
   showed_interest
@@ -7761,6 +7968,19 @@ type mutation_root {
   delete_activities_by_pk(id: uuid!): activities
 
   """
+  delete data from the table: "activity_comments"
+  """
+  delete_activity_comments(
+    """filter the rows which have to be deleted"""
+    where: activity_comments_bool_exp!
+  ): activity_comments_mutation_response
+
+  """
+  delete single row from the table: "activity_comments"
+  """
+  delete_activity_comments_by_pk(id: uuid!): activity_comments
+
+  """
   delete data from the table: "activity_verb"
   """
   delete_activity_verb(
@@ -8317,6 +8537,28 @@ type mutation_root {
     """upsert condition"""
     on_conflict: activities_on_conflict
   ): activities
+
+  """
+  insert data into the table: "activity_comments"
+  """
+  insert_activity_comments(
+    """the rows to be inserted"""
+    objects: [activity_comments_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: activity_comments_on_conflict
+  ): activity_comments_mutation_response
+
+  """
+  insert a single row into the table: "activity_comments"
+  """
+  insert_activity_comments_one(
+    """the row to be inserted"""
+    object: activity_comments_insert_input!
+
+    """upsert condition"""
+    on_conflict: activity_comments_on_conflict
+  ): activity_comments
 
   """
   insert data into the table: "activity_verb"
@@ -9177,6 +9419,34 @@ type mutation_root {
     """updates to execute, in order"""
     updates: [activities_updates!]!
   ): [activities_mutation_response]
+
+  """
+  update data of the table: "activity_comments"
+  """
+  update_activity_comments(
+    """sets the columns of the filtered rows to the given values"""
+    _set: activity_comments_set_input
+
+    """filter the rows which have to be updated"""
+    where: activity_comments_bool_exp!
+  ): activity_comments_mutation_response
+
+  """
+  update single row of the table: "activity_comments"
+  """
+  update_activity_comments_by_pk(
+    """sets the columns of the filtered rows to the given values"""
+    _set: activity_comments_set_input
+    pk_columns: activity_comments_pk_columns_input!
+  ): activity_comments
+
+  """
+  update multiples rows of table: "activity_comments"
+  """
+  update_activity_comments_many(
+    """updates to execute, in order"""
+    updates: [activity_comments_updates!]!
+  ): [activity_comments_mutation_response]
 
   """
   update data of the table: "activity_verb"
@@ -10233,6 +10503,51 @@ type query_root {
 
   """fetch data from the table: "activities" using primary key columns"""
   activities_by_pk(id: uuid!): activities
+
+  """
+  fetch data from the table: "activity_comments"
+  """
+  activity_comments(
+    """distinct select on columns"""
+    distinct_on: [activity_comments_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [activity_comments_order_by!]
+
+    """filter the rows returned"""
+    where: activity_comments_bool_exp
+  ): [activity_comments!]!
+
+  """
+  fetch aggregated fields from the table: "activity_comments"
+  """
+  activity_comments_aggregate(
+    """distinct select on columns"""
+    distinct_on: [activity_comments_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [activity_comments_order_by!]
+
+    """filter the rows returned"""
+    where: activity_comments_bool_exp
+  ): activity_comments_aggregate!
+
+  """
+  fetch data from the table: "activity_comments" using primary key columns
+  """
+  activity_comments_by_pk(id: uuid!): activity_comments
 
   """
   fetch data from the table: "activity_verb"
@@ -11781,6 +12096,51 @@ type subscription_root {
 
   """fetch data from the table: "activities" using primary key columns"""
   activities_by_pk(id: uuid!): activities
+
+  """
+  fetch data from the table: "activity_comments"
+  """
+  activity_comments(
+    """distinct select on columns"""
+    distinct_on: [activity_comments_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [activity_comments_order_by!]
+
+    """filter the rows returned"""
+    where: activity_comments_bool_exp
+  ): [activity_comments!]!
+
+  """
+  fetch aggregated fields from the table: "activity_comments"
+  """
+  activity_comments_aggregate(
+    """distinct select on columns"""
+    distinct_on: [activity_comments_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [activity_comments_order_by!]
+
+    """filter the rows returned"""
+    where: activity_comments_bool_exp
+  ): activity_comments_aggregate!
+
+  """
+  fetch data from the table: "activity_comments" using primary key columns
+  """
+  activity_comments_by_pk(id: uuid!): activity_comments
 
   """
   fetch data from the table: "activity_verb"

@@ -1,10 +1,15 @@
-﻿import { Alert, Spin } from 'antd';
+﻿import { Alert, Col, Row, Spin, Typography } from 'antd';
 import { isEmpty } from 'lodash-es';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { createUseStyles } from 'react-jss';
 import { ActivityFeed } from '../../components/display';
-import { useGroupActivityQuery, useGroupDetailsQuery } from '../../generated/graphql';
+import { ThingList } from '../../components/ThingList';
+import {
+    Things_Bool_Exp,
+    useGroupActivityQuery,
+    useGroupDetailsQuery,
+} from '../../generated/graphql';
 import { useMembership } from '../../utils/group';
 import { useMedia } from '../../utils/hooks';
 import { GroupEmptyContent } from './GroupEmptyContent';
@@ -29,6 +34,15 @@ export const GroupHomePage = () => {
     const query = useGroupActivityQuery({ variables: { shortId, limit: 100, offset: 0 } });
     const activities = query.data?.groups?.[0].activities || [];
 
+    const where = useMemo(
+        (): Things_Bool_Exp => ({
+            enabled: { _eq: true },
+            group_relations: { group: { short_id: { _eq: shortId } } },
+            _or: [{ expiry: { _gt: 'now()' } }, { expiry: { _is_null: true } }],
+        }),
+        [shortId],
+    );
+
     if (loading) {
         return <Spin />;
     }
@@ -49,18 +63,20 @@ export const GroupHomePage = () => {
 
     return (
         <GroupLayout activePage="home" group={group}>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <ActivityFeed loading={query.loading} activities={activities} />
-            </div>
-            {/* <Row gutter={[16, 16]}>
-                <Col sm={24} md={12}></Col>
-                <Col sm={24} md={12}>
-                    <UserAvatarList size="default" users={group.memberships.map((m) => m.user)} />
-                    {group.memberships_aggregate.aggregate?.count} members. Invite someone.
-                    <br />
-                    {group.thing_relations_aggregate.aggregate?.count} things shared. Add something.
+            <Row gutter={[16, 16]}>
+                {!collapsed && (
+                    <Col flex="200px">
+                        <Typography.Title level={5}>Latest activity</Typography.Title>
+                        <ActivityFeed loading={query.loading} activities={activities} />
+                    </Col>
+                )}
+                <Col flex="auto">
+                    <Typography.Title level={5}>Find something</Typography.Title>
+                    <div>
+                        <ThingList where={where} />
+                    </div>
                 </Col>
-            </Row> */}
+            </Row>
         </GroupLayout>
     );
 };

@@ -38,7 +38,11 @@ Cypress.Commands.add('logout', () => {
     cy.url().should('match', /\/$/);
 });
 
-Cypress.Commands.add('t', (value, ...childSelectors) => {
+Cypress.Commands.add('t', { prevSubject: 'optional' }, (subject, value, ...childSelectors) => {
+    if (subject) {
+        const chain = childSelectors.map((cs) => `[data-cy="${cs}"]`).join(' ');
+        return cy.wrap(subject).find(`[data-cy="${value}"] ${chain}`);
+    }
     const chain = childSelectors.map((cs) => `[data-cy="${cs}"]`).join(' ');
     return cy.get(`[data-cy="${value}"] ${chain}`);
 });
@@ -68,8 +72,7 @@ Cypress.Commands.add('decodeQuotedPrintable', { prevSubject: 'optional' }, (subj
 });
 
 Cypress.Commands.add('waitRequest', (what: 'files' | 'graphql') => {
-    // cy.wait(`@${what}`);
-    cy.wait(3000); // TODO
+    cy.wait(`@${what}`);
 });
 
 Cypress.Commands.add('interceptRequests', () => {

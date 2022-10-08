@@ -430,6 +430,180 @@ export type Activities_Updates = {
   where: Activities_Bool_Exp;
 };
 
+/** columns and relationships of "activity_comments" */
+export type Activity_Comments = {
+  __typename?: 'activity_comments';
+  activity_id: Scalars['uuid'];
+  author_id: Scalars['uuid'];
+  comment_id: Scalars['uuid'];
+  content: Scalars['String'];
+  created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  updated_at: Scalars['timestamptz'];
+};
+
+/** aggregated selection of "activity_comments" */
+export type Activity_Comments_Aggregate = {
+  __typename?: 'activity_comments_aggregate';
+  aggregate?: Maybe<Activity_Comments_Aggregate_Fields>;
+  nodes: Array<Activity_Comments>;
+};
+
+/** aggregate fields of "activity_comments" */
+export type Activity_Comments_Aggregate_Fields = {
+  __typename?: 'activity_comments_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Activity_Comments_Max_Fields>;
+  min?: Maybe<Activity_Comments_Min_Fields>;
+};
+
+
+/** aggregate fields of "activity_comments" */
+export type Activity_Comments_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Activity_Comments_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "activity_comments". All fields are combined with a logical 'AND'. */
+export type Activity_Comments_Bool_Exp = {
+  _and?: InputMaybe<Array<Activity_Comments_Bool_Exp>>;
+  _not?: InputMaybe<Activity_Comments_Bool_Exp>;
+  _or?: InputMaybe<Array<Activity_Comments_Bool_Exp>>;
+  activity_id?: InputMaybe<Uuid_Comparison_Exp>;
+  author_id?: InputMaybe<Uuid_Comparison_Exp>;
+  comment_id?: InputMaybe<Uuid_Comparison_Exp>;
+  content?: InputMaybe<String_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "activity_comments" */
+export enum Activity_Comments_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  ActivityCommentsPkey = 'activity_comments_pkey'
+}
+
+/** input type for inserting data into table "activity_comments" */
+export type Activity_Comments_Insert_Input = {
+  activity_id?: InputMaybe<Scalars['uuid']>;
+  author_id?: InputMaybe<Scalars['uuid']>;
+  comment_id?: InputMaybe<Scalars['uuid']>;
+  content?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Activity_Comments_Max_Fields = {
+  __typename?: 'activity_comments_max_fields';
+  activity_id?: Maybe<Scalars['uuid']>;
+  author_id?: Maybe<Scalars['uuid']>;
+  comment_id?: Maybe<Scalars['uuid']>;
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate min on columns */
+export type Activity_Comments_Min_Fields = {
+  __typename?: 'activity_comments_min_fields';
+  activity_id?: Maybe<Scalars['uuid']>;
+  author_id?: Maybe<Scalars['uuid']>;
+  comment_id?: Maybe<Scalars['uuid']>;
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** response of any mutation on the table "activity_comments" */
+export type Activity_Comments_Mutation_Response = {
+  __typename?: 'activity_comments_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Activity_Comments>;
+};
+
+/** on_conflict condition type for table "activity_comments" */
+export type Activity_Comments_On_Conflict = {
+  constraint: Activity_Comments_Constraint;
+  update_columns?: Array<Activity_Comments_Update_Column>;
+  where?: InputMaybe<Activity_Comments_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "activity_comments". */
+export type Activity_Comments_Order_By = {
+  activity_id?: InputMaybe<Order_By>;
+  author_id?: InputMaybe<Order_By>;
+  comment_id?: InputMaybe<Order_By>;
+  content?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: activity_comments */
+export type Activity_Comments_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "activity_comments" */
+export enum Activity_Comments_Select_Column {
+  /** column name */
+  ActivityId = 'activity_id',
+  /** column name */
+  AuthorId = 'author_id',
+  /** column name */
+  CommentId = 'comment_id',
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "activity_comments" */
+export type Activity_Comments_Set_Input = {
+  activity_id?: InputMaybe<Scalars['uuid']>;
+  author_id?: InputMaybe<Scalars['uuid']>;
+  comment_id?: InputMaybe<Scalars['uuid']>;
+  content?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "activity_comments" */
+export enum Activity_Comments_Update_Column {
+  /** column name */
+  ActivityId = 'activity_id',
+  /** column name */
+  AuthorId = 'author_id',
+  /** column name */
+  CommentId = 'comment_id',
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+export type Activity_Comments_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Activity_Comments_Set_Input>;
+  where: Activity_Comments_Bool_Exp;
+};
+
 /** columns and relationships of "activity_verb" */
 export type Activity_Verb = {
   __typename?: 'activity_verb';
@@ -479,6 +653,10 @@ export enum Activity_Verb_Enum {
   Accepted = 'accepted',
   /** added */
   Added = 'added',
+  /** became admin of group */
+  BecameAdmin = 'became_admin',
+  /** became owner of group */
+  BecameOwner = 'became_owner',
   /** commented */
   Commented = 'commented',
   /** deleted */
@@ -491,6 +669,8 @@ export enum Activity_Verb_Enum {
   Rejected = 'rejected',
   /** requested_to_join */
   RequestedToJoin = 'requested_to_join',
+  /** revoked admin */
+  RevokedAdmin = 'revoked_admin',
   /** showed_interest */
   ShowedInterest = 'showed_interest',
   /** updated */
@@ -6533,6 +6713,10 @@ export type Mutation_Root = {
   delete_activities?: Maybe<Activities_Mutation_Response>;
   /** delete single row from the table: "activities" */
   delete_activities_by_pk?: Maybe<Activities>;
+  /** delete data from the table: "activity_comments" */
+  delete_activity_comments?: Maybe<Activity_Comments_Mutation_Response>;
+  /** delete single row from the table: "activity_comments" */
+  delete_activity_comments_by_pk?: Maybe<Activity_Comments>;
   /** delete data from the table: "activity_verb" */
   delete_activity_verb?: Maybe<Activity_Verb_Mutation_Response>;
   /** delete single row from the table: "activity_verb" */
@@ -6676,6 +6860,10 @@ export type Mutation_Root = {
   insert_activities?: Maybe<Activities_Mutation_Response>;
   /** insert a single row into the table: "activities" */
   insert_activities_one?: Maybe<Activities>;
+  /** insert data into the table: "activity_comments" */
+  insert_activity_comments?: Maybe<Activity_Comments_Mutation_Response>;
+  /** insert a single row into the table: "activity_comments" */
+  insert_activity_comments_one?: Maybe<Activity_Comments>;
   /** insert data into the table: "activity_verb" */
   insert_activity_verb?: Maybe<Activity_Verb_Mutation_Response>;
   /** insert a single row into the table: "activity_verb" */
@@ -6820,6 +7008,12 @@ export type Mutation_Root = {
   update_activities_by_pk?: Maybe<Activities>;
   /** update multiples rows of table: "activities" */
   update_activities_many?: Maybe<Array<Maybe<Activities_Mutation_Response>>>;
+  /** update data of the table: "activity_comments" */
+  update_activity_comments?: Maybe<Activity_Comments_Mutation_Response>;
+  /** update single row of the table: "activity_comments" */
+  update_activity_comments_by_pk?: Maybe<Activity_Comments>;
+  /** update multiples rows of table: "activity_comments" */
+  update_activity_comments_many?: Maybe<Array<Maybe<Activity_Comments_Mutation_Response>>>;
   /** update data of the table: "activity_verb" */
   update_activity_verb?: Maybe<Activity_Verb_Mutation_Response>;
   /** update single row of the table: "activity_verb" */
@@ -7127,6 +7321,18 @@ export type Mutation_RootDelete_ActivitiesArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Activities_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Activity_CommentsArgs = {
+  where: Activity_Comments_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Activity_Comments_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -7582,6 +7788,20 @@ export type Mutation_RootInsert_ActivitiesArgs = {
 export type Mutation_RootInsert_Activities_OneArgs = {
   object: Activities_Insert_Input;
   on_conflict?: InputMaybe<Activities_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Activity_CommentsArgs = {
+  objects: Array<Activity_Comments_Insert_Input>;
+  on_conflict?: InputMaybe<Activity_Comments_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Activity_Comments_OneArgs = {
+  object: Activity_Comments_Insert_Input;
+  on_conflict?: InputMaybe<Activity_Comments_On_Conflict>;
 };
 
 
@@ -8116,6 +8336,26 @@ export type Mutation_RootUpdate_Activities_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Activities_ManyArgs = {
   updates: Array<Activities_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Activity_CommentsArgs = {
+  _set?: InputMaybe<Activity_Comments_Set_Input>;
+  where: Activity_Comments_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Activity_Comments_By_PkArgs = {
+  _set?: InputMaybe<Activity_Comments_Set_Input>;
+  pk_columns: Activity_Comments_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Activity_Comments_ManyArgs = {
+  updates: Array<Activity_Comments_Updates>;
 };
 
 
@@ -8882,6 +9122,12 @@ export type Query_Root = {
   activities_aggregate: Activities_Aggregate;
   /** fetch data from the table: "activities" using primary key columns */
   activities_by_pk?: Maybe<Activities>;
+  /** fetch data from the table: "activity_comments" */
+  activity_comments: Array<Activity_Comments>;
+  /** fetch aggregated fields from the table: "activity_comments" */
+  activity_comments_aggregate: Activity_Comments_Aggregate;
+  /** fetch data from the table: "activity_comments" using primary key columns */
+  activity_comments_by_pk?: Maybe<Activity_Comments>;
   /** fetch data from the table: "activity_verb" */
   activity_verb: Array<Activity_Verb>;
   /** fetch aggregated fields from the table: "activity_verb" */
@@ -9112,6 +9358,29 @@ export type Query_RootActivities_AggregateArgs = {
 
 
 export type Query_RootActivities_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_RootActivity_CommentsArgs = {
+  distinct_on?: InputMaybe<Array<Activity_Comments_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Activity_Comments_Order_By>>;
+  where?: InputMaybe<Activity_Comments_Bool_Exp>;
+};
+
+
+export type Query_RootActivity_Comments_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Activity_Comments_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Activity_Comments_Order_By>>;
+  where?: InputMaybe<Activity_Comments_Bool_Exp>;
+};
+
+
+export type Query_RootActivity_Comments_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -9936,6 +10205,12 @@ export type Subscription_Root = {
   activities_aggregate: Activities_Aggregate;
   /** fetch data from the table: "activities" using primary key columns */
   activities_by_pk?: Maybe<Activities>;
+  /** fetch data from the table: "activity_comments" */
+  activity_comments: Array<Activity_Comments>;
+  /** fetch aggregated fields from the table: "activity_comments" */
+  activity_comments_aggregate: Activity_Comments_Aggregate;
+  /** fetch data from the table: "activity_comments" using primary key columns */
+  activity_comments_by_pk?: Maybe<Activity_Comments>;
   /** fetch data from the table: "activity_verb" */
   activity_verb: Array<Activity_Verb>;
   /** fetch aggregated fields from the table: "activity_verb" */
@@ -10166,6 +10441,29 @@ export type Subscription_RootActivities_AggregateArgs = {
 
 
 export type Subscription_RootActivities_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootActivity_CommentsArgs = {
+  distinct_on?: InputMaybe<Array<Activity_Comments_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Activity_Comments_Order_By>>;
+  where?: InputMaybe<Activity_Comments_Bool_Exp>;
+};
+
+
+export type Subscription_RootActivity_Comments_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Activity_Comments_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Activity_Comments_Order_By>>;
+  where?: InputMaybe<Activity_Comments_Bool_Exp>;
+};
+
+
+export type Subscription_RootActivity_Comments_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -13499,6 +13797,14 @@ export type DeleteGroupPostMutationVariables = Exact<{
 
 export type DeleteGroupPostMutation = { __typename?: 'mutation_root', delete_group_posts_by_pk?: { __typename?: 'group_posts', id: any } | null };
 
+export type ChangeMemberRoleMutationVariables = Exact<{
+  memberId: Scalars['uuid'];
+  role: Group_Role_Enum;
+}>;
+
+
+export type ChangeMemberRoleMutation = { __typename?: 'mutation_root', update_group_members_by_pk?: { __typename?: 'group_members', id: any, role: Group_Role_Enum, created_at: any, user: { __typename?: 'users', id: any, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: any, name?: string | null, mimeType?: string | null } | null } | null } } | null };
+
 export type SearchCountsQueryVariables = Exact<{
   thingWhere: Things_Bool_Exp;
   groupWhere: Groups_Bool_Exp;
@@ -13922,6 +14228,22 @@ export type ResolversTypes = {
   activities_set_input: Activities_Set_Input;
   activities_update_column: Activities_Update_Column;
   activities_updates: Activities_Updates;
+  activity_comments: ResolverTypeWrapper<Activity_Comments>;
+  activity_comments_aggregate: ResolverTypeWrapper<Activity_Comments_Aggregate>;
+  activity_comments_aggregate_fields: ResolverTypeWrapper<Activity_Comments_Aggregate_Fields>;
+  activity_comments_bool_exp: Activity_Comments_Bool_Exp;
+  activity_comments_constraint: Activity_Comments_Constraint;
+  activity_comments_insert_input: Activity_Comments_Insert_Input;
+  activity_comments_max_fields: ResolverTypeWrapper<Activity_Comments_Max_Fields>;
+  activity_comments_min_fields: ResolverTypeWrapper<Activity_Comments_Min_Fields>;
+  activity_comments_mutation_response: ResolverTypeWrapper<Activity_Comments_Mutation_Response>;
+  activity_comments_on_conflict: Activity_Comments_On_Conflict;
+  activity_comments_order_by: Activity_Comments_Order_By;
+  activity_comments_pk_columns_input: Activity_Comments_Pk_Columns_Input;
+  activity_comments_select_column: Activity_Comments_Select_Column;
+  activity_comments_set_input: Activity_Comments_Set_Input;
+  activity_comments_update_column: Activity_Comments_Update_Column;
+  activity_comments_updates: Activity_Comments_Updates;
   activity_verb: ResolverTypeWrapper<Activity_Verb>;
   activity_verb_aggregate: ResolverTypeWrapper<Activity_Verb_Aggregate>;
   activity_verb_aggregate_fields: ResolverTypeWrapper<Activity_Verb_Aggregate_Fields>;
@@ -14747,6 +15069,19 @@ export type ResolversParentTypes = {
   activities_pk_columns_input: Activities_Pk_Columns_Input;
   activities_set_input: Activities_Set_Input;
   activities_updates: Activities_Updates;
+  activity_comments: Activity_Comments;
+  activity_comments_aggregate: Activity_Comments_Aggregate;
+  activity_comments_aggregate_fields: Activity_Comments_Aggregate_Fields;
+  activity_comments_bool_exp: Activity_Comments_Bool_Exp;
+  activity_comments_insert_input: Activity_Comments_Insert_Input;
+  activity_comments_max_fields: Activity_Comments_Max_Fields;
+  activity_comments_min_fields: Activity_Comments_Min_Fields;
+  activity_comments_mutation_response: Activity_Comments_Mutation_Response;
+  activity_comments_on_conflict: Activity_Comments_On_Conflict;
+  activity_comments_order_by: Activity_Comments_Order_By;
+  activity_comments_pk_columns_input: Activity_Comments_Pk_Columns_Input;
+  activity_comments_set_input: Activity_Comments_Set_Input;
+  activity_comments_updates: Activity_Comments_Updates;
   activity_verb: Activity_Verb;
   activity_verb_aggregate: Activity_Verb_Aggregate;
   activity_verb_aggregate_fields: Activity_Verb_Aggregate_Fields;
@@ -15519,6 +15854,58 @@ export type Activities_Min_FieldsResolvers<ContextType = any, ParentType extends
 export type Activities_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['activities_mutation_response'] = ResolversParentTypes['activities_mutation_response']> = {
   affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   returning?: Resolver<Array<ResolversTypes['activities']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Activity_CommentsResolvers<ContextType = any, ParentType extends ResolversParentTypes['activity_comments'] = ResolversParentTypes['activity_comments']> = {
+  activity_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  author_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  comment_id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  content?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  created_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['uuid'], ParentType, ContextType>;
+  updated_at?: Resolver<ResolversTypes['timestamptz'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Activity_Comments_AggregateResolvers<ContextType = any, ParentType extends ResolversParentTypes['activity_comments_aggregate'] = ResolversParentTypes['activity_comments_aggregate']> = {
+  aggregate?: Resolver<Maybe<ResolversTypes['activity_comments_aggregate_fields']>, ParentType, ContextType>;
+  nodes?: Resolver<Array<ResolversTypes['activity_comments']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Activity_Comments_Aggregate_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['activity_comments_aggregate_fields'] = ResolversParentTypes['activity_comments_aggregate_fields']> = {
+  count?: Resolver<ResolversTypes['Int'], ParentType, ContextType, Partial<Activity_Comments_Aggregate_FieldsCountArgs>>;
+  max?: Resolver<Maybe<ResolversTypes['activity_comments_max_fields']>, ParentType, ContextType>;
+  min?: Resolver<Maybe<ResolversTypes['activity_comments_min_fields']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Activity_Comments_Max_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['activity_comments_max_fields'] = ResolversParentTypes['activity_comments_max_fields']> = {
+  activity_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  author_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  comment_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  content?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Activity_Comments_Min_FieldsResolvers<ContextType = any, ParentType extends ResolversParentTypes['activity_comments_min_fields'] = ResolversParentTypes['activity_comments_min_fields']> = {
+  activity_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  author_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  comment_id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  content?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  created_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['uuid']>, ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['timestamptz']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type Activity_Comments_Mutation_ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['activity_comments_mutation_response'] = ResolversParentTypes['activity_comments_mutation_response']> = {
+  affected_rows?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  returning?: Resolver<Array<ResolversTypes['activity_comments']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -17138,6 +17525,8 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   deleteUsers?: Resolver<Maybe<ResolversTypes['users_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDeleteUsersArgs, 'where'>>;
   delete_activities?: Resolver<Maybe<ResolversTypes['activities_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_ActivitiesArgs, 'where'>>;
   delete_activities_by_pk?: Resolver<Maybe<ResolversTypes['activities']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Activities_By_PkArgs, 'id'>>;
+  delete_activity_comments?: Resolver<Maybe<ResolversTypes['activity_comments_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Activity_CommentsArgs, 'where'>>;
+  delete_activity_comments_by_pk?: Resolver<Maybe<ResolversTypes['activity_comments']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Activity_Comments_By_PkArgs, 'id'>>;
   delete_activity_verb?: Resolver<Maybe<ResolversTypes['activity_verb_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Activity_VerbArgs, 'where'>>;
   delete_activity_verb_by_pk?: Resolver<Maybe<ResolversTypes['activity_verb']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Activity_Verb_By_PkArgs, 'value'>>;
   delete_chat_group_members?: Resolver<Maybe<ResolversTypes['chat_group_members_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootDelete_Chat_Group_MembersArgs, 'where'>>;
@@ -17210,6 +17599,8 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   insertUsers?: Resolver<Maybe<ResolversTypes['users_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsertUsersArgs, 'objects'>>;
   insert_activities?: Resolver<Maybe<ResolversTypes['activities_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_ActivitiesArgs, 'objects'>>;
   insert_activities_one?: Resolver<Maybe<ResolversTypes['activities']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Activities_OneArgs, 'object'>>;
+  insert_activity_comments?: Resolver<Maybe<ResolversTypes['activity_comments_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Activity_CommentsArgs, 'objects'>>;
+  insert_activity_comments_one?: Resolver<Maybe<ResolversTypes['activity_comments']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Activity_Comments_OneArgs, 'object'>>;
   insert_activity_verb?: Resolver<Maybe<ResolversTypes['activity_verb_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Activity_VerbArgs, 'objects'>>;
   insert_activity_verb_one?: Resolver<Maybe<ResolversTypes['activity_verb']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Activity_Verb_OneArgs, 'object'>>;
   insert_chat_group_members?: Resolver<Maybe<ResolversTypes['chat_group_members_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootInsert_Chat_Group_MembersArgs, 'objects'>>;
@@ -17283,6 +17674,9 @@ export type Mutation_RootResolvers<ContextType = any, ParentType extends Resolve
   update_activities?: Resolver<Maybe<ResolversTypes['activities_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_ActivitiesArgs, 'where'>>;
   update_activities_by_pk?: Resolver<Maybe<ResolversTypes['activities']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Activities_By_PkArgs, 'pk_columns'>>;
   update_activities_many?: Resolver<Maybe<Array<Maybe<ResolversTypes['activities_mutation_response']>>>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Activities_ManyArgs, 'updates'>>;
+  update_activity_comments?: Resolver<Maybe<ResolversTypes['activity_comments_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Activity_CommentsArgs, 'where'>>;
+  update_activity_comments_by_pk?: Resolver<Maybe<ResolversTypes['activity_comments']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Activity_Comments_By_PkArgs, 'pk_columns'>>;
+  update_activity_comments_many?: Resolver<Maybe<Array<Maybe<ResolversTypes['activity_comments_mutation_response']>>>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Activity_Comments_ManyArgs, 'updates'>>;
   update_activity_verb?: Resolver<Maybe<ResolversTypes['activity_verb_mutation_response']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Activity_VerbArgs, 'where'>>;
   update_activity_verb_by_pk?: Resolver<Maybe<ResolversTypes['activity_verb']>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Activity_Verb_By_PkArgs, 'pk_columns'>>;
   update_activity_verb_many?: Resolver<Maybe<Array<Maybe<ResolversTypes['activity_verb_mutation_response']>>>, ParentType, ContextType, RequireFields<Mutation_RootUpdate_Activity_Verb_ManyArgs, 'updates'>>;
@@ -17419,6 +17813,9 @@ export type Query_RootResolvers<ContextType = any, ParentType extends ResolversP
   activities?: Resolver<Array<ResolversTypes['activities']>, ParentType, ContextType, Partial<Query_RootActivitiesArgs>>;
   activities_aggregate?: Resolver<ResolversTypes['activities_aggregate'], ParentType, ContextType, Partial<Query_RootActivities_AggregateArgs>>;
   activities_by_pk?: Resolver<Maybe<ResolversTypes['activities']>, ParentType, ContextType, RequireFields<Query_RootActivities_By_PkArgs, 'id'>>;
+  activity_comments?: Resolver<Array<ResolversTypes['activity_comments']>, ParentType, ContextType, Partial<Query_RootActivity_CommentsArgs>>;
+  activity_comments_aggregate?: Resolver<ResolversTypes['activity_comments_aggregate'], ParentType, ContextType, Partial<Query_RootActivity_Comments_AggregateArgs>>;
+  activity_comments_by_pk?: Resolver<Maybe<ResolversTypes['activity_comments']>, ParentType, ContextType, RequireFields<Query_RootActivity_Comments_By_PkArgs, 'id'>>;
   activity_verb?: Resolver<Array<ResolversTypes['activity_verb']>, ParentType, ContextType, Partial<Query_RootActivity_VerbArgs>>;
   activity_verb_aggregate?: Resolver<ResolversTypes['activity_verb_aggregate'], ParentType, ContextType, Partial<Query_RootActivity_Verb_AggregateArgs>>;
   activity_verb_by_pk?: Resolver<Maybe<ResolversTypes['activity_verb']>, ParentType, ContextType, RequireFields<Query_RootActivity_Verb_By_PkArgs, 'value'>>;
@@ -17533,6 +17930,9 @@ export type Subscription_RootResolvers<ContextType = any, ParentType extends Res
   activities?: SubscriptionResolver<Array<ResolversTypes['activities']>, "activities", ParentType, ContextType, Partial<Subscription_RootActivitiesArgs>>;
   activities_aggregate?: SubscriptionResolver<ResolversTypes['activities_aggregate'], "activities_aggregate", ParentType, ContextType, Partial<Subscription_RootActivities_AggregateArgs>>;
   activities_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['activities']>, "activities_by_pk", ParentType, ContextType, RequireFields<Subscription_RootActivities_By_PkArgs, 'id'>>;
+  activity_comments?: SubscriptionResolver<Array<ResolversTypes['activity_comments']>, "activity_comments", ParentType, ContextType, Partial<Subscription_RootActivity_CommentsArgs>>;
+  activity_comments_aggregate?: SubscriptionResolver<ResolversTypes['activity_comments_aggregate'], "activity_comments_aggregate", ParentType, ContextType, Partial<Subscription_RootActivity_Comments_AggregateArgs>>;
+  activity_comments_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['activity_comments']>, "activity_comments_by_pk", ParentType, ContextType, RequireFields<Subscription_RootActivity_Comments_By_PkArgs, 'id'>>;
   activity_verb?: SubscriptionResolver<Array<ResolversTypes['activity_verb']>, "activity_verb", ParentType, ContextType, Partial<Subscription_RootActivity_VerbArgs>>;
   activity_verb_aggregate?: SubscriptionResolver<ResolversTypes['activity_verb_aggregate'], "activity_verb_aggregate", ParentType, ContextType, Partial<Subscription_RootActivity_Verb_AggregateArgs>>;
   activity_verb_by_pk?: SubscriptionResolver<Maybe<ResolversTypes['activity_verb']>, "activity_verb_by_pk", ParentType, ContextType, RequireFields<Subscription_RootActivity_Verb_By_PkArgs, 'value'>>;
@@ -18133,6 +18533,12 @@ export type Resolvers<ContextType = any> = {
   activities_max_fields?: Activities_Max_FieldsResolvers<ContextType>;
   activities_min_fields?: Activities_Min_FieldsResolvers<ContextType>;
   activities_mutation_response?: Activities_Mutation_ResponseResolvers<ContextType>;
+  activity_comments?: Activity_CommentsResolvers<ContextType>;
+  activity_comments_aggregate?: Activity_Comments_AggregateResolvers<ContextType>;
+  activity_comments_aggregate_fields?: Activity_Comments_Aggregate_FieldsResolvers<ContextType>;
+  activity_comments_max_fields?: Activity_Comments_Max_FieldsResolvers<ContextType>;
+  activity_comments_min_fields?: Activity_Comments_Min_FieldsResolvers<ContextType>;
+  activity_comments_mutation_response?: Activity_Comments_Mutation_ResponseResolvers<ContextType>;
   activity_verb?: Activity_VerbResolvers<ContextType>;
   activity_verb_aggregate?: Activity_Verb_AggregateResolvers<ContextType>;
   activity_verb_aggregate_fields?: Activity_Verb_Aggregate_FieldsResolvers<ContextType>;
@@ -18464,6 +18870,7 @@ export const CreateJoinTokenDocument = {"kind":"Document","definitions":[{"kind"
 export const DeleteJoinTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteJoinToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_group_join_tokens_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupJoinTokenCard"}}]}}]}},...GroupJoinTokenCardFragmentDoc.definitions]} as unknown as DocumentNode<DeleteJoinTokenMutation, DeleteJoinTokenMutationVariables>;
 export const UpdateJoinTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateJoinToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens_set_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_group_join_tokens_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupJoinTokenCard"}}]}}]}},...GroupJoinTokenCardFragmentDoc.definitions]} as unknown as DocumentNode<UpdateJoinTokenMutation, UpdateJoinTokenMutationVariables>;
 export const DeleteGroupPostDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteGroupPost"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"delete_group_posts_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteGroupPostMutation, DeleteGroupPostMutationVariables>;
+export const ChangeMemberRoleDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ChangeMemberRole"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"memberId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"role"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_role_enum"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_group_members_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pk_columns"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"memberId"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"role"},"value":{"kind":"Variable","name":{"kind":"Name","value":"role"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"GroupMemberCard"}}]}}]}},...GroupMemberCardFragmentDoc.definitions]} as unknown as DocumentNode<ChangeMemberRoleMutation, ChangeMemberRoleMutationVariables>;
 export const SearchCountsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"SearchCounts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"thingWhere"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"things_bool_exp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"groupWhere"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"groups_bool_exp"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userWhere"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"users_bool_exp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"usersAggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userWhere"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"groups_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"groupWhere"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"things_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"thingWhere"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"10"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}}]} as unknown as DocumentNode<SearchCountsQuery, SearchCountsQueryVariables>;
 export const ThingListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ThingList"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"limit"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offset"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}},"type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"things_order_by"}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"things_bool_exp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"things"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"Variable","name":{"kind":"Name","value":"limit"}}},{"kind":"Argument","name":{"kind":"Name","value":"offset"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offset"}}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"Variable","name":{"kind":"Name","value":"orderBy"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingCard"}}]}},{"kind":"Field","name":{"kind":"Name","value":"things_aggregate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aggregate"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}}]}}]}}]}},...ThingCardFragmentDoc.definitions]} as unknown as DocumentNode<ThingListQuery, ThingListQueryVariables>;
 export const ThingDetailsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ThingDetails"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"shortId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"things"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"short_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"shortId"}}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ThingDetails"}}]}}]}},...ThingDetailsFragmentDoc.definitions]} as unknown as DocumentNode<ThingDetailsQuery, ThingDetailsQueryVariables>;

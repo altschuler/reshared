@@ -39,6 +39,18 @@ export const activityMessage = (
         if (activity.verb === Activity_Verb_Enum.Added) {
             return `${actor} joined the group ${ent.group_member.group.name}`;
         }
+
+        if (activity.verb === Activity_Verb_Enum.BecameAdmin) {
+            return `${actor} made you an admin of the group ${ent.group_member.group.name}`;
+        }
+
+        if (activity.verb === Activity_Verb_Enum.BecameOwner) {
+            return `${actor} made you the owner of the group ${ent.group_member.group.name}`;
+        }
+
+        if (activity.verb === Activity_Verb_Enum.RevokedAdmin) {
+            return `${actor} revoked your admin role in the group ${ent.group_member.group.name}`;
+        }
     }
 
     if (ent.group_post) {
@@ -116,5 +128,6 @@ export const activityMessage = (
 
     Sentry.captureMessage('Unhandled activity type', { extra: { activity } });
 
+    console.log(activity);
     return `Unknown activity`;
 };

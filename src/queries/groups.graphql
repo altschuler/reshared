@@ -287,3 +287,9 @@ mutation DeleteGroupPost($id: uuid!) {
         id
     }
 }
+
+mutation ChangeMemberRole($memberId: uuid!, $role: group_role_enum!) {
+    update_group_members_by_pk(pk_columns: { id: $memberId }, _set: { role: $role }) {
+        ...GroupMemberCard
+    }
+}

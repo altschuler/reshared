@@ -6,7 +6,7 @@ describe('group flow', () => {
 
     beforeEach(() => {
         cy.visit('/');
-        // cy.interceptRequests();
+        cy.interceptRequests();
     });
 
     it('create public group', () => {

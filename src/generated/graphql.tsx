@@ -430,6 +430,180 @@ export type Activities_Updates = {
   where: Activities_Bool_Exp;
 };
 
+/** columns and relationships of "activity_comments" */
+export type Activity_Comments = {
+  __typename?: 'activity_comments';
+  activity_id: Scalars['uuid'];
+  author_id: Scalars['uuid'];
+  comment_id: Scalars['uuid'];
+  content: Scalars['String'];
+  created_at: Scalars['timestamptz'];
+  id: Scalars['uuid'];
+  updated_at: Scalars['timestamptz'];
+};
+
+/** aggregated selection of "activity_comments" */
+export type Activity_Comments_Aggregate = {
+  __typename?: 'activity_comments_aggregate';
+  aggregate?: Maybe<Activity_Comments_Aggregate_Fields>;
+  nodes: Array<Activity_Comments>;
+};
+
+/** aggregate fields of "activity_comments" */
+export type Activity_Comments_Aggregate_Fields = {
+  __typename?: 'activity_comments_aggregate_fields';
+  count: Scalars['Int'];
+  max?: Maybe<Activity_Comments_Max_Fields>;
+  min?: Maybe<Activity_Comments_Min_Fields>;
+};
+
+
+/** aggregate fields of "activity_comments" */
+export type Activity_Comments_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Activity_Comments_Select_Column>>;
+  distinct?: InputMaybe<Scalars['Boolean']>;
+};
+
+/** Boolean expression to filter rows from the table "activity_comments". All fields are combined with a logical 'AND'. */
+export type Activity_Comments_Bool_Exp = {
+  _and?: InputMaybe<Array<Activity_Comments_Bool_Exp>>;
+  _not?: InputMaybe<Activity_Comments_Bool_Exp>;
+  _or?: InputMaybe<Array<Activity_Comments_Bool_Exp>>;
+  activity_id?: InputMaybe<Uuid_Comparison_Exp>;
+  author_id?: InputMaybe<Uuid_Comparison_Exp>;
+  comment_id?: InputMaybe<Uuid_Comparison_Exp>;
+  content?: InputMaybe<String_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+};
+
+/** unique or primary key constraints on table "activity_comments" */
+export enum Activity_Comments_Constraint {
+  /** unique or primary key constraint on columns "id" */
+  ActivityCommentsPkey = 'activity_comments_pkey'
+}
+
+/** input type for inserting data into table "activity_comments" */
+export type Activity_Comments_Insert_Input = {
+  activity_id?: InputMaybe<Scalars['uuid']>;
+  author_id?: InputMaybe<Scalars['uuid']>;
+  comment_id?: InputMaybe<Scalars['uuid']>;
+  content?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+};
+
+/** aggregate max on columns */
+export type Activity_Comments_Max_Fields = {
+  __typename?: 'activity_comments_max_fields';
+  activity_id?: Maybe<Scalars['uuid']>;
+  author_id?: Maybe<Scalars['uuid']>;
+  comment_id?: Maybe<Scalars['uuid']>;
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** aggregate min on columns */
+export type Activity_Comments_Min_Fields = {
+  __typename?: 'activity_comments_min_fields';
+  activity_id?: Maybe<Scalars['uuid']>;
+  author_id?: Maybe<Scalars['uuid']>;
+  comment_id?: Maybe<Scalars['uuid']>;
+  content?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['timestamptz']>;
+  id?: Maybe<Scalars['uuid']>;
+  updated_at?: Maybe<Scalars['timestamptz']>;
+};
+
+/** response of any mutation on the table "activity_comments" */
+export type Activity_Comments_Mutation_Response = {
+  __typename?: 'activity_comments_mutation_response';
+  /** number of rows affected by the mutation */
+  affected_rows: Scalars['Int'];
+  /** data from the rows affected by the mutation */
+  returning: Array<Activity_Comments>;
+};
+
+/** on_conflict condition type for table "activity_comments" */
+export type Activity_Comments_On_Conflict = {
+  constraint: Activity_Comments_Constraint;
+  update_columns?: Array<Activity_Comments_Update_Column>;
+  where?: InputMaybe<Activity_Comments_Bool_Exp>;
+};
+
+/** Ordering options when selecting data from "activity_comments". */
+export type Activity_Comments_Order_By = {
+  activity_id?: InputMaybe<Order_By>;
+  author_id?: InputMaybe<Order_By>;
+  comment_id?: InputMaybe<Order_By>;
+  content?: InputMaybe<Order_By>;
+  created_at?: InputMaybe<Order_By>;
+  id?: InputMaybe<Order_By>;
+  updated_at?: InputMaybe<Order_By>;
+};
+
+/** primary key columns input for table: activity_comments */
+export type Activity_Comments_Pk_Columns_Input = {
+  id: Scalars['uuid'];
+};
+
+/** select columns of table "activity_comments" */
+export enum Activity_Comments_Select_Column {
+  /** column name */
+  ActivityId = 'activity_id',
+  /** column name */
+  AuthorId = 'author_id',
+  /** column name */
+  CommentId = 'comment_id',
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+/** input type for updating data in table "activity_comments" */
+export type Activity_Comments_Set_Input = {
+  activity_id?: InputMaybe<Scalars['uuid']>;
+  author_id?: InputMaybe<Scalars['uuid']>;
+  comment_id?: InputMaybe<Scalars['uuid']>;
+  content?: InputMaybe<Scalars['String']>;
+  created_at?: InputMaybe<Scalars['timestamptz']>;
+  id?: InputMaybe<Scalars['uuid']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']>;
+};
+
+/** update columns of table "activity_comments" */
+export enum Activity_Comments_Update_Column {
+  /** column name */
+  ActivityId = 'activity_id',
+  /** column name */
+  AuthorId = 'author_id',
+  /** column name */
+  CommentId = 'comment_id',
+  /** column name */
+  Content = 'content',
+  /** column name */
+  CreatedAt = 'created_at',
+  /** column name */
+  Id = 'id',
+  /** column name */
+  UpdatedAt = 'updated_at'
+}
+
+export type Activity_Comments_Updates = {
+  /** sets the columns of the filtered rows to the given values */
+  _set?: InputMaybe<Activity_Comments_Set_Input>;
+  where: Activity_Comments_Bool_Exp;
+};
+
 /** columns and relationships of "activity_verb" */
 export type Activity_Verb = {
   __typename?: 'activity_verb';
@@ -479,6 +653,10 @@ export enum Activity_Verb_Enum {
   Accepted = 'accepted',
   /** added */
   Added = 'added',
+  /** became admin of group */
+  BecameAdmin = 'became_admin',
+  /** became owner of group */
+  BecameOwner = 'became_owner',
   /** commented */
   Commented = 'commented',
   /** deleted */
@@ -491,6 +669,8 @@ export enum Activity_Verb_Enum {
   Rejected = 'rejected',
   /** requested_to_join */
   RequestedToJoin = 'requested_to_join',
+  /** revoked admin */
+  RevokedAdmin = 'revoked_admin',
   /** showed_interest */
   ShowedInterest = 'showed_interest',
   /** updated */
@@ -6533,6 +6713,10 @@ export type Mutation_Root = {
   delete_activities?: Maybe<Activities_Mutation_Response>;
   /** delete single row from the table: "activities" */
   delete_activities_by_pk?: Maybe<Activities>;
+  /** delete data from the table: "activity_comments" */
+  delete_activity_comments?: Maybe<Activity_Comments_Mutation_Response>;
+  /** delete single row from the table: "activity_comments" */
+  delete_activity_comments_by_pk?: Maybe<Activity_Comments>;
   /** delete data from the table: "activity_verb" */
   delete_activity_verb?: Maybe<Activity_Verb_Mutation_Response>;
   /** delete single row from the table: "activity_verb" */
@@ -6676,6 +6860,10 @@ export type Mutation_Root = {
   insert_activities?: Maybe<Activities_Mutation_Response>;
   /** insert a single row into the table: "activities" */
   insert_activities_one?: Maybe<Activities>;
+  /** insert data into the table: "activity_comments" */
+  insert_activity_comments?: Maybe<Activity_Comments_Mutation_Response>;
+  /** insert a single row into the table: "activity_comments" */
+  insert_activity_comments_one?: Maybe<Activity_Comments>;
   /** insert data into the table: "activity_verb" */
   insert_activity_verb?: Maybe<Activity_Verb_Mutation_Response>;
   /** insert a single row into the table: "activity_verb" */
@@ -6820,6 +7008,12 @@ export type Mutation_Root = {
   update_activities_by_pk?: Maybe<Activities>;
   /** update multiples rows of table: "activities" */
   update_activities_many?: Maybe<Array<Maybe<Activities_Mutation_Response>>>;
+  /** update data of the table: "activity_comments" */
+  update_activity_comments?: Maybe<Activity_Comments_Mutation_Response>;
+  /** update single row of the table: "activity_comments" */
+  update_activity_comments_by_pk?: Maybe<Activity_Comments>;
+  /** update multiples rows of table: "activity_comments" */
+  update_activity_comments_many?: Maybe<Array<Maybe<Activity_Comments_Mutation_Response>>>;
   /** update data of the table: "activity_verb" */
   update_activity_verb?: Maybe<Activity_Verb_Mutation_Response>;
   /** update single row of the table: "activity_verb" */
@@ -7127,6 +7321,18 @@ export type Mutation_RootDelete_ActivitiesArgs = {
 
 /** mutation root */
 export type Mutation_RootDelete_Activities_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Activity_CommentsArgs = {
+  where: Activity_Comments_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootDelete_Activity_Comments_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -7582,6 +7788,20 @@ export type Mutation_RootInsert_ActivitiesArgs = {
 export type Mutation_RootInsert_Activities_OneArgs = {
   object: Activities_Insert_Input;
   on_conflict?: InputMaybe<Activities_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Activity_CommentsArgs = {
+  objects: Array<Activity_Comments_Insert_Input>;
+  on_conflict?: InputMaybe<Activity_Comments_On_Conflict>;
+};
+
+
+/** mutation root */
+export type Mutation_RootInsert_Activity_Comments_OneArgs = {
+  object: Activity_Comments_Insert_Input;
+  on_conflict?: InputMaybe<Activity_Comments_On_Conflict>;
 };
 
 
@@ -8116,6 +8336,26 @@ export type Mutation_RootUpdate_Activities_By_PkArgs = {
 /** mutation root */
 export type Mutation_RootUpdate_Activities_ManyArgs = {
   updates: Array<Activities_Updates>;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Activity_CommentsArgs = {
+  _set?: InputMaybe<Activity_Comments_Set_Input>;
+  where: Activity_Comments_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Activity_Comments_By_PkArgs = {
+  _set?: InputMaybe<Activity_Comments_Set_Input>;
+  pk_columns: Activity_Comments_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Activity_Comments_ManyArgs = {
+  updates: Array<Activity_Comments_Updates>;
 };
 
 
@@ -8882,6 +9122,12 @@ export type Query_Root = {
   activities_aggregate: Activities_Aggregate;
   /** fetch data from the table: "activities" using primary key columns */
   activities_by_pk?: Maybe<Activities>;
+  /** fetch data from the table: "activity_comments" */
+  activity_comments: Array<Activity_Comments>;
+  /** fetch aggregated fields from the table: "activity_comments" */
+  activity_comments_aggregate: Activity_Comments_Aggregate;
+  /** fetch data from the table: "activity_comments" using primary key columns */
+  activity_comments_by_pk?: Maybe<Activity_Comments>;
   /** fetch data from the table: "activity_verb" */
   activity_verb: Array<Activity_Verb>;
   /** fetch aggregated fields from the table: "activity_verb" */
@@ -9112,6 +9358,29 @@ export type Query_RootActivities_AggregateArgs = {
 
 
 export type Query_RootActivities_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Query_RootActivity_CommentsArgs = {
+  distinct_on?: InputMaybe<Array<Activity_Comments_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Activity_Comments_Order_By>>;
+  where?: InputMaybe<Activity_Comments_Bool_Exp>;
+};
+
+
+export type Query_RootActivity_Comments_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Activity_Comments_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Activity_Comments_Order_By>>;
+  where?: InputMaybe<Activity_Comments_Bool_Exp>;
+};
+
+
+export type Query_RootActivity_Comments_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -9936,6 +10205,12 @@ export type Subscription_Root = {
   activities_aggregate: Activities_Aggregate;
   /** fetch data from the table: "activities" using primary key columns */
   activities_by_pk?: Maybe<Activities>;
+  /** fetch data from the table: "activity_comments" */
+  activity_comments: Array<Activity_Comments>;
+  /** fetch aggregated fields from the table: "activity_comments" */
+  activity_comments_aggregate: Activity_Comments_Aggregate;
+  /** fetch data from the table: "activity_comments" using primary key columns */
+  activity_comments_by_pk?: Maybe<Activity_Comments>;
   /** fetch data from the table: "activity_verb" */
   activity_verb: Array<Activity_Verb>;
   /** fetch aggregated fields from the table: "activity_verb" */
@@ -10166,6 +10441,29 @@ export type Subscription_RootActivities_AggregateArgs = {
 
 
 export type Subscription_RootActivities_By_PkArgs = {
+  id: Scalars['uuid'];
+};
+
+
+export type Subscription_RootActivity_CommentsArgs = {
+  distinct_on?: InputMaybe<Array<Activity_Comments_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Activity_Comments_Order_By>>;
+  where?: InputMaybe<Activity_Comments_Bool_Exp>;
+};
+
+
+export type Subscription_RootActivity_Comments_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Activity_Comments_Select_Column>>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
+  order_by?: InputMaybe<Array<Activity_Comments_Order_By>>;
+  where?: InputMaybe<Activity_Comments_Bool_Exp>;
+};
+
+
+export type Subscription_RootActivity_Comments_By_PkArgs = {
   id: Scalars['uuid'];
 };
 
@@ -13499,6 +13797,14 @@ export type DeleteGroupPostMutationVariables = Exact<{
 
 export type DeleteGroupPostMutation = { __typename?: 'mutation_root', delete_group_posts_by_pk?: { __typename?: 'group_posts', id: string } | null };
 
+export type ChangeMemberRoleMutationVariables = Exact<{
+  memberId: Scalars['uuid'];
+  role: Group_Role_Enum;
+}>;
+
+
+export type ChangeMemberRoleMutation = { __typename?: 'mutation_root', update_group_members_by_pk?: { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } | null };
+
 export type SearchCountsQueryVariables = Exact<{
   thingWhere: Things_Bool_Exp;
   groupWhere: Groups_Bool_Exp;
@@ -15147,6 +15453,40 @@ export function useDeleteGroupPostMutation(baseOptions?: Apollo.MutationHookOpti
 export type DeleteGroupPostMutationHookResult = ReturnType<typeof useDeleteGroupPostMutation>;
 export type DeleteGroupPostMutationResult = Apollo.MutationResult<DeleteGroupPostMutation>;
 export type DeleteGroupPostMutationOptions = Apollo.BaseMutationOptions<DeleteGroupPostMutation, DeleteGroupPostMutationVariables>;
+export const ChangeMemberRoleDocument = gql`
+    mutation ChangeMemberRole($memberId: uuid!, $role: group_role_enum!) {
+  update_group_members_by_pk(pk_columns: {id: $memberId}, _set: {role: $role}) {
+    ...GroupMemberCard
+  }
+}
+    ${GroupMemberCardFragmentDoc}`;
+export type ChangeMemberRoleMutationFn = Apollo.MutationFunction<ChangeMemberRoleMutation, ChangeMemberRoleMutationVariables>;
+
+/**
+ * __useChangeMemberRoleMutation__
+ *
+ * To run a mutation, you first call `useChangeMemberRoleMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeMemberRoleMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changeMemberRoleMutation, { data, loading, error }] = useChangeMemberRoleMutation({
+ *   variables: {
+ *      memberId: // value for 'memberId'
+ *      role: // value for 'role'
+ *   },
+ * });
+ */
+export function useChangeMemberRoleMutation(baseOptions?: Apollo.MutationHookOptions<ChangeMemberRoleMutation, ChangeMemberRoleMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ChangeMemberRoleMutation, ChangeMemberRoleMutationVariables>(ChangeMemberRoleDocument, options);
+      }
+export type ChangeMemberRoleMutationHookResult = ReturnType<typeof useChangeMemberRoleMutation>;
+export type ChangeMemberRoleMutationResult = Apollo.MutationResult<ChangeMemberRoleMutation>;
+export type ChangeMemberRoleMutationOptions = Apollo.BaseMutationOptions<ChangeMemberRoleMutation, ChangeMemberRoleMutationVariables>;
 export const SearchCountsDocument = gql`
     query SearchCounts($thingWhere: things_bool_exp!, $groupWhere: groups_bool_exp!, $userWhere: users_bool_exp!) {
   usersAggregate(where: $userWhere, limit: 10) {
@@ -15798,6 +16138,7 @@ export const GqlOps = {
     DeleteJoinToken: 'DeleteJoinToken',
     UpdateJoinToken: 'UpdateJoinToken',
     DeleteGroupPost: 'DeleteGroupPost',
+    ChangeMemberRole: 'ChangeMemberRole',
     CreateThing: 'CreateThing',
     UpdateThing: 'UpdateThing',
     DeleteThing: 'DeleteThing',

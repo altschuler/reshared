@@ -23,10 +23,8 @@ export const GroupThingsPage = () => {
 
     const where = useMemo(
         (): Things_Bool_Exp => ({
-            group_relations: {
-                group: { short_id: { _eq: shortId } },
-            },
             enabled: { _eq: true },
+            group_relations: { group: { short_id: { _eq: shortId } } },
             _or: [{ expiry: { _gt: 'now()' } }, { expiry: { _is_null: true } }],
         }),
         [shortId],

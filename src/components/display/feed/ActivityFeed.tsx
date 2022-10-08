@@ -32,6 +32,7 @@ const renderActivity = (activity: DetailedActivityFragment) => {
 export const ActivityFeed = ({ activities, loading }: ActivityFeedProps) => {
     return (
         <List
+            size="small"
             locale={{ emptyText: 'No activity' }}
             loading={loading}
             dataSource={activities}

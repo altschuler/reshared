@@ -123,7 +123,7 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                         </div>
                     }>
                     <Button type="primary" danger loading={mutation.loading}>
-                        Leave Group
+                        Leave group
                     </Button>
                 </Popconfirm>
             </Menu.Item>
@@ -219,7 +219,7 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                     ),
 
                     isMember && (
-                        <Dropdown key="more" overlay={menu}>
+                        <Dropdown key="more" overlay={menu} trigger={['click']}>
                             <Button data-cy="group-header:more:btn" icon={<EllipsisOutlined />} />
                         </Dropdown>
                     ),

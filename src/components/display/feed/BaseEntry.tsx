@@ -1,5 +1,5 @@
 ﻿import { ReactNode } from 'react';
-import { Space, Typography } from 'antd';
+import { List, Space, Typography } from 'antd';
 import { UserAvatar } from '../UserAvatar';
 import { UserCardFragment } from '../../../generated/graphql';
 import { createUseStyles } from 'react-jss';
@@ -51,23 +51,17 @@ export interface BaseEntryProps {
 export const BaseEntry = (props: BaseEntryProps) => {
     const classes = useStyles();
     return (
-        <div className={classes.root}>
-            <div className={classes.header}>
-                <div className={classes.avatar}>
-                    <UserAvatar size="large" user={props.actor} />
-                </div>
-                <div className={classes.headerText}>
+        <List.Item actions={props.extra ? [props.extra] : []}>
+            <List.Item.Meta
+                avatar={<UserAvatar size="small" user={props.actor} />}
+                title={
                     <span>
                         {props.actor.displayName} {props.title}
                     </span>
-
-                    <Typography.Text type="secondary" className={classes.date}>
-                        <DateDisplay utc={props.date} showDistance mode="datetime" />
-                    </Typography.Text>
-                </div>
-                {props.extra && <div className={classes.extra}>{props.extra}</div>}
-            </div>
-            {props.children && <div className={classes.content}>{props.children}</div>}
-        </div>
+                }
+                description={<DateDisplay utc={props.date} mode="distance" />}
+            />
+            <div>{props.children}</div>
+        </List.Item>
     );
 };
