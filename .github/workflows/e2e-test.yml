@@ -1,6 +1,6 @@
 name: E2E tests
 
-run-name: e2e testing
+run-name: test and deploy
 
 on: [push]
 
@@ -16,23 +16,18 @@ env:
   SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
   SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
 
-  EVENTS_BASE_URL: http://localhost:3000/api/events
-  ACTION_BASE_URL: http://localhost:3000/api/actions
-
 jobs:
   test-e2e:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
         uses: actions/checkout@v3
-        with:
-          node-version: '16'
 
       - name: install sudo (for act)
         if: ${{ env.ACT }}
         run: apt update && apt install sudo
 
-      - name: Set up Node.js
+      - name: set up node.js
         uses: actions/setup-node@v3
         with:
           node-version: '16'
@@ -67,15 +62,15 @@ jobs:
         working-directory: ./nhost
 
       - name: start backend
-        run: nhost dev --no-browser --hasuracli hasura & sleep 140 && curl http://localhost:1337 -I
+        run: nhost dev --no-browser --hasuracli hasura & npx wait-on http-get://localhost:9695
         working-directory: ./nhost
 
-      - name: test e2e
+      - name: run cypress tests
         run: yarn run cypress-run
 
-      - name: Archive cypress videos
+      - name: archive cypress videos
         uses: actions/upload-artifact@v3
-        if: always()
+        if: failure()
         with:
           name: cypress-videos
           path: ./cypress/videos
@@ -86,7 +81,7 @@ jobs:
     needs: test-e2e
     if: github.ref == 'refs/heads/dev'
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Pull Vercel Environment Information
@@ -99,7 +94,7 @@ jobs:
     needs: test-e2e
     if: github.ref == 'refs/heads/main'
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
       - name: Pull Vercel Environment Information
