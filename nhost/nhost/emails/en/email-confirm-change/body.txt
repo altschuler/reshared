@@ -1,0 +1,1 @@
+You requested to change your email on Reshared. Use this link to confirm changing email: ${link}

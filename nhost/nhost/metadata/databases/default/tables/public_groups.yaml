@@ -1,0 +1,145 @@
+table:
+  name: groups
+  schema: public
+object_relationships:
+  - name: banner_file
+    using:
+      manual_configuration:
+        column_mapping:
+          banner_file_id: id
+        insertion_order: null
+        remote_table:
+          name: files
+          schema: storage
+array_relationships:
+  - name: activities
+    using:
+      foreign_key_constraint_on:
+        column: group_id
+        table:
+          name: activities
+          schema: public
+  - name: join_requests
+    using:
+      foreign_key_constraint_on:
+        column: group_id
+        table:
+          name: group_join_requests
+          schema: public
+  - name: join_tokens
+    using:
+      foreign_key_constraint_on:
+        column: group_id
+        table:
+          name: group_join_tokens
+          schema: public
+  - name: memberships
+    using:
+      foreign_key_constraint_on:
+        column: group_id
+        table:
+          name: group_members
+          schema: public
+  - name: thing_relations
+    using:
+      foreign_key_constraint_on:
+        column: group_id
+        table:
+          name: group_thing
+          schema: public
+insert_permissions:
+  - role: user
+    permission:
+      check: {}
+      set:
+        creator_id: x-hasura-user-id
+      columns:
+        - banner_file_id
+        - description
+        - name
+        - public
+select_permissions:
+  - role: public
+    permission:
+      columns:
+        - created_at
+        - description
+        - id
+        - name
+        - public
+        - short_id
+      filter: {}
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+        - created_at
+        - description
+        - id
+        - name
+        - public
+        - short_id
+        - updated_at
+      filter: {}
+      allow_aggregations: true
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - banner_file_id
+        - description
+        - name
+        - public
+      filter:
+        _and:
+          - memberships:
+              _and:
+                - user_id:
+                    _eq: X-Hasura-User-Id
+                - role:
+                    _in:
+                      - admin
+                      - owner
+          - _or:
+              - banner_file_id:
+                  _is_null: true
+              - banner_file:
+                  uploaded_by_user_id:
+                    _eq: X-Hasura-User-Id
+      check: null
+delete_permissions:
+  - role: user
+    permission:
+      backend_only: false
+      filter:
+        memberships:
+          _and:
+            - user_id:
+                _eq: X-Hasura-User-Id
+            - role:
+                _eq: owner
+event_triggers:
+  - name: group_event
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: true
+      insert:
+        columns: '*'
+      update:
+        columns:
+          - public
+          - description
+          - name
+          - short_id
+          - created_at
+          - updated_at
+          - id
+    retry_conf:
+      interval_sec: 10
+      num_retries: 1
+      timeout_sec: 30
+    webhook: '{{EVENTS_BASE_URL}}/group_event'
+    headers:
+      - name: X-WEBHOOK-SECRET
+        value_from_env: NHOST_WEBHOOK_SECRET

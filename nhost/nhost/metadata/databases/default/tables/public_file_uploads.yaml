@@ -1,0 +1,47 @@
+table:
+  name: file_uploads
+  schema: public
+object_relationships:
+  - name: owner
+    using:
+      foreign_key_constraint_on: owner_id
+  - name: thing_image
+    using:
+      manual_configuration:
+        column_mapping:
+          id: file_id
+        insertion_order: null
+        remote_table:
+          name: thing_images
+          schema: public
+insert_permissions:
+  - role: user
+    permission:
+      check: {}
+      set:
+        owner_id: x-hasura-User-Id
+      columns:
+        - mime_type
+        - name
+        - size
+        - url
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - created_at
+        - id
+        - mime_type
+        - name
+        - owner_id
+        - size
+        - updated_at
+        - url
+      filter: {}
+delete_permissions:
+  - role: user
+    permission:
+      backend_only: false
+      filter:
+        owner_id:
+          _eq: X-Hasura-User-Id

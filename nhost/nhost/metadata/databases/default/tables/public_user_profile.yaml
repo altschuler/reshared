@@ -1,0 +1,80 @@
+table:
+  name: user_profile
+  schema: public
+object_relationships:
+  - name: avatar
+    using:
+      foreign_key_constraint_on: avatar_id
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      set:
+        user_id: x-hasura-User-Id
+      columns:
+        - avatar_id
+        - user_id
+select_permissions:
+  - role: public
+    permission:
+      columns:
+        - avatar_id
+        - id
+        - user_id
+      filter:
+        user:
+          _or:
+            - memberships:
+                group:
+                  _or:
+                    - public:
+                        _eq: true
+  - role: user
+    permission:
+      columns:
+        - avatar_id
+        - id
+        - user_id
+      filter:
+        user:
+          _or:
+            - id:
+                _eq: X-Hasura-User-Id
+            - memberships:
+                group:
+                  _or:
+                    - public:
+                        _eq: true
+                    - memberships:
+                        user_id:
+                          _eq: X-Hasura-User-Id
+            - group_join_requests:
+                group:
+                  memberships:
+                    _and:
+                      - user_id:
+                          _eq: X-Hasura-User-Id
+                      - role:
+                          _in:
+                            - admin
+                            - owner
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - avatar_id
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check:
+        _or:
+          - avatar_id:
+              _is_null: true
+          - avatar:
+              uploaded_by_user_id:
+                _eq: X-Hasura-User-Id

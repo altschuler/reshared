@@ -1,0 +1,56 @@
+table:
+  name: activities
+  schema: public
+object_relationships:
+  - name: actor
+    using:
+      foreign_key_constraint_on: actor_id
+  - name: entity
+    using:
+      foreign_key_constraint_on: entity_id
+  - name: group
+    using:
+      foreign_key_constraint_on: group_id
+  - name: secondary_entity
+    using:
+      foreign_key_constraint_on: secondary_entity_id
+array_relationships:
+  - name: notifications
+    using:
+      foreign_key_constraint_on:
+        column: activity_id
+        table:
+          name: notifications
+          schema: public
+select_permissions:
+  - role: public
+    permission:
+      columns:
+        - actor_id
+        - created_at
+        - entity_id
+        - id
+        - secondary_entity_id
+        - verb
+      filter:
+        group:
+          public:
+            _eq: true
+  - role: user
+    permission:
+      columns:
+        - actor_id
+        - created_at
+        - entity_id
+        - id
+        - secondary_entity_id
+        - verb
+      filter:
+        _or:
+          - notifications:
+              user_id:
+                _eq: X-Hasura-User-Id
+          - group:
+              memberships:
+                user_id:
+                  _eq: X-Hasura-User-Id

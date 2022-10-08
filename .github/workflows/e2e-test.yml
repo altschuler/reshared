@@ -23,18 +23,10 @@ jobs:
   test-e2e:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout client
+      - name: checkout
         uses: actions/checkout@v3
         with:
-          path: client
-
-      - name: checkout backend
-        uses: actions/checkout@v3
-        with:
-          repository: altschuler/reshared-nhost
-          token: ${{ secrets.BACKEND_PAT }}
-          ref: dev
-          path: backend
+          node-version: '16'
 
       - name: install sudo (for act)
         if: ${{ env.ACT }}
@@ -45,7 +37,6 @@ jobs:
         with:
           node-version: '16'
           cache: 'yarn'
-          cache-dependency-path: client/yarn.lock
 
       - name: install cypress deps
         run: sudo DEBIAN_FRONTEND=noninteractive apt-get install -y libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
@@ -58,40 +49,36 @@ jobs:
 
       - name: install client deps
         run: yarn install --prefer-offline
-        working-directory: ./client
 
       - name: install hasura cli
         run: curl -L https://github.com/hasura/graphql-engine/raw/stable/cli/get.sh | bash
 
       - name: build client
         run: yarn build
-        working-directory: ./client
 
       - name: start client
         run: yarn start & sleep 5 && curl http://localhost:3000 -I
-        working-directory: ./client
 
       - name: create .env for nhost
         run: |
           touch .env.development
           echo "EVENTS_BASE_URL=http://172.17.0.1:3000/api/events" >> .env.development
           echo "ACTION_BASE_URL=http://172.17.0.1:3000/api/actions" >> .env.development
-        working-directory: ./backend
+        working-directory: ./nhost
 
       - name: start backend
         run: nhost dev --no-browser --hasuracli hasura & sleep 140 && curl http://localhost:1337 -I
-        working-directory: ./backend
+        working-directory: ./nhost
 
       - name: test e2e
         run: yarn run cypress-run
-        working-directory: ./client
 
       - name: Archive cypress videos
         uses: actions/upload-artifact@v3
         if: always()
         with:
           name: cypress-videos
-          path: ./client/cypress/videos
+          path: ./cypress/videos
           retention-days: 1
 
   deploy-dev:

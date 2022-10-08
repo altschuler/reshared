@@ -1,0 +1,59 @@
+table:
+  name: chat_group_members
+  schema: public
+object_relationships:
+  - name: chat_group
+    using:
+      foreign_key_constraint_on: chat_group_id
+  - name: info
+    using:
+      manual_configuration:
+        column_mapping:
+          id: id
+        insertion_order: null
+        remote_table:
+          name: chat_group_member_info
+          schema: public
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        chat_group:
+          members:
+            user_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - chat_group_id
+        - user_id
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - chat_group_id
+        - id
+        - last_read
+        - user_id
+      filter:
+        chat_group:
+          members:
+            user_id:
+              _eq: X-Hasura-User-Id
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - last_read
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check: null
+delete_permissions:
+  - role: user
+    permission:
+      backend_only: false
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id

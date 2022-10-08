@@ -1,0 +1,46 @@
+table:
+  name: chat_group_member_info
+  schema: public
+object_relationships:
+  - name: chat_group
+    using:
+      manual_configuration:
+        column_mapping:
+          chat_group_id: id
+        insertion_order: null
+        remote_table:
+          name: chat_groups
+          schema: public
+  - name: chat_group_member
+    using:
+      manual_configuration:
+        column_mapping:
+          id: id
+        insertion_order: null
+        remote_table:
+          name: chat_group_members
+          schema: public
+  - name: user
+    using:
+      manual_configuration:
+        column_mapping:
+          user_id: id
+        insertion_order: null
+        remote_table:
+          name: users
+          schema: auth
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - chat_group_id
+        - has_unread
+        - id
+        - last_message_at
+        - last_read
+        - user_id
+      filter:
+        chat_group:
+          members:
+            user_id:
+              _eq: X-Hasura-User-Id

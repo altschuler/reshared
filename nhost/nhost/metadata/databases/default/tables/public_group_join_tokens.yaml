@@ -1,0 +1,80 @@
+table:
+  name: group_join_tokens
+  schema: public
+object_relationships:
+  - name: group
+    using:
+      foreign_key_constraint_on: group_id
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        group:
+          memberships:
+            _and:
+              - user:
+                  id:
+                    _eq: X-Hasura-User-Id
+              - role:
+                  _in:
+                    - admin
+                    - owner
+      columns:
+        - disabled
+        - group_id
+        - note
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - created_at
+        - disabled
+        - group_id
+        - id
+        - note
+        - token
+        - updated_at
+      filter:
+        group:
+          memberships:
+            _and:
+              - user:
+                  id:
+                    _eq: X-Hasura-User-Id
+              - role:
+                  _in:
+                    - admin
+                    - owner
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - disabled
+        - note
+      filter:
+        group:
+          memberships:
+            _and:
+              - user:
+                  id:
+                    _eq: X-Hasura-User-Id
+              - role:
+                  _in:
+                    - admin
+                    - owner
+      check: null
+delete_permissions:
+  - role: user
+    permission:
+      backend_only: false
+      filter:
+        group:
+          memberships:
+            _and:
+              - user:
+                  id:
+                    _eq: X-Hasura-User-Id
+              - role:
+                  _in:
+                    - admin
+                    - owner

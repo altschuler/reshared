@@ -1,2 +1,4 @@
 -node_modules
 -.next
+-nhost/node_modules
+-nhost/.nhost

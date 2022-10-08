@@ -1,0 +1,168 @@
+type Mutation {
+  createChatGroup(
+    input: CreateChatGroupInput!
+  ): CreateChatGroupResult
+}
+
+type Mutation {
+  createChatMessage(
+    input: CreateChatMessageInput
+  ): CreateChatMessageResult!
+}
+
+type Mutation {
+  handleJoinRequest(
+    input: HandleJoinRequestInput!
+  ): HandleJoinRequestResult!
+}
+
+type Mutation {
+  handleTransferRequest(
+    input: HandleTransferRequestInput!
+  ): HandleTransferRequestResult
+}
+
+type Mutation {
+  joinGroup(
+    input: JoinGroupInput!
+  ): JoinGroupResult
+}
+
+type Mutation {
+  updateThing(
+    input: UpdateThingInput!
+  ): UpdateThingResult
+}
+
+input CredentialsInput {
+  email: String
+  name: String!
+  password: String!
+}
+
+input create_group_input {
+  name: String!
+  description: String!
+  public: Boolean
+}
+
+input CreateGroupInput {
+  name: String!
+  description: String!
+  public: Boolean
+}
+
+input RequestJoinGroupInput {
+  group_id: uuid!
+  message: String
+}
+
+input HandleJoinRequestInput {
+  join_request_id: uuid!
+  accepted: Boolean!
+  response: String
+}
+
+input CreateJoinTokenInput {
+  group_id: uuid!
+}
+
+input JoinGroupInput {
+  group_id: uuid!
+  join_token: String
+}
+
+input UpdateThingInput {
+  id: uuid
+  category: String
+  description: String
+  name: String
+  type: String
+  expiry: timestamptz
+  enabled: Boolean
+  groups: [UpdateGroupThing!]
+  images: [UpdateThingImage!]
+}
+
+input UpdateGroupThing {
+  groupId: uuid!
+}
+
+input UpdateThingImage {
+  fileId: uuid!
+  description: String!
+  order: Int!
+}
+
+input CreateChatGroupInput {
+  receiverIds: [uuid!]!
+  message: String!
+  thing_id: uuid
+}
+
+input CreateChatMessageInput {
+  chat_group_id: uuid!
+  message: String!
+}
+
+input HandleTransferRequestInput {
+  transfer_request_id: uuid!
+  accepted: Boolean!
+  response: String
+}
+
+type RegistrationResult {
+  user_id: uuid!
+}
+
+type create_group_result {
+  group_id: uuid!
+}
+
+type CreateGroupResult {
+  group_id: uuid!
+}
+
+type RequestJoinGroupResult {
+  group_id: uuid!
+  user_id: uuid!
+}
+
+type HandleJoinRequestOutput {
+  join_request_id: uuid!
+}
+
+type HandleJoinRequestResult {
+  join_request_id: uuid!
+}
+
+type CreateJoinTokenResult {
+  join_token_id: uuid!
+  group_id: uuid!
+}
+
+type JoinGroupResult {
+  group_id: uuid!
+  user_id: uuid!
+}
+
+type UpdateThingResult {
+  thing_id: uuid!
+}
+
+type CreateChatGroupResult {
+  chat_group_id: uuid!
+}
+
+type CreateChatMessageOutput {
+  chat_messages_id: uuid!
+}
+
+type CreateChatMessageResult {
+  chat_messages_id: uuid!
+}
+
+type HandleTransferRequestResult {
+  transfer_request_id: uuid!
+}
+

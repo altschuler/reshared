@@ -1,0 +1,31 @@
+table:
+  name: notifications
+  schema: public
+object_relationships:
+  - name: activity
+    using:
+      foreign_key_constraint_on: activity_id
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - activity_id
+        - created_at
+        - id
+        - read_at
+        - user_id
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - read_at
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check: null

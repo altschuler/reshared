@@ -1,0 +1,104 @@
+table:
+  name: entities
+  schema: public
+object_relationships:
+  - name: group
+    using:
+      foreign_key_constraint_on: group_id
+  - name: group_join_request
+    using:
+      foreign_key_constraint_on: join_request_id
+  - name: group_member
+    using:
+      foreign_key_constraint_on: group_member_id
+  - name: group_post
+    using:
+      foreign_key_constraint_on: group_post_id
+  - name: group_post_comment
+    using:
+      foreign_key_constraint_on: group_post_comment_id
+  - name: group_thing
+    using:
+      foreign_key_constraint_on: group_thing_id
+  - name: thing
+    using:
+      foreign_key_constraint_on: thing_id
+  - name: transfer_request
+    using:
+      manual_configuration:
+        column_mapping:
+          transfer_request_id: id
+        insertion_order: null
+        remote_table:
+          name: transfer_request
+          schema: public
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+computed_fields:
+  - name: is_valid
+    definition:
+      function:
+        name: entity_valid
+        schema: public
+    comment: Determines whether the entity points to any single existing object
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        thing:
+          group_relations:
+            group:
+              memberships:
+                user_id:
+                  _eq: X-Hasura-User-Id
+      columns:
+        - dummy
+        - thing_id
+select_permissions:
+  - role: public
+    permission:
+      columns:
+        - dummy
+        - group_id
+        - group_member_id
+        - group_post_comment_id
+        - group_post_id
+        - group_thing_id
+        - id
+        - join_request_id
+        - thing_id
+        - user_id
+      computed_fields:
+        - is_valid
+      filter: {}
+  - role: user
+    permission:
+      columns:
+        - dummy
+        - group_id
+        - group_member_id
+        - group_post_comment_id
+        - group_post_id
+        - group_thing_id
+        - id
+        - join_request_id
+        - thing_id
+        - transfer_request_id
+        - user_id
+      computed_fields:
+        - is_valid
+      filter: {}
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - dummy
+      filter:
+        thing:
+          group_relations:
+            group:
+              memberships:
+                user_id:
+                  _eq: X-Hasura-User-Id
+      check: null

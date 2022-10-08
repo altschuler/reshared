@@ -1,0 +1,107 @@
+table:
+  name: group_thing
+  schema: public
+object_relationships:
+  - name: group
+    using:
+      foreign_key_constraint_on: group_id
+  - name: thing
+    using:
+      foreign_key_constraint_on: thing_id
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        _and:
+          - group:
+              memberships:
+                user_id:
+                  _eq: X-Hasura-User-Id
+          - thing:
+              owner_id:
+                _eq: X-Hasura-User-Id
+      columns:
+        - group_id
+        - thing_id
+select_permissions:
+  - role: public
+    permission:
+      columns:
+        - id
+        - created_at
+        - updated_at
+        - group_id
+        - thing_id
+      filter:
+        group:
+          public:
+            _eq: true
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+        - created_at
+        - group_id
+        - id
+        - thing_id
+        - updated_at
+      filter:
+        _or:
+          - group:
+              memberships:
+                user_id:
+                  _eq: X-Hasura-User-Id
+          - group:
+              public:
+                _eq: true
+      allow_aggregations: true
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - group_id
+        - thing_id
+      filter:
+        thing:
+          owner_id:
+            _eq: X-Hasura-User-Id
+      check:
+        _and:
+          - group:
+              memberships:
+                user_id:
+                  _eq: X-Hasura-User-Id
+          - thing:
+              owner_id:
+                _eq: X-Hasura-User-Id
+delete_permissions:
+  - role: user
+    permission:
+      backend_only: false
+      filter:
+        thing:
+          owner_id:
+            _eq: X-Hasura-User-Id
+event_triggers:
+  - name: group_thing_event
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: false
+      insert:
+        columns: '*'
+      update:
+        columns:
+          - created_at
+          - updated_at
+          - group_id
+          - id
+          - thing_id
+    retry_conf:
+      interval_sec: 10
+      num_retries: 0
+      timeout_sec: 60
+    webhook: '{{EVENTS_BASE_URL}}/group_thing_event'
+    headers:
+      - name: X-WEBHOOK-SECRET
+        value_from_env: NHOST_WEBHOOK_SECRET

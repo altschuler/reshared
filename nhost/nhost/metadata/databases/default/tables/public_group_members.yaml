@@ -1,0 +1,130 @@
+table:
+  name: group_members
+  schema: public
+object_relationships:
+  - name: group
+    using:
+      foreign_key_constraint_on: group_id
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        _or:
+          - _and:
+              - group:
+                  public:
+                    _eq: true
+              - role:
+                  _eq: user
+          - _and:
+              - group:
+                  creator_id:
+                    _eq: X-Hasura-User-Id
+              - role:
+                  _eq: owner
+      set:
+        user_id: x-hasura-User-Id
+      columns:
+        - group_id
+        - role
+select_permissions:
+  - role: public
+    permission:
+      columns:
+        - created_at
+        - group_id
+        - id
+        - role
+        - user_id
+      filter:
+        group:
+          public:
+            _eq: true
+      allow_aggregations: true
+  - role: user
+    permission:
+      columns:
+        - created_at
+        - group_id
+        - id
+        - role
+        - updated_at
+        - user_id
+      filter:
+        _or:
+          - group:
+              memberships:
+                user_id:
+                  _eq: X-Hasura-User-Id
+          - group:
+              public:
+                _eq: true
+      allow_aggregations: true
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - role
+      filter:
+        group:
+          memberships:
+            _and:
+              - user_id:
+                  _eq: X-Hasura-User-Id
+              - role:
+                  _in:
+                    - admin
+                    - owner
+      check: null
+delete_permissions:
+  - role: user
+    permission:
+      backend_only: false
+      filter:
+        _and:
+          - _or:
+              - user_id:
+                  _eq: X-Hasura-User-Id
+              - group:
+                  memberships:
+                    _and:
+                      - user_id:
+                          _eq: X-Hasura-User-Id
+                      - role:
+                          _in:
+                            - admin
+                            - owner
+          - group:
+              memberships:
+                _and:
+                  - role:
+                      _eq: owner
+                  - user_id:
+                      _ne: X-Hasura-User-Id
+event_triggers:
+  - name: group_member_event
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: false
+      insert:
+        columns: '*'
+      update:
+        columns:
+          - role
+          - created_at
+          - updated_at
+          - group_id
+          - id
+          - user_id
+    retry_conf:
+      interval_sec: 10
+      num_retries: 1
+      timeout_sec: 30
+    webhook: '{{EVENTS_BASE_URL}}/group_member_event'
+    headers:
+      - name: X-WEBHOOK-SECRET
+        value_from_env: NHOST_WEBHOOK_SECRET

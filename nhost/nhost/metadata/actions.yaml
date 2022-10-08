@@ -1,0 +1,199 @@
+actions:
+  - name: createChatGroup
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/create_chat_group'
+      forward_client_headers: true
+    permissions:
+      - role: user
+  - name: createChatMessage
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/create_chat_message'
+      forward_client_headers: true
+    permissions:
+      - role: user
+    comment: write new message in a chat group
+  - name: handleJoinRequest
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/handle_join_request'
+      forward_client_headers: true
+    permissions:
+      - role: user
+  - name: handleTransferRequest
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/handle_transfer_request'
+      forward_client_headers: true
+    permissions:
+      - role: user
+    comment: Accept or reject a transfer request
+  - name: joinGroup
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/join_group'
+      forward_client_headers: true
+    permissions:
+      - role: user
+  - name: updateThing
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/update_thing'
+      forward_client_headers: true
+    permissions:
+      - role: user
+custom_types:
+  enums: []
+  input_objects:
+    - name: CredentialsInput
+    - name: create_group_input
+    - name: CreateGroupInput
+    - name: RequestJoinGroupInput
+    - name: HandleJoinRequestInput
+    - name: CreateJoinTokenInput
+    - name: JoinGroupInput
+    - name: UpdateThingInput
+    - name: UpdateGroupThing
+    - name: UpdateThingImage
+    - name: CreateChatGroupInput
+    - name: CreateChatMessageInput
+    - name: HandleTransferRequestInput
+  objects:
+    - name: RegistrationResult
+      relationships:
+        - field_mapping:
+            user_id: id
+          name: user
+          remote_table:
+            name: users
+            schema: auth
+          source: default
+          type: object
+    - name: create_group_result
+    - name: CreateGroupResult
+      relationships:
+        - field_mapping:
+            group_id: id
+          name: group
+          remote_table:
+            name: groups
+            schema: public
+          source: default
+          type: object
+    - name: RequestJoinGroupResult
+      relationships:
+        - field_mapping:
+            group_id: id
+          name: group
+          remote_table:
+            name: groups
+            schema: public
+          source: default
+          type: object
+        - field_mapping:
+            user_id: id
+          name: user
+          remote_table:
+            name: users
+            schema: auth
+          source: default
+          type: object
+    - name: HandleJoinRequestOutput
+    - name: HandleJoinRequestResult
+      relationships:
+        - field_mapping:
+            join_request_id: id
+          name: join_request
+          remote_table:
+            name: group_join_requests
+            schema: public
+          source: default
+          type: object
+    - name: CreateJoinTokenResult
+      relationships:
+        - field_mapping:
+            join_token_id: id
+          name: join_token
+          remote_table:
+            name: group_join_tokens
+            schema: public
+          source: default
+          type: object
+        - field_mapping:
+            group_id: id
+          name: group
+          remote_table:
+            name: groups
+            schema: public
+          source: default
+          type: object
+    - name: JoinGroupResult
+      relationships:
+        - field_mapping:
+            group_id: id
+          name: group
+          remote_table:
+            name: groups
+            schema: public
+          source: default
+          type: object
+        - field_mapping:
+            user_id: id
+          name: user
+          remote_table:
+            name: users
+            schema: auth
+          source: default
+          type: object
+    - name: UpdateThingResult
+      relationships:
+        - field_mapping:
+            thing_id: id
+          name: thing
+          remote_table:
+            name: things
+            schema: public
+          source: default
+          type: object
+    - name: CreateChatGroupResult
+      relationships:
+        - field_mapping:
+            chat_group_id: id
+          name: chat_group
+          remote_table:
+            name: chat_groups
+            schema: public
+          source: default
+          type: object
+    - name: CreateChatMessageOutput
+      relationships:
+        - field_mapping:
+            chat_messages_id: id
+          name: chat_message
+          remote_table:
+            name: chat_messages
+            schema: public
+          source: default
+          type: object
+    - name: CreateChatMessageResult
+      relationships:
+        - field_mapping:
+            chat_messages_id: id
+          name: chat_message
+          remote_table:
+            name: chat_messages
+            schema: public
+          source: default
+          type: object
+    - name: HandleTransferRequestResult
+      relationships:
+        - field_mapping:
+            transfer_request_id: id
+          name: transfer_request
+          remote_table:
+            name: transfer_request
+            schema: public
+          source: default
+          type: object
+  scalars: []

@@ -1,0 +1,4 @@
+table:
+  name: group_join_request_status
+  schema: public
+is_enum: true

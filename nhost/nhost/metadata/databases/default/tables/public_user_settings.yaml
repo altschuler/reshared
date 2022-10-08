@@ -1,0 +1,41 @@
+table:
+  name: user_settings
+  schema: public
+object_relationships:
+  - name: avatar
+    using:
+      foreign_key_constraint_on: avatar_file_id
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        user_id:
+          _eq: X-Hasura-User-Id
+      columns: []
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - avatar_file_id
+        - id
+        - updated_at
+        - user_id
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - avatar_file_id
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+      check:
+        avatar:
+          uploaded_by:
+            id:
+              _eq: X-Hasura-User-Id

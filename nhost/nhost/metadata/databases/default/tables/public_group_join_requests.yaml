@@ -1,0 +1,108 @@
+table:
+  name: group_join_requests
+  schema: public
+object_relationships:
+  - name: group
+    using:
+      foreign_key_constraint_on: group_id
+  - name: user
+    using:
+      foreign_key_constraint_on: user_id
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        _and:
+          - group:
+              public:
+                _eq: false
+          - group:
+              memberships:
+                _not:
+                  user_id:
+                    _eq: X-Hasura-User-Id
+      set:
+        status: pending
+        user_id: x-hasura-User-Id
+      columns:
+        - group_id
+        - message
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - id
+        - created_at
+        - updated_at
+        - user_id
+        - group_id
+        - status
+        - message
+        - response
+        - responder_id
+      filter:
+        _or:
+          - group:
+              memberships:
+                _and:
+                  - user_id:
+                      _eq: X-Hasura-User-Id
+                  - role:
+                      _in:
+                        - admin
+                        - owner
+          - user_id:
+              _eq: X-Hasura-User-Id
+      allow_aggregations: true
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - responder_id
+        - response
+        - status
+      filter:
+        group:
+          memberships:
+            _and:
+              - user_id:
+                  _eq: X-Hasura-User-Id
+              - role:
+                  _in:
+                    - admin
+                    - owner
+      check: null
+delete_permissions:
+  - role: user
+    permission:
+      backend_only: false
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
+event_triggers:
+  - name: join_request_event
+    definition:
+      delete:
+        columns: '*'
+      enable_manual: false
+      insert:
+        columns: '*'
+      update:
+        columns:
+          - message
+          - response
+          - status
+          - created_at
+          - updated_at
+          - group_id
+          - id
+          - responder_id
+          - user_id
+    retry_conf:
+      interval_sec: 10
+      num_retries: 1
+      timeout_sec: 30
+    webhook: '{{EVENTS_BASE_URL}}/join_request_event'
+    headers:
+      - name: X-WEBHOOK-SECRET
+        value_from_env: NHOST_WEBHOOK_SECRET

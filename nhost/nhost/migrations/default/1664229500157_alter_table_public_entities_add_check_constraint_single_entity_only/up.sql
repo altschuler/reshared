@@ -1,0 +1,2 @@
+alter table "public"."entities" drop constraint "single_entity_only";
+alter table "public"."entities" add constraint "single_entity_only" check (((thing_id IS NOT NULL)::integer + (group_id IS NOT NULL)::integer + (join_request_id IS NOT NULL)::integer + (user_id IS NOT NULL)::integer + (group_post_id IS NOT NULL)::integer + (group_post_comment_id IS NOT NULL)::integer + (group_thing_id IS NOT NULL)::integer + (group_member_id IS NOT NULL)::integer + (transfer_request_id IS NOT NULL)::integer) <= 1);

@@ -1,0 +1,89 @@
+table:
+  name: comments
+  schema: public
+object_relationships:
+  - name: author
+    using:
+      foreign_key_constraint_on: author_id
+array_relationships:
+  - name: group_post_relations
+    using:
+      foreign_key_constraint_on:
+        column: comment_id
+        table:
+          name: group_post_comment
+          schema: public
+insert_permissions:
+  - role: user
+    permission:
+      check:
+        _and:
+          - author_id:
+              _eq: X-Hasura-User-Id
+      columns:
+        - author_id
+        - content
+select_permissions:
+  - role: public
+    permission:
+      columns:
+        - author_id
+        - content
+        - created_at
+        - id
+        - updated_at
+      filter:
+        _or:
+          - group_post_relations:
+              post:
+                group:
+                  public:
+                    _eq: true
+  - role: user
+    permission:
+      columns:
+        - content
+        - created_at
+        - updated_at
+        - author_id
+        - id
+      filter:
+        _or:
+          - group_post_relations:
+              post:
+                group:
+                  _or:
+                    - public:
+                        _eq: true
+                    - memberships:
+                        _and:
+                          - user_id:
+                              _eq: X-Hasura-User-Id
+update_permissions:
+  - role: user
+    permission:
+      columns:
+        - content
+      filter:
+        author_id:
+          _eq: X-Hasura-User-Id
+      check: null
+delete_permissions:
+  - role: user
+    permission:
+      backend_only: false
+      filter:
+        _or:
+          - group_post_relations:
+              post:
+                group:
+                  memberships:
+                    _and:
+                      - role:
+                          _in:
+                            - admin
+                            - owner
+                      - user_id:
+                          _eq: X-Hasura-User-Id
+          - author_id:
+              _eq: X-Hasura-User-Id

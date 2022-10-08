@@ -1,0 +1,1 @@
+Use this link to securely sign in to Reshared: ${link}
