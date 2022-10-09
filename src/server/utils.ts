@@ -2,7 +2,7 @@
 import Joi from 'joi';
 import { decodeToken, JwtToken } from './auth';
 import { hasuraClient, makeHasuraUserClient } from './hasuraClient';
-import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
+import { ApolloClient, DocumentNode, NormalizedCacheObject } from '@apollo/client';
 
 export const errorReply = (res: NextApiResponse, status: number, message: string) => {
     res.status(status);
@@ -167,3 +167,24 @@ export const makeEventHandler =
             errorReply(res, 400, 'Error: ' + err.message);
         }
     };
+
+// Fixed duplicated fragments in generated queries
+// See: https://github.com/dotansimha/graphql-code-generator/issues/8103
+export const fixQuery = (query: DocumentNode) => {
+    const deduped = query.definitions.reduce(
+        (acc, def) => {
+            if (def.kind !== 'FragmentDefinition') {
+                return { added: acc.added, defs: [...acc.defs, def] };
+            }
+
+            if (acc.added.includes(def.name.value)) {
+                return acc;
+            }
+
+            return { added: [...acc.added, def.name.value], defs: [...acc.defs, def] };
+        },
+        { added: [] as string[], defs: [] },
+    );
+
+    return { ...query, definitions: deduped.defs };
+};

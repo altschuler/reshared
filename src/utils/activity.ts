@@ -1,17 +1,16 @@
-﻿import {
-    Activity_Verb_Enum,
-    ActivityCardFragment,
-    UserCardFragment,
-    Transfer_Request_Status_Enum,
-} from '../generated/graphql';
-import * as Sentry from '@sentry/react';
-import { ReactNode } from 'react';
+﻿import * as Sentry from '@sentry/react';
 import { compact } from 'lodash-es';
+import {
+    ActivityCardFragment,
+    Activity_Verb_Enum,
+    Transfer_Request_Status_Enum,
+    UserCardFragment,
+} from '../generated/graphql';
 
-export const activityMessage = (
+export const activityMessageSafe = (
     activity: ActivityCardFragment,
     currentUser: UserCardFragment | null,
-): ReactNode => {
+) => {
     const ent = activity.entity;
     const actor = activity.actor?.displayName || '[Deleted user]';
 
@@ -19,8 +18,6 @@ export const activityMessage = (
         if (activity.verb === Activity_Verb_Enum.Added) {
             return `${actor} added ${ent.group_thing.thing.name} to ${ent.group_thing.group.name}`;
         }
-
-        return `${actor} ${activity.verb} thing`;
     }
 
     if (ent.group) {
@@ -31,8 +28,6 @@ export const activityMessage = (
         if (activity.verb === Activity_Verb_Enum.Joined) {
             return `${actor} joined the group ${ent.group.name}`;
         }
-
-        return `${actor} ${activity.verb} group`;
     }
 
     if (ent.group_member) {
@@ -57,8 +52,6 @@ export const activityMessage = (
         if (activity.verb === Activity_Verb_Enum.Added) {
             return `${actor} posted in ${ent.group_post.group.name}`;
         }
-
-        return `${actor} ${activity.verb} post`;
     }
 
     if (ent.group_post_comment) {
@@ -69,8 +62,6 @@ export const activityMessage = (
                 yourPost ? 'your post' : "a post you're participating in,"
             } in ${ent.group_post_comment.post.group.name}`;
         }
-
-        return `${actor} ${activity.verb} comment`;
     }
 
     if (ent.group_join_request) {
@@ -89,9 +80,6 @@ export const activityMessage = (
         if (activity.verb === Activity_Verb_Enum.Added) {
             return `${actor} has requested to join ${req.group.name}`;
         }
-
-        // Fallback
-        return `${actor} ${activity.verb} group join request`;
     }
 
     if (ent.transfer_request) {
@@ -117,17 +105,17 @@ export const activityMessage = (
                 cancelled && `${actor} cancelled the request`,
             ]).join('. ');
         }
-
-        // Fallback
-        return `${actor} ${activity.verb} request to transfer thing`;
     }
 
-    if (ent.user) {
-        return `${actor} ${activity.verb} user`;
-    }
-
-    Sentry.captureMessage('Unhandled activity type', { extra: { activity } });
+    Sentry.captureMessage('Unsupported activity type', { extra: { activity } });
 
     console.log(activity);
-    return `Unknown activity`;
+    return null;
+};
+
+export const activityMessage = (
+    activity: ActivityCardFragment,
+    currentUser: UserCardFragment | null,
+) => {
+    return activityMessageSafe(activity, currentUser) || `Unknown activity`;
 };

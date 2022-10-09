@@ -86,7 +86,6 @@ const toInsert = (input: ActivityInput): Activities_Insert_Input => {
         verb: input.verb,
         entity: makeEntityInsert(input.entity),
         secondary_entity: makeEntityInsert(input.secondaryEntity),
-        // Notify all users in group except thing owner
         notifications: {
             data: input.receivers?.map((userId) => ({ user_id: userId })) || [],
         },

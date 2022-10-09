@@ -16,29 +16,29 @@
 
     <mj-section>
       <mj-column>
-        <mj-text mj-class="body paragraph">Hi, {{user_name}}!</mj-text>
+        <mj-text mj-class="body paragraph">Hi, ${user_name}!</mj-text>
         <mj-text mj-class="body paragraph">
-          {{sender_name}} sent you a message on Reshared:
+          ${sender_name} sent you a message on Reshared:
         </mj-text>
       </mj-column>
     </mj-section>
 
     <mj-section background-color="#EEEEEE">
       <mj-column>
-        <mj-text>{{message}}</mj-text>
+        <mj-text>${message}</mj-text>
 
-        <mj-text align="right">{{datetime}}</mj-text>
+        <mj-text align="right">${datetime}</mj-text>
       </mj-column>
     </mj-section>
 
     <mj-section>
       <mj-column>
         <mj-button font-family="Helvetica" background-color="#001529" color="white">
-          <a href="{{link}}" style="text-decoration: none; color: white">Reply on Reshared</a>
+          <a href="${link}" style="text-decoration: none; color: white">Reply on Reshared</a>
         </mj-button>
         <mj-spacer height="20px"></mj-spacer>
         <mj-text>
-          <a href="{{settings_link}}" style="text-decoration: none;">Click here</a> to change your settings if you don't want to receive email notifications like this one.
+          <a href="${settings_link}" style="text-decoration: none;">Click here</a> to change your settings if you don't want to receive email notifications like this one.
         </mj-text>
       </mj-column>
     </mj-section>

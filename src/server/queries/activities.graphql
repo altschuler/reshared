@@ -1,4 +1,16 @@
-﻿mutation ServerInsertActivities($input: [activities_insert_input!]!) {
+﻿# TODO: fetch email settings for the user
+query ServerFindNotifcation($id: uuid!) {
+    notifications_by_pk(id: $id) {
+        ...NotificationCard
+
+        user {
+            ...UserCard
+            email
+        }
+    }
+}
+
+mutation ServerInsertActivities($input: [activities_insert_input!]!) {
     insert_activities(objects: $input) {
         returning {
             id

@@ -1,0 +1,5 @@
+Hi ${user_name}, you might be interested to know that ${message}.
+
+Use this link to go to Reshared: ${link}
+
+Use this link to change your settings if you don't want to receive email notifications like this one: ${settings_link}

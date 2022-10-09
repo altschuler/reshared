@@ -39,19 +39,20 @@ export default makeEventHandler<Group_Members>(async (args, ctx) => {
 const getVerb = (args: HasuraEventPayload<Group_Members>) => {
     const { old: o, new: n } = args.event.data;
     const { Admin, User, Owner } = Group_Role_Enum;
+    const isUpdate = args.event.op === 'UPDATE';
 
     // Became admin
-    if (args.event.op === 'UPDATE' && o?.role === User && n?.role === Admin) {
+    if (isUpdate && o?.role === User && n?.role === Admin) {
         return Activity_Verb_Enum.BecameAdmin;
     }
 
     // Revoked admin
-    if (args.event.op === 'UPDATE' && o?.role === Admin && n?.role === User) {
+    if (isUpdate && o?.role === Admin && n?.role === User) {
         return Activity_Verb_Enum.RevokedAdmin;
     }
 
     // Became owner
-    if (args.event.op === 'UPDATE' && n?.role === Owner) {
+    if (isUpdate && n?.role === Owner) {
         return Activity_Verb_Enum.BecameOwner;
     }
 

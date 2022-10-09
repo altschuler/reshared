@@ -29,3 +29,17 @@ update_permissions:
         user_id:
           _eq: X-Hasura-User-Id
       check: null
+event_triggers:
+  - name: notification_event
+    definition:
+      enable_manual: false
+      insert:
+        columns: '*'
+    retry_conf:
+      interval_sec: 10
+      num_retries: 0
+      timeout_sec: 60
+    webhook: '{{EVENTS_BASE_URL}}/notification_event'
+    headers:
+      - name: X-WEBHOOK-SECRET
+        value_from_env: NHOST_WEBHOOK_SECRET

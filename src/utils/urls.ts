@@ -55,6 +55,9 @@ export const urlFor = {
         list: (absolute = false) => makeUrl(absolute, `/groups`),
         home: (group: GroupWithId, absolute = false) =>
             makeUrl(absolute, `/groups/${group.short_id}`),
+        // TODO: placeholder, link to actual post
+        post: (group: GroupWithId, absolute = false) =>
+            makeUrl(absolute, `/groups/${group.short_id}`),
         things: (group: GroupWithId, absolute = false) =>
             makeUrl(absolute, `/groups/${group.short_id}/things`),
         members: (group: GroupWithId, absolute = false) =>

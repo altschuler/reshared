@@ -11,23 +11,20 @@ generates:
     ./src/generated/server-queries.ts:
         documents:
             - './src/**/*.graphql'
+            - '!./src/generated/**'
         plugins:
             - typescript
             - typescript-operations
-            - typescript-resolvers
             - typed-document-node
-            - fragment-matcher
     ./src/generated/graphql.tsx:
         documents:
             - './src/**/*.graphql'
             - '!./src/generated/**'
-            - '!./src/pages/api/**'
             - '!./src/server/**'
         plugins:
             - typescript
             - typescript-operations
             - typescript-react-apollo
-            - fragment-matcher
             - named-operations-object
         config:
             withHooks: true
