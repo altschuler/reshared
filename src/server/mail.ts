@@ -2,7 +2,8 @@
 import sendgrid from '@sendgrid/mail';
 import fs from 'fs';
 import { TemplateExecutor } from 'lodash';
-import { template as compileTemplate, memoize } from 'lodash-es';
+import { memoize, template as compileTemplate } from 'lodash-es';
+import nodemailer from 'nodemailer';
 
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY!);
 
@@ -42,7 +43,24 @@ const makeEmail = async <T>(data: MailData<T>): Promise<MailDataRequired> => {
     };
 };
 
+// Dev
+const makeDevTransport = memoize(() =>
+    nodemailer.createTransport({
+        port: 1025,
+        secure: false,
+        auth: {
+            user: 'user',
+            pass: 'password',
+        },
+    }),
+);
+
 export const sendMail = async <T>(data: MailData<T> | MailData<T>[]) => {
     const mails = await Promise.all((Array.isArray(data) ? data : [data]).map(makeEmail));
-    return sendgrid.send(mails);
+
+    if (process.env.NODE_ENV === 'production') {
+        return sendgrid.send(mails);
+    } else {
+        mails.map((mail) => makeDevTransport().sendMail(mail as any));
+    }
 };
