@@ -6669,6 +6669,8 @@ export type Mutation_Root = {
   createChatGroup?: Maybe<CreateChatGroupResult>;
   /** write new message in a chat group */
   createChatMessage: CreateChatMessageResult;
+  /** Delete a user account */
+  deleteAccount: Scalars['Boolean'];
   /** delete single row from the table: "auth.providers" */
   deleteAuthProvider?: Maybe<AuthProviders>;
   /** delete single row from the table: "auth.provider_requests" */
@@ -7190,6 +7192,12 @@ export type Mutation_RootCreateChatGroupArgs = {
 /** mutation root */
 export type Mutation_RootCreateChatMessageArgs = {
   input?: InputMaybe<CreateChatMessageInput>;
+};
+
+
+/** mutation root */
+export type Mutation_RootDeleteAccountArgs = {
+  id: Scalars['uuid'];
 };
 
 
@@ -13945,6 +13953,13 @@ export type UpdateUserProfileMutationVariables = Exact<{
 
 export type UpdateUserProfileMutation = { __typename?: 'mutation_root', insert_user_profile_one?: { __typename?: 'user_profile', user: { __typename?: 'users', createdAt: string, email?: any | null, emailVerified: boolean, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> } } | null };
 
+export type DeleteAccountMutationVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type DeleteAccountMutation = { __typename?: 'mutation_root', deleteAccount: boolean };
+
 export const FileUploadCardFragmentDoc = gql`
     fragment FileUploadCard on files {
   id
@@ -16090,6 +16105,37 @@ export function useUpdateUserProfileMutation(baseOptions?: Apollo.MutationHookOp
 export type UpdateUserProfileMutationHookResult = ReturnType<typeof useUpdateUserProfileMutation>;
 export type UpdateUserProfileMutationResult = Apollo.MutationResult<UpdateUserProfileMutation>;
 export type UpdateUserProfileMutationOptions = Apollo.BaseMutationOptions<UpdateUserProfileMutation, UpdateUserProfileMutationVariables>;
+export const DeleteAccountDocument = gql`
+    mutation DeleteAccount($id: uuid!) {
+  deleteAccount(id: $id)
+}
+    `;
+export type DeleteAccountMutationFn = Apollo.MutationFunction<DeleteAccountMutation, DeleteAccountMutationVariables>;
+
+/**
+ * __useDeleteAccountMutation__
+ *
+ * To run a mutation, you first call `useDeleteAccountMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteAccountMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteAccountMutation, { data, loading, error }] = useDeleteAccountMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteAccountMutation(baseOptions?: Apollo.MutationHookOptions<DeleteAccountMutation, DeleteAccountMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteAccountMutation, DeleteAccountMutationVariables>(DeleteAccountDocument, options);
+      }
+export type DeleteAccountMutationHookResult = ReturnType<typeof useDeleteAccountMutation>;
+export type DeleteAccountMutationResult = Apollo.MutationResult<DeleteAccountMutation>;
+export type DeleteAccountMutationOptions = Apollo.BaseMutationOptions<DeleteAccountMutation, DeleteAccountMutationVariables>;
 export const GqlOps = {
   Query: {
     GroupActivity: 'GroupActivity',
@@ -16137,7 +16183,8 @@ export const GqlOps = {
     MarkNotificationRead: 'MarkNotificationRead',
     MarkAllNotificationsRead: 'MarkAllNotificationsRead',
     UpdateUser: 'UpdateUser',
-    UpdateUserProfile: 'UpdateUserProfile'
+    UpdateUserProfile: 'UpdateUserProfile',
+    DeleteAccount: 'DeleteAccount'
   },
   Subscription: {
     ChatGroups: 'ChatGroups',

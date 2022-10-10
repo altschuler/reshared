@@ -1,4 +1,4 @@
-﻿# Queries
+# Queries
 
 query ServerFindGroup($where: groups_bool_exp) {
     groups(where: $where) {
@@ -28,6 +28,21 @@ query ServerFindGroupMembers($groupId: uuid!, $where: group_members_bool_exp) {
         memberships(where: $where) {
             user {
                 id
+            }
+        }
+    }
+}
+
+query ServerFindGroupMemberships($where: group_members_bool_exp!) {
+    group_members(where: $where) {
+        user_id
+        role
+        group_id
+        group {
+            memberships_aggregate {
+                aggregate {
+                    count
+                }
             }
         }
     }

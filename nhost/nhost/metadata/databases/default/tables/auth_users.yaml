@@ -254,3 +254,26 @@ update_permissions:
         id:
           _eq: X-Hasura-User-Id
       check: null
+delete_permissions:
+  - role: user
+    permission:
+      backend_only: false
+      filter:
+        _and:
+          - id:
+              _eq: X-Hasura-User-Id
+          - _not:
+              _exists:
+                _table:
+                  name: group_members
+                  schema: public
+                _where:
+                  _and:
+                    - user_id:
+                        _eq: X-Hasura-User-Id
+                    - role:
+                        _eq: owner
+                    - group:
+                        memberships:
+                          user_id:
+                            _neq: X-Hasura-User-Id

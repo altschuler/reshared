@@ -1,4 +1,4 @@
-﻿import {
+import {
     ServerFetchThingDetailsDocument,
     ServerUpdateThingDocument,
 } from '../../../generated/server-queries';
@@ -113,6 +113,12 @@ export default makeAuthorizedHandler<UpdateThingMutationVariables, UpdateThingRe
             },
         });
 
-        ctx.success({ thing_id: mutation.data?.insert_things_one?.id });
+        const thing_id = mutation.data?.insert_things_one?.id;
+
+        if (thing_id) {
+            ctx.success({ thing_id });
+        } else {
+            ctx.error('Failed to update thing');
+        }
     },
 );

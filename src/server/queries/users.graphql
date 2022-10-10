@@ -1,6 +1,19 @@
-﻿query ServerFindUser($email: citext) {
+query ServerFindUser($email: citext) {
     users(limit: 1, where: { email: { _eq: $email } }) {
         id
         email
+    }
+}
+
+mutation ServerDeleteUser($id: uuid!) {
+    # Order here is crucial!
+    deleteUser(id: $id) {
+        id
+    }
+}
+
+mutation ServerDeleteGroups($ids: [uuid!]!) {
+    delete_groups(where: { id: { _in: $ids } }) {
+        affected_rows
     }
 }

@@ -14,6 +14,14 @@ actions:
     permissions:
       - role: user
     comment: write new message in a chat group
+  - name: deleteAccount
+    definition:
+      kind: synchronous
+      handler: '{{ACTION_BASE_URL}}/delete_account'
+      forward_client_headers: true
+    permissions:
+      - role: user
+    comment: Delete a user account
   - name: handleJoinRequest
     definition:
       kind: synchronous

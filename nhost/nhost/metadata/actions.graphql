@@ -11,6 +11,12 @@ type Mutation {
 }
 
 type Mutation {
+  deleteAccount(
+    id: uuid!
+  ): Boolean
+}
+
+type Mutation {
   handleJoinRequest(
     input: HandleJoinRequestInput!
   ): HandleJoinRequestResult!

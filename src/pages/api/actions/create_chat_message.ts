@@ -1,4 +1,4 @@
-﻿import Joi from 'joi';
+import Joi from 'joi';
 import { ServerCreateChatMessageDocument } from '../../../generated/server-queries';
 import {
     CreateChatMessageInput,

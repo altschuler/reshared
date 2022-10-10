@@ -1,4 +1,4 @@
-﻿overwrite: true
+overwrite: true
 schema:
     #  - ${NEXT_PUBLIC_GRAPHQL_ENDPOINT}:
     - http://localhost:1337/v1/graphql:
@@ -16,6 +16,11 @@ generates:
             - typescript
             - typescript-operations
             - typed-document-node
+        config:
+            scalars:
+                timestamptz: string
+                timestamp: string
+                uuid: string 
     ./src/generated/graphql.tsx:
         documents:
             - './src/**/*.graphql'

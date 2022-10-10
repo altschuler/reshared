@@ -7824,6 +7824,9 @@ type mutation_root {
   """write new message in a chat group"""
   createChatMessage(input: CreateChatMessageInput): CreateChatMessageResult!
 
+  """Delete a user account"""
+  deleteAccount(id: uuid!): Boolean!
+
   """
   delete single row from the table: "auth.providers"
   """

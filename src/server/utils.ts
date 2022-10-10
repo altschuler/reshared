@@ -1,4 +1,4 @@
-﻿import { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 import Joi from 'joi';
 import { decodeToken, JwtToken } from './auth';
 import { hasuraClient, makeHasuraUserClient } from './hasuraClient';

@@ -1,4 +1,4 @@
-﻿import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 import {
     CheckCircleTwoTone,
     EyeInvisibleOutlined,
@@ -38,7 +38,7 @@ export const GroupList = (props: GroupListProps) => {
     const auth = useAuth();
     const pgn = usePagination();
 
-    const { data, previousData, loading, error } = useListGroupsQuery({
+    const { data, previousData, loading } = useListGroupsQuery({
         variables: {
             limit: pgn.limit,
             offset: pgn.offset,
