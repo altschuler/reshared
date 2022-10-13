@@ -1,6 +1,6 @@
-﻿import { message } from 'antd';
+import { message } from 'antd';
 import dayjs from 'dayjs';
-import { head } from 'lodash-es';
+import { head, isEmpty } from 'lodash-es';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo } from 'react';
 import { createUseStyles } from 'react-jss';
@@ -58,7 +58,7 @@ export const ChatPage = () => {
 
     const handleNameChange = useCallback(
         (name: string) => {
-            if (!selected) {
+            if (!selected || isEmpty(name)) {
                 return;
             }
             updateGroup({ variables: { id: selected.id, input: { name } } });

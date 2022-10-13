@@ -1,4 +1,4 @@
-﻿import React, { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { ChatGroupCardFragment } from '../../generated/graphql';
 import { createUseStyles } from 'react-jss';
 import { UserAvatarList } from '../../components/display';
@@ -36,11 +36,17 @@ export const MessageListHeader = ({ chatGroup, onNameChange }: MessageListHeader
         () => chatGroup.name || users.map((u) => u.displayName).join(', '),
         [chatGroup.name, users],
     );
+    const nameEditable = users.length > 1;
 
     return (
         <div className={classes.root}>
             <UserAvatarList className={classes.avatars} users={users} />
-            <Typography.Title style={{ margin: 0 }} level={5} editable={{ onChange: onNameChange }}>
+            <Typography.Title
+                style={{ margin: 0 }}
+                level={5}
+                editable={
+                    nameEditable && { onChange: onNameChange, tooltip: 'Edit chat group name' }
+                }>
                 {title}
             </Typography.Title>
         </div>
