@@ -219,28 +219,7 @@ select_permissions:
         - created_at
         - display_name
         - id
-      filter:
-        _or:
-          - id:
-              _eq: X-Hasura-User-Id
-          - memberships:
-              group:
-                _or:
-                  - public:
-                      _eq: true
-                  - memberships:
-                      user_id:
-                        _eq: X-Hasura-User-Id
-          - group_join_requests:
-              group:
-                memberships:
-                  _and:
-                    - user_id:
-                        _eq: X-Hasura-User-Id
-                    - role:
-                        _in:
-                          - admin
-                          - owner
+      filter: {}
       allow_aggregations: true
 update_permissions:
   - role: user
