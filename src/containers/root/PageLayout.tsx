@@ -1,5 +1,5 @@
-﻿import type { MutableRefObject, ReactNode } from 'react';
-import { Divider, Layout, Space, Spin, Typography } from 'antd';
+import type { ReactNode } from 'react';
+import { Layout, Spin } from 'antd';
 import Link from 'next/link';
 import clsx from 'clsx';
 
@@ -9,15 +9,18 @@ import { urlFor } from '../../utils/urls';
 import { ErrorDisplay } from '../../components/display';
 
 const { Content } = Layout;
+
 const useStyles = createUseStyles({
     content: {
         display: 'flex',
         flexDirection: 'column',
         overflowY: 'auto',
+        alignItems: 'center',
     },
     pageContent: {
         display: 'flex',
         flex: 1,
+        width: '100%',
     },
     pageContentNoScroll: {
         minHeight: 0,
@@ -32,6 +35,7 @@ const useStyles = createUseStyles({
         justifyContent: 'center',
     },
     footer: {
+        width: '100%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -54,9 +58,14 @@ const useStyles = createUseStyles({
     root: {
         backgroundColor: 'white',
         flex: 1,
+        width: '100%',
     },
     contentPadded: {
         padding: '1em',
+    },
+    restrictedWidth: {
+        width: '100%',
+        maxWidth: 800,
     },
 });
 
@@ -69,6 +78,7 @@ export interface PageLayoutProps {
     children?: ReactNode;
     loading?: boolean;
     error?: string;
+    fullWidth?: boolean;
 }
 
 export const PageLayout = (props: PageLayoutProps) => {
@@ -92,6 +102,8 @@ export const PageLayout = (props: PageLayoutProps) => {
                             ? classes.pageContentHorizontal
                             : classes.pageContentVertical,
                         props.padded && classes.contentPadded,
+
+                        !props.fullWidth && classes.restrictedWidth,
                     )}>
                     {props.error && <ErrorDisplay error={props.error} />}{' '}
                     {props.loading ? <Spin>{props.children}</Spin> : props.children}

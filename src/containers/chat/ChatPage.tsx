@@ -79,7 +79,7 @@ export const ChatPage = () => {
     }, [groupId, selected, auth.user, updateGroupMember]); // TODO: add some sort of focus trigger
 
     return (
-        <PageLayout noScroll noFooter horizontal>
+        <PageLayout noScroll noFooter horizontal fullWidth>
             <div className={classes.sidebar}>
                 <Sidebar groups={chatGroups} selected={selected} loading={groupsSub.loading} />
             </div>
