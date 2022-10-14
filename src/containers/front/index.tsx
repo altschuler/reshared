@@ -1,5 +1,5 @@
-﻿import { PageLayout } from '../root/PageLayout';
-import { Alert, Typography } from 'antd';
+import { PageLayout } from '../root/PageLayout';
+import { Typography } from 'antd';
 import { createUseStyles } from 'react-jss';
 import useInterval from '../../utils/hooks';
 import { useState } from 'react';
@@ -44,7 +44,7 @@ const Typed = () => {
     const classes = useStyles();
     const [wordIndex, setWordIndex] = useState(0);
     const [backward, setBackward] = useState(false);
-    const [index, setIndex] = useState(0);
+    const [index, setIndex] = useState(WORDS[wordIndex].length);
     const [atEnd, setAtEnd] = useState(false);
     const [ticksAtEnd, setTicksAtEnd] = useState(0);
 
@@ -94,13 +94,9 @@ export const FrontPage = () => {
                     <br />- with your community
                 </Typography.Title>
 
-                <Typography.Title type="success" level={3}>
-                    It's free forever, no spam, no ads, no bullshit. Good for your wallet, the
+                <Typography.Title type="secondary" level={4}>
+                    It's free forever with no ads or hidden agendas. Good for your wallet, the
                     environment and your community.
-                </Typography.Title>
-
-                <Typography.Title level={3}>
-                    {'<'}Cool graphics explaining how and why{'>'}
                 </Typography.Title>
             </div>
         </PageLayout>
