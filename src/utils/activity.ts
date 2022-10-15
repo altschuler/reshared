@@ -1,4 +1,4 @@
-﻿import * as Sentry from '@sentry/react';
+import * as Sentry from '@sentry/react';
 import { compact } from 'lodash-es';
 import {
     ActivityCardFragment,
@@ -27,6 +27,10 @@ export const activityMessageSafe = (
 
         if (activity.verb === Activity_Verb_Enum.Joined) {
             return `${actor} joined the group ${ent.group.name}`;
+        }
+
+        if (activity.verb === Activity_Verb_Enum.Added) {
+            return `${actor} created the group ${ent.group.name}`;
         }
     }
 

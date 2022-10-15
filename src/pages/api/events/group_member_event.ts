@@ -1,4 +1,4 @@
-﻿import { Activity_Verb_Enum, Group_Members, Group_Role_Enum } from '../../../generated/graphql';
+import { Activity_Verb_Enum, Group_Members, Group_Role_Enum } from '../../../generated/graphql';
 import { ServerFindGroupMembersDocument } from '../../../generated/server-queries';
 import { HasuraEventPayload, makeEventHandler } from '../../../server';
 import { insertActivities, opToVerb } from '../../../server/activity';
@@ -16,6 +16,11 @@ export default makeEventHandler<Group_Members>(async (args, ctx) => {
     });
 
     const group = query.data.groups_by_pk;
+
+    // Don't add a join event for the creator (there's a group created activity)
+    if (group?.creator_id === membership.user_id) {
+        return ctx.success({ success: true });
+    }
 
     if (!group) {
         return ctx.error('Group not found');
