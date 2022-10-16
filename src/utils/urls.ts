@@ -60,6 +60,8 @@ export const urlFor = {
             makeUrl(absolute, `/groups/${group.short_id}`),
         things: (group: GroupWithId, absolute = false) =>
             makeUrl(absolute, `/groups/${group.short_id}/things`),
+        posts: (group: GroupWithId, absolute = false) =>
+            makeUrl(absolute, `/groups/${group.short_id}/posts`),
         members: (group: GroupWithId, absolute = false) =>
             makeUrl(absolute, `/groups/${group.short_id}/members`),
         settings: (group: GroupWithId, absolute = false) =>

@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { isEmpty } from 'lodash-es';
 import { useAuth } from '../../utils/auth';
 import { Dashboard } from './Dashboard';

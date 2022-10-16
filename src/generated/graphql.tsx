@@ -14022,7 +14022,7 @@ export const GroupPostFragmentDoc = gql`
   type
   resolved
   content
-  comments(order_by: [{created_at: desc}]) {
+  comments(order_by: [{created_at: asc}]) {
     id
     comment {
       ...CommentCard

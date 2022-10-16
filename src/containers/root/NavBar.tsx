@@ -1,5 +1,6 @@
-﻿import { useMedia } from '../../utils/hooks';
+import { useMedia } from '../../utils/hooks';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Dropdown, Input, Menu, Space, Typography } from 'antd';
 import { urlFor } from '../../utils/urls';
 import { MenuFoldOutlined } from '@ant-design/icons';
@@ -14,11 +15,17 @@ const useStyles = createUseStyles({
     header: {
         display: 'flex',
         alignItems: 'center',
-        color: 'white',
+        justifyContent: 'center',
         height: '64px',
         padding: '0 24px',
         lineHeight: '64px',
-        background: '#001529',
+        background: '#C6CDD2',
+    },
+    inner: {
+        display: 'flex',
+        alignItems: 'center',
+        width: '100%',
+        // maxWidth: '800px',
     },
     title: {
         cursor: 'pointer',
@@ -29,7 +36,7 @@ const useStyles = createUseStyles({
         alignItems: 'center',
         marginRight: '1em',
         '& h3': {
-            color: 'white',
+            // color: 'white',
             marginBottom: 0,
         },
     },
@@ -38,11 +45,11 @@ const useStyles = createUseStyles({
         alignItems: 'center',
         flex: 1,
 
-        color: 'white',
+        // color: 'white',
     },
     navLink: {
         '& a': {
-            color: 'white',
+            // color: 'white',
         },
     },
     collapsedNav: {
@@ -73,17 +80,12 @@ const ExpandedNav = () => {
                         </a>
                     </Link>
 
-                    <Link href={urlFor.user.things()}>
-                        <a data-cy="navbar:my-things:btn" className={classes.navLink}>
-                            My Things
-                        </a>
-                    </Link>
-
                     <Link href={urlFor.group.list()}>
                         <a data-cy="navbar:my-groups:btn" className={classes.navLink}>
                             My Groups
                         </a>
                     </Link>
+
                     <Input.Search
                         data-cy="navbar:search:in"
                         placeholder="Find things, groups, users..."
@@ -208,15 +210,19 @@ export const NavBar = () => {
 
     return (
         <header className={classes.header}>
-            <div className={classes.title}>
-                <Typography.Title level={3}>
-                    <Link href={urlFor.root()}>
-                        <a>Reshared</a>
-                    </Link>
-                </Typography.Title>
-            </div>
+            <div className={classes.inner}>
+                <div className={classes.title}>
+                    <Typography.Title level={3}>
+                        <Link passHref href={urlFor.root()}>
+                            <a>
+                                <Image width={150} height={40} src="/logo.svg" />
+                            </a>
+                        </Link>
+                    </Typography.Title>
+                </div>
 
-            {collapsed ? <CollapsedNav /> : <ExpandedNav />}
+                {collapsed ? <CollapsedNav /> : <ExpandedNav />}
+            </div>
         </header>
     );
 };

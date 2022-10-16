@@ -1,5 +1,6 @@
 ﻿import dayjs from 'dayjs';
 import RelativeTime from 'dayjs/plugin/relativeTime';
+import { useMemo } from 'react';
 
 dayjs.extend(RelativeTime);
 
@@ -19,11 +20,15 @@ const formats: { [P in DateDisplayMode]: string } = {
 };
 
 export const DateDisplay = (props: DateDisplayProps) => {
-    const utc =
-        props.utc && (dayjs(props.utc).isValid() ? (props.utc as Date) : dayjs(props.utc, 'iso'));
+    const utc = useMemo(
+        () =>
+            props.utc &&
+            (dayjs(props.utc).isValid() ? (props.utc as Date) : dayjs(props.utc, 'iso')),
+        [props.utc],
+    );
 
     return (
-        <span>
+        <span title={dayjs(utc).format(formats['datetime'])}>
             {props.mode === 'distance'
                 ? utc && dayjs(utc).fromNow()
                 : utc

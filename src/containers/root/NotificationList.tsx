@@ -1,4 +1,4 @@
-﻿import { CheckOutlined, NotificationOutlined } from '@ant-design/icons';
+import { CheckOutlined, NotificationOutlined } from '@ant-design/icons';
 import { Badge, Button, List, message, Modal, Popover, Space, Tooltip, Typography } from 'antd';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/router';
@@ -258,9 +258,7 @@ export const NotificationsButton = () => {
             }>
             <Badge size="small" count={newCount} overflowCount={9}>
                 <Tooltip title="Notifications">
-                    <NotificationOutlined
-                        style={{ fontSize: '1.5em', cursor: 'pointer', color: 'white' }}
-                    />
+                    <NotificationOutlined style={{ fontSize: '1.5em', cursor: 'pointer' }} />
                 </Tooltip>
             </Badge>
         </Popover>

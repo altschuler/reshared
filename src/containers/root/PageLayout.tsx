@@ -19,11 +19,16 @@ const useStyles = createUseStyles({
     },
     pageContent: {
         display: 'flex',
+        marginTop: '2em',
         flex: 1,
         width: '100%',
+        boxShadow: '0px 1px 120px 9px rgba(125,125,125,0.15)',
+        paddingBottom: '2em',
+        backgroundColor: 'white',
     },
     pageContentNoScroll: {
         minHeight: 0,
+        paddingBottom: 0,
     },
     pageContentVertical: {
         flexDirection: 'column',
@@ -42,8 +47,7 @@ const useStyles = createUseStyles({
         flex: 'none',
         flexWrap: 'wrap',
         padding: '0 10px',
-        backgroundColor: '#EEE',
-        marginTop: '2em',
+        /* backgroundColor: '#C6CDD2', */
         '& > *': {
             marginRight: '2em',
         },
@@ -56,7 +60,7 @@ const useStyles = createUseStyles({
         '& a': { color: 'black' },
     },
     root: {
-        backgroundColor: 'white',
+        backgroundColor: '#FFFCF9',
         flex: 1,
         width: '100%',
     },
@@ -88,11 +92,6 @@ export const PageLayout = (props: PageLayoutProps) => {
         <Layout className={classes.root}>
             <NavBar />
             <Content className={classes.content}>
-                {/*<Breadcrumb style={{ margin: '16px 0' }}>*/}
-                {/*    <Breadcrumb.Item>Home</Breadcrumb.Item>*/}
-                {/*    <Breadcrumb.Item>List</Breadcrumb.Item>*/}
-                {/*    <Breadcrumb.Item>App</Breadcrumb.Item>*/}
-                {/*</Breadcrumb>*/}
                 <div
                     className={clsx(
                         classes.pageContent,
@@ -108,10 +107,9 @@ export const PageLayout = (props: PageLayoutProps) => {
                     {props.error && <ErrorDisplay error={props.error} />}{' '}
                     {props.loading ? <Spin>{props.children}</Spin> : props.children}
                 </div>
+
                 {!props.noFooter && (
                     <div className={classes.footer}>
-                        <span className={classes.footerLink}>© Reshared</span>
-
                         <Link href={urlFor.site.privacy()}>
                             <a className={classes.footerLink}>Privacy Policy</a>
                         </Link>

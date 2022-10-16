@@ -23,7 +23,7 @@ export const ChatButton = () => {
         <Badge size="small" count={unreadCount} overflowCount={9}>
             <Link href={urlFor.chat.root()} passHref>
                 <Tooltip title="Messages">
-                    <MessageOutlined style={{ fontSize: '1.5em', color: 'white' }} />
+                    <MessageOutlined style={{ fontSize: '1.5em' }} />
                 </Tooltip>
             </Link>
         </Badge>

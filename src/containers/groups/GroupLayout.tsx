@@ -1,13 +1,17 @@
 ﻿import { EllipsisOutlined } from '@ant-design/icons';
 import {
+    Avatar,
     Button,
     Divider,
     Dropdown,
     Menu,
+    MenuProps,
     message,
     Modal,
     PageHeader,
     Popconfirm,
+    Space,
+    Tabs,
     Typography,
 } from 'antd';
 import Link from 'next/link';
@@ -22,7 +26,7 @@ import { urlFor } from '../../utils/urls';
 import { PageLayout } from '../root/PageLayout';
 import { JoinButton } from './JoinButton';
 
-export type GroupPage = 'home' | 'members' | 'settings' | 'things';
+export type GroupPage = 'home' | 'members' | 'settings' | 'things' | 'posts';
 
 export interface GroupLayoutProps {
     activePage?: GroupPage;
@@ -54,7 +58,7 @@ export const GroupLayout = (props: GroupLayoutProps) => {
     const { isAdmin, isMember, user } = useMembership(props.group);
     const btnClass = (page: GroupPage) => (props.activePage === page ? classes.active : undefined);
 
-    const [leave, mutation] = useLeaveGroupMutation({
+    const [leave] = useLeaveGroupMutation({
         refetchQueries: [GqlOps.Query.UserPrivateDetails],
         awaitRefetchQueries: true,
     });
@@ -98,15 +102,36 @@ export const GroupLayout = (props: GroupLayoutProps) => {
         () =>
             dialogs
                 .showDialog(CreatePostDrawer, { group: props.group })
-                .then(() => router.push(urlFor.group.home(props.group))),
+                .then(() => router.push(urlFor.group.posts(props.group))),
         [dialogs, props.group, router],
     );
 
-    const menu = (
-        <Menu>
-            <Menu.Item>
+    const menu: MenuProps['items'] = [
+        {
+            key: 'members',
+            label: (
+                <Link passHref key="members" href={urlFor.group.members(props.group)}>
+                    <a data-cy="group-header:members:btn">Members</a>
+                </Link>
+            ),
+        },
+        ...(isAdmin
+            ? [
+                  {
+                      key: 'settings',
+                      label: (
+                          <Link passHref href={urlFor.group.settings(props.group)}>
+                              <a data-cy="group-header:settings:btn">Settings</a>
+                          </Link>
+                      ),
+                  },
+              ]
+            : []),
+        {
+            key: 'leave',
+            danger: true,
+            label: (
                 <Popconfirm
-                    key="leave"
                     okText="Leave"
                     okType="danger"
                     onConfirm={handleLeave}
@@ -122,114 +147,106 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                             </Typography.Paragraph>
                         </div>
                     }>
-                    <Button type="primary" danger loading={mutation.loading}>
-                        Leave group
-                    </Button>
+                    <span>Leave group</span>
                 </Popconfirm>
-            </Menu.Item>
-        </Menu>
-    );
+            ),
+        },
+    ];
 
     return (
         <PageLayout>
-            <PageHeader
-                className={classes.header}
-                title={<span data-cy="group-header:title:txt">{props.group.name}</span>}
-                avatar={
-                    props.group.banner_file
-                        ? {
-                              icon: (
-                                  <ImageDisplay
-                                      dataCy="group-header:image"
-                                      width={100}
-                                      height={100}
-                                      file={props.group.banner_file}
-                                  />
-                              ),
-                          }
-                        : undefined
-                }
-                extra={[
-                    isMember && (
-                        <Link passHref key="home" href={urlFor.group.home(props.group)}>
+            <Tabs
+                key="tabs"
+                activeKey={props.activePage}
+                tabBarExtraContent={{
+                    left: (
+                        <Space align="center" style={{ padding: '1em 2em 1em 1em' }}>
+                            {props.group.banner_file && (
+                                <Avatar
+                                    src={
+                                        <ImageDisplay
+                                            dataCy="group-header:image"
+                                            width={100}
+                                            height={100}
+                                            file={props.group.banner_file}
+                                        />
+                                    }></Avatar>
+                            )}
+                            <Typography.Title
+                                level={3}
+                                style={{ margin: 0 }}
+                                data-cy="group-header:title:txt">
+                                {props.group.name}
+                            </Typography.Title>
+                        </Space>
+                    ),
+                    right: isMember ? (
+                        <Space style={{ padding: '1em' }}>
                             <Button
-                                data-cy="group-header:home:btn"
-                                type="link"
-                                className={btnClass('home')}>
-                                Home
+                                key="share"
+                                data-cy="group-header:share:btn"
+                                type="primary"
+                                onClick={handleShare}>
+                                Share a thing
                             </Button>
-                        </Link>
-                    ),
-
-                    isMember && (
-                        <Link passHref key="things" href={urlFor.group.things(props.group)}>
                             <Button
-                                data-cy="group-header:things:btn"
-                                type="link"
-                                className={btnClass('things')}>
-                                Things
+                                key="post"
+                                data-cy="group-header:ask:btn"
+                                type="primary"
+                                onClick={handlePost}>
+                                Ask for a thing
                             </Button>
-                        </Link>
-                    ),
-
-                    isMember && (
-                        <Link passHref key="members" href={urlFor.group.members(props.group)}>
-                            <Button
-                                data-cy="group-header:members:btn"
-                                type="link"
-                                className={btnClass('members')}>
-                                Members
-                            </Button>
-                        </Link>
-                    ),
-
-                    isAdmin && (
-                        <Link passHref key="settings" href={urlFor.group.settings(props.group)}>
-                            <Button
-                                data-cy="group-header:settings:btn"
-                                type="link"
-                                className={btnClass('settings')}>
-                                Settings
-                            </Button>
-                        </Link>
-                    ),
-
-                    isMember && (
-                        <Divider key="divider" type="vertical" style={{ color: 'black' }} />
-                    ),
-
-                    isMember && (
-                        <Button
-                            key="share"
-                            data-cy="group-header:share:btn"
-                            type="primary"
-                            onClick={handleShare}>
-                            Share a thing
-                        </Button>
-                    ),
-
-                    isMember && (
-                        <Button
-                            key="post"
-                            data-cy="group-header:ask:btn"
-                            type="primary"
-                            onClick={handlePost}>
-                            Ask for a thing
-                        </Button>
-                    ),
-
-                    isMember && (
-                        <Dropdown key="more" overlay={menu} trigger={['click']}>
-                            <Button data-cy="group-header:more:btn" icon={<EllipsisOutlined />} />
-                        </Dropdown>
-                    ),
-
-                    !isMember && (
+                            <Dropdown
+                                key="more"
+                                overlay={<Menu items={menu} />}
+                                trigger={['click']}>
+                                <Button
+                                    data-cy="group-header:more:btn"
+                                    icon={<EllipsisOutlined />}
+                                />
+                            </Dropdown>
+                        </Space>
+                    ) : (
                         <JoinButton dataCy="group-header:join:btn" key="join" group={props.group} />
                     ),
-                ]}>
-                {props.children}
-            </PageHeader>
+                }}
+                items={[
+                    {
+                        key: 'home',
+                        label: (
+                            <Link passHref key="home" href={urlFor.group.home(props.group)}>
+                                <a data-cy="group-header:home:btn">Home</a>
+                            </Link>
+                        ),
+                    },
+                    {
+                        key: 'posts',
+                        label: (
+                            <Link passHref key="posts" href={urlFor.group.posts(props.group)}>
+                                <a data-cy="group-header:posts:btn">Posts</a>
+                            </Link>
+                        ),
+                    },
+                    {
+                        key: 'things',
+                        label: (
+                            <Link passHref key="things" href={urlFor.group.things(props.group)}>
+                                <a data-cy="group-header:things:btn">Things</a>
+                            </Link>
+                        ),
+                    },
+                ]}
+            />
+            <div style={{ padding: '0em 1em' }}>{props.children}</div>
         </PageLayout>
     );
 };
+
+/*
+
+                              <JoinButton
+                                  dataCy="group-header:join:btn"
+                                  key="join"
+                                  group={props.group}
+                              />,
+*/
