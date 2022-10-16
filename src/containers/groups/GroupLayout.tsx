@@ -147,7 +147,7 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                             </Typography.Paragraph>
                         </div>
                     }>
-                    <span>Leave group</span>
+                    <span data-cy="group-header:leave:btn">Leave group</span>
                 </Popconfirm>
             ),
         },
@@ -241,12 +241,3 @@ export const GroupLayout = (props: GroupLayoutProps) => {
         </PageLayout>
     );
 };
-
-/*
-
-                              <JoinButton
-                                  dataCy="group-header:join:btn"
-                                  key="join"
-                                  group={props.group}
-                              />,
-*/

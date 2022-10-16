@@ -53,8 +53,8 @@ export const GroupPostsPage = () => {
     if (loading) {
         return (
             <GroupLayout activePage="posts" group={group}>
-                {[1, 2, 3].map(() => (
-                    <Card style={{ width: 500, marginTop: 16 }}>
+                {[1, 2, 3].map((i) => (
+                    <Card key={i} style={{ width: 500, marginTop: 16 }}>
                         <Skeleton loading={loading} avatar={{ size: 'small' }} active></Skeleton>
                     </Card>
                 ))}

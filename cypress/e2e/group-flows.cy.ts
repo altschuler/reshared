@@ -36,6 +36,7 @@ describe('group flow', () => {
         cy.t('group-header:title:txt').should('contain.text', name);
         cy.t('group-header:image').should('exist');
 
+        cy.t('group-header:more:btn').click();
         cy.t('group-header:members:btn').click();
 
         cy.t('member-list:item').should('have.length', 1);
@@ -55,11 +56,11 @@ describe('group flow', () => {
 
         cy.url().should('match', /\/groups\/\w+$/, { timeout: 3000 });
 
-        cy.t('group-header:members:btn').should('not.exist');
+        cy.t('group-header:more:btn').should('not.exist');
 
         cy.t('group-header:join:btn').click();
 
-        cy.t('group-header:members:btn').should('exist');
+        cy.t('group-header:more:btn').should('exist');
     });
 
     // it('get join notification', () => {
@@ -90,6 +91,7 @@ describe('group flow', () => {
         cy.t('group-header:title:txt').should('contain.text', name);
         cy.t('group-header:image').should('not.exist');
 
+        cy.t('group-header:more:btn').click();
         cy.t('group-header:members:btn').click();
 
         cy.t('member-list:item').should('have.length', 1);
@@ -109,7 +111,7 @@ describe('group flow', () => {
 
         cy.url().should('match', /\/groups\/\w+$/, { timeout: 3000 });
 
-        cy.t('group-header:members:btn').should('not.exist');
+        cy.t('group-header:more:btn').should('not.exist');
 
         cy.t('group-header:join:btn').click();
 
@@ -118,7 +120,7 @@ describe('group flow', () => {
 
         cy.waitRequest('graphql');
 
-        cy.t('group-header:members:btn').should('not.exist');
+        cy.t('group-header:more:btn').should('not.exist');
 
         cy.t('group-header:join:btn').should('contain.text', 'pending');
     });
@@ -131,6 +133,7 @@ describe('group flow', () => {
         }
         cy.visit(privateUrl);
 
+        cy.t('group-header:more:btn').click();
         cy.t('group-header:members:btn').click();
 
         cy.t('join-request-list', 'item', 'accept:btn').first().click();

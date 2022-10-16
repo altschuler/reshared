@@ -11,6 +11,7 @@ describe('roles', () => {
 
         cy.visit(`/groups/${testData.groups.one.shortId}`);
 
+        cy.t('group-header:more:btn').click();
         cy.t('group-header:members:btn').click();
 
         let bob = getBobItem();
