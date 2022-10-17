@@ -80,8 +80,6 @@ describe('account deletion', () => {
 
         cy.visit('/settings');
 
-        cy.wait(1000);
-
         cy.t('delete-account:btn').click();
 
         cy.t('delete-account:blocked:txt').should('exist');
@@ -105,7 +103,6 @@ describe('account deletion', () => {
 
         cy.visit('/settings');
 
-        cy.wait(1000);
         cy.t('delete-account:btn').click();
 
         cy.t('delete-account:blocked:txt').should('not.exist');

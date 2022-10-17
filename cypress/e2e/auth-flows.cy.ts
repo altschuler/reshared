@@ -112,6 +112,9 @@ describe('auth flow', () => {
 
         cy.url().should('contain', '/settings');
 
+        cy.waitRequest('graphql');
+
+        cy.wait(1000);
         cy.t('password:editable', 'edit:btn').click();
         cy.t('password:editable', 'value:in').type(`${password}!`);
         cy.t('password:editable', 'save:btn').click();
