@@ -176,7 +176,10 @@ export const RegistrationForm = (props: RegistrationFormProps) => {
     const handleRegister = useCallback(
         (state: RegistrationEditorState) => {
             const input = toCredentialsInput(state);
-            signUpEmailPassword(input.email!, input.password, { displayName: input.name });
+            signUpEmailPassword(input.email!, input.password, {
+                displayName: input.name,
+                redirectTo: urlFor.home(),
+            });
         },
         [signUpEmailPassword],
     );

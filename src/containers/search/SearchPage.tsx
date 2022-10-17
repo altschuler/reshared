@@ -73,7 +73,7 @@ export const SearchPage = () => {
     );
 
     const defaultType = useMemo(
-        () => typeSchema.validate(router.query.t).value || 'thing',
+        () => (typeSchema.validate(router.query.t).value || 'thing') as 'thing' | 'group' | 'user',
         [router.query.t],
     );
 
