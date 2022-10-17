@@ -15,6 +15,7 @@ env:
   NHOST_ADMIN_SECRET: nhost-admin-secret
   SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
   SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+  NEXT_PUBLIC_SENTRY_DISABLE: 1
 
 jobs:
   test-e2e:
