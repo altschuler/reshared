@@ -66,7 +66,7 @@ export const GroupList = (props: GroupListProps) => {
                     data-cy={props.dataCy && `${props.dataCy}:item`}
                     key={group.name}
                     actions={[
-                        isMember(group, auth.user) && (
+                        isMember(group, auth.userDetails) && (
                             <Tooltip title="You're a member">
                                 <CheckCircleTwoTone twoToneColor="#52c41a" />
                             </Tooltip>

@@ -68,7 +68,7 @@ export const Dashboard = () => {
                     <Typography.Title level={4}>Your Groups</Typography.Title>
 
                     <List
-                        dataSource={auth.user?.memberships}
+                        dataSource={auth.userDetails?.memberships}
                         renderItem={(m) => (
                             <List.Item.Meta
                                 avatar={<Avatar src={''} />}

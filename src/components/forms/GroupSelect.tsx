@@ -42,9 +42,10 @@ export const GroupSelect = (props: GroupSelectProps) => {
     const auth = useAuth();
     const classes = useStyles();
 
-    const groups = useMemo(() => auth.user?.memberships.map((m) => m.group) || [], [
-        auth.user?.memberships,
-    ]);
+    const groups = useMemo(
+        () => auth.userDetails?.memberships.map((m) => m.group) || [],
+        [auth.userDetails?.memberships],
+    );
     const options = useMemo(() => groups.map(makeOption), [groups]);
 
     const value = useMemo(() => {

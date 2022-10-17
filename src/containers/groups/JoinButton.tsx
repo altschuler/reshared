@@ -34,8 +34,8 @@ export const JoinButton = ({ group, dataCy }: { group: GroupCardFragment; dataCy
     const [cancelRequest, cancelRequestMutation] = useCancelJoinRequestMutation();
     const [requestMessage, setRequestMessage] = useState('');
 
-    const isMember = auth.user?.memberships.find((m) => m.group.id === group.id);
-    const joinRequest = auth.user?.group_join_requests.find((r) => r.group_id === group.id);
+    const isMember = auth.userDetails?.memberships.find((m) => m.group.id === group.id);
+    const joinRequest = auth.userDetails?.group_join_requests.find((r) => r.group_id === group.id);
 
     const handleJoin = useCallback(() => {
         join({ variables: { groupId: group.id } })

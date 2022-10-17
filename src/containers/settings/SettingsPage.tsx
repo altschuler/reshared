@@ -81,19 +81,19 @@ export const SettingsPage = () => {
             <Typography.Title level={5}>Profile</Typography.Title>
             <Typography.Paragraph italic>Publicly visible information.</Typography.Paragraph>
 
-            {auth.user && (
+            {auth.userDetails && (
                 <Form layout="horizontal">
                     <Form.Item label="Name" help="Your name as it is shown to others">
                         <EditableInput
                             dataCy="name:editable"
                             onSave={handleChangeName}
-                            defaultValue={auth.user.displayName}
+                            defaultValue={auth.userDetails.displayName}
                         />
                     </Form.Item>
 
                     <Form.Item label="Avatar">
                         <ImageInput
-                            value={auth.user.user_profile?.avatar || null}
+                            value={auth.userDetails.user_profile?.avatar || null}
                             onChange={handleAvatarChange}
                         />
                     </Form.Item>
@@ -157,7 +157,7 @@ const DeleteAccountButton = () => {
         // setConfirmText('')
     };
 
-    const ownerNonEmptyGroups = auth.user?.memberships.filter(
+    const ownerNonEmptyGroups = auth.userDetails?.memberships.filter(
         (m) =>
             m.role === Group_Role_Enum.Owner &&
             (m.group.memberships_aggregate.aggregate?.count || 0) > 1,

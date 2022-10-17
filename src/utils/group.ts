@@ -22,9 +22,12 @@ export const useMembership = (group?: GroupCardFragment | null) => {
 
     return useMemo(
         () => ({
-            isOwner: isMember(group, auth.user, [Group_Role_Enum.Owner]),
-            isAdmin: isMember(group, auth.user, [Group_Role_Enum.Admin, Group_Role_Enum.Owner]),
-            isMember: isMember(group, auth.user),
+            isOwner: isMember(group, auth.userDetails, [Group_Role_Enum.Owner]),
+            isAdmin: isMember(group, auth.userDetails, [
+                Group_Role_Enum.Admin,
+                Group_Role_Enum.Owner,
+            ]),
+            isMember: isMember(group, auth.userDetails),
             user: auth.user,
         }),
         [auth.user, group],
