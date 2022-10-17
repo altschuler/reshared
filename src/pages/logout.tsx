@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { ErrorDisplay } from '../components/display';
 import { PageLayout } from '../containers/root/PageLayout';
+import { makeGSSP } from '../utils/gssp';
 import { isServer } from '../utils/next';
 import { urlFor } from '../utils/urls';
 
@@ -28,5 +29,13 @@ export const LogoutPage = () => {
         </PageLayout>
     );
 };
+
+export const getServerSideProps = makeGSSP({
+    handler: async (data) => {
+        if (!data.user) {
+            return { redirect: { statusCode: 302, destination: urlFor.root() } };
+        }
+    },
+});
 
 export default LogoutPage;

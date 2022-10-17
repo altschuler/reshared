@@ -4,6 +4,10 @@ import { ServerFindGroupMembersDocument } from '../../../generated/server-querie
 import { insertActivities, opToVerb } from '../../../server/activity';
 
 export default makeEventHandler<Groups>(async (args, ctx) => {
+    if (args.event.op === 'DELETE') {
+        ctx.success({ success: true, message: 'ok: skipping delete event' });
+    }
+
     const groupId = (args.event.data.new || args.event.data.old).id;
     // Find members except the actor
     const query = await ctx.adminClient.query({

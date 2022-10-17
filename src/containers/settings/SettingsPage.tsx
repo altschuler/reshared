@@ -1,5 +1,5 @@
 import { useNhostClient } from '@nhost/react';
-import { Alert, Button, Form, Input, List, message, Modal, Space, Typography } from 'antd';
+import { Alert, Button, Form, Input, List, message, Modal, Typography } from 'antd';
 import { isEmpty } from 'lodash-es';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -133,6 +133,7 @@ export const SettingsPage = () => {
 const DeleteAccountButton = () => {
     const auth = useAuth();
     const router = useRouter();
+    const nhost = useNhostClient();
     const [open, setOpen] = useState(false);
     const [confirmText, setConfirmText] = useState('');
 
@@ -145,7 +146,7 @@ const DeleteAccountButton = () => {
             .then((res) => {
                 if (!res.errors && res.data?.deleteAccount) {
                     message.success('Your account has been deleted');
-                    router.push(urlFor.auth.logout());
+                    nhost.auth.signOut({ all: true }).then(() => router.push(urlFor.auth.logout()));
                 }
             })
             .catch((err) => console.log(err));
@@ -181,7 +182,11 @@ const DeleteAccountButton = () => {
                 open={open}
                 onOk={handleDelete}
                 okText="Delete my account permanently"
-                okButtonProps={{ disabled: deleteBlocked || !confirmed, type: 'primary' }}
+                okButtonProps={{
+                    disabled: deleteBlocked || !confirmed,
+                    type: 'primary',
+                    ...({ ['data-cy']: 'delete-account:confirm:btn' } as any),
+                }}
                 okType="danger"
                 confirmLoading={mutation.loading}
                 onCancel={handleCancel}>
@@ -200,6 +205,7 @@ const DeleteAccountButton = () => {
                         </Typography.Paragraph>
 
                         <Input
+                            data-cy="delete-account:email:in"
                             value={confirmText}
                             onChange={(e) => setConfirmText(e.target.value)}
                             placeholder="Email"
@@ -207,7 +213,7 @@ const DeleteAccountButton = () => {
                     </>
                 )}
                 {deleteBlocked && (
-                    <div>
+                    <div data-cy="delete-account:blocked:txt">
                         <Typography.Paragraph>
                             You cannot delete your account because you are the owner of one or more
                             groups that have other members. Either transfer ownership to another
@@ -232,9 +238,10 @@ const DeleteAccountButton = () => {
                                         <Link
                                             key="go-to-group"
                                             passHref
-                                            href={urlFor.group.home(g.group)}
-                                            data-cy="item:go-to-group:btn">
-                                            <Typography.Link>Go to group</Typography.Link>
+                                            href={urlFor.group.home(g.group)}>
+                                            <Typography.Link data-cy="item:go-to-group:btn">
+                                                Go to group
+                                            </Typography.Link>
                                         </Link>,
                                     ]}>
                                     {g.group.name} ({g.group.memberships_aggregate.aggregate?.count}{' '}

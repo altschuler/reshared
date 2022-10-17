@@ -135,6 +135,7 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                     okText="Leave"
                     okType="danger"
                     onConfirm={handleLeave}
+                    okButtonProps={{ ['data-cy']: 'confirm:ok:btn' } as any}
                     title={
                         <div style={{ maxWidth: 400 }}>
                             <Typography.Paragraph>

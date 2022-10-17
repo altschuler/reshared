@@ -128,13 +128,11 @@ event_triggers:
         columns: '*'
       update:
         columns:
+          - id
           - public
           - description
-          - name
           - short_id
-          - created_at
-          - updated_at
-          - id
+          - name
     retry_conf:
       interval_sec: 10
       num_retries: 1

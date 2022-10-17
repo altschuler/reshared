@@ -114,12 +114,10 @@ event_triggers:
         columns: '*'
       update:
         columns:
-          - role
-          - created_at
-          - updated_at
-          - group_id
           - id
           - user_id
+          - group_id
+          - role
     retry_conf:
       interval_sec: 10
       num_retries: 1

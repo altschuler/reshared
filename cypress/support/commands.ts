@@ -12,24 +12,28 @@ Cypress.on('uncaught:exception', (err) => {
     }
 });
 
-Cypress.Commands.add('login', (user: TestUserName, doLogout?: boolean) => {
+Cypress.Commands.add('loginCustom', (email: string, password: string, doLogout?: boolean) => {
     if (doLogout) {
         cy.logout();
         cy.reload();
     }
 
-    const userData = testData.users[user];
     cy.t('navbar:btn:login').click();
 
     cy.url().should('match', /\/login$/);
 
-    cy.t('email:in').type(userData.email);
-    cy.t('password:in').type(userData.password);
+    cy.t('email:in').type(email);
+    cy.t('password:in').type(password);
     cy.t('submit:btn').click();
 
     cy.url().should('contain', '/home');
     // TODO: don't wait like this
     cy.wait(1000);
+});
+
+Cypress.Commands.add('login', (user: TestUserName, doLogout?: boolean) => {
+    const userData = testData.users[user];
+    cy.loginCustom(userData.email, userData.password, doLogout);
 });
 
 Cypress.Commands.add('logout', () => {
@@ -89,6 +93,7 @@ declare global {
              */
             t(value: string, ...childSelectors: string[]): Chainable<JQuery<Element>>;
             login(user: TestUserName, doLogout?: boolean): void;
+            loginCustom(email: string, password: string, doLogout?: boolean): void;
             decodeQuotedPrintable(value?: string): Chainable<string>;
             waitRequest(what: 'files' | 'graphql'): Chainable<Interception>;
             interceptRequests(): Chainable<Interception>;
