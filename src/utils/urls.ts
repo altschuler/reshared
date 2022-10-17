@@ -12,6 +12,13 @@ interface ThingWithId {
     short_id: string;
 }
 
+interface PostWithId {
+    id: string;
+    group: {
+        short_id: string;
+    };
+}
+
 interface ChatGroupWithId {
     id: string;
 }
@@ -56,8 +63,8 @@ export const urlFor = {
         home: (group: GroupWithId, absolute = false) =>
             makeUrl(absolute, `/groups/${group.short_id}`),
         // TODO: placeholder, link to actual post
-        post: (group: GroupWithId, absolute = false) =>
-            makeUrl(absolute, `/groups/${group.short_id}`),
+        post: (post: PostWithId, absolute = false) =>
+            makeUrl(absolute, `/groups/${post.group.short_id}/posts/${post.id}`),
         things: (group: GroupWithId, absolute = false) =>
             makeUrl(absolute, `/groups/${group.short_id}/things`),
         posts: (group: GroupWithId, absolute = false) =>
@@ -83,15 +90,15 @@ export const urlFor = {
 
         // Navigate to the related entity
         if (ent.group_thing) {
-            // TODO: link to thing page
             return urlFor.thing(ent.group_thing.thing);
         } else if (ent.group_post) {
             return urlFor.group.home(ent.group_post.group);
         } else if (ent.group_member) {
             return urlFor.group.home(ent.group_member.group);
         } else if (ent.group_post_comment) {
-            // TODO: link to post somehow
-            return urlFor.group.home(ent.group_post_comment.post.group);
+            return urlFor.group.post(ent.group_post_comment.post);
+        } else if (ent.group_post) {
+            return urlFor.group.post(ent.group_post);
         } else if (ent.group) {
             return urlFor.group.home(ent.group);
         } else if (ent.group_join_request) {

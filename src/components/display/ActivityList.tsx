@@ -24,7 +24,7 @@ const renderNotification = (
                     {activityMessage(activity, currentUser)}
                 </Typography.Link>
             }
-            description={<DateDisplay mode="datetime" utc={activity.created_at} />}
+            description={<DateDisplay mode="distance" utc={activity.created_at} />}
         />
     </List.Item>
 );

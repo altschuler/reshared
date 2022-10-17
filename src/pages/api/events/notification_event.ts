@@ -17,7 +17,7 @@ interface EmailConfig {
     // The subject of the potential email
     subject: string;
     // CTA link
-    link: string;
+    link?: string;
 }
 
 export default makeEventHandler<Notifications>(async (args, ctx) => {
@@ -61,7 +61,7 @@ export default makeEventHandler<Notifications>(async (args, ctx) => {
             data: {
                 user_name: notification.user.displayName,
                 message,
-                link: config.link,
+                link: urlFor.activity(notification.activity),
                 settings_link: urlFor.user.settings(true),
             },
         });
@@ -83,7 +83,6 @@ const getEmailConfig = (
             return {
                 direct: true,
                 subject: `You have been made an admin of ${ent.group_member.group.name}`,
-                link: urlFor.group.home(ent.group_member.group, true),
             };
         }
 
@@ -91,7 +90,6 @@ const getEmailConfig = (
             return {
                 direct: true,
                 subject: `You have been made the owner of ${ent.group_member.group.name}`,
-                link: urlFor.group.home(ent.group_member.group, true),
             };
         }
 
@@ -99,7 +97,6 @@ const getEmailConfig = (
             return {
                 direct: true,
                 subject: `You are no longer an admin of ${ent.group_member.group.name}`,
-                link: urlFor.group.home(ent.group_member.group, true),
             };
         }
     }
@@ -109,7 +106,6 @@ const getEmailConfig = (
             return {
                 direct: true,
                 subject: `New post in ${ent.group_post.group.name}`,
-                link: urlFor.group.post(ent.group_post.group, true),
             };
         }
     }
@@ -122,7 +118,6 @@ const getEmailConfig = (
                 subject: `New reply to ${yourPost ? 'your' : 'a'} post in ${
                     ent.group_post_comment.post.group.name
                 }`,
-                link: urlFor.group.post(ent.group_post_comment.post.group, true),
             };
         }
     }
@@ -132,7 +127,6 @@ const getEmailConfig = (
             return {
                 direct: true,
                 subject: `Your request to join ${ent.group_join_request.group.name} has been accepted`,
-                link: urlFor.group.home(ent.group_join_request.group, true),
             };
         }
 
@@ -140,7 +134,6 @@ const getEmailConfig = (
             return {
                 direct: true,
                 subject: `Your request to join ${ent.group_join_request.group.name} has been accepted`,
-                link: urlFor.home(true),
             };
         }
 
@@ -148,7 +141,6 @@ const getEmailConfig = (
             return {
                 direct: true,
                 subject: `Someone would like to join ${ent.group_join_request.group.name}`,
-                link: urlFor.group.members(ent.group_join_request.group, true),
             };
         }
     }
@@ -164,7 +156,6 @@ const getEmailConfig = (
             return {
                 direct: true,
                 subject: `${receiver.displayName} accepted ownership of ${thing.name}`,
-                link: urlFor.thing(thing, true),
             };
         }
 
@@ -172,7 +163,6 @@ const getEmailConfig = (
             return {
                 direct: true,
                 subject: `${receiver.displayName} declined to take ownership of ${thing.name}`,
-                link: urlFor.thing(thing, true),
             };
         }
 
@@ -180,7 +170,6 @@ const getEmailConfig = (
             return {
                 direct: true,
                 subject: `${giver.displayName} wants to transfer ownership of ${thing.name} to you`,
-                link: urlFor.thing(thing, true),
             };
         }
     }

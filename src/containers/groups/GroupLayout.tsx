@@ -34,29 +34,10 @@ export interface GroupLayoutProps {
     children?: ReactNode;
 }
 
-const useStyles = createUseStyles({
-    active: {
-        color: '#40a9ff',
-        borderColor: '#40a9ff',
-        border: 'none',
-        borderBottomStyle: 'solid',
-        borderBottomWidth: 3,
-    },
-
-    header: {
-        '& .ant-page-header-heading': {
-            paddingBottom: '1em',
-            borderBottom: '1px solid #CCC',
-        },
-    },
-});
-
 export const GroupLayout = (props: GroupLayoutProps) => {
-    const classes = useStyles();
     const dialogs = useDialogs();
     const router = useRouter();
     const { isAdmin, isMember, user } = useMembership(props.group);
-    const btnClass = (page: GroupPage) => (props.activePage === page ? classes.active : undefined);
 
     const [leave] = useLeaveGroupMutation({
         refetchQueries: [GqlOps.Query.UserPrivateDetails],

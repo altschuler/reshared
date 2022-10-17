@@ -7,7 +7,7 @@ import { useActivityListQuery } from '../../generated/graphql';
 import { ActivityList } from '../../components/display';
 import { AudioOutlined, GiftOutlined, SearchOutlined, UserAddOutlined } from '@ant-design/icons';
 import { useCallback } from 'react';
-import { CreateThingDrawer, useDialogs } from '../../components/dialogs';
+import { CreatePostDrawer, CreateThingDrawer, useDialogs } from '../../components/dialogs';
 import { urlFor } from '../../utils/urls';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -40,6 +40,14 @@ export const Dashboard = () => {
         [dialogs],
     );
 
+    const handleAsk = useCallback(
+        () =>
+            dialogs
+                .showDialog(CreatePostDrawer)
+                .then((post) => post && router.push(urlFor.group.post(post))),
+        [dialogs],
+    );
+
     return (
         <PageLayout padded>
             <div className={classes.quickActions}>
@@ -50,7 +58,9 @@ export const Dashboard = () => {
                     <QuickAction icon={<SearchOutlined />}>
                         <Link href={urlFor.search()}>Find something</Link>
                     </QuickAction>
-                    <QuickAction icon={<AudioOutlined />}>Ask for something</QuickAction>
+                    <QuickAction onClick={handleAsk} icon={<AudioOutlined />}>
+                        Ask for something
+                    </QuickAction>
                     <QuickAction icon={<UserAddOutlined />}>Invite others</QuickAction>
                 </Row>
             </div>

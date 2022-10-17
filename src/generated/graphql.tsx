@@ -13680,6 +13680,13 @@ export type GroupPostListQueryVariables = Exact<{
 
 export type GroupPostListQuery = { __typename?: 'query_root', group_posts: Array<{ __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }>, group_posts_aggregate: { __typename?: 'group_posts_aggregate', aggregate?: { __typename?: 'group_posts_aggregate_fields', count: number } | null } };
 
+export type GroupPostSingleQueryVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type GroupPostSingleQuery = { __typename?: 'query_root', group_posts_by_pk?: { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } | null };
+
 export type ActivityListQueryVariables = Exact<{
   offset?: InputMaybe<Scalars['Int']>;
 }>;
@@ -14022,7 +14029,7 @@ export const GroupPostFragmentDoc = gql`
   type
   resolved
   content
-  comments(order_by: [{created_at: asc}]) {
+  comments(order_by: [{created_at: desc}]) {
     id
     comment {
       ...CommentCard
@@ -14859,6 +14866,44 @@ export type GroupPostListLazyQueryHookResult = ReturnType<typeof useGroupPostLis
 export type GroupPostListQueryResult = Apollo.QueryResult<GroupPostListQuery, GroupPostListQueryVariables>;
 export function refetchGroupPostListQuery(variables: GroupPostListQueryVariables) {
       return { query: GroupPostListDocument, variables: variables }
+    }
+export const GroupPostSingleDocument = gql`
+    query GroupPostSingle($id: uuid!) {
+  group_posts_by_pk(id: $id) {
+    ...GroupPost
+  }
+}
+    ${GroupPostFragmentDoc}`;
+
+/**
+ * __useGroupPostSingleQuery__
+ *
+ * To run a query within a React component, call `useGroupPostSingleQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGroupPostSingleQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGroupPostSingleQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGroupPostSingleQuery(baseOptions: Apollo.QueryHookOptions<GroupPostSingleQuery, GroupPostSingleQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GroupPostSingleQuery, GroupPostSingleQueryVariables>(GroupPostSingleDocument, options);
+      }
+export function useGroupPostSingleLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GroupPostSingleQuery, GroupPostSingleQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GroupPostSingleQuery, GroupPostSingleQueryVariables>(GroupPostSingleDocument, options);
+        }
+export type GroupPostSingleQueryHookResult = ReturnType<typeof useGroupPostSingleQuery>;
+export type GroupPostSingleLazyQueryHookResult = ReturnType<typeof useGroupPostSingleLazyQuery>;
+export type GroupPostSingleQueryResult = Apollo.QueryResult<GroupPostSingleQuery, GroupPostSingleQueryVariables>;
+export function refetchGroupPostSingleQuery(variables: GroupPostSingleQueryVariables) {
+      return { query: GroupPostSingleDocument, variables: variables }
     }
 export const ActivityListDocument = gql`
     query ActivityList($offset: Int = 0) {
@@ -16145,6 +16190,7 @@ export const GqlOps = {
     GroupJoinRequests: 'GroupJoinRequests',
     GroupJoinTokens: 'GroupJoinTokens',
     GroupPostList: 'GroupPostList',
+    GroupPostSingle: 'GroupPostSingle',
     ActivityList: 'ActivityList',
     SearchCounts: 'SearchCounts',
     ThingList: 'ThingList',

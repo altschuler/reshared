@@ -7,4 +7,5 @@ export * from './ActivityList';
 export * from './ImageThumbList';
 export * from './ThingImageDisplay';
 export * from './ImageDisplay';
+export * from './PostDisplay';
 export * from './feed';

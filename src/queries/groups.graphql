@@ -87,7 +87,7 @@ fragment GroupPost on group_posts {
     type
     resolved
     content
-    comments(order_by: [{ created_at: asc }]) {
+    comments(order_by: [{ created_at: desc }]) {
         id
         comment {
             ...CommentCard
@@ -147,6 +147,12 @@ query GroupPostList(
         aggregate {
             count
         }
+    }
+}
+
+query GroupPostSingle($id: uuid!) {
+    group_posts_by_pk(id: $id) {
+        ...GroupPost
     }
 }
 
