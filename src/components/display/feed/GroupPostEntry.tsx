@@ -1,23 +1,30 @@
 ﻿import { useMemo } from 'react';
-import { GroupPostFragment, Group_Post_Type_Enum } from '../../../generated/graphql';
+import {
+    Activity_Verb_Enum,
+    DetailedActivityFragment,
+    GroupPostFragment,
+    Group_Post_Type_Enum,
+} from '../../../generated/graphql';
 import { BaseEntry } from './BaseEntry';
 
 export interface GroupPostEntryProps {
     post: GroupPostFragment;
+    activity: DetailedActivityFragment;
 }
 
-export const GroupPostEntry = ({ post }: GroupPostEntryProps) => {
-    const title = useMemo(
-        () =>
-            post.type === Group_Post_Type_Enum.Message
-                ? 'posted a message'
-                : 'is looking for something',
-        [post.type],
-    );
+export const GroupPostEntry = ({ post, activity }: GroupPostEntryProps) => {
+    const title = useMemo(() => {
+        const isMessage = post.type === Group_Post_Type_Enum.Message;
+        if (isMessage) {
+            return 'posted a message';
+        }
 
-    return (
-        <BaseEntry actor={post.author} title={title} date={post.created_at}>
-            <p>{post.content}</p>
-        </BaseEntry>
-    );
+        if (activity.verb === Activity_Verb_Enum.Resolved) {
+            return 'resolved a request';
+        }
+
+        return 'is looking for something';
+    }, [post.type]);
+
+    return <BaseEntry activity={activity} actor={post.author} title={title} />;
 };

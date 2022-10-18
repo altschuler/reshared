@@ -1,12 +1,16 @@
-﻿import { GroupMemberWithGroupCardFragment } from '../../../generated/graphql';
+﻿import { useMemo } from 'react';
+import {
+    DetailedActivityFragment,
+    GroupMemberWithGroupCardFragment,
+} from '../../../generated/graphql';
 import { BaseEntry } from './BaseEntry';
-import { useMemo } from 'react';
 
 export interface GroupMemberEntryProps {
     member: GroupMemberWithGroupCardFragment;
+    activity: DetailedActivityFragment;
 }
 
-export const GroupMemberEntry = ({ member }: GroupMemberEntryProps) => {
+export const GroupMemberEntry = ({ member, activity }: GroupMemberEntryProps) => {
     const title = useMemo(() => `joined ${member.group.name}`, [member.group.name]);
-    return <BaseEntry actor={member.user} title={title} date={member.created_at} />;
+    return <BaseEntry activity={activity} actor={member.user} title={title} />;
 };

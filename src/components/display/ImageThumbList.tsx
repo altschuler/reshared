@@ -12,8 +12,8 @@ const useStyles = createUseStyles({
         maxWidth: 200,
     },
     thumbnail: {
-        width: 40,
-        height: 40,
+        width: (props: ImageThumbListProps) => props.thumbSize || 40,
+        height: (props: ImageThumbListProps) => props.thumbSize || 40,
         border: '1px solid #EEE',
         borderRadius: 3,
         cursor: 'pointer',
@@ -29,11 +29,12 @@ const useStyles = createUseStyles({
 
 export interface ImageThumbListProps {
     thing: ThingCardFragment;
+    thumbSize?: number;
 }
 
 export const ImageThumbList = (props: ImageThumbListProps) => {
     const { showDialog } = useDialogs();
-    const classes = useStyles();
+    const classes = useStyles(props);
     const nhost = useNhostClient();
 
     const handleShowGallery = useCallback(
@@ -61,8 +62,8 @@ export const ImageThumbList = (props: ImageThumbListProps) => {
                     <ThingImageDisplay
                         image={img}
                         thing={props.thing}
-                        width={40}
-                        height={40}
+                        width={props.thumbSize || 40}
+                        height={props.thumbSize || 40}
                         onClick={() => handleShowGallery(index)}
                     />
                 </div>

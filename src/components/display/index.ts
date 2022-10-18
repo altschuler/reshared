@@ -8,4 +8,5 @@ export * from './ImageThumbList';
 export * from './ThingImageDisplay';
 export * from './ImageDisplay';
 export * from './PostDisplay';
+export * from './PostList';
 export * from './feed';

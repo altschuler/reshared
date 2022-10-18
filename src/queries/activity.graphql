@@ -136,6 +136,9 @@ fragment DetailedEntity on entities {
         thing {
             ...ThingCard
         }
+        group {
+            ...GroupRef
+        }
     }
     group_member {
         ...GroupMemberWithGroupCard

@@ -20,29 +20,45 @@ insert_permissions:
   - role: user
     permission:
       check:
-        group:
-          memberships:
-            user_id:
-              _eq: X-Hasura-User-Id
+        _and:
+          - group:
+              memberships:
+                user_id:
+                  _eq: X-Hasura-User-Id
+          - _or:
+              - pinned:
+                  _eq: false
+              - group:
+                  memberships:
+                    _and:
+                      - user_id:
+                          _eq: X-Hasura-User-Id
+                      - role:
+                          _in:
+                            - admin
+                            - owner
       set:
         author_id: x-hasura-User-Id
       columns:
         - content
         - group_id
+        - keyword
         - resolved
         - type
 select_permissions:
   - role: public
     permission:
       columns:
-        - resolved
-        - content
-        - type
-        - created_at
-        - updated_at
         - author_id
+        - content
+        - created_at
         - group_id
         - id
+        - keyword
+        - pinned
+        - resolved
+        - type
+        - updated_at
       filter:
         group:
           public:
@@ -55,6 +71,8 @@ select_permissions:
         - created_at
         - group_id
         - id
+        - keyword
+        - pinned
         - resolved
         - type
         - updated_at
@@ -72,6 +90,7 @@ update_permissions:
     permission:
       columns:
         - content
+        - keyword
         - resolved
         - type
       filter:

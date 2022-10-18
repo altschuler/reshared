@@ -19,7 +19,6 @@ const useStyles = createUseStyles({
     },
     pageContent: {
         display: 'flex',
-        marginTop: '2em',
         flex: 1,
         width: '100%',
         boxShadow: '0px 1px 120px 9px rgba(125,125,125,0.15)',
@@ -70,6 +69,7 @@ const useStyles = createUseStyles({
     restrictedWidth: {
         width: '100%',
         maxWidth: 800,
+        // marginTop: '2em',
     },
 });
 

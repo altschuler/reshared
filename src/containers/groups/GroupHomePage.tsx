@@ -3,9 +3,11 @@ import { isEmpty } from 'lodash-es';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { createUseStyles } from 'react-jss';
-import { ActivityFeed } from '../../components/display';
+import { ActivityFeed, PostList } from '../../components/display';
 import { ThingList } from '../../components/ThingList';
 import {
+    Group_Posts_Bool_Exp,
+    Group_Post_Type_Enum,
     Things_Bool_Exp,
     useGroupActivityQuery,
     useGroupDetailsQuery,
@@ -35,10 +37,10 @@ export const GroupHomePage = () => {
     const activities = query.data?.groups?.[0].activities || [];
 
     const where = useMemo(
-        (): Things_Bool_Exp => ({
-            enabled: { _eq: true },
-            group_relations: { group: { short_id: { _eq: shortId } } },
-            _or: [{ expiry: { _gt: 'now()' } }, { expiry: { _is_null: true } }],
+        (): Group_Posts_Bool_Exp => ({
+            group: { short_id: { _eq: shortId } },
+            pinned: { _eq: false },
+            type: { _eq: Group_Post_Type_Enum.Message },
         }),
         [shortId],
     );
@@ -65,16 +67,13 @@ export const GroupHomePage = () => {
         <GroupLayout activePage="home" group={group}>
             <Row gutter={[16, 16]}>
                 {!collapsed && (
-                    <Col flex="200px">
+                    <Col flex="300px">
                         <Typography.Title level={5}>Latest activity</Typography.Title>
                         <ActivityFeed loading={query.loading} activities={activities} />
                     </Col>
                 )}
                 <Col flex="auto">
-                    <Typography.Title level={5}>Find something</Typography.Title>
-                    <div>
-                        <ThingList where={where} />
-                    </div>
+                    <PostList where={where} emptyText="There are no messages yet" />
                 </Col>
             </Row>
         </GroupLayout>

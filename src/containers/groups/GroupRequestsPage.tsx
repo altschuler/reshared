@@ -1,14 +1,9 @@
 ﻿import { Alert, Card, Col, Input, Radio, Row, Skeleton, Space, Spin } from 'antd';
-import { compact, head } from 'lodash-es';
+import { compact, head, isEmpty } from 'lodash-es';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
-import { PostDisplay } from '../../components/display';
-import {
-    Group_Post_Type_Enum,
-    Order_By,
-    useGroupDetailsQuery,
-    useGroupPostListQuery,
-} from '../../generated/graphql';
+import { useMemo, useState } from 'react';
+import { PostList } from '../../components/display';
+import { Group_Post_Type_Enum, useGroupDetailsQuery } from '../../generated/graphql';
 import { useDebounce } from '../../utils/hooks';
 import { GroupLayout } from './GroupLayout';
 
@@ -26,29 +21,23 @@ export const GroupRequestsPage = () => {
     });
     const group = head(data?.groups);
 
-    const postsQuery = useGroupPostListQuery({
-        variables: {
-            limit: 10,
-            offset: 0,
-            orderBy: [{ created_at: Order_By.Desc }],
-            where: {
-                group: { short_id: { _eq: shortId } },
-                type: { _eq: Group_Post_Type_Enum.Request },
-                _and: compact([
-                    search && {
-                        _or: [
-                            { content: { _ilike: `%${debouncedSearch}%` } },
-                            { author: { displayName: { _ilike: `%${debouncedSearch}%` } } },
-                        ],
-                    },
-                    status === 'open' && { resolved: { _eq: false } },
-                    status === 'resolved' && { resolved: { _eq: true } },
-                ]),
-            },
-        },
-    });
-
-    const posts = postsQuery.data?.group_posts || [];
+    const where = useMemo(
+        () => ({
+            group: { short_id: { _eq: shortId } },
+            type: { _eq: Group_Post_Type_Enum.Request },
+            _and: compact([
+                debouncedSearch && {
+                    _or: [
+                        { content: { _ilike: `%${debouncedSearch}%` } },
+                        { author: { displayName: { _ilike: `%${debouncedSearch}%` } } },
+                    ],
+                },
+                status === 'open' && { resolved: { _eq: false } },
+                status === 'resolved' && { resolved: { _eq: true } },
+            ]),
+        }),
+        [debouncedSearch, shortId, status],
+    );
 
     if (error || (!loading && !group)) {
         return <Alert message={error?.message || 'Group does not exist'} />;
@@ -95,13 +84,10 @@ export const GroupRequestsPage = () => {
                     </Col>
                 </Row>
 
-                <Spin spinning={postsQuery.loading}>
-                    <Space direction="vertical" size="large" style={{ display: 'flex' }}>
-                        {posts.map((post) => (
-                            <PostDisplay key={post.id} post={post} link />
-                        ))}
-                    </Space>
-                </Spin>
+                <PostList
+                    where={where}
+                    emptyText={isEmpty(debouncedSearch) ? 'No requests to show' : 'Nothing found'}
+                />
             </Space>
         </GroupLayout>
     );

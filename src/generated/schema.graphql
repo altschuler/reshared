@@ -6686,6 +6686,8 @@ type group_posts {
   group: groups!
   group_id: uuid!
   id: uuid!
+  keyword: String!
+  pinned: Boolean!
   resolved: Boolean!
   type: group_post_type_enum!
   updated_at: timestamptz!
@@ -6742,6 +6744,8 @@ input group_posts_bool_exp {
   group: groups_bool_exp
   group_id: uuid_comparison_exp
   id: uuid_comparison_exp
+  keyword: String_comparison_exp
+  pinned: Boolean_comparison_exp
   resolved: Boolean_comparison_exp
   type: group_post_type_enum_comparison_exp
   updated_at: timestamptz_comparison_exp
@@ -6769,6 +6773,8 @@ input group_posts_insert_input {
   group: groups_obj_rel_insert_input
   group_id: uuid
   id: uuid
+  keyword: String
+  pinned: Boolean
   resolved: Boolean
   type: group_post_type_enum
   updated_at: timestamptz
@@ -6781,6 +6787,7 @@ type group_posts_max_fields {
   created_at: timestamptz
   group_id: uuid
   id: uuid
+  keyword: String
   updated_at: timestamptz
 }
 
@@ -6793,6 +6800,7 @@ input group_posts_max_order_by {
   created_at: order_by
   group_id: order_by
   id: order_by
+  keyword: order_by
   updated_at: order_by
 }
 
@@ -6803,6 +6811,7 @@ type group_posts_min_fields {
   created_at: timestamptz
   group_id: uuid
   id: uuid
+  keyword: String
   updated_at: timestamptz
 }
 
@@ -6815,6 +6824,7 @@ input group_posts_min_order_by {
   created_at: order_by
   group_id: order_by
   id: order_by
+  keyword: order_by
   updated_at: order_by
 }
 
@@ -6858,6 +6868,8 @@ input group_posts_order_by {
   group: groups_order_by
   group_id: order_by
   id: order_by
+  keyword: order_by
+  pinned: order_by
   resolved: order_by
   type: order_by
   updated_at: order_by
@@ -6888,6 +6900,12 @@ enum group_posts_select_column {
   id
 
   """column name"""
+  keyword
+
+  """column name"""
+  pinned
+
+  """column name"""
   resolved
 
   """column name"""
@@ -6906,6 +6924,8 @@ input group_posts_set_input {
   created_at: timestamptz
   group_id: uuid
   id: uuid
+  keyword: String
+  pinned: Boolean
   resolved: Boolean
   type: group_post_type_enum
   updated_at: timestamptz
@@ -6929,6 +6949,12 @@ enum group_posts_update_column {
 
   """column name"""
   id
+
+  """column name"""
+  keyword
+
+  """column name"""
+  pinned
 
   """column name"""
   resolved

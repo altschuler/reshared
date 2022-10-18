@@ -7,6 +7,7 @@ import { CSSProperties, useMemo } from 'react';
 import { urlFor } from '../../utils/urls';
 import { useAuth } from '../../utils/auth';
 import { useNhostClient } from '@nhost/react';
+import { AvatarSize } from 'antd/lib/avatar/SizeContext';
 
 const useStyles = createUseStyles({
     overlay: {
@@ -23,7 +24,7 @@ export interface UserAvatarProps {
     className?: string;
     style?: CSSProperties;
     showName?: boolean;
-    size?: 'small' | 'default' | 'large';
+    size?: AvatarSize;
 }
 
 export const UserAvatar = (props: UserAvatarProps) => {

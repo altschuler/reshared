@@ -1,67 +1,36 @@
-﻿import { ReactNode } from 'react';
-import { List, Space, Typography } from 'antd';
-import { UserAvatar } from '../UserAvatar';
-import { UserCardFragment } from '../../../generated/graphql';
-import { createUseStyles } from 'react-jss';
+﻿import { List } from 'antd';
+import Link from 'next/link';
+import { ReactNode } from 'react';
+import { DetailedActivityFragment, UserCardFragment } from '../../../generated/graphql';
+import { urlFor } from '../../../utils/urls';
 import { DateDisplay } from '../DateDisplay';
-
-const useStyles = createUseStyles({
-    root: {
-        border: '1px solid #EEE',
-        backgroundColor: '#fcfcfc',
-        boxShadow: '3px 3px #e4e4e4',
-        width: '100%',
-        maxWidth: 800,
-        padding: '1em',
-        marginBottom: '2em',
-    },
-    header: {
-        display: 'flex',
-    },
-    headerText: {
-        display: 'flex',
-        flexDirection: 'column',
-        flex: 1,
-    },
-    avatar: {
-        display: 'flex',
-        alignItems: 'center',
-        flex: 'none',
-        marginRight: '1em',
-    },
-    extra: {
-        flex: 'none',
-    },
-    date: {
-        fontSize: '0.8em',
-    },
-    content: {
-        marginTop: '1em',
-    },
-});
+import { UserAvatar } from '../UserAvatar';
 
 export interface BaseEntryProps {
     actor: UserCardFragment;
-    date: Date | string;
     title: ReactNode;
     extra?: ReactNode;
-    children?: ReactNode;
+    activity: DetailedActivityFragment;
 }
 
 export const BaseEntry = (props: BaseEntryProps) => {
-    const classes = useStyles();
     return (
         <List.Item actions={props.extra ? [props.extra] : []}>
-            <List.Item.Meta
-                avatar={<UserAvatar size="small" user={props.actor} />}
-                title={
-                    <span>
+            <Link href={urlFor.activity(props.activity)}>
+                <a>
+                    <span style={{ display: 'flex', alignItems: 'center' }}>
+                        <UserAvatar
+                            size={16}
+                            user={props.actor}
+                            style={{ marginRight: 5, flex: 'none' }}
+                        />
                         {props.actor.displayName} {props.title}
                     </span>
-                }
-                description={<DateDisplay utc={props.date} mode="distance" />}
-            />
-            <div>{props.children}</div>
+                </a>
+            </Link>
+            <span style={{ fontSize: '0.8em' }}>
+                <DateDisplay utc={props.activity.created_at} mode="distance" />
+            </span>
         </List.Item>
     );
 };

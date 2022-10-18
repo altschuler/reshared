@@ -74,7 +74,7 @@ export const ChatNewPage = (props: ChatPageNewProps) => {
     );
 
     return (
-        <PageLayout noScroll noFooter horizontal>
+        <PageLayout noScroll noFooter horizontal fullWidth>
             <div className={classes.sidebar}>
                 <Sidebar groups={chatGroups} loading={groupsSub.loading} />
             </div>
