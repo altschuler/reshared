@@ -20,7 +20,7 @@ export const LogoutPage = () => {
         if ((!isAuthenticated || isSuccess) && !isServer) {
             router.push(urlFor.root());
         }
-    }, [isSuccess, isAuthenticated]);
+    }, [isSuccess, isAuthenticated, isServer, router]);
 
     return (
         <PageLayout centered horizontal padded>
