@@ -19,6 +19,7 @@ const assertLoggedOut = () => {
 describe('auth flow', () => {
     beforeEach(() => {
         cy.visit('/');
+        cy.interceptRequests();
     });
 
     it('registration', () => {

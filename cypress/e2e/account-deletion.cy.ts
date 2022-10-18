@@ -80,6 +80,9 @@ describe('account deletion', () => {
 
         cy.visit('/settings');
 
+        // prevent cypress detached error
+        cy.wait(2000);
+
         cy.t('delete-account:btn').click();
 
         cy.t('delete-account:blocked:txt').should('exist');
@@ -102,6 +105,9 @@ describe('account deletion', () => {
         cy.loginCustom(email, password, true);
 
         cy.visit('/settings');
+
+        // prevent cypress detached error
+        cy.wait(2000);
 
         cy.t('delete-account:btn').click();
 
