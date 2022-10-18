@@ -1,5 +1,17 @@
 import { CheckCircleTwoTone, EditOutlined } from '@ant-design/icons';
-import { Button, Card, Comment, List, message, Modal, Space, Tooltip, Typography } from 'antd';
+import {
+    Badge,
+    Button,
+    Card,
+    Comment,
+    List,
+    message,
+    Modal,
+    Space,
+    Tooltip,
+    Typography,
+} from 'antd';
+import clsx from 'clsx';
 import { isEmpty } from 'lodash-es';
 import Link from 'next/link';
 import { useCallback, useMemo, useState } from 'react';
@@ -20,6 +32,10 @@ const useStyles = createUseStyles({
     card: {
         flex: 1,
         boxShadow: '0px 0px 58px 5px rgba(125,125,125,.1)',
+    },
+
+    pinned: {
+        border: '1px solid #188ffe',
     },
 
     cardHeader: {
@@ -49,6 +65,7 @@ export const PostDisplay = ({ post, link }: { post: GroupPostFragment; link?: bo
                 }),
             );
     }, [post]);
+
     const handleAddComment = useCallback(
         (state: CommentEditorState) => {
             addComment({
@@ -72,15 +89,15 @@ export const PostDisplay = ({ post, link }: { post: GroupPostFragment; link?: bo
 
     const title =
         post.type === Group_Post_Type_Enum.Message
-            ? `${post.author.displayName} posted a message`
-            : `${post.author.displayName} is looking for something`;
+            ? `${post.author.displayName} ${post.pinned ? 'pinned' : 'posted'} a message`
+            : `${post.author.displayName} is looking for ${post.keyword || 'something'}`;
 
     const isAuthor = post.author.id === auth.user?.id;
     const comments = useMemo(() => post.comments.slice().reverse(), [post.comments]);
 
-    return (
+    const card = (
         <Card
-            className={classes.card}
+            className={clsx(classes.card, post.pinned && classes.pinned)}
             size="small"
             title={
                 <Space>
@@ -93,7 +110,7 @@ export const PostDisplay = ({ post, link }: { post: GroupPostFragment; link?: bo
                 </Space>
             }
             extra={
-                <Space>
+                <Space style={post.pinned ? { paddingRight: 50 } : {}}>
                     <Typography.Text type="secondary">
                         <DateDisplay mode="distance" utc={post.created_at} />
                     </Typography.Text>
@@ -179,4 +196,6 @@ export const PostDisplay = ({ post, link }: { post: GroupPostFragment; link?: bo
             </div>
         </Card>
     );
+
+    return post.pinned ? <Badge.Ribbon text="Pinned">{card}</Badge.Ribbon> : card;
 };

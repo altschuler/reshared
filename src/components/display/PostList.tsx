@@ -6,7 +6,9 @@ import { PostDisplay } from './PostDisplay';
 
 export interface PostListProps {
     where: Group_Posts_Bool_Exp;
+    hideEmpty?: boolean;
     emptyText: ReactNode;
+    footer?: ReactNode;
 }
 
 export const PostList = (props: PostListProps) => {
@@ -21,6 +23,10 @@ export const PostList = (props: PostListProps) => {
 
     const posts = postsQuery.data?.group_posts || [];
 
+    if (isEmpty(posts) && props.hideEmpty) {
+        return null;
+    }
+
     return (
         <Spin spinning={postsQuery.loading}>
             <Space direction="vertical" size="large" style={{ display: 'flex' }}>
@@ -30,6 +36,7 @@ export const PostList = (props: PostListProps) => {
 
                 {isEmpty(posts) && props.emptyText}
             </Space>
+            {props.footer}
         </Spin>
     );
 };

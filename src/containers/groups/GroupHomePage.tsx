@@ -1,4 +1,4 @@
-﻿import { Alert, Col, Row, Spin, Typography } from 'antd';
+﻿import { Alert, Col, Divider, Row, Spin, Typography } from 'antd';
 import { isEmpty } from 'lodash-es';
 import { useRouter } from 'next/router';
 import { useMemo } from 'react';
@@ -45,6 +45,15 @@ export const GroupHomePage = () => {
         [shortId],
     );
 
+    const wherePinned = useMemo(
+        (): Group_Posts_Bool_Exp => ({
+            group: { short_id: { _eq: shortId } },
+            pinned: { _eq: true },
+            type: { _eq: Group_Post_Type_Enum.Message },
+        }),
+        [shortId],
+    );
+
     if (loading) {
         return <Spin />;
     }
@@ -73,6 +82,12 @@ export const GroupHomePage = () => {
                     </Col>
                 )}
                 <Col flex="auto">
+                    <PostList
+                        where={wherePinned}
+                        hideEmpty
+                        footer={<Divider type="horizontal" />}
+                        emptyText="There are no messages yet"
+                    />
                     <PostList where={where} emptyText="There are no messages yet" />
                 </Col>
             </Row>

@@ -68,7 +68,7 @@ const useStyles = createUseStyles({
     },
     restrictedWidth: {
         width: '100%',
-        maxWidth: 800,
+        maxWidth: 960,
         // marginTop: '2em',
     },
 });

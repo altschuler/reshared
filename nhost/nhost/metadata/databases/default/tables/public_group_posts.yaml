@@ -43,6 +43,7 @@ insert_permissions:
         - content
         - group_id
         - keyword
+        - pinned
         - resolved
         - type
 select_permissions:
@@ -91,12 +92,30 @@ update_permissions:
       columns:
         - content
         - keyword
+        - pinned
         - resolved
         - type
       filter:
         author_id:
           _eq: X-Hasura-User-Id
-      check: null
+      check:
+        _and:
+          - group:
+              memberships:
+                user_id:
+                  _eq: X-Hasura-User-Id
+          - _or:
+              - pinned:
+                  _eq: false
+              - group:
+                  memberships:
+                    _and:
+                      - user_id:
+                          _eq: X-Hasura-User-Id
+                      - role:
+                          _in:
+                            - admin
+                            - owner
 delete_permissions:
   - role: user
     permission:

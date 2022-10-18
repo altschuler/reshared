@@ -1,4 +1,4 @@
-﻿import { useCallback, useMemo, useState } from 'react';
+﻿import { ReactNode, useCallback, useMemo, useState } from 'react';
 import { set, isEmpty } from 'lodash-es';
 import Joi from 'joi';
 import { useDebounce } from '../../utils/hooks';
@@ -13,7 +13,10 @@ export interface EditorState<T> {
     touch: (path: string | string[]) => unknown;
     touched: string[];
     submit: () => boolean;
-    ant: (path: string) => { help?: string; validateStatus: 'error' | 'success' };
+    ant: (
+        path: string,
+        defaults?: { help?: ReactNode },
+    ) => { help?: string; validateStatus: 'error' | 'success' };
 }
 
 export const createUseEditor =
@@ -80,9 +83,9 @@ export const createUseEditor =
         }, [errors.all]);
 
         const ant = useCallback(
-            (path: string) => ({
+            (path: string, defaults?: { help?: ReactNode }) => ({
                 validateStatus: errors.touched[path] ? 'error' : ('success' as 'error' | 'success'),
-                help: errors.touched[path],
+                help: errors.touched[path] || defaults?.help,
             }),
             [errors.touched],
         );

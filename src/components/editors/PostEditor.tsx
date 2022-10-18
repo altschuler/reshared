@@ -1,16 +1,16 @@
-﻿import { Alert, Button, Form, Input, Popconfirm, Space, Typography } from 'antd';
-import { createUseEditor, EditorState } from './AbstractEditor';
+﻿import { Alert, Button, Checkbox, Form, Input, Popconfirm, Space } from 'antd';
+import Joi from 'joi';
+import { useCallback } from 'react';
 import {
-    Group_Post_Type_Enum,
-    Group_Posts_Insert_Input,
-    Group_Posts_Set_Input,
     GroupCardFragment,
     GroupPostFragment,
+    Group_Posts_Insert_Input,
+    Group_Posts_Set_Input,
+    Group_Post_Type_Enum,
 } from '../../generated/graphql';
-import Joi from 'joi';
-import { useCallback, useMemo } from 'react';
+import { useAuth } from '../../utils/auth';
 import { GroupPostTypeSelect, GroupSelect } from '../forms';
-import { HeartOutlined } from '@ant-design/icons';
+import { createUseEditor, EditorState } from './AbstractEditor';
 
 export const postSchema = Joi.object<EditorPost>({
     content: Joi.string().min(10).max(1000).messages({
@@ -18,6 +18,16 @@ export const postSchema = Joi.object<EditorPost>({
         'string.min': 'Write a bit more',
         'string.max': 'Keep it a little shorter (max 1000 characters)',
     }),
+    keyword: Joi.when('type', {
+        is: Group_Post_Type_Enum.Request,
+        then: Joi.string().required().min(4).max(50).messages({
+            'string.empty': 'Required',
+            'string.min': 'Keep it between 5 and 50 characters',
+            'string.max': 'Keep it between 5 and 50 characters',
+        }),
+        otherwise: Joi.optional(),
+    }),
+
     type: Joi.string().valid(Group_Post_Type_Enum.Request, Group_Post_Type_Enum.Message),
     group: Joi.any(),
 });
@@ -27,6 +37,8 @@ export interface EditorPost {
     type: Group_Post_Type_Enum;
     resolved: boolean;
     group: GroupCardFragment | null;
+    pinned: boolean;
+    keyword: string;
 }
 
 export const makeEditorPost = (source?: GroupPostFragment): EditorPost => ({
@@ -34,6 +46,8 @@ export const makeEditorPost = (source?: GroupPostFragment): EditorPost => ({
     type: source?.type || Group_Post_Type_Enum.Request,
     resolved: source?.resolved || false,
     group: source?.group || null,
+    pinned: source?.pinned || false,
+    keyword: source?.keyword || '',
 });
 
 export type PostEditorState = EditorState<EditorPost>;
@@ -49,17 +63,15 @@ export interface PostEditorProps {
 }
 
 export const PostEditor = (props: PostEditorProps) => {
+    const auth = useAuth();
     const { state, loading, error, submitLabel, onSubmit } = props;
     const { present } = state;
 
+    const isRequest = present.type === Group_Post_Type_Enum.Request;
     const handleSubmit = useCallback(() => state.submit() && onSubmit(state), [onSubmit, state]);
-    const contentPlaceholder = useMemo(
-        () =>
-            present.type === Group_Post_Type_Enum.Request
-                ? 'What are you looking for?'
-                : "What's on your mind?",
-        [present.type],
-    );
+    const contentPlaceholder = isRequest
+        ? 'Describe in more detail what are you looking for'
+        : "What's on your mind?";
 
     return (
         <div>
@@ -81,6 +93,39 @@ export const PostEditor = (props: PostEditorProps) => {
                         onChange={(type) => state.update({ type })}
                     />
                 </Form.Item>
+
+                {!isRequest && (
+                    <Form.Item extra="Pinned posts are shown at the top on the group home page">
+                        <Checkbox
+                            data-cy="pinned:cb"
+                            checked={present.pinned}
+                            onChange={(e) => state.update({ pinned: e.target.checked })}>
+                            Pinned
+                        </Checkbox>
+                    </Form.Item>
+                )}
+
+                {isRequest && (
+                    <Form.Item
+                        {...state.ant('keyword', {
+                            help: (
+                                <span>
+                                    Choose one or a few keywords that describe what you're looking
+                                    for, such as <i>chairs</i>, <i>5mm wood drill</i> or{' '}
+                                    <i>children's books</i>.
+                                </span>
+                            ),
+                        })}>
+                        <Input
+                            placeholder="Keyword"
+                            showCount
+                            maxLength={50}
+                            value={present.keyword}
+                            onBlur={() => state.touch('keyword')}
+                            onChange={(e) => state.update({ keyword: e.target.value })}
+                        />
+                    </Form.Item>
+                )}
 
                 <Form.Item {...state.ant('content')}>
                     <Input.TextArea
@@ -124,6 +169,22 @@ export const PostEditor = (props: PostEditorProps) => {
                     </Form.Item>
                 )}
             </Form>
+
+            {/* <PostDisplay
+                post={{
+                    id: 'x',
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString(),
+                    author: auth.userDetails!,
+                    content: state.present.content,
+                    comments: [],
+                    keyword: state.present.keyword,
+                    group: state.present.group as any,
+                    pinned: state.present.pinned,
+                    resolved: false,
+                    type: state.present.type,
+                }}
+            /> */}
         </div>
     );
 };
@@ -135,10 +196,14 @@ export const asPostCreateInput = ({ present }: PostEditorState): Group_Posts_Ins
     type: present.type,
     group_id: present.group?.id,
     resolved: present.resolved,
+    pinned: present.type === Group_Post_Type_Enum.Message && present.pinned,
+    keyword: present.type === Group_Post_Type_Enum.Request ? present.keyword : '',
 });
 
 export const asPostUpdateInput = ({ present }: PostEditorState): Group_Posts_Set_Input => ({
     content: present.content,
     type: present.type,
     resolved: present.resolved,
+    pinned: present.type === Group_Post_Type_Enum.Message && present.pinned,
+    keyword: present.type === Group_Post_Type_Enum.Request ? present.keyword : '',
 });

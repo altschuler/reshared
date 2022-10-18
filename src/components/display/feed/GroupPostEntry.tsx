@@ -20,10 +20,10 @@ export const GroupPostEntry = ({ post, activity }: GroupPostEntryProps) => {
         }
 
         if (activity.verb === Activity_Verb_Enum.Resolved) {
-            return 'resolved a request';
+            return `resolved a request for ${post.keyword || 'something'}`;
         }
 
-        return 'is looking for something';
+        return `is looking for ${post.keyword || 'something'}`;
     }, [post.type]);
 
     return <BaseEntry activity={activity} actor={post.author} title={title} />;
