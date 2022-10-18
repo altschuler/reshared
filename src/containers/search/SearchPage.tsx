@@ -144,7 +144,6 @@ export const SearchPage = () => {
                 <div className={classes.results}>
                     {options.type === 'thing' && (
                         <ThingList
-                            hideSearch
                             where={thingWhere}
                             emptyText={
                                 <Space direction="vertical">
