@@ -30,17 +30,15 @@ export const GroupPostPage = () => {
 
     if (loading) {
         return (
-            <GroupLayout activePage="posts" group={post.group}>
-                {[1, 2, 3].map((i) => (
-                    <Card key={i} style={{ width: 500, marginTop: 16 }}>
-                        <Skeleton loading={loading} avatar={{ size: 'small' }} active></Skeleton>
-                    </Card>
-                ))}
+            <GroupLayout activePage="requests" group={post.group}>
+                <Card>
+                    <Skeleton loading avatar={{ size: 'small' }} active></Skeleton>
+                </Card>
             </GroupLayout>
         );
     }
     return (
-        <GroupLayout activePage="posts" group={post.group}>
+        <GroupLayout activePage="requests" group={post.group}>
             <Space direction="vertical" size="large" style={{ width: '100%' }}>
                 {post.type === Group_Post_Type_Enum.Request ? (
                     <Link href={urlFor.group.requests(post.group)} passHref>
