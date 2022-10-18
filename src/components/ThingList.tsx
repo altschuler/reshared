@@ -1,24 +1,23 @@
-﻿import {
+﻿import { EditOutlined, PictureOutlined } from '@ant-design/icons';
+import { Button, List, Space } from 'antd';
+import { head } from 'lodash-es';
+import Link from 'next/link';
+import { ReactNode, useCallback, useEffect } from 'react';
+import { createUseStyles } from 'react-jss';
+import {
     Order_By,
     ThingCardFragment,
     Things_Bool_Exp,
     Things_Order_By,
     useThingListQuery,
 } from '../generated/graphql';
-import { head } from 'lodash-es';
 import { useAuth } from '../utils/auth';
-import { EditThingDrawer, useDialogs } from './dialogs';
 import { usePagination } from '../utils/list';
-import React, { ReactNode, useCallback, useEffect, useState } from 'react';
-import { Button, Input, List, Space } from 'antd';
 import { ownsThing } from '../utils/thing';
-import { EditOutlined, PictureOutlined } from '@ant-design/icons';
-import { ThingTypeTag, UserAvatar, ThingImageDisplay } from './display';
-import Link from 'next/link';
-import { createUseStyles } from 'react-jss';
-import { useDebounce } from '../utils/hooks';
-import { ThingInterestButton } from './ThingInterestButton';
 import { urlFor } from '../utils/urls';
+import { EditThingDrawer, useDialogs } from './dialogs';
+import { ThingImageDisplay, ThingTypeTag, UserAvatar } from './display';
+import { ThingInterestButton } from './ThingInterestButton';
 
 const useStyles = createUseStyles({
     search: {
@@ -45,15 +44,12 @@ export interface ThingListProps {
     where: Things_Bool_Exp;
     skip?: boolean;
     orderBy?: Things_Order_By[];
-    hideSearch?: boolean;
     emptyText?: ReactNode;
     header?: ReactNode;
     extra?: ReactNode;
 }
 
 export const ThingList = (props: ThingListProps) => {
-    const [query, setQuery] = useState('');
-    const debouncedQuery = useDebounce(query, 300);
     const { showDialog } = useDialogs();
     const pgn = usePagination();
     const classes = useStyles();
@@ -65,10 +61,7 @@ export const ThingList = (props: ThingListProps) => {
             offset: pgn.offset,
             orderBy: [{ created_at: Order_By.Desc }],
             where: {
-                _and: [
-                    props.where,
-                    debouncedQuery ? { name: { _ilike: `%${debouncedQuery}%` } } : {},
-                ],
+                _and: [props.where],
             },
         },
     });
@@ -86,18 +79,7 @@ export const ThingList = (props: ThingListProps) => {
 
     return (
         <List
-            header={
-                props.header ||
-                (!props.hideSearch && (
-                    <Input.Search
-                        size="large"
-                        placeholder="Search..."
-                        className={classes.search}
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                    />
-                ))
-            }
+            header={props.header}
             extra={props.extra}
             loading={loading}
             itemLayout="horizontal"
@@ -139,8 +121,9 @@ const ThingItem = (props: ThingItemProps) => {
                         title="This is your thing, click to edit"
                         icon={<EditOutlined />}
                         key="edit"
-                        onClick={props.onEdit}
-                    />
+                        onClick={props.onEdit}>
+                        Edit
+                    </Button>
                 ) : (
                     <ThingInterestButton thing={props.thing} />
                 ),

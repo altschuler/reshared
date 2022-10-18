@@ -1,12 +1,10 @@
-﻿import { createUseStyles } from 'react-jss';
-import { head } from 'lodash-es';
-import { ThingCardFragment, useCreateChatGroupMutation } from '../generated/graphql';
+﻿import { MessageOutlined } from '@ant-design/icons';
+import { Button, Input, Modal, Popover, Space, Typography } from 'antd';
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
+import { createUseStyles } from 'react-jss';
+import { ThingCardFragment, useCreateChatGroupMutation } from '../generated/graphql';
 import { urlFor } from '../utils/urls';
-import { Button, Input, Modal, Popover, Space, Typography } from 'antd';
-import { BellOutlined } from '@ant-design/icons';
-import * as React from 'react';
 
 const useStyles = createUseStyles({
     textarea: {
@@ -54,9 +52,11 @@ export const ThingInterestButton = ({ thing }: { thing: ThingCardFragment }) => 
     const content = (
         <div className={classes.contentRoot}>
             <Typography.Paragraph>
-                If you&apos;re interested in this thing, let {thing.owner.displayName} know by
-                sending them a message which will include a reference to this thing. Let them know
-                relevant details such as when/how much/for what/how many.
+                Let {thing.owner.displayName} know that you're interested by sending them a message
+                which will include a reference to this thing.
+            </Typography.Paragraph>
+            <Typography.Paragraph>
+                Include relevant details such as when, how much, for what etc.
             </Typography.Paragraph>
             <Input.TextArea
                 autoSize
@@ -68,7 +68,9 @@ export const ThingInterestButton = ({ thing }: { thing: ThingCardFragment }) => 
                 onChange={(e) => setValue(e.target.value)}
             />
             <Space>
-                <Button disabled={mutation.loading}>Cancel</Button>
+                <Button disabled={mutation.loading} onClick={() => handleVisibleChange(false)}>
+                    Cancel
+                </Button>
                 <Button
                     type="primary"
                     onClick={handleConfirm}
@@ -89,8 +91,9 @@ export const ThingInterestButton = ({ thing }: { thing: ThingCardFragment }) => 
             content={content}>
             <Button
                 title={`Let ${thing.owner.displayName} know you're interested in this`}
-                icon={<BellOutlined />}
-            />
+                icon={<MessageOutlined />}>
+                I'm interested
+            </Button>
         </Popover>
     );
 };

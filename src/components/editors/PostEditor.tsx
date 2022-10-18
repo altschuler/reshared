@@ -129,6 +129,7 @@ export const PostEditor = (props: PostEditorProps) => {
 
                 <Form.Item {...state.ant('content')}>
                     <Input.TextArea
+                        autoSize
                         placeholder={contentPlaceholder}
                         showCount
                         maxLength={1000}
