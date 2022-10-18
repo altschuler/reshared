@@ -45,7 +45,7 @@ export const GroupPostPage = () => {
                         <a>
                             <Space>
                                 <ArrowLeftOutlined />
-                                All posts
+                                All requests
                             </Space>
                         </a>
                     </Link>

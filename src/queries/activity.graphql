@@ -79,6 +79,8 @@ fragment EntityCard on entities {
         post {
             id
             author_id
+            keyword
+            type
             group {
                 ...GroupRef
             }
@@ -90,6 +92,8 @@ fragment EntityCard on entities {
 
     group_post {
         id
+        keyword
+        type
         group {
             ...GroupRef
         }

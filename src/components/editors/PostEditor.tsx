@@ -8,7 +8,7 @@ import {
     Group_Posts_Set_Input,
     Group_Post_Type_Enum,
 } from '../../generated/graphql';
-import { useAuth } from '../../utils/auth';
+import { useMembership } from '../../utils/group';
 import { GroupPostTypeSelect, GroupSelect } from '../forms';
 import { createUseEditor, EditorState } from './AbstractEditor';
 
@@ -63,9 +63,9 @@ export interface PostEditorProps {
 }
 
 export const PostEditor = (props: PostEditorProps) => {
-    const auth = useAuth();
     const { state, loading, error, submitLabel, onSubmit } = props;
     const { present } = state;
+    const { isAdmin } = useMembership(state.present.group);
 
     const isRequest = present.type === Group_Post_Type_Enum.Request;
     const handleSubmit = useCallback(() => state.submit() && onSubmit(state), [onSubmit, state]);
@@ -94,7 +94,7 @@ export const PostEditor = (props: PostEditorProps) => {
                     />
                 </Form.Item>
 
-                {!isRequest && (
+                {!isRequest && isAdmin && (
                     <Form.Item extra="Pinned posts are shown at the top on the group home page">
                         <Checkbox
                             data-cy="pinned:cb"

@@ -1,4 +1,4 @@
-﻿import { Drawer, message } from 'antd';
+﻿import { Alert, Drawer, message } from 'antd';
 import { useCallback } from 'react';
 import {
     GqlOps,
@@ -56,6 +56,7 @@ export const CreatePostDrawer = (props: CreatePostDrawerProps) => {
                 loading={mutation.loading}
                 onSubmit={handlePost}
             />
+            {mutation.error && <Alert type="error" message={mutation.error.message} />}
         </Drawer>
     );
 };

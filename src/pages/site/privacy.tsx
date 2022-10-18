@@ -43,7 +43,7 @@ const PrivacyPolicyPage = () => {
                     about how we handle user data and personal information, feel free to contact us.
                 </Typography.Paragraph>
                 <Typography.Paragraph>
-                    This policy is effective as of 1 January 2021.
+                    This policy is effective as of 1 January 2022.
                 </Typography.Paragraph>
             </PageHeader>
         </PageLayout>

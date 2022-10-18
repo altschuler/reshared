@@ -3,6 +3,7 @@ import { compact } from 'lodash-es';
 import {
     ActivityCardFragment,
     Activity_Verb_Enum,
+    Group_Post_Type_Enum,
     Transfer_Request_Status_Enum,
     UserCardFragment,
 } from '../generated/graphql';
@@ -53,12 +54,24 @@ export const activityMessageSafe = (
     }
 
     if (ent.group_post) {
-        if (activity.verb === Activity_Verb_Enum.Added) {
+        if (
+            activity.verb === Activity_Verb_Enum.Added &&
+            ent.group_post.type === Group_Post_Type_Enum.Message
+        ) {
             return `${actor} posted in ${ent.group_post.group.name}`;
         }
 
+        if (
+            activity.verb === Activity_Verb_Enum.Added &&
+            ent.group_post.type === Group_Post_Type_Enum.Request
+        ) {
+            return `${actor} is looking for ${ent.group_post.keyword || 'something'}`;
+        }
+
         if (activity.verb === Activity_Verb_Enum.Resolved) {
-            return `${actor} marked their request in ${ent.group_post.group.name} as resolved`;
+            return `${actor} marked their request for ${
+                ent.group_post.keyword || 'something'
+            } as resolved`;
         }
 
         if (activity.verb === Activity_Verb_Enum.Updated) {
@@ -70,8 +83,15 @@ export const activityMessageSafe = (
         if (activity.verb === Activity_Verb_Enum.Added) {
             const yourPost =
                 currentUser && ent.group_post_comment.post.author_id === currentUser.id;
+            const isRequest = ent.group_post_comment.post.type === Group_Post_Type_Enum.Request;
+            if (isRequest) {
+                return `${actor} commented on ${
+                    yourPost ? 'your request' : "a request you're participating in"
+                } for ${ent.group_post_comment.post.keyword}`;
+            }
+
             return `${actor} commented on ${
-                yourPost ? 'your post' : "a post you're participating in,"
+                yourPost ? 'your post' : "a post you're participating in"
             } in ${ent.group_post_comment.post.group.name}`;
         }
     }

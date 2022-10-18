@@ -1,4 +1,4 @@
-﻿import { Drawer, message, Modal } from 'antd';
+﻿import { Alert, Drawer, message, Modal } from 'antd';
 import { useCallback } from 'react';
 import {
     GqlOps,
@@ -77,6 +77,8 @@ export const EditPostDrawer = (props: EditPostDrawerProps) => {
                 onDelete={handleDelete}
                 submitLabel="Update"
             />
+
+            {mutation.error && <Alert type="error" message={mutation.error.message} />}
         </Drawer>
     );
 };
