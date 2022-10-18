@@ -56,6 +56,14 @@ export const activityMessageSafe = (
         if (activity.verb === Activity_Verb_Enum.Added) {
             return `${actor} posted in ${ent.group_post.group.name}`;
         }
+
+        if (activity.verb === Activity_Verb_Enum.Resolved) {
+            return `${actor} marked their request in ${ent.group_post.group.name} as resolved`;
+        }
+
+        if (activity.verb === Activity_Verb_Enum.Updated) {
+            return `${actor} updated their post in ${ent.group_post.group.name}`;
+        }
     }
 
     if (ent.group_post_comment) {

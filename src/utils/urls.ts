@@ -67,8 +67,8 @@ export const urlFor = {
             makeUrl(absolute, `/groups/${post.group.short_id}/posts/${post.id}`),
         things: (group: GroupWithId, absolute = false) =>
             makeUrl(absolute, `/groups/${group.short_id}/things`),
-        posts: (group: GroupWithId, absolute = false) =>
-            makeUrl(absolute, `/groups/${group.short_id}/posts`),
+        requests: (group: GroupWithId, absolute = false) =>
+            makeUrl(absolute, `/groups/${group.short_id}/requests`),
         members: (group: GroupWithId, absolute = false) =>
             makeUrl(absolute, `/groups/${group.short_id}/members`),
         settings: (group: GroupWithId, absolute = false) =>
@@ -91,8 +91,6 @@ export const urlFor = {
         // Navigate to the related entity
         if (ent.group_thing) {
             return urlFor.thing(ent.group_thing.thing);
-        } else if (ent.group_post) {
-            return urlFor.group.home(ent.group_post.group);
         } else if (ent.group_member) {
             return urlFor.group.home(ent.group_member.group);
         } else if (ent.group_post_comment) {

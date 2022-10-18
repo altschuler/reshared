@@ -1,14 +1,15 @@
 ﻿import { makeEventHandler } from '../../../server';
 import { Group_Post_Comment } from '../../../generated/graphql';
-import { ServerFindPostParticipantsDocument } from '../../../generated/server-queries';
+import { ServerFindPostParticipantsByCommentDocument } from '../../../generated/server-queries';
 import { insertActivities, opToVerb } from '../../../server/activity';
+import { uniq } from 'lodash-es';
 
 export default makeEventHandler<Group_Post_Comment>(async (args, ctx) => {
     const groupPostComment = args.event.data.new || args.event.data.old;
 
     // Find post participants, post author and group info
     const query = await ctx.adminClient.query({
-        query: ServerFindPostParticipantsDocument,
+        query: ServerFindPostParticipantsByCommentDocument,
         variables: {
             groupPostId: groupPostComment.group_post_id,
             groupPostCommentId: groupPostComment.id,
@@ -25,8 +26,10 @@ export default makeEventHandler<Group_Post_Comment>(async (args, ctx) => {
     const postAuthor = postComment.post.author;
 
     // Notify post participants and post author but not comment author (post author could be comment author)
-    const receivers = [...query.data.participants.map((u) => u.id), postAuthor.id].filter(
-        (id) => id !== commentAuthor.id,
+    const receivers = uniq(
+        [...query.data.participants.map((u) => u.id), postAuthor.id].filter(
+            (id) => id !== commentAuthor.id,
+        ),
     );
 
     await insertActivities(ctx, [

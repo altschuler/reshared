@@ -2,7 +2,7 @@
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import { PostDisplay } from '../../components/display';
-import { useGroupPostSingleQuery } from '../../generated/graphql';
+import { Group_Post_Type_Enum, useGroupPostSingleQuery } from '../../generated/graphql';
 import { urlFor } from '../../utils/urls';
 import { GroupLayout } from './GroupLayout';
 import Link from 'next/link';
@@ -42,14 +42,25 @@ export const GroupPostPage = () => {
     return (
         <GroupLayout activePage="posts" group={post.group}>
             <Space direction="vertical" size="large" style={{ width: '100%' }}>
-                <Link href={urlFor.group.posts(post.group)} passHref>
-                    <a>
-                        <Space>
-                            <ArrowLeftOutlined />
-                            All posts
-                        </Space>
-                    </a>
-                </Link>
+                {post.type === Group_Post_Type_Enum.Request ? (
+                    <Link href={urlFor.group.requests(post.group)} passHref>
+                        <a>
+                            <Space>
+                                <ArrowLeftOutlined />
+                                All posts
+                            </Space>
+                        </a>
+                    </Link>
+                ) : (
+                    <Link href={urlFor.group.home(post.group)} passHref>
+                        <a>
+                            <Space>
+                                <ArrowLeftOutlined />
+                                Group home
+                            </Space>
+                        </a>
+                    </Link>
+                )}
 
                 <PostDisplay key={post.id} post={post} />
             </Space>

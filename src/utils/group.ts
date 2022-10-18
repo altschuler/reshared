@@ -28,8 +28,8 @@ export const useMembership = (group?: GroupCardFragment | null) => {
                 Group_Role_Enum.Owner,
             ]),
             isMember: isMember(group, auth.userDetails),
-            user: auth.user,
+            user: auth.userDetails,
         }),
-        [auth.user, group],
+        [auth.userDetails, group],
     );
 };

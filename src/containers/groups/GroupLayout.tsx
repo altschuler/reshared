@@ -2,13 +2,11 @@
 import {
     Avatar,
     Button,
-    Divider,
     Dropdown,
     Menu,
     MenuProps,
     message,
     Modal,
-    PageHeader,
     Popconfirm,
     Space,
     Tabs,
@@ -17,16 +15,20 @@ import {
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ReactNode, useCallback } from 'react';
-import { createUseStyles } from 'react-jss';
 import { CreatePostDrawer, CreateThingDrawer, useDialogs } from '../../components/dialogs';
 import { ImageDisplay } from '../../components/display';
-import { GqlOps, GroupCardFragment, useLeaveGroupMutation } from '../../generated/graphql';
+import {
+    GqlOps,
+    GroupCardFragment,
+    Group_Post_Type_Enum,
+    useLeaveGroupMutation,
+} from '../../generated/graphql';
 import { useMembership } from '../../utils/group';
 import { urlFor } from '../../utils/urls';
 import { PageLayout } from '../root/PageLayout';
 import { JoinButton } from './JoinButton';
 
-export type GroupPage = 'home' | 'members' | 'settings' | 'things' | 'posts';
+export type GroupPage = 'home' | 'members' | 'settings' | 'things' | 'requests';
 
 export interface GroupLayoutProps {
     activePage?: GroupPage;
@@ -83,7 +85,16 @@ export const GroupLayout = (props: GroupLayoutProps) => {
         () =>
             dialogs
                 .showDialog(CreatePostDrawer, { group: props.group })
-                .then(() => router.push(urlFor.group.posts(props.group))),
+                .then(
+                    (post) =>
+                        post &&
+                        router.push(
+                            post.type === Group_Post_Type_Enum.Message
+                                ? urlFor.group.home(props.group)
+                                : urlFor.group.requests(props.group),
+                        ),
+                ),
+
         [dialogs, props.group, router],
     );
 
@@ -189,37 +200,45 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                             </Dropdown>
                         </Space>
                     ) : (
-                        <JoinButton dataCy="group-header:join:btn" key="join" group={props.group} />
+                        <Space style={{ padding: '1em' }}>
+                            <JoinButton
+                                dataCy="group-header:join:btn"
+                                key="join"
+                                group={props.group}
+                            />
+                        </Space>
                     ),
                 }}
                 items={[
                     {
                         key: 'home',
                         label: (
-                            <Link passHref key="home" href={urlFor.group.home(props.group)}>
+                            <Link passHref href={urlFor.group.home(props.group)}>
                                 <a data-cy="group-header:home:btn">Home</a>
                             </Link>
                         ),
                     },
                     {
-                        key: 'posts',
+                        key: 'requests',
                         label: (
-                            <Link passHref key="posts" href={urlFor.group.posts(props.group)}>
-                                <a data-cy="group-header:posts:btn">Posts</a>
+                            <Link passHref href={urlFor.group.requests(props.group)}>
+                                <a data-cy="group-header:requests:btn">Requests</a>
                             </Link>
                         ),
                     },
                     {
                         key: 'things',
                         label: (
-                            <Link passHref key="things" href={urlFor.group.things(props.group)}>
+                            <Link passHref href={urlFor.group.things(props.group)}>
                                 <a data-cy="group-header:things:btn">Things</a>
                             </Link>
                         ),
                     },
                 ]}
             />
-            <div style={{ padding: '0em 1em' }}>{props.children}</div>
+            <div style={{ display: 'flex', flexDirection: 'column', padding: '0em 1em' }}>
+                {props.children}
+            </div>
         </PageLayout>
     );
 };

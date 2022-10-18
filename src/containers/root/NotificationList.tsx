@@ -45,7 +45,9 @@ export const NotificationList = ({ notifications, loading, onSelect }: Notificat
     const handleClick = useCallback(
         (notification: NotificationCardFragment) => {
             // Mark the notification as read
-            handleMarkRead(notification);
+            if (!notification.read_at) {
+                handleMarkRead(notification);
+            }
 
             router.push(urlFor.activity(notification.activity));
 

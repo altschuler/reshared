@@ -764,6 +764,9 @@ enum activity_verb_enum {
   """requested_to_join"""
   requested_to_join
 
+  """resolved request"""
+  resolved
+
   """revoked admin"""
   revoked_admin
 

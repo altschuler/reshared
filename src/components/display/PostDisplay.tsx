@@ -1,13 +1,14 @@
-import { EditOutlined } from '@ant-design/icons';
-import { Button, Card, Comment, List, Modal, Space, Typography } from 'antd';
+import { CheckCircleTwoTone, EditOutlined } from '@ant-design/icons';
+import { Button, Card, Comment, List, message, Modal, Space, Tooltip, Typography } from 'antd';
 import { isEmpty } from 'lodash-es';
 import Link from 'next/link';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { createUseStyles } from 'react-jss';
 import {
     GroupPostFragment,
     Group_Post_Type_Enum,
     useCreateGroupPostCommentMutation,
+    useUpdateGroupPostMutation,
 } from '../../generated/graphql';
 import { useAuth } from '../../utils/auth';
 import { urlFor } from '../../utils/urls';
@@ -17,6 +18,7 @@ import { CommentEditor, CommentEditorState, useCommentEditor } from '../editors'
 
 const useStyles = createUseStyles({
     card: {
+        flex: 1,
         boxShadow: '0px 0px 58px 5px rgba(125,125,125,.1)',
     },
 
@@ -34,7 +36,19 @@ export const PostDisplay = ({ post, link }: { post: GroupPostFragment; link?: bo
 
     const [addComment, commentMutation] = useCreateGroupPostCommentMutation();
 
+    const [updatePost, mutation] = useUpdateGroupPostMutation({});
+
     const handleEdit = useCallback(() => showDialog(EditPostDrawer, { post }), [post, showDialog]);
+    const handleResolve = useCallback(() => {
+        updatePost({ variables: { id: post.id, input: { resolved: true } } })
+            .then(() => message.success('Your request has been marked as resolved'))
+            .catch((err) =>
+                Modal.error({
+                    title: 'Something unexpected happened',
+                    content: `An error happened while updating your thing, the server said: ${err.message}'`,
+                }),
+            );
+    }, [post]);
     const handleAddComment = useCallback(
         (state: CommentEditorState) => {
             addComment({
@@ -61,6 +75,9 @@ export const PostDisplay = ({ post, link }: { post: GroupPostFragment; link?: bo
             ? `${post.author.displayName} posted a message`
             : `${post.author.displayName} is looking for something`;
 
+    const isAuthor = post.author.id === auth.user?.id;
+    const comments = useMemo(() => post.comments.slice().reverse(), [post.comments]);
+
     return (
         <Card
             className={classes.card}
@@ -81,7 +98,7 @@ export const PostDisplay = ({ post, link }: { post: GroupPostFragment; link?: bo
                         <DateDisplay mode="distance" utc={post.created_at} />
                     </Typography.Text>
 
-                    {post.author.id === auth.user?.id && (
+                    {isAuthor && (
                         <Button
                             key="edit"
                             size="small"
@@ -90,6 +107,24 @@ export const PostDisplay = ({ post, link }: { post: GroupPostFragment; link?: bo
                             Edit
                         </Button>
                     )}
+
+                    {isAuthor && post.type === Group_Post_Type_Enum.Request && !post.resolved && (
+                        <Tooltip title="If you've found what you were looking for then mark the request as resolved">
+                            <Button
+                                key="resolve"
+                                size="small"
+                                icon={<CheckCircleTwoTone />}
+                                onClick={handleResolve}>
+                                Resolve
+                            </Button>
+                        </Tooltip>
+                    )}
+
+                    {post.type === Group_Post_Type_Enum.Request && post.resolved && (
+                        <Tooltip key="resolved" title="The request has been resolved">
+                            <CheckCircleTwoTone twoToneColor="#52c41a" />
+                        </Tooltip>
+                    )}
                 </Space>
             }>
             <Typography.Paragraph style={{ whiteSpace: 'pre-wrap' }}>
@@ -97,13 +132,11 @@ export const PostDisplay = ({ post, link }: { post: GroupPostFragment; link?: bo
             </Typography.Paragraph>
 
             <div>
-                {!isEmpty(post.comments) && (
+                {!isEmpty(comments) && (
                     <List
-                        header={`${post.comments.length} ${
-                            post.comments.length === 1 ? 'reply' : 'replies'
-                        }`}
+                        header={`${comments.length} ${comments.length === 1 ? 'reply' : 'replies'}`}
                         itemLayout="horizontal"
-                        dataSource={post.comments}
+                        dataSource={comments}
                         renderItem={(comment) => (
                             <li>
                                 <Comment

@@ -669,6 +669,8 @@ export enum Activity_Verb_Enum {
   Rejected = 'rejected',
   /** requested_to_join */
   RequestedToJoin = 'requested_to_join',
+  /** resolved request */
+  Resolved = 'resolved',
   /** revoked admin */
   RevokedAdmin = 'revoked_admin',
   /** showed_interest */
