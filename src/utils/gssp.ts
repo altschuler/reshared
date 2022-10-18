@@ -4,6 +4,7 @@ import { ParsedUrlQuery } from 'querystring';
 import { User } from '@nhost/core';
 import { getNhostSession } from './nhost';
 import { createApolloClient } from '@nhost/apollo';
+import { UserPrivateDetailsDocument } from '../generated/graphql';
 
 interface BaseGSSPData<TParams extends ParsedUrlQuery> {
     serverClient: ApolloClient<NormalizedCacheObject>;
@@ -77,11 +78,13 @@ export const makeGSSP = <TProps extends object, TParams extends ParsedUrlQuery>(
 
         if (userClient && user) {
             if (options.preloadUser) {
-                // Disabled because we fetch it way too often
-                // await userClient.query({
-                //     query: UserPrivateDetailsDocument,
-                //     variables: { id:  },
-                // });
+                await userClient.query({
+                    query: UserPrivateDetailsDocument,
+                    variables: { id: user.id },
+                    context: {
+                        headers: { 'x-hasura-role': 'me' },
+                    },
+                });
             }
         }
 
@@ -104,6 +107,13 @@ export const makeGSSP = <TProps extends object, TParams extends ParsedUrlQuery>(
             res = { props: { ...(res as any).props } };
         }
 
-        return { ...res, props: { ...((res as any).props || {}), nhostSession: session } };
+        return {
+            ...res,
+            props: {
+                ...((res as any).props || {}),
+                nhostSession: session,
+                apolloCache: userClient.cache.extract(),
+            },
+        };
     };
 };

@@ -14,6 +14,7 @@ import { NhostApolloProvider } from '@nhost/react-apollo';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import { isServer } from '../utils/next';
+import { InMemoryCache } from '@apollo/client';
 
 // Loading bar
 Router.events.on('routeChangeStart', () => NProgress.start());
@@ -31,10 +32,16 @@ const nhost = new NhostClient({
 
 const theme = {};
 
-const App = ({ Component, pageProps }: AppProps<{ nhostSession: NhostSession }>) => {
+const App = ({
+    Component,
+    pageProps,
+}: AppProps<{ nhostSession: NhostSession; apolloCache?: any }>) => {
+    const cache = pageProps.apolloCache
+        ? new InMemoryCache().restore(pageProps.apolloCache)
+        : undefined;
     return (
         <NhostNextProvider nhost={nhost} initial={pageProps.nhostSession}>
-            <NhostApolloProvider nhost={nhost}>
+            <NhostApolloProvider cache={cache} nhost={nhost}>
                 <UserProvider>
                     <ThemeProvider theme={theme}>
                         <DialogsProvider>
