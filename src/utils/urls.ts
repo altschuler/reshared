@@ -81,6 +81,7 @@ export const urlFor = {
         terms: (absolute = false) => makeUrl(absolute, `/site/terms`),
         contact: (absolute = false) => makeUrl(absolute, `/site/contact`),
         attributions: (absolute = false) => makeUrl(absolute, `/site/attributions`),
+        openSource: (absolute = false) => makeUrl(absolute, `/site/open-source`),
     },
 
     // Will redirect to another url
