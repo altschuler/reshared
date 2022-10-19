@@ -12,13 +12,13 @@ import { asPostCreateInput, PostEditor, PostEditorState, usePostEditor } from '.
 
 export interface CreatePostDrawerProps extends DialogProps<GroupPostFragment | null> {
     group: GroupCardFragment;
-    type?: Group_Post_Type_Enum;
+    type: Group_Post_Type_Enum;
 }
 
 export const CreatePostDrawer = (props: CreatePostDrawerProps) => {
     const { group, type, resolve, dispose, visible } = props;
 
-    const editorState = usePostEditor({ group, type: type || Group_Post_Type_Enum.Request });
+    const editorState = usePostEditor({ group, type });
 
     const [createPost, mutation] = useCreateGroupPostMutation({
         refetchQueries: [GqlOps.Query.GroupPostList, GqlOps.Query.GroupActivity],
@@ -38,9 +38,13 @@ export const CreatePostDrawer = (props: CreatePostDrawerProps) => {
         [createPost, resolve],
     );
 
+    const titleType =
+        editorState.present.type === Group_Post_Type_Enum.Request
+            ? 'Request something'
+            : 'Post a message';
     const title = editorState.present.group
-        ? `Create post in ${editorState.present.group.name}`
-        : 'Create post';
+        ? `${titleType} in ${editorState.present.group.name}`
+        : titleType;
 
     return (
         <Drawer

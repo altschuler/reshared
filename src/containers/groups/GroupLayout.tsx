@@ -82,9 +82,9 @@ export const GroupLayout = (props: GroupLayoutProps) => {
     );
 
     const handlePost = useCallback(
-        () =>
+        (type: Group_Post_Type_Enum) => {
             dialogs
-                .showDialog(CreatePostDrawer, { group: props.group })
+                .showDialog(CreatePostDrawer, { group: props.group, type })
                 .then(
                     (post) =>
                         post &&
@@ -93,8 +93,8 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                                 ? urlFor.group.home(props.group)
                                 : urlFor.group.requests(props.group),
                         ),
-                ),
-
+                );
+        },
         [dialogs, props.group, router],
     );
 
@@ -176,23 +176,23 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                     right: isMember ? (
                         <Space style={{ padding: '1em' }}>
                             <Button
-                                key="share"
+                                data-cy="group-header:post:btn"
+                                onClick={() => handlePost(Group_Post_Type_Enum.Message)}>
+                                Write a post
+                            </Button>
+                            <Button
                                 data-cy="group-header:share:btn"
                                 type="primary"
                                 onClick={handleShare}>
-                                Share a thing
+                                Share something
                             </Button>
                             <Button
-                                key="post"
                                 data-cy="group-header:ask:btn"
                                 type="primary"
-                                onClick={handlePost}>
-                                Ask for a thing
+                                onClick={() => handlePost(Group_Post_Type_Enum.Request)}>
+                                Ask for something
                             </Button>
-                            <Dropdown
-                                key="more"
-                                overlay={<Menu items={menu} />}
-                                trigger={['click']}>
+                            <Dropdown overlay={<Menu items={menu} />} trigger={['click']}>
                                 <Button
                                     data-cy="group-header:more:btn"
                                     icon={<EllipsisOutlined />}

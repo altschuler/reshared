@@ -75,7 +75,7 @@ export const PostEditor = (props: PostEditorProps) => {
 
     return (
         <div>
-            <Form layout="horizontal">
+            <Form layout="vertical">
                 {props.showGroup && (
                     <Form.Item label="Group" {...state.ant('group')}>
                         <GroupSelect
@@ -85,14 +85,6 @@ export const PostEditor = (props: PostEditorProps) => {
                         />
                     </Form.Item>
                 )}
-
-                <Form.Item {...state.ant('type')}>
-                    <GroupPostTypeSelect
-                        multiple={false}
-                        value={present.type}
-                        onChange={(type) => state.update({ type })}
-                    />
-                </Form.Item>
 
                 {!isRequest && isAdmin && (
                     <Form.Item extra="Pinned posts are shown at the top on the group home page">
@@ -107,6 +99,7 @@ export const PostEditor = (props: PostEditorProps) => {
 
                 {isRequest && (
                     <Form.Item
+                        label="Keyword"
                         {...state.ant('keyword', {
                             help: (
                                 <span>
@@ -127,11 +120,11 @@ export const PostEditor = (props: PostEditorProps) => {
                     </Form.Item>
                 )}
 
-                <Form.Item {...state.ant('content')}>
+                <Form.Item {...state.ant('content')} label="Message">
                     <Input.TextArea
-                        autoSize
                         placeholder={contentPlaceholder}
                         showCount
+                        rows={3}
                         maxLength={1000}
                         value={present.content}
                         onBlur={() => state.touch('content')}
@@ -146,7 +139,7 @@ export const PostEditor = (props: PostEditorProps) => {
                             disabled={loading}
                             type="primary"
                             onClick={handleSubmit}>
-                            {submitLabel || 'Post'}
+                            {submitLabel || 'Submit'}
                         </Button>
 
                         {props.onDelete && (

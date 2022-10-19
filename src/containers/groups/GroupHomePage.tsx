@@ -1,19 +1,19 @@
-﻿import { Alert, Col, Divider, Row, Spin, Typography } from 'antd';
+﻿import { Alert, Button, Col, Divider, Row, Space, Spin, Typography } from 'antd';
 import { isEmpty } from 'lodash-es';
 import { useRouter } from 'next/router';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { createUseStyles } from 'react-jss';
+import { CreatePostDrawer, useDialogs } from '../../components/dialogs';
 import { ActivityFeed, PostList } from '../../components/display';
-import { ThingList } from '../../components/ThingList';
 import {
     Group_Posts_Bool_Exp,
     Group_Post_Type_Enum,
-    Things_Bool_Exp,
     useGroupActivityQuery,
     useGroupDetailsQuery,
 } from '../../generated/graphql';
 import { useMembership } from '../../utils/group';
 import { useMedia } from '../../utils/hooks';
+import { urlFor } from '../../utils/urls';
 import { GroupEmptyContent } from './GroupEmptyContent';
 import { GroupLayout } from './GroupLayout';
 
@@ -22,6 +22,7 @@ const useStyles = createUseStyles({});
 export const GroupHomePage = () => {
     const classes = useStyles();
     const router = useRouter();
+    const dialogs = useDialogs();
     const { id: shortId } = router.query as { id: string };
 
     const collapsed = useMedia(['(max-width: 800px)'], [true], false);
@@ -35,6 +36,20 @@ export const GroupHomePage = () => {
 
     const query = useGroupActivityQuery({ variables: { shortId, limit: 100, offset: 0 } });
     const activities = query.data?.groups?.[0].activities || [];
+
+    const handlePost = useCallback(() => {
+        dialogs
+            .showDialog(CreatePostDrawer, { group, type: Group_Post_Type_Enum.Message })
+            .then(
+                (post) =>
+                    post &&
+                    router.push(
+                        post.type === Group_Post_Type_Enum.Message
+                            ? urlFor.group.home(group!)
+                            : urlFor.group.requests(group!),
+                    ),
+            );
+    }, [dialogs, group, router]);
 
     const where = useMemo(
         (): Group_Posts_Bool_Exp => ({
@@ -86,9 +101,16 @@ export const GroupHomePage = () => {
                         where={wherePinned}
                         hideEmpty
                         footer={<Divider type="horizontal" />}
-                        emptyText="There are no messages yet"
                     />
-                    <PostList where={where} emptyText="There are no messages yet" />
+                    <PostList
+                        where={where}
+                        emptyText={
+                            <Space direction="vertical" align="center" style={{ width: '100%' }}>
+                                <Typography.Text>There are no messages yet</Typography.Text>
+                                <Button onClick={handlePost}>Write a post</Button>
+                            </Space>
+                        }
+                    />
                 </Col>
             </Row>
         </GroupLayout>

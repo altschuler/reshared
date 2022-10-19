@@ -1,4 +1,4 @@
-import { Space, Spin, Typography } from 'antd';
+import { Space, Spin } from 'antd';
 import { isEmpty } from 'lodash-es';
 import { ReactNode } from 'react';
 import { Group_Posts_Bool_Exp, Order_By, useGroupPostListQuery } from '../../generated/graphql';
@@ -7,7 +7,7 @@ import { PostDisplay } from './PostDisplay';
 export interface PostListProps {
     where: Group_Posts_Bool_Exp;
     hideEmpty?: boolean;
-    emptyText: ReactNode;
+    emptyText?: ReactNode;
     footer?: ReactNode;
 }
 

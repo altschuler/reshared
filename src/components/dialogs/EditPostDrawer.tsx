@@ -4,6 +4,7 @@ import {
     GqlOps,
     GroupCardFragment,
     GroupPostFragment,
+    Group_Post_Type_Enum,
     useCreateGroupPostMutation,
     useDeleteGroupPostMutation,
     useUpdateGroupMutation,
@@ -62,11 +63,13 @@ export const EditPostDrawer = (props: EditPostDrawerProps) => {
             .catch((err) => Modal.error({ title: 'Failed to delete post', content: err.message }));
     }, [post]);
 
+    const isRequest = post.type === Group_Post_Type_Enum.Request;
+
     return (
         <Drawer
             bodyStyle={{ maxWidth: '100%' }}
             width={400}
-            title={`Edit post in ${post.group.name}`}
+            title={`Edit ${isRequest ? 'request' : 'post'} in ${post.group.name}`}
             placement="right"
             onClose={dispose}
             open={visible}>

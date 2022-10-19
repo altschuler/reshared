@@ -3,8 +3,8 @@ import { useAuth } from '../../utils/auth';
 import { Avatar, Button, Col, List, Row, Typography } from 'antd';
 import { createUseStyles } from 'react-jss';
 import { ButtonProps } from 'antd/lib/button';
-import { useActivityListQuery } from '../../generated/graphql';
-import { ActivityList } from '../../components/display';
+import { Group_Post_Type_Enum, useActivityListQuery } from '../../generated/graphql';
+import { ActivityList, ImageDisplay } from '../../components/display';
 import { AudioOutlined, GiftOutlined, SearchOutlined, UserAddOutlined } from '@ant-design/icons';
 import { useCallback } from 'react';
 import { CreatePostDrawer, CreateThingDrawer, useDialogs } from '../../components/dialogs';
@@ -43,7 +43,7 @@ export const Dashboard = () => {
     const handleAsk = useCallback(
         () =>
             dialogs
-                .showDialog(CreatePostDrawer)
+                .showDialog(CreatePostDrawer, { type: Group_Post_Type_Enum.Request })
                 .then((post) => post && router.push(urlFor.group.post(post))),
         [dialogs],
     );
@@ -80,13 +80,29 @@ export const Dashboard = () => {
                     <List
                         dataSource={auth.userDetails?.memberships}
                         renderItem={(m) => (
-                            <List.Item.Meta
-                                avatar={<Avatar src={''} />}
-                                title={
-                                    <Link href={urlFor.group.home(m.group)}>{m.group.name}</Link>
-                                }
-                                description={m.group.description}
-                            />
+                            <List.Item>
+                                <List.Item.Meta
+                                    avatar={
+                                        <Avatar
+                                            icon={
+                                                m.group.banner_file && (
+                                                    <ImageDisplay
+                                                        width={50}
+                                                        height={50}
+                                                        file={m.group.banner_file}
+                                                    />
+                                                )
+                                            }
+                                        />
+                                    }
+                                    title={
+                                        <Link passHref href={urlFor.group.home(m.group)}>
+                                            <a data-cy="title">{m.group.name}</a>
+                                        </Link>
+                                    }
+                                    description={m.group.description}
+                                />
+                            </List.Item>
                         )}
                     />
                 </Col>

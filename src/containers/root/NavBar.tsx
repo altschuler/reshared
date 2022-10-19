@@ -1,9 +1,9 @@
 import { useMedia } from '../../utils/hooks';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Dropdown, Input, Menu, Space, Typography } from 'antd';
+import { Dropdown, Form, Input, Menu, Space, Typography } from 'antd';
 import { urlFor } from '../../utils/urls';
-import { MenuFoldOutlined } from '@ant-design/icons';
+import { MenuFoldOutlined, SearchOutlined } from '@ant-design/icons';
 import { NotificationsButton } from './NotificationList';
 import { createUseStyles } from 'react-jss';
 import { useAuth } from '../../utils/auth';
@@ -43,7 +43,7 @@ const useStyles = createUseStyles({
     nav: {
         display: 'flex',
         alignItems: 'center',
-        flex: 1,
+        /* flex: 1, */
 
         // color: 'white',
     },
@@ -62,13 +62,27 @@ const useStyles = createUseStyles({
         alignItems: 'center',
         flex: 'none',
     },
+    search: {
+        margin: 0,
+        backgroundColor: '#DDD',
+        borderRadius: 5,
+        '& .ant-input::placeholder': {
+            color: '#000',
+        },
+
+        '&:focus-within': {
+            backgroundColor: '#FFF',
+        },
+    },
 });
 
 const ExpandedNav = () => {
     const classes = useStyles();
     const auth = useAuth();
     const router = useRouter();
-    const handleSearch = (query: string) => router.push(urlFor.search(query));
+    const handleSearch = ({ query }: { query: string }) => {
+        router.push(urlFor.search(query));
+    };
 
     return (
         <>
@@ -85,15 +99,27 @@ const ExpandedNav = () => {
                             My Groups
                         </a>
                     </Link>
-
-                    <Input.Search
-                        data-cy="navbar:search:in"
-                        placeholder="Find things, groups, users..."
-                        style={{ display: 'block' }}
-                        defaultValue={router.query.query}
-                        onSearch={handleSearch}
-                    />
                 </Space>
+            </div>
+            <div
+                style={{
+                    flex: 1,
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
+                <Form onFinish={handleSearch}>
+                    <Form.Item name="query" className={classes.search}>
+                        <Input
+                            size="large"
+                            bordered={false}
+                            suffix={<SearchOutlined />}
+                            data-cy="navbar:search:in"
+                            placeholder="Find things, groups, users..."
+                            defaultValue={router.query.query}
+                        />
+                    </Form.Item>
+                </Form>
             </div>
             <div className={classes.user}>
                 {!auth.user && (
