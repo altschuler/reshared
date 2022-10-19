@@ -20,6 +20,19 @@ const moduleExports = {
     images: {
         domains: ['kghtoguwbjifomvtvumw.nhost.run', 'hgtsjdxovopboicvsfhk.nhost.run', 'localhost'],
     },
+    webpack: (config) => {
+        config.module.rules.push({
+            test: /\.txt$/i,
+            loader: "raw-loader",
+        });
+
+        config.module.rules.push({
+            test: /\.html$/i,
+            loader: "raw-loader",
+        });
+
+        return config;
+    },
 };
 
 const sentryWebpackPluginOptions = {

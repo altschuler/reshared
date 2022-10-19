@@ -1,29 +1,33 @@
 ﻿import { MailDataRequired } from '@sendgrid/helpers/classes/mail';
 import sendgrid from '@sendgrid/mail';
-import fs from 'fs';
 import { TemplateExecutor } from 'lodash';
 import { memoize, template as compileTemplate } from 'lodash-es';
 import nodemailer from 'nodemailer';
-import path from 'path';
+
+// Templates
+import newActivityHtml from '../emails/compiled/new_activity.html';
+import newChatHtml from '../emails/compiled/new_chat.html';
+import newActivityTxt from '../emails/new_activity.txt';
+import newChatTxt from '../emails/new_chat.txt';
 
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY!);
 
 type EmailTemplate = 'new_activity' | 'new_chat';
 
-const readString = async (filePath: string) =>
-    (await fs.promises.readFile(path.join(process.cwd(), filePath), 'utf8')).toString();
-
 const getTemplate = memoize(
-    async (
-        template: EmailTemplate,
-    ): Promise<{ text: TemplateExecutor; html: TemplateExecutor }> => {
-        const text = await readString(`emails/${template}.txt`);
-        const html = await readString(`emails/compiled/${template}.html`);
-
-        return {
-            text: compileTemplate(text),
-            html: compileTemplate(html),
-        };
+    (template: EmailTemplate): { text: TemplateExecutor; html: TemplateExecutor } => {
+        switch (template) {
+            case 'new_chat':
+                return {
+                    text: compileTemplate(newChatTxt),
+                    html: compileTemplate(newChatHtml),
+                };
+            case 'new_activity':
+                return {
+                    text: compileTemplate(newActivityTxt),
+                    html: compileTemplate(newActivityHtml),
+                };
+        }
     },
 );
 
@@ -34,8 +38,8 @@ export interface MailData<T> {
     data: T;
 }
 
-const makeEmail = async <T>(data: MailData<T>): Promise<MailDataRequired> => {
-    const template = await getTemplate(data.template);
+const makeEmail = <T>(data: MailData<T>): MailDataRequired => {
+    const template = getTemplate(data.template);
     return {
         ...data,
         text: template.text(data.data as any),
@@ -58,7 +62,7 @@ const makeDevTransport = memoize(() =>
 );
 
 export const sendMail = async <T>(data: MailData<T> | MailData<T>[]) => {
-    const mails = await Promise.all((Array.isArray(data) ? data : [data]).map(makeEmail));
+    const mails = (Array.isArray(data) ? data : [data]).map(makeEmail);
 
     if (process.env.NODE_ENV === 'production') {
         return sendgrid.send(mails);

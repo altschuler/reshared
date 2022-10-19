@@ -47,6 +47,8 @@ export default makeCronHandler<any>(async (_args, ctx) => {
         };
     });
 
+    await sendMail(emails);
+
     const notifiedIds = flatMap(byUser).map((u) => u.chat_group_member!.id);
     const update = await ctx.adminClient.mutate({
         mutation: ServerUpdateChatGroupMemberDocument,
@@ -57,8 +59,6 @@ export default makeCronHandler<any>(async (_args, ctx) => {
             },
         },
     });
-
-    await sendMail(emails);
 
     ctx.success({
         success: true,
