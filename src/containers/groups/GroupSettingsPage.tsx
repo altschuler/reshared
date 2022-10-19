@@ -1,18 +1,18 @@
-﻿import { useGroupDetailsQuery, useUpdateGroupMutation } from '../../generated/graphql';
+﻿import { Alert, Divider, message, Modal, Spin, Typography } from 'antd';
 import { head } from 'lodash-es';
 import { useRouter } from 'next/router';
-import { Alert, Divider, message, Modal, Spin, Typography } from 'antd';
-import { GroupLayout } from './GroupLayout';
+import { useCallback } from 'react';
 import {
     asGroupUpdateInput,
     GroupEditor,
     makeEditorGroup,
     useGroupEditor,
 } from '../../components/editors';
-import { useCallback } from 'react';
-import { JoinLinkList } from './JoinLinkList';
-import { DeleteButton } from './DeleteButton';
+import { useGroupDetailsQuery, useUpdateGroupMutation } from '../../generated/graphql';
 import { useMembership } from '../../utils/group';
+import { DeleteButton } from './DeleteButton';
+import { GroupLayout } from './GroupLayout';
+import { JoinLinkList } from './JoinLinkList';
 
 export const GroupSettingsPage = () => {
     const router = useRouter();

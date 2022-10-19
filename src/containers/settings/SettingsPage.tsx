@@ -201,7 +201,7 @@ const DeleteAccountButton = () => {
                         </Typography.Paragraph>
 
                         <Typography.Paragraph>
-                            Please enter your email to confirm.
+                            If so, please enter your email to confirm.
                         </Typography.Paragraph>
 
                         <Input
