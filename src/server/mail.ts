@@ -4,12 +4,14 @@ import fs from 'fs';
 import { TemplateExecutor } from 'lodash';
 import { memoize, template as compileTemplate } from 'lodash-es';
 import nodemailer from 'nodemailer';
+import path from 'path';
 
 sendgrid.setApiKey(process.env.SENDGRID_API_KEY!);
 
 type EmailTemplate = 'new_activity' | 'new_chat';
 
-const readString = async (path: string) => (await fs.promises.readFile(path)).toString();
+const readString = async (filePath: string) =>
+    (await fs.promises.readFile(path.join(process.cwd(), filePath), 'utf8')).toString();
 
 const getTemplate = memoize(
     async (

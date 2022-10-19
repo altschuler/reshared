@@ -60,7 +60,9 @@ export default makeCronHandler<any>(async (_args, ctx) => {
 
     await sendMail(emails);
 
-    console.log(new Date(), notifiedIds, update.data?.update_chat_group_members?.affected_rows);
-
-    ctx.success({ success: true, notified: notifiedIds });
+    ctx.success({
+        success: true,
+        notified: notifiedIds,
+        affected_rows: update.data?.update_chat_group_members?.affected_rows,
+    });
 });
