@@ -10,7 +10,7 @@
         "schema": "graphql-codegen",
         "schema-watch": "dotenv -c local -- graphql-codegen --watch",
         "lint": "next lint",
-        "compile-emails": "mjml 'emails/*.mjml' -o emails/compiled",
+        "compile-emails": "mjml 'src/emails/*.mjml' -o src/emails/compiled",
         "cypress": "cypress open",
         "cypress-run": "cypress run"
     },
