@@ -9,13 +9,16 @@ export const errorReply = (res: NextApiResponse, status: number, message: string
     res.json({ message });
 };
 
-export interface EventHandlerContext {
+export interface CronHandlerContext {
     req: NextApiRequest;
     res: NextApiResponse;
-    userId: string;
     error: (msg: string, code?: number) => void;
     success: (output: unknown) => void;
     adminClient: ApolloClient<NormalizedCacheObject>;
+}
+
+export interface EventHandlerContext extends CronHandlerContext {
+    userId: string;
 }
 
 export interface HandlerContext<TOutput> {
@@ -130,6 +133,14 @@ export interface HasuraEventPayload<T> {
     };
 }
 
+export interface HasuraCronPayload<T> {
+    comment: string;
+    id: string;
+    name: string;
+    payload: T;
+    scheduled_time: string;
+}
+
 export const makeEventHandler =
     <T>(
         handler: (args: HasuraEventPayload<T>, ctx: EventHandlerContext) => Promise<void>,
@@ -158,6 +169,29 @@ export const makeEventHandler =
                 req,
                 res,
                 userId,
+                adminClient: hasuraClient,
+                error: (msg: string, status = 400) => errorReply(res, status, msg),
+                success: (output: unknown) => res.json(output),
+            });
+        } catch (err) {
+            console.log(err);
+            errorReply(res, 400, 'Error: ' + err.message);
+        }
+    };
+
+export const makeCronHandler =
+    <T>(handler: (payload: HasuraCronPayload<T>, ctx: CronHandlerContext) => Promise<void>) =>
+    async (req: NextApiRequest, res: NextApiResponse) => {
+        // Verify secret
+        const secret = req.headers['x-webhook-secret'];
+        if (!secret || secret !== process.env.NHOST_WEBHOOK_SECRET) {
+            return errorReply(res, 401, 'Wrong or missing secret');
+        }
+
+        try {
+            await handler(req.body, {
+                req,
+                res,
                 adminClient: hasuraClient,
                 error: (msg: string, status = 400) => errorReply(res, status, msg),
                 success: (output: unknown) => res.json(output),

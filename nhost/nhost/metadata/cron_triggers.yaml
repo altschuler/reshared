@@ -1,1 +1,10 @@
-[]
+- name: chat_notifier
+  webhook: '{{EVENTS_BASE_URL}}/chat_notifier_cron'
+  schedule: '*/5 * * * *'
+  include_in_metadata: true
+  payload:
+    action: chat_notify
+  headers:
+    - name: x-webhook-secret
+      value_from_env: NHOST_WEBHOOK_SECRET
+  comment: notify about new chat messages

@@ -2891,6 +2891,7 @@ type chat_group_member_info {
   id: uuid
   last_message_at: timestamptz
   last_read: timestamptz
+  notified_at: timestamptz
 
   """An object relationship"""
   user: users
@@ -2928,6 +2929,7 @@ input chat_group_member_info_bool_exp {
   id: uuid_comparison_exp
   last_message_at: timestamptz_comparison_exp
   last_read: timestamptz_comparison_exp
+  notified_at: timestamptz_comparison_exp
   user: users_bool_exp
   user_id: uuid_comparison_exp
 }
@@ -2943,6 +2945,7 @@ input chat_group_member_info_insert_input {
   id: uuid
   last_message_at: timestamptz
   last_read: timestamptz
+  notified_at: timestamptz
   user: users_obj_rel_insert_input
   user_id: uuid
 }
@@ -2953,6 +2956,7 @@ type chat_group_member_info_max_fields {
   id: uuid
   last_message_at: timestamptz
   last_read: timestamptz
+  notified_at: timestamptz
   user_id: uuid
 }
 
@@ -2962,6 +2966,7 @@ type chat_group_member_info_min_fields {
   id: uuid
   last_message_at: timestamptz
   last_read: timestamptz
+  notified_at: timestamptz
   user_id: uuid
 }
 
@@ -2981,6 +2986,7 @@ input chat_group_member_info_order_by {
   id: order_by
   last_message_at: order_by
   last_read: order_by
+  notified_at: order_by
   user: users_order_by
   user_id: order_by
 }
@@ -3005,6 +3011,9 @@ enum chat_group_member_info_select_column {
   last_read
 
   """column name"""
+  notified_at
+
+  """column name"""
   user_id
 }
 
@@ -3020,6 +3029,7 @@ type chat_group_members {
   """An object relationship"""
   info: chat_group_member_info
   last_read: timestamptz
+  notified_at: timestamptz
 
   """An object relationship"""
   user: users!
@@ -3074,6 +3084,7 @@ input chat_group_members_bool_exp {
   id: uuid_comparison_exp
   info: chat_group_member_info_bool_exp
   last_read: timestamptz_comparison_exp
+  notified_at: timestamptz_comparison_exp
   user: users_bool_exp
   user_id: uuid_comparison_exp
 }
@@ -3097,6 +3108,7 @@ input chat_group_members_insert_input {
   id: uuid
   info: chat_group_member_info_obj_rel_insert_input
   last_read: timestamptz
+  notified_at: timestamptz
   user: users_obj_rel_insert_input
   user_id: uuid
 }
@@ -3106,6 +3118,7 @@ type chat_group_members_max_fields {
   chat_group_id: uuid
   id: uuid
   last_read: timestamptz
+  notified_at: timestamptz
   user_id: uuid
 }
 
@@ -3116,6 +3129,7 @@ input chat_group_members_max_order_by {
   chat_group_id: order_by
   id: order_by
   last_read: order_by
+  notified_at: order_by
   user_id: order_by
 }
 
@@ -3124,6 +3138,7 @@ type chat_group_members_min_fields {
   chat_group_id: uuid
   id: uuid
   last_read: timestamptz
+  notified_at: timestamptz
   user_id: uuid
 }
 
@@ -3134,6 +3149,7 @@ input chat_group_members_min_order_by {
   chat_group_id: order_by
   id: order_by
   last_read: order_by
+  notified_at: order_by
   user_id: order_by
 }
 
@@ -3174,6 +3190,7 @@ input chat_group_members_order_by {
   id: order_by
   info: chat_group_member_info_order_by
   last_read: order_by
+  notified_at: order_by
   user: users_order_by
   user_id: order_by
 }
@@ -3197,6 +3214,9 @@ enum chat_group_members_select_column {
   last_read
 
   """column name"""
+  notified_at
+
+  """column name"""
   user_id
 }
 
@@ -3207,6 +3227,7 @@ input chat_group_members_set_input {
   chat_group_id: uuid
   id: uuid
   last_read: timestamptz
+  notified_at: timestamptz
   user_id: uuid
 }
 
@@ -3222,6 +3243,9 @@ enum chat_group_members_update_column {
 
   """column name"""
   last_read
+
+  """column name"""
+  notified_at
 
   """column name"""
   user_id

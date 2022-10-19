@@ -104,7 +104,7 @@ const getEmailConfig = (
     if (ent.group_post) {
         if (verb === Activity_Verb_Enum.Added) {
             return {
-                direct: true,
+                direct: false,
                 subject: `New post in ${ent.group_post.group.name}`,
             };
         }

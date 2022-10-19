@@ -2486,6 +2486,7 @@ export type Chat_Group_Member_Info = {
   id?: Maybe<Scalars['uuid']>;
   last_message_at?: Maybe<Scalars['timestamptz']>;
   last_read?: Maybe<Scalars['timestamptz']>;
+  notified_at?: Maybe<Scalars['timestamptz']>;
   /** An object relationship */
   user?: Maybe<Users>;
   user_id?: Maybe<Scalars['uuid']>;
@@ -2525,6 +2526,7 @@ export type Chat_Group_Member_Info_Bool_Exp = {
   id?: InputMaybe<Uuid_Comparison_Exp>;
   last_message_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   last_read?: InputMaybe<Timestamptz_Comparison_Exp>;
+  notified_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   user?: InputMaybe<Users_Bool_Exp>;
   user_id?: InputMaybe<Uuid_Comparison_Exp>;
 };
@@ -2538,6 +2540,7 @@ export type Chat_Group_Member_Info_Insert_Input = {
   id?: InputMaybe<Scalars['uuid']>;
   last_message_at?: InputMaybe<Scalars['timestamptz']>;
   last_read?: InputMaybe<Scalars['timestamptz']>;
+  notified_at?: InputMaybe<Scalars['timestamptz']>;
   user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   user_id?: InputMaybe<Scalars['uuid']>;
 };
@@ -2549,6 +2552,7 @@ export type Chat_Group_Member_Info_Max_Fields = {
   id?: Maybe<Scalars['uuid']>;
   last_message_at?: Maybe<Scalars['timestamptz']>;
   last_read?: Maybe<Scalars['timestamptz']>;
+  notified_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['uuid']>;
 };
 
@@ -2559,6 +2563,7 @@ export type Chat_Group_Member_Info_Min_Fields = {
   id?: Maybe<Scalars['uuid']>;
   last_message_at?: Maybe<Scalars['timestamptz']>;
   last_read?: Maybe<Scalars['timestamptz']>;
+  notified_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['uuid']>;
 };
 
@@ -2576,6 +2581,7 @@ export type Chat_Group_Member_Info_Order_By = {
   id?: InputMaybe<Order_By>;
   last_message_at?: InputMaybe<Order_By>;
   last_read?: InputMaybe<Order_By>;
+  notified_at?: InputMaybe<Order_By>;
   user?: InputMaybe<Users_Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
@@ -2593,6 +2599,8 @@ export enum Chat_Group_Member_Info_Select_Column {
   /** column name */
   LastRead = 'last_read',
   /** column name */
+  NotifiedAt = 'notified_at',
+  /** column name */
   UserId = 'user_id'
 }
 
@@ -2606,6 +2614,7 @@ export type Chat_Group_Members = {
   /** An object relationship */
   info?: Maybe<Chat_Group_Member_Info>;
   last_read?: Maybe<Scalars['timestamptz']>;
+  notified_at?: Maybe<Scalars['timestamptz']>;
   /** An object relationship */
   user: Users;
   user_id: Scalars['uuid'];
@@ -2657,6 +2666,7 @@ export type Chat_Group_Members_Bool_Exp = {
   id?: InputMaybe<Uuid_Comparison_Exp>;
   info?: InputMaybe<Chat_Group_Member_Info_Bool_Exp>;
   last_read?: InputMaybe<Timestamptz_Comparison_Exp>;
+  notified_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   user?: InputMaybe<Users_Bool_Exp>;
   user_id?: InputMaybe<Uuid_Comparison_Exp>;
 };
@@ -2674,6 +2684,7 @@ export type Chat_Group_Members_Insert_Input = {
   id?: InputMaybe<Scalars['uuid']>;
   info?: InputMaybe<Chat_Group_Member_Info_Obj_Rel_Insert_Input>;
   last_read?: InputMaybe<Scalars['timestamptz']>;
+  notified_at?: InputMaybe<Scalars['timestamptz']>;
   user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   user_id?: InputMaybe<Scalars['uuid']>;
 };
@@ -2684,6 +2695,7 @@ export type Chat_Group_Members_Max_Fields = {
   chat_group_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   last_read?: Maybe<Scalars['timestamptz']>;
+  notified_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['uuid']>;
 };
 
@@ -2692,6 +2704,7 @@ export type Chat_Group_Members_Max_Order_By = {
   chat_group_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   last_read?: InputMaybe<Order_By>;
+  notified_at?: InputMaybe<Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
 
@@ -2701,6 +2714,7 @@ export type Chat_Group_Members_Min_Fields = {
   chat_group_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   last_read?: Maybe<Scalars['timestamptz']>;
+  notified_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['uuid']>;
 };
 
@@ -2709,6 +2723,7 @@ export type Chat_Group_Members_Min_Order_By = {
   chat_group_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   last_read?: InputMaybe<Order_By>;
+  notified_at?: InputMaybe<Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
 
@@ -2742,6 +2757,7 @@ export type Chat_Group_Members_Order_By = {
   id?: InputMaybe<Order_By>;
   info?: InputMaybe<Chat_Group_Member_Info_Order_By>;
   last_read?: InputMaybe<Order_By>;
+  notified_at?: InputMaybe<Order_By>;
   user?: InputMaybe<Users_Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
@@ -2760,6 +2776,8 @@ export enum Chat_Group_Members_Select_Column {
   /** column name */
   LastRead = 'last_read',
   /** column name */
+  NotifiedAt = 'notified_at',
+  /** column name */
   UserId = 'user_id'
 }
 
@@ -2768,6 +2786,7 @@ export type Chat_Group_Members_Set_Input = {
   chat_group_id?: InputMaybe<Scalars['uuid']>;
   id?: InputMaybe<Scalars['uuid']>;
   last_read?: InputMaybe<Scalars['timestamptz']>;
+  notified_at?: InputMaybe<Scalars['timestamptz']>;
   user_id?: InputMaybe<Scalars['uuid']>;
 };
 
@@ -2779,6 +2798,8 @@ export enum Chat_Group_Members_Update_Column {
   Id = 'id',
   /** column name */
   LastRead = 'last_read',
+  /** column name */
+  NotifiedAt = 'notified_at',
   /** column name */
   UserId = 'user_id'
 }
@@ -14017,6 +14038,11 @@ export type ServerMostRecentChatsQueryVariables = Exact<{ [key: string]: never; 
 
 export type ServerMostRecentChatsQuery = { __typename?: 'query_root', chat_groups: Array<{ __typename?: 'chat_groups', id: string }> };
 
+export type ServerUnreadChatMemberQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type ServerUnreadChatMemberQuery = { __typename?: 'query_root', chat_group_member_info: Array<{ __typename?: 'chat_group_member_info', last_read?: string | null, last_message_at?: string | null, has_unread?: boolean | null, user?: { __typename?: 'users', email?: any | null, id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, chat_group?: { __typename?: 'chat_groups', messages: Array<{ __typename?: 'chat_messages', message: string, sender: { __typename?: 'users', displayName: string } }> } | null, chat_group_member?: { __typename?: 'chat_group_members', id: string, notified_at?: string | null } | null }> };
+
 export type ServerCreateChatGroupMutationVariables = Exact<{
   input: Chat_Groups_Insert_Input;
 }>;
@@ -14033,6 +14059,14 @@ export type ServerCreateChatMessageMutationVariables = Exact<{
 
 
 export type ServerCreateChatMessageMutation = { __typename?: 'mutation_root', insert_chat_messages_one?: { __typename?: 'chat_messages', id: string } | null, update_chat_group_members?: { __typename?: 'chat_group_members_mutation_response', affected_rows: number } | null };
+
+export type ServerUpdateChatGroupMemberMutationVariables = Exact<{
+  chat_group_member_ids: Array<Scalars['uuid']> | Scalars['uuid'];
+  input: Chat_Group_Members_Set_Input;
+}>;
+
+
+export type ServerUpdateChatGroupMemberMutation = { __typename?: 'mutation_root', update_chat_group_members?: { __typename?: 'chat_group_members_mutation_response', affected_rows: number } | null };
 
 export type ServerFindGroupQueryVariables = Exact<{
   where?: InputMaybe<Groups_Bool_Exp>;
@@ -14276,8 +14310,10 @@ export const ServerFindNotifcationDocument = {"kind":"Document","definitions":[{
 export const ServerInsertActivitiesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerInsertActivities"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"activities_insert_input"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_activities"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"returning"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<ServerInsertActivitiesMutation, ServerInsertActivitiesMutationVariables>;
 export const ServerFindChatGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindChatGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_groups_bool_exp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat_groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"ServerChatGroup"}}]}}]}},...ServerChatGroupFragmentDoc.definitions]} as unknown as DocumentNode<ServerFindChatGroupQuery, ServerFindChatGroupQueryVariables>;
 export const ServerMostRecentChatsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerMostRecentChats"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat_groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ListValue","values":[{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"messages_aggregate"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"max"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}]}}]}]}},{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<ServerMostRecentChatsQuery, ServerMostRecentChatsQueryVariables>;
+export const ServerUnreadChatMemberDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerUnreadChatMember"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chat_group_member_info"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"has_unread"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"BooleanValue","value":true}}]}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserCard"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"last_read"}},{"kind":"Field","name":{"kind":"Name","value":"last_message_at"}},{"kind":"Field","name":{"kind":"Name","value":"has_unread"}},{"kind":"Field","name":{"kind":"Name","value":"chat_group"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"messages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"limit"},"value":{"kind":"IntValue","value":"1"}},{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sender"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"displayName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"message"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"chat_group_member"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"notified_at"}}]}}]}}]}},...UserCardFragmentDoc.definitions]} as unknown as DocumentNode<ServerUnreadChatMemberQuery, ServerUnreadChatMemberQueryVariables>;
 export const ServerCreateChatGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerCreateChatGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_groups_insert_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_chat_groups_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<ServerCreateChatGroupMutation, ServerCreateChatGroupMutationVariables>;
 export const ServerCreateChatMessageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerCreateChatMessage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"chat_group_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"message"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"entity"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"entities_obj_rel_insert_input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insert_chat_messages_one"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"object"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"chat_group_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"chat_group_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"message"},"value":{"kind":"Variable","name":{"kind":"Name","value":"message"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"sender_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"entity"},"value":{"kind":"Variable","name":{"kind":"Name","value":"entity"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"update_chat_group_members"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"chat_group_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"chat_group_id"}}}]}},{"kind":"ObjectField","name":{"kind":"Name","value":"user_id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_eq"},"value":{"kind":"Variable","name":{"kind":"Name","value":"user_id"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"last_read"},"value":{"kind":"StringValue","value":"now()","block":false}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<ServerCreateChatMessageMutation, ServerCreateChatMessageMutationVariables>;
+export const ServerUpdateChatGroupMemberDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ServerUpdateChatGroupMember"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"chat_group_member_ids"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"chat_group_members_set_input"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"update_chat_group_members"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"id"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"_in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"chat_group_member_ids"}}}]}}]}},{"kind":"Argument","name":{"kind":"Name","value":"_set"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"affected_rows"}}]}}]}}]} as unknown as DocumentNode<ServerUpdateChatGroupMemberMutation, ServerUpdateChatGroupMemberMutationVariables>;
 export const ServerFindGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"groups_bool_exp"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]} as unknown as DocumentNode<ServerFindGroupQuery, ServerFindGroupQueryVariables>;
 export const ServerFindGroupJoinRequestDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindGroupJoinRequest"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"uuid"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_join_requests_by_pk"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"group_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}}]}}]}}]} as unknown as DocumentNode<ServerFindGroupJoinRequestQuery, ServerFindGroupJoinRequestQueryVariables>;
 export const ServerFindJoinTokenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ServerFindJoinToken"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"group_join_tokens_bool_exp"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group_join_tokens"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"token"}}]}}]}}]} as unknown as DocumentNode<ServerFindJoinTokenQuery, ServerFindJoinTokenQueryVariables>;

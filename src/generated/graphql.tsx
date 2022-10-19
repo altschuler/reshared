@@ -2488,6 +2488,7 @@ export type Chat_Group_Member_Info = {
   id?: Maybe<Scalars['uuid']>;
   last_message_at?: Maybe<Scalars['timestamptz']>;
   last_read?: Maybe<Scalars['timestamptz']>;
+  notified_at?: Maybe<Scalars['timestamptz']>;
   /** An object relationship */
   user?: Maybe<Users>;
   user_id?: Maybe<Scalars['uuid']>;
@@ -2527,6 +2528,7 @@ export type Chat_Group_Member_Info_Bool_Exp = {
   id?: InputMaybe<Uuid_Comparison_Exp>;
   last_message_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   last_read?: InputMaybe<Timestamptz_Comparison_Exp>;
+  notified_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   user?: InputMaybe<Users_Bool_Exp>;
   user_id?: InputMaybe<Uuid_Comparison_Exp>;
 };
@@ -2540,6 +2542,7 @@ export type Chat_Group_Member_Info_Insert_Input = {
   id?: InputMaybe<Scalars['uuid']>;
   last_message_at?: InputMaybe<Scalars['timestamptz']>;
   last_read?: InputMaybe<Scalars['timestamptz']>;
+  notified_at?: InputMaybe<Scalars['timestamptz']>;
   user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   user_id?: InputMaybe<Scalars['uuid']>;
 };
@@ -2551,6 +2554,7 @@ export type Chat_Group_Member_Info_Max_Fields = {
   id?: Maybe<Scalars['uuid']>;
   last_message_at?: Maybe<Scalars['timestamptz']>;
   last_read?: Maybe<Scalars['timestamptz']>;
+  notified_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['uuid']>;
 };
 
@@ -2561,6 +2565,7 @@ export type Chat_Group_Member_Info_Min_Fields = {
   id?: Maybe<Scalars['uuid']>;
   last_message_at?: Maybe<Scalars['timestamptz']>;
   last_read?: Maybe<Scalars['timestamptz']>;
+  notified_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['uuid']>;
 };
 
@@ -2578,6 +2583,7 @@ export type Chat_Group_Member_Info_Order_By = {
   id?: InputMaybe<Order_By>;
   last_message_at?: InputMaybe<Order_By>;
   last_read?: InputMaybe<Order_By>;
+  notified_at?: InputMaybe<Order_By>;
   user?: InputMaybe<Users_Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
@@ -2595,6 +2601,8 @@ export enum Chat_Group_Member_Info_Select_Column {
   /** column name */
   LastRead = 'last_read',
   /** column name */
+  NotifiedAt = 'notified_at',
+  /** column name */
   UserId = 'user_id'
 }
 
@@ -2608,6 +2616,7 @@ export type Chat_Group_Members = {
   /** An object relationship */
   info?: Maybe<Chat_Group_Member_Info>;
   last_read?: Maybe<Scalars['timestamptz']>;
+  notified_at?: Maybe<Scalars['timestamptz']>;
   /** An object relationship */
   user: Users;
   user_id: Scalars['uuid'];
@@ -2659,6 +2668,7 @@ export type Chat_Group_Members_Bool_Exp = {
   id?: InputMaybe<Uuid_Comparison_Exp>;
   info?: InputMaybe<Chat_Group_Member_Info_Bool_Exp>;
   last_read?: InputMaybe<Timestamptz_Comparison_Exp>;
+  notified_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   user?: InputMaybe<Users_Bool_Exp>;
   user_id?: InputMaybe<Uuid_Comparison_Exp>;
 };
@@ -2676,6 +2686,7 @@ export type Chat_Group_Members_Insert_Input = {
   id?: InputMaybe<Scalars['uuid']>;
   info?: InputMaybe<Chat_Group_Member_Info_Obj_Rel_Insert_Input>;
   last_read?: InputMaybe<Scalars['timestamptz']>;
+  notified_at?: InputMaybe<Scalars['timestamptz']>;
   user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
   user_id?: InputMaybe<Scalars['uuid']>;
 };
@@ -2686,6 +2697,7 @@ export type Chat_Group_Members_Max_Fields = {
   chat_group_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   last_read?: Maybe<Scalars['timestamptz']>;
+  notified_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['uuid']>;
 };
 
@@ -2694,6 +2706,7 @@ export type Chat_Group_Members_Max_Order_By = {
   chat_group_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   last_read?: InputMaybe<Order_By>;
+  notified_at?: InputMaybe<Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
 
@@ -2703,6 +2716,7 @@ export type Chat_Group_Members_Min_Fields = {
   chat_group_id?: Maybe<Scalars['uuid']>;
   id?: Maybe<Scalars['uuid']>;
   last_read?: Maybe<Scalars['timestamptz']>;
+  notified_at?: Maybe<Scalars['timestamptz']>;
   user_id?: Maybe<Scalars['uuid']>;
 };
 
@@ -2711,6 +2725,7 @@ export type Chat_Group_Members_Min_Order_By = {
   chat_group_id?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   last_read?: InputMaybe<Order_By>;
+  notified_at?: InputMaybe<Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
 
@@ -2744,6 +2759,7 @@ export type Chat_Group_Members_Order_By = {
   id?: InputMaybe<Order_By>;
   info?: InputMaybe<Chat_Group_Member_Info_Order_By>;
   last_read?: InputMaybe<Order_By>;
+  notified_at?: InputMaybe<Order_By>;
   user?: InputMaybe<Users_Order_By>;
   user_id?: InputMaybe<Order_By>;
 };
@@ -2762,6 +2778,8 @@ export enum Chat_Group_Members_Select_Column {
   /** column name */
   LastRead = 'last_read',
   /** column name */
+  NotifiedAt = 'notified_at',
+  /** column name */
   UserId = 'user_id'
 }
 
@@ -2770,6 +2788,7 @@ export type Chat_Group_Members_Set_Input = {
   chat_group_id?: InputMaybe<Scalars['uuid']>;
   id?: InputMaybe<Scalars['uuid']>;
   last_read?: InputMaybe<Scalars['timestamptz']>;
+  notified_at?: InputMaybe<Scalars['timestamptz']>;
   user_id?: InputMaybe<Scalars['uuid']>;
 };
 
@@ -2781,6 +2800,8 @@ export enum Chat_Group_Members_Update_Column {
   Id = 'id',
   /** column name */
   LastRead = 'last_read',
+  /** column name */
+  NotifiedAt = 'notified_at',
   /** column name */
   UserId = 'user_id'
 }

@@ -19,6 +19,31 @@ query ServerMostRecentChats {
     }
 }
 
+query ServerUnreadChatMember {
+    chat_group_member_info(where: { has_unread: { _eq: true } }) {
+        user {
+            ...UserCard
+            email
+        }
+        last_read
+        last_message_at
+        has_unread
+
+        chat_group {
+            messages(limit: 1, order_by: { created_at: desc }) {
+                sender {
+                    displayName
+                }
+                message
+            }
+        }
+        chat_group_member {
+            id
+            notified_at
+        }
+    }
+}
+
 mutation ServerCreateChatGroup($input: chat_groups_insert_input!) {
     insert_chat_groups_one(object: $input) {
         id
@@ -46,6 +71,15 @@ mutation ServerCreateChatMessage(
         where: { chat_group_id: { _eq: $chat_group_id }, user_id: { _eq: $user_id } }
         _set: { last_read: "now()" }
     ) {
+        affected_rows
+    }
+}
+
+mutation ServerUpdateChatGroupMember(
+    $chat_group_member_ids: [uuid!]!
+    $input: chat_group_members_set_input!
+) {
+    update_chat_group_members(where: { id: { _in: $chat_group_member_ids } }, _set: $input) {
         affected_rows
     }
 }

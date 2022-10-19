@@ -1,3 +1,4 @@
+<!-- user_name, sender_names, link, settings_link -->
 <mjml>
   <mj-head>
     <mj-attributes>
@@ -18,16 +19,8 @@
       <mj-column>
         <mj-text mj-class="body paragraph">Hi, ${user_name}!</mj-text>
         <mj-text mj-class="body paragraph">
-          ${sender_name} sent you a message on Reshared:
+          ${sender_names} sent you a message on Reshared.
         </mj-text>
-      </mj-column>
-    </mj-section>
-
-    <mj-section background-color="#EEEEEE">
-      <mj-column>
-        <mj-text>${message}</mj-text>
-
-        <mj-text align="right">${datetime}</mj-text>
       </mj-column>
     </mj-section>
 

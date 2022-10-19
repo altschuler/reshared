@@ -9,6 +9,8 @@ export const hasuraClient = new ApolloClient({
         },
     }),
     cache: new InMemoryCache(),
+    // Disable caching on the server
+    defaultOptions: { query: { fetchPolicy: 'no-cache' } },
 });
 
 export const makeHasuraUserClient = (jwt: string) =>
