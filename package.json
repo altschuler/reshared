@@ -10,7 +10,7 @@
         "schema": "graphql-codegen",
         "schema-watch": "dotenv -c local -- graphql-codegen --watch",
         "lint": "next lint",
-        "compile-emails": "mjml 'emails/*.mjml' -o emails/compiled",
+        "compile-emails": "mjml 'src/emails/*.mjml' -o src/emails/compiled",
         "cypress": "cypress open",
         "cypress-run": "cypress run"
     },
@@ -91,6 +91,7 @@
         "eslint-plugin-react": "^7.31.8",
         "eslint-plugin-react-hooks": "^4.2.0",
         "prettier": "^2.3.2",
+        "raw-loader": "^4.0.2",
         "typescript": "^4.8.4"
     }
 }

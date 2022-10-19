@@ -9,6 +9,7 @@ const SENTRY_DISABLE = process.env.SENTRY_DISABLE || process.env.NEXT_PUBLIC_SEN
 
 if (!SENTRY_DISABLE) {
     Sentry.init({
+        autoSessionTracking: false,
         dsn: SENTRY_DSN || 'https://2169bd6c993847aca2e31fa821bd6909@o146636.ingest.sentry.io/5555148',
         // Adjust this value in production, or use tracesSampler for greater control
         tracesSampleRate: 1.0,

@@ -125,6 +125,10 @@ export const PageLayout = (props: PageLayoutProps) => {
                         <Link href={urlFor.site.attributions()}>
                             <a className={classes.footerLink}>Attributions</a>
                         </Link>
+
+                        <Link href={urlFor.site.openSource()}>
+                            <a className={classes.footerLink}>Open source</a>
+                        </Link>
                     </div>
                 )}
             </Content>
