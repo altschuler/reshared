@@ -55,7 +55,7 @@ export const GroupThingsPage = () => {
     return (
         <GroupLayout activePage="things" group={group}>
             <Space direction="vertical" size="large" style={{ display: 'flex' }}>
-                <Row align="middle" gutter={16}>
+                <Row align="middle" gutter={16} wrap={false}>
                     <Col flex={1}>
                         <Input.Search
                             value={search}

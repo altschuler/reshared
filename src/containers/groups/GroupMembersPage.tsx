@@ -27,7 +27,7 @@ export const GroupMembersPage = () => {
 
     return (
         <GroupLayout activePage="members" group={group}>
-            <Row gutter={2}>
+            <Row gutter={2} wrap={false}>
                 <Col flex={1}>
                     <MemberList memberships={group.memberships} group={group} />
                 </Col>

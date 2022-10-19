@@ -51,7 +51,7 @@ export const Dashboard = () => {
     return (
         <PageLayout padded>
             <div className={classes.quickActions}>
-                <Row gutter={[12, 12]}>
+                <Row gutter={[12, 12]} wrap={false}>
                     <QuickAction onClick={handleShare} icon={<GiftOutlined />}>
                         Share something
                     </QuickAction>
@@ -65,7 +65,7 @@ export const Dashboard = () => {
                 </Row>
             </div>
 
-            <Row gutter={[12, 12]}>
+            <Row gutter={[12, 12]} wrap={false}>
                 <Col md={12} sm={12} xs={6}>
                     <Typography.Title level={4}>Recent Activity</Typography.Title>
                     <ActivityList

@@ -89,7 +89,7 @@ export const GroupHomePage = () => {
 
     return (
         <GroupLayout activePage="home" group={group}>
-            <Row gutter={[16, 16]}>
+            <Row gutter={[16, 16]} wrap={false}>
                 {!collapsed && (
                     <Col flex="300px">
                         <Typography.Title level={5}>Latest activity</Typography.Title>
