@@ -18,8 +18,25 @@ insert_permissions:
         user_id: x-hasura-User-Id
       columns:
         - avatar_id
+        - email_activity
+        - email_chat
+        - email_digest
         - user_id
 select_permissions:
+  - role: private
+    permission:
+      columns:
+        - avatar_id
+        - created_at
+        - email_activity
+        - email_chat
+        - email_digest
+        - id
+        - updated_at
+        - user_id
+      filter:
+        user_id:
+          _eq: X-Hasura-User-Id
   - role: public
     permission:
       columns:
@@ -68,6 +85,9 @@ update_permissions:
     permission:
       columns:
         - avatar_id
+        - email_activity
+        - email_chat
+        - email_digest
       filter:
         user_id:
           _eq: X-Hasura-User-Id

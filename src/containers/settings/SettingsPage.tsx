@@ -1,5 +1,5 @@
 import { useNhostClient } from '@nhost/react';
-import { Alert, Button, Form, Input, List, message, Modal, Typography } from 'antd';
+import { Alert, Button, Form, Input, List, message, Modal, Switch, Typography } from 'antd';
 import { isEmpty } from 'lodash-es';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -10,6 +10,8 @@ import {
     FileUploadCardFragment,
     Group_Role_Enum,
     useDeleteAccountMutation,
+    User_Profile_Insert_Input,
+    User_Profile_Update_Column,
     useUpdateUserMutation,
     useUpdateUserProfileMutation,
 } from '../../generated/graphql';
@@ -60,8 +62,20 @@ export const SettingsPage = () => {
     const handleAvatarChange = (file: FileUploadCardFragment) =>
         makeChange('avatar', () =>
             updateProfile({
-                variables: { userId: auth.user!.id, input: { avatar_id: file?.id || null } },
+                variables: {
+                    userId: auth.user!.id,
+                    input: { avatar_id: file?.id || null },
+                    columns: [User_Profile_Update_Column.AvatarId],
+                },
             }),
+        );
+
+    const handleNotificationUpdate = (
+        input: Partial<User_Profile_Insert_Input>,
+        column: User_Profile_Update_Column,
+    ) =>
+        makeChange('notifications', () =>
+            updateProfile({ variables: { userId: auth.user!.id, input, columns: [column] } }),
         );
 
     return (
@@ -119,6 +133,58 @@ export const SettingsPage = () => {
                             password
                         />
                     </Form.Item>
+                </Form>
+            )}
+
+            <Typography.Title level={5}>Email notifications</Typography.Title>
+            <Typography.Paragraph italic>
+                Choose which notifications you want to receive by email
+            </Typography.Paragraph>
+
+            {auth.userDetails && (
+                <Form layout="horizontal">
+                    <Form.Item
+                        label="New chat message"
+                        help="When another user sends you a chat message. You will only receive an email if you haven't seen the message. It is strongly recommended to keep this on.">
+                        <Switch
+                            checked={auth.userDetails.user_profile?.email_chat ?? true}
+                            onChange={(value) =>
+                                handleNotificationUpdate(
+                                    { email_chat: value },
+                                    User_Profile_Update_Column.EmailChat,
+                                )
+                            }
+                        />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Important activity"
+                        help="When something that you will likely want to know about happens, such as when someone replies to your request or when an invitation has been handled, etc.">
+                        <Switch
+                            checked={auth.userDetails.user_profile?.email_activity ?? true}
+                            onChange={(value) =>
+                                handleNotificationUpdate(
+                                    { email_activity: value },
+                                    User_Profile_Update_Column.EmailActivity,
+                                )
+                            }
+                        />
+                    </Form.Item>
+
+                    {/* The digest emails are not implemented yet */}
+                    {/* <Form.Item
+                        label="Weekly digest"
+                        help="A weekly digest of things that happened in your groups">
+                        <Switch
+                            checked={auth.userDetails.user_profile?.email_digest ?? true}
+                            onChange={(value) =>
+                                handleNotificationUpdate(
+                                    { email_digest: value },
+                                    User_Profile_Update_Column.EmailDigest,
+                                )
+                            }
+                        />
+                    </Form.Item> */}
                 </Form>
             )}
 

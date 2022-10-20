@@ -1,8 +1,8 @@
-import { useCallback, useState } from 'react';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { useNhostClient } from '@nhost/nextjs';
 import { message, Space, Typography, Upload } from 'antd';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { RcFile } from 'antd/lib/upload';
+import { useState } from 'react';
 import { FileUploadCardFragment } from '../../generated/graphql';
 import { ImageDisplay } from '../display';
 
@@ -18,27 +18,23 @@ export const ImageInput = (props: ImageInputProps) => {
     const nhost = useNhostClient();
     const [loading, setLoading] = useState(false);
 
-    const handleUploadImage = useCallback(
-        async (file: RcFile) => {
-            setLoading(true);
-            const uploaded = await nhost.storage.upload({ file });
+    const handleUploadImage = async (file: RcFile) => {
+        setLoading(true);
 
-            if (uploaded.error) {
-                message.error(uploaded.error.message);
-            } else {
-                props.onChange(uploaded.fileMetadata);
-            }
+        const uploaded = await nhost.storage.upload({ file });
 
-            setLoading(false);
+        if (uploaded.error) {
+            message.error(uploaded.error.message);
+        } else {
+            props.onChange(uploaded.fileMetadata);
+        }
 
-            return '';
-        },
-        [nhost, props.onChange],
-    );
+        setLoading(false);
 
-    const handleRemove = useCallback(() => {
-        props.onChange(null);
-    }, []);
+        return '';
+    };
+
+    const handleRemove = () => props.onChange(null);
 
     const beforeUpload = (file: RcFile) => {
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';

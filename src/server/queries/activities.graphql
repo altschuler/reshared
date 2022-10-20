@@ -4,8 +4,19 @@ query ServerFindNotifcation($id: uuid!) {
         ...NotificationCard
 
         user {
-            ...UserCard
+            id
+            displayName
+            avatarUrl
             email
+
+            user_profile {
+                email_chat
+                email_activity
+                email_digest
+                avatar {
+                    ...FileUploadCard
+                }
+            }
         }
     }
 }

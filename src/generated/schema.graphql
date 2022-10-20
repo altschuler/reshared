@@ -15133,6 +15133,9 @@ type user_profile {
   avatar: files
   avatar_id: uuid
   created_at: timestamptz!
+  email_activity: Boolean!
+  email_chat: Boolean!
+  email_digest: Boolean!
   id: uuid!
   updated_at: timestamptz!
 
@@ -15168,6 +15171,9 @@ input user_profile_bool_exp {
   avatar: files_bool_exp
   avatar_id: uuid_comparison_exp
   created_at: timestamptz_comparison_exp
+  email_activity: Boolean_comparison_exp
+  email_chat: Boolean_comparison_exp
+  email_digest: Boolean_comparison_exp
   id: uuid_comparison_exp
   updated_at: timestamptz_comparison_exp
   user: users_bool_exp
@@ -15196,6 +15202,9 @@ input user_profile_insert_input {
   avatar: files_obj_rel_insert_input
   avatar_id: uuid
   created_at: timestamptz
+  email_activity: Boolean
+  email_chat: Boolean
+  email_digest: Boolean
   id: uuid
   updated_at: timestamptz
   user: users_obj_rel_insert_input
@@ -15255,6 +15264,9 @@ input user_profile_order_by {
   avatar: files_order_by
   avatar_id: order_by
   created_at: order_by
+  email_activity: order_by
+  email_chat: order_by
+  email_digest: order_by
   id: order_by
   updated_at: order_by
   user: users_order_by
@@ -15277,6 +15289,15 @@ enum user_profile_select_column {
   created_at
 
   """column name"""
+  email_activity
+
+  """column name"""
+  email_chat
+
+  """column name"""
+  email_digest
+
+  """column name"""
   id
 
   """column name"""
@@ -15292,6 +15313,9 @@ input type for updating data in table "user_profile"
 input user_profile_set_input {
   avatar_id: uuid
   created_at: timestamptz
+  email_activity: Boolean
+  email_chat: Boolean
+  email_digest: Boolean
   id: uuid
   updated_at: timestamptz
   user_id: uuid
@@ -15306,6 +15330,15 @@ enum user_profile_update_column {
 
   """column name"""
   created_at
+
+  """column name"""
+  email_activity
+
+  """column name"""
+  email_chat
+
+  """column name"""
+  email_digest
 
   """column name"""
   id
