@@ -46,7 +46,12 @@ const App = ({
                     <ThemeProvider theme={theme}>
                         <DialogsProvider>
                             <Head>
-                                <title>Reshared</title>
+                                <title>Reshared | Share things with your community</title>
+                                <meta
+                                    name="description"
+                                    content="Reshared facilitates, encourages and organizes sharing within your local community"
+                                    key="desc"
+                                />
                                 <link rel="icon" href="/favicon.ico" />
                                 <link
                                     rel="apple-touch-icon"

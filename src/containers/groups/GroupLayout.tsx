@@ -12,6 +12,7 @@ import {
     Tabs,
     Typography,
 } from 'antd';
+import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ReactNode, useCallback } from 'react';
@@ -148,6 +149,9 @@ export const GroupLayout = (props: GroupLayoutProps) => {
 
     return (
         <PageLayout>
+            <Head>
+                <title>{props.group.name} | Reshared</title>
+            </Head>
             <Tabs
                 key="tabs"
                 activeKey={props.activePage}
