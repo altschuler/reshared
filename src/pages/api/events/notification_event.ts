@@ -4,7 +4,10 @@
     Notifications,
     UserCardFragment,
 } from '../../../generated/graphql';
-import { ServerFindNotifcationDocument } from '../../../generated/server-queries';
+import {
+    ServerFindNotifcationDocument,
+    ServerFindNotifcationQuery,
+} from '../../../generated/server-queries';
 import { fixQuery, makeEventHandler, sendMail } from '../../../server';
 import { activityMessageSafe } from '../../../utils/activity';
 import { urlFor } from '../../../utils/urls';
@@ -34,7 +37,8 @@ export default makeEventHandler<Notifications>(async (args, ctx) => {
         variables: { id: args.event.data.new!.id },
     });
 
-    const notification = query.data.notifications_by_pk;
+    const notification = query.data
+        .notifications_by_pk as ServerFindNotifcationQuery['notifications_by_pk'];
 
     // Should not be able to happen, but who knows, and we'll just ignore it
     if (!notification) {
@@ -44,9 +48,16 @@ export default makeEventHandler<Notifications>(async (args, ctx) => {
         });
     }
 
+    // Stop if the user has disabled activity emails
+    if (!(notification.user.user_profile?.email_activity ?? true)) {
+        return ctx.success({
+            success: true,
+            message: 'ok: skipping because user has disabled activity emails',
+        });
+    }
+
     const config = getEmailConfig(notification, notification.user);
 
-    // TODO: check if user has disabled email settings for this activity
     if (config?.direct) {
         const message = activityMessageSafe(notification.activity as any, notification.user);
 

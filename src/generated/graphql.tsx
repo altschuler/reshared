@@ -12548,6 +12548,9 @@ export type User_Profile = {
   avatar?: Maybe<Files>;
   avatar_id?: Maybe<Scalars['uuid']>;
   created_at: Scalars['timestamptz'];
+  email_activity: Scalars['Boolean'];
+  email_chat: Scalars['Boolean'];
+  email_digest: Scalars['Boolean'];
   id: Scalars['uuid'];
   updated_at: Scalars['timestamptz'];
   /** An object relationship */
@@ -12585,6 +12588,9 @@ export type User_Profile_Bool_Exp = {
   avatar?: InputMaybe<Files_Bool_Exp>;
   avatar_id?: InputMaybe<Uuid_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  email_activity?: InputMaybe<Boolean_Comparison_Exp>;
+  email_chat?: InputMaybe<Boolean_Comparison_Exp>;
+  email_digest?: InputMaybe<Boolean_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   user?: InputMaybe<Users_Bool_Exp>;
@@ -12604,6 +12610,9 @@ export type User_Profile_Insert_Input = {
   avatar?: InputMaybe<Files_Obj_Rel_Insert_Input>;
   avatar_id?: InputMaybe<Scalars['uuid']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
+  email_activity?: InputMaybe<Scalars['Boolean']>;
+  email_chat?: InputMaybe<Scalars['Boolean']>;
+  email_digest?: InputMaybe<Scalars['Boolean']>;
   id?: InputMaybe<Scalars['uuid']>;
   updated_at?: InputMaybe<Scalars['timestamptz']>;
   user?: InputMaybe<Users_Obj_Rel_Insert_Input>;
@@ -12658,6 +12667,9 @@ export type User_Profile_Order_By = {
   avatar?: InputMaybe<Files_Order_By>;
   avatar_id?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
+  email_activity?: InputMaybe<Order_By>;
+  email_chat?: InputMaybe<Order_By>;
+  email_digest?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
   user?: InputMaybe<Users_Order_By>;
@@ -12676,6 +12688,12 @@ export enum User_Profile_Select_Column {
   /** column name */
   CreatedAt = 'created_at',
   /** column name */
+  EmailActivity = 'email_activity',
+  /** column name */
+  EmailChat = 'email_chat',
+  /** column name */
+  EmailDigest = 'email_digest',
+  /** column name */
   Id = 'id',
   /** column name */
   UpdatedAt = 'updated_at',
@@ -12687,6 +12705,9 @@ export enum User_Profile_Select_Column {
 export type User_Profile_Set_Input = {
   avatar_id?: InputMaybe<Scalars['uuid']>;
   created_at?: InputMaybe<Scalars['timestamptz']>;
+  email_activity?: InputMaybe<Scalars['Boolean']>;
+  email_chat?: InputMaybe<Scalars['Boolean']>;
+  email_digest?: InputMaybe<Scalars['Boolean']>;
   id?: InputMaybe<Scalars['uuid']>;
   updated_at?: InputMaybe<Scalars['timestamptz']>;
   user_id?: InputMaybe<Scalars['uuid']>;
@@ -12698,6 +12719,12 @@ export enum User_Profile_Update_Column {
   AvatarId = 'avatar_id',
   /** column name */
   CreatedAt = 'created_at',
+  /** column name */
+  EmailActivity = 'email_activity',
+  /** column name */
+  EmailChat = 'email_chat',
+  /** column name */
+  EmailDigest = 'email_digest',
   /** column name */
   Id = 'id',
   /** column name */
@@ -13798,14 +13825,14 @@ export type JoinGroupMutationVariables = Exact<{
 }>;
 
 
-export type JoinGroupMutation = { __typename?: 'mutation_root', insert_group_members_one?: { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, user: { __typename?: 'users', createdAt: string, email?: any | null, emailVerified: boolean, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> } } | null };
+export type JoinGroupMutation = { __typename?: 'mutation_root', insert_group_members_one?: { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, user: { __typename?: 'users', createdAt: string, email?: any | null, emailVerified: boolean, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, user_profile?: { __typename?: 'user_profile', email_chat: boolean, email_activity: boolean, email_digest: boolean, avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> } } | null };
 
 export type JoinGroupWithTokenMutationVariables = Exact<{
   input: JoinGroupInput;
 }>;
 
 
-export type JoinGroupWithTokenMutation = { __typename?: 'mutation_root', joinGroup?: { __typename?: 'JoinGroupResult', group?: { __typename?: 'groups', id: string } | null, user?: { __typename?: 'users', createdAt: string, email?: any | null, emailVerified: boolean, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> } | null } | null };
+export type JoinGroupWithTokenMutation = { __typename?: 'mutation_root', joinGroup?: { __typename?: 'JoinGroupResult', group?: { __typename?: 'groups', id: string } | null, user?: { __typename?: 'users', createdAt: string, email?: any | null, emailVerified: boolean, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, user_profile?: { __typename?: 'user_profile', email_chat: boolean, email_activity: boolean, email_digest: boolean, avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> } | null } | null };
 
 export type RequestJoinGroupMutationVariables = Exact<{
   input: Group_Join_Requests_Insert_Input;
@@ -13948,7 +13975,7 @@ export type UserCardFragment = { __typename?: 'users', id: string, displayName: 
 
 export type UserJoinRequestsFragment = { __typename?: 'users', id: string, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> };
 
-export type UserPrivateDetailFragment = { __typename?: 'users', createdAt: string, email?: any | null, emailVerified: boolean, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> };
+export type UserPrivateDetailFragment = { __typename?: 'users', createdAt: string, email?: any | null, emailVerified: boolean, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, user_profile?: { __typename?: 'user_profile', email_chat: boolean, email_activity: boolean, email_digest: boolean, avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> };
 
 export type UserListQueryVariables = Exact<{
   where?: InputMaybe<Users_Bool_Exp>;
@@ -13964,7 +13991,7 @@ export type UserPrivateDetailsQueryVariables = Exact<{
 }>;
 
 
-export type UserPrivateDetailsQuery = { __typename?: 'query_root', user?: { __typename?: 'users', createdAt: string, email?: any | null, emailVerified: boolean, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> } | null };
+export type UserPrivateDetailsQuery = { __typename?: 'query_root', user?: { __typename?: 'users', createdAt: string, email?: any | null, emailVerified: boolean, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, user_profile?: { __typename?: 'user_profile', email_chat: boolean, email_activity: boolean, email_digest: boolean, avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> } | null };
 
 export type NotificationsSubscriptionVariables = Exact<{
   userId: Scalars['uuid'];
@@ -13995,15 +14022,16 @@ export type UpdateUserMutationVariables = Exact<{
 }>;
 
 
-export type UpdateUserMutation = { __typename?: 'mutation_root', updateUser?: { __typename?: 'users', createdAt: string, email?: any | null, emailVerified: boolean, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> } | null };
+export type UpdateUserMutation = { __typename?: 'mutation_root', updateUser?: { __typename?: 'users', createdAt: string, email?: any | null, emailVerified: boolean, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, user_profile?: { __typename?: 'user_profile', email_chat: boolean, email_activity: boolean, email_digest: boolean, avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> } | null };
 
 export type UpdateUserProfileMutationVariables = Exact<{
   userId: Scalars['uuid'];
   input: User_Profile_Insert_Input;
+  columns: Array<User_Profile_Update_Column> | User_Profile_Update_Column;
 }>;
 
 
-export type UpdateUserProfileMutation = { __typename?: 'mutation_root', insert_user_profile_one?: { __typename?: 'user_profile', user: { __typename?: 'users', createdAt: string, email?: any | null, emailVerified: boolean, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> } } | null };
+export type UpdateUserProfileMutation = { __typename?: 'mutation_root', insert_user_profile_one?: { __typename?: 'user_profile', user: { __typename?: 'users', createdAt: string, email?: any | null, emailVerified: boolean, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, user_profile?: { __typename?: 'user_profile', email_chat: boolean, email_activity: boolean, email_digest: boolean, avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> } } | null };
 
 export type DeleteAccountMutationVariables = Exact<{
   id: Scalars['uuid'];
@@ -14429,10 +14457,19 @@ export const UserPrivateDetailFragmentDoc = gql`
       ...GroupCard
     }
   }
+  user_profile {
+    avatar {
+      ...FileUploadCard
+    }
+    email_chat
+    email_activity
+    email_digest
+  }
 }
     ${UserCardFragmentDoc}
 ${UserJoinRequestsFragmentDoc}
-${GroupCardFragmentDoc}`;
+${GroupCardFragmentDoc}
+${FileUploadCardFragmentDoc}`;
 export const GroupActivityDocument = gql`
     query GroupActivity($shortId: String!, $limit: Int!, $offset: Int!) {
   groups(limit: 1, where: {short_id: {_eq: $shortId}}) {
@@ -16167,10 +16204,10 @@ export type UpdateUserMutationHookResult = ReturnType<typeof useUpdateUserMutati
 export type UpdateUserMutationResult = Apollo.MutationResult<UpdateUserMutation>;
 export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<UpdateUserMutation, UpdateUserMutationVariables>;
 export const UpdateUserProfileDocument = gql`
-    mutation UpdateUserProfile($userId: uuid!, $input: user_profile_insert_input!) {
+    mutation UpdateUserProfile($userId: uuid!, $input: user_profile_insert_input!, $columns: [user_profile_update_column!]!) {
   insert_user_profile_one(
     object: $input
-    on_conflict: {where: {user_id: {_eq: $userId}}, constraint: user_profile_user_id_key, update_columns: [avatar_id]}
+    on_conflict: {where: {user_id: {_eq: $userId}}, constraint: user_profile_user_id_key, update_columns: $columns}
   ) {
     user {
       ...UserPrivateDetail
@@ -16195,6 +16232,7 @@ export type UpdateUserProfileMutationFn = Apollo.MutationFunction<UpdateUserProf
  *   variables: {
  *      userId: // value for 'userId'
  *      input: // value for 'input'
+ *      columns: // value for 'columns'
  *   },
  * });
  */

@@ -3,7 +3,7 @@ import {
     ServerUnreadChatMemberDocument,
     ServerUpdateChatGroupMemberDocument,
 } from '../../../generated/server-queries';
-import { flatMap, groupBy, map, uniq } from 'lodash-es';
+import { compact, flatMap, groupBy, map, uniq } from 'lodash-es';
 import dayjs from 'dayjs';
 import { urlFor } from '../../../utils/urls';
 
@@ -27,8 +27,13 @@ export default makeCronHandler<any>(async (_args, ctx) => {
     });
 
     const byUser = groupBy(needsNotification, (u) => u.user?.id);
-    const emails = map(byUser, (unreadChats): MailData<any> => {
+    const emails = map(byUser, (unreadChats): MailData<any> | null => {
         const user = unreadChats[0].user!;
+
+        // Don't send an email if the user has disabled chat notifications
+        if (!(user.user_profile?.email_chat ?? true)) {
+            return null;
+        }
 
         const messages = unreadChats.map((u) => u.chat_group?.messages[0]);
         return {
@@ -47,8 +52,10 @@ export default makeCronHandler<any>(async (_args, ctx) => {
         };
     });
 
-    await sendMail(emails);
+    await sendMail(compact(emails));
 
+    // Mark all users notified even if they have disabled emails, to prevent suddenly
+    // sending a bunch of emails if they choose to enable it later
     const notifiedIds = flatMap(byUser).map((u) => u.chat_group_member!.id);
     const update = await ctx.adminClient.mutate({
         mutation: ServerUpdateChatGroupMemberDocument,

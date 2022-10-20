@@ -22,8 +22,14 @@ query ServerMostRecentChats {
 query ServerUnreadChatMember {
     chat_group_member_info(where: { has_unread: { _eq: true } }) {
         user {
-            ...UserCard
+            id
+            displayName
             email
+            user_profile {
+                email_chat
+                email_activity
+                email_digest
+            }
         }
         last_read
         last_message_at
