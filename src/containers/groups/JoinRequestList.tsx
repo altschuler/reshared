@@ -10,6 +10,7 @@ import {
     useGroupJoinRequestsQuery,
     useHandleJoinRequestMutation,
 } from '../../generated/graphql';
+import { urlFor } from '../../utils/urls';
 
 export interface JoinRequestListProps {
     group: GroupDetailsFragment;
@@ -86,7 +87,9 @@ export const JoinRequestList = (props: JoinRequestListProps) => {
                     ]}>
                     <List.Item.Meta
                         avatar={<UserAvatar user={req.user} />}
-                        title={<Link href={`/u/${req.user.id}`}>{req.user.displayName}</Link>}
+                        title={
+                            <Link href={urlFor.user.profile(req.user)}>{req.user.displayName}</Link>
+                        }
                         description={
                             <Typography.Text>
                                 Request sent on <DateDisplay utc={req.created_at} showDistance />:{' '}

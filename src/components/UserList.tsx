@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Users_Bool_Exp, Users_Order_By, useUserListQuery } from '../generated/graphql';
 import { usePagination } from '../utils/list';
 import { UserAvatar } from './display';
+import { urlFor } from '../utils/urls';
 
 export interface UserListProps {
     where: Users_Bool_Exp;
@@ -42,7 +43,7 @@ export const UserList = (props: UserListProps) => {
                         avatar={<UserAvatar user={user} />}
                         title={
                             <Space>
-                                <Link href={`/user/${user.id}`}>{user.displayName}</Link>
+                                <Link href={urlFor.user.profile(user)}>{user.displayName}</Link>
                             </Space>
                         }
                     />

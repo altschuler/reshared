@@ -13,6 +13,7 @@ import {
 } from '../../generated/graphql';
 import { useMembership } from '../../utils/group';
 import { usePagination } from '../../utils/list';
+import { urlFor } from '../../utils/urls';
 
 export interface MemberListProps {
     group: GroupCardFragment;
@@ -147,7 +148,7 @@ export const MemberList = ({ memberships, group }: MemberListProps) => {
                             avatar={<UserAvatar user={member.user} />}
                             title={
                                 <Space data-cy="member-list:item:role:txt">
-                                    <Link href={`/u/${member.user.id}`}>
+                                    <Link href={urlFor.user.profile(member.user)}>
                                         {member.user.displayName}
                                     </Link>
                                     {member.role === Group_Role_Enum.Admin && (

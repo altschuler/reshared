@@ -41,7 +41,8 @@ const useStyles = createUseStyles({
 
 export interface ThingListProps {
     initial?: ThingCardFragment[];
-    where: Things_Bool_Exp;
+    where?: Things_Bool_Exp;
+    things?: ThingCardFragment[];
     skip?: boolean;
     orderBy?: Things_Order_By[];
     emptyText?: ReactNode;
@@ -55,20 +56,20 @@ export const ThingList = (props: ThingListProps) => {
     const classes = useStyles();
 
     const { data, previousData, loading } = useThingListQuery({
-        skip: props.skip,
+        skip: !!props.things || props.skip,
         variables: {
             limit: pgn.limit,
             offset: pgn.offset,
             orderBy: [{ created_at: Order_By.Desc }],
             where: {
-                _and: [props.where],
+                _and: [props.where || {}],
             },
         },
     });
 
     const results = data || previousData;
-    const things = results?.things || previousData?.things || [];
-    const total = results?.things_aggregate.aggregate?.count || 0;
+    const things = props.things || results?.things || previousData?.things || [];
+    const total = props.things?.length || results?.things_aggregate.aggregate?.count || 0;
 
     useEffect(() => pgn.setTotal(total), [total, pgn]);
 

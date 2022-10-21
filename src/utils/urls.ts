@@ -19,6 +19,10 @@ interface PostWithId {
     };
 }
 
+interface UserWithId {
+    id: string;
+}
+
 interface ChatGroupWithId {
     id: string;
 }
@@ -57,6 +61,7 @@ export const urlFor = {
     user: {
         settings: (absolute = false) => makeUrl(absolute, `/settings`),
         things: (absolute = false) => makeUrl(absolute, `/my-things`),
+        profile: (user: UserWithId, absolute = false) => makeUrl(absolute, `/user/${user.id}`),
     },
     group: {
         list: (absolute = false) => makeUrl(absolute, `/groups`),
