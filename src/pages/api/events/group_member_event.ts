@@ -31,7 +31,7 @@ export default makeEventHandler<Group_Members>(async (args, ctx) => {
     await insertActivities(ctx, [
         {
             groupId: membership.group_id,
-            actorId: membership.user_id,
+            actorId: ctx.userId,
             entity: { group_member_id: membership.id },
             verb: getVerb(args),
             receivers: getReceivers(args, memberIds),
