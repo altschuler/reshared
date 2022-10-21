@@ -5237,7 +5237,9 @@ export type Group_Members_Bool_Exp = {
 /** unique or primary key constraints on table "group_members" */
 export enum Group_Members_Constraint {
   /** unique or primary key constraint on columns "id" */
-  GroupMembersPkey = 'group_members_pkey'
+  GroupMembersPkey = 'group_members_pkey',
+  /** unique or primary key constraint on columns "group_id", "user_id" */
+  GroupMembersUserIdGroupIdKey = 'group_members_user_id_group_id_key'
 }
 
 /** input type for inserting data into table "group_members" */
@@ -13892,6 +13894,13 @@ export type ChangeMemberRoleMutationVariables = Exact<{
 
 export type ChangeMemberRoleMutation = { __typename?: 'mutation_root', update_group_members_by_pk?: { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } | null };
 
+export type ChangeGroupOwnerMutationVariables = Exact<{
+  memberId: Scalars['uuid'];
+}>;
+
+
+export type ChangeGroupOwnerMutation = { __typename?: 'mutation_root', update_group_members_many?: Array<{ __typename?: 'group_members_mutation_response', returning: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> } | null> | null };
+
 export type SearchCountsQueryVariables = Exact<{
   thingWhere: Things_Bool_Exp;
   groupWhere: Groups_Bool_Exp;
@@ -15639,6 +15648,43 @@ export function useChangeMemberRoleMutation(baseOptions?: Apollo.MutationHookOpt
 export type ChangeMemberRoleMutationHookResult = ReturnType<typeof useChangeMemberRoleMutation>;
 export type ChangeMemberRoleMutationResult = Apollo.MutationResult<ChangeMemberRoleMutation>;
 export type ChangeMemberRoleMutationOptions = Apollo.BaseMutationOptions<ChangeMemberRoleMutation, ChangeMemberRoleMutationVariables>;
+export const ChangeGroupOwnerDocument = gql`
+    mutation ChangeGroupOwner($memberId: uuid!) {
+  update_group_members_many(
+    updates: [{where: {id: {_eq: $memberId}}, _set: {role: owner}}, {where: {id: {_neq: $memberId}, group: {memberships: {id: {_eq: $memberId}}}, role: {_eq: owner}}, _set: {role: admin}}]
+  ) {
+    returning {
+      ...GroupMemberCard
+    }
+  }
+}
+    ${GroupMemberCardFragmentDoc}`;
+export type ChangeGroupOwnerMutationFn = Apollo.MutationFunction<ChangeGroupOwnerMutation, ChangeGroupOwnerMutationVariables>;
+
+/**
+ * __useChangeGroupOwnerMutation__
+ *
+ * To run a mutation, you first call `useChangeGroupOwnerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeGroupOwnerMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changeGroupOwnerMutation, { data, loading, error }] = useChangeGroupOwnerMutation({
+ *   variables: {
+ *      memberId: // value for 'memberId'
+ *   },
+ * });
+ */
+export function useChangeGroupOwnerMutation(baseOptions?: Apollo.MutationHookOptions<ChangeGroupOwnerMutation, ChangeGroupOwnerMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ChangeGroupOwnerMutation, ChangeGroupOwnerMutationVariables>(ChangeGroupOwnerDocument, options);
+      }
+export type ChangeGroupOwnerMutationHookResult = ReturnType<typeof useChangeGroupOwnerMutation>;
+export type ChangeGroupOwnerMutationResult = Apollo.MutationResult<ChangeGroupOwnerMutation>;
+export type ChangeGroupOwnerMutationOptions = Apollo.BaseMutationOptions<ChangeGroupOwnerMutation, ChangeGroupOwnerMutationVariables>;
 export const SearchCountsDocument = gql`
     query SearchCounts($thingWhere: things_bool_exp!, $groupWhere: groups_bool_exp!, $userWhere: users_bool_exp!) {
   usersAggregate(where: $userWhere, limit: 10) {
@@ -16313,6 +16359,7 @@ export const GqlOps = {
     UpdateJoinToken: 'UpdateJoinToken',
     DeleteGroupPost: 'DeleteGroupPost',
     ChangeMemberRole: 'ChangeMemberRole',
+    ChangeGroupOwner: 'ChangeGroupOwner',
     CreateThing: 'CreateThing',
     UpdateThing: 'UpdateThing',
     DeleteThing: 'DeleteThing',

@@ -78,7 +78,35 @@ update_permissions:
                   _in:
                     - admin
                     - owner
-      check: null
+      check:
+        _or:
+          - _and:
+              - group:
+                  memberships:
+                    _and:
+                      - user_id:
+                          _eq: X-Hasura-User-Id
+                      - role:
+                          _eq: owner
+              - role:
+                  _in:
+                    - owner
+                    - admin
+                    - user
+          - _and:
+              - group:
+                  memberships:
+                    _and:
+                      - user_id:
+                          _eq: X-Hasura-User-Id
+                      - role:
+                          _in:
+                            - owner
+                            - admin
+              - role:
+                  _in:
+                    - admin
+                    - user
 delete_permissions:
   - role: user
     permission:

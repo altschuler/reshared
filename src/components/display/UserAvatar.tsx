@@ -55,10 +55,11 @@ export const UserAvatar = (props: UserAvatarProps) => {
                             <Avatar
                                 size="large"
                                 src={
-                                    user.user_profile?.avatar &&
-                                    nhost.storage.getPublicUrl({
-                                        fileId: user.user_profile?.avatar?.id,
-                                    })
+                                    (user.user_profile?.avatar &&
+                                        nhost.storage.getPublicUrl({
+                                            fileId: user.user_profile?.avatar?.id,
+                                        })) ||
+                                    user.avatarUrl
                                 }>
                                 <span style={{ userSelect: 'none' }}>
                                     {user.displayName.slice(0, 2).toUpperCase() || '?'}
