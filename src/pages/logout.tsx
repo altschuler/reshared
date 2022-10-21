@@ -1,10 +1,11 @@
 ﻿import { useAuthenticated, useSignOut } from '@nhost/react';
+import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { ErrorDisplay } from '../components/display';
 import { PageLayout } from '../containers/root/PageLayout';
-import { makeGSSP } from '../utils/gssp';
 import { isServer } from '../utils/next';
+import { getNhostSession } from '../utils/nhost';
 import { urlFor } from '../utils/urls';
 
 export const LogoutPage = () => {
@@ -30,12 +31,19 @@ export const LogoutPage = () => {
     );
 };
 
-export const getServerSideProps = makeGSSP({
-    handler: async (data) => {
-        if (!data.user) {
-            return { redirect: { statusCode: 302, destination: urlFor.root() } };
-        }
-    },
-});
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+    const { nhost, session } = await getNhostSession(
+        process.env.NEXT_PUBLIC_NHOST_BACKEND_URL!,
+        ctx,
+    );
+
+    if (!session?.user) {
+        return { redirect: { statusCode: 302, destination: '/' } };
+    }
+
+    await nhost.auth.signOut();
+
+    return { props: { nhostSession: null, apolloCache: null } };
+};
 
 export default LogoutPage;
