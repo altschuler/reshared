@@ -5237,7 +5237,9 @@ export type Group_Members_Bool_Exp = {
 /** unique or primary key constraints on table "group_members" */
 export enum Group_Members_Constraint {
   /** unique or primary key constraint on columns "id" */
-  GroupMembersPkey = 'group_members_pkey'
+  GroupMembersPkey = 'group_members_pkey',
+  /** unique or primary key constraint on columns "group_id", "user_id" */
+  GroupMembersUserIdGroupIdKey = 'group_members_user_id_group_id_key'
 }
 
 /** input type for inserting data into table "group_members" */
@@ -13892,6 +13894,13 @@ export type ChangeMemberRoleMutationVariables = Exact<{
 
 export type ChangeMemberRoleMutation = { __typename?: 'mutation_root', update_group_members_by_pk?: { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } | null };
 
+export type ChangeGroupOwnerMutationVariables = Exact<{
+  memberId: Scalars['uuid'];
+}>;
+
+
+export type ChangeGroupOwnerMutation = { __typename?: 'mutation_root', update_group_members_many?: Array<{ __typename?: 'group_members_mutation_response', returning: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> } | null> | null };
+
 export type SearchCountsQueryVariables = Exact<{
   thingWhere: Things_Bool_Exp;
   groupWhere: Groups_Bool_Exp;
@@ -13975,6 +13984,8 @@ export type UserCardFragment = { __typename?: 'users', id: string, displayName: 
 
 export type UserJoinRequestsFragment = { __typename?: 'users', id: string, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> };
 
+export type UserProfileDetailsFragment = { __typename?: 'users', createdAt: string, id: string, displayName: string, avatarUrl: string, activities: Array<{ __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, group_post?: { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, pinned: boolean, keyword: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, group: { __typename?: 'groups', id: string, short_id: string, name: string }, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } | null } }>, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }>, group_posts: Array<{ __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, pinned: boolean, keyword: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }>, things: Array<{ __typename?: 'things', id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }>, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null };
+
 export type UserPrivateDetailFragment = { __typename?: 'users', createdAt: string, email?: any | null, emailVerified: boolean, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, user_profile?: { __typename?: 'user_profile', email_chat: boolean, email_activity: boolean, email_digest: boolean, avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> };
 
 export type UserListQueryVariables = Exact<{
@@ -13992,6 +14003,13 @@ export type UserPrivateDetailsQueryVariables = Exact<{
 
 
 export type UserPrivateDetailsQuery = { __typename?: 'query_root', user?: { __typename?: 'users', createdAt: string, email?: any | null, emailVerified: boolean, id: string, displayName: string, avatarUrl: string, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } }>, user_profile?: { __typename?: 'user_profile', email_chat: boolean, email_activity: boolean, email_digest: boolean, avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null, group_join_requests: Array<{ __typename?: 'group_join_requests', id: string, created_at: string, updated_at: string, status?: Group_Join_Request_Status_Enum | null, group_id: string, message: string, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }> } | null };
+
+export type UserProfileDetailsQueryVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type UserProfileDetailsQuery = { __typename?: 'query_root', user?: { __typename?: 'users', createdAt: string, id: string, displayName: string, avatarUrl: string, activities: Array<{ __typename?: 'activities', id: string, created_at: string, verb: Activity_Verb_Enum, actor?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, entity: { __typename?: 'entities', id: string, group?: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } } | null, user?: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null, group_post?: { __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, pinned: boolean, keyword: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } | null, group_thing?: { __typename?: 'group_thing', id: string, thing: { __typename?: 'things', id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }, group: { __typename?: 'groups', id: string, short_id: string, name: string } } | null, group_member?: { __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, group: { __typename?: 'groups', id: string, short_id: string, name: string }, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } | null } }>, memberships: Array<{ __typename?: 'group_members', id: string, role: Group_Role_Enum, created_at: string, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, user: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }>, group_posts: Array<{ __typename?: 'group_posts', id: string, created_at: string, updated_at: string, type: Group_Post_Type_Enum, resolved: boolean, content: string, pinned: boolean, keyword: string, comments: Array<{ __typename?: 'group_post_comment', id: string, comment: { __typename?: 'comments', id: string, content: string, created_at: string, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } } }>, group: { __typename?: 'groups', id: string, short_id: string, name: string, created_at: string, description?: string | null, public: boolean, banner_file?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null, memberships_aggregate: { __typename?: 'group_members_aggregate', aggregate?: { __typename?: 'group_members_aggregate_fields', count: number } | null }, thing_relations_aggregate: { __typename?: 'group_thing_aggregate', aggregate?: { __typename?: 'group_thing_aggregate_fields', count: number } | null } }, author: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }>, things: Array<{ __typename?: 'things', id: string, name: string, description: string, category?: string | null, type: Thing_Type_Enum, expiry?: any | null, short_id: string, images: Array<{ __typename?: 'thing_images', id: string, description: string, order: number, file: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } }>, owner: { __typename?: 'users', id: string, displayName: string, avatarUrl: string, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } }>, user_profile?: { __typename?: 'user_profile', avatar?: { __typename?: 'files', id: string, name?: string | null, mimeType?: string | null } | null } | null } | null };
 
 export type NotificationsSubscriptionVariables = Exact<{
   userId: Scalars['uuid'];
@@ -14040,6 +14058,13 @@ export type DeleteAccountMutationVariables = Exact<{
 
 export type DeleteAccountMutation = { __typename?: 'mutation_root', deleteAccount: boolean };
 
+export const GroupRefFragmentDoc = gql`
+    fragment GroupRef on groups {
+  id
+  short_id
+  name
+}
+    `;
 export const FileUploadCardFragmentDoc = gql`
     fragment FileUploadCard on files {
   id
@@ -14047,6 +14072,18 @@ export const FileUploadCardFragmentDoc = gql`
   mimeType
 }
     `;
+export const ThingRefFragmentDoc = gql`
+    fragment ThingRef on things {
+  id
+  short_id
+  name
+  images(limit: 1) {
+    file {
+      ...FileUploadCard
+    }
+  }
+}
+    ${FileUploadCardFragmentDoc}`;
 export const UserCardFragmentDoc = gql`
     fragment UserCard on users {
   id
@@ -14055,31 +14092,6 @@ export const UserCardFragmentDoc = gql`
   user_profile {
     avatar {
       ...FileUploadCard
-    }
-  }
-}
-    ${FileUploadCardFragmentDoc}`;
-export const GroupCardFragmentDoc = gql`
-    fragment GroupCard on groups {
-  id
-  short_id
-  name
-  created_at
-  description
-  public
-  banner_file {
-    ...FileUploadCard
-  }
-  memberships_aggregate {
-    aggregate {
-      count
-    }
-  }
-  thing_relations_aggregate(
-    where: {thing: {enabled: {_eq: true}, _or: [{expiry: {_gt: "now()"}}, {expiry: {_is_null: true}}]}}
-  ) {
-    aggregate {
-      count
     }
   }
 }
@@ -14094,32 +14106,6 @@ export const CommentCardFragmentDoc = gql`
   }
 }
     ${UserCardFragmentDoc}`;
-export const GroupPostFragmentDoc = gql`
-    fragment GroupPost on group_posts {
-  id
-  created_at
-  updated_at
-  type
-  resolved
-  content
-  pinned
-  keyword
-  comments(order_by: [{created_at: desc}]) {
-    id
-    comment {
-      ...CommentCard
-    }
-  }
-  group {
-    ...GroupCard
-  }
-  author {
-    ...UserCard
-  }
-}
-    ${CommentCardFragmentDoc}
-${GroupCardFragmentDoc}
-${UserCardFragmentDoc}`;
 export const ThingImageCardFragmentDoc = gql`
     fragment ThingImageCard on thing_images {
   id
@@ -14148,90 +14134,6 @@ export const ThingCardFragmentDoc = gql`
 }
     ${ThingImageCardFragmentDoc}
 ${UserCardFragmentDoc}`;
-export const GroupRefFragmentDoc = gql`
-    fragment GroupRef on groups {
-  id
-  short_id
-  name
-}
-    `;
-export const GroupMemberCardFragmentDoc = gql`
-    fragment GroupMemberCard on group_members {
-  id
-  role
-  created_at
-  user {
-    ...UserCard
-  }
-}
-    ${UserCardFragmentDoc}`;
-export const GroupMemberWithGroupCardFragmentDoc = gql`
-    fragment GroupMemberWithGroupCard on group_members {
-  ...GroupMemberCard
-  group {
-    id
-    short_id
-    name
-  }
-}
-    ${GroupMemberCardFragmentDoc}`;
-export const DetailedEntityFragmentDoc = gql`
-    fragment DetailedEntity on entities {
-  id
-  group {
-    ...GroupCard
-  }
-  user {
-    ...UserCard
-  }
-  group_post {
-    ...GroupPost
-  }
-  group_thing {
-    id
-    thing {
-      ...ThingCard
-    }
-    group {
-      ...GroupRef
-    }
-  }
-  group_member {
-    ...GroupMemberWithGroupCard
-  }
-}
-    ${GroupCardFragmentDoc}
-${UserCardFragmentDoc}
-${GroupPostFragmentDoc}
-${ThingCardFragmentDoc}
-${GroupRefFragmentDoc}
-${GroupMemberWithGroupCardFragmentDoc}`;
-export const DetailedActivityFragmentDoc = gql`
-    fragment DetailedActivity on activities {
-  id
-  created_at
-  verb
-  actor {
-    ...UserCard
-  }
-  entity {
-    ...DetailedEntity
-  }
-}
-    ${UserCardFragmentDoc}
-${DetailedEntityFragmentDoc}`;
-export const ThingRefFragmentDoc = gql`
-    fragment ThingRef on things {
-  id
-  short_id
-  name
-  images(limit: 1) {
-    file {
-      ...FileUploadCard
-    }
-  }
-}
-    ${FileUploadCardFragmentDoc}`;
 export const TransferRequestCardFragmentDoc = gql`
     fragment TransferRequestCard on transfer_request {
   id
@@ -14386,6 +14288,41 @@ export const ChatGroupCardFragmentDoc = gql`
 }
     ${ChatGroupMemberCardFragmentDoc}
 ${UserCardFragmentDoc}`;
+export const GroupCardFragmentDoc = gql`
+    fragment GroupCard on groups {
+  id
+  short_id
+  name
+  created_at
+  description
+  public
+  banner_file {
+    ...FileUploadCard
+  }
+  memberships_aggregate {
+    aggregate {
+      count
+    }
+  }
+  thing_relations_aggregate(
+    where: {thing: {enabled: {_eq: true}, _or: [{expiry: {_gt: "now()"}}, {expiry: {_is_null: true}}]}}
+  ) {
+    aggregate {
+      count
+    }
+  }
+}
+    ${FileUploadCardFragmentDoc}`;
+export const GroupMemberCardFragmentDoc = gql`
+    fragment GroupMemberCard on group_members {
+  id
+  role
+  created_at
+  user {
+    ...UserCard
+  }
+}
+    ${UserCardFragmentDoc}`;
 export const GroupDetailsFragmentDoc = gql`
     fragment GroupDetails on groups {
   ...GroupCard
@@ -14422,6 +14359,113 @@ export const ThingDetailsFragmentDoc = gql`
     ${ThingCardFragmentDoc}
 ${GroupCardFragmentDoc}
 ${TransferRequestCardFragmentDoc}`;
+export const GroupPostFragmentDoc = gql`
+    fragment GroupPost on group_posts {
+  id
+  created_at
+  updated_at
+  type
+  resolved
+  content
+  pinned
+  keyword
+  comments(order_by: [{created_at: desc}]) {
+    id
+    comment {
+      ...CommentCard
+    }
+  }
+  group {
+    ...GroupCard
+  }
+  author {
+    ...UserCard
+  }
+}
+    ${CommentCardFragmentDoc}
+${GroupCardFragmentDoc}
+${UserCardFragmentDoc}`;
+export const GroupMemberWithGroupCardFragmentDoc = gql`
+    fragment GroupMemberWithGroupCard on group_members {
+  ...GroupMemberCard
+  group {
+    id
+    short_id
+    name
+  }
+}
+    ${GroupMemberCardFragmentDoc}`;
+export const DetailedEntityFragmentDoc = gql`
+    fragment DetailedEntity on entities {
+  id
+  group {
+    ...GroupCard
+  }
+  user {
+    ...UserCard
+  }
+  group_post {
+    ...GroupPost
+  }
+  group_thing {
+    id
+    thing {
+      ...ThingCard
+    }
+    group {
+      ...GroupRef
+    }
+  }
+  group_member {
+    ...GroupMemberWithGroupCard
+  }
+}
+    ${GroupCardFragmentDoc}
+${UserCardFragmentDoc}
+${GroupPostFragmentDoc}
+${ThingCardFragmentDoc}
+${GroupRefFragmentDoc}
+${GroupMemberWithGroupCardFragmentDoc}`;
+export const DetailedActivityFragmentDoc = gql`
+    fragment DetailedActivity on activities {
+  id
+  created_at
+  verb
+  actor {
+    ...UserCard
+  }
+  entity {
+    ...DetailedEntity
+  }
+}
+    ${UserCardFragmentDoc}
+${DetailedEntityFragmentDoc}`;
+export const UserProfileDetailsFragmentDoc = gql`
+    fragment UserProfileDetails on users {
+  ...UserCard
+  createdAt
+  activities(limit: 10, order_by: {created_at: desc}) {
+    ...DetailedActivity
+  }
+  memberships {
+    ...GroupMemberCard
+    group {
+      ...GroupCard
+    }
+  }
+  group_posts(limit: 10, order_by: {created_at: desc}) {
+    ...GroupPost
+  }
+  things(limit: 100) {
+    ...ThingCard
+  }
+}
+    ${UserCardFragmentDoc}
+${DetailedActivityFragmentDoc}
+${GroupMemberCardFragmentDoc}
+${GroupCardFragmentDoc}
+${GroupPostFragmentDoc}
+${ThingCardFragmentDoc}`;
 export const GroupJoinRequestCardFragmentDoc = gql`
     fragment GroupJoinRequestCard on group_join_requests {
   id
@@ -15639,6 +15683,43 @@ export function useChangeMemberRoleMutation(baseOptions?: Apollo.MutationHookOpt
 export type ChangeMemberRoleMutationHookResult = ReturnType<typeof useChangeMemberRoleMutation>;
 export type ChangeMemberRoleMutationResult = Apollo.MutationResult<ChangeMemberRoleMutation>;
 export type ChangeMemberRoleMutationOptions = Apollo.BaseMutationOptions<ChangeMemberRoleMutation, ChangeMemberRoleMutationVariables>;
+export const ChangeGroupOwnerDocument = gql`
+    mutation ChangeGroupOwner($memberId: uuid!) {
+  update_group_members_many(
+    updates: [{where: {id: {_eq: $memberId}}, _set: {role: owner}}, {where: {id: {_neq: $memberId}, group: {memberships: {id: {_eq: $memberId}}}, role: {_eq: owner}}, _set: {role: admin}}]
+  ) {
+    returning {
+      ...GroupMemberCard
+    }
+  }
+}
+    ${GroupMemberCardFragmentDoc}`;
+export type ChangeGroupOwnerMutationFn = Apollo.MutationFunction<ChangeGroupOwnerMutation, ChangeGroupOwnerMutationVariables>;
+
+/**
+ * __useChangeGroupOwnerMutation__
+ *
+ * To run a mutation, you first call `useChangeGroupOwnerMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeGroupOwnerMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changeGroupOwnerMutation, { data, loading, error }] = useChangeGroupOwnerMutation({
+ *   variables: {
+ *      memberId: // value for 'memberId'
+ *   },
+ * });
+ */
+export function useChangeGroupOwnerMutation(baseOptions?: Apollo.MutationHookOptions<ChangeGroupOwnerMutation, ChangeGroupOwnerMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ChangeGroupOwnerMutation, ChangeGroupOwnerMutationVariables>(ChangeGroupOwnerDocument, options);
+      }
+export type ChangeGroupOwnerMutationHookResult = ReturnType<typeof useChangeGroupOwnerMutation>;
+export type ChangeGroupOwnerMutationResult = Apollo.MutationResult<ChangeGroupOwnerMutation>;
+export type ChangeGroupOwnerMutationOptions = Apollo.BaseMutationOptions<ChangeGroupOwnerMutation, ChangeGroupOwnerMutationVariables>;
 export const SearchCountsDocument = gql`
     query SearchCounts($thingWhere: things_bool_exp!, $groupWhere: groups_bool_exp!, $userWhere: users_bool_exp!) {
   usersAggregate(where: $userWhere, limit: 10) {
@@ -16061,6 +16142,44 @@ export type UserPrivateDetailsQueryResult = Apollo.QueryResult<UserPrivateDetail
 export function refetchUserPrivateDetailsQuery(variables: UserPrivateDetailsQueryVariables) {
       return { query: UserPrivateDetailsDocument, variables: variables }
     }
+export const UserProfileDetailsDocument = gql`
+    query UserProfileDetails($id: uuid!) {
+  user(id: $id) {
+    ...UserProfileDetails
+  }
+}
+    ${UserProfileDetailsFragmentDoc}`;
+
+/**
+ * __useUserProfileDetailsQuery__
+ *
+ * To run a query within a React component, call `useUserProfileDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserProfileDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserProfileDetailsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUserProfileDetailsQuery(baseOptions: Apollo.QueryHookOptions<UserProfileDetailsQuery, UserProfileDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserProfileDetailsQuery, UserProfileDetailsQueryVariables>(UserProfileDetailsDocument, options);
+      }
+export function useUserProfileDetailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserProfileDetailsQuery, UserProfileDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserProfileDetailsQuery, UserProfileDetailsQueryVariables>(UserProfileDetailsDocument, options);
+        }
+export type UserProfileDetailsQueryHookResult = ReturnType<typeof useUserProfileDetailsQuery>;
+export type UserProfileDetailsLazyQueryHookResult = ReturnType<typeof useUserProfileDetailsLazyQuery>;
+export type UserProfileDetailsQueryResult = Apollo.QueryResult<UserProfileDetailsQuery, UserProfileDetailsQueryVariables>;
+export function refetchUserProfileDetailsQuery(variables: UserProfileDetailsQueryVariables) {
+      return { query: UserProfileDetailsDocument, variables: variables }
+    }
 export const NotificationsDocument = gql`
     subscription Notifications($userId: uuid!) {
   notifications(
@@ -16289,7 +16408,8 @@ export const GqlOps = {
     ThingList: 'ThingList',
     ThingDetails: 'ThingDetails',
     UserList: 'UserList',
-    UserPrivateDetails: 'UserPrivateDetails'
+    UserPrivateDetails: 'UserPrivateDetails',
+    UserProfileDetails: 'UserProfileDetails'
   },
   Mutation: {
     CreateChatGroup: 'CreateChatGroup',
@@ -16313,6 +16433,7 @@ export const GqlOps = {
     UpdateJoinToken: 'UpdateJoinToken',
     DeleteGroupPost: 'DeleteGroupPost',
     ChangeMemberRole: 'ChangeMemberRole',
+    ChangeGroupOwner: 'ChangeGroupOwner',
     CreateThing: 'CreateThing',
     UpdateThing: 'UpdateThing',
     DeleteThing: 'DeleteThing',
@@ -16356,6 +16477,7 @@ export const GqlOps = {
     FileUploadCard: 'FileUploadCard',
     UserCard: 'UserCard',
     UserJoinRequests: 'UserJoinRequests',
+    UserProfileDetails: 'UserProfileDetails',
     UserPrivateDetail: 'UserPrivateDetail'
   }
 }

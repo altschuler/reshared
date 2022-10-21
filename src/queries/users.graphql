@@ -19,6 +19,30 @@ fragment UserJoinRequests on users {
     }
 }
 
+fragment UserProfileDetails on users {
+    ...UserCard
+    createdAt
+
+    activities(limit: 10, order_by: { created_at: desc }) {
+        ...DetailedActivity
+    }
+
+    memberships {
+        ...GroupMemberCard
+        group {
+            ...GroupCard
+        }
+    }
+
+    group_posts(limit: 10, order_by: { created_at: desc }) {
+        ...GroupPost
+    }
+
+    things(limit: 100) {
+        ...ThingCard
+    }
+}
+
 fragment UserPrivateDetail on users {
     ...UserCard
     ...UserJoinRequests
@@ -63,6 +87,12 @@ query UserList($where: users_bool_exp, $limit: Int, $offset: Int) {
 query UserPrivateDetails($id: uuid!) {
     user(id: $id) {
         ...UserPrivateDetail
+    }
+}
+
+query UserProfileDetails($id: uuid!) {
+    user(id: $id) {
+        ...UserProfileDetails
     }
 }
 

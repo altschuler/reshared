@@ -9,6 +9,7 @@ import {
 import { Avatar, List, Space, Tooltip } from 'antd';
 import Link from 'next/link';
 import {
+    GroupCardFragment,
     Groups_Bool_Exp,
     Groups_Order_By,
     Order_By,
@@ -21,7 +22,8 @@ import { urlFor } from '../utils/urls';
 import { ImageDisplay } from './display';
 
 export interface GroupListProps {
-    where: Groups_Bool_Exp;
+    where?: Groups_Bool_Exp;
+    groups?: GroupCardFragment[];
     orderBy?: Groups_Order_By[];
     emptyText?: ReactNode;
     dataCy?: string;
@@ -39,6 +41,7 @@ export const GroupList = (props: GroupListProps) => {
     const pgn = usePagination();
 
     const { data, previousData, loading } = useListGroupsQuery({
+        skip: !!props.groups,
         variables: {
             limit: pgn.limit,
             offset: pgn.offset,
@@ -48,8 +51,8 @@ export const GroupList = (props: GroupListProps) => {
     });
 
     const results = data || previousData;
-    const groups = results?.groups || [];
-    const total = results?.groups_aggregate.aggregate?.count || 0;
+    const groups = props.groups || results?.groups || [];
+    const total = props.groups?.length || results?.groups_aggregate.aggregate?.count || 0;
     useEffect(() => pgn.setTotal(total), [pgn, total]);
 
     return (

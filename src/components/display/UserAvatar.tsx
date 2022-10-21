@@ -1,6 +1,6 @@
 ﻿import { GroupCardFragment, UserCardFragment } from '../../generated/graphql';
 import Link from 'next/link';
-import { Avatar, Popover, Card, Skeleton, Space, Tag } from 'antd';
+import { Avatar, Popover, Card, Skeleton, Space, Tag, Button } from 'antd';
 import { MessageOutlined, ProfileOutlined } from '@ant-design/icons';
 import { createUseStyles } from 'react-jss';
 import { CSSProperties, useMemo } from 'react';
@@ -44,35 +44,40 @@ export const UserAvatar = (props: UserAvatarProps) => {
                             passHref
                             key="message"
                             href={{ pathname: urlFor.chat.new(), query: { to: user.id } }}>
-                            <MessageOutlined title="Send a message" />
+                            <Button type="link" icon={<MessageOutlined />}>
+                                Send a message
+                            </Button>
                         </Link>
                     ),
-                    <ProfileOutlined key="profile" />,
+                    <Link key="profile" passHref href={urlFor.user.profile(user)}>
+                        <Button type="link" icon={<ProfileOutlined />}>
+                            View profile
+                        </Button>
+                    </Link>,
                 ]}>
-                <Skeleton loading={false} avatar active>
-                    <Card.Meta
-                        avatar={
-                            <Avatar
-                                size="large"
-                                src={
-                                    user.user_profile?.avatar &&
+                <Card.Meta
+                    avatar={
+                        <Avatar
+                            size="large"
+                            src={
+                                (user.user_profile?.avatar &&
                                     nhost.storage.getPublicUrl({
                                         fileId: user.user_profile?.avatar?.id,
-                                    })
-                                }>
-                                <span style={{ userSelect: 'none' }}>
-                                    {user.displayName.slice(0, 2).toUpperCase() || '?'}
-                                </span>
-                            </Avatar>
-                        }
-                        title={
-                            <Space>
-                                <span>{user.displayName}</span>
-                                {isSelf && <Tag>You</Tag>}
-                            </Space>
-                        }
-                    />
-                </Skeleton>
+                                    })) ||
+                                user.avatarUrl
+                            }>
+                            <span style={{ userSelect: 'none' }}>
+                                {user.displayName.slice(0, 2).toUpperCase() || '?'}
+                            </span>
+                        </Avatar>
+                    }
+                    title={
+                        <Space>
+                            <span>{user.displayName}</span>
+                            {isSelf && <Tag>You</Tag>}
+                        </Space>
+                    }
+                />
             </Card>
         ),
         [isSelf, user.displayName, user.id],

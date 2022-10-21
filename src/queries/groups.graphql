@@ -301,3 +301,23 @@ mutation ChangeMemberRole($memberId: uuid!, $role: group_role_enum!) {
         ...GroupMemberCard
     }
 }
+
+mutation ChangeGroupOwner($memberId: uuid!) {
+    update_group_members_many(
+        updates: [
+            { where: { id: { _eq: $memberId } }, _set: { role: owner } }
+            {
+                where: {
+                    id: { _neq: $memberId }
+                    group: { memberships: { id: { _eq: $memberId } } }
+                    role: { _eq: owner }
+                }
+                _set: { role: admin }
+            }
+        ]
+    ) {
+        returning {
+            ...GroupMemberCard
+        }
+    }
+}

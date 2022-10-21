@@ -1,17 +1,16 @@
 import { PageLayout } from '../root/PageLayout';
-import { Typography } from 'antd';
+import { Button, Space, Typography } from 'antd';
 import { createUseStyles } from 'react-jss';
 import useInterval from '../../utils/hooks';
 import { useState } from 'react';
+import Link from 'next/link';
+import { urlFor } from '../../utils/urls';
 
 const useStyles = createUseStyles({
-    root: {
-        display: 'flex',
-        // alignItems: 'center',
-        flexDirection: 'column',
-    },
     cta: {
         textAlign: 'left',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
     },
     '@keyframes blink': {
         '0%': { opacity: 0 },
@@ -88,17 +87,55 @@ export const FrontPage = () => {
 
     return (
         <PageLayout padded>
-            <div className={classes.root}>
-                <Typography.Title level={1} className={classes.cta}>
-                    Share your <Typed />
-                    <br />- with your community
-                </Typography.Title>
+            <Typography.Title level={1} className={classes.cta}>
+                Share your <Typed />
+                <br />
+                in your community
+            </Typography.Title>
 
-                <Typography.Title type="secondary" level={4}>
-                    It's free forever with no ads or hidden agendas. Good for your wallet, the
-                    environment and your community.
-                </Typography.Title>
-            </div>
+            <Typography.Title level={4}>
+                Reshared facilitates and encourages sharing of anything within communities. It is
+                not a marketplace, there are no money involved, it's just like borrowing a hammer
+                from your neighbour.
+            </Typography.Title>
+
+            <Typography.Title level={4} style={{ fontWeight: 'normal' }}>
+                <ul style={{ paddingLeft: '1em' }}>
+                    <li>Join or create a group</li>
+                    <li>Add the things you want to share or give away</li>
+                    <li>Request a thing you are looking for, but can't find listed</li>
+                    <li>Chat with others to arrange sharing</li>
+                    <li>Be kind and reasonable</li>
+                </ul>
+            </Typography.Title>
+
+            <Typography.Text style={{ fontSize: '1.3em' }}>
+                <strong>Reshared is free forever</strong>, without ads or hidden agendas. Good for
+                your wallet, the environment and your community.
+            </Typography.Text>
+
+            <Space
+                direction="vertical"
+                style={{
+                    marginTop: '2em',
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}>
+                <Link href={urlFor.auth.register()}>
+                    <Button size="large" shape="round" type="primary">
+                        Sign up
+                    </Button>
+                </Link>
+                <span>
+                    or{' '}
+                    <Link passHref href={urlFor.auth.login()}>
+                        <Typography.Link>login</Typography.Link>
+                    </Link>{' '}
+                    if you have an account already
+                </span>
+            </Space>
         </PageLayout>
     );
 };

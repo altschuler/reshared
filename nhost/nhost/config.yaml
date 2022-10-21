@@ -31,9 +31,9 @@ auth:
     signin_email_verified_required: true
     template_fetch_url: ""
   gravatar:
-    default: ""
+    default: "identicon"
     enabled: true
-    rating: ""
+    rating: "g"
   locale:
     allowed: en
     default: en

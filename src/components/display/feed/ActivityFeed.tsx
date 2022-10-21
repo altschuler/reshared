@@ -5,7 +5,7 @@ import { GroupPostEntry } from './GroupPostEntry';
 import { ThingEntry } from './ThingEntry';
 
 export interface ActivityFeedProps {
-    loading: boolean;
+    loading?: boolean;
     activities: DetailedActivityFragment[];
 }
 

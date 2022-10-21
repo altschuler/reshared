@@ -1,4 +1,4 @@
-﻿import { Button, Modal, Space, Typography } from 'antd';
+﻿import { Button, Divider, Modal, Space, Typography } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
@@ -29,9 +29,9 @@ export const Onboarding = () => {
 
     return (
         <PageLayout padded>
-            <Typography.Title level={4}>Welcome to Reshared!</Typography.Title>
+            <Typography.Title level={2}>Welcome to Reshared!</Typography.Title>
 
-            <Typography.Paragraph>
+            <Typography.Paragraph style={{ fontSize: '1.2em' }}>
                 Users and things in Reshared are organized in <strong>groups</strong>, so to get
                 started you need to be a member of one (or more!).
             </Typography.Paragraph>
@@ -52,6 +52,12 @@ export const Onboarding = () => {
                     </Button>
                 </Space>
             </Space>
+
+            <Divider />
+            <Typography.Paragraph style={{ fontSize: '1.2em', textAlign: 'center' }}>
+                <strong>Tip!</strong> You can add a profile image and change your email
+                notifications on the <Link href={urlFor.user.settings()}>settings page</Link>.
+            </Typography.Paragraph>
         </PageLayout>
     );
 };

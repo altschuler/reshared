@@ -1,5 +1,5 @@
-import { makeGSSP } from '../utils/gssp';
 import { FrontPage } from '../containers/front';
+import { makeGSSP } from '../utils/gssp';
 import { urlFor } from '../utils/urls';
 
 export default FrontPage;

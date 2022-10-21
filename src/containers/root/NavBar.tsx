@@ -87,19 +87,21 @@ const ExpandedNav = () => {
     return (
         <>
             <div className={classes.nav}>
-                <Space size="large" align="center">
-                    <Link href={urlFor.home()}>
-                        <a data-cy="navbar:home:btn" className={classes.navLink}>
-                            Home
-                        </a>
-                    </Link>
+                {auth.user && (
+                    <Space size="large" align="center">
+                        <Link href={urlFor.home()}>
+                            <a data-cy="navbar:home:btn" className={classes.navLink}>
+                                Home
+                            </a>
+                        </Link>
 
-                    <Link href={urlFor.group.list()}>
-                        <a data-cy="navbar:my-groups:btn" className={classes.navLink}>
-                            My Groups
-                        </a>
-                    </Link>
-                </Space>
+                        <Link href={urlFor.group.list()}>
+                            <a data-cy="navbar:my-groups:btn" className={classes.navLink}>
+                                My Groups
+                            </a>
+                        </Link>
+                    </Space>
+                )}
             </div>
             <div
                 style={{
@@ -108,18 +110,20 @@ const ExpandedNav = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                 }}>
-                <Form onFinish={handleSearch}>
-                    <Form.Item name="query" className={classes.search}>
-                        <Input
-                            size="large"
-                            bordered={false}
-                            suffix={<SearchOutlined />}
-                            data-cy="navbar:search:in"
-                            placeholder="Find things, groups, users..."
-                            defaultValue={router.query.query}
-                        />
-                    </Form.Item>
-                </Form>
+                {auth.user && (
+                    <Form onFinish={handleSearch}>
+                        <Form.Item name="query" className={classes.search}>
+                            <Input
+                                size="large"
+                                bordered={false}
+                                suffix={<SearchOutlined />}
+                                data-cy="navbar:search:in"
+                                placeholder="Find things, groups, users..."
+                                defaultValue={router.query.query}
+                            />
+                        </Form.Item>
+                    </Form>
+                )}
             </div>
             <div className={classes.user}>
                 {!auth.user && (

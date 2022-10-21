@@ -6107,6 +6107,11 @@ enum group_members_constraint {
   unique or primary key constraint on columns "id"
   """
   group_members_pkey
+
+  """
+  unique or primary key constraint on columns "group_id", "user_id"
+  """
+  group_members_user_id_group_id_key
 }
 
 """
