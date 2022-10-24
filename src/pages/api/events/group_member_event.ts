@@ -46,8 +46,12 @@ const getVerb = (args: HasuraEventPayload<Group_Members>) => {
     const { Admin, User, Owner } = Group_Role_Enum;
     const isUpdate = args.event.op === 'UPDATE';
 
+    if (!isUpdate || o?.role === n?.role) {
+        return opToVerb(args.event.op);
+    }
+
     // Became admin
-    if (isUpdate && o?.role === User && n?.role === Admin) {
+    if (isUpdate && o?.role !== Admin && n?.role === Admin) {
         return Activity_Verb_Enum.BecameAdmin;
     }
 
