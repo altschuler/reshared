@@ -43,31 +43,25 @@ export const UserPage = ({ user }: UserPageProps) => (
             </div>
             <Row>
                 <Col xs={6}>
-                    <Typography.Title level={4}>
-                        {user.displayName}'s latest activity
-                    </Typography.Title>
+                    <Typography.Title level={4}>Latest activity</Typography.Title>
                     <ActivityFeed activities={user.activities} />
                 </Col>
                 <Col xs={18}>
                     {isEmpty(user.things) ? (
-                        <Typography.Title level={4}>
-                            {user.displayName} is not a member of any groups
-                        </Typography.Title>
+                        <Typography.Title level={4}>No memberships</Typography.Title>
                     ) : (
                         <Typography.Title level={4}>
-                            {user.displayName} is a member of {user.memberships.length} groups
+                            Member of {user.memberships.length} memberships
                         </Typography.Title>
                     )}
 
                     <GroupList groups={user.memberships.map((m) => m.group)} />
 
                     {isEmpty(user.things) ? (
-                        <Typography.Title level={4}>
-                            {user.displayName} is not sharing any things
-                        </Typography.Title>
+                        <Typography.Title level={4}>No shared things</Typography.Title>
                     ) : (
                         <Typography.Title level={4}>
-                            {user.displayName} is sharing {user.things.length} things
+                            Sharing {user.things.length} things
                         </Typography.Title>
                     )}
 
