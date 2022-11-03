@@ -12,7 +12,7 @@ if (!SENTRY_DISABLE) {
         autoSessionTracking: false,
         dsn: SENTRY_DSN || 'https://2169bd6c993847aca2e31fa821bd6909@o146636.ingest.sentry.io/5555148',
         // Adjust this value in production, or use tracesSampler for greater control
-        tracesSampleRate: 1.0,
+        tracesSampleRate: 0,
         enabled: process.env.NODE_ENV === 'production',
         // ...
         // Note: if you want to override the automatic release value, do not set a
