@@ -36,8 +36,10 @@ export const activityMessageSafe = (
     }
 
     if (ent.group_member) {
+        const newMemberName = ent.group_member.user.displayName;
+
         if (activity.verb === Activity_Verb_Enum.Added) {
-            return `${actor} joined the group ${ent.group_member.group.name}`;
+            return `${newMemberName} joined the group ${ent.group_member.group.name}`;
         }
 
         if (activity.verb === Activity_Verb_Enum.BecameAdmin) {
