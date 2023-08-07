@@ -1,0 +1,39 @@
+[
+  {
+    "op": "remove",
+    "path": "/auth/method/oauth/facebook/clientId"
+  },
+  {
+    "op": "remove",
+    "path": "/auth/method/oauth/facebook/clientSecret"
+  },
+  {
+    "op": "replace",
+    "path": "/auth/method/oauth/facebook/enabled",
+    "value": false
+  },
+  {
+    "op": "remove",
+    "path": "/auth/method/oauth/facebook/scope"
+  },
+  {
+    "op": "replace",
+    "path": "/auth/method/webauthn/relyingParty/name",
+    "value": "reshared-dev"
+  },
+  {
+    "op": "replace",
+    "path": "/auth/redirections/clientUrl",
+    "value": "https://dev.reshared.org"
+  },
+  {
+    "op": "replace",
+    "path": "/global/environment/0/value",
+    "value": "https://dev.reshared.org/api/events"
+  },
+  {
+    "op": "replace",
+    "path": "/global/environment/1/value",
+    "value": "https://dev.reshared.org/api/actions"
+  }
+]
