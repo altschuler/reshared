@@ -43,13 +43,14 @@ export const UserAvatar = (props: UserAvatarProps) => {
                         <Link
                             passHref
                             key="message"
-                            href={{ pathname: urlFor.chat.new(), query: { to: user.id } }}>
+                            href={{ pathname: urlFor.chat.new(), query: { to: user.id } }}
+                            legacyBehavior>
                             <Button type="link" icon={<MessageOutlined />}>
                                 Send a message
                             </Button>
                         </Link>
                     ),
-                    <Link key="profile" passHref href={urlFor.user.profile(user)}>
+                    <Link key="profile" passHref href={urlFor.user.profile(user)} legacyBehavior>
                         <Button type="link" icon={<ProfileOutlined />}>
                             View profile
                         </Button>

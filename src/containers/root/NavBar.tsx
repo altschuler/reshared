@@ -84,70 +84,74 @@ const ExpandedNav = () => {
         router.push(urlFor.search(query));
     };
 
-    return (
-        <>
-            <div className={classes.nav}>
-                {auth.user && (
-                    <Space size="large" align="center">
-                        <Link href={urlFor.home()}>
-                            <a data-cy="navbar:home:btn" className={classes.navLink}>
-                                Home
-                            </a>
-                        </Link>
+    return <>
+        <div className={classes.nav}>
+            {auth.user && (
+                <Space size="large" align="center">
+                    <Link
+                        href={urlFor.home()}
+                        data-cy="navbar:home:btn"
+                        className={classes.navLink}>
+                        
+                            Home
+                        
+                    </Link>
 
-                        <Link href={urlFor.group.list()}>
-                            <a data-cy="navbar:my-groups:btn" className={classes.navLink}>
-                                My Groups
-                            </a>
-                        </Link>
-                    </Space>
-                )}
-            </div>
-            <div
-                style={{
-                    flex: 1,
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}>
-                {auth.user && (
-                    <Form onFinish={handleSearch}>
-                        <Form.Item name="query" className={classes.search}>
-                            <Input
-                                size="large"
-                                bordered={false}
-                                suffix={<SearchOutlined />}
-                                data-cy="navbar:search:in"
-                                placeholder="Find things, groups, users..."
-                                defaultValue={router.query.query}
-                            />
-                        </Form.Item>
-                    </Form>
-                )}
-            </div>
-            <div className={classes.user}>
-                {!auth.user && (
-                    <div>
-                        <a data-cy="navbar:btn:login" href={urlFor.auth.login()}>
-                            Login
-                        </a>{' '}
-                        or{' '}
-                        <a data-cy="navbar:btn:register" href={urlFor.auth.register()}>
-                            Register
-                        </a>
-                    </div>
-                )}
+                    <Link
+                        href={urlFor.group.list()}
+                        data-cy="navbar:my-groups:btn"
+                        className={classes.navLink}>
+                        
+                            My Groups
+                        
+                    </Link>
+                </Space>
+            )}
+        </div>
+        <div
+            style={{
+                flex: 1,
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}>
+            {auth.user && (
+                <Form onFinish={handleSearch}>
+                    <Form.Item name="query" className={classes.search}>
+                        <Input
+                            size="large"
+                            bordered={false}
+                            suffix={<SearchOutlined />}
+                            data-cy="navbar:search:in"
+                            placeholder="Find things, groups, users..."
+                            defaultValue={router.query.query}
+                        />
+                    </Form.Item>
+                </Form>
+            )}
+        </div>
+        <div className={classes.user}>
+            {!auth.user && (
+                <div>
+                    <a data-cy="navbar:btn:login" href={urlFor.auth.login()}>
+                        Login
+                    </a>{' '}
+                    or{' '}
+                    <a data-cy="navbar:btn:register" href={urlFor.auth.register()}>
+                        Register
+                    </a>
+                </div>
+            )}
 
-                {auth.user && (
-                    <Space size="large" align="center">
-                        <ChatButton />
-                        <NotificationsButton />
-                        <UserButton user={auth.user} />
-                    </Space>
-                )}
-            </div>
-        </>
-    );
+            {auth.user && (
+                <Space size="large" align="center">
+                    <ChatButton />
+                    <NotificationsButton />
+                    <UserButton user={auth.user} />
+                </Space>
+            )}
+        </div>
+    </>;
 };
 
 const CollapsedNav = () => {
@@ -244,9 +248,9 @@ export const NavBar = () => {
                 <div className={classes.title}>
                     <Typography.Title level={3}>
                         <Link passHref href={urlFor.root()}>
-                            <a>
-                                <Image width={150} height={40} src="/logo.svg" />
-                            </a>
+
+                            <Image width={150} height={40} src="/logo.svg" />
+
                         </Link>
                     </Typography.Title>
                 </div>

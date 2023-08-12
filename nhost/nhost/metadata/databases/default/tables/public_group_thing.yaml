@@ -77,7 +77,6 @@ update_permissions:
 delete_permissions:
   - role: user
     permission:
-      backend_only: false
       filter:
         thing:
           owner_id:

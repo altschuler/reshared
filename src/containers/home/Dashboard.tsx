@@ -96,8 +96,8 @@ export const Dashboard = () => {
                                         />
                                     }
                                     title={
-                                        <Link passHref href={urlFor.group.home(m.group)}>
-                                            <a data-cy="title">{m.group.name}</a>
+                                        <Link passHref href={urlFor.group.home(m.group)} data-cy="title">
+                                            {m.group.name}
                                         </Link>
                                     }
                                     description={m.group.description}

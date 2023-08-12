@@ -131,7 +131,7 @@ export const RegistrationEditor = (props: RegistrationEditorProps) => {
                             {props.onLogin ? (
                                 <Typography.Link onClick={props.onLogin}>Sign in</Typography.Link>
                             ) : (
-                                <Link href={urlFor.auth.login()} passHref>
+                                <Link href={urlFor.auth.login()} passHref legacyBehavior>
                                     <Typography.Link>Sign in</Typography.Link>
                                 </Link>
                             )}{' '}

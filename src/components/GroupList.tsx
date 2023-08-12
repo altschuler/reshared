@@ -105,8 +105,8 @@ export const GroupList = (props: GroupListProps) => {
                             />
                         }
                         title={
-                            <Link passHref href={urlFor.group.home(group)}>
-                                <a data-cy="title">{group.name}</a>
+                            <Link passHref href={urlFor.group.home(group)} data-cy="title">
+                                {group.name}
                             </Link>
                         }
                         description={group.description}

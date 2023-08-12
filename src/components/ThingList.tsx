@@ -133,7 +133,7 @@ const ThingItem = (props: ThingItemProps) => {
                 avatar={avatar}
                 title={
                     <Space>
-                        <Link href={urlFor.thing(props.thing)}>{props.thing.name}</Link>
+                        <Link href={urlFor.thing(props.thing)} legacyBehavior>{props.thing.name}</Link>
                         <ThingTypeTag type={props.thing.type} />
                     </Space>
                 }

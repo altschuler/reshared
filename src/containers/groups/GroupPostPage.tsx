@@ -41,23 +41,23 @@ export const GroupPostPage = () => {
         <GroupLayout activePage="requests" group={post.group}>
             <Space direction="vertical" size="large" style={{ width: '100%' }}>
                 {post.type === Group_Post_Type_Enum.Request ? (
-                    <Link href={urlFor.group.requests(post.group)} passHref>
-                        <a>
-                            <Space>
-                                <ArrowLeftOutlined />
-                                All requests
-                            </Space>
-                        </a>
-                    </Link>
+                    (<Link href={urlFor.group.requests(post.group)} passHref>
+
+                        <Space>
+                            <ArrowLeftOutlined />
+                            All requests
+                        </Space>
+
+                    </Link>)
                 ) : (
-                    <Link href={urlFor.group.home(post.group)} passHref>
-                        <a>
-                            <Space>
-                                <ArrowLeftOutlined />
-                                Group home
-                            </Space>
-                        </a>
-                    </Link>
+                    (<Link href={urlFor.group.home(post.group)} passHref>
+
+                        <Space>
+                            <ArrowLeftOutlined />
+                            Group home
+                        </Space>
+
+                    </Link>)
                 )}
 
                 <PostDisplay key={post.id} post={post} />

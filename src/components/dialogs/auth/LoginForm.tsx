@@ -108,7 +108,7 @@ export const LoginForm = (props: LoginFormProps) => {
                         {props.onRegister ? (
                             <Typography.Link onClick={props.onRegister}>Sign up</Typography.Link>
                         ) : (
-                            <Link href={urlFor.auth.register()} passHref>
+                            <Link href={urlFor.auth.register()} passHref legacyBehavior>
                                 <Typography.Link>Sign up</Typography.Link>
                             </Link>
                         )}{' '}
@@ -118,7 +118,10 @@ export const LoginForm = (props: LoginFormProps) => {
                 <Form.Item>
                     <Typography.Text>
                         Forgot your password?{' '}
-                        <Link href={urlFor.auth.reset(form.getFieldValue('email'))} passHref>
+                        <Link
+                            href={urlFor.auth.reset(form.getFieldValue('email'))}
+                            passHref
+                            legacyBehavior>
                             <Typography.Link data-cy="forgot:btn">Reset password</Typography.Link>
                         </Link>
                         .

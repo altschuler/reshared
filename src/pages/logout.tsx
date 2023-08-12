@@ -32,10 +32,7 @@ export const LogoutPage = () => {
 };
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-    const { nhost, session } = await getNhostSession(
-        process.env.NEXT_PUBLIC_NHOST_BACKEND_URL!,
-        ctx,
-    );
+    const { nhost, session } = await getNhostSession(ctx);
 
     if (!session?.user) {
         return { redirect: { statusCode: 302, destination: '/' } };

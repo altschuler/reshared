@@ -1,16 +1,7 @@
 import { CheckCircleTwoTone, EditOutlined } from '@ant-design/icons';
-import {
-    Badge,
-    Button,
-    Card,
-    Comment,
-    List,
-    message,
-    Modal,
-    Space,
-    Tooltip,
-    Typography,
-} from 'antd';
+import { Comment } from '@ant-design/compatible';
+
+import { Badge, Button, Card, List, message, Modal, Space, Tooltip, Typography } from 'antd';
 import clsx from 'clsx';
 import { isEmpty } from 'lodash-es';
 import Link from 'next/link';
@@ -103,7 +94,7 @@ export const PostDisplay = ({ post, link }: { post: GroupPostFragment; link?: bo
                 <Space>
                     <UserAvatar user={post.author} />
                     {link ? (
-                        <Link href={urlFor.group.post(post)}>{title}</Link>
+                        <Link href={urlFor.group.post(post)} legacyBehavior>{title}</Link>
                     ) : (
                         <span>{title}</span>
                     )}

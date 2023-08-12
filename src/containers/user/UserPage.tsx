@@ -34,7 +34,10 @@ export const UserPage = ({ user }: UserPageProps) => (
                     <Typography.Text>
                         Member since <DateDisplay mode="date" utc={user.createdAt} />
                     </Typography.Text>
-                    <Link passHref href={{ pathname: urlFor.chat.new(), query: { to: user.id } }}>
+                    <Link
+                        passHref
+                        href={{ pathname: urlFor.chat.new(), query: { to: user.id } }}
+                        legacyBehavior>
                         <Button type="link" icon={<MessageOutlined />}>
                             Send a message
                         </Button>

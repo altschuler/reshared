@@ -148,7 +148,7 @@ export const MemberList = ({ memberships, group }: MemberListProps) => {
                             avatar={<UserAvatar user={member.user} />}
                             title={
                                 <Space data-cy="member-list:item:role:txt">
-                                    <Link href={urlFor.user.profile(member.user)}>
+                                    <Link href={urlFor.user.profile(member.user)} legacyBehavior>
                                         {member.user.displayName}
                                     </Link>
                                     {member.role === Group_Role_Enum.Admin && (

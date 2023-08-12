@@ -1,6 +1,6 @@
 ﻿import React, { useCallback } from 'react';
 import Link from 'next/link';
-import { Button, Descriptions, Divider, PageHeader, Popconfirm, Space, Typography } from 'antd';
+import { Button, Descriptions, Divider, Popconfirm, Space, Typography } from 'antd';
 import { head } from 'lodash-es';
 import { PageLayout } from '../root/PageLayout';
 import {
@@ -25,6 +25,7 @@ import { useRouter } from 'next/router';
 import { urlFor } from '../../utils/urls';
 import { ThingImageDisplay } from '../../components/display/ThingImageDisplay';
 import { useNhostClient } from '@nhost/react';
+import { PageHeader } from '@ant-design/pro-layout';
 
 const useStyles = createUseStyles({
     header: {
@@ -191,7 +192,8 @@ export const ThingPage = () => {
                                     <Link
                                         key={r.group.id}
                                         href={urlFor.group.home(r.group)}
-                                        passHref>
+                                        passHref
+                                        legacyBehavior>
                                         <Typography.Link>{r.group.name}</Typography.Link>
                                     </Link>
                                 ))}

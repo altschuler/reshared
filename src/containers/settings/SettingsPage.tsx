@@ -304,7 +304,8 @@ const DeleteAccountButton = () => {
                                         <Link
                                             key="go-to-group"
                                             passHref
-                                            href={urlFor.group.home(g.group)}>
+                                            href={urlFor.group.home(g.group)}
+                                            legacyBehavior>
                                             <Typography.Link data-cy="item:go-to-group:btn">
                                                 Go to group
                                             </Typography.Link>

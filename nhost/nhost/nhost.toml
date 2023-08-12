@@ -8,13 +8,13 @@ name = 'ACTION_BASE_URL'
 value = 'https://reshared.org/api/actions'
 
 [hasura]
-version = 'v2.15.2'
-adminSecret = '{{ secrets.NHOST_ADMIN_SECRET }}'
+version = 'v2.25.1-ce'
+adminSecret = '{{ secrets.HASURA_GRAPHQL_ADMIN_SECRET }}'
 webhookSecret = '{{ secrets.NHOST_WEBHOOK_SECRET }}'
 
 [[hasura.jwtSecrets]]
 type = 'HS256'
-key = '{{ secrets.NHOST_JWT_SECRET }}'
+key = '{{ secrets.HASURA_GRAPHQL_JWT_SECRET }}'
 
 [hasura.settings]
 corsDomain = ['*']
@@ -35,7 +35,7 @@ httpPoolSize = 100
 version = 16
 
 [auth]
-version = '0.19.1'
+version = '0.20.1'
 
 [auth.redirections]
 clientUrl = 'https://reshared.org'
@@ -66,7 +66,7 @@ rating = 'g'
 expiresIn = 900
 
 [auth.session.refreshToken]
-expiresIn = 2592000
+expiresIn = 43200
 
 [auth.method]
 [auth.method.anonymous]
@@ -160,7 +160,7 @@ secure = false
 method = 'CRAM-MD5'
 
 [storage]
-version = '0.3.0'
+version = '0.3.5'
 
 [observability]
 [observability.grafana]

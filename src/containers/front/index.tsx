@@ -123,14 +123,14 @@ export const FrontPage = () => {
                     alignItems: 'center',
                     justifyContent: 'center',
                 }}>
-                <Link href={urlFor.auth.register()}>
+                <Link href={urlFor.auth.register()} legacyBehavior>
                     <Button size="large" shape="round" type="primary">
                         Sign up
                     </Button>
                 </Link>
                 <span>
                     or{' '}
-                    <Link passHref href={urlFor.auth.login()}>
+                    <Link passHref href={urlFor.auth.login()} legacyBehavior>
                         <Typography.Link>login</Typography.Link>
                     </Link>{' '}
                     if you have an account already

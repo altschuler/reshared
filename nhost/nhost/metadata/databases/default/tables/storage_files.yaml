@@ -107,7 +107,6 @@ update_permissions:
 delete_permissions:
   - role: user
     permission:
-      backend_only: false
       filter:
         uploaded_by_user_id:
           _eq: X-Hasura-User-Id

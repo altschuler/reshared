@@ -13,7 +13,7 @@ const NotFoundPage = () => {
                     "There's nothing to see here, make sure the address you entered is correct."
                 }
                 extra={
-                    <Link href={urlFor.home()} passHref>
+                    <Link href={urlFor.home()} passHref legacyBehavior>
                         <Button type="primary">Back Home</Button>
                     </Link>
                 }

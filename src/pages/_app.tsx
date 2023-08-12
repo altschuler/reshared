@@ -9,7 +9,7 @@ import { ThemeProvider } from 'react-jss';
 import { DialogsProvider } from '../components/dialogs';
 import '../styles/globals.scss';
 
-import { NhostClient, NhostNextProvider, NhostSession } from '@nhost/nextjs';
+import { NhostClient, NhostProvider, NhostSession } from '@nhost/nextjs';
 import { NhostApolloProvider } from '@nhost/react-apollo';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
@@ -26,8 +26,8 @@ if (!isServer) {
 }
 
 const nhost = new NhostClient({
-    backendUrl: process.env.NEXT_PUBLIC_NHOST_BACKEND_URL || '',
-    subdomain: process.env.NODE_ENV === 'development' ? 'localhost' : undefined,
+    subdomain: process.env.NODE_ENV === 'development' ? 'local' : undefined,
+    region: '',
 });
 
 const theme = {};
@@ -40,7 +40,7 @@ const App = ({
         ? new InMemoryCache().restore(pageProps.apolloCache)
         : undefined;
     return (
-        <NhostNextProvider nhost={nhost} initial={pageProps.nhostSession}>
+        <NhostProvider nhost={nhost} initial={pageProps.nhostSession}>
             <NhostApolloProvider cache={cache} nhost={nhost}>
                 <UserProvider>
                     <ThemeProvider theme={theme}>
@@ -85,7 +85,7 @@ const App = ({
                     </ThemeProvider>
                 </UserProvider>
             </NhostApolloProvider>
-        </NhostNextProvider>
+        </NhostProvider>
     );
 };
 
