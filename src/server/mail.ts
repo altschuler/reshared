@@ -9,8 +9,6 @@ import newChatHtml from '../emails/compiled/new_chat.html';
 import newActivityTxt from '../emails/new_activity.txt';
 import newChatTxt from '../emails/new_chat.txt';
 
-var client = new ServerClient(process.env.POSTMARK_API_TOKEN!);
-
 type EmailTemplate = 'new_activity' | 'new_chat';
 
 const getTemplate = memoize(
@@ -62,11 +60,13 @@ const makeDevTransport = memoize(() =>
     }),
 );
 
+var makePostmarkClient = memoize(() => new ServerClient(process.env.POSTMARK_API_TOKEN!));
+
 export const sendMail = async <T>(data: MailData<T> | MailData<T>[]) => {
     const mails = (Array.isArray(data) ? data : [data]).map(makeEmail);
 
     if (process.env.SEND_REAL_EMAILS) {
-        return client.sendEmailBatch(mails);
+        return makePostmarkClient().sendEmailBatch(mails);
     } else {
         mails.map((mail) =>
             makeDevTransport().sendMail({
