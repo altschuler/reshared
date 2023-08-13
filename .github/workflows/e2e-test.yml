@@ -55,11 +55,18 @@ jobs:
       - name: start client
         run: yarn start & npx --yes wait-on http-get://localhost:3000
 
-      - name: create .env for nhost
+      - name: create .secrets for nhost
         run: |
-          touch .env.development
-          echo "EVENTS_BASE_URL=http://172.17.0.1:3000/api/events" >> .env.development
-          echo "ACTION_BASE_URL=http://172.17.0.1:3000/api/actions" >> .env.development
+          touch .secrets
+          echo "GRAFANA_ADMIN_PASSWORD='grafana-admin-password'" >> .secrets
+          echo "NHOST_ADMIN_SECRET='nhost-admin-secret'" >> .secrets
+          echo "NHOST_JWT_SECRET='0f987876650b4a085e64594fae9219e7781b17506bec02489ad061fba8cb22db'" >> .secrets
+          echo "NHOST_WEBHOOK_SECRET='nhost-webhook-secret'" >> .secrets
+          echo "OAUTH_FACEBOOK_CLIENT_ID=''" >> .secrets
+          echo "OAUTH_FACEBOOK_SECRET=''" >> .secrets
+          echo "SMTP_HOST='mailhog'" >> .secrets
+          echo "SMTP_USER='user'" >> .secrets
+          echo "SMTP_PASSWORD='password'" >> .secrets
         working-directory: ./nhost
 
       - name: start backend
