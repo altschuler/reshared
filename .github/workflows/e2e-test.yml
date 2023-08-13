@@ -63,7 +63,7 @@ jobs:
         working-directory: ./nhost
 
       - name: start backend
-        run: nhost up & npx --yes wait-on http-get://localhost:9695
+        run: nhost up
         working-directory: ./nhost
 
       - name: run cypress tests
