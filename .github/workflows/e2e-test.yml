@@ -5,8 +5,8 @@ run-name: test and deploy
 on: [push]
 
 env:
-  NEXT_PUBLIC_NHOST_BACKEND_URL: http://localhost:1337
-  NEXT_PUBLIC_NHOST_BACKEND_HOST: localhost
+  NEXT_PUBLIC_NHOST_SUBDOMAIN: 'local'
+  NEXT_PUBLIC_NHOST_REGION: ''
   NEXT_PUBLIC_GRAPHQL_ENDPOINT: http://localhost:1337/v1/graphql
   NEXT_PUBLIC_GRAPHQL_ENDPOINT_WS: ws://localhost:1337/v1/graphql
   NEXT_PUBLIC_ROOT_URL: http://localhost:3000
@@ -63,7 +63,7 @@ jobs:
         working-directory: ./nhost
 
       - name: start backend
-        run: nhost dev --no-browser --hasuracli hasura & npx --yes wait-on http-get://localhost:9695
+        run: nhost up & npx --yes wait-on http-get://localhost:9695
         working-directory: ./nhost
 
       - name: run cypress tests
