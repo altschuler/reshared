@@ -1,0 +1,17 @@
+[
+  {
+    "op": "replace",
+    "path": "/auth/redirections/clientUrl",
+    "value": "http://localhost:3000"
+  },
+  {
+    "op": "replace",
+    "path": "/global/environment/0/value",
+    "value": "http://172.17.0.1:3000/api/events"
+  },
+  {
+    "op": "replace",
+    "path": "/global/environment/1/value",
+    "value": "http://172.17.0.1:3000/api/actions"
+  }
+]

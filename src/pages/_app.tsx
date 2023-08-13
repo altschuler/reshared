@@ -26,8 +26,8 @@ if (!isServer) {
 }
 
 const nhost = new NhostClient({
-    subdomain: process.env.NODE_ENV === 'development' ? 'local' : undefined,
-    region: '',
+    subdomain: process.env.NEXT_PUBLIC_NHOST_SUBDOMAIN,
+    region: process.env.NEXT_PUBLIC_NHOST_REGION,
 });
 
 const theme = {};

@@ -1,4 +1,4 @@
-﻿import { useAuthenticated, useSignOut } from '@nhost/react';
+﻿import { useAuthenticated, useSignOut } from '@nhost/nextjs';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
