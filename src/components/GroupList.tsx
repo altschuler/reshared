@@ -99,6 +99,7 @@ export const GroupList = (props: GroupListProps) => {
                                             width={100}
                                             height={100}
                                             file={group.banner_file}
+                                            alt="Group banner image"
                                         />
                                     )
                                 }

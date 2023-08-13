@@ -38,7 +38,8 @@ version = 16
 version = '0.20.1'
 
 [auth.redirections]
-clientUrl = 'https://reshared.org'
+clientUrl = 'http://localhost:3000'
+# clientUrl = 'https://reshared.org'
 
 [auth.signUp]
 enabled = true
@@ -77,7 +78,7 @@ enabled = true
 
 [auth.method.emailPassword]
 hibpEnabled = false
-emailVerificationRequired = false
+emailVerificationRequired = true
 passwordMinLength = 8
 
 [auth.method.smsPasswordless]

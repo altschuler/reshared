@@ -18,7 +18,7 @@ const moduleExports = {
         autoInstrumentServerFunctions: true,
     },
     images: {
-        domains: ['kghtoguwbjifomvtvumw.nhost.run', 'hgtsjdxovopboicvsfhk.nhost.run', 'localhost'],
+        domains: ['kghtoguwbjifomvtvumw.nhost.run', 'hgtsjdxovopboicvsfhk.nhost.run', 'local.storage.nhost.run'],
     },
     webpack: (config) => {
         config.module.rules.push({

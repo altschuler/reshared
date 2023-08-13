@@ -66,7 +66,6 @@ export const makeGSSP = <TProps extends object, TParams extends ParsedUrlQuery>(
         const serverClient = nhostAdmin && createApolloClient({ nhost: nhostAdmin });
 
         if (userClient && user && options.preloadUser) {
-            console.log('UserPrivateDetailsDocument');
             await userClient.query({
                 query: UserPrivateDetailsDocument,
                 variables: { id: user.id },

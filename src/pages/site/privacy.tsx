@@ -1,7 +1,8 @@
 ﻿/* eslint-disable react/no-unescaped-entities */
 
 import { PageLayout } from '../../containers/root/PageLayout';
-import { PageHeader, Typography } from 'antd';
+import { PageHeader } from '@ant-design/pro-layout';
+import { Typography } from 'antd';
 
 const PrivacyPolicyPage = () => {
     return (

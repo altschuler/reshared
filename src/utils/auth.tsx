@@ -1,7 +1,6 @@
 ﻿import { UserPrivateDetailFragment, useUserPrivateDetailsQuery } from '../generated/graphql';
 import { createContext, ReactNode, useContext, useMemo } from 'react';
-import { useAuthenticationStatus, useUserId, useSignOut, useUserData } from '@nhost/nextjs';
-import { User } from '@nhost/core';
+import { useAuthenticationStatus, useUserId, useSignOut, useUserData, User } from '@nhost/nextjs';
 import { useRouter } from 'next/router';
 import { urlFor } from './urls';
 

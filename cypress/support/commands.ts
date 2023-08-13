@@ -80,8 +80,8 @@ Cypress.Commands.add('waitRequest', (what: 'files' | 'graphql') => {
 });
 
 Cypress.Commands.add('interceptRequests', () => {
-    cy.intercept('**/v1/graphql**').as('graphql');
-    cy.intercept('**/v1/storage/files**').as('files');
+    cy.intercept(/.*graphql\.nhost\.run.*/).as('graphql');
+    cy.intercept(/.*storage\.nhost\.run.*/).as('files');
 });
 
 declare global {

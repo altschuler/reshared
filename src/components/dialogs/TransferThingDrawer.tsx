@@ -65,7 +65,6 @@ export const TransferThingDrawer = (props: TransferThingDrawerProps) => {
                 , and can no longer edit or delete it. Use this if a thing has been physically
                 handed over to someone else.
             </Typography.Paragraph>
-
             <Typography.Paragraph>
                 The receiver will have to option to accept or reject the transfer. You can cancel
                 the request as long as the receiver has not responded.

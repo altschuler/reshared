@@ -173,6 +173,7 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                                             width={100}
                                             height={100}
                                             file={props.group.banner_file}
+                                            alt="Header image for the group"
                                         />
                                     }></Avatar>
                             )}

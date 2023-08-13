@@ -1,5 +1,6 @@
 ﻿import { PageLayout } from '../../containers/root/PageLayout';
-import { PageHeader, Typography } from 'antd';
+import { PageHeader } from '@ant-design/pro-layout';
+import { Typography } from 'antd';
 import Link from 'next/link';
 
 const OpenSourcePage = () => (
