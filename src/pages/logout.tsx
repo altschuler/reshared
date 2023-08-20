@@ -32,15 +32,13 @@ export const LogoutPage = () => {
 };
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-    const { nhost, session } = await getNhostSession(ctx);
+    const { session } = await getNhostSession(ctx);
 
     if (!session?.user) {
         return { redirect: { statusCode: 302, destination: '/' } };
     }
 
-    await nhost.auth.signOut();
-
-    return { props: { nhostSession: null, apolloCache: null } };
+    return { props: { nhostSession: session, apolloCache: null } };
 };
 
 export default LogoutPage;
