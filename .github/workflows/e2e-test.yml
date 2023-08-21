@@ -7,8 +7,8 @@ on: [push]
 env:
   NEXT_PUBLIC_NHOST_SUBDOMAIN: 'local'
   NEXT_PUBLIC_NHOST_REGION: ''
-  NEXT_PUBLIC_GRAPHQL_ENDPOINT: http://localhost:1337/v1/graphql
-  NEXT_PUBLIC_GRAPHQL_ENDPOINT_WS: ws://localhost:1337/v1/graphql
+  NEXT_PUBLIC_GRAPHQL_ENDPOINT: https://local.graphql.nhost.run
+  NEXT_PUBLIC_GRAPHQL_ENDPOINT_WS: ws://local.graphql.nhost.run
   NEXT_PUBLIC_ROOT_URL: http://localhost:3000
   NHOST_JWT_SECRET: '{"type":"HS256", "key": "0f987876650b4a085e64594fae9219e7781b17506bec02489ad061fba8cb22db"}'
   NHOST_WEBHOOK_SECRET: nhost-webhook-secret
