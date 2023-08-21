@@ -67,8 +67,8 @@ export const makeHandler = <TInput, TOutput>(
                 error: (msg: string, status = 400) => errorReply(res, status, msg),
                 success: (output: TOutput) => res.json(output),
             });
-        } catch {
-            errorReply(res, 400, 'An error occured while processing the request.');
+        } catch (e: any) {
+            errorReply(res, 400, `An error occured while processing the request.: ${e.message}`);
         }
     };
 };
@@ -109,9 +109,9 @@ export const makeAuthorizedHandler = <TInput, TOutput>(
                 error: (msg: string, status = 400) => errorReply(res, status, msg),
                 success: (output: TOutput) => res.json(output),
             });
-        } catch (err) {
+        } catch (err: any) {
             console.log(err);
-            errorReply(res, 400, 'An error occured while processing the request.');
+            errorReply(res, 400, `An error occured while processing the request.: ${err.message}`);
         }
     };
 };
