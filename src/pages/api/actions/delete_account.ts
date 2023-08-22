@@ -29,7 +29,6 @@ export default makeAuthorizedHandler<DeleteAccountMutationVariables, boolean>(
             variables: { id: args.id },
         });
 
-        console.log(res.data);
         if (!res.data?.deleteUser?.id) {
             return ctx.error('Could not delete account', 400);
         }
