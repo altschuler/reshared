@@ -1,5 +1,5 @@
 ﻿import Joi from 'joi';
-import { hasuraClient, makeAuthorizedHandler } from '../../../server';
+import { adminClient, makeAuthorizedHandler } from '../../../server';
 import {
     Group_Join_Request_Status_Enum,
     Group_Role_Enum,
@@ -23,7 +23,7 @@ export default makeAuthorizedHandler<HandleJoinRequestMutationVariables, HandleJ
     }),
     async (args, ctx) => {
         // TODO: use ctx.userClient and test
-        const requestQuery = await hasuraClient.query({
+        const requestQuery = await adminClient.query({
             query: ServerFindGroupJoinRequestDocument,
             variables: { id: args.input.join_request_id },
         });

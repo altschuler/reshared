@@ -1,7 +1,6 @@
 overwrite: true
 schema:
-    #  - ${NEXT_PUBLIC_GRAPHQL_ENDPOINT}:
-    - http://localhost:1337/v1/graphql:
+    - https://local.graphql.nhost.run:
           headers:
               X-Hasura-Admin-Secret: nhost-admin-secret
 generates:
@@ -20,7 +19,7 @@ generates:
             scalars:
                 timestamptz: string
                 timestamp: string
-                uuid: string 
+                uuid: string
     ./src/generated/graphql.tsx:
         documents:
             - './src/**/*.graphql'

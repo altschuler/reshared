@@ -1,8 +1,9 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import Joi from 'joi';
 import { decodeToken, JwtToken } from './auth';
-import { hasuraClient, makeHasuraUserClient } from './hasuraClient';
 import { ApolloClient, DocumentNode, NormalizedCacheObject } from '@apollo/client';
+import { NhostClient } from '@nhost/nextjs';
+import { adminClient, makeUserClient } from './nhostClient';
 
 export const errorReply = (res: NextApiResponse, status: number, message: string) => {
     res.status(status);
@@ -63,7 +64,7 @@ export const makeHandler = <TInput, TOutput>(
                 req,
                 res,
                 token,
-                adminClient: hasuraClient,
+                adminClient,
                 error: (msg: string, status = 400) => errorReply(res, status, msg),
                 success: (output: TOutput) => res.json(output),
             });
@@ -92,8 +93,8 @@ export const makeAuthorizedHandler = <TInput, TOutput>(
         }
 
         // Remove 'Bearer ' from auth header
-
-        const token = decodeToken(req.headers.authorization.slice(7));
+        const jwt = req.headers.authorization.slice(7);
+        const token = decodeToken(jwt);
 
         if (!token) {
             return errorReply(res, 401, 'Session expired');
@@ -104,8 +105,8 @@ export const makeAuthorizedHandler = <TInput, TOutput>(
                 req,
                 res,
                 token,
-                adminClient: hasuraClient,
-                userClient: makeHasuraUserClient(req.headers.authorization),
+                adminClient,
+                userClient: makeUserClient(jwt),
                 error: (msg: string, status = 400) => errorReply(res, status, msg),
                 success: (output: TOutput) => res.json(output),
             });
@@ -169,7 +170,7 @@ export const makeEventHandler =
                 req,
                 res,
                 userId,
-                adminClient: hasuraClient,
+                adminClient,
                 error: (msg: string, status = 400) => errorReply(res, status, msg),
                 success: (output: unknown) => res.json(output),
             });
@@ -192,7 +193,7 @@ export const makeCronHandler =
             await handler(req.body, {
                 req,
                 res,
-                adminClient: hasuraClient,
+                adminClient,
                 error: (msg: string, status = 400) => errorReply(res, status, msg),
                 success: (output: unknown) => res.json(output),
             });
