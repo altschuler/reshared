@@ -131,7 +131,7 @@ const AlreadyMemberContent = ({ group }: { group: GroupCardFragment }) => (
             You're already a member of <i>{group.name}</i>
         </Typography.Title>
 
-        <Link href={urlFor.group.home(group)}>
+        <Link href={urlFor.group.home(group)} legacyBehavior>
             <Button type="link">Go to group home</Button>
         </Link>
     </Space>

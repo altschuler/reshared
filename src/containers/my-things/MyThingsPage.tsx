@@ -1,4 +1,5 @@
-﻿import { Button, PageHeader } from 'antd';
+﻿import { Button } from 'antd';
+import { PageHeader } from '@ant-design/pro-layout';
 import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
 import { CreateThingDrawer, useDialogs } from '../../components/dialogs';

@@ -89,16 +89,18 @@ const ExpandedNav = () => {
             <div className={classes.nav}>
                 {auth.user && (
                     <Space size="large" align="center">
-                        <Link href={urlFor.home()}>
-                            <a data-cy="navbar:home:btn" className={classes.navLink}>
-                                Home
-                            </a>
+                        <Link
+                            href={urlFor.home()}
+                            data-cy="navbar:home:btn"
+                            className={classes.navLink}>
+                            Home
                         </Link>
 
-                        <Link href={urlFor.group.list()}>
-                            <a data-cy="navbar:my-groups:btn" className={classes.navLink}>
-                                My Groups
-                            </a>
+                        <Link
+                            href={urlFor.group.list()}
+                            data-cy="navbar:my-groups:btn"
+                            className={classes.navLink}>
+                            My Groups
                         </Link>
                     </Space>
                 )}
@@ -244,9 +246,7 @@ export const NavBar = () => {
                 <div className={classes.title}>
                     <Typography.Title level={3}>
                         <Link passHref href={urlFor.root()}>
-                            <a>
-                                <Image width={150} height={40} src="/logo.svg" />
-                            </a>
+                            <Image width={150} height={40} src="/logo.svg" alt="Reshared logo" />
                         </Link>
                     </Typography.Title>
                 </div>

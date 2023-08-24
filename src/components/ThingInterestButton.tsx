@@ -86,7 +86,7 @@ export const ThingInterestButton = ({ thing }: { thing: ThingCardFragment }) => 
         <Popover
             open={visible}
             onOpenChange={handleVisibleChange}
-            arrowPointAtCenter={false}
+            arrow={{ pointAtCenter: false }}
             trigger="click"
             content={content}>
             <Button

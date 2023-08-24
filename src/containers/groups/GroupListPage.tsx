@@ -1,6 +1,6 @@
 ﻿import { GroupCardFragment, Groups_Bool_Exp } from '../../generated/graphql';
 import { createUseStyles } from 'react-jss';
-import { Button, PageHeader } from 'antd';
+import { Button } from 'antd';
 import { useCallback, useMemo } from 'react';
 import { useDialogs, CreateGroupDrawer } from '../../components/dialogs';
 import { useRouter } from 'next/router';
@@ -8,6 +8,7 @@ import { PageLayout } from '../root/PageLayout';
 import { GroupList } from '../../components/GroupList';
 import { useAuth } from '../../utils/auth';
 import { urlFor } from '../../utils/urls';
+import { PageHeader } from '@ant-design/pro-layout';
 
 const useStyles = createUseStyles({
     thing: {

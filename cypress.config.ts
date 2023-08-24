@@ -9,7 +9,7 @@ export default defineConfig({
     },
 
     ...({
-        mailHogUrl: 'http://localhost:8025',
+        mailHogUrl: 'https://local.mailhog.nhost.run',
         mailHogAuth: { user: 'user', pass: 'password' },
     } as any),
 });

@@ -20,7 +20,7 @@ const CustomErrorComponent = ({ statusCode }: ErrorProps) => {
                 title={statusCode}
                 subTitle={msg[status]}
                 extra={
-                    <Link passHref href={urlFor.root()}>
+                    <Link passHref href={urlFor.root()} legacyBehavior>
                         <Button type="primary">Go to home page</Button>
                     </Link>
                 }

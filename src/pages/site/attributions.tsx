@@ -1,5 +1,5 @@
 ﻿import { PageLayout } from '../../containers/root/PageLayout';
-import { PageHeader } from 'antd';
+import { PageHeader } from '@ant-design/pro-layout';
 
 const Attributions = () => {
     return (

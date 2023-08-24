@@ -208,7 +208,7 @@ const BubbleExtra = ({ entity }: { entity?: EntityCardFragment }) => {
                         src={nhost.storage.getPublicUrl({ fileId: image.file.id })}
                     />
                 )}
-                <Link href={urlFor.thing(entity.thing)}>{entity.thing.name}</Link>
+                <Link href={urlFor.thing(entity.thing)} legacyBehavior>{entity.thing.name}</Link>
             </Space>
         </div>
     );

@@ -103,8 +103,12 @@ export const GroupLayout = (props: GroupLayoutProps) => {
         {
             key: 'members',
             label: (
-                <Link passHref key="members" href={urlFor.group.members(props.group)}>
-                    <a data-cy="group-header:members:btn">Members</a>
+                <Link
+                    passHref
+                    key="members"
+                    href={urlFor.group.members(props.group)}
+                    data-cy="group-header:members:btn">
+                    Members
                 </Link>
             ),
         },
@@ -113,8 +117,11 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                   {
                       key: 'settings',
                       label: (
-                          <Link passHref href={urlFor.group.settings(props.group)}>
-                              <a data-cy="group-header:settings:btn">Settings</a>
+                          <Link
+                              passHref
+                              href={urlFor.group.settings(props.group)}
+                              data-cy="group-header:settings:btn">
+                              Settings
                           </Link>
                       ),
                   },
@@ -166,6 +173,7 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                                             width={100}
                                             height={100}
                                             file={props.group.banner_file}
+                                            alt="Header image for the group"
                                         />
                                     }></Avatar>
                             )}
@@ -217,24 +225,33 @@ export const GroupLayout = (props: GroupLayoutProps) => {
                     {
                         key: 'home',
                         label: (
-                            <Link passHref href={urlFor.group.home(props.group)}>
-                                <a data-cy="group-header:home:btn">Home</a>
+                            <Link
+                                passHref
+                                href={urlFor.group.home(props.group)}
+                                data-cy="group-header:home:btn">
+                                Home
                             </Link>
                         ),
                     },
                     {
                         key: 'requests',
                         label: (
-                            <Link passHref href={urlFor.group.requests(props.group)}>
-                                <a data-cy="group-header:requests:btn">Requests</a>
+                            <Link
+                                passHref
+                                href={urlFor.group.requests(props.group)}
+                                data-cy="group-header:requests:btn">
+                                Requests
                             </Link>
                         ),
                     },
                     {
                         key: 'things',
                         label: (
-                            <Link passHref href={urlFor.group.things(props.group)}>
-                                <a data-cy="group-header:things:btn">Things</a>
+                            <Link
+                                passHref
+                                href={urlFor.group.things(props.group)}
+                                data-cy="group-header:things:btn">
+                                Things
                             </Link>
                         ),
                     },

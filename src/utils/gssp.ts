@@ -1,7 +1,7 @@
 ﻿import { ApolloClient, NormalizedCacheObject } from '@apollo/client';
 import { GetServerSideProps, GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import { ParsedUrlQuery } from 'querystring';
-import { User } from '@nhost/core';
+import { User } from '@nhost/nextjs';
 import { getNhostSession } from './nhost';
 import { createApolloClient } from '@nhost/apollo';
 import { UserPrivateDetailsDocument } from '../generated/graphql';
@@ -54,10 +54,7 @@ export const makeGSSP = <TProps extends object, TParams extends ParsedUrlQuery>(
     options: GSSPOptions<TProps, TParams>,
 ): GetServerSideProps<TProps, TParams> => {
     return async (ctx: GetServerSidePropsContext<TParams>) => {
-        const { nhost, nhostAdmin, session } = await getNhostSession(
-            process.env.NEXT_PUBLIC_NHOST_BACKEND_URL!,
-            ctx,
-        );
+        const { nhost, nhostAdmin, session } = await getNhostSession(ctx);
         const user = session?.user;
 
         if (options.requireAuth && !user) {
@@ -65,27 +62,17 @@ export const makeGSSP = <TProps extends object, TParams extends ParsedUrlQuery>(
         }
 
         // Run handler
-        const userClient =
-            nhost &&
-            createApolloClient({ nhost, graphqlUrl: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT! });
+        const userClient = nhost && createApolloClient({ nhost });
+        const serverClient = nhostAdmin && createApolloClient({ nhost: nhostAdmin });
 
-        const serverClient =
-            nhostAdmin &&
-            createApolloClient({
-                nhost: nhostAdmin,
-                graphqlUrl: process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT!,
+        if (userClient && user && options.preloadUser) {
+            await userClient.query({
+                query: UserPrivateDetailsDocument,
+                variables: { id: user.id },
+                context: {
+                    headers: { 'x-hasura-role': 'me' },
+                },
             });
-
-        if (userClient && user) {
-            if (options.preloadUser) {
-                await userClient.query({
-                    query: UserPrivateDetailsDocument,
-                    variables: { id: user.id },
-                    context: {
-                        headers: { 'x-hasura-role': 'me' },
-                    },
-                });
-            }
         }
 
         const result =

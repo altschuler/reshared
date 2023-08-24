@@ -110,24 +110,24 @@ export const PageLayout = (props: PageLayoutProps) => {
 
                 {!props.noFooter && (
                     <div className={classes.footer}>
-                        <Link href={urlFor.site.privacy()}>
-                            <a className={classes.footerLink}>Privacy Policy</a>
+                        <Link href={urlFor.site.privacy()} className={classes.footerLink}>
+                            Privacy Policy
                         </Link>
 
-                        <Link href={urlFor.site.terms()}>
-                            <a className={classes.footerLink}>Terms of Service</a>
+                        <Link href={urlFor.site.terms()} className={classes.footerLink}>
+                            Terms of Service
                         </Link>
 
-                        <Link href={urlFor.site.contact()}>
-                            <a className={classes.footerLink}>Contact</a>
+                        <Link href={urlFor.site.contact()} className={classes.footerLink}>
+                            Contact
                         </Link>
 
-                        <Link href={urlFor.site.attributions()}>
-                            <a className={classes.footerLink}>Attributions</a>
+                        <Link href={urlFor.site.attributions()} className={classes.footerLink}>
+                            Attributions
                         </Link>
 
-                        <Link href={urlFor.site.openSource()}>
-                            <a className={classes.footerLink}>Open source</a>
+                        <Link href={urlFor.site.openSource()} className={classes.footerLink}>
+                            Open source
                         </Link>
                     </div>
                 )}

@@ -2,7 +2,7 @@
 import { head } from 'lodash-es';
 import { GroupJoinPage, GroupJoinPageProps } from '../../../../containers/groups';
 import { ServerFindJoinTokenDocument } from '../../../../generated/server-queries';
-import { hasuraClient } from '../../../../server';
+import { adminClient } from '../../../../server';
 
 export default GroupJoinPage;
 
@@ -12,7 +12,7 @@ export const getServerSideProps: GetServerSideProps<
 > = async (ctx) => {
     const { id, token } = ctx.params!;
 
-    const tokenQuery = await hasuraClient.query({
+    const tokenQuery = await adminClient.query({
         query: ServerFindJoinTokenDocument,
         variables: {
             where: {

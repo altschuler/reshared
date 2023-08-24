@@ -71,7 +71,7 @@ export const Sidebar = (props: SidebarProps) => {
                 classes.root,
                 collapsed ? classes.rootCollapsed : classes.rootExpanded,
             )}>
-            <Link href={urlFor.chat.new()} passHref>
+            <Link href={urlFor.chat.new()} passHref legacyBehavior>
                 <Button className={classes.newButton} icon={<FormOutlined />}>
                     {!collapsed && 'New Message'}
                 </Button>

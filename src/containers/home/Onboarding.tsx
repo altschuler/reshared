@@ -41,7 +41,7 @@ export const Onboarding = () => {
                     Create a group
                 </Button>
                 <Space direction="vertical" align="center">
-                    <Link key="invite" href={urlFor.search('', 'group')} passHref>
+                    <Link key="invite" href={urlFor.search('', 'group')} passHref legacyBehavior>
                         <Button size="large" shape="round" type="primary">
                             Find a group
                         </Button>

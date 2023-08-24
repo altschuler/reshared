@@ -90,14 +90,18 @@ export const Dashboard = () => {
                                                         width={50}
                                                         height={50}
                                                         file={m.group.banner_file}
+                                                        alt="Group banner image"
                                                     />
                                                 )
                                             }
                                         />
                                     }
                                     title={
-                                        <Link passHref href={urlFor.group.home(m.group)}>
-                                            <a data-cy="title">{m.group.name}</a>
+                                        <Link
+                                            passHref
+                                            href={urlFor.group.home(m.group)}
+                                            data-cy="title">
+                                            {m.group.name}
                                         </Link>
                                     }
                                     description={m.group.description}

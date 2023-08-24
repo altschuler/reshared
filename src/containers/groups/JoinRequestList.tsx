@@ -88,7 +88,7 @@ export const JoinRequestList = (props: JoinRequestListProps) => {
                     <List.Item.Meta
                         avatar={<UserAvatar user={req.user} />}
                         title={
-                            <Link href={urlFor.user.profile(req.user)}>{req.user.displayName}</Link>
+                            <Link href={urlFor.user.profile(req.user)} legacyBehavior>{req.user.displayName}</Link>
                         }
                         description={
                             <Typography.Text>

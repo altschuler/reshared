@@ -1,4 +1,4 @@
-﻿import { User } from '@nhost/core';
+﻿import { User } from '@nhost/nextjs';
 import { Dropdown, Menu } from 'antd';
 import Link from 'next/link';
 import { urlFor } from '../../utils/urls';

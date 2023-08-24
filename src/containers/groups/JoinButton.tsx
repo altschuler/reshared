@@ -61,7 +61,7 @@ export const JoinButton = ({ group, dataCy }: { group: GroupCardFragment; dataCy
     // Anonymous
     if (!auth.user) {
         return (
-            <Link href={urlFor.auth.register()} passHref>
+            <Link href={urlFor.auth.register()} passHref legacyBehavior>
                 <Button data-cy={dataCy} type="link">
                     Sign up to join group
                 </Button>

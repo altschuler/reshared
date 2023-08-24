@@ -1,9 +1,8 @@
 ﻿import jwt from 'jsonwebtoken';
-import { JWTClaims } from '@nhost/core';
 
 const jwtSecret = JSON.parse(process.env.NHOST_JWT_SECRET!);
 
-export interface JwtToken extends JWTClaims {
+export interface JwtToken {
     id: string;
 }
 

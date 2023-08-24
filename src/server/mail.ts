@@ -1,5 +1,4 @@
-﻿import { MailDataRequired } from '@sendgrid/helpers/classes/mail';
-import sendgrid from '@sendgrid/mail';
+﻿import { ServerClient, Message } from 'postmark';
 import { TemplateExecutor } from 'lodash';
 import { memoize, template as compileTemplate } from 'lodash-es';
 import nodemailer from 'nodemailer';
@@ -9,8 +8,6 @@ import newActivityHtml from '../emails/compiled/new_activity.html';
 import newChatHtml from '../emails/compiled/new_chat.html';
 import newActivityTxt from '../emails/new_activity.txt';
 import newChatTxt from '../emails/new_chat.txt';
-
-sendgrid.setApiKey(process.env.SENDGRID_API_KEY!);
 
 type EmailTemplate = 'new_activity' | 'new_chat';
 
@@ -38,14 +35,16 @@ export interface MailData<T> {
     data: T;
 }
 
-const makeEmail = <T>(data: MailData<T>): MailDataRequired => {
+const makeEmail = <T>(data: MailData<T>): Message => {
     const template = getTemplate(data.template);
     return {
-        ...data,
-        text: template.text(data.data as any),
-        html: template.html(data.data as any),
-        from: 'no-reply@reshared.org',
-        replyTo: 'contact@reshared.org',
+        To: data.to,
+        Subject: data.subject,
+        TextBody: template.text(data.data as any),
+        HtmlBody: template.html(data.data as any),
+        From: 'no-reply@reshared.org',
+        ReplyTo: 'contact@reshared.org',
+        MessageStream: 'outbound',
     };
 };
 
@@ -61,12 +60,22 @@ const makeDevTransport = memoize(() =>
     }),
 );
 
+var makePostmarkClient = memoize(() => new ServerClient(process.env.POSTMARK_API_TOKEN!));
+
 export const sendMail = async <T>(data: MailData<T> | MailData<T>[]) => {
     const mails = (Array.isArray(data) ? data : [data]).map(makeEmail);
 
-    if (process.env.NODE_ENV === 'production') {
-        return sendgrid.send(mails);
+    if (process.env.SEND_REAL_EMAILS) {
+        return makePostmarkClient().sendEmailBatch(mails);
     } else {
-        mails.map((mail) => makeDevTransport().sendMail(mail as any));
+        mails.map((mail) =>
+            makeDevTransport().sendMail({
+                to: mail.To,
+                subject: mail.Subject,
+                text: mail.TextBody,
+                html: mail.HtmlBody,
+                from: mail.From,
+            }),
+        );
     }
 };

@@ -99,14 +99,15 @@ export const GroupList = (props: GroupListProps) => {
                                             width={100}
                                             height={100}
                                             file={group.banner_file}
+                                            alt="Group banner image"
                                         />
                                     )
                                 }
                             />
                         }
                         title={
-                            <Link passHref href={urlFor.group.home(group)}>
-                                <a data-cy="title">{group.name}</a>
+                            <Link passHref href={urlFor.group.home(group)} data-cy="title">
+                                {group.name}
                             </Link>
                         }
                         description={group.description}

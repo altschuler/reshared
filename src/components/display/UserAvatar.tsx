@@ -7,7 +7,7 @@ import { CSSProperties, useMemo } from 'react';
 import { urlFor } from '../../utils/urls';
 import { useAuth } from '../../utils/auth';
 import { useNhostClient } from '@nhost/react';
-import { AvatarSize } from 'antd/lib/avatar/SizeContext';
+import { AvatarSize } from 'antd/lib/avatar/AvatarContext';
 
 const useStyles = createUseStyles({
     overlay: {
@@ -43,13 +43,14 @@ export const UserAvatar = (props: UserAvatarProps) => {
                         <Link
                             passHref
                             key="message"
-                            href={{ pathname: urlFor.chat.new(), query: { to: user.id } }}>
+                            href={{ pathname: urlFor.chat.new(), query: { to: user.id } }}
+                            legacyBehavior>
                             <Button type="link" icon={<MessageOutlined />}>
                                 Send a message
                             </Button>
                         </Link>
                     ),
-                    <Link key="profile" passHref href={urlFor.user.profile(user)}>
+                    <Link key="profile" passHref href={urlFor.user.profile(user)} legacyBehavior>
                         <Button type="link" icon={<ProfileOutlined />}>
                             View profile
                         </Button>
@@ -105,7 +106,7 @@ export const UserAvatar = (props: UserAvatarProps) => {
         avatar
     ) : (
         <Popover
-            arrowPointAtCenter
+            arrow={{ pointAtCenter: true }}
             destroyTooltipOnHide
             overlayClassName={classes.overlay}
             content={popover}>

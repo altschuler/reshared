@@ -43,7 +43,7 @@ export const UserList = (props: UserListProps) => {
                         avatar={<UserAvatar user={user} />}
                         title={
                             <Space>
-                                <Link href={urlFor.user.profile(user)}>{user.displayName}</Link>
+                                <Link href={urlFor.user.profile(user)} legacyBehavior>{user.displayName}</Link>
                             </Space>
                         }
                     />

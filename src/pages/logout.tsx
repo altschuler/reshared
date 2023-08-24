@@ -1,4 +1,4 @@
-﻿import { useAuthenticated, useSignOut } from '@nhost/react';
+﻿import { useAuthenticated, useSignOut } from '@nhost/nextjs';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -32,18 +32,13 @@ export const LogoutPage = () => {
 };
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
-    const { nhost, session } = await getNhostSession(
-        process.env.NEXT_PUBLIC_NHOST_BACKEND_URL!,
-        ctx,
-    );
+    const { session } = await getNhostSession(ctx);
 
     if (!session?.user) {
         return { redirect: { statusCode: 302, destination: '/' } };
     }
 
-    await nhost.auth.signOut();
-
-    return { props: { nhostSession: null, apolloCache: null } };
+    return { props: { nhostSession: session, apolloCache: null } };
 };
 
 export default LogoutPage;
