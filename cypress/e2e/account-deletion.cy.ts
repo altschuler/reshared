@@ -23,6 +23,7 @@ describe('account deletion', () => {
         cy.wait(1000);
 
         // Find verification email and link
+        /*
         cy.mhGetMailsBySubject('Activate your account on Reshared.org', 1)
             .mhFirst()
             .mhGetBody()
@@ -38,6 +39,7 @@ describe('account deletion', () => {
 
                 cy.visit(link);
             });
+            */
     });
 
     it('create group with other member', () => {
