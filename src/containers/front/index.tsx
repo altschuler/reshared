@@ -95,7 +95,7 @@ export const FrontPage = () => {
 
             <Typography.Title level={4}>
                 Reshared facilitates and encourages sharing of anything within communities. It is
-                not a marketplace, there are no money involved, it's just like borrowing a hammer
+                not a marketplace, there is no money involved, it's just like borrowing a hammer
                 from your neighbour.
             </Typography.Title>
 
