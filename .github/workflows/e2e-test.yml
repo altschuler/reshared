@@ -64,6 +64,8 @@ jobs:
           echo "NHOST_WEBHOOK_SECRET='nhost-webhook-secret'" >> .secrets
           echo "OAUTH_FACEBOOK_CLIENT_ID=''" >> .secrets
           echo "OAUTH_FACEBOOK_SECRET=''" >> .secrets
+          echo "OAUTH_DISCORD_CLIENT_ID=''" >> .secrets
+          echo "OAUTH_DISCORD_CLIENT_SECRET=''" >> .secrets
           echo "SMTP_HOST='mailhog'" >> .secrets
           echo "SMTP_USER='user'" >> .secrets
           echo "SMTP_PASSWORD='password'" >> .secrets

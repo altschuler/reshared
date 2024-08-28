@@ -32,7 +32,7 @@ httpPoolSize = 100
 
 [functions]
 [functions.node]
-version = 16
+version = 18
 
 [auth]
 version = '0.20.1'
@@ -95,7 +95,9 @@ enabled = false
 enabled = false
 
 [auth.method.oauth.discord]
-enabled = false
+enabled = true
+clientId = '{{ secrets.OAUTH_DISCORD_CLIENT_ID }}'
+clientSecret = '{{ secrets.OAUTH_DISCORD_CLIENT_SECRET }}'
 
 [auth.method.oauth.facebook]
 enabled = true
