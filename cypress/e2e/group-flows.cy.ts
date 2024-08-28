@@ -77,8 +77,11 @@ describe('group flow', () => {
         cy.t('create-group:btn').click();
 
         cy.t('name:in').type(`${name} private`);
+        cy.wait(1000);
         cy.t('description:in').type(`${description} private`);
         cy.t('public:cb').uncheck();
+
+        cy.wait(1000);
 
         cy.t('submit:btn').click();
 

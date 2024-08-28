@@ -5,6 +5,7 @@ import { createUseStyles } from 'react-jss';
 import { urlFor } from '../../../utils/urls';
 import { useNhostClient, useSignInEmailPassword } from '@nhost/nextjs';
 import { isServer } from '../../../utils/next';
+import { DiscordLogo } from '../../display/DiscordLogo';
 
 const useStyles = createUseStyles({
     root: {
@@ -51,6 +52,8 @@ export const LoginForm = (props: LoginFormProps) => {
             .sendVerificationEmail({ email: form.getFieldValue('email') })
             .then(() => message.success('Activation email has been sent'));
     };
+
+    const handleDiscordLogin = () => nhost.auth.signIn({ provider: 'discord' });
 
     if (login.isSuccess && !isServer) {
         router.push(urlFor.home());
@@ -115,6 +118,18 @@ export const LoginForm = (props: LoginFormProps) => {
                         instead.
                     </Typography.Text>
                 </Form.Item>
+
+                <Form.Item>
+                    or{' '}
+                    <Button
+                        icon={<DiscordLogo height="0.7em" />}
+                        style={{ background: '#5865F2', color: 'white' }}
+                        type="link"
+                        onClick={handleDiscordLogin}>
+                        Sign in with Discord
+                    </Button>
+                </Form.Item>
+
                 <Form.Item>
                     <Typography.Text>
                         Forgot your password?{' '}
