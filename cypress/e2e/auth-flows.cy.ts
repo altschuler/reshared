@@ -103,7 +103,7 @@ describe('auth flow', () => {
             .decodeQuotedPrintable()
             .then((body) => {
                 // Find activation link
-                const match = /(https?:\/\/.*?)\s/.exec(body);
+                const match = /(https:\/\/local.auth.*?)\s/.exec(body);
                 const link = match?.[1];
 
                 if (!link) {
