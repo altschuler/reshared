@@ -1,4 +1,4 @@
 - role_name: me
   role_set:
-    - user
     - private
+    - user

@@ -31,7 +31,7 @@ jobs:
       - name: set up node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: '18'
           cache: 'yarn'
 
       - name: install cypress deps
@@ -76,6 +76,7 @@ jobs:
         working-directory: ./nhost
 
       - name: run cypress tests
+        if: "!contains(github.event.head_commit.message, '[skip-test]')"
         run: yarn run cypress-run
 
       - name: archive cypress videos
